@@ -1,0 +1,18 @@
+15
+15
+210
+210
+("foo" "bar" "baz" "bletch" "quux")
+("foo" "bar" "baz" "bletch" "quux")
+#("foo" "bar" "baz" "bletch" "quux")
+#("foo" "bar" "baz" "bletch" "quux")
+("foo" "bar" "baz" "bletch" "quux")
+("foo" "bar" "baz" "bletch" "quux")
+"foobarbazbletchquux"
+"foobarbazbletchquux"
+""
+""
+"foo,bar,baz,bletch,quux"
+"foo,bar,baz,bletch,quux"
+"ABCD"
+"ABCD"

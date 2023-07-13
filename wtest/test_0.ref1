@@ -1,0 +1,6 @@
+(compiler-version (0 8 0))
+(garbage-collection? #t)
+(rc4-rand? #f)
+(sqlite? #t)
+(float-type quad-double)
+(integer-type int-128)

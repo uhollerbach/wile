@@ -1,0 +1,752 @@
+%# -*- mode: c; -*-
+
+%# Wile -- the extremely stable scheming genius compiler
+%# Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+%# License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
+
+%# This is input for a lex clone I wrote a long time ago...
+%# I did say this was a project for learning! It's probably worth
+%# converting this to flex at some point... not today.
+
+%# Section 1: options & definitions
+
+%{
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdarg.h>
+#define __USE_XOPEN_EXTENDED	// for strdup
+#include <string.h>
+#include <ctype.h>
+#include <math.h>
+
+#include "wile.h"
+#include "alloc.h"
+#include "lib-macros.h"
+#include "wile-parse.h"
+
+#define AB_ATYPE	char
+#define AB_STYPE	ab_char
+#define AB_STATIC
+#define AB_ALLOC	LISP_ALLOC
+#define AB_REALLOC	LISP_REALLOC
+#define AB_FREE		LISP_FREE
+
+#include "array_builder.h"
+
+// a bit redundant, need to silence a warning
+
+void set_start_state(struct ulex_context* context);
+
+void set_start_state(struct ulex_context* context)
+{
+    BEGIN_SC(context, S_MAIN);
+}
+
+static void read_int(int base, const unsigned char* str, lisp_int_t* res);
+static void read_real(char* sp, lisp_real_t* res);
+
+static void unescape(char* s)
+{
+    char* d = s;
+    while (*s) {
+	if (*s == '\\') {
+	    ++s;
+	    switch (*s) {
+	    case 'a':		*d = '\a';	break;
+	    case 'b':		*d = '\b';	break;
+	    case 'f':		*d = '\f';	break;
+	    case 'n':		*d = '\n';	break;
+	    case 'r':		*d = '\r';	break;
+	    case 't':		*d = '\t';	break;
+	    case 'v':		*d = '\v';	break;
+	    default:		*d = *s;	break;
+	    }
+	} else {
+	    *d = *s;
+	}
+	++d;
+	++s;
+    }
+    *d = '\0';
+}
+
+#define set_tag(tag,ret)				\
+    do {						\
+	lexval->vt = tag;				\
+	lexval->origin =				\
+	    encode_line_loc(ulex_lineno(yyl_context));	\
+	return ret;					\
+    } while (0)
+
+#define set_char(ch)					\
+    do {						\
+	lexval->v.chr = ch;				\
+	set_tag(LV_CHAR, CHARACTER);			\
+    } while (0)
+
+#define set_int(b,t)					\
+    do {						\
+	read_int(b,t,&lexval->v.iv);			\
+	set_tag(LV_INT, INTEGER);			\
+    } while (0)
+
+#define set_rat(b,t)					\
+    do {						\
+	char* slash = strchr((char*) (t), '/');		\
+	read_int(b, (t), &lexval->v.irv.num);		\
+	read_int(b, (unsigned char*) slash+1,		\
+		 &lexval->v.irv.den);			\
+	set_tag(LV_RAT, RATIONAL);			\
+    } while (0)
+
+#define set_special_real(var,val)			\
+    do {						\
+	lexval->v.var = val;				\
+	lexval->origin =				\
+	    encode_line_loc(ulex_lineno(yyl_context));	\
+	if (yytext[ix] == '-') {			\
+	    lexval->v.var =				\
+		COPYSIGN(lexval->v.var, -1.0);		\
+	}						\
+    } while (0)
+
+#define set_special_imag(val)				\
+    do {						\
+	lisp_real_t tv = val;				\
+	lexval->origin =				\
+	    encode_line_loc(ulex_lineno(yyl_context));	\
+	if (yytext[ix] == '-') {			\
+	    tv = COPYSIGN(tv, -1.0);			\
+	}						\
+	lexval->v.cv = tv*I;				\
+    } while (0)
+
+%}
+
+%option prefix="wile_"
+%option output-file="wile-lex.c" header-file="wile-lex.h"
+%option 4yucc minimize-dfas no-main no-default
+
+%# States
+%x S_MAIN S_HEREDOC
+
+%# Letters used for special purposes in numbers: decide here whether
+%# to make these case-sensitive or not... I choose not to for now
+
+A	[aA]
+B	[bB]
+C	[cC]
+D	[dD]
+E	[eE]
+F	[fF]
+I	[iI]
+N	[nN]
+O	[oO]
+T	[tT]
+X	[xX]
+
+%# Digits in bases 2, 8, 10, 16
+
+D2	[01]
+D3	[0-2]
+D4	[0-3]
+D5	[0-4]
+D6	[0-5]
+D7	[0-6]
+D8	[0-7]
+D9	[0-8]
+D10	[0-9]
+D11	({D10}|{A})
+D12	({D10}|{A}|{B})
+D13	({D10}|{A}|{B}|{C})
+D14	({D10}|{A}|{B}|{C}|{D})
+D15	({D10}|{A}|{B}|{C}|{D}|{E})
+D16	({D10}|{A}|{B}|{C}|{D}|{E}|{F})
+
+%# Base prefixes
+
+R2	#{B}
+R3	#\{3\}
+R4	#\{4\}
+R5	#\{5\}
+R6	#\{6\}
+R7	#\{7\}
+R8	#{O}
+R9	#\{9\}
+R10	#{D}
+R11	#\{11\}
+R12	#\{12\}
+R13	#\{13\}
+R14	#\{14\}
+R15	#\{15\}
+R16	#{X}
+
+%# Required and optional signs
+
+SGR	[+-]
+SGO	{SGR}?
+
+%# Exponent suffixes
+
+SUF2	({E}{SGO}{D2}+)?
+SUF8	({E}{SGO}{D8}+)?
+SUF10	({E}{SGO}{D10}+)?
+SUF16	({X}{SGO}{D16}+)?
+
+%# Inf and NaN
+
+INF	{SGR}{I}{N}{F}\.0
+NAN	{SGR}{N}{A}{N}\.0
+
+%# Skip the exactness prefix: integers and rationals will always be exact,
+%# and reals and complexes will always be inexact
+
+%#  PRE2	({R2}{EXACT}|{EXACT}{R2})
+%#  PRE8	({R8}{EXACT}|{EXACT}{R8})
+%#  PRE10	({R10}{EXACT}|{EXACT}{R10})
+%#  PRE16	({R16}{EXACT}|{EXACT}{R16})
+
+PRE2	{R2}
+PRE3	{R3}
+PRE4	{R4}
+PRE5	{R5}
+PRE6	{R6}
+PRE7	{R7}
+PRE8	{R8}
+PRE9	{R9}
+PRE10	{R10}
+PRE11	{R11}
+PRE12	{R12}
+PRE13	{R13}
+PRE14	{R14}
+PRE15	{R15}
+PRE16	{R16}
+
+%# Unsigned integers
+
+UINT2	{D2}+
+UINT3	{D3}+
+UINT4	{D4}+
+UINT5	{D5}+
+UINT6	{D6}+
+UINT7	{D7}+
+UINT8	{D8}+
+UINT9	{D9}+
+UINT10	{D10}+
+UINT11	{D11}+
+UINT12	{D12}+
+UINT13	{D13}+
+UINT14	{D14}+
+UINT15	{D15}+
+UINT16	{D16}+
+
+%# Unsigned real numbers
+
+UREAL2	({D2}+(\.{D2}*)?|\.{D2}+){SUF2}
+UREAL8	({D8}+(\.{D8}*)?|\.{D8}+){SUF8}
+UREAL10	({D10}+(\.{D10}*)?|\.{D10}+){SUF10}
+UREAL16	({D16}+(\.{D16}*)?|\.{D16}+){SUF16}
+
+%# Signed integers
+
+INT2	{SGO}{UINT2}
+INT3	{SGO}{UINT3}
+INT4	{SGO}{UINT4}
+INT5	{SGO}{UINT5}
+INT6	{SGO}{UINT6}
+INT7	{SGO}{UINT7}
+INT8	{SGO}{UINT8}
+INT9	{SGO}{UINT9}
+INT10	{SGO}{UINT10}
+INT11	{SGO}{UINT11}
+INT12	{SGO}{UINT12}
+INT13	{SGO}{UINT13}
+INT14	{SGO}{UINT14}
+INT15	{SGO}{UINT15}
+INT16	{SGO}{UINT16}
+
+%# Signed rationals
+
+RAT2	{INT2}/{UINT2}
+RAT3	{INT3}/{UINT3}
+RAT4	{INT4}/{UINT4}
+RAT5	{INT5}/{UINT5}
+RAT6	{INT6}/{UINT6}
+RAT7	{INT7}/{UINT7}
+RAT8	{INT8}/{UINT8}
+RAT9	{INT9}/{UINT9}
+RAT10	{INT10}/{UINT10}
+RAT11	{INT11}/{UINT11}
+RAT12	{INT12}/{UINT12}
+RAT13	{INT13}/{UINT13}
+RAT14	{INT14}/{UINT14}
+RAT15	{INT15}/{UINT15}
+RAT16	{INT16}/{UINT16}
+
+%# Signed reals and imaginaries
+
+%# TODO: don't rely on C runtime to properly handle inf and nan:
+%# break them out into separate patterns and handle them separately...
+%# a tiny bit messy for reals and imags, a lot more messy for complex.
+
+REAL2	{SGO}{UREAL2}
+REAL8	{SGO}{UREAL8}
+REAL10	{SGO}{UREAL10}
+REAL16	{SGO}{UREAL16}
+
+IMAG2	{SGO}{UREAL2}{I}
+IMAG8	{SGO}{UREAL8}{I}
+IMAG10	{SGO}{UREAL10}{I}
+IMAG16	{SGO}{UREAL16}{I}
+
+%# A quoted-string
+QS	\"([^\"\\]|\\.)*\"
+
+%# Components of symbols
+
+INIT	[a-zA-Z!$%&*/:<=>?^_~]
+SUB	[a-zA-Z!$%&*/:<=>?^_~0-9.@+-]
+
+%# HERE-DOC prefix; the length of this prefix = 3 is used in the code below
+HEREPRE	@<<
+
+%# HERE-DOC id string -- very restricted character set
+HERESAY	[A-Z_]
+
+%%
+%################################################################
+%# Section 2: patterns
+
+%{
+    YYSTYPE* lexval = (YYSTYPE*) yyl_lexval;
+    lexval->vt = VT_UNINIT;
+    // TODO: DANGER WILL ROBINSON! This is not thread-safe!
+    static char* here_delim;
+    static ab_char astr;
+%}
+
+%# Hashbang for making scripts executable
+
+<S_MAIN>^#!.*			return HASHBANG;
+
+
+%# vectors and bytevectors
+
+<S_MAIN>#\(			return VECTOR;
+<S_MAIN>#u8\(			return BVECTOR;
+
+
+%# Swallow comments and whitespace
+
+<S_MAIN>;.*			|
+<S_MAIN>\s+			|
+<S_MAIN>\n
+
+
+%# Recognize booleans #t and #f
+
+<S_MAIN>#({T}|{F})   		%{
+				    lexval->v.bv =
+					(yytext[1] == 't' || yytext[1] == 'T');
+				    set_tag(LV_BOOL, BOOLEAN);
+				%}
+
+
+%# Recognize characters in several flavors
+
+<S_MAIN>#\\alarm		set_char(0x07);
+<S_MAIN>#\\backspace		set_char(0x08);
+<S_MAIN>#\\delete		set_char(0x7f);
+<S_MAIN>#\\esc(ape)?		set_char(0x1b);
+<S_MAIN>#\\return		set_char('\r');
+<S_MAIN>#\\linefeed		|
+<S_MAIN>#\\newline		set_char('\n');
+<S_MAIN>#\\null?		set_char(0x00);
+<S_MAIN>#\\page			set_char(0x0c);
+<S_MAIN>#\\space		set_char(' ');
+<S_MAIN>#\\tab			set_char('\t');
+<S_MAIN>#\\vtab			set_char(0x0b);
+
+<S_MAIN>#\\{X}{D16}+		%{
+				     lisp_int_t ci;
+				     read_int(16, yytext + 3, &ci);
+				     lexval->v.chr = ci & 0xff;
+				     set_tag(LV_CHAR, CHARACTER);
+				%}
+
+<S_MAIN>#\\.			set_char(yytext[2]);
+
+
+%# Recognize strings
+<S_MAIN>{QS}			%{
+				    lexval->v.str =
+					LISP_STRDUP((char*) yytext + 1);
+				    LISP_ASSERT(lexval->v.str != NULL);
+				    lexval->v.str[yyleng-2] = '\0';
+				    unescape(lexval->v.str);
+				    set_tag(LV_STRING, STRING);
+				%}
+
+
+%# Recognize numbers: we won't do all of the scheme number types,
+%# only exact integers, exact rationals, and inexact real and complex:
+%# no exactness prefix, no unspecified digits '#'. On the other hand,
+%# we'll do inexact real and complex in all four bases... except we
+%# don't yet -- TODO: finish implementing this!
+
+<S_MAIN>{PRE2}{INT2}		set_int(2, yytext + 2);
+<S_MAIN>{PRE3}{INT3}		set_int(3, yytext + 4);
+<S_MAIN>{PRE4}{INT4}		set_int(4, yytext + 4);
+<S_MAIN>{PRE5}{INT5}		set_int(5, yytext + 4);
+<S_MAIN>{PRE6}{INT6}		set_int(6, yytext + 4);
+<S_MAIN>{PRE7}{INT7}		set_int(7, yytext + 4);
+<S_MAIN>{PRE8}{INT8}		set_int(8, yytext + 2);
+<S_MAIN>{PRE9}{INT9}		set_int(9, yytext + 4);
+<S_MAIN>{PRE10}?{INT10}		set_int(10, yytext + (yytext[0] == '#' ? 2 : 0));
+<S_MAIN>{PRE11}{INT11}		set_int(11, yytext + 5);
+<S_MAIN>{PRE12}{INT12}		set_int(12, yytext + 5);
+<S_MAIN>{PRE13}{INT13}		set_int(13, yytext + 5);
+<S_MAIN>{PRE14}{INT14}		set_int(14, yytext + 5);
+<S_MAIN>{PRE15}{INT15}		set_int(15, yytext + 5);
+<S_MAIN>{PRE16}{INT16}		set_int(16, yytext + 2);
+
+<S_MAIN>{PRE2}{RAT2}		set_rat(2, yytext + 2);
+<S_MAIN>{PRE3}{RAT3}		set_rat(3, yytext + 4);
+<S_MAIN>{PRE4}{RAT4}		set_rat(4, yytext + 4);
+<S_MAIN>{PRE5}{RAT5}		set_rat(5, yytext + 4);
+<S_MAIN>{PRE6}{RAT6}		set_rat(6, yytext + 4);
+<S_MAIN>{PRE7}{RAT7}		set_rat(7, yytext + 4);
+<S_MAIN>{PRE8}{RAT8}		set_rat(8, yytext + 2);
+<S_MAIN>{PRE9}{RAT9}		set_rat(9, yytext + 4);
+<S_MAIN>{PRE10}?{RAT10}		set_rat(10, yytext + (yytext[0] == '#' ? 2 : 0));
+<S_MAIN>{PRE11}{RAT11}		set_rat(11, yytext + 5);
+<S_MAIN>{PRE12}{RAT12}		set_rat(12, yytext + 5);
+<S_MAIN>{PRE13}{RAT13}		set_rat(13, yytext + 5);
+<S_MAIN>{PRE14}{RAT14}		set_rat(14, yytext + 5);
+<S_MAIN>{PRE15}{RAT15}		set_rat(15, yytext + 5);
+<S_MAIN>{PRE16}{RAT16}		set_rat(16, yytext + 2);
+
+<S_MAIN>{PRE10}?{REAL10}	%{
+				    int ix = yytext[0] == '#' ? 2 : 0;
+		#ifdef WILE_USES_QUAD_DOUBLE
+				    lexval->v.rv =
+					strtoflt128((char*) yytext + ix, NULL);
+		#else
+				    sscanf((char*) yytext + ix,
+					   REAL_SCAN_FMT, &(lexval->v.rv));
+		#endif
+				    set_tag(LV_REAL, REAL);
+				%}
+
+<S_MAIN>{PRE2}{REAL2}		|
+<S_MAIN>{PRE8}{REAL8}		|
+<S_MAIN>{PRE16}{REAL16}		%{
+				    read_real((char*) yytext, &(lexval->v.rv));
+				    set_tag(LV_REAL, REAL);
+				%}
+
+<S_MAIN>{PRE2}{INF}		|
+<S_MAIN>{PRE8}{INF}		|
+<S_MAIN>{PRE10}?{INF}		|
+<S_MAIN>{PRE16}{INF}		%{
+				    int ix = yytext[0] == '#' ? 2 : 0;
+				    set_special_real(rv, REAL_INF);
+				    set_tag(LV_REAL, REAL);
+				%}
+
+<S_MAIN>{PRE2}{NAN}		|
+<S_MAIN>{PRE8}{NAN}		|
+<S_MAIN>{PRE10}?{NAN}		|
+<S_MAIN>{PRE16}{NAN}		%{
+				    int ix = yytext[0] == '#' ? 2 : 0;
+				    set_special_real(rv, REAL_NAN);
+				    set_tag(LV_REAL, REAL);
+				%}
+
+<S_MAIN>{PRE10}?{IMAG10}	%{
+				    int ix = yytext[0] == '#' ? 2 : 0;
+				    lisp_real_t im;
+		#ifdef WILE_USES_QUAD_DOUBLE
+				    im = strtoflt128((char*) yytext + ix, NULL);
+		#else
+				    sscanf((char*) yytext + ix,
+					   REAL_SCAN_FMT, &im);
+		#endif
+				    lexval->v.cv = im*I;
+				    set_tag(LV_CMPLX, COMPLEX);
+				%}
+
+<S_MAIN>{PRE2}{IMAG2}		|
+<S_MAIN>{PRE8}{IMAG8}		|
+<S_MAIN>{PRE16}{IMAG16}		%{
+				    lisp_real_t im;
+				    read_real((char*) yytext, &im);
+				    lexval->v.cv = im*I;
+				    set_tag(LV_CMPLX, COMPLEX);
+				%}
+
+<S_MAIN>{PRE2}{SGR}{I}		|
+<S_MAIN>{PRE8}{SGR}{I}		|
+<S_MAIN>{PRE10}?{SGR}{I}	|
+<S_MAIN>{PRE16}{SGR}{I}		%{
+				    int ix = yytext[0] == '#' ? 2 : 0;
+				    set_special_imag(yytext[ix] == '-' ? -1: 1);
+				    set_tag(LV_CMPLX, COMPLEX);
+				%}
+
+<S_MAIN>{PRE2}{INF}{I}		|
+<S_MAIN>{PRE8}{INF}{I}		|
+<S_MAIN>{PRE10}?{INF}{I}	|
+<S_MAIN>{PRE16}{INF}{I}		%{
+				    int ix = yytext[0] == '#' ? 2 : 0;
+				    set_special_imag(REAL_INF);
+				    set_tag(LV_CMPLX, COMPLEX);
+				%}
+
+<S_MAIN>{PRE2}{NAN}{I}		|
+<S_MAIN>{PRE8}{NAN}{I}		|
+<S_MAIN>{PRE10}?{NAN}{I}	|
+<S_MAIN>{PRE16}{NAN}{I}		%{
+				    int ix = yytext[0] == '#' ? 2 : 0;
+				    set_special_imag(REAL_NAN);
+				    set_tag(LV_CMPLX, COMPLEX);
+				%}
+
+%# Still TODO: handle complex numbers with one part inf or nan -- messy!
+
+%# still TODO: base [2,8,16] complex numbers
+
+<S_MAIN>{PRE10}?{REAL10}{IMAG10} %{
+				    int ix = yytext[0] == '#' ? 2 : 0;
+				    lisp_real_t re, im;
+		#ifdef WILE_USES_QUAD_DOUBLE
+				    char* ep;
+				    re = strtoflt128((char*) yytext + ix, &ep);
+				    im = strtoflt128(ep, NULL);
+		#else
+				    sscanf((char*) yytext + ix,
+					   REAL_SCAN_FMT REAL_SCAN_FMT,
+					   &re, &im);
+		#endif
+				    lexval->v.cv = CMPLX(re, im);
+				    set_tag(LV_CMPLX, COMPLEX);
+				%}
+
+
+%# Recognize identifiers: first a couple of
+%# "peculiar identifiers", then regular identifiers
+
+<S_MAIN>\+			|
+<S_MAIN>-			|
+<S_MAIN>\.\.\.			|
+<S_MAIN>{INIT}{SUB}*		%{
+				    lexval->v.str = LISP_STRDUP((char*) yytext);
+				    LISP_ASSERT(lexval->v.str != NULL);
+				    set_tag(LV_SYMBOL, SYMBOL);
+				%}
+
+
+%# Here-docs
+
+<S_MAIN>{HEREPRE}{HERESAY}+\n	%{
+				    here_delim = LISP_STRDUP((char*) yytext + 3);
+				    astr = ab_char_setup(32);
+				    BEGIN(S_HEREDOC);
+				%}
+
+<S_HEREDOC>[^\n]*\n		%{
+				    if (strcmp(here_delim, (char*) yytext)) {
+					size_t i;
+					for (i = 0; i < yyleng; ++i) {
+					    ab_char_append(&astr, yytext[i]);
+					}
+				    } else {
+					if (ab_char_get_size(&astr) == 0) {
+					    lexval->v.str = LISP_STRDUP("");
+					} else {
+					    ab_char_append(&astr, '\0');
+					    lexval->v.str =
+						LISP_STRDUP(ab_char_get_array(&astr));
+					}
+					ab_char_destroy(&astr);
+					LISP_FREE(here_delim);
+					BEGIN(S_MAIN);
+					LISP_ASSERT(lexval->v.str != NULL);
+					set_tag(LV_STRING, STRING);
+				    }
+				%}
+
+
+%# Anything else, for the moment, is just returned verbatim
+
+<S_MAIN>.			return yytext[0];
+
+%%
+
+static void read_int(int base, const unsigned char* str, lisp_int_t* res)
+{
+    int s = 1;
+
+    if (*str == '-') {
+	s = -1;
+	++str;
+    } else if (*str == '+') {
+	++str;
+    }
+    *res = 0;
+    while (*str && isxdigit(*str)) {
+	*res *= base;
+	switch (*str++) {
+	case '0':				break;
+	case '1':		*res += 1;	break;
+	case '2':		*res += 2;	break;
+	case '3':		*res += 3;	break;
+	case '4':		*res += 4;	break;
+	case '5':		*res += 5;	break;
+	case '6':		*res += 6;	break;
+	case '7':		*res += 7;	break;
+	case '8':		*res += 8;	break;
+	case '9':		*res += 9;	break;
+	case 'a':    case 'A':	*res += 10;	break;
+	case 'b':    case 'B':	*res += 11;	break;
+	case 'c':    case 'C':	*res += 12;	break;
+	case 'd':    case 'D':	*res += 13;	break;
+	case 'e':    case 'E':	*res += 14;	break;
+	case 'f':    case 'F':	*res += 15;	break;
+	}
+    }
+    *res *= s;
+}
+
+#define IPART(b,d)							\
+    do {								\
+	if (base < b) {							\
+	    FATAL("<read_real>", "got bad base-%d digit %c", base, *sp); \
+	}								\
+	ipart = base*ipart + d;						\
+    } while (0)
+
+#define FPART(b,d)							\
+    do {								\
+	if (base < b) {							\
+	    FATAL("<read_real>", "got bad base-%d digit %c", base, *sp); \
+	}								\
+	fpart += scale*d;						\
+	scale /= base;							\
+    } while (0)
+
+#define EPART(b,d)							\
+    do {								\
+	if (base < b) {							\
+	    FATAL("<read_real>", "got bad base-%d digit %c", base, *sp); \
+	}								\
+	epart = base*epart + d;						\
+    } while (0)
+
+#define DO_DSEQ(mac)							\
+    do {								\
+	switch (*sp) {							\
+	case '0':	mac(2, 0);	break;				\
+	case '1':	mac(2, 1);	break;				\
+	case '2':	mac(8, 2);	break;				\
+	case '3':	mac(8, 3);	break;				\
+	case '4':	mac(8, 4);	break;				\
+	case '5':	mac(8, 5);	break;				\
+	case '6':	mac(8, 6);	break;				\
+	case '7':	mac(8, 7);	break;				\
+	case '8':	mac(10, 8);	break;				\
+	case '9':	mac(10, 9);	break;				\
+	case 'a':							\
+	case 'A':	mac(16, 10);	break;				\
+	case 'b':							\
+	case 'B':	mac(16, 11);	break;				\
+	case 'c':							\
+	case 'C':	mac(16, 12);	break;				\
+	case 'd':							\
+	case 'D':	mac(16, 13);	break;				\
+	case 'e':							\
+	case 'E':	mac(16, 14);	break;				\
+	case 'f':							\
+	case 'F':	mac(16, 15);	break;				\
+	default:							\
+	    FATAL("<read_real>", "got bad base-%d digit %c", 16, *sp);	\
+	}								\
+	++sp;								\
+    } while (0)
+
+static void read_real(char* sp, lisp_real_t* res)
+{
+    int base, esign, epart;
+    lisp_real_t ipart, fpart, scale;
+    char emark;
+
+    base = 10;
+    ipart = fpart = REAL_LIT(0.0);
+    epart = esign = 0;
+    if (*sp == '#') {
+	++sp;
+	switch (*sp) {
+	case 'b':
+	case 'B':	base = 2;	break;
+	case 'o':
+	case 'O':	base = 8;	break;
+	case 'd':
+	case 'D':	base = 10;	break;
+	case 'x':
+	case 'X':	base = 16;	break;
+	default:
+	    FATAL("<read_real>", "saw an unrecognized base specifier");
+	}
+	++sp;
+    }
+    emark = (base == 16) ? 'x' : 'e';
+    while (*sp) {
+	if (*sp == '.') {
+	    ++sp;
+	    break;
+	}
+	if (tolower(*sp) == emark) {
+	    ++sp;
+	    goto do_exp;
+	}
+	if (tolower(*sp) == 'i') {
+	    goto finish;
+	}
+	DO_DSEQ(IPART);
+    }
+    scale = REAL_LIT(1.0)/base;
+    while (*sp) {
+	if (tolower(*sp) == emark) {
+	    ++sp;
+	    break;
+	}
+	if (tolower(*sp) == 'i') {
+	    goto finish;
+	}
+	DO_DSEQ(FPART);
+    }
+ do_exp:
+    esign = 1;
+    if (*sp == '-') {
+	esign = -1;
+	++sp;
+    } else if (*sp == '+') {
+	++sp;
+    }
+    while (*sp) {
+	if (tolower(*sp) == 'i') {
+	    break;
+	}
+	DO_DSEQ(EPART);
+    }
+ finish:
+    ipart += fpart;
+    epart *= esign;
+    switch (base) {
+    case 2:							break;
+    case 8:	epart *= 3;					break;
+    case 10:	*res = ipart*POW(REAL_LIT(10.0), epart);	return;
+    case 16:	epart *= 4;					break;
+    }
+    *res = LDEXP(ipart, epart);
+}

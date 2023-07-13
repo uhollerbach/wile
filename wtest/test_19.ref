@@ -1,0 +1,16 @@
+Test (guard)
+
+exception is 'meh'... caught 'meh'
+exception is 'barf'... caught 'barf'... yuk!
+exception is 'yahoo!'... a little excitable today, aren't we...
+exception is '(1 2)'... does not compute <dalek's head explodes>
+
+Again, this time with nested guards
+
+exception is 'meh'... caught 'meh'
+exception is 'barf'... caught 'barf'... yuk!
+exception is 'yahoo!'... a little excitable today, aren't we...
+exception is '(1 2)'... does not compute <dalek's head explodes>
+exception is 'shazam'... hah, wimpy inner guard didn't catch that one!
+
+And a final flourish

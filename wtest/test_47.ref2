@@ -1,0 +1,3 @@
+long-double
+final eps 5.421011e-20 nbits 64
+eps-test pass: 5.421010862e-20 64

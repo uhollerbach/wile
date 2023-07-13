@@ -1,0 +1,28 @@
+replicate
+()
+()
+(a a a a a)
+(() () () () ())
+((a b c) (a b c) (a b c) (a b c) (a b c))
+memp
+(4 1 5 9)
+(5 9)
+#f
+assp
+(4 c)
+(3 a)
+#f
+list-drop-while
+(4 1 5 9)
+list-take-while
+((3 1) (4 1 5 9))
+(1 2 3 2 1 4 1)
+".....foo"
+"foo....."
+"..foo..."
+"......foo"
+"foo......"
+"...foo..."
+"foo   "
+"   foo"
+"foo"

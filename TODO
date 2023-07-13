@@ -1,0 +1,205 @@
+Stuff TODO
+
+* self-compilation
+
+  > a bug: in read-recursive, there are several named-let functions:
+    loop1 which contains loop2 which can in turn call loop1... the variable
+    which contains the closure for loop1 and which is blithely used
+    in generating a call to loop1 inside loop2 isn't visible inside loop2.
+    it should be possible to make a much smaller test case that shows this
+    >>> fixed I think - it works for one level of nesting; multi-level
+        not tested yet
+
+  > still a couple of things missing:
+
+    + eval which is very much non-trivial, but it seems to affect only
+      use of macros; can it be worked around for now?
+
+  > found & fixed a problem (or a couple) in apply: in the C code in
+    wile-rtl1.c, I had a couple of instances of things like
+
+	val = *(CAR(ap));
+
+    >>> possibly still an analogous instance in continuations.c
+
+* stack traces: working pretty well for starters - try getting better
+  location info? not sure yet how, the backtrace and addr2line stuff
+  knows only about c
+
+* Add a profiler - start with a counter for each compiled function,
+  incremented for every call (including tail calls).
+
+* I think I understand why the queue test stuff is failing... skeem uses
+  pointers into the heap uniformly; so the (hidden) vector-ref getting the
+  tail of the queue in queue-insert-back gets the pointer that is stored
+  in the last element of the vector; then the set-cdr updates the cdr of
+  that pair, and then the last element of the vector is updated, all via
+  pointers. In wile, the vector-ref returns a *value*, a copy of what's
+  stored there, and set-cdr updates the cdr of that pair, but *not* the cdr
+  of the original that's stored in the vector.
+
+  Fixing this requires some more thought. One "trivial" way would be to
+  rewrite everything so that all variables are stored in the heap, and
+  we deal only with lptrs. That's... kind of a non-trivial "trivial".
+
+  Maybe could write some special-purpose primitives that get pointers.
+  First attempt at this was mixed... need to fetch something that is
+  guaranteed to be there; for purposes of queue.scm, that might mean
+  that we need to store the "tail" as the *next-to-tail* element,
+  which is really awkward.
+
+  Needs More Thought!
+
+* make all the configurable stuff that's currently in environment variables
+  come from a config file
+
+* closures
+
+  > well damn... they seem to be working, at least in obey-stack-discipline
+    mode. still can't have them escaping arbitrarily
+
+  > quite a few tests are under continuations, in selftest-cont.scm;
+    see below
+
+* quasiquote stuff: in progress: everything seems to be working in lists
+  and vectors, bytevector stuff is not tested yet
+
+* more tail-call optimization: want to do tail self-recursion, ie routine
+  calls itself directly in a tail call, regardless of the pragma; it's a
+  simple goto which should be safe in all cases, so want to do it. but
+  the pragma flips a switch in the wrong place, the info isn't where it
+  needs to be for this to work. needs some rearrangement.
+
+  > clang has attribute musttail which is wrapped up in macro TAIL_CALL;
+    however, now that the careful argument re-use is in place, gcc also
+    seems to be able to compile the test cases into tail calls.
+
+  > TCO seems to be working, except for (apply): even though that's
+    marked as TAIL_CALL, it's still not doing it - perhaps because
+    I'm allocating a new args vector, perhaps because it's in wile-rtl1.c
+    which is inside the libwrtl library?
+
+* continuations - section below
+
+* possibly a bug in macro-expansion - nested macros as in namespace plus
+  def-struct seem to be a bit wiggy: the def-struct stuff is not getting
+  expanded? might need to add a full separate macro-expansion pass
+
+* Implement more special forms: delay, force; finish case
+
+  > case ((val1 val2 ...) => proc-ish) syntax is not implemented yet
+
+* code cleanup optimizations -> get a proper intermediate instruction language
+
+  > dead-code removal: stuff after return or goto or TAIL_CALL - implemented
+
+  > unused-variables removal: the values computed in a sequence of expressions
+    don't get used, except for the last one: remove them - implemented
+
+  > duplicate-assignments: stuff like
+
+      lval var_A;		// used only here
+      var_A = <some_value>;
+      var_B = var_A;
+
+    could be replaced by
+
+      var_B = <some_value>;
+
+    however: this interacts badly with (set! foo (some-value)): this can
+    & usually does generate similar assignments sequences, but the last
+    one in the series is the value assigned to the set! expression, and
+    that one is not usually of great interest. the current version of
+    this cleanup code preserves that one and nukes the intermediate one
+    that assigns the new value to the variable of interest... ooooops!
+
+    gotta think about this more; for now, withdraw the code.
+
+* change read-line primitive:
+
+  > already took away 0-args version, that was not going to work anymore
+  > add an optional second argument to tell whether or not to filter out
+    the trailing CR/LF
+
+* more primitives
+
+  eq?
+  bytevector-unpack
+  get-group-information
+  get-user-information			partially done: got 1-arg, need 0-arg
+
+  (read-bytes port nbytes)		analogout to fread
+  (write-bytes port bytevector)		analogous to fwrite
+
+  change-file-owner
+  change-symbolic-link-owner
+  matrix-lu-decompose
+  matrix-lu-solve
+  sat2-solve
+
+  eval
+
+  special cases in the compiler:
+
+  trace-function
+
+  ;;; will not support right now
+  vector-grow!		;;; stack vs heap complicates this
+  dump-bindings		;;; it's not clear what the bindings are
+  procedure->data	;;; this is "uncompile", not clear how to do that
+  macro?		;;; at runtime, don't have macros anymore
+
+* add some kind of doc-string to prim-table entries - in progress
+
+* performance... hmmm. on vector-sort! test case, skeem is ~4x *faster*
+  than wile's compiled code. that's not nice! ... same seems to be true
+  for Collatz sequence proggie; serious performance regression here!
+
+  > collatz: time goes down from >1h to ~5sec (!!!) when I replace the
+    generic arithmetic ops by their 2-arg integer-specific versions,
+    and from ~5sec to ~3sec when I replace write-string by write-1str.
+    holy flaming cat turds! that's kinda horrible... but well localized!
+
+  > and the same is true for vector-sort! test. inside vector-sort! and
+    random-permutation, there are index calculations involving addition
+    and subtraction of integers... replace generic + and - with i+ and i-,
+    stuff gets zoomy. test case runs in <10sec vs >1min for skeem.
+
+  > NEED TYPE CHECKER AND OPTIMIZER! (but how? that's hard work...)
+
+  > maybe add 3- and 4-argument versions of at least i+ and i-? some
+    of the date-manip code got really tangled with the need to do only
+    2-argument i+ and i-
+
+  > no, can't do that; the generic +-*/ routines wrap the specific
+    ops, and can't do that if they are ambiguous. instead, add i++ and i--
+
++ bug? zero-length vector creation, ie (vector), doesn't work;
+    it produces a vector of length 1. this is because in vector-create,
+    it uses a minimum capa of 1. hmmm... fix this?
+
+* scheme number tower: implement a bunch of little tiny fussy two-argument
+  routines i+ i- i* i/ q+ ... c* c/ min/i max/i ... min/r max/r, then
+  weave them together into user-facing routines
+
+  > good progress, a bunch of pieces are in place already
+
+  > generic multi-argument + - * / seem to be working; ditto min/max
+
+* Go back to everything living in heap? it would make closures etc easier...?
+
+################################################################
+
+* continuations aka call/cc
+
+  a number of different tests are working: mit-scheme, skeem, and wile
+  all agree on what the answer should be. amazing!
+
+  many many tests available from delimited continuations but need
+  closures to work... and update: a significant number of those tests
+  do indeed work; a number do not, most with "bad type" exception from
+  apply - or a segfault.
+
+  one test where skeem and wile agree, but generates an infinite loop,
+  whereas mit-scheme just gives two outputs - but! my cargo-cult
+  understanding of continuations seems to agree with skeem+wile! wut???

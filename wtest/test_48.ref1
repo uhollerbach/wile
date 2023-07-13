@@ -1,0 +1,5 @@
+create-directory 'lowercase-name' returned #t
+errno is Success
+now attempting to chdir to 'LOWERCASE-NAME' ... #f
+it appears this filesystem is case-sensitive
+rmdir 'lowercase-name' reports #t

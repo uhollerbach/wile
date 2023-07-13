@@ -1,0 +1,15 @@
+pub data is cool
+pri data is 43
+access pub data cool
+pub routine changing data from cool to groovy
+"cool"
+access pub data cool
+pub data is groovy
+pri data is 43
+pri routine changing data from 43 to 172
+pub routine changing data from groovy to protean
+access pub data cool
+pub data is protean
+pri data is 172
+pub data is protean
+pri data is 172

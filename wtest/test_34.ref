@@ -1,0 +1,7 @@
+#### continuation not invoked
+uno
+dos
+#f
+#### continuation invoked
+One
+#t

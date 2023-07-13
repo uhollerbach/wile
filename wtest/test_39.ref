@@ -1,0 +1,55 @@
+char G string >>foo<< percent % 10 percent %%%%%%%%%% thang (3 . a)
+string foo                 
+string         bar         
+string                  baz
+b-int #b1010              
+b-int        #b1011       
+b-int               #b1100
+b-int #b-1010             
+b-int       #b-1011       
+b-int              #b-1100
+b-int  #b1010             
+b-int        #b1011       
+b-int               #b1100
+b-int  #b1010             
+b-int        #b1011       
+b-int               #b1100
+x-int #x12d687
+x-int  #x12d687
+x-int  #x12d687
+x-int #x-12d687
+x-int #x-12d687
+x-int #x-12d687
+d-int 10                  
+d-int          11         
+d-int                   12
+d-int -10                 
+d-int         -11         
+d-int                  -12
+d-int  10                 
+d-int          11         
+d-int                   12
+d-int +10                 
+d-int         +11         
+d-int                  +12
+now it is #b1101 o'clock... or 43% of the HoP if you insist
+now I will go to sleep
+float 1.3000e+00          
+float      1.3000e+00     
+float           1.3000e+00
+float  1.3000e+00         
+float      1.3000e+00     
+float           1.3000e+00
+float -1.3000e+00         
+float     -1.3000e+00     
+float          -1.3000e+00
+o
+ o
+  o
+   o
+    o
+     o
+      o
+       o
+        o
+         ooohlala!

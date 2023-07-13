@@ -1,0 +1,117 @@
+%# -*- mode: c; -*-
+
+%# Wile -- the extremely stable scheming genius compiler
+%# Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+%# License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
+
+%# This is input for a yacc clone I wrote a long time ago...
+%# I did say this was a project for learning! It's probably worth
+%# converting this to yacc at some point... not today.
+%# yucc is an LL(1) parser generator, not LALR(1) or LR(1)
+
+%# Section 1: options & definitions
+
+%{
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <math.h>
+
+#include "wile.h"
+#include "alloc.h"
+#include "wile-lex.h"
+
+static lptr cp_lv(const lptr old);
+static lptr rev_lst(lptr list, lptr tail);
+
+#define PUSHQ(q)				\
+    do {					\
+	YYSTYPE v;				\
+	v.vt = LV_SYMBOL;			\
+	v.v.str = LISP_STRDUP(q);		\
+	LISP_ASSERT(v.v.str != NULL);		\
+	PUSH(v);				\
+    } while (0)
+%}
+
+%option prefix="wile_"
+%option output-file="wile-parse.c" header-file="wile-parse.h"
+%option doc-file="wile-parse.txt"
+%option nomain
+
+%token HASHBANG VECTOR BVECTOR SYMBOL BOOLEAN CHARACTER
+%token STRING INTEGER RATIONAL REAL COMPLEX
+
+%start file
+
+%%
+%# Section 2: patterns
+
+%{
+    YYSTYPE vv;
+    lptr stk = new_pair(NULL, NULL), tail = NULL, np;
+    lptr* ret = (lptr*) user_data;
+%}
+
+file	: HASHBANG? datum* %{ *ret = rev_lst(CDR(stk), NULL); %} ;
+
+datum	: atomic
+	  %{ POP(vv); CDR(stk) = new_pair(cp_lv(&vv), CDR(stk)); %}
+	| '(' b-list
+	  datum* ( '.' datum %{ np = CDR(stk);
+				CDR(stk) = CDR(np);
+				tail = CAR(np);
+				LISP_FREE_LV(np); %} )?
+	  ')' e-list
+	| VECTOR b-list datum* ')' e-list %{ CADR(stk) = lst2vec(CADR(stk)); %}
+	| BVECTOR b-list datum* ')' e-list
+	  %{ CADR(stk) = lst2bvec(CADR(stk)); %}
+	| quote datum %{ POP(vv);
+			 np = new_pair(CADR(stk), NULL);
+			 CADR(stk) = new_pair(cp_lv(&vv), np); %}
+	;
+
+atomic	: SYMBOL | BOOLEAN | CHARACTER | STRING
+	| INTEGER | RATIONAL | REAL | COMPLEX ;
+
+quote	: '\''	    %{ PUSHQ("quote"); %}
+	| '`'	    %{ PUSHQ("quasiquote"); %}
+	| ',' ( '@' %{ PUSHQ("unquote-splicing"); %}
+	      |     %{ PUSHQ("unquote"); %} )
+	;
+
+%# A couple of action-only productions, since we do basically
+%# the same thing for lists and vectors/bytevectors
+
+b-list	: %{ stk = new_pair(stk, NULL); tail = NULL; %} ;
+
+e-list	: %{ np = stk;
+	     stk = CAR(stk);
+	     if (stk == NULL) {
+		 FAIL();
+	     }
+	     CAR(np) = rev_lst(CDR(np), tail);
+	     CDR(np) = CDR(stk);
+	     CDR(stk) = np;
+	     tail = NULL; %} ;
+
+%%
+
+static lptr cp_lv(const lptr old)
+{
+    lptr ret = new_lv(old->vt);
+    ret->v = old->v;
+    ret->origin = old->origin;
+    return ret;
+}
+
+static lptr rev_lst(lptr list, lptr tail)
+{
+    while (list) {
+	lptr p = CDR(list);
+	CDR(list) = tail;
+	tail = list;
+	list = p;
+    }
+    return tail;
+}

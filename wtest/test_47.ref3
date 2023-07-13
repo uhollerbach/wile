@@ -1,0 +1,3 @@
+double
+final eps 1.110223e-16 nbits 53
+eps-test pass: 1.110223025e-16 53

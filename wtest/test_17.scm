@@ -1,0 +1,11 @@
+(display
+ (letrec* ((p (lambda  (x)
+		(write-string "p " (number->string x) #\newline)
+		(+ 1 (q (- x 1)))))
+	   (q (lambda (y)
+		(write-string "q " (number->string y) #\newline)
+		(if (zero? y) 0 (+ 1 (p (- y 1))))))
+	   (x (p 5))
+	   (y x))
+   y))
+(newline)

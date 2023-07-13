@@ -1,0 +1,14 @@
+test string-hash-32
+test ends
+test string-hash-64
+test ends
+test string-ci-hash-32
+string1 -> 1852968235
+sTrInG2 -> 1869745854
+STRING3 -> 1886523473
+test ends
+test string-ci-hash-64
+string1 -> 9289652461676127851
+sTrInG2 -> 9289653561187756062
+STRING3 -> 9289654660699384273
+test ends

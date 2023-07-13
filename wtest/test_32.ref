@@ -1,0 +1,8 @@
+#f: boolean
+42: integer
+3.141590000000000e+00: real
+#\space: char
+"foo": string
+(): nil
+(a b): pair
+<lambda>: procedure

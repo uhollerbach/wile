@@ -1,0 +1,52 @@
+######## begin loop 0
+before breakable 3
+    begin breakable 3
+    before breakable 2
+        begin breakable 2
+        before breakable 1
+            begin breakable 1
+                just doing our job here...
+            end breakable 1
+        after breakable 1
+        end breakable 2
+    after breakable 2
+    end breakable 3
+after breakable 3
+
+######## begin loop 1
+before breakable 3
+    begin breakable 3
+    before breakable 2
+        begin breakable 2
+        before breakable 1
+            begin breakable 1
+                just doing our job here...
+        after breakable 1
+        end breakable 2
+    after breakable 2
+    end breakable 3
+after breakable 3
+
+######## begin loop 2
+before breakable 3
+    begin breakable 3
+    before breakable 2
+        begin breakable 2
+        before breakable 1
+            begin breakable 1
+                just doing our job here...
+    after breakable 2
+    end breakable 3
+after breakable 3
+
+######## begin loop 3
+before breakable 3
+    begin breakable 3
+    before breakable 2
+        begin breakable 2
+        before breakable 1
+            begin breakable 1
+                just doing our job here...
+after breakable 3
+
+it's all over except for the screaming

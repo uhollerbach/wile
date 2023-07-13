@@ -1,0 +1,33 @@
+try froop?
+
+waiting 1...
+waiting 2...
+waiting 3...
+
+begin launch sequence
+	3!
+	2!
+	1!
+blastoff!
+
+waiting 5...
+waiting 6...
+waiting 7...
+
+begin launch sequence
+	3!
+	2!
+	1!
+blastoff!
+
+waiting 9...
+waiting 10...
+waiting 11...
+
+begin launch sequence
+	3!
+	2!
+	1!
+blastoff!
+
+success froop!
