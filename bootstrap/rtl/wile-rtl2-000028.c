@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (- . vs)
+// @@@ (- . vs) @@@ bld-rtl-dir/wile-rtl2-000028.scm:13 @@@ wile_subtract @@@
 lval wile_subtract(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -146,8 +146,8 @@ var_29 = var_36;
 var_28 = var_29;
 } while (1);
 var_23 = var_24;
-}
 break;
+}
 case 1:
 {
 lval var_37;
@@ -261,8 +261,8 @@ var_56 = LVI_INT(var_37.v.irv.num);
 var_52 = var_56;
 }
 var_23 = var_52;
-}
 break;
+}
 case 2:
 {
 lval var_57;
@@ -327,8 +327,8 @@ var_63 = var_71;
 var_62 = var_63;
 } while (1);
 var_23 = var_57;
-}
 break;
+}
 case 3:
 {
 lval var_72;
@@ -407,8 +407,8 @@ var_78 = var_86;
 var_77 = var_78;
 } while (1);
 var_23 = var_72;
-}
 break;
+}
 default:
 {
 lval var_87;
@@ -428,8 +428,8 @@ cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
 var_23 = var_88;
-}
 break;
+}
 }
 var_6 = var_23;
 } else {

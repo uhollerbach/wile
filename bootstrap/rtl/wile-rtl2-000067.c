@@ -21,7 +21,7 @@ static lval fn_38(lptr*, lptr);
 
 // definitions
 
-// vector-length
+// @@@ vector-length @@@ bld-rtl-dir/wile-rtl2-000067.scm:15 @@@ fn_7 @@@
 static lval fn_7(lptr* var_8, lptr var_9)
 {
 lval var_11;
@@ -35,13 +35,13 @@ return var_11;
 }
 // end of prim fn_7
 
-// min
+// @@@ min @@@ bld-rtl-dir/wile-rtl2-000067.scm:16 @@@ fn_14 @@@
 static lval fn_14(lptr* var_15, lptr var_16)
 {
 lval var_18;
 var_18 = var_16[0];
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_18;
 var_18 = wile_min(NULL, vs);
 }
@@ -49,13 +49,13 @@ return var_18;
 }
 // end of prim fn_14
 
-// max
+// @@@ max @@@ bld-rtl-dir/wile-rtl2-000067.scm:16 @@@ fn_20 @@@
 static lval fn_20(lptr* var_21, lptr var_22)
 {
 lval var_24;
 var_24 = var_22[0];
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_24;
 var_24 = wile_max(NULL, vs);
 }
@@ -63,7 +63,7 @@ return var_24;
 }
 // end of prim fn_20
 
-// lambda (v)
+// @@@ lambda (v) @@@ bld-rtl-dir/wile-rtl2-000067.scm:21 @@@ fn_38 @@@
 static lval fn_38(lptr* var_39, lptr var_40)
 {
 lval var_42;
@@ -80,7 +80,7 @@ return var_42;
 }
 // end of lambda fn_38
 
-// (vector-for-each proc vec . vecs)
+// @@@ (vector-for-each proc vec . vecs) @@@ bld-rtl-dir/wile-rtl2-000067.scm:13 @@@ wile_vector_foreach @@@
 lval wile_vector_foreach(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -102,7 +102,7 @@ lval var_6;
 lval var_12;
 var_12 = LVI_NIL();
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_7,NULL,1);
 vs[1] = var_4;
 vs[2] = var_12;
@@ -237,7 +237,7 @@ var_39[0] = &(var_33);
 lval var_43;
 var_43 = LVI_NIL();
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_38,var_39,1);
 vs[1] = var_4;
 vs[2] = var_43;
@@ -261,7 +261,7 @@ vs[1] = var_45;
 var_46 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_46;
 var_46 = wile_add(NULL, vs);
 }

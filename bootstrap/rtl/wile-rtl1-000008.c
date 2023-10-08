@@ -37,7 +37,6 @@ lval wile_temp_file(lptr*, lptr args)
     *tp++ = '\0';
     nt = mkstemp(template);
     if (nt < 0) {
-	// DO_ERRNO();
 	LISP_FREE_STR(template);
 	wile_exception("open-temporary-file", "could not create temporary file");
     }
@@ -46,7 +45,6 @@ lval wile_temp_file(lptr*, lptr args)
     LISP_FREE_STR(template);
     fp = fdopen(nt, "w+");
     if (fp == NULL) {
-	// DO_ERRNO();
 	wile_exception("open-temporary-file", "could not create temporary file");
     }
     vs[0] = LVI_FPORT(fp);

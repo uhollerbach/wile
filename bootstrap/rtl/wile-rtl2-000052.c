@@ -25,7 +25,7 @@ static lval fn_60(lptr*, lptr);
 
 // definitions
 
-// lambda (a1)
+// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000052.scm:16 @@@ fn_11 @@@
 static lval fn_11(lptr* var_12, lptr var_13)
 {
 lval var_15;
@@ -51,7 +51,7 @@ return var_16;
 }
 // end of lambda fn_11
 
-// lambda (a1)
+// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000052.scm:17 @@@ fn_19 @@@
 static lval fn_19(lptr* var_20, lptr var_21)
 {
 lval var_23;
@@ -77,7 +77,7 @@ return var_24;
 }
 // end of lambda fn_19
 
-// lambda (s)
+// @@@ lambda (s) @@@ bld-rtl-dir/wile-rtl2-000052.scm:21 @@@ fn_35 @@@
 static lval fn_35(lptr* var_36, lptr var_37)
 {
 lval var_39;
@@ -85,7 +85,7 @@ lval var_40;
 var_40 = LVI_STRING("^[-+]?[0-9]+$");
 lval var_41;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_40;
 vs[1] = var_37[0];
 var_41 = wile_regex_match(NULL, vs);
@@ -106,7 +106,7 @@ vs[2] = var_44;
 var_45 = gen_list(3, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_42;
 vs[1] = var_45;
 var_45 = wile_string_join_by(NULL, vs);
@@ -119,7 +119,7 @@ return var_39;
 }
 // end of lambda fn_35
 
-// lambda (n t)
+// @@@ lambda (n t) @@@ bld-rtl-dir/wile-rtl2-000052.scm:28 @@@ fn_50 @@@
 static lval fn_50(lptr* var_51, lptr var_52)
 {
 lval var_54;
@@ -132,7 +132,7 @@ vs[1] = var_52[1];
 var_55 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_54;
 vs[1] = var_55;
 var_55 = wile_string_join_by(NULL, vs);
@@ -141,7 +141,7 @@ return var_55;
 }
 // end of lambda fn_50
 
-// lambda (v)
+// @@@ lambda (v) @@@ bld-rtl-dir/wile-rtl2-000052.scm:31 @@@ fn_60 @@@
 static lval fn_60(lptr* var_61, lptr var_62)
 {
 lval var_64;
@@ -153,7 +153,7 @@ var_66 = LVI_STRING(",");
 lval var_67;
 var_67 = LVI_NIL();
 {
-lval vs[6];
+lval vs[8];
 vs[0] = (*(var_61[2]));
 vs[1] = var_62[0];
 vs[2] = var_67;
@@ -166,7 +166,7 @@ vs[0] = var_67;
 var_68 = gen_list(1, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_66;
 vs[1] = var_68;
 var_68 = wile_string_join_by(NULL, vs);
@@ -185,7 +185,7 @@ vs[5] = var_69;
 var_70 = gen_list(6, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_70;
 var_70 = wile_write_string(NULL, vs);
 }
@@ -193,7 +193,7 @@ return var_70;
 }
 // end of lambda fn_60
 
-// (sqlite-dump-table sport tbl oport)
+// @@@ (sqlite-dump-table sport tbl oport) @@@ bld-rtl-dir/wile-rtl2-000052.scm:13 @@@ wile_sql_dump_table @@@
 lval wile_sql_dump_table(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -212,7 +212,7 @@ vs[2] = var_7;
 var_8 = gen_list(3, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_5;
 vs[1] = var_8;
 var_8 = wile_string_join_by(NULL, vs);
@@ -233,7 +233,7 @@ lptr var_12[0];
 lval var_17;
 var_17 = LVI_NIL();
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_11,var_12,1);
 vs[1] = var_4;
 vs[2] = var_17;
@@ -245,7 +245,7 @@ lptr var_20[0];
 lval var_25;
 var_25 = LVI_NIL();
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_19,var_20,1);
 vs[1] = var_4;
 vs[2] = var_25;
@@ -265,7 +265,7 @@ vs[1] = var_2[1];
 var_29 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_27;
 vs[1] = var_29;
 var_29 = wile_string_join_by(NULL, vs);
@@ -290,7 +290,7 @@ vs[0] = var_10;
 var_33 = gen_list(1, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_32;
 vs[1] = var_33;
 var_33 = wile_string_join_by(NULL, vs);
@@ -314,7 +314,7 @@ vs[0] = var_18;
 var_56 = gen_list(1, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_50,var_51,2);
 vs[1] = var_10;
 vs[2] = var_56;
@@ -327,7 +327,7 @@ vs[0] = var_56;
 var_57 = gen_list(1, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_49;
 vs[1] = var_57;
 var_57 = wile_string_join_by(NULL, vs);
@@ -348,7 +348,7 @@ vs[7] = var_58;
 var_59 = gen_list(8, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_59;
 var_59 = wile_write_string(NULL, vs);
 }
@@ -359,7 +359,7 @@ var_61[0] = &(var_2[2]);
 lval var_71;
 var_71 = LVI_NIL();
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_60,var_61,1);
 vs[1] = var_26;
 vs[2] = var_71;
@@ -375,7 +375,7 @@ vs[1] = var_72;
 var_73 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_73;
 var_73 = wile_write_string(NULL, vs);
 }

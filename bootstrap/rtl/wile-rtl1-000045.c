@@ -27,7 +27,6 @@ lval wile_setfilepos3(lptr*, lptr args)
     } else {
 	wile_exception("set-file-position", "got an unknown location symbol");
     }
-    // TODO: MAYBE_ERRNO()
     return LVI_BOOL(fseek(args[0].v.fp, args[1].v.iv, whence) == 0);
 }
 

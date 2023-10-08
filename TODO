@@ -85,35 +85,11 @@ Stuff TODO
   def-struct seem to be a bit wiggy: the def-struct stuff is not getting
   expanded? might need to add a full separate macro-expansion pass
 
-* Implement more special forms: delay, force; finish case
+* Implement more special forms: delay, force
 
-  > case ((val1 val2 ...) => proc-ish) syntax is not implemented yet
+  > test => syntax for (case)
 
 * code cleanup optimizations -> get a proper intermediate instruction language
-
-  > dead-code removal: stuff after return or goto or TAIL_CALL - implemented
-
-  > unused-variables removal: the values computed in a sequence of expressions
-    don't get used, except for the last one: remove them - implemented
-
-  > duplicate-assignments: stuff like
-
-      lval var_A;		// used only here
-      var_A = <some_value>;
-      var_B = var_A;
-
-    could be replaced by
-
-      var_B = <some_value>;
-
-    however: this interacts badly with (set! foo (some-value)): this can
-    & usually does generate similar assignments sequences, but the last
-    one in the series is the value assigned to the set! expression, and
-    that one is not usually of great interest. the current version of
-    this cleanup code preserves that one and nukes the intermediate one
-    that assigns the new value to the variable of interest... ooooops!
-
-    gotta think about this more; for now, withdraw the code.
 
 * change read-line primitive:
 

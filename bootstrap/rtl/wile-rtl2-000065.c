@@ -21,7 +21,7 @@ static lval fn_39(lptr*, lptr);
 
 // definitions
 
-// vector-length
+// @@@ vector-length @@@ bld-rtl-dir/wile-rtl2-000065.scm:14 @@@ fn_7 @@@
 static lval fn_7(lptr* var_8, lptr var_9)
 {
 lval var_11;
@@ -35,13 +35,13 @@ return var_11;
 }
 // end of prim fn_7
 
-// min
+// @@@ min @@@ bld-rtl-dir/wile-rtl2-000065.scm:15 @@@ fn_14 @@@
 static lval fn_14(lptr* var_15, lptr var_16)
 {
 lval var_18;
 var_18 = var_16[0];
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_18;
 var_18 = wile_min(NULL, vs);
 }
@@ -49,13 +49,13 @@ return var_18;
 }
 // end of prim fn_14
 
-// max
+// @@@ max @@@ bld-rtl-dir/wile-rtl2-000065.scm:15 @@@ fn_20 @@@
 static lval fn_20(lptr* var_21, lptr var_22)
 {
 lval var_24;
 var_24 = var_22[0];
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_24;
 var_24 = wile_max(NULL, vs);
 }
@@ -63,7 +63,7 @@ return var_24;
 }
 // end of prim fn_20
 
-// lambda (v)
+// @@@ lambda (v) @@@ bld-rtl-dir/wile-rtl2-000065.scm:22 @@@ fn_39 @@@
 static lval fn_39(lptr* var_40, lptr var_41)
 {
 lval var_43;
@@ -80,7 +80,7 @@ return var_43;
 }
 // end of lambda fn_39
 
-// (vector-map proc vec . vecs)
+// @@@ (vector-map proc vec . vecs) @@@ bld-rtl-dir/wile-rtl2-000065.scm:12 @@@ wile_vector_map @@@
 lval wile_vector_map(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -101,7 +101,7 @@ var_4 = var_5;
 lval var_6;
 lval var_12;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_7,NULL,1);
 vs[1] = var_4;
 var_12 = wile_map1(NULL, vs);
@@ -249,7 +249,7 @@ var_40[0] = &(var_35);
 lval var_44;
 var_44 = LVI_NIL();
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_39,var_40,1);
 vs[1] = var_4;
 vs[2] = var_44;
@@ -283,7 +283,7 @@ vs[1] = var_47;
 var_48 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_48;
 var_48 = wile_add(NULL, vs);
 }

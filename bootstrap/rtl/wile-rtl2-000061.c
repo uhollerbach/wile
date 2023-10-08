@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (type-of v)
+// @@@ (type-of v) @@@ bld-rtl-dir/wile-rtl2-000061.scm:13 @@@ wile_typeof @@@
 lval wile_typeof(lptr* var_1, lptr var_2)
 {
 lval var_4;

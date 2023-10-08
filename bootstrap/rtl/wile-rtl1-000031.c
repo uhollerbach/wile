@@ -13,7 +13,6 @@ lval wile_gethostname(lptr*, lptr)
 {
     char buf[HOST_NAME_MAX+1];
     if (gethostname(buf, sizeof(buf)) < 0) {
-	// TODO: DO_ERRNO();
 	return LVI_BOOL(false);
     } else {
 	return LVI_STRING(buf);

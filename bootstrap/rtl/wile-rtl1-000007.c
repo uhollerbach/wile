@@ -24,7 +24,6 @@ lval run_pipe_command(lval cmd, const char* rw, const char* fname, int lno)
     if (fp) {
 	return LVI_PPORT(fp);
     } else {
-	//	DO_ERRNO();
 	return LVI_BOOL(false);
     }
 }

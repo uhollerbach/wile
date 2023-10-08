@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (vector-map! proc vec)
+// @@@ (vector-map! proc vec) @@@ bld-rtl-dir/wile-rtl2-000066.scm:12 @@@ wile_vector_map_inplace @@@
 lval wile_vector_map_inplace(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -122,7 +122,7 @@ vs[1] = var_15;
 var_16 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_16;
 var_16 = wile_add(NULL, vs);
 }

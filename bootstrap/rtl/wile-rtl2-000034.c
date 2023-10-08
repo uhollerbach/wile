@@ -17,11 +17,10 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval fn_17(lptr*, lptr);
 
 // definitions
 
-// (memp test? lst)
+// @@@ (memp test? lst) @@@ bld-rtl-dir/wile-rtl2-000034.scm:12 @@@ wile_memp @@@
 lval wile_memp(lptr* var_1, lptr var_2)
 {
 lbl_3:;
@@ -63,7 +62,7 @@ if (var_2[1].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
 var_10 = (var_2[1].v.pair.cdr ? *(var_2[1].v.pair.cdr) : LVI_NIL());
-lval var_13[6];
+lval var_13[8];
 var_13[0] = var_2[0];
 var_13[1] = var_10;
 var_2[0] = var_13[0];
@@ -74,25 +73,43 @@ return var_4;
 }
 // end of function wile_memp
 
-// lambda (x)
-static lval fn_17(lptr* var_18, lptr var_19)
-{
-lval var_21;
-var_21 = LVI_BOOL(do_eqv(&(var_19[0]), &((*(var_18[0])))));
-return var_21;
-}
-// end of lambda fn_17
-
-// (memv obj lst)
+// @@@ (memv obj lst) @@@ bld-rtl-dir/wile-rtl2-000034.scm:18 @@@ wile_memv @@@
 lval wile_memv(lptr* var_14, lptr var_15)
 {
-lptr var_18[1];
-var_18[0] = &(var_15[0]);
-lval var_24[6];
-var_24[0] = LVI_PROC(fn_17,var_18,1);
-var_24[1] = var_15[1];
-var_15[0] = var_24[0];
-var_15[1] = var_24[1];
-TAIL_CALL wile_memp(NULL, var_15);
+lbl_16:;
+lval var_17;
+do {
+lval var_18;
+var_18 = LVI_BOOL(var_15[1].vt == LV_NIL);
+if (!LV_IS_FALSE(var_18)) {
+lval var_19;
+var_19 = LVI_BOOL(false);
+var_17 = var_19;
+break;
+}
+lval var_20;
+if (var_15[1].vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
+}
+var_20 = (var_15[1].v.pair.car ? *(var_15[1].v.pair.car) : LVI_NIL());
+lval var_21;
+var_21 = LVI_BOOL(do_eqv(&(var_15[0]), &(var_20)));
+if (!LV_IS_FALSE(var_21)) {
+var_17 = var_15[1];
+break;
+}
+lval var_22;
+if (var_15[1].vt != LV_PAIR) {
+WILE_EX("cdr", "input is not a pair!");
+}
+var_22 = (var_15[1].v.pair.cdr ? *(var_15[1].v.pair.cdr) : LVI_NIL());
+lval var_25[8];
+var_25[0] = var_15[0];
+var_25[1] = var_22;
+var_15[0] = var_25[0];
+var_15[1] = var_25[1];
+goto lbl_16;	// selfie
+} while (0);
+return var_17;
 }
 // end of function wile_memv

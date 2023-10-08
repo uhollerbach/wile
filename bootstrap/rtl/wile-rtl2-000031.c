@@ -21,14 +21,14 @@ static lval fn_5(lptr*, lptr);
 
 // definitions
 
-// lambda (x)
+// @@@ lambda (x) @@@ bld-rtl-dir/wile-rtl2-000031.scm:14 @@@ fn_5 @@@
 static lval fn_5(lptr* var_6, lptr var_7)
 {
 return var_7[0];
 }
 // end of lambda fn_5
 
-// promote/rat
+// @@@ promote/rat @@@ bld-rtl-dir/wile-rtl2-000031.scm:14 @@@ fn_9 @@@
 static lval fn_9(lptr* var_10, lptr var_11)
 {
 lval var_13;
@@ -41,7 +41,7 @@ return var_13;
 }
 // end of prim fn_9
 
-// promote/real
+// @@@ promote/real @@@ bld-rtl-dir/wile-rtl2-000031.scm:14 @@@ fn_14 @@@
 static lval fn_14(lptr* var_15, lptr var_16)
 {
 lval var_18;
@@ -56,7 +56,7 @@ return var_18;
 }
 // end of prim fn_14
 
-// max/i
+// @@@ max/i @@@ bld-rtl-dir/wile-rtl2-000031.scm:15 @@@ fn_21 @@@
 static lval fn_21(lptr* var_22, lptr var_23)
 {
 lval var_25;
@@ -65,7 +65,7 @@ return var_25;
 }
 // end of prim fn_21
 
-// max/q
+// @@@ max/q @@@ bld-rtl-dir/wile-rtl2-000031.scm:15 @@@ fn_26 @@@
 static lval fn_26(lptr* var_27, lptr var_28)
 {
 lval var_30;
@@ -78,7 +78,7 @@ return var_30;
 }
 // end of prim fn_26
 
-// max/r
+// @@@ max/r @@@ bld-rtl-dir/wile-rtl2-000031.scm:15 @@@ fn_31 @@@
 static lval fn_31(lptr* var_32, lptr var_33)
 {
 lval var_35;
@@ -87,7 +87,7 @@ return var_35;
 }
 // end of prim fn_31
 
-// max/i
+// @@@ max/i @@@ bld-rtl-dir/wile-rtl2-000031.scm:22 @@@ fn_53 @@@
 static lval fn_53(lptr* var_54, lptr var_55)
 {
 lval var_57;
@@ -96,7 +96,7 @@ return var_57;
 }
 // end of prim fn_53
 
-// number/type
+// @@@ number/type @@@ bld-rtl-dir/wile-rtl2-000031.scm:22 @@@ fn_59 @@@
 static lval fn_59(lptr* var_60, lptr var_61)
 {
 lval var_63;
@@ -121,7 +121,7 @@ return var_63;
 }
 // end of prim fn_59
 
-// (max . vs)
+// @@@ (max . vs) @@@ bld-rtl-dir/wile-rtl2-000031.scm:13 @@@ wile_max @@@
 lval wile_max(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -260,14 +260,14 @@ lval var_58;
 var_58 = LVI_INT(0);
 lval var_64;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_59,NULL,1);
 vs[1] = var_2[0];
 var_64 = wile_map1(NULL, vs);
 }
 lval var_65;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_53,NULL,2);
 vs[1] = var_58;
 vs[2] = var_64;
@@ -331,28 +331,28 @@ var_66 = var_70;
 } else {
 lval var_71;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_20;
 vs[1] = var_52;
 var_71 = wile_list_ref(NULL, vs);
 }
 lval var_72;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_4;
 vs[1] = var_52;
 var_72 = wile_list_ref(NULL, vs);
 }
 lval var_73;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_72;
 vs[1] = var_2[0];
 var_73 = wile_map1(NULL, vs);
 }
 lval var_74;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_71;
 vs[1] = var_73;
 var_74 = wile_foldl1(NULL, vs);

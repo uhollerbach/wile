@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (list-partition pred lst)
+// @@@ (list-partition pred lst) @@@ bld-rtl-dir/wile-rtl2-000011.scm:14 @@@ wile_list_partition @@@
 lval wile_list_partition(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -111,13 +111,13 @@ var_10 = var_11;
 } while (1);
 lval var_24;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_4;
 var_24 = wile_list_reverse(NULL, vs);
 }
 lval var_25;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_6;
 var_25 = wile_list_reverse(NULL, vs);
 }

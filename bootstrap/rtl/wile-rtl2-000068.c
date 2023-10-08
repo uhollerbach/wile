@@ -26,7 +26,7 @@ static lval fn_50(lptr*, lptr);
 
 // definitions
 
-// lambda (p)
+// @@@ lambda (p) @@@ bld-rtl-dir/wile-rtl2-000068.scm:29 @@@ fn_13 @@@
 static lval fn_13(lptr* var_14, lptr var_15)
 {
 lval var_17;
@@ -37,7 +37,7 @@ vs[1] = (*(var_14[0]));
 var_17 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_17;
 var_17 = wile_divide(NULL, vs);
 }
@@ -45,7 +45,7 @@ return var_17;
 }
 // end of lambda fn_13
 
-// (wk1 r rs)
+// @@@ (wk1 r rs) @@@ bld-rtl-dir/wile-rtl2-000068.scm:26 @@@ fn_4 @@@
 static lval fn_4(lptr* var_7, lptr var_8)
 {
 lval var_10;
@@ -74,7 +74,7 @@ var_14[0] = &(var_8[0]);
 lval var_18;
 var_18 = LVI_NIL();
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_13,var_14,1);
 vs[1] = var_8[1];
 vs[2] = var_18;
@@ -117,7 +117,7 @@ return var_10;
 }
 // end of function fn_4
 
-// lambda (e1 e2)
+// @@@ lambda (e1 e2) @@@ bld-rtl-dir/wile-rtl2-000068.scm:31 @@@ fn_25 @@@
 static lval fn_25(lptr* var_26, lptr var_27)
 {
 lval var_29;
@@ -128,7 +128,7 @@ vs[1] = var_27[1];
 var_29 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_29;
 var_29 = wile_multiply(NULL, vs);
 }
@@ -140,7 +140,7 @@ vs[1] = var_29;
 var_30 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_30;
 var_30 = wile_subtract(NULL, vs);
 }
@@ -148,7 +148,7 @@ return var_30;
 }
 // end of lambda fn_25
 
-// (wk2 r1 s r2)
+// @@@ (wk2 r1 s r2) @@@ bld-rtl-dir/wile-rtl2-000068.scm:30 @@@ fn_5 @@@
 static lval fn_5(lptr* var_22, lptr var_23)
 {
 lptr var_26[1];
@@ -160,7 +160,7 @@ vs[0] = var_23[2];
 var_31 = gen_list(1, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_25,var_26,2);
 vs[1] = var_23[0];
 vs[2] = var_31;
@@ -170,7 +170,7 @@ return var_31;
 }
 // end of function fn_5
 
-// (wk3 ms p us)
+// @@@ (wk3 ms p us) @@@ bld-rtl-dir/wile-rtl2-000068.scm:32 @@@ fn_6 @@@
 static lval fn_6(lptr* var_32, lptr var_33)
 {
 lval var_35;
@@ -188,7 +188,7 @@ WILE_EX("car", "input is not a pair!");
 }
 var_38 = (var_33[2].v.pair.car ? *(var_33[2].v.pair.car) : LVI_NIL());
 lval var_39;
-lval var_40[6];
+lval var_40[8];
 var_40[0] = var_37;
 var_40[1] = var_38;
 var_40[2] = var_33[1];
@@ -209,7 +209,7 @@ WILE_EX("cdr", "input is not a pair!");
 }
 var_44 = (var_33[2].v.pair.cdr ? *(var_33[2].v.pair.cdr) : LVI_NIL());
 lval var_45;
-lval var_46[6];
+lval var_46[8];
 var_46[0] = var_42;
 var_46[1] = var_43;
 var_46[2] = var_44;
@@ -237,7 +237,7 @@ return var_35;
 }
 // end of function fn_6
 
-// lambda (ms ds us)
+// @@@ lambda (ms ds us) @@@ bld-rtl-dir/wile-rtl2-000068.scm:36 @@@ fn_50 @@@
 static lval fn_50(lptr* var_51, lptr var_52)
 {
 lbl_53:;
@@ -268,7 +268,7 @@ var_61 = (var_56.v.pair.cdr ? *(var_56.v.pair.cdr) : LVI_NIL());
 var_60 = var_61;
 lval var_62;
 lval var_63;
-lval var_64[6];
+lval var_64[8];
 var_64[0] = var_58;
 var_64[1] = var_60;
 var_63 = fn_4(NULL, var_64);
@@ -284,7 +284,7 @@ WILE_EX("cdr", "input is not a pair!");
 }
 var_67 = (var_62.v.pair.cdr ? *(var_62.v.pair.cdr) : LVI_NIL());
 lval var_68;
-lval var_69[6];
+lval var_69[8];
 var_69[0] = var_66;
 var_69[1] = var_60;
 var_69[2] = var_67;
@@ -315,7 +315,7 @@ p2 = new_lv(LV_NIL);
 }
 var_72 = LVI_PAIR(p1, p2);
 }
-lval var_75[6];
+lval var_75[8];
 var_75[0] = var_68;
 var_75[1] = var_71;
 var_75[2] = var_72;
@@ -326,13 +326,13 @@ goto lbl_53;	// selfie
 } else {
 lval var_76;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_52[1];
 var_76 = wile_list_reverse(NULL, vs);
 }
 lval var_77;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_52[2];
 var_77 = wile_list_reverse(NULL, vs);
 }
@@ -349,7 +349,7 @@ return var_54;
 }
 // end of lambda fn_50
 
-// (cholesky-decompose mat)
+// @@@ (cholesky-decompose mat) @@@ bld-rtl-dir/wile-rtl2-000068.scm:25 @@@ wile_cholesky_decompose @@@
 lval wile_cholesky_decompose(lptr* var_1, lptr var_2)
 {
 lptr var_51[0];
@@ -358,7 +358,7 @@ var_79 = LVI_NIL();
 lval var_80;
 var_80 = LVI_NIL();
 lval var_81;
-lval var_82[6];
+lval var_82[8];
 var_82[0] = var_2[0];
 var_82[1] = var_79;
 var_82[2] = var_80;

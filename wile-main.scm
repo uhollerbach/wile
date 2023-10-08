@@ -1,4 +1,3 @@
-#!/home/uwe/tools/skeem --
 ;;; -*- mode: scheme; -*-
 
 ;;; Wile -- the extremely stable scheming genius compiler
@@ -10,21 +9,22 @@
 		"setting up minimal WILE_LIBRARY_PATH environment\n")
   (set-environment-variable "WILE_LIBRARY_PATH" "."))
 
-(defmacro (load-library fname)
-  (letrec* ((paths (string-split-by
-		    (lambda (c) (eqv? c #\:))
-		    (get-environment-variable "WILE_LIBRARY_PATH")))
-	    (find (lambda (ps)
-		    (if (null? ps)
-			#f
-			(let ((fp (string-join-by "/" (car ps) fname)))
-			  (if (file-exists? fp)
-			      fp
-			      (find (cdr ps)))))))
-	    (filepath (find paths)))
-	   (if filepath
-	       `(load ,filepath)
-	       `(write-string "unable to find file '" ,fname "'\n"))))
+;;; comment this out for closing the self-hosting loop
+;;; (defmacro (load-library fname)
+;;;   (letrec* ((paths (string-split-by
+;;; 		    (lambda (c) (eqv? c #\:))
+;;; 		    (get-environment-variable "WILE_LIBRARY_PATH")))
+;;; 	    (find (lambda (ps)
+;;; 		    (if (null? ps)
+;;; 			#f
+;;; 			(let ((fp (string-join-by "/" (car ps) fname)))
+;;; 			  (if (file-exists? fp)
+;;; 			      fp
+;;; 			      (find (cdr ps)))))))
+;;; 	    (filepath (find paths)))
+;;; 	   (if filepath
+;;; 	       `(load ,filepath)
+;;; 	       `(write-string "unable to find file '" ,fname "'\n"))))
 
 (define (is-colon? c) (char=? c #\:))
 
@@ -32,7 +32,8 @@
 (define (symbol-hash sym) (string-hash (symbol->string sym)))
 
 (load-library "hash.scm")
-(load-library "struct.scm")
+;;; comment this out for closing the self-hosting loop
+;;; (load-library "struct.scm")
 (load-library "arg-parse.scm")
 (load-library "wile-comp.scm")
 
@@ -143,9 +144,10 @@
 	       "    .c\t\tfor c files"
 	       "    .o\t\tfor object files"
 	       ""
-	       "The output file is optional. If it is specified, wile will use it;"
-	       "if not, wile will infer it from the input filename and the specified"
-	       "compilation flag -c -o or -x: foo.scm -> foo.c -> foo.o -> foo"))
+	       "The output file is optional; if specified, it must come *after* the"
+	       "input file, unlike some other compilers. If it is specified, wile will"
+	       "use it; if not, wile will infer it from the input filename and the"
+	       "specified compilation flag -c -o or -x: foo.scm -> foo.c -> foo.o -> foo"))
        (compile-to-c (hash-table-ref fvals "-c" #f))
        (compile-to-o (hash-table-ref fvals "-o" #f))
        (compile-to-x (hash-table-ref fvals "-x" #f))
@@ -164,6 +166,11 @@
 			   (string-split-by char-whitespace? wc)))
       (set! do-debug #t)))
   (when (hash-table-ref fvals "-V" #f)
+    (write-string
+     "Wile, the extremely stable scheming genius compiler\n"
+     "Wile is available from https://github.com/uhollerbach/wile\n"
+     "under GPLv3 or later for the compiler, LGPLv3 or later for the RTL\n"
+     "Copyright 2023, Uwe Hollerbach\n")
     (for-each (lambda (v)
 		(display v)
 		(newline))

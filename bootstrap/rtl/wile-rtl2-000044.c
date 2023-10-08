@@ -20,19 +20,19 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (string-trim drop? str)
+// @@@ (string-trim drop? str) @@@ bld-rtl-dir/wile-rtl2-000044.scm:13 @@@ wile_string_trim @@@
 lval wile_string_trim(lptr* var_1, lptr var_2)
 {
 lval var_4;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_2[0];
 vs[1] = var_2[1];
 var_4 = wile_string_trim_right(NULL, vs);
 }
 lval var_5;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_2[0];
 vs[1] = var_4;
 var_5 = wile_string_trim_left(NULL, vs);

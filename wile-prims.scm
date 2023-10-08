@@ -230,6 +230,7 @@
    (list 'number? 'alias 'complex?)
    (list 'char-lower-case? 'alias 'char-lowercase?)
    (list 'char-upper-case? 'alias 'char-uppercase?)
+   (list 'list->string 'alias 'char->string)
    (list 'magnitude 'alias 'abs)
    (list 'modulo 'alias 'floor-remainder)
    (list 'quotient 'alias 'truncate-quotient)
@@ -300,6 +301,9 @@
 		  ,@(map (lambda (v s) `(set! ,v ,s)) vars svals)
 		  ,result)))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; these macros are part of closing the loop for wile to compile itself
+
    (list 'load-library 'macro 1
 	 (lambda (fname)
 	   (letrec* ((paths (string-split-by
@@ -317,6 +321,81 @@
 	     (if filepath
 		 `(load ,filepath)
 		 `(write-string "unable to find file '" ,fname "'\n")))))
+
+   (list 'add-output 'macro 1
+	 (lambda (val) `(set! output (cons ,val output))))
+
+   (list 'compile-with-output 'macro -2
+	 (lambda (dest . body)
+	   (let ((tport (gensym)))
+	     `(let ((,tport (open-scratch-space)))
+		(fluid-let ((global-out ,tport))
+		  ,@body
+		  (when ,dest
+		    (transfer-all-lines ,tport ,dest)))))))
+
+   (list 'emit-code 'macro -1
+	 (lambda strs
+	   (let ((xform
+		  (let loop ((cs (string->list
+				  (apply string-join-by "\n" strs)))
+			     (accs ())
+			     (acca ()))
+		    (cond ((null? cs)
+			   (cons (list->string (list-reverse accs))
+				 (map (lambda (c)
+					(if (char=? c #\@)
+					    'r
+					    (string->symbol
+					     (char->string #\a c))))
+				      (list-reverse acca))))
+			  ((char=? (car cs) #\@)
+			   (loop (cddr cs)
+				 (cons #\s (cons #\% accs))
+				 (cons (cadr cs) acca)))
+			  (else
+			   (loop (cdr cs) (cons (car cs) accs) acca))))))
+	     `(begin (when r (emit-decl r))
+		     (apply fprintf global-out ,@xform ())
+		     (newline global-out)
+		     r))))
+
+   (list 'def-struct 'macro -3
+	 (lambda (name field . fields)
+	   (let* ((fs (cons field fields))
+		  (lfs (list-length fs))
+		  (nfs (+ 1 lfs))
+		  (J0 (lambda strs (apply string-append strs)))
+		  (J1 (lambda (pre main) (string->symbol (J0 pre main))))
+		  (J2 (lambda (pre main post) (string->symbol (J0 pre main post))))
+		  (nstr (symbol->string name))
+		  (mstr (J1 "make-" nstr))
+		  (msym (gensym))
+		  (istr (J2 "isa-" nstr "?"))
+		  (gpre (J0 "get-" nstr "-"))
+		  (spre (J0 "set-" nstr "-"))
+		  (istrs (map (lambda (f i)
+				`(vector-set! ,msym ,i ,f)) fs (fromto 1 lfs)))
+		  (gstrs (map (lambda (f i)
+				(let ((gfn (J1 gpre (symbol->string f))))
+				  `(define (,gfn it)
+				     (vector-ref it ,i)))) fs (fromto 1 lfs)))
+		  (sstrs (map (lambda (f i)
+				(let ((sfn (J2 spre (symbol->string f) "!")))
+				  `(define (,sfn it val)
+				     (vector-set! it ,i val)))) fs (fromto 1 lfs)))
+		  (defs `(begin
+			   (define (,mstr ,@fs)
+			     (let ((,msym (vector-create ,nfs)))
+			       (vector-set! ,msym 0 ',name)
+			       ,@istrs
+			       ,msym))
+			   (define (,istr it)
+			     (and (vector? it) (eqv? (vector-ref it 0) ',name)))
+			   ,@gstrs ,@sstrs)))
+	     defs)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
    (list 'begin-breakable 'macro -2
 	 (lambda (tag . actions)
@@ -697,15 +776,18 @@
 	 (lambda (r)
 	   (emit-code "@@ = LVI_INT(getuid());")))
 
-   (list 'set-user-id 'prim 1
+   (list 'set-user-id "expects one integer and sets the user id of the running process to that value; returns #t if the operation succeeded, #f otherwise"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(setuid(@1.v.iv) == 0);")))
 
-   (list 'get-effective-user-id 'prim 0
+   (list 'get-effective-user-id "expects no arguments, returns the effective user id of the running process"
+	 'prim 0
 	 (lambda (r)
 	   (emit-code "@@ = LVI_INT(geteuid());")))
 
-   (list 'set-effective-user-id 'prim 1
+   (list 'set-effective-user-id "expects one integer and sets the effective user id of the running process to that value; returns #t if the operation succeeded, #f otherwise"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(seteuid(@1.v.iv) == 0);")))
 
@@ -713,15 +795,18 @@
 	 (lambda (r)
 	   (emit-code "@@ = LVI_INT(getgid());")))
 
-   (list 'set-group-id 'prim 1
+   (list 'set-group-id "expects one integer and sets the group id of the running process to that value; returns #t if the operation succeeded, #f otherwise"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(setgid(@1.v.iv) == 0);")))
 
-   (list 'get-effective-group-id 'prim 0
+   (list 'get-effective-group-id "expects no arguments, returns the effective group id of the running process"
+	 'prim 0
 	 (lambda (r)
 	   (emit-code "@@ = LVI_INT(getegid());")))
 
-   (list 'set-effective-group-id 'prim 1
+   (list 'set-effective-group-id "expects one integer and sets the effective group id of the running process to that value; returns #t if the operation succeeded, #f otherwise"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(setegid(@1.v.iv) == 0);")))
 
@@ -813,7 +898,8 @@
 	 'prim 0 "wile_getdomainname")
    (list 'read-line 'prim 1 "wile_read_line")
 
-   (list 'read-char 'prim
+   (list 'read-char "expects no arguments or one port argument, attempts to read one character from stdin or the port, and returns the character if the read was successful, #f otherwise"
+	 'prim
 	 0 (lambda (r)
 	     (emit-code
 	      "{"
@@ -1699,7 +1785,7 @@
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_BOOL(tolower(@1.v.chr) < tolower(@2.v.chr));")))
 
-   (list 'char-ci<=? "expects two character inputs and returns #t if, ignoring case, the first is lexicographically less than or equal tothe second, #f otherwise"
+   (list 'char-ci<=? "expects two character inputs and returns #t if, ignoring case, the first is lexicographically less than or equal to the second, #f otherwise"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_BOOL(tolower(@1.v.chr) <= tolower(@2.v.chr));")))
@@ -1719,7 +1805,7 @@
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_BOOL(tolower(@1.v.chr) > tolower(@2.v.chr));")))
 
-   (list 'char-ci/=? "expects two character inputs and returns #t if, ignoring case, the first is lexicographically equal to the second, #f otherwise"
+   (list 'char-ci/=? "expects two character inputs and returns #t if, ignoring case, the first is unequal to the second, #f otherwise"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_BOOL(tolower(@1.v.chr) != tolower(@2.v.chr));")))
@@ -1749,31 +1835,38 @@
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_BOOL(strcmp(@1.v.str, @2.v.str) > 0);")))
 
-   (list 'string/=? 'prim 2
+   (list 'string/=? "expects two string inputs and returns #t if the first is unequal to the second, #f otherwise"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_BOOL(strcmp(@1.v.str, @2.v.str) != 0);")))
 
-   (list 'string-ci<? 'prim 2
+   (list 'string-ci<? "expects two string inputs and returns #t if, ignoring case, the first is lexicographically less than the second, #f otherwise"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_BOOL(strcasecmp(@1.v.str, @2.v.str) < 0);")))
 
-   (list 'string-ci<=? 'prim 2
+   (list 'string-ci<=? "expects two string inputs and returns #t if, ignoring case, the first is lexicographically less than or equal to the second, #f otherwise"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_BOOL(strcasecmp(@1.v.str, @2.v.str) <= 0);")))
 
-   (list 'string-ci=? 'prim 2
+   (list 'string-ci=? "expects two string inputs and returns #t if, ignoring case, the first is equal to the second, #f otherwise"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_BOOL(strcasecmp(@1.v.str, @2.v.str) == 0);")))
 
-   (list 'string-ci>=? 'prim 2
+   (list 'string-ci>=? "expects two string inputs and returns #t if, ignoring case, the first is lexicographically greater than or equal to the second, #f otherwise"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_BOOL(strcasecmp(@1.v.str, @2.v.str) >= 0);")))
 
-   (list 'string-ci>? 'prim 2
+   (list 'string-ci>? "expects two string inputs and returns #t if, ignoring case, the first is lexicographically greater than the second, #f otherwise"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_BOOL(strcasecmp(@1.v.str, @2.v.str) > 0);")))
 
-   (list 'string-ci/=? 'prim 2
+   (list 'string-ci/=? "expects two string inputs and returns #t if, ignoring case, the first is unequal to the second, #f otherwise"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_BOOL(strcasecmp(@1.v.str, @2.v.str) != 0);")))
 
@@ -1933,7 +2026,8 @@
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_INT(strlen(@1.v.str));")))
 
-   (list 'string-ref 'prim 2
+   (list 'string-ref "expects one string and one integer index, and returns the character at that position in the string"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "if (@1.vt != LV_STRING) {"
@@ -1944,7 +2038,8 @@
 	    "}"
 	    "@@ = LVI_CHAR(@1.v.str[@2.v.iv]);")))
 
-   (list 'string-find-first-char 'prim 2
+   (list 'string-find-first-char "expects one string and one character, and returns the index of the left-most occurrence of that character in the string, or #f if the character does not occur in the string"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "if (@1.vt != LV_STRING || @2.vt != LV_CHAR) {"
@@ -1959,7 +2054,8 @@
 	    "}"
 	    "}")))
 
-   (list 'string-find-last-char 'prim 2
+   (list 'string-find-last-char "expects one string and one character, and returns the index of the right-most occurrence of that character in the string, or #f if the character does not occur in the string"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "if (@1.vt != LV_STRING || @2.vt != LV_CHAR) {"
@@ -1986,18 +2082,24 @@
 	    "@1.v.str[@2.v.iv] = @3.v.chr;"
 	    "@@ = @1;")))
 
-   (list 'string-reverse 'prim 1 "wile_string_reverse")
+   (list 'string-reverse "expects one string and returns the front-to-back reverse of it"
+	 'prim 1 "wile_string_reverse")
 
-   (list 'string-hash-32 'prim 1 "wile_string_hash_32")
-   (list 'string-ci-hash-32 'prim 1 "wile_string_ci_hash_32")
-   (list 'string-hash-64 'prim 1 "wile_string_hash_64")
-   (list 'string-ci-hash-64 'prim 1 "wile_string_ci_hash_64")
+   (list 'string-hash-32 "expects one string and returns the 32-bit FNV hash of it"
+	 'prim 1 "wile_string_hash_32")
+   (list 'string-ci-hash-32 "expects one string and returns the 32-bit FNV hash of the lowercase version of it"
+	 'prim 1 "wile_string_ci_hash_32")
+   (list 'string-hash-64 "expects one string and returns the 64-bit FNV hash of it"
+	 'prim 1 "wile_string_hash_64")
+   (list 'string-ci-hash-64 "expects one string and returns the 64-bit FNV hash of the lowercase version of it it"
+	 'prim 1 "wile_string_ci_hash_64")
 
-   (list 'char->integer 'prim 1
+   (list 'char->integer "expects one character and returns its integer code equivalent"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_INT((unsigned char) @1.v.chr);")))
 
-   (list 'integer->char
+   (list 'integer->char "expects one integer and returns its character equivalent"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_CHAR((unsigned char) @1.v.iv);")))
@@ -2019,19 +2121,23 @@
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_BOOL(strcmp(@1.v.str, @2.v.str) == 0);")))
 
-   (list 'bits-and 'prim 2
+   (list 'bits-and "expects two integers and returns their bitwise AND"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_INT(@1.v.iv & @2.v.iv);")))
 
-   (list 'bits-or 'prim 2
+   (list 'bits-or "expects two integers and returns their bitwise OR"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_INT(@1.v.iv | @2.v.iv);")))
 
-   (list 'bits-xor 'prim 2
+   (list 'bits-xor "expects two integers and returns their bitwise XOR"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_INT(@1.v.iv ^ @2.v.iv);")))
 
-   (list 'bits-not 'prim 1
+   (list 'bits-not "expects one integer and returns its bitwise NOT"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_INT(~@1.v.iv);")))
 
@@ -2076,22 +2182,47 @@
 	 'prim 1
 	 (lambda (r a1) (emit-code "_exit(@1.v.iv);")))
 
-   ;;; TODO: think about whether floor and ceiling return exact or inexact
-   ;;; skeem returns inexact for inexact input, exact for exact input
-   ;;; TODO: deal with int and rat inputs
-
    (list 'floor 'prim 1
 	 (lambda (r a1)
-	   (emit-code "@@ = LVI_INT(FLOOR(@1.v.rv));")))
+	   (emit-code
+	    "if (@1.vt == LV_REAL) {"
+	    "@@ = LVI_REAL(FLOOR(@1.v.rv));"
+	    "} else if (@1.vt == LV_RAT) {"
+	    ;;; TODO: keep this as an integer division & return quotient?
+	    "@@ = LVI_INT(FLOOR(LV_RAT2REAL(@1)));"
+	    "} else if (@1.vt == LV_INT) {"
+	    "@@ = LVI_INT(@1.v.iv);"
+	    "} else {"
+	    "WILE_EX(\"floor\", \"expects one real-valued argument\");"
+	    "}")))
 
    (list 'ceiling 'prim 1
 	 (lambda (r a1)
-	   (emit-code "@@ = LVI_INT(CEIL(@1.v.rv));")))
+	   (emit-code
+	    "if (@1.vt == LV_REAL) {"
+	    "@@ = LVI_REAL(CEIL(@1.v.rv));"
+	    "} else if (@1.vt == LV_RAT) {"
+	    ;;; TODO: keep this as an integer division & return quotient?
+	    "@@ = LVI_INT(CEIL(LV_RAT2REAL(@1)));"
+	    "} else if (@1.vt == LV_INT) {"
+	    "@@ = LVI_INT(@1.v.iv);"
+	    "} else {"
+	    "WILE_EX(\"ceiling\", \"expects one real-valued argument\");"
+	    "}")))
 
    (list 'round 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "@@ = LVI_INT(FLOOR(0.5 + @1.v.rv));")))
+	    "if (@1.vt == LV_REAL) {"
+	    "@@ = LVI_REAL(FLOOR(0.5 + @1.v.rv));"
+	    "} else if (@1.vt == LV_RAT) {"
+	    ;;; TODO: keep this as an integer division & return quotient?
+	    "@@ = LVI_INT(FLOOR(0.5 + LV_RAT2REAL(@1)));"
+	    "} else if (@1.vt == LV_INT) {"
+	    "@@ = LVI_INT(@1.v.iv);"
+	    "} else {"
+	    "WILE_EX(\"round\", \"expects one real-valued argument\");"
+	    "}")))
 
    (list 'truncate 'prim 1
 	 (lambda (r a1)
@@ -2315,7 +2446,8 @@
    ;;; not likely that there will be very many separate calls to AGM
    ;;; in a program.
 
-   (list 'arithmetic-geometric-mean 'prim 2
+   (list 'arithmetic-geometric-mean "expects to numeric values and returns their arithmetic-geometric mean"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a9 (new-svar))
 		 (a8 (new-svar)))
@@ -2367,7 +2499,8 @@
 	 'prim 1
 	 (lambda (r a1) (promote/real+check "float" r a1)))
 
-   (list 'expt 'prim 2
+   (list 'expt
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "@@ = wile_expt(&@1, &@2);")))
@@ -3102,7 +3235,8 @@
 	      "WILE_EX(\"sqlite-open\", \"expects a filename\");"
 	      "}")))
 
-   (list 'sqlite-run 'prim 2
+   (list 'sqlite-run "expects an sqlite port and a string, and runs the string as a command. warning! do not use this with user-supplied strings, this is a security hole"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "#ifdef WILE_USES_SQLITE"
@@ -3147,7 +3281,8 @@
 	      "wile_stack_trace_minimal(fileno((@1.vt == LV_FILE_PORT) ? @1.v.fp : stderr));"
 	      "@@ = LVI_NIL();")))
 
-   (list 'display-object-hook 'prim 2
+   (list 'display-object-hook "expects one symbol and one procedure of two arguments and records that procedure as the display method for objects of that type. this allows displaying objects with cycles"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "if (@1.vt == LV_SYMBOL && @2.vt == LV_LAMBDA && @2.v.lambda.arity == 2) {"

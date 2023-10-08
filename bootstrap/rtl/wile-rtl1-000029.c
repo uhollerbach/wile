@@ -41,7 +41,6 @@ lval wile_listen_port(lptr*, lptr args)
 
     sd = socket(AF_INET, SOCK_STREAM, tcp_proto);
     if (sd < 0) {
-	// DO_ERRNO();
 	return LVI_BOOL(false);
     } else {
 	struct sockaddr_in my_addr;
@@ -52,17 +51,14 @@ lval wile_listen_port(lptr*, lptr args)
 	my_addr.sin_port = htons(args[0].v.iv);
 
 	if (bind(sd, (struct sockaddr*) &my_addr, sizeof(my_addr)) < 0) {
-	    // DO_ERRNO();
 	    return LVI_BOOL(false);
 	} else {
 	    if (listen(sd, 16) < 0) {
-		// DO_ERRNO();
 		return LVI_BOOL(false);
 	    } else {
 		fp = fdopen(sd, "rb+");
 		if (fp == NULL) {
 		    // TODO: close sd? I think so
-		    // DO_ERRNO();
 		    return LVI_BOOL(false);
 		} else {
 		    setvbuf(fp, NULL, _IONBF, 0);
@@ -87,7 +83,6 @@ lval wile_accept_connection(lptr*, lptr args)
 	psize = sizeof(peer);
 	fd = accept(fileno(args->v.fp), (struct sockaddr*) &peer, &psize);
 	if (fd < 0) {
-	    // DO_ERRNO();
 	    return LVI_BOOL(false);
 	} else {
 	    lval vs[3];
@@ -95,7 +90,6 @@ lval wile_accept_connection(lptr*, lptr args)
 	    vs[0] = LVI_SPORT(fdopen(fd, "rb+"));
 	    if (vs[0].v.fp == NULL) {
 		vs[0] = LVI_BOOL(false);
-		// DO_ERRNO();
 	    } else {
 		setvbuf(vs[0].v.fp, NULL, _IONBF, 0);
 	    }
@@ -103,7 +97,6 @@ lval wile_accept_connection(lptr*, lptr args)
 		vs[1] = LVI_STRING(buf);
 	    } else {
 		vs[1] = LVI_STRING("<unknown>");
-		// DO_ERRNO();
 	    }
 	    vs[2] = LVI_INT(ntohs(peer.sin_port));
 	    return gen_list(3, vs, NULL);
@@ -158,7 +151,6 @@ lval wile_connect_to(lptr*, lptr args)
 	ret = LVI_SPORT(fdopen(sd, "rb+"));
 	if (ret.v.fp == NULL) {
 	    ret = LVI_BOOL(false);
-	    // DO_ERRNO();
 	} else {
 	    setvbuf(ret.v.fp, NULL, _IONBF, 0);
 	}

@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (expmod a n m)
+// @@@ (expmod a n m) @@@ bld-rtl-dir/wile-rtl2-000019.scm:13 @@@ wile_expmod @@@
 lval wile_expmod(lptr* var_1, lptr var_2)
 {
 lbl_3:;
@@ -90,7 +90,7 @@ lval var_13;
 var_13 = LVI_INT(-1);
 lval var_14;
 var_14 = LVI_INT((var_13.v.iv >= 0) ? (var_2[1].v.iv << var_13.v.iv) : (var_2[1].v.iv >> -var_13.v.iv));
-lval var_17[6];
+lval var_17[8];
 var_17[0] = var_12;
 var_17[1] = var_14;
 var_17[2] = var_2[2];
@@ -104,7 +104,7 @@ var_18 = LVI_INT(1);
 lval var_19;
 var_19 = LVI_INT(var_2[1].v.iv - var_18.v.iv);
 lval var_20;
-lval var_21[6];
+lval var_21[8];
 var_21[0] = var_2[0];
 var_21[1] = var_19;
 var_21[2] = var_2[2];

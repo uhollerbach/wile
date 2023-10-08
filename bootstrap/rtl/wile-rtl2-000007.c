@@ -20,12 +20,12 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (list-unhead lst n)
+// @@@ (list-unhead lst n) @@@ bld-rtl-dir/wile-rtl2-000007.scm:13 @@@ wile_list_unhead @@@
 lval wile_list_unhead(lptr* var_1, lptr var_2)
 {
 lval var_4;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_2[0];
 var_4 = wile_list_length(NULL, vs);
 }
@@ -33,7 +33,7 @@ lval var_5;
 var_5 = LVI_INT(var_4.v.iv - var_2[1].v.iv);
 lval var_6;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_2[0];
 vs[1] = var_5;
 var_6 = wile_list_tail(NULL, vs);

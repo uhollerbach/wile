@@ -89,6 +89,10 @@ lisp_loc_t get_lisp_loc(lptr vp)
 
     if (vp) {
 	switch (vp->vt) {
+	case LV_NIL:
+	    WARN("<get_lisp_loc>", "got nil with location %u", vp->origin);
+	    return 0;
+
 	case LV_SYMBOL:
 	case LV_BOOL:
 	case LV_CHAR:

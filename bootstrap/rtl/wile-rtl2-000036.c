@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (list-drop-while drop? lst)
+// @@@ (list-drop-while drop? lst) @@@ bld-rtl-dir/wile-rtl2-000036.scm:12 @@@ wile_list_drop_while @@@
 lval wile_list_drop_while(lptr* var_1, lptr var_2)
 {
 lbl_3:;
@@ -64,7 +64,7 @@ if (var_2[1].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
 var_11 = (var_2[1].v.pair.cdr ? *(var_2[1].v.pair.cdr) : LVI_NIL());
-lval var_14[6];
+lval var_14[8];
 var_14[0] = var_2[0];
 var_14[1] = var_11;
 var_2[0] = var_14[0];

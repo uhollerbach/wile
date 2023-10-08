@@ -261,4 +261,66 @@ struct wile_profile_t {
     char* name;
 };
 
+// This stuff is for checking that the configuration of the library is
+// the same as the configuration of the main program: the library will
+// contain a do-nothing routine WILE_CONFIG_SYM<N>, which is its
+// configuration, and the main will call a routine WILE_CONFIG_SYM<N>
+// which is its configuration. If they match, we're good
+
+#define CAT(s1,s2)	s1 ## _ ## s2
+#define XCAT(s1,s2)	CAT(s1,s2)
+
+#if defined(WILE_USES_DOUBLE)
+#define WILE_REAL_SYM		real_D
+#elif  defined(WILE_USES_LONG_DOUBLE)
+#define WILE_REAL_SYM		real_LD
+#elif  defined(WILE_USES_QUAD_DOUBLE)
+#define WILE_REAL_SYM		real_QD
+#else
+#error "wile real format was not specified!"
+#endif // WILE_USES_DOUBLE
+
+#define WILE_CONFIG_SYM1	XCAT(wile_config, WILE_REAL_SYM)
+
+#if defined(WILE_USES_LONG_INT)
+#define WILE_INT_SYM		int_LI
+#elif  defined(WILE_USES_INT128)
+#define WILE_INT_SYM		int_I128
+#elif  defined(WILE_USES_BIGINT)
+#define WILE_INT_SYM		int_BI
+#else
+#error "wile int format was not specified!"
+#endif // WILE_USES_LONG_INT
+
+#define WILE_CONFIG_SYM2	XCAT(WILE_CONFIG_SYM1, WILE_INT_SYM)
+
+#if defined(WILE_USES_GC)
+#define WILE_GC_SYM		gc_Y
+#else
+#define WILE_GC_SYM		gc_N
+#endif // WILE_USES_GC
+
+#define WILE_CONFIG_SYM3	XCAT(WILE_CONFIG_SYM2, WILE_GC_SYM)
+
+#if defined(WILE_USES_SQLITE)
+#define WILE_SQLITE_SYM		sqlite_Y
+#else
+#define WILE_SQLITE_SYM		sqlite_N
+#endif // WILE_USES_SQLITE
+
+#define WILE_CONFIG_SYM4	XCAT(WILE_CONFIG_SYM3, WILE_SQLITE_SYM)
+
+// Not used yet
+#if 0
+#if defined(WILE_USES_RC4)
+#define WILE_RC4_SYM		rc4_Y
+#else
+#define WILE_RC4_SYM		rc4_N
+#endif // WILE_USES_RC4
+
+#define WILE_CONFIG_SYM5	XCAT(WILE_CONFIG_SYM4, WILE_RC4_SYM)
+#endif // 0
+
+void WILE_CONFIG_SYM4(void);
+
 #endif // WILE_RUNTIME_H

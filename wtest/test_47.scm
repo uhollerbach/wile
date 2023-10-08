@@ -6,7 +6,7 @@
 ;;; quad-double		eps 9.63e-35 nbits 113
 
 (let* ((cdata (wile-build-info))
-       (dtype (cxr "cadaddddr" cdata))
+       (dtype (cxr "cadadr" cdata))
        (eps 1.0)
        (nbits 0)
        (eeps #f)

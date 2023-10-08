@@ -23,7 +23,6 @@ lval read_directory(lptr*, lptr args)
 	wile_exception("read-directory", "expects one string argument");
     }
     if (dp == NULL) {
-//	DO_ERRNO();
 	return LVI_BOOL(false);
     }
     res = NULL;
@@ -34,7 +33,6 @@ lval read_directory(lptr*, lptr args)
 		       res);
     }
     if (closedir(dp)) {
-//	DO_ERRNO();
     }
     return (res ? *res : LVI_NIL());
 }

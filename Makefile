@@ -25,46 +25,52 @@ CFLAGS = $(CFDEF) $(CGCOV) $(WILE_CONFIG)
 ASRC =	wile-lex.[ch] wile-parse.[ch] wile-parse.txt
 HDRS =	wile.h alloc.h wile-lex.h wile-parse.h lib-macros.h
 
-WROBJS = wile-sql.o alloc.o print.o location.o wile-parse.o wile-lex.o \
-	swll-cfft.o continuations.o fsi_set.o nfa.o regex.o ulexlib.o
+WRSRC = wile-sql.c alloc.c print.c location.c wile-parse.c wile-lex.c \
+	swll-cfft.c continuations.c fsi_set.c nfa.c regex.c ulexlib.c
 
 # in an emergency, it also can work to build wile-rtl2.[co] as one unified
 # object file; that does mean that every link pulls in everything
 
-libwrtl.a:	$(WROBJS) wile-rtl1.c wile-rtl2.h math-funcs.c
-	rm -rf build-rtl
-	mkdir build-rtl
-	buspl wile-rtl1.c build-rtl
-	buspl wile-rtl2.scm build-rtl
-	buspl math-funcs.c build-rtl
-	rm -f libwrtl.a
-	ar rcs $@ $(WROBJS) build-rtl/*.o
-	echo "sanity check: numbers of c and o files must match"
-	ls build-rtl/*.c | wc -l
-	ls build-rtl/*.o | wc -l
+libwrtl.a:	$(WRSRC) wile-rtl1.c wile-rtl2.scm math-funcs.c
+	wile -v wile-rtl2.scm wile-rtl2.c
+	build-rtl libwrtl.a $(WRSRC) -s wile-rtl1.c wile-rtl2.scm math-funcs.c
+	nm -a libwrtl.a | grep wile_config
+
+libwrtl-dbg.a:	$(WRSRC) wile-rtl1.c wile-rtl2.scm math-funcs.c
+	wile -v wile-rtl2.scm wile-rtl2.c
+	build-rtl -g libwrtl-dbg.a $(WRSRC) -s \
+		wile-rtl1.c wile-rtl2.scm math-funcs.c
+	nm -a libwrtl-dbg.a | grep wile_config
+
+wilec:	wile-main.scm wile-comp.scm wile-prims.scm libwrtl.a
+	wile -x -v wile-main.scm wilec
 
 twp:	test-wile-progs.scm
 	wile -x -v test-wile-progs.scm twp
 
-buspl:	build-split.scm
-	wile -x -v build-split.scm buspl
+build-rtl:	build-rtl.scm
+	wile -x -v build-rtl.scm build-rtl
 
 test:	libwrtl.a twp
 	test-wile.scm
 	twp wtest
 
-# don't delete buspl, otherwise there is a bootstrap problem!
+# don't delete build-rtl, otherwise there is a bootstrap problem!
 
 realclean:	clean
-	rm -f libwrtl.a wrtl.sch wile-rtl2.h twp
+	rm -f libwrtl.a libwrtl-dbg.a wrtl.sch wile-rtl2.h twp
 
 clean:	semiclean
 	rm -f wile-rtl2.c wtest/test_*.tst
-	rm -rf build-rtl
+	rm -rf bld-rtl-dir
 
 semiclean:
 	rm -f *.o *.gcno *.gcda *.gcov test.txt test-cont.txt \
 	coyote coywolf coy.log woycolf wile-out.c wile-profile.out
+
+# show all the files in the repo
+tracked:
+	git ls-tree -r HEAD --name-only
 
 .PHONY:	realclean clean semiclean test
 

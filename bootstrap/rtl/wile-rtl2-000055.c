@@ -20,12 +20,12 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (offset-date year month day offset)
+// @@@ (offset-date year month day offset) @@@ bld-rtl-dir/wile-rtl2-000055.scm:16 @@@ wile_offset_date @@@
 lval wile_offset_date(lptr* var_1, lptr var_2)
 {
 lval var_4;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_2[0];
 vs[1] = var_2[1];
 vs[2] = var_2[2];
@@ -35,7 +35,7 @@ lval var_5;
 var_5 = LVI_INT(var_4.v.iv + var_2[3].v.iv);
 lval var_6;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_5;
 var_6 = wile_gregorian_date(NULL, vs);
 }

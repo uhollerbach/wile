@@ -12,7 +12,6 @@ extern lisp_escape_t cachalot;
 lval wile_getuserinfo(lptr*, lptr args)
 {
     struct passwd* pwp;
-    // errno = 0;
     if (args[0].vt == LV_STRING) {
 	pwp = getpwnam(args[0].v.str);
     } else if (args[0].vt == LV_INT) {
@@ -31,7 +30,6 @@ lval wile_getuserinfo(lptr*, lptr args)
 	vs[6] = LVI_STRING(pwp->pw_shell);
 	return gen_list(7, vs, NULL);
     } else {
-	// DO_ERRNO();
 	return LVI_BOOL(false);
     }
 }

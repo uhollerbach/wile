@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (day-of-week v . vs)
+// @@@ (day-of-week v . vs) @@@ bld-rtl-dir/wile-rtl2-000057.scm:13 @@@ wile_day_of_week @@@
 lval wile_day_of_week(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -55,7 +55,7 @@ WILE_EX("cxr", "got malformed control string '%s'", var_8.v.str);
 }
 lval var_10;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_2[0];
 vs[1] = var_7;
 vs[2] = var_9;

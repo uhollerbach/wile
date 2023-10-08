@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (list-flatten lst)
+// @@@ (list-flatten lst) @@@ bld-rtl-dir/wile-rtl2-000004.scm:15 @@@ wile_list_flatten @@@
 lval wile_list_flatten(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -53,7 +53,7 @@ WILE_EX("car", "input is not a pair!");
 }
 var_9 = (var_2[0].v.pair.car ? *(var_2[0].v.pair.car) : LVI_NIL());
 lval var_10;
-lval var_11[6];
+lval var_11[8];
 var_11[0] = var_9;
 var_10 = wile_list_flatten(NULL, var_11);
 lval var_13;
@@ -62,7 +62,7 @@ WILE_EX("cdr", "input is not a pair!");
 }
 var_13 = (var_2[0].v.pair.cdr ? *(var_2[0].v.pair.cdr) : LVI_NIL());
 lval var_14;
-lval var_15[6];
+lval var_15[8];
 var_15[0] = var_13;
 var_14 = wile_list_flatten(NULL, var_15);
 lval var_17;
@@ -73,7 +73,7 @@ vs[1] = var_14;
 var_17 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_17;
 var_17 = wile_list_append(NULL, vs);
 }
@@ -91,7 +91,7 @@ WILE_EX("cdr", "input is not a pair!");
 }
 var_19 = (var_2[0].v.pair.cdr ? *(var_2[0].v.pair.cdr) : LVI_NIL());
 lval var_20;
-lval var_21[6];
+lval var_21[8];
 var_21[0] = var_19;
 var_20 = wile_list_flatten(NULL, var_21);
 lval var_23;

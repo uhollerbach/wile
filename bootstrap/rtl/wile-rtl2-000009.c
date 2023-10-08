@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (list-ref lst n)
+// @@@ (list-ref lst n) @@@ bld-rtl-dir/wile-rtl2-000009.scm:13 @@@ wile_list_ref @@@
 lval wile_list_ref(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -47,7 +47,7 @@ if (LV_IS_FALSE(var_7)) {
 } else {
 lval var_9;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_4;
 var_9 = wile_list_length(NULL, vs);
 }

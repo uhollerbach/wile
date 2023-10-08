@@ -21,7 +21,7 @@ static lval fn_4(lptr*, lptr);	// (map2 proc acc ls)
 
 // definitions
 
-// car
+// @@@ car @@@ bld-rtl-dir/wile-rtl2-000024.scm:17 @@@ fn_11 @@@
 static lval fn_11(lptr* var_12, lptr var_13)
 {
 lval var_15;
@@ -33,7 +33,7 @@ return var_15;
 }
 // end of prim fn_11
 
-// cdr
+// @@@ cdr @@@ bld-rtl-dir/wile-rtl2-000024.scm:17 @@@ fn_19 @@@
 static lval fn_19(lptr* var_20, lptr var_21)
 {
 lval var_23;
@@ -45,7 +45,7 @@ return var_23;
 }
 // end of prim fn_19
 
-// (map2 proc acc ls)
+// @@@ (map2 proc acc ls) @@@ bld-rtl-dir/wile-rtl2-000024.scm:14 @@@ fn_4 @@@
 static lval fn_4(lptr* var_5, lptr var_6)
 {
 lbl_7:;
@@ -60,7 +60,7 @@ var_10 = LVI_BOOL(var_9.vt == LV_NIL);
 if (LV_IS_FALSE(var_10)) {
 lval var_16;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_11,NULL,1);
 vs[1] = var_6[2];
 var_16 = wile_map1(NULL, vs);
@@ -88,12 +88,12 @@ var_18 = LVI_PAIR(p1, p2);
 }
 lval var_24;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_19,NULL,1);
 vs[1] = var_6[2];
 var_24 = wile_map1(NULL, vs);
 }
-lval var_27[6];
+lval var_27[8];
 var_27[0] = var_6[0];
 var_27[1] = var_18;
 var_27[2] = var_24;
@@ -104,7 +104,7 @@ goto lbl_7;	// selfie
 } else {
 lval var_28;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_6[1];
 var_28 = wile_list_reverse(NULL, vs);
 }
@@ -114,12 +114,12 @@ return var_8;
 }
 // end of function fn_4
 
-// list-length
+// @@@ list-length @@@ bld-rtl-dir/wile-rtl2-000024.scm:19 @@@ fn_32 @@@
 static lval fn_32(lptr* var_33, lptr var_34)
 {
 lval var_36;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_34[0];
 var_36 = wile_list_length(NULL, vs);
 }
@@ -127,7 +127,7 @@ return var_36;
 }
 // end of prim fn_32
 
-// min/i
+// @@@ min/i @@@ bld-rtl-dir/wile-rtl2-000024.scm:20 @@@ fn_39 @@@
 static lval fn_39(lptr* var_40, lptr var_41)
 {
 lval var_43;
@@ -136,7 +136,7 @@ return var_43;
 }
 // end of prim fn_39
 
-// max/i
+// @@@ max/i @@@ bld-rtl-dir/wile-rtl2-000024.scm:20 @@@ fn_45 @@@
 static lval fn_45(lptr* var_46, lptr var_47)
 {
 lval var_49;
@@ -145,7 +145,7 @@ return var_49;
 }
 // end of prim fn_45
 
-// (map proc lst . lsts)
+// @@@ (map proc lst . lsts) @@@ bld-rtl-dir/wile-rtl2-000024.scm:13 @@@ wile_map @@@
 lval wile_map(lptr* var_1, lptr var_2)
 {
 lval var_29;
@@ -166,7 +166,7 @@ var_29 = var_30;
 lval var_31;
 lval var_37;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_32,NULL,1);
 vs[1] = var_29;
 var_37 = wile_map1(NULL, vs);
@@ -175,14 +175,14 @@ var_31 = var_37;
 lval var_38;
 lval var_44;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_39,NULL,2);
 vs[1] = var_31;
 var_44 = wile_foldl1(NULL, vs);
 }
 lval var_50;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_45,NULL,2);
 vs[1] = var_31;
 var_50 = wile_foldl1(NULL, vs);
@@ -223,7 +223,7 @@ break;
 if (LV_IS_FALSE(var_51)) {
 lval var_52;
 var_52 = LVI_NIL();
-lval var_55[6];
+lval var_55[8];
 var_55[0] = var_2[0];
 var_55[1] = var_52;
 var_55[2] = var_29;

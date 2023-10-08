@@ -358,7 +358,6 @@ lval run_pipe_command(lval cmd, const char* rw, const char* fname, int lno)
     if (fp) {
 	return LVI_PPORT(fp);
     } else {
-	//	DO_ERRNO();
 	return LVI_BOOL(false);
     }
 }
@@ -393,7 +392,6 @@ lval wile_temp_file(lptr*, lptr args)
     *tp++ = '\0';
     nt = mkstemp(template);
     if (nt < 0) {
-	// DO_ERRNO();
 	LISP_FREE_STR(template);
 	wile_exception("open-temporary-file", "could not create temporary file");
     }
@@ -402,7 +400,6 @@ lval wile_temp_file(lptr*, lptr args)
     LISP_FREE_STR(template);
     fp = fdopen(nt, "w+");
     if (fp == NULL) {
-	// DO_ERRNO();
 	wile_exception("open-temporary-file", "could not create temporary file");
     }
     vs[0] = LVI_FPORT(fp);
@@ -1053,7 +1050,6 @@ lval read_directory(lptr*, lptr args)
 	wile_exception("read-directory", "expects one string argument");
     }
     if (dp == NULL) {
-//	DO_ERRNO();
 	return LVI_BOOL(false);
     }
     res = NULL;
@@ -1064,7 +1060,6 @@ lval read_directory(lptr*, lptr args)
 		       res);
     }
     if (closedir(dp)) {
-//	DO_ERRNO();
     }
     return (res ? *res : LVI_NIL());
 }
@@ -1084,7 +1079,20 @@ lval wile_char2string(lptr*, lptr args)
 	wile_exception("char->string", "got a bad list length!?!");
     }
     len = lv.v.iv;
-    LISP_ASSERT(len > 0);
+
+    if (len == 1) {
+	ac = CAR(args) ? *(CAR(args)) : LVI_NIL();
+	if (ac.vt == LV_PAIR || ac.vt == LV_NIL) {
+	    args = CAR(args);
+	    lv = wile_list_length(NULL, args);
+	    if (lv.vt != LV_INT || lv.v.iv < 0) {
+		wile_exception("char->string", "got a bad list length!?!");
+	    }
+	    len = lv.v.iv;
+	}
+    }
+
+    LISP_ASSERT(len >= 0);
 
     lv.vt = LV_STRING;
     lv.v.str = LISP_ALLOC(char, len + 1);
@@ -1138,7 +1146,6 @@ lval wile_listen_port(lptr*, lptr args)
 
     sd = socket(AF_INET, SOCK_STREAM, tcp_proto);
     if (sd < 0) {
-	// DO_ERRNO();
 	return LVI_BOOL(false);
     } else {
 	struct sockaddr_in my_addr;
@@ -1149,17 +1156,14 @@ lval wile_listen_port(lptr*, lptr args)
 	my_addr.sin_port = htons(args[0].v.iv);
 
 	if (bind(sd, (struct sockaddr*) &my_addr, sizeof(my_addr)) < 0) {
-	    // DO_ERRNO();
 	    return LVI_BOOL(false);
 	} else {
 	    if (listen(sd, 16) < 0) {
-		// DO_ERRNO();
 		return LVI_BOOL(false);
 	    } else {
 		fp = fdopen(sd, "rb+");
 		if (fp == NULL) {
 		    // TODO: close sd? I think so
-		    // DO_ERRNO();
 		    return LVI_BOOL(false);
 		} else {
 		    setvbuf(fp, NULL, _IONBF, 0);
@@ -1184,7 +1188,6 @@ lval wile_accept_connection(lptr*, lptr args)
 	psize = sizeof(peer);
 	fd = accept(fileno(args->v.fp), (struct sockaddr*) &peer, &psize);
 	if (fd < 0) {
-	    // DO_ERRNO();
 	    return LVI_BOOL(false);
 	} else {
 	    lval vs[3];
@@ -1192,7 +1195,6 @@ lval wile_accept_connection(lptr*, lptr args)
 	    vs[0] = LVI_SPORT(fdopen(fd, "rb+"));
 	    if (vs[0].v.fp == NULL) {
 		vs[0] = LVI_BOOL(false);
-		// DO_ERRNO();
 	    } else {
 		setvbuf(vs[0].v.fp, NULL, _IONBF, 0);
 	    }
@@ -1200,7 +1202,6 @@ lval wile_accept_connection(lptr*, lptr args)
 		vs[1] = LVI_STRING(buf);
 	    } else {
 		vs[1] = LVI_STRING("<unknown>");
-		// DO_ERRNO();
 	    }
 	    vs[2] = LVI_INT(ntohs(peer.sin_port));
 	    return gen_list(3, vs, NULL);
@@ -1255,7 +1256,6 @@ lval wile_connect_to(lptr*, lptr args)
 	ret = LVI_SPORT(fdopen(sd, "rb+"));
 	if (ret.v.fp == NULL) {
 	    ret = LVI_BOOL(false);
-	    // DO_ERRNO();
 	} else {
 	    setvbuf(ret.v.fp, NULL, _IONBF, 0);
 	}
@@ -1289,7 +1289,6 @@ lval wile_gethostname(lptr*, lptr)
 {
     char buf[HOST_NAME_MAX+1];
     if (gethostname(buf, sizeof(buf)) < 0) {
-	// TODO: DO_ERRNO();
 	return LVI_BOOL(false);
     } else {
 	return LVI_STRING(buf);
@@ -1302,7 +1301,6 @@ lval wile_getdomainname(lptr*, lptr)
 {
     char buf[HOST_NAME_MAX+1];
     if (getdomainname(buf, sizeof(buf)) < 0) {
-	// TODO: DO_ERRNO();
 	return LVI_BOOL(false);
     } else {
 	return LVI_STRING(buf);
@@ -1318,7 +1316,6 @@ lval wile_getcwd(lptr*, lptr)
     if (sp) {
 	return LVI_STRING(sp);
     } else {
-	// TODO: ERRNO()
 	return LVI_BOOL(false);
     }
 }
@@ -1334,7 +1331,6 @@ lval wile_cputime(lptr*, lptr)
 	vs[1] = LVI_REAL(usage.ru_stime.tv_sec + 1.0e-6*usage.ru_stime.tv_usec);
 	return gen_list(2, vs, NULL);
     } else {
-	// TODO: ERRNO()
 	return LVI_BOOL(false);
     }
 }
@@ -1364,7 +1360,6 @@ lval wile_filestat(lptr*, lptr args)
 	vs[12] = LVI_INT(sbuf.st_ctime);
 	return gen_list(13, vs, NULL);
     } else {
-	// TODO: MAYBE_ERRNO()
 	return LVI_BOOL(false);
     }
 }
@@ -1395,7 +1390,6 @@ lval wile_symlinkstat(lptr*, lptr args)
 	vs[12] = LVI_INT(sbuf.st_ctime);
 	return gen_list(13, vs, NULL);
     } else {
-	// TODO: MAYBE_ERRNO()
 	return LVI_BOOL(false);
     }
 }
@@ -1405,7 +1399,6 @@ lval wile_symlinkstat(lptr*, lptr args)
 lval wile_getuserinfo(lptr*, lptr args)
 {
     struct passwd* pwp;
-    // errno = 0;
     if (args[0].vt == LV_STRING) {
 	pwp = getpwnam(args[0].v.str);
     } else if (args[0].vt == LV_INT) {
@@ -1424,7 +1417,6 @@ lval wile_getuserinfo(lptr*, lptr args)
 	vs[6] = LVI_STRING(pwp->pw_shell);
 	return gen_list(7, vs, NULL);
     } else {
-	// DO_ERRNO();
 	return LVI_BOOL(false);
     }
 }
@@ -1456,7 +1448,6 @@ lval wile_localtime(lptr*, lptr args)
 	vs[8] = LVI_INT(tval.tm_isdst);
 	return gen_list(9, vs, NULL);
     } else {
-	// DO_ERRNO();
 	return LVI_BOOL(false);
     }
 }
@@ -1488,7 +1479,6 @@ lval wile_gmtime(lptr*, lptr args)
 	vs[8] = LVI_INT(tval.tm_isdst);
 	return gen_list(9, vs, NULL);
     } else {
-	// DO_ERRNO();
 	return LVI_BOOL(false);
     }
 }
@@ -1540,7 +1530,6 @@ lval wile_setlinebuffering(lptr*, lptr args)
     if (args[0].vt == LV_FILE_PORT ||
 	args[0].vt == LV_PIPE_PORT ||
 	args[0].vt == LV_SOCK_PORT) {
-	// TODO: MAYBE_ERRNO
 	return LVI_BOOL(setvbuf(args[0].v.fp, NULL, _IOLBF, 0) == 0);
     } else if (args[0].vt == LV_STR_PORT) {
 	return LVI_BOOL(true);
@@ -1560,7 +1549,6 @@ lval wile_setnobuffering(lptr*, lptr args)
     if (args[0].vt == LV_FILE_PORT ||
 	args[0].vt == LV_PIPE_PORT ||
 	args[0].vt == LV_SOCK_PORT) {
-	// TODO: MAYBE_ERRNO
 	return LVI_BOOL(setvbuf(args[0].v.fp, NULL, _IONBF, 0) == 0);
     } else if (args[0].vt == LV_STR_PORT) {
 	return LVI_BOOL(true);
@@ -1582,7 +1570,6 @@ lval wile_setfilepos2(lptr*, lptr args)
 	wile_exception("set-file-position",
 		       "expects a file port and an offset");
     }
-    // TODO: MAYBE_ERRNO()
     return LVI_BOOL(fseek(args[0].v.fp, args[1].v.iv, SEEK_SET) == 0);
 }
 
@@ -1606,7 +1593,6 @@ lval wile_setfilepos3(lptr*, lptr args)
     } else {
 	wile_exception("set-file-position", "got an unknown location symbol");
     }
-    // TODO: MAYBE_ERRNO()
     return LVI_BOOL(fseek(args[0].v.fp, args[1].v.iv, whence) == 0);
 }
 
@@ -1779,4 +1765,10 @@ lval wile_cfft(lptr*, lptr args)
     LISP_FREE(a2);
 
     return args[1];
+}
+
+// --8><----8><----8><--
+
+void WILE_CONFIG_SYM4(void)
+{
 }

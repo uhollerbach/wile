@@ -34,7 +34,6 @@ lval wile_gmtime(lptr*, lptr args)
 	vs[8] = LVI_INT(tval.tm_isdst);
 	return gen_list(9, vs, NULL);
     } else {
-	// DO_ERRNO();
 	return LVI_BOOL(false);
     }
 }

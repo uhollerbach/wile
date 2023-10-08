@@ -19,15 +19,13 @@ WCONFIG="-DWILE_USES_LONG_INT -DWILE_USES_DOUBLE"
 
 CCOMMON="-ansi -std=c11 -Wall -Wstrict-prototypes -Wmissing-prototypes -Winline -Wpointer-arith -Wshadow -Wnested-externs -Wformat-security -Wunused -Wsign-compare -Wno-error=unused-parameter -Wno-error=unused-but-set-variable -D_DEFAULT_SOURCE -I. -I.. $WCONFIG"
 
-#### build optimized version
-
 CFOPT="-O3"
 
 rm -f *.o libwrtl.a
 echo '################################'
 echo build stage0
 echo '################################'
-echo build optimized library
+echo build library
 $CC $CCOMMON $CFOPT -c ../wile-sql.c ../alloc.c ../print.c ../location.c \
     ../wile-parse.c ../wile-lex.c ../swll-cfft.c ../continuations.c \
     ../fsi_set.c ../nfa.c ../regex.c ../ulexlib.c rtl/*.c
@@ -38,9 +36,9 @@ $CC $CCOMMON $CFOPT -c wilec.c
 $CC $CCOMMON $CFOPT -L. -o wilec wilec.o -lwrtl -lpthread -lm
 
 echo '################################'
-echo build auxiliary buspl program
-$CC $CCOMMON $CFOPT -c buspl.c
-$CC $CCOMMON $CFOPT -L. -o buspl buspl.o -lwrtl -lpthread -lm
+echo build auxiliary build-rtl program
+$CC $CCOMMON $CFOPT -c build-rtl.c
+$CC $CCOMMON $CFOPT -L. -o build-rtl build-rtl.o -lwrtl -lpthread -lm
 
 #### clean up
 

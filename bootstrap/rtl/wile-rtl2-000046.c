@@ -21,7 +21,7 @@ static lval fn_4(lptr*, lptr);
 
 // definitions
 
-// lambda (s n acc)
+// @@@ lambda (s n acc) @@@ bld-rtl-dir/wile-rtl2-000046.scm:14 @@@ fn_4 @@@
 static lval fn_4(lptr* var_5, lptr var_6)
 {
 lbl_7:;
@@ -77,7 +77,7 @@ p2 = new_lv(LV_NIL);
 }
 var_12 = LVI_PAIR(p1, p2);
 }
-lval var_15[6];
+lval var_15[8];
 var_15[0] = var_6[0];
 var_15[1] = var_11;
 var_15[2] = var_12;
@@ -92,7 +92,7 @@ return var_8;
 }
 // end of lambda fn_4
 
-// (upfrom s n0)
+// @@@ (upfrom s n0) @@@ bld-rtl-dir/wile-rtl2-000046.scm:13 @@@ wile_upfrom @@@
 lval wile_upfrom(lptr* var_1, lptr var_2)
 {
 lptr var_5[0];
@@ -105,7 +105,7 @@ var_18 = LVI_INT(var_16.v.iv - var_17.v.iv);
 lval var_19;
 var_19 = LVI_NIL();
 lval var_20;
-lval var_21[6];
+lval var_21[8];
 var_21[0] = var_2[0];
 var_21[1] = var_18;
 var_21[2] = var_19;

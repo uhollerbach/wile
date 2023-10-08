@@ -20,13 +20,13 @@ extern lval var_flt_precision;
 
 // definitions
 
-// string-append
+// @@@ string-append @@@ bld-rtl-dir/wile-rtl2-000020.scm:20 @@@ fn_18 @@@
 static lval fn_18(lptr* var_19, lptr var_20)
 {
 lval var_22;
 var_22 = var_20[0];
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_22;
 var_22 = wile_string_append(NULL, vs);
 }
@@ -34,13 +34,13 @@ return var_22;
 }
 // end of prim fn_18
 
-// string-append
+// @@@ string-append @@@ bld-rtl-dir/wile-rtl2-000020.scm:27 @@@ fn_42 @@@
 static lval fn_42(lptr* var_43, lptr var_44)
 {
 lval var_46;
 var_46 = var_44[0];
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_46;
 var_46 = wile_string_append(NULL, vs);
 }
@@ -48,7 +48,7 @@ return var_46;
 }
 // end of prim fn_42
 
-// (string-join-by join . strs)
+// @@@ (string-join-by join . strs) @@@ bld-rtl-dir/wile-rtl2-000020.scm:13 @@@ wile_string_join_by @@@
 lval wile_string_join_by(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -60,7 +60,7 @@ lval var_7;
 var_7 = LVI_INT(1);
 lval var_8;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_2[1];
 var_8 = wile_list_length(NULL, vs);
 }
@@ -155,7 +155,7 @@ break;
 lval var_24;
 lval var_25;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_4;
 var_25 = wile_list_reverse(NULL, vs);
 }

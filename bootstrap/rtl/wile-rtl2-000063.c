@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (random-permutation n)
+// @@@ (random-permutation n) @@@ bld-rtl-dir/wile-rtl2-000063.scm:13 @@@ wile_random_permutation @@@
 lval wile_random_permutation(lptr* var_1, lptr var_2)
 {
 lval var_4;

@@ -22,7 +22,7 @@ static lval fn_10(lptr*, lptr);
 
 // definitions
 
-// lambda (x)
+// @@@ lambda (x) @@@ bld-rtl-dir/wile-rtl2-000038.scm:16 @@@ fn_10 @@@
 static lval fn_10(lptr* var_11, lptr var_12)
 {
 lval var_14;
@@ -36,7 +36,7 @@ return var_15;
 }
 // end of lambda fn_10
 
-// lambda (lst acc)
+// @@@ lambda (lst acc) @@@ bld-rtl-dir/wile-rtl2-000038.scm:12 @@@ fn_4 @@@
 static lval fn_4(lptr* var_5, lptr var_6)
 {
 lbl_7:;
@@ -53,7 +53,7 @@ WILE_EX("cdr", "input is not a pair!");
 var_16 = (var_6[0].v.pair.cdr ? *(var_6[0].v.pair.cdr) : LVI_NIL());
 lval var_17;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_10,var_11,1);
 vs[1] = var_16;
 var_17 = wile_list_drop_while(NULL, vs);
@@ -76,7 +76,7 @@ p2 = new_lv(LV_NIL);
 }
 var_19 = LVI_PAIR(p1, p2);
 }
-lval var_22[6];
+lval var_22[8];
 var_22[0] = var_17;
 var_22[1] = var_19;
 var_6[0] = var_22[0];
@@ -85,7 +85,7 @@ goto lbl_7;	// selfie
 } else {
 lval var_23;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_6[1];
 var_23 = wile_list_reverse(NULL, vs);
 }
@@ -95,14 +95,14 @@ return var_8;
 }
 // end of lambda fn_4
 
-// (list-remove-dups lst)
+// @@@ (list-remove-dups lst) @@@ bld-rtl-dir/wile-rtl2-000038.scm:11 @@@ wile_list_remove_dups @@@
 lval wile_list_remove_dups(lptr* var_1, lptr var_2)
 {
 lptr var_5[0];
 lval var_24;
 var_24 = LVI_NIL();
 lval var_25;
-lval var_26[6];
+lval var_26[8];
 var_26[0] = var_2[0];
 var_26[1] = var_24;
 var_25 = fn_4(var_5, var_26);

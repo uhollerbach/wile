@@ -9,14 +9,6 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_getcwd(lptr*, lptr)
+void WILE_CONFIG_SYM4(void)
 {
-    char str[1+PATH_MAX], *sp;
-    sp = getcwd(str, sizeof(str));
-    if (sp) {
-	return LVI_STRING(sp);
-    } else {
-	return LVI_BOOL(false);
-    }
 }
-

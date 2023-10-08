@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (list-filter pred lst)
+// @@@ (list-filter pred lst) @@@ bld-rtl-dir/wile-rtl2-000010.scm:15 @@@ wile_list_filter @@@
 lval wile_list_filter(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -95,7 +95,7 @@ var_8 = var_9;
 } while (1);
 lval var_22;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_4;
 var_22 = wile_list_reverse(NULL, vs);
 }

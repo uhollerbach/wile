@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (string-pad-left str pch lmin)
+// @@@ (string-pad-left str pch lmin) @@@ bld-rtl-dir/wile-rtl2-000039.scm:13 @@@ wile_string_pad_left @@@
 lval wile_string_pad_left(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -88,7 +88,7 @@ vs[1] = var_2[0];
 var_11 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_8;
 vs[1] = var_11;
 var_11 = wile_string_join_by(NULL, vs);

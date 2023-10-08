@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (wile-build-info)
+// @@@ (wile-build-info) @@@ bld-rtl-dir/wile-rtl2-000070.scm:13 @@@ wile_build_info @@@
 lval wile_build_info(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -32,279 +32,279 @@ var_6 = LVI_NIL();
 lval var_7;
 var_7 = LVI_NIL();
 lval var_8;
-var_8 = LVI_INT(96);
+var_8 = LVI_INT(4);
 lval var_9;
 var_9 = LVI_INT(var_4.v.iv & var_8.v.iv);
 lval var_10;
-var_10 = LVI_INT(-5);
-lval var_11;
-var_11 = LVI_INT((var_10.v.iv >= 0) ? (var_9.v.iv << var_10.v.iv) : (var_9.v.iv >> -var_10.v.iv));
-lval var_12;
-if (var_11.vt != LV_INT) {
-wile_exception2("case", __FILE__, __LINE__, "case-value type does not match case type");
-}
-switch (var_11.v.iv) {
-case 0:
-{
-lval var_13;
-var_13 = LVI_SYMBOL("long-int");
-var_12 = var_13;
-}
+switch (var_9.vt) {
+case LV_REAL:
+var_10 = LVI_BOOL(var_9.v.rv == 0.0);
 break;
-case 1:
-{
-lval var_14;
-var_14 = LVI_SYMBOL("int-128");
-var_12 = var_14;
-}
+case LV_RAT:
+var_10 = LVI_BOOL((var_9.v.irv.num == 0 && var_9.v.irv.den != 0));
 break;
-case 2:
-{
-lval var_15;
-var_15 = LVI_SYMBOL("semi-big-int-untested");
-var_12 = var_15;
-}
+case LV_INT:
+var_10 = LVI_BOOL(var_9.v.iv == 0);
+break;
+case LV_CMPLX:
+var_10 = LVI_BOOL(CREAL(var_9.v.cv) == 0.0 && CIMAG(var_9.v.cv) == 0.0);
 break;
 default:
-{
-lval var_16;
-var_16 = LVI_SYMBOL("unknown-int-type!?!");
-var_12 = var_16;
+WILE_EX("zero?", "expects a real-valued number");
 }
-break;
-}
-lval var_17;
+lval var_11;
+var_11 = LVI_BOOL(LV_IS_FALSE(var_10));
+lval var_12;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_12.vt != LV_NIL) {
+if (var_11.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_12;
+*p1 = var_11;
 }
 if (var_7.vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
 *p2 = var_7;
 }
-var_17 = LVI_PAIR(p1, p2);
+var_12 = LVI_PAIR(p1, p2);
 }
-lval var_18;
-var_18 = LVI_SYMBOL("integer-type");
-lval var_19;
+lval var_13;
+var_13 = LVI_SYMBOL("sqlite?");
+lval var_14;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_18.vt != LV_NIL) {
+if (var_13.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_18;
+*p1 = var_13;
 }
-if (var_17.vt != LV_NIL) {
+if (var_12.vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_17;
+*p2 = var_12;
 }
-var_19 = LVI_PAIR(p1, p2);
+var_14 = LVI_PAIR(p1, p2);
 }
-lval var_20;
+lval var_15;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_19.vt != LV_NIL) {
+if (var_14.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_19;
+*p1 = var_14;
 }
 if (var_6.vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
 *p2 = var_6;
 }
-var_20 = LVI_PAIR(p1, p2);
+var_15 = LVI_PAIR(p1, p2);
 }
-lval var_21;
-var_21 = LVI_NIL();
-lval var_22;
-var_22 = LVI_INT(24);
-lval var_23;
-var_23 = LVI_INT(var_4.v.iv & var_22.v.iv);
-lval var_24;
-var_24 = LVI_INT(-3);
-lval var_25;
-var_25 = LVI_INT((var_24.v.iv >= 0) ? (var_23.v.iv << var_24.v.iv) : (var_23.v.iv >> -var_24.v.iv));
-lval var_26;
-if (var_25.vt != LV_INT) {
-wile_exception2("case", __FILE__, __LINE__, "case-value type does not match case type");
-}
-switch (var_25.v.iv) {
-case 0:
-{
-lval var_27;
-var_27 = LVI_SYMBOL("double");
-var_26 = var_27;
-}
+lval var_16;
+var_16 = LVI_NIL();
+lval var_17;
+var_17 = LVI_INT(1);
+lval var_18;
+var_18 = LVI_INT(var_4.v.iv & var_17.v.iv);
+lval var_19;
+switch (var_18.vt) {
+case LV_REAL:
+var_19 = LVI_BOOL(var_18.v.rv == 0.0);
 break;
-case 1:
-{
-lval var_28;
-var_28 = LVI_SYMBOL("long-double");
-var_26 = var_28;
-}
+case LV_RAT:
+var_19 = LVI_BOOL((var_18.v.irv.num == 0 && var_18.v.irv.den != 0));
 break;
-case 2:
-{
-lval var_29;
-var_29 = LVI_SYMBOL("quad-double");
-var_26 = var_29;
-}
+case LV_INT:
+var_19 = LVI_BOOL(var_18.v.iv == 0);
+break;
+case LV_CMPLX:
+var_19 = LVI_BOOL(CREAL(var_18.v.cv) == 0.0 && CIMAG(var_18.v.cv) == 0.0);
 break;
 default:
-{
-lval var_30;
-var_30 = LVI_SYMBOL("unknown-float-type!?!");
-var_26 = var_30;
+WILE_EX("zero?", "expects a real-valued number");
 }
-break;
-}
-lval var_31;
+lval var_20;
+var_20 = LVI_BOOL(LV_IS_FALSE(var_19));
+lval var_21;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_26.vt != LV_NIL) {
+if (var_20.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_26;
+*p1 = var_20;
+}
+if (var_16.vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_16;
+}
+var_21 = LVI_PAIR(p1, p2);
+}
+lval var_22;
+var_22 = LVI_SYMBOL("garbage-collection?");
+lval var_23;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_22.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_22;
 }
 if (var_21.vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
 *p2 = var_21;
 }
-var_31 = LVI_PAIR(p1, p2);
+var_23 = LVI_PAIR(p1, p2);
 }
+lval var_24;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_23.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_23;
+}
+if (var_15.vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_15;
+}
+var_24 = LVI_PAIR(p1, p2);
+}
+lval var_25;
+var_25 = LVI_NIL();
+lval var_26;
+var_26 = LVI_INT(96);
+lval var_27;
+var_27 = LVI_INT(var_4.v.iv & var_26.v.iv);
+lval var_28;
+var_28 = LVI_INT(-5);
+lval var_29;
+var_29 = LVI_INT((var_28.v.iv >= 0) ? (var_27.v.iv << var_28.v.iv) : (var_27.v.iv >> -var_28.v.iv));
+lval var_30;
+if (var_29.vt != LV_INT) {
+wile_exception2("case", __FILE__, __LINE__, "case-value type does not match case type");
+}
+switch (var_29.v.iv) {
+case 0:
+{
+lval var_31;
+var_31 = LVI_SYMBOL("long-int");
+var_30 = var_31;
+break;
+}
+case 1:
+{
 lval var_32;
-var_32 = LVI_SYMBOL("float-type");
+var_32 = LVI_SYMBOL("int-128");
+var_30 = var_32;
+break;
+}
+case 2:
+{
 lval var_33;
+var_33 = LVI_SYMBOL("semi-big-int-untested");
+var_30 = var_33;
+break;
+}
+default:
 {
-lptr p1 = NULL, p2 = NULL;
-if (var_32.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_32;
-}
-if (var_31.vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = var_31;
-}
-var_33 = LVI_PAIR(p1, p2);
-}
 lval var_34;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_33.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_33;
+var_34 = LVI_SYMBOL("unknown-int-type!?!");
+var_30 = var_34;
+break;
 }
-if (var_20.vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = var_20;
-}
-var_34 = LVI_PAIR(p1, p2);
 }
 lval var_35;
-var_35 = LVI_NIL();
-lval var_36;
-var_36 = LVI_INT(4);
-lval var_37;
-var_37 = LVI_INT(var_4.v.iv & var_36.v.iv);
-lval var_38;
-switch (var_37.vt) {
-case LV_REAL:
-var_38 = LVI_BOOL(var_37.v.rv == 0.0);
-break;
-case LV_RAT:
-var_38 = LVI_BOOL((var_37.v.irv.num == 0 && var_37.v.irv.den != 0));
-break;
-case LV_INT:
-var_38 = LVI_BOOL(var_37.v.iv == 0);
-break;
-case LV_CMPLX:
-var_38 = LVI_BOOL(CREAL(var_37.v.cv) == 0.0 && CIMAG(var_37.v.cv) == 0.0);
-break;
-default:
-WILE_EX("zero?", "expects a real-valued number");
-}
-lval var_39;
-var_39 = LVI_BOOL(LV_IS_FALSE(var_38));
-lval var_40;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_39.vt != LV_NIL) {
+if (var_30.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_39;
+*p1 = var_30;
+}
+if (var_25.vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_25;
+}
+var_35 = LVI_PAIR(p1, p2);
+}
+lval var_36;
+var_36 = LVI_SYMBOL("integer-type");
+lval var_37;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_36.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_36;
 }
 if (var_35.vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
 *p2 = var_35;
 }
-var_40 = LVI_PAIR(p1, p2);
+var_37 = LVI_PAIR(p1, p2);
 }
+lval var_38;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_37.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_37;
+}
+if (var_24.vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_24;
+}
+var_38 = LVI_PAIR(p1, p2);
+}
+lval var_39;
+var_39 = LVI_NIL();
+lval var_40;
+var_40 = LVI_INT(24);
 lval var_41;
-var_41 = LVI_SYMBOL("sqlite?");
+var_41 = LVI_INT(var_4.v.iv & var_40.v.iv);
 lval var_42;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_41.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_41;
-}
-if (var_40.vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = var_40;
-}
-var_42 = LVI_PAIR(p1, p2);
-}
+var_42 = LVI_INT(-3);
 lval var_43;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_42.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_42;
-}
-if (var_34.vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = var_34;
-}
-var_43 = LVI_PAIR(p1, p2);
-}
+var_43 = LVI_INT((var_42.v.iv >= 0) ? (var_41.v.iv << var_42.v.iv) : (var_41.v.iv >> -var_42.v.iv));
 lval var_44;
-var_44 = LVI_NIL();
-lval var_45;
-var_45 = LVI_INT(2);
-lval var_46;
-var_46 = LVI_INT(var_4.v.iv & var_45.v.iv);
-lval var_47;
-switch (var_46.vt) {
-case LV_REAL:
-var_47 = LVI_BOOL(var_46.v.rv == 0.0);
-break;
-case LV_RAT:
-var_47 = LVI_BOOL((var_46.v.irv.num == 0 && var_46.v.irv.den != 0));
-break;
-case LV_INT:
-var_47 = LVI_BOOL(var_46.v.iv == 0);
-break;
-case LV_CMPLX:
-var_47 = LVI_BOOL(CREAL(var_46.v.cv) == 0.0 && CIMAG(var_46.v.cv) == 0.0);
-break;
-default:
-WILE_EX("zero?", "expects a real-valued number");
+if (var_43.vt != LV_INT) {
+wile_exception2("case", __FILE__, __LINE__, "case-value type does not match case type");
 }
+switch (var_43.v.iv) {
+case 0:
+{
+lval var_45;
+var_45 = LVI_SYMBOL("double");
+var_44 = var_45;
+break;
+}
+case 1:
+{
+lval var_46;
+var_46 = LVI_SYMBOL("long-double");
+var_44 = var_46;
+break;
+}
+case 2:
+{
+lval var_47;
+var_47 = LVI_SYMBOL("quad-double");
+var_44 = var_47;
+break;
+}
+default:
+{
 lval var_48;
-var_48 = LVI_BOOL(LV_IS_FALSE(var_47));
+var_48 = LVI_SYMBOL("unknown-float-type!?!");
+var_44 = var_48;
+break;
+}
+}
 lval var_49;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_48.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_48;
-}
 if (var_44.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_44;
+}
+if (var_39.vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_44;
+*p2 = var_39;
 }
 var_49 = LVI_PAIR(p1, p2);
 }
 lval var_50;
-var_50 = LVI_SYMBOL("rc4-rand?");
+var_50 = LVI_SYMBOL("float-type");
 lval var_51;
 {
 lptr p1 = NULL, p2 = NULL;
@@ -325,37 +325,33 @@ if (var_51.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
 *p1 = var_51;
 }
-if (var_43.vt != LV_NIL) {
+if (var_38.vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_43;
+*p2 = var_38;
 }
 var_52 = LVI_PAIR(p1, p2);
 }
 lval var_53;
 var_53 = LVI_NIL();
 lval var_54;
-var_54 = LVI_INT(1);
+var_54 = LVI_NIL();
 lval var_55;
-var_55 = LVI_INT(var_4.v.iv & var_54.v.iv);
+var_55 = LVI_INT(0);
 lval var_56;
-switch (var_55.vt) {
-case LV_REAL:
-var_56 = LVI_BOOL(var_55.v.rv == 0.0);
-break;
-case LV_RAT:
-var_56 = LVI_BOOL((var_55.v.irv.num == 0 && var_55.v.irv.den != 0));
-break;
-case LV_INT:
-var_56 = LVI_BOOL(var_55.v.iv == 0);
-break;
-case LV_CMPLX:
-var_56 = LVI_BOOL(CREAL(var_55.v.cv) == 0.0 && CIMAG(var_55.v.cv) == 0.0);
-break;
-default:
-WILE_EX("zero?", "expects a real-valued number");
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_55.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_55;
+}
+if (var_54.vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_54;
+}
+var_56 = LVI_PAIR(p1, p2);
 }
 lval var_57;
-var_57 = LVI_BOOL(LV_IS_FALSE(var_56));
+var_57 = LVI_INT(9);
 lval var_58;
 {
 lptr p1 = NULL, p2 = NULL;
@@ -363,14 +359,14 @@ if (var_57.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
 *p1 = var_57;
 }
-if (var_53.vt != LV_NIL) {
+if (var_56.vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_53;
+*p2 = var_56;
 }
 var_58 = LVI_PAIR(p1, p2);
 }
 lval var_59;
-var_59 = LVI_SYMBOL("garbage-collection?");
+var_59 = LVI_INT(0);
 lval var_60;
 {
 lptr p1 = NULL, p2 = NULL;
@@ -391,102 +387,40 @@ if (var_60.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
 *p1 = var_60;
 }
-if (var_52.vt != LV_NIL) {
+if (var_53.vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_52;
+*p2 = var_53;
 }
 var_61 = LVI_PAIR(p1, p2);
 }
 lval var_62;
-var_62 = LVI_NIL();
+var_62 = LVI_SYMBOL("compiler-version");
 lval var_63;
-var_63 = LVI_NIL();
-lval var_64;
-var_64 = LVI_INT(0);
-lval var_65;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_64.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_64;
-}
-if (var_63.vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = var_63;
-}
-var_65 = LVI_PAIR(p1, p2);
-}
-lval var_66;
-var_66 = LVI_INT(8);
-lval var_67;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_66.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_66;
-}
-if (var_65.vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = var_65;
-}
-var_67 = LVI_PAIR(p1, p2);
-}
-lval var_68;
-var_68 = LVI_INT(0);
-lval var_69;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_68.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_68;
-}
-if (var_67.vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = var_67;
-}
-var_69 = LVI_PAIR(p1, p2);
-}
-lval var_70;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_69.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_69;
-}
 if (var_62.vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = var_62;
-}
-var_70 = LVI_PAIR(p1, p2);
-}
-lval var_71;
-var_71 = LVI_SYMBOL("compiler-version");
-lval var_72;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_71.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_71;
-}
-if (var_70.vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = var_70;
-}
-var_72 = LVI_PAIR(p1, p2);
-}
-lval var_73;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_72.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_72;
+*p1 = var_62;
 }
 if (var_61.vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
 *p2 = var_61;
 }
-var_73 = LVI_PAIR(p1, p2);
+var_63 = LVI_PAIR(p1, p2);
 }
-return var_73;
+lval var_64;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_63.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_63;
+}
+if (var_52.vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_52;
+}
+var_64 = LVI_PAIR(p1, p2);
+}
+return var_64;
 }
 // end of function wile_build_info

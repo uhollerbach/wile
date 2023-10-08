@@ -1,14 +1,15 @@
-Last update: 2023-10-07 15:45 PST
+Last update: 2023-10-10 22:15 PST
 
 # `wile` -- the extremely stable scheming genius compiler
 
-`wile` is a small scheme-to-c compiler which I'm writing; it's by no means
-complete, it cannot yet quite compile itself, but it's capable enough
-that writing small to medium programs with it is starting to be pretty
-pleasant, and self-hosting is starting to look plausible soon. It's
-already good enough to compile those parts of its standard library
-which are written in scheme, plus several auxiliary programs, plus a
-number of less-standard libraries.
+`wile` is a small scheme-to-c compiler which I'm writing; it's by no
+means complete, but it's capable enough that writing small to medium
+programs with it is starting to be pretty pleasant. `wile` **is
+self-hosting**. (I did make one mistaken claim in the previous version
+of this README: I said `wile` could compile a number of files in the
+`library/` subdirectory; that's wrong, those files are full of
+user-defined macros, which is the major area where `wile` is still
+incomplete. My bad.)
 
 My design philosophy for it is the unix way of small simple tools; I
 have tried to keep it simple and self-contained, with minimal
@@ -24,6 +25,18 @@ implemented yet, less because bugs). See below for a roadmap.
 The name `wile` is, of course, the name of that extremely stable
 super-genius schemer, Wile E. Coyote. 'nuff said
 
+## Table of contents
+
+- [License](#license)
+- [Short installation](#short-installation)
+- [Limitation and bugs](#limitations-and-bugs)
+- [Roadmap for future work](#roadmap)
+- [What `wile` already has](#what-wile-already-has)
+- [Installation gory details](#configuration-and-installation-details)
+- [How to run `wile`](#howto-run-wile)
+- [Guide to compiler files](#guide-to-the-files)
+- [Contact me](#contact-me)
+
 ## License
 
 `wile` is released under GPLv3 or later. Its runtime library is released
@@ -32,7 +45,7 @@ not cause your code to become GPL'd. You retain copyright of your
 scheme source code and may keep your code as open or closed as you
 desire.
 
-## Install tl;dr
+## Short installation
 
 The tl;dr you set the environment variable CC to your c compiler, for
 example `export CC=gcc`, then run `cd bootstrap && ./boot1.sh` which
@@ -46,19 +59,22 @@ better-configured compiler, read the section below, edit the
 set CC as above, and run that `bootstrap.sh`. There is also a
 `setup.env` in the `wile` main directory.
 
-If you get weird errors when running programs you've compiled, make
-sure the configuration with which you built the runtime library is the
-same as the one with which you compiled and linked your main
-program. If there are differences, things go crazy quickly. `wile`
-attempts to detect this, but it's not perfect yet.
+If you get link errors like `undefined reference to
+wile_config_real_QD_int_I128_gc_Y_sqlite_Y`, make sure the
+configuration with which you built the runtime library is the same as
+the one with which you compiled and linked your main program. If there
+are differences, things go crazy quickly, and this is how `wile` attempts
+to detect and prevent these crazinesses.
 
-## Limitations/Bugs/Roadmap
+## Limitations and Bugs
 
-Stuff that's missing:
+### Stuff that's missing:
 
 * `wile` can't compile user-defined macros, which are user-defined code
   that runs at compile time: it doesn't have an interpreter built in.
-  This is why it can't compile itself yet.
+  ~~This is why it can't compile itself yet.~~ In order to get around
+  this and make `wile` self-hosting, I took the few macros that `wile`
+  defines and stuck them as built-in macros into its list of primitives.
 
 * Closures are incomplete: closures which obey stack discipline are
   ok, but closures which have indefinite lifetime beyond where they
@@ -69,11 +85,12 @@ Stuff that's missing:
   hurt). Sometimes code with continuations crashes.
 
 * There is no high-level macro system yet. `wile` does have some
-  low-level macros built in, `def-macro` style.
+  low-level macros built in, `def-macro` style. Macros are not available
+  in user programs yet.
 
 * There is no unicode support; `wile` speaks only ASCII so far.
 
-* I'm aiming at R^N^RS compliance, for suitably recent value of N;
+* I'm aiming at R*N*RS compliance, for suitably recent value of *N*;
   not there yet, but working on it.
 
 * There is no automake/autoconf-style build+install system yet; I only
@@ -82,20 +99,20 @@ Stuff that's missing:
 
 * Tail recursion seems to be largely working, but since `wile` is a
   scheme-to-c compiler, it can be a bit tricky at times. We depend on
-  the c compiler, and not every c compiler will do this correctly.
+  the c compiler, and not every c compiler will do this correctly
+  in all cases.
 
 * There are no bignums. Recent versions of gcc and clang support
   128-bit integers, and I have support for that in `wile`, but no true
   unlimited-size integers.
 
-* A couple of special forms are missing: `delay`, `force`; `case` is
-  missing the `=>` style of syntax.
+* A few special forms are missing: `delay`, `force`.
 
 * There are huge amounts of documentation still to be written.
 
 * Error messages need significant improvement
 
-Outright bugs:
+### Outright bugs:
 
 * `set-car!` and `set-cdr!` are broken. The issue is that they need to
   mutate info that's stored in the heap, but instead they change local
@@ -113,13 +130,17 @@ Outright bugs:
   with any style of number (int, rational, real, complex where
   relevant) as input, but there may be some cases I've missed.
 
-Roadmap, in no particular order:
+## Roadmap
 
 * Fix all the bugs
 
 * Implement all the stuff that's missing
 
 * Work on standards compliance
+
+* Enable a real "link against library" mode: part of it is already there,
+  need an equivalent of wrtl.sch for other libraries, but it seems pretty
+  straightforward
 
 * Make `wile` optimize better. Right now, I'm writing c output
   directly. I plan to generate output in some intermediate
@@ -132,9 +153,10 @@ Roadmap, in no particular order:
   what I intend to pursue.)
 
 * Add a decent foreign-function interface: I'd like to be able to call
-  large parts of `FFTW` or `LAPACK` etc from `wile` programs.
+  large parts of `FFTW` or `LAPACK` etc from `wile` programs, without having
+  to hand-craft every single interface.
 
-## What does `wile` have?
+## What `wile` already has
 
 * The usual special forms: `and` `begin` `case` `cond` `define`
   `define-primitive` `define-alias` `do` `guard` `if` `lambda` `let`
@@ -191,8 +213,8 @@ Roadmap, in no particular order:
   `is-named-pipe?` `is-regular-file?` `is-socket?` `is-symbolic-link?`
   `julian-day` `julian-day-of-easter` `lambert-W` `lambert-W+`
   `lambert-W-` `last` `lcm` `ldexp` `length` `list` `list->bytevector`
-  `list->vector` `list-append` `list-drop-while` `list-filter`
-  `list-flatten` `list-head` `list-last` `list-length`
+  `list->string` `list->vector` `list-append` `list-drop-while`
+  `list-filter` `list-flatten` `list-head` `list-last` `list-length`
   `list-partition` `list-ref` `list-remove-dups` `list-reverse`
   `list-sort` `list-tail` `list-take-while` `list-unhead`
   `list-untail` `list?` `listen-on` `load-library` `localtime` `log`
@@ -260,9 +282,21 @@ Roadmap, in no particular order:
   starting point for exploration, plus a couple of programs in the
   main directory which are part of the build itself.
 
-* TODO more examples
+* A couple of example programs in `examples/`:
 
-## Install details
+- `cal.scm` is a re-implementation of part of the standard unix command
+  `cal` to display the current calendar. I needed that at one point
+  and had not installed it on my laptop, so rather than get it from
+  the distro I took it as a challenge to re-implement the bits I wanted.
+
+- `net-server.scm` is a teeny-tiny very cheesy way to serve up the
+  system's notion of the current time across the network - a
+  cargo-cult implementation of `ntp` (but don't use this for anything
+  requiring real precision!)
+
+- `net-client.scm` is the client corresponding to the above server.
+
+## Configuration and installation details
 
 If you go for the more ambitious build described above, you have to
 decide how to configure `wile`. If you read the stuff below and your
@@ -353,7 +387,75 @@ Run `wile -x hello.scm hello`, then `hello`; it should say `saluton
 mondo`. If you run it as `hello 1`, there is one command-line
 argument, and it should say `coi munje` instead. And if that works,
 you're off and running. (The greetings are "hello world" in Esperanto
-and Lojban respectively.)
+and Lojban respectively... I think.)
+
+## Guide to the files
+
+The compiler is composed of three files:
+
+- `wile-main.scm` which does all the nitty-gritty of dealing with
+  command-line options, inferring output file from input if required, etc.
+
+- `wile-comp.scm` which is the heart of the compiler: this deals with
+  expressions, special forms, sequencing of outputs, etc.
+
+- `wile-prims.scm` which is the compiler's view of the runtime library:
+  a bunch of little tiny leaf functions and codelets that implement
+  most of the (small) primitives.
+
+The rest of the runtime library lives in a number of C and scheme files:
+
+- `alloc.c` which is the lowest-level interface to memory allocation,
+  either plain-vanilla `malloc` or the Boehm garbage collector version.
+
+- `print.c` which encodes all the knowledge of how to print the different
+  types of scheme values.
+
+- `location.c` is a fairly small file which helps provide source file
+  location info for tokens, and thus hopefully helps make better error
+  messages.
+
+- `wile-sql.c` contains most of the interface to `sqlite`.
+
+- `swll-cfft.c` contains `wile`'s 1D complex Fourier transform routine.
+  This should really be in some other library, not the standard runtime,
+  but this sort of thing is kinda what I do a lot of, so there it is.
+
+- `continuations.c` implements `call/cc`.
+
+- `wile-parse.c` and `wile-lex.c` are the parser and scanner,
+  respectively.  If you examine these closely, you'll see that they
+  appear machine-generated; that is in fact correct. There are
+  currently-unused `wile.yucc` and `wile.ulex` files which are the
+  true sources. A long time ago, I got curious as to how `yacc` and `lex`
+  work, and I wrote my own, `yucc` and `ulex`. I never got around to
+  releasing those, which is why I use the generated files. Maybe
+  someday I'll release those, or possibly just rewrite this back into
+  standard `yacc` and `lex`.
+
+- `fsi_set.c`, `nfa.c`, `regex.c`, and `ulexlib.c` are support files
+  for the scanner. `regex.c` also implements the very simple
+  regular-expression engine in `wile`.
+
+- `wile-rtl1.c` contains a number of low-level runtime functions
+
+- `wile-rtl2.scm` contains a fairly large number of higher-level scheme
+  routines that implement large parts of the runtime library. Many
+  of these are written in a fairly low-level style; that's because they
+  came into existence before some of the fancier stuff in the compiler
+  got written.
+
+- `math-funcs.c` contains a number of special mathematical functions.
+
+The last three of these files get chopped up when compiling the
+runtime library, so that there are lots of small object files; this is
+so that executables stay smaller and also more secure: if a particular
+buggy function gets dragged in during linking even though it never
+gets used, just because it lives in the same object file as some other
+function that does get used, and if the executable gets used in
+cracking a system somehow, buffer overruns or other hacks could get
+used to reach the broken buggy function even though the normal flow of
+control never will. But if it isn't linked in... it can't get reached.
 
 ## Contact me
 

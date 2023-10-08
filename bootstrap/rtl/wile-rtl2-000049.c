@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (write-string . strs)
+// @@@ (write-string . strs) @@@ bld-rtl-dir/wile-rtl2-000049.scm:15 @@@ wile_write_string @@@
 lval wile_write_string(lptr* var_1, lptr var_2)
 {
 lval var_4;

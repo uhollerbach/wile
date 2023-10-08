@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (vector-sort! is-le? vec)
+// @@@ (vector-sort! is-le? vec) @@@ bld-rtl-dir/wile-rtl2-000064.scm:15 @@@ wile_vector_sort_inplace @@@
 lval wile_vector_sort_inplace(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -132,7 +132,7 @@ vs[1] = var_24;
 var_25 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_25;
 var_25 = wile_max(NULL, vs);
 }

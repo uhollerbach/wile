@@ -20,13 +20,13 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (list->vector lst)
+// @@@ (list->vector lst) @@@ bld-rtl-dir/wile-rtl2-000012.scm:13 @@@ wile_list2vector @@@
 lval wile_list2vector(lptr* var_1, lptr var_2)
 {
 lval var_4;
 lval var_5;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_2[0];
 var_5 = wile_list_length(NULL, vs);
 }

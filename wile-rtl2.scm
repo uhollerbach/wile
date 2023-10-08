@@ -87,9 +87,12 @@
 (define-primitive "wile_list_head"
   "expects a list L and an integer N, and returns the first N elements of L as a new list"
   (list-head lst n)
-  (if (or (null? lst) (zero? n) (negative? n))
-      ()
-      (cons (car lst) (list-head (cdr lst) (i- n 1)))))
+  (let loop ((l1 lst)
+	     (l2 ())
+	     (nl n))
+    (if (or (null? l1) (<= nl 0))
+	(list-reverse l2)
+	(loop (cdr l1) (cons (car l1) l2) (i- nl 1)))))
 
 ;;; --8><----8><----8><--
 
@@ -151,7 +154,8 @@
 
 (define-alias partition list-partition)
 
-(define-primitive "wile_list_partition" "" (list-partition pred lst)
+(define-primitive "wile_list_partition" ""
+  (list-partition pred lst)
   (let ((ts ())
 	(fs ())
 	(vs lst))
@@ -177,7 +181,8 @@
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_list2bytevector" "" (list->bytevector lst)
+(define-primitive "wile_list2bytevector" ""
+  (list->bytevector lst)
   (let* ((l (list-length lst))
 	 (v (bytevector-create l)))
     (do ((i 0 (i+ i 1))
@@ -297,7 +302,7 @@
     (let* ((proto
 	    (list-take-while (lambda (c) (not (drop? c))) l))
 	   (rest (list-drop-while drop? (cadr proto)))
-	   (app (cons (apply char->string (car proto)) a)))
+	   (app (cons (char->string (car proto)) a)))
       (if (zero? (list-length rest))
 	  (list-reverse app)
 	  (loop rest app)))))
@@ -309,15 +314,14 @@
 
 ;;; --8><----8><----8><--
 
-;;; TODO: make a number of these mappy functions more stack-friendly
-;;; with an accumulator
-
 (define-primitive "wile_map1"
   "expects one procedure of one argument and one list, applies the procedure to each element of the list, and returns the list of results"
   (map1 proc lst)
-  (if (null? lst)
-      ()
-      (cons (proc (car lst)) (map1 proc (cdr lst)))))
+  (let loop ((l1 lst)
+	     (l2 ()))
+    (if (null? l1)
+	(list-reverse l2)
+	(loop (cdr l1) (cons (proc (car l1)) l2)))))
 
 ;;; --8><----8><----8><--
 
@@ -610,19 +614,22 @@
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_memp" "" (memp test? lst)
+(define-primitive "wile_memp" ""
+  (memp test? lst)
   (cond ((null? lst) #f)
 	((test? (car lst)) lst)
 	(else (memp test? (cdr lst)))))
 
-(define-primitive "wile_memv"
-  ""
+(define-primitive "wile_memv" ""
   (memv obj lst)
-  (memp (lambda (x) (eqv? x obj)) lst))
+  (cond ((null? lst) #f)
+	((eqv? obj (car lst)) lst)
+	(else (memv obj (cdr lst)))))
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_assp" "" (assp test? lst)
+(define-primitive "wile_assp" ""
+  (assp test? lst)
   (cond ((null? lst) #f)
 	((test? (caar lst)) (car lst))
 	(else (assp test? (cdr lst)))))
@@ -630,18 +637,22 @@
 (define-primitive "wile_assv"
   ""
   (assv obj lst)
-  (assp (lambda (x) (eqv? x obj)) lst))
+  (cond ((null? lst) #f)
+	((eqv? obj (caar lst)) (car lst))
+	(else (assv obj (cdr lst)))))
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_list_drop_while" "" (list-drop-while drop? lst)
+(define-primitive "wile_list_drop_while" ""
+  (list-drop-while drop? lst)
   (if (and (not (null? lst)) (drop? (car lst)))
       (list-drop-while drop? (cdr lst))
       lst))
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_list_take_while" "" (list-take-while keep? lst)
+(define-primitive "wile_list_take_while" ""
+  (list-take-while keep? lst)
   (let loop ((keep? keep?)
 	     (lst lst)
 	     (acc ()))
@@ -698,7 +709,7 @@
 (define-primitive "wile_string_trim_left"
   "expects a drop? predicate and a string, and returns a new string with all the droppable characters on the left side of the string removed"
   (string-trim-left drop? str)
-  (apply char->string (list-drop-while drop? (string->list str))))
+  (char->string (list-drop-while drop? (string->list str))))
 
 ;;; these two definitions are not the most efficient, but they're simple
 
@@ -1095,7 +1106,7 @@
 	    (loop p (cons c a))
 	    (begin
 	      (close-port p)
-	      (apply char->string (list-reverse a))))))))
+	      (char->string (list-reverse a))))))))
 
 ;;; small issue with numbers in bases 2 8 & 16 and plus prefix:
 ;;; negative numbers get written as #b-1100, but this makes positive
@@ -1251,7 +1262,8 @@
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_vector_map" "" (vector-map proc vec . vecs)
+(define-primitive "wile_vector_map" ""
+  (vector-map proc vec . vecs)
   (let* ((vs (cons vec vecs))
 	 (ls (map1 vector-length vs)))
     (unless (= (apply min ls) (apply max ls))
@@ -1265,7 +1277,8 @@
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_vector_map_inplace" "" (vector-map! proc vec)
+(define-primitive "wile_vector_map_inplace" ""
+  (vector-map! proc vec)
   (let ((len (vector-length vec)))
     (do ((i 0 (+ i 1)))
 	((= i len) vec)
@@ -1300,7 +1313,8 @@
 ;;; cholesky-decompose and a vector and computes the solution of the
 ;;; matrix equation.
 
-(define-primitive "wile_cholesky_decompose" "" (cholesky-decompose mat)
+(define-primitive "wile_cholesky_decompose" ""
+  (cholesky-decompose mat)
   (define (wk1 r rs)
     (if (zero? r)
 	(raise "Zero pivot in Cholesky decomposition")
@@ -1324,7 +1338,8 @@
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_cholesky_solve" "" (cholesky-solve mat vec)
+(define-primitive "wile_cholesky_solve" ""
+  (cholesky-solve mat vec)
   (define (sf m v)
     (if (null? m)
 	()
@@ -1357,10 +1372,7 @@
   "expects no arguments and returns an list of various build configuration items"
   (wile-build-info)
   (let* ((binfo (wile-basic-build-info)))
-    `((compiler-version (0 8 0))
-      (garbage-collection? ,(not (zero? (bits-and binfo #b0000001))))
-      (rc4-rand? ,(not (zero? (bits-and binfo #b0000010))))
-      (sqlite? ,(not (zero? (bits-and binfo #b0000100))))
+    `((compiler-version (0 9 0))
       (float-type ,(case (bits-shift (bits-and binfo #b0011000) -3)
 		     ((0) 'double)
 		     ((1) 'long-double)
@@ -1370,7 +1382,9 @@
 		       ((0) 'long-int)
 		       ((1) 'int-128)
 		       ((2) 'semi-big-int-untested)
-		       (else 'unknown-int-type!?!))))))
+		       (else 'unknown-int-type!?!)))
+      (garbage-collection? ,(not (zero? (bits-and binfo #b0000001))))
+      (sqlite? ,(not (zero? (bits-and binfo #b0000100)))))))
 
 ;;; --8><----8><----8><--
 
@@ -1397,12 +1411,14 @@
     (set! cmd (apply string-join-by " "
 		     "addr2line -f -p -e" exe-name "-a" data2))
     (set! pport (run-read-command cmd))
+    (write-string port "wile stack trace begin\n")
     (let loop ()
       (let ((line (read-line pport)))
 	(if line
 	    (begin (write-string port line #\newline)
 		   (loop))
-	    (close-port pport))))))
+	    (close-port pport))))
+    (write-string port "wile stack trace end\n")))
 
 (define-primitive "wile_stack_trace"
   "expects one output file port argument and writes a nice useful stack trace to that file port. returns nothing useful"

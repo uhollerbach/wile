@@ -20,12 +20,12 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (delta-dates y1 m1 d1 y2 m2 d2)
+// @@@ (delta-dates y1 m1 d1 y2 m2 d2) @@@ bld-rtl-dir/wile-rtl2-000056.scm:15 @@@ wile_delta_dates @@@
 lval wile_delta_dates(lptr* var_1, lptr var_2)
 {
 lval var_4;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_2[3];
 vs[1] = var_2[4];
 vs[2] = var_2[5];
@@ -33,7 +33,7 @@ var_4 = wile_julian_day(NULL, vs);
 }
 lval var_5;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_2[0];
 vs[1] = var_2[1];
 vs[2] = var_2[2];

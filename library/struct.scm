@@ -25,7 +25,7 @@
   (let* ((fs (cons field fields))
 	 (lfs (list-length fs))
 	 (nfs (+ 1 lfs))
-	 (J0 (curry string-join-by ""))
+	 (J0 (lambda strs (apply string-append strs)))
 	 (J1 (lambda (pre main) (string->symbol (J0 pre main))))
 	 (J2 (lambda (pre main post) (string->symbol (J0 pre main post))))
 	 (nstr (symbol->string name))

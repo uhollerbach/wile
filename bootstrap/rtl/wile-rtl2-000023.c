@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (foldl1 proc lst)
+// @@@ (foldl1 proc lst) @@@ bld-rtl-dir/wile-rtl2-000023.scm:13 @@@ wile_foldl1 @@@
 lval wile_foldl1(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -35,7 +35,7 @@ WILE_EX("cdr", "input is not a pair!");
 var_5 = (var_2[1].v.pair.cdr ? *(var_2[1].v.pair.cdr) : LVI_NIL());
 lval var_6;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_2[0];
 vs[1] = var_4;
 vs[2] = var_5;

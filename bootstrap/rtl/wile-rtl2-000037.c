@@ -21,7 +21,7 @@ static lval fn_4(lptr*, lptr);
 
 // definitions
 
-// lambda (keep? lst acc)
+// @@@ lambda (keep? lst acc) @@@ bld-rtl-dir/wile-rtl2-000037.scm:13 @@@ fn_4 @@@
 static lval fn_4(lptr* var_5, lptr var_6)
 {
 lbl_7:;
@@ -60,7 +60,7 @@ if (LV_IS_FALSE(var_9)) { break; }
 if (LV_IS_FALSE(var_9)) {
 lval var_15;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_6[2];
 var_15 = wile_list_reverse(NULL, vs);
 }
@@ -96,7 +96,7 @@ p2 = new_lv(LV_NIL);
 }
 var_19 = LVI_PAIR(p1, p2);
 }
-lval var_22[6];
+lval var_22[8];
 var_22[0] = var_6[0];
 var_22[1] = var_17;
 var_22[2] = var_19;
@@ -109,14 +109,14 @@ return var_8;
 }
 // end of lambda fn_4
 
-// (list-take-while keep? lst)
+// @@@ (list-take-while keep? lst) @@@ bld-rtl-dir/wile-rtl2-000037.scm:12 @@@ wile_list_take_while @@@
 lval wile_list_take_while(lptr* var_1, lptr var_2)
 {
 lptr var_5[0];
 lval var_23;
 var_23 = LVI_NIL();
 lval var_24;
-lval var_25[6];
+lval var_25[8];
 var_25[0] = var_2[0];
 var_25[1] = var_2[1];
 var_25[2] = var_23;

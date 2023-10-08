@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (list-append . lsts)
+// @@@ (list-append . lsts) @@@ bld-rtl-dir/wile-rtl2-000003.scm:15 @@@ wile_list_append @@@
 lval wile_list_append(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -35,7 +35,7 @@ lval var_8;
 var_8 = var_2[0];
 lval var_9;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_8;
 var_9 = wile_list_reverse(NULL, vs);
 }
@@ -75,7 +75,7 @@ WILE_EX("car", "input is not a pair!");
 var_20 = (var_8.v.pair.car ? *(var_8.v.pair.car) : LVI_NIL());
 lval var_21;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_20;
 var_21 = wile_list_reverse(NULL, vs);
 }

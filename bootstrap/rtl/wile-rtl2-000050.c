@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// car
+// @@@ car @@@ bld-rtl-dir/wile-rtl2-000050.scm:14 @@@ fn_4 @@@
 static lval fn_4(lptr* var_5, lptr var_6)
 {
 lval var_8;
@@ -32,7 +32,7 @@ return var_8;
 }
 // end of prim fn_4
 
-// (sqlite-meta-tables port)
+// @@@ (sqlite-meta-tables port) @@@ bld-rtl-dir/wile-rtl2-000050.scm:13 @@@ wile_sql_meta_tables @@@
 lval wile_sql_meta_tables(lptr* var_1, lptr var_2)
 {
 lval var_9;
@@ -50,7 +50,7 @@ var_10 = LVI_BOOL(false);
 lval var_11;
 var_11 = LVI_NIL();
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_4,NULL,1);
 vs[1] = var_10;
 vs[2] = var_11;

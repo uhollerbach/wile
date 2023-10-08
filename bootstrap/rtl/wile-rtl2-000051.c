@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (sqlite-meta-schema port tbl)
+// @@@ (sqlite-meta-schema port tbl) @@@ bld-rtl-dir/wile-rtl2-000051.scm:16 @@@ wile_sql_meta_schema @@@
 lval wile_sql_meta_schema(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -40,7 +40,7 @@ vs[2] = var_7;
 var_8 = gen_list(3, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_5;
 vs[1] = var_8;
 var_8 = wile_string_join_by(NULL, vs);

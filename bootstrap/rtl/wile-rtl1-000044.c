@@ -16,7 +16,6 @@ lval wile_setfilepos2(lptr*, lptr args)
 	wile_exception("set-file-position",
 		       "expects a file port and an offset");
     }
-    // TODO: MAYBE_ERRNO()
     return LVI_BOOL(fseek(args[0].v.fp, args[1].v.iv, SEEK_SET) == 0);
 }
 

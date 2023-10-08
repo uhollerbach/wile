@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (any-true? vals)
+// @@@ (any-true? vals) @@@ bld-rtl-dir/wile-rtl2-000047.scm:13 @@@ wile_any_true @@@
 lval wile_any_true(lptr* var_1, lptr var_2)
 {
 lbl_3:;
@@ -50,7 +50,7 @@ if (var_2[0].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
 var_9 = (var_2[0].v.pair.cdr ? *(var_2[0].v.pair.cdr) : LVI_NIL());
-lval var_12[6];
+lval var_12[8];
 var_12[0] = var_9;
 var_2[0] = var_12[0];
 goto lbl_3;	// selfie

@@ -26,7 +26,7 @@ static lval fn_93(lptr*, lptr);
 
 // definitions
 
-// lambda (e1 e2)
+// @@@ lambda (e1 e2) @@@ bld-rtl-dir/wile-rtl2-000069.scm:18 @@@ fn_16 @@@
 static lval fn_16(lptr* var_17, lptr var_18)
 {
 lval var_20;
@@ -37,7 +37,7 @@ vs[1] = var_18[1];
 var_20 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_20;
 var_20 = wile_multiply(NULL, vs);
 }
@@ -49,7 +49,7 @@ vs[1] = var_20;
 var_21 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_21;
 var_21 = wile_subtract(NULL, vs);
 }
@@ -57,7 +57,7 @@ return var_21;
 }
 // end of lambda fn_16
 
-// (sf m v)
+// @@@ (sf m v) @@@ bld-rtl-dir/wile-rtl2-000069.scm:13 @@@ fn_4 @@@
 static lval fn_4(lptr* var_8, lptr var_9)
 {
 lval var_11;
@@ -109,14 +109,14 @@ vs[0] = var_24;
 var_25 = gen_list(1, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_16,var_17,2);
 vs[1] = var_22;
 vs[2] = var_25;
 var_25 = wile_map(NULL, vs);
 }
 lval var_26;
-lval var_27[6];
+lval var_27[8];
 var_27[0] = var_15;
 var_27[1] = var_25;
 var_26 = fn_4(NULL, var_27);
@@ -143,7 +143,7 @@ return var_11;
 }
 // end of function fn_4
 
-// (t1 n m)
+// @@@ (t1 n m) @@@ bld-rtl-dir/wile-rtl2-000069.scm:20 @@@ fn_5 @@@
 static lval fn_5(lptr* var_31, lptr var_32)
 {
 lval var_34;
@@ -176,7 +176,7 @@ vs[1] = var_37;
 var_38 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_38;
 var_38 = wile_subtract(NULL, vs);
 }
@@ -186,7 +186,7 @@ WILE_EX("cdr", "input is not a pair!");
 }
 var_39 = (var_32[1].v.pair.cdr ? *(var_32[1].v.pair.cdr) : LVI_NIL());
 lval var_40;
-lval var_41[6];
+lval var_41[8];
 var_41[0] = var_38;
 var_41[1] = var_39;
 var_40 = fn_5(NULL, var_41);
@@ -282,7 +282,7 @@ return var_34;
 }
 // end of function fn_5
 
-// (t2 i n m)
+// @@@ (t2 i n m) @@@ bld-rtl-dir/wile-rtl2-000069.scm:26 @@@ fn_6 @@@
 static lval fn_6(lptr* var_55, lptr var_56)
 {
 lval var_58;
@@ -331,14 +331,14 @@ vs[1] = var_61;
 var_62 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_62;
 var_62 = wile_add(NULL, vs);
 }
 var_60 = var_62;
 lval var_63;
 lval var_64;
-lval var_65[6];
+lval var_65[8];
 var_65[0] = var_60;
 var_65[1] = var_56[2];
 var_64 = fn_5(NULL, var_65);
@@ -350,7 +350,7 @@ WILE_EX("car", "input is not a pair!");
 var_67 = (var_63.v.pair.car ? *(var_63.v.pair.car) : LVI_NIL());
 lval var_68;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_67;
 var_68 = wile_list_reverse(NULL, vs);
 }
@@ -374,7 +374,7 @@ WILE_EX("cxr", "got malformed control string '%s'", var_69.v.str);
 }
 }
 lval var_71;
-lval var_72[6];
+lval var_72[8];
 var_72[0] = var_60;
 var_72[1] = var_56[1];
 var_72[2] = var_70;
@@ -402,26 +402,26 @@ return var_58;
 }
 // end of function fn_6
 
-// (t3 m)
+// @@@ (t3 m) @@@ bld-rtl-dir/wile-rtl2-000069.scm:32 @@@ fn_7 @@@
 static lval fn_7(lptr* var_76, lptr var_77)
 {
 lval var_79;
 var_79 = LVI_INT(0);
 lval var_80;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_77[0];
 var_80 = wile_list_length(NULL, vs);
 }
 lval var_81;
-lval var_82[6];
+lval var_82[8];
 var_82[0] = var_79;
 var_82[1] = var_80;
 var_82[2] = var_77[0];
 var_81 = fn_6(NULL, var_82);
 lval var_84;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_81;
 var_84 = wile_list_reverse(NULL, vs);
 }
@@ -429,7 +429,7 @@ return var_84;
 }
 // end of function fn_7
 
-// lambda (m v)
+// @@@ lambda (m v) @@@ bld-rtl-dir/wile-rtl2-000069.scm:36 @@@ fn_93 @@@
 static lval fn_93(lptr* var_94, lptr var_95)
 {
 lval var_97;
@@ -440,7 +440,7 @@ vs[1] = var_95[0];
 var_97 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_97;
 var_97 = wile_divide(NULL, vs);
 }
@@ -448,7 +448,7 @@ return var_97;
 }
 // end of lambda fn_93
 
-// (cholesky-solve mat vec)
+// @@@ (cholesky-solve mat vec) @@@ bld-rtl-dir/wile-rtl2-000069.scm:12 @@@ wile_cholesky_solve @@@
 lval wile_cholesky_solve(lptr* var_1, lptr var_2)
 {
 lval var_85;
@@ -480,12 +480,12 @@ WILE_EX("cxr", "got malformed control string '%s'", var_88.v.str);
 }
 var_87 = var_89;
 lval var_90;
-lval var_91[6];
+lval var_91[8];
 var_91[0] = var_87;
 var_90 = fn_7(NULL, var_91);
 lptr var_94[0];
 lval var_98;
-lval var_99[6];
+lval var_99[8];
 var_99[0] = var_87;
 var_99[1] = var_2[1];
 var_98 = fn_4(NULL, var_99);
@@ -496,7 +496,7 @@ vs[0] = var_98;
 var_101 = gen_list(1, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_93,var_94,2);
 vs[1] = var_85;
 vs[2] = var_101;
@@ -504,18 +504,18 @@ var_101 = wile_map(NULL, vs);
 }
 lval var_102;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_101;
 var_102 = wile_list_reverse(NULL, vs);
 }
 lval var_103;
-lval var_104[6];
+lval var_104[8];
 var_104[0] = var_90;
 var_104[1] = var_102;
 var_103 = fn_4(NULL, var_104);
 lval var_106;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_103;
 var_106 = wile_list_reverse(NULL, vs);
 }

@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// (day-of-year y m d)
+// @@@ (day-of-year y m d) @@@ bld-rtl-dir/wile-rtl2-000059.scm:16 @@@ wile_day_of_year @@@
 lval wile_day_of_year(lptr* var_1, lptr var_2)
 {
 lval var_4;
@@ -65,7 +65,7 @@ vs[11] = var_15;
 var_16 = gen_list(12, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_16;
 var_16 = wile_list2vector(NULL, vs);
 }
@@ -126,7 +126,7 @@ var_21 = var_23;
 if (LV_IS_FALSE(var_21)) { break; }
 lval var_24;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_2[0];
 var_24 = wile_is_leap_year(NULL, vs);
 }

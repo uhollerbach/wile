@@ -34,7 +34,7 @@
 ;;;
 ;;; if this is set to -1, warnings about too many args are suppressed.
 
-(define global-tc-min-args 6)
+(define global-tc-min-args 8)
 
 (define (debug-show-env env n)
   (unless (null? env)
@@ -56,13 +56,6 @@
     (debug-show-env env 5)
     (flush-port stderr)))
 
-;;; TODO: how is this different than assv in the RTL, besides being
-;;; compiled in&for the RTL? can't see any difference, but.. it matters.
-;;; somehow.
-
-(define (assd obj lst)
-  (assp (lambda (x) (eqv? x obj)) lst))
-
 (define (format-real val)
   (cond ((nan? val)
 	 "REAL_NAN")
@@ -82,7 +75,7 @@
   (let* ((cs1 (string->list str1))
 	 (cs2 (map (lambda (c)
 		     (if (char-alphanumeric? c) (char-upcase c) #\_)) cs1))
-	 (str2 (apply char->string cs2))
+	 (str2 (list->string cs2))
 	 (str3 (number->string (string-hash str1))))
     (string-join-by "_" str2 str3)))
 
@@ -93,7 +86,7 @@
   (let loop ((cs (list-reverse (string->list str)))
 	     (acc ()))
     (if (null? cs)
-	(apply char->string acc)
+	(list->string acc)
 	(case (car cs)
 	  ((#\alarm)		(loop (cdr cs) (cons #\\ (cons #\a acc))))
 	  ((#\backspace)	(loop (cdr cs) (cons #\\ (cons #\b acc))))
@@ -137,13 +130,14 @@
 	    (read-all-lines from-port))
   (close-port from-port))
 
-(defmacro (compile-with-output dest . body)
-  (let ((tport (gensym)))
-    `(let ((,tport (open-scratch-space)))
-       (fluid-let ((global-out ,tport))
-	 ,@body
-	 (when ,dest
-	   (transfer-all-lines ,tport ,dest))))))
+;;; comment this out for closing the self-hosting loop
+;;; (defmacro (compile-with-output dest . body)
+;;;   (let ((tport (gensym)))
+;;;     `(let ((,tport (open-scratch-space)))
+;;;        (fluid-let ((global-out ,tport))
+;;; 	 ,@body
+;;; 	 (when ,dest
+;;; 	   (transfer-all-lines ,tport ,dest))))))
 
 (define (args-ref name ix)
   (string-append name "[" (number->string ix) "]"))
@@ -194,40 +188,42 @@
 ;;; @@ gets replaced with the value of the variable 'r', @1 to @9
 ;;; get replaced with the values of the variables 'a1' to 'a9'.
 
-(defmacro (emit-code . strs)
-  (let ((xform
-	 (let loop ((cs (string->list (apply string-join-by "\n" strs)))
-		    (accs ())
-		    (acca ()))
-	   (cond ((null? cs)
-		  (cons (apply char->string (list-reverse accs))
-			(map (lambda (c)
-			       (if (char=? c #\@)
-				   'r
-				   (string->symbol (char->string #\a c))))
-			     (list-reverse acca))))
-		 ((char=? (car cs) #\@)
-		  (loop (cddr cs)
-			(cons #\s (cons #\% accs))
-			(cons (cadr cs) acca)))
-		 (else
-		  (loop (cdr cs) (cons (car cs) accs) acca))))))
-    `(begin (when r (emit-decl r))
-	    (apply fprintf global-out ,@xform ())
-	    (newline global-out)
-	    r)))
+;;; comment this out for closing the self-hosting loop
+;;; (defmacro (emit-code . strs)
+;;;   (let ((xform
+;;; 	 (let loop ((cs (string->list (apply string-join-by "\n" strs)))
+;;; 		    (accs ())
+;;; 		    (acca ()))
+;;; 	   (cond ((null? cs)
+;;; 		  (cons (list->string (list-reverse accs))
+;;; 			(map (lambda (c)
+;;; 			       (if (char=? c #\@)
+;;; 				   'r
+;;; 				   (string->symbol (char->string #\a c))))
+;;; 			     (list-reverse acca))))
+;;; 		 ((char=? (car cs) #\@)
+;;; 		  (loop (cddr cs)
+;;; 			(cons #\s (cons #\% accs))
+;;; 			(cons (cadr cs) acca)))
+;;; 		 (else
+;;; 		  (loop (cdr cs) (cons (car cs) accs) acca))))))
+;;;     `(begin (when r (emit-decl r))
+;;; 	    (apply fprintf global-out ,@xform ())
+;;; 	    (newline global-out)
+;;; 	    r)))
 
 (define (emit-function-head fn-name top-label visible?
-			    clos-name args-name info)
+			    clos-name args-name info1 info2)
   ;;; emit a trailing ';' after the label because clang expects
   ;;; an expression after a label; gcc doesn't care
   (emit-fstr
-   "\n// %v\n%slval %s(lptr* %s, lptr %s)\n{\n%s:;\n"
-   info (if visible? "" "static ") fn-name clos-name args-name top-label)
+   "\n// @@@ %v @@@ %s @@@ %s @@@\n%slval %s(lptr* %s, lptr %s)\n{\n%s:;\n"
+   info1 info2 fn-name (if visible? "" "static ")
+   fn-name clos-name args-name top-label)
   (when global-profile
     (emit-fstr "wile_profile[%d].count += 1;\n" (list-length global-profile))
     (set! global-profile
-	  (cons (sprintf "%v\\t%v" (token-source-line info) info)
+	  (cons (sprintf "%v\\t%v" info2 info1)
 		global-profile))))
 
 (define (emit-function-call res fn closure args tcall frame)
@@ -235,7 +231,7 @@
     (let* ((cl1 (car global-closures))
 	   (cname (get-closure-table-cname cl1))
 	   (clist (get-closure-table-clist cl1))
-	   (cl-entry (assd closure clist)))
+	   (cl-entry (assv closure clist)))
       (when cl-entry
 	(set! closure (sprintf "(lptr*) %s" (cdr cl-entry))))))
   (let ((call (sprintf "%s(%s, %s)" fn (if closure closure "NULL") args)))
@@ -295,7 +291,7 @@
 		 (cname (get-closure-table-cname cl))
 		 (csize (get-closure-table-csize cl))
 		 (the-list (get-list cl))
-		 (cl-entry (assd entry the-list)))
+		 (cl-entry (assv entry the-list)))
 	    (if cl-entry
 		(cdr cl-entry)
 		(let ((cl-entry (sprintf format cname csize)))
@@ -332,10 +328,6 @@
 					    fc (cadr entry))))
 			   ((and (> fc 1)
 				 (symbol=? (car entry) 'proc))
-;;;			    (list 0 'c-var (update-closure-clist
-;;;					    (- fc 1) (cadddr entry)))
-;;; TODO: do I return an updated list as in the commented-out bit above,
-;;; or just update the table then return the original entry as below
 			    (update-closure-clist (- fc 1) (cadddr entry))
 			    (cons fc entry)
 			    )
@@ -408,7 +400,21 @@
      cons prim-table
      (list
       (let ((tmp "var_argv")
-	    (fstr "{\nuint16_t binfo = wile_binfo();\n#ifdef WILE_USES_GC\nif (!(binfo & 0x01)) {\nfprintf(stderr, \"warning: RTL is not configured to use garbage collection\\n\");\n}\n#else\nif (binfo & 0x01) {\nfprintf(stderr, \"warning: RTL is configured to use garbage collection\\n\");\n}\n#endif\n}\nif (argc <= 1) {\n%s = LVI_NIL();\n} else {\nint i;\nlval* sas = LISP_ALLOC(lval, argc-1);\nLISP_ASSERT(sas != NULL);\nfor (i = 1; i < argc; ++i) {\nsas[i-1] = LVI_STRING(argv[i]);\n}\n%s = gen_list(argc - 1, sas, NULL);\n}\n"))
+	    (fstr (string-join-by
+		   "\n"
+		   "WILE_CONFIG_SYM4();"
+		   "if (argc <= 1) {"
+		   "%s = LVI_NIL();"
+		   "} else {"
+		   "int i;"
+		   "lval* sas = LISP_ALLOC(lval, argc-1);"
+		   "LISP_ASSERT(sas != NULL);"
+		   "for (i = 1; i < argc; ++i) {"
+		   "sas[i-1] = LVI_STRING(argv[i]);"
+		   "}"
+		   "%s = gen_list(argc - 1, sas, NULL);"
+		   "}"
+		   "")))
 	(special-decl tmp compile-type)
 	(cond ((symbol=? compile-type 'singleton)
 	       (emit-fstr fstr tmp tmp))
@@ -811,7 +817,7 @@
 			 (ix1 (string-find-last-char name1 #\())
 			 (ix2 (string-find-first-char name1 #\)))
 			 (var (car cle))
-			 (tmp (assd var vlist2))
+			 (tmp (assv var vlist2))
 			 (name2 (if tmp (cdr tmp) var)))
 		    (emit-fstr "%s = &(%s);\n"
 			       (string-copy name1 (+ ix1 1) ix2) name2)))
@@ -819,7 +825,7 @@
       (for-each (lambda (cle)
 		  (let* ((name1 (cdr cle))
 			 (var (car cle))
-			 (tmp (assd var clist2))
+			 (tmp (assv var clist2))
 			 (name2 (if tmp (cdr tmp) var)))
 		    (emit-fstr "%s = (lptr) (%s);\n" name1 name2)))
 		clist1))))
@@ -844,7 +850,8 @@
       (compile-with-output
        global-func
        (emit-function-head tmp-fn top-label #f c-name a-name
-			   (sprintf "lambda %v" (car def)))
+			   (sprintf "lambda %v" (car def))
+			   (token-source-line def))
        (for-each (lambda (sa ca)
 		   (set! cur-env (cons (make-var-def sa ca) cur-env)))
 		 sas cas)
@@ -854,9 +861,20 @@
       (string-append "LVI_PROC(" tmp-fn "," c-name ","
 		     (number->string arity) ")"))))
 
-;;; TODO: implement the ((val val val...) => proc-ish) syntax
+(define (finish-one-case res cur-env tcall val clause)
+  (emit-fstr "{\n")
+  (emit-fstr
+   "%s = %s;\nbreak;\n}\n" res
+   (if (and (= 3 (list-length clause))
+	    (symbol? (cadr clause))
+	    (symbol=? (cadr clause) '=>))
+       (let ((proc (compile-expr cur-env tcall (caddr clause)))
+	     (tmp (new-svar)))
+	 (apply build-basic-list tmp (list val))
+	 (compile-runtime-apply (new-svar) proc tmp))
+       (compile-special-begin cur-env tcall (cdr clause)))))
 
-(define (do-one-case1 res to-int cur-env tcall clause)
+(define (do-one-case1 res to-int cur-env tcall val clause)
   (debug-trace 'do-one-case1 cur-env tcall clause)
   ;;; do not merge these emit-fstr; sequencing and scoping depends
   ;;; on them being separate
@@ -864,9 +882,7 @@
       (emit-fstr "default:\n")
       (for-each (lambda (c) (emit-fstr "case %d:\n" (to-int c)))
 		(car clause)))
-  (emit-fstr "{\n")
-  (emit-fstr "%s = %s;\n}\nbreak;\n"
-	     res (compile-special-begin cur-env tcall (cdr clause))))
+  (finish-one-case res cur-env tcall val clause))
 
 (define (do-compile-case1 type member to-int def? cur-env tcall clauses)
   (debug-trace 'do-compile-case1 cur-env tcall clauses)
@@ -874,14 +890,14 @@
 	(res (new-svar)))
     (emit-decl res)
     (emit-fstr "if (%s.vt != %s) {\nwile_exception2(\"case\", __FILE__, __LINE__, \"case-value type does not match case type\");\n}\nswitch (%s%s) {\n" val type val member)
-    (for-each (lambda (c) (do-one-case1 res to-int cur-env tcall c))
+    (for-each (lambda (c) (do-one-case1 res to-int cur-env tcall val c))
 	      (cdr clauses))
     (unless def?
       (emit-fstr "default:\n%s = LVI_BOOL(false);\n" res))
     (emit-fstr "}\n")
     res))
 
-(define (do-one-case2 res to-str cur-env tcall vm clause)
+(define (do-one-case2 res to-str cur-env tcall val vm clause)
   (debug-trace 'do-one-case2 cur-env tcall clause)
   ;;; do not merge these emit-fstr; sequencing and scoping depends
   ;;; on them being separate
@@ -893,9 +909,7 @@
 		       (string-append
 			"(strcmp(" vm ", \"" (to-str s) "\") == 0)"))
 		     (car clause)))))
-  (emit-fstr "{\n")
-  (emit-fstr "%s = %s;\nbreak;\n}\n"
-	     res (compile-special-begin cur-env tcall (cdr clause))))
+  (finish-one-case res cur-env tcall val clause))
 
 (define (do-compile-case2 type member to-str def? cur-env tcall clauses)
   (debug-trace 'do-compile-case2 cur-env tcall clauses)
@@ -904,7 +918,7 @@
 	 (res (new-svar)))
     (emit-decl res)
     (emit-fstr "if (%s.vt != %s) {\nwile_exception2(\"case\", __FILE__, __LINE__, \"case-value type does not match case type\");\n}\ndo {\n" val type)
-    (for-each (lambda (c) (do-one-case2 res to-str cur-env tcall vm c))
+    (for-each (lambda (c) (do-one-case2 res to-str cur-env tcall val vm c))
 	      (cdr clauses))
     (unless def?
       (emit-fstr "%s = LVI_BOOL(false);\n" res))
@@ -1193,7 +1207,8 @@
 	(ncs (/ (list-length codelets) 2))
 	(arity (car codelets)))
     (fluid-let ((global-out global-func))
-      (emit-function-head f-name top-label #f c-name a-name s-name)
+      (emit-function-head f-name top-label #f c-name a-name s-name
+			  (token-source-line s-name))
       (if (> ncs 1)
 	  (ERR "ambiguous primitive '%s': %d choices cannot be wrapped yet"
 	       s-name ncs)
@@ -1352,8 +1367,7 @@
 	    (cond ((symbol=? (car op) 'c-var)
 		   (let ((tmp (new-svar)))
 		     (apply build-basic-list tmp args)
-		     (apply compile-runtime-apply
-			    (list (new-svar) (cadr op) tmp))))
+		     (compile-runtime-apply (new-svar) (cadr op) tmp)))
 		  ((symbol=? (car op) 'prim)
 		   (apply-prim s-name (cdr op) args))
 		  ((symbol=? (car op) 'proc)
@@ -1367,7 +1381,7 @@
 		     (cdr expr)))
 	  (tmp (new-svar)))
       (apply build-basic-list tmp args)
-      (apply compile-runtime-apply (list (new-svar) ator tmp))))))
+      (compile-runtime-apply (new-svar) ator tmp)))))
 
 (define (maybe-compile-expr cur-env tcall expr)
   (if (symbol? expr)
@@ -1449,7 +1463,8 @@
 		 (cons (make-closure-table c-name () () 0) global-closures)))
       (compile-with-output
        global-func
-       (emit-function-head tmp-fn top-label c-fn-name c-name a-name (car def))
+       (emit-function-head tmp-fn top-label c-fn-name c-name a-name
+			   (car def) (token-source-line def))
        (for-each (lambda (sa ca)
 		   (set! cur-env (cons (make-var-def sa ca) cur-env)))
 		 sas cas)
@@ -1661,7 +1676,8 @@
 		      acc
 		      (cons l acc))))))))
 
-(defmacro (add-output val) `(set! output (cons ,val output)))
+;;; comment this out for closing the self-hosting loop
+;;; (defmacro (add-output val) `(set! output (cons ,val output)))
 
 (define (remove-unused-vars lines)
   (let ((decl (hash-table-create string-hash string=?))
