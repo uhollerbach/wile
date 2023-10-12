@@ -96,6 +96,10 @@
 #define TAIL_CALL		return
 #endif
 
+#define MK_CLOS(nm,sz)		lptr nm[sz]
+#define P_CLOS(nm,ix)		(nm[ix])
+#define V_CLOS(nm,ix)		(*(P_CLOS(nm,ix)))
+
 uint16_t wile_binfo(void);
 
 void wile_stack_trace_minimal(int fd);

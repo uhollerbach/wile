@@ -88,6 +88,10 @@ int main(int argc, char** argv)
 	    fputc('!', stderr);
 	}
 	fputc('\n', stderr);
+	if (errno) {
+	    fprintf(stderr, "errno is set to %d :: %s\n",
+		    errno, strerror(errno));
+	}
     }
 
     if (wile_profile) {

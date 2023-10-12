@@ -38,3 +38,8 @@ Last update: 2023-10-08 10:00 PST
 * There are occasional segfaults after running some continuations test
   cases. Probably uninitialized memory somehow, but valgrind is
   inconclusive.
+
+* Occasionally wtest/test_46 fails; so far I haven't been able to
+  isolate it. Stack trace says "caught exception from
+  <test_46-int.c:1233>;'apply' failed while fetching proc - bad type
+  6" which means that apply got handed an int instead of a proc...?

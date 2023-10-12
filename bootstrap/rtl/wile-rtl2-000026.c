@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (+ . vs) @@@ bld-rtl-dir/wile-rtl2-000026.scm:13 @@@ wile_add @@@
+// @@@ (+ . vs) @@@ bld-rtl-dir/wile-rtl2-000026.scm:15 @@@ wile_add @@@
 lval wile_add(lptr* var_1, lptr var_2)
 {
 lval var_4;

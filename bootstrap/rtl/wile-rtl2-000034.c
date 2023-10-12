@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (memp test? lst) @@@ bld-rtl-dir/wile-rtl2-000034.scm:12 @@@ wile_memp @@@
+// @@@ (memp test? lst) @@@ bld-rtl-dir/wile-rtl2-000034.scm:13 @@@ wile_memp @@@
 lval wile_memp(lptr* var_1, lptr var_2)
 {
 lbl_3:;
@@ -73,7 +73,7 @@ return var_4;
 }
 // end of function wile_memp
 
-// @@@ (memv obj lst) @@@ bld-rtl-dir/wile-rtl2-000034.scm:18 @@@ wile_memv @@@
+// @@@ (memv obj lst) @@@ bld-rtl-dir/wile-rtl2-000034.scm:20 @@@ wile_memv @@@
 lval wile_memv(lptr* var_14, lptr var_15)
 {
 lbl_16:;

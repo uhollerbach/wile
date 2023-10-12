@@ -16,7 +16,9 @@ have tried to keep it simple and self-contained, with minimal
 dependencies: in a minimal version, I want it to be usable without any
 requirements beyond a reasonably-modern C compiler (although I do rely
 on the [Boehm garbage collector](https://www.hboehm.info/gc); without
-that, you'll be limited to very small programs).
+that, you'll be limited to small programs... that said, the bootstrap
+stage0 compiler is configured to build without GC, and it can recompile
+itself; that's not tiny.)
 
 This release of it is still very incomplete: batteries *not* included,
 some assembly required! This is alpha software (mainly because not

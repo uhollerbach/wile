@@ -55,6 +55,10 @@ test:	libwrtl.a twp
 	test-wile.scm
 	twp wtest
 
+tarball:
+	tar cvf dist.tar `git ls-tree -r HEAD --name-only`
+	gzip -9 dist.tar
+
 # don't delete build-rtl, otherwise there is a bootstrap problem!
 
 realclean:	clean
@@ -68,11 +72,7 @@ semiclean:
 	rm -f *.o *.gcno *.gcda *.gcov test.txt test-cont.txt \
 	coyote coywolf coy.log woycolf wile-out.c wile-profile.out
 
-# show all the files in the repo
-tracked:
-	git ls-tree -r HEAD --name-only
-
-.PHONY:	realclean clean semiclean test
+.PHONY:	realclean clean semiclean test tarball
 
 # dependencies
 
@@ -101,7 +101,7 @@ wile-sql.o:	wile-sql.c $(HDRS) wile-rtl1.h wile-rtl2.h
 wile-rtl2.o:	wile-rtl2.c $(HDRS)
 
 wile-rtl2.c:	wile-rtl2.scm
-	./wile -v wile-rtl2.scm wile-rtl2.c
+	wile -v wile-rtl2.scm wile-rtl2.c
 
 wile-rtl2.h:	wile-rtl2.c
 

@@ -4,6 +4,13 @@ Last update: 2023-10-11 12:00 PST
 
 ## Current version `wile` (x x x)
 
+- rework internal buffers to no longer use scratch files,
+  that was not elegant
+
+- still working on adding doc-strings to more and more functions
+
+- more work on making RTL stack-friendly
+
 ## Current version `wile` (0 9 0) 2023-10-11
 
 - implement `((val val val...) => proc-ish)` syntax for `case`

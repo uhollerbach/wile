@@ -6,20 +6,33 @@
 
 (define (ERR fmt . args)
   (flush-port stderr)
-  (raise (apply sprintf (string-append
-			 "wile error: " fmt " at " (token-source-line args))
+  (raise (apply sprintf
+		(string-append fmt " at " (token-source-line args))
 		args)))
 
 (define global-verbose 0)		;;; how chirpy are we?
 
 (define global-library #f)		;;; flag library mode or not
 
-;;; several output ports for various bits of code wrangling
+(define global-errors 0)		;;; count errors seen during compile
 
-(define global-out stdout)
-(define global-decl stderr)
-(define global-func stderr)
-(define global-code stderr)
+;;; several output ports for various bits of code wrangling
+;;; these are no longer real file ports, but rather string-bag structs
+
+(define global-out #f)
+(define global-decl #f)
+(define global-func #f)
+(define global-code #f)
+
+(def-struct string-bag bag)
+
+(define (add-to-bag! bag str)
+  (set-string-bag-bag! bag (cons str (get-string-bag-bag bag))))
+
+(display-object-hook 'string-bag
+ (lambda (p port)
+   (for-each (lambda (s) (write-string port s))
+	     (list-reverse (get-string-bag-bag p)))))
 
 ;;; if doing profiling, this gets re-initialized to (), and then a list
 ;;; of function labels gets generated, each of which will correspond to
@@ -101,17 +114,6 @@
 	  ((#\")		(loop (cdr cs) (cons #\\ (cons #\" acc))))
 	  (else			(loop (cdr cs) (cons (car cs) acc)))))))
 
-(define (open-scratch-space)
-  (let* ((scr-dir (get-environment-variable "WILE_SCRATCH_DIRECTORY"))
-	 (scr-tmp1 "wile-scratch.XXXXXX")
-	 (scr-tmp2 (if scr-dir (string-append scr-dir "/" scr-tmp1) scr-tmp1))
-	 (tfile (open-temporary-file scr-tmp2))
-	 (port (car tfile))
-	 (name (cadr tfile)))
-    (when (< global-verbose 2)
-      (remove-file name))
-    port))
-
 ;;; Read all lines from a port after resetting the position back to the start;
 ;;; used for merging output files in merge-files
 
@@ -124,16 +126,16 @@
 	  (loop (cons line acc))
 	  (list-reverse acc)))))
 
-(define (transfer-all-lines from-port to-port)
-  (flush-port to-port)
-  (for-each (lambda (l) (write-string to-port l #\newline))
-	    (read-all-lines from-port))
-  (close-port from-port))
+(define (transfer-all-lines from-bag to-bag)
+  (let ((fbag (get-string-bag-bag from-bag))
+	(tbag (get-string-bag-bag to-bag)))
+    (set-string-bag-bag! to-bag (list-append fbag tbag))
+    (set-string-bag-bag! from-bag ())))
 
 ;;; comment this out for closing the self-hosting loop
 ;;; (defmacro (compile-with-output dest . body)
 ;;;   (let ((tport (gensym)))
-;;;     `(let ((,tport (open-scratch-space)))
+;;;     `(let ((,tport (make-string-bag ())))
 ;;;        (fluid-let ((global-out ,tport))
 ;;; 	 ,@body
 ;;; 	 (when ,dest
@@ -172,10 +174,13 @@
 ;;; The lowest-level routines that actually emit bits of code; everything
 ;;; should go through these emit-* routines.
 
-;;; Emit a generic formatted string
+;;; Emit a generic literal or formatted string
+
+(define (emit-str str)
+  (add-to-bag! global-out str))
 
 (define (emit-fstr fstr . args)
-  (apply fprintf global-out fstr args))
+  (emit-str (apply sprintf fstr args)))
 
 ;;; Emit a declaration of an lval or array of lvals
 
@@ -208,8 +213,8 @@
 ;;; 		 (else
 ;;; 		  (loop (cdr cs) (cons (car cs) accs) acca))))))
 ;;;     `(begin (when r (emit-decl r))
-;;; 	    (apply fprintf global-out ,@xform ())
-;;; 	    (newline global-out)
+;;; 	    (add-to-bag! global-out (apply sprintf ,@xform ()))
+;;; 	    (add-to-bag! global-out #\newline)
 ;;; 	    r)))
 
 (define (emit-function-head fn-name top-label visible?
@@ -229,7 +234,6 @@
 (define (emit-function-call res fn closure args tcall frame)
   (when (and closure (not (null? global-closures)))
     (let* ((cl1 (car global-closures))
-	   (cname (get-closure-table-cname cl1))
 	   (clist (get-closure-table-clist cl1))
 	   (cl-entry (assv closure clist)))
       (when cl-entry
@@ -253,12 +257,12 @@
   (emit-fstr "return %s;\n}\n" vname))
 
 ;;; closure table for a given function consists of:
-;;; * cname, the name by which the function itself refers to its closure table
+;;; * name, the name by which the function itself refers to its closure table
+;;; * size, the total number of aliases in both lists
 ;;; * vlist, the list of aliases for variables outside itself
 ;;; * clist, the list of aliases for other functions' closures
-;;; * csize, the total number of aliases in both lists
 
-(def-struct closure-table cname vlist clist csize)
+(def-struct closure-table name size vlist clist)
 
 ;;; Symbol table entries: lists in the following formats,
 ;;; or a bare symbol 'frame
@@ -288,24 +292,24 @@
 	(begin
 	  (loop (cdr cls) (- fc 1))
 	  (let* ((cl (car cls))
-		 (cname (get-closure-table-cname cl))
-		 (csize (get-closure-table-csize cl))
+		 (name (get-closure-table-name cl))
+		 (size (get-closure-table-size cl))
 		 (the-list (get-list cl))
 		 (cl-entry (assv entry the-list)))
 	    (if cl-entry
 		(cdr cl-entry)
-		(let ((cl-entry (sprintf format cname csize)))
-		  (set-closure-table-csize! cl (+ csize 1))
+		(let ((cl-entry (sprintf format name size)))
+		  (set-closure-table-size! cl (+ size 1))
 		  (set-list! cl (cons (cons entry cl-entry) the-list))
 		  cl-entry)))))))
 
 (define (update-closure-vlist fc entry)
-  (update-closure-table
-   get-closure-table-vlist set-closure-table-vlist! "(*(%s[%d]))" fc entry))
+  (update-closure-table get-closure-table-vlist
+			set-closure-table-vlist! "V_CLOS(%s,%d)" fc entry))
 
 (define (update-closure-clist fc entry)
-  (update-closure-table
-   get-closure-table-clist set-closure-table-clist! "(%s[%d])" fc entry))
+  (update-closure-table get-closure-table-clist
+			set-closure-table-clist! "P_CLOS(%s,%d)" fc entry))
 
 (define (lookup-symbol full-env name)
   (let loop ((env full-env)
@@ -389,8 +393,9 @@
   (cond ((symbol=? compile-type 'singleton)
 	 (emit-fstr "%s = %s;\n" c-name c-def))
 	((symbol=? compile-type 'main)
-	 (fluid-let ((global-out global-code))
-	   (emit-fstr "%s = %s;\n" c-name c-def))))
+	 (compile-with-output
+	  global-code
+	  (emit-fstr "%s = %s;\n" c-name c-def))))
   (make-var-def s-var c-name))
 
 (define (make-top-env compile-type)
@@ -419,8 +424,9 @@
 	(cond ((symbol=? compile-type 'singleton)
 	       (emit-fstr fstr tmp tmp))
 	      ((symbol=? compile-type 'main)
-	       (fluid-let ((global-out global-code))
-		 (emit-fstr fstr tmp tmp))))
+	       (compile-with-output
+		global-code
+		(emit-fstr fstr tmp tmp))))
 	(make-var-def 'command-line-arguments tmp))
       (make-top-def compile-type 'command-name
 		    "var_cmd_name" "LVI_STRING(argv[0])")
@@ -469,12 +475,12 @@
   (let* ((tmp (args-list expr))
 	 (alen (car tmp))
 	 (aal (abs alen))
-	 (vals (cadr tmp))
-	 (tport (open-scratch-space)))
-    (fluid-let ((global-out global-decl))
-      (when global-library
-	(emit-fstr "static bool do_init_%s = true;\n" vname))
-      (emit-fstr "static lval %s;\t\t// const list(%d)\n" vname alen))
+	 (vals (cadr tmp)))
+    (compile-with-output
+     global-decl
+     (when global-library
+       (emit-fstr "static bool do_init_%s = true;\n" vname))
+     (emit-fstr "static lval %s;\t\t// const list(%d)\n" vname alen))
 
     ;;; In no-main mode, the prior output is most likely a function which is
     ;;; getting processed via its own (compile-with-output), so we need to
@@ -509,13 +515,13 @@
 
 (define (compile-immediate-vector vname cur-env expr is-bv?)
   (debug-trace 'compile-immediate-vector cur-env #f expr)
-  (let ((vlen (vector-length expr))
-	(tport (open-scratch-space)))
-    (fluid-let ((global-out global-decl))
-      (when global-library
-	(emit-fstr "static bool do_init_%s = true;\n" vname))
-      (emit-fstr "static lval %s;\t\t// const %svector(%d)\n"
-		 vname (if is-bv? "byte" "") vlen))
+  (let ((vlen (vector-length expr)))
+    (compile-with-output
+     global-decl
+     (when global-library
+       (emit-fstr "static bool do_init_%s = true;\n" vname))
+     (emit-fstr "static lval %s;\t\t// const %svector(%d)\n"
+		vname (if is-bv? "byte" "") vlen))
 
     ;;; In no-main mode, the prior output is most likely a function which is
     ;;; getting processed via its own (compile-with-output), so we need to
@@ -725,6 +731,9 @@
   (cond ((or (null? clauses) (null? (cdr clauses)))
 	 (ERR "malformed let '%v'" clauses))
 	((symbol? (car clauses))		;;; named let
+	 (unless (list? (cadr clauses))
+	   (ERR "malformed named-let '%s' clauses '%v'"
+		(car clauses) (cadr clauses)))
 	 (let* ((s-name (car clauses))
 		(nargs (list-length (cadr clauses)))
 		(formals (map car (cadr clauses)))
@@ -739,6 +748,8 @@
 				   lambda-env #f lambda-clauses)
 	   (compile-expr lambda-env #f (cons s-name args))))
 	(else					;;; let or let*
+	 (unless (list? (car clauses))
+	   (ERR "malformed let clauses '%v'" (car clauses)))
 	 (let ((ndefs
 		(map (lambda (def)
 		       (if (symbol? (car def))
@@ -767,8 +778,7 @@
 			(let* ((tmp (new-svar))
 			       (d (make-var-def (car def) tmp)))
 ;;; TODO: is this right? or should it write the declaration to global-decl?
-			  (fluid-let ((global-out global-func))
-			    (emit-decl tmp))
+			  (compile-with-output global-func (emit-decl tmp))
 			  (set! cur-env (cons d cur-env))
 			  tmp)
 			(ERR "malformed let definition '%s'" def)))
@@ -805,22 +815,20 @@
 (define (build-closure)
   (unless (null? global-closures)
     (let* ((cl1 (car global-closures))
-	   (cname (get-closure-table-cname cl1))
+	   (name (get-closure-table-name cl1))
+	   (size (get-closure-table-size cl1))
 	   (vlist1 (get-closure-table-vlist cl1))
 	   (clist1 (get-closure-table-clist cl1))
 	   (cl2 (if (null? (cdr global-closures)) () (cadr global-closures)))
 	   (vlist2 (if (null? cl2) () (get-closure-table-vlist cl2)))
 	   (clist2 (if (null? cl2) () (get-closure-table-clist cl2))))
-      (emit-fstr "lptr %s[%d];\n" cname (get-closure-table-csize cl1))
+      (emit-fstr "MK_CLOS(%s,%d);\n" name size)
       (for-each (lambda (cle)
 		  (let* ((name1 (cdr cle))
-			 (ix1 (string-find-last-char name1 #\())
-			 (ix2 (string-find-first-char name1 #\)))
 			 (var (car cle))
 			 (tmp (assv var vlist2))
 			 (name2 (if tmp (cdr tmp) var)))
-		    (emit-fstr "%s = &(%s);\n"
-			       (string-copy name1 (+ ix1 1) ix2) name2)))
+		    (emit-fstr "P%s = &(%s);\n" (string-copy name1 1) name2)))
 		vlist1)
       (for-each (lambda (cle)
 		  (let* ((name1 (cdr cle))
@@ -841,12 +849,12 @@
 	 (top-label (new-svar 'lbl))
 	 (cur-env (cons (list frame-sym tmp-fn top-label) cur-env))
 	 (cas (map (lambda (i) (args-ref a-name i))
-		   (upfrom 0 (list-length sas))))
-	 (tport (open-scratch-space)))
-    (fluid-let ((global-out global-decl))
-      (emit-fstr "static lval %s(lptr*, lptr);\n" tmp-fn))
+		   (upfrom 0 (list-length sas)))))
+    (compile-with-output
+     global-decl
+     (emit-fstr "static lval %s(lptr*, lptr);\n" tmp-fn))
     (fluid-let ((global-closures
-		 (cons (make-closure-table c-name () () 0) global-closures)))
+		 (cons (make-closure-table c-name 0 () ()) global-closures)))
       (compile-with-output
        global-func
        (emit-function-head tmp-fn top-label #f c-name a-name
@@ -1206,25 +1214,26 @@
 	(res (new-svar))
 	(ncs (/ (list-length codelets) 2))
 	(arity (car codelets)))
-    (fluid-let ((global-out global-func))
-      (emit-function-head f-name top-label #f c-name a-name s-name
-			  (token-source-line s-name))
-      (if (> ncs 1)
-	  (ERR "ambiguous primitive '%s': %d choices cannot be wrapped yet"
-	       s-name ncs)
-	  (let ((cas (map (lambda (i) (args-ref a-name i))
-			  (upfrom 0 (abs arity)))))
+    (compile-with-output
+     global-func
+     (emit-function-head f-name top-label #f c-name a-name s-name
+			 (token-source-line s-name))
+     (if (> ncs 1)
+	 (ERR "ambiguous primitive '%s': %d choices cannot be wrapped yet"
+	      s-name ncs)
+	 (let ((cas (map (lambda (i) (args-ref a-name i))
+			 (upfrom 0 (abs arity)))))
 	    ;;; the build-variadic-bypass is only for variadic functions,
 	    ;;; it doesn't do anything for fixed-arity functions; so we
 	    ;;; can set it for either case
-	    (fluid-let ((build-variadic-bypass
-			 (args-ref a-name (- (abs arity) 1))))
-	      (let ((op (cadr codelets)))
-		(if (string? op)
-		    (build-regular-prim res arity arity op cas)
-		    (apply op (cons res cas)))))))
-      (emit-function-tail res)
-      (emit-fstr "// end of prim %s\n" f-name))
+	   (fluid-let ((build-variadic-bypass
+			(args-ref a-name (- (abs arity) 1))))
+	     (let ((op (cadr codelets)))
+	       (if (string? op)
+		   (build-regular-prim res arity arity op cas)
+		   (apply op (cons res cas)))))))
+     (emit-function-tail res)
+     (emit-fstr "// end of prim %s\n" f-name))
     (string-append "LVI_PROC(" f-name "," "NULL" ","
 		   (number->string arity) ")")))
 
@@ -1418,11 +1427,13 @@
   (debug-trace 'compile-const cur-env #f def)
   (let ((const-name (car def))
 	(tmp (if c-var-name c-var-name (new-svar))))
-    (fluid-let ((global-out global-decl))
-      (emit-fstr "static lval %s;\t\t// %v\n" tmp const-name))
-    (fluid-let ((global-out global-code))
-      (emit-fstr "%s = %s;\n"
-		 tmp (maybe-compile-expr cur-env #f (cadr def))))
+    (compile-with-output
+     global-decl
+     (emit-fstr "static lval %s;\t\t// %v\n" tmp const-name))
+    (compile-with-output
+     global-code
+     (emit-fstr "%s = %s;\n"
+		tmp (maybe-compile-expr cur-env #f (cadr def))))
     (make-var-def const-name tmp)))
 
 (define (declare-function c-fn-name cur-env def c-port s-port doc-string)
@@ -1432,15 +1443,17 @@
     (if c-fn-name
 	(begin
 	  (when c-port
-	    (fluid-let ((global-out c-port))
-	      (emit-fstr "lval %s(lptr*, lptr);\t// %v\n" tmp-fn (car def))))
+	    (let ((c-bag (make-string-bag ())))
+	      (compile-with-output c-bag
+	       (emit-fstr "lval %s(lptr*, lptr);\t// %v\n" tmp-fn (car def)))
+	      (display c-bag c-port)))
 	  (when s-port
 	    (if (string=? doc-string "")
 		(fprintf s-port "(%s prim %d \"%s\")\n"
 			 (caar def) arity c-fn-name)
-		(fprintf s-port "(%s \"%s\"prim %d \"%s\")\n"
+		(fprintf s-port "(%s \"%s\" prim %d \"%s\")\n"
 			 (caar def) doc-string arity c-fn-name))))
-	(fluid-let ((global-out global-decl))
+	(compile-with-output global-decl
 	  (emit-fstr "static lval %s(lptr*, lptr);\t// %v\n"
 		     tmp-fn (car def))))
     (make-fn-def (caar def) tmp-fn "NULL" arity)))
@@ -1457,10 +1470,9 @@
 	 (top-label (new-svar 'lbl))
 	 (cur-env (cons (list frame-sym tmp-fn top-label) cur-env))
 	 (cas (map (lambda (i) (args-ref a-name i))
-		   (upfrom 0 (list-length sas))))
-	 (tport (open-scratch-space)))
+		   (upfrom 0 (list-length sas)))))
     (fluid-let ((global-closures
-		 (cons (make-closure-table c-name () () 0) global-closures)))
+		 (cons (make-closure-table c-name 0 () ()) global-closures)))
       (compile-with-output
        global-func
        (emit-function-head tmp-fn top-label c-fn-name c-name a-name
@@ -1468,10 +1480,8 @@
        (for-each (lambda (sa ca)
 		   (set! cur-env (cons (make-var-def sa ca) cur-env)))
 		 sas cas)
-       (emit-function-tail
-	(compile-special-begin cur-env a-name (cdr def)))
-       (emit-fstr "// end of function %s\n" tmp-fn))
-      )))
+       (emit-function-tail (compile-special-begin cur-env a-name (cdr def)))
+       (emit-fstr "// end of function %s\n" tmp-fn)))))
 
 (define (declare-macro def)
   (debug-trace 'declare-macro () #f def)
@@ -1516,16 +1526,18 @@
 ;;; error messages from compiler - including pointers to stdlib-skeem???
 ;;;  (let ((loc (string-split-by is-colon? (token-source-line def))))
 ;;;    (emit-fstr "#line %s \"%s\"\n" (cadr loc) (car loc)))
-  (cond
-   ((symbol=? (car def) 'define)
-    (unless (symbol? (cadr def))
-      (compile-function #f cur-env (cdr def))))
-   ((symbol=? (car def) 'define-primitive)
-    (unless (symbol? (cadddr def))
-      (compile-function (cadr def) cur-env (cdddr def))))
-   ((symbol=? (car def) 'define-alias) #t)	;;; relax, all good
-   ((symbol=? (car def) 'defmacro) #t)		;;; relax, all good
-   (else (ERR "unknown toplevel-define action '%s'" (car def)))))
+  (guard (err (#t (fprintf stderr "caught exception\n    %v\n" err)
+		  (set! global-errors (+ global-errors 1))))
+	 (cond
+	  ((symbol=? (car def) 'define)
+	   (unless (symbol? (cadr def))
+	     (compile-function #f cur-env (cdr def))))
+	  ((symbol=? (car def) 'define-primitive)
+	   (unless (symbol? (cadddr def))
+	     (compile-function (cadr def) cur-env (cdddr def))))
+	  ((symbol=? (car def) 'define-alias) #t)	;;; relax, all good
+	  ((symbol=? (car def) 'defmacro) #t)		;;; relax, all good
+	  (else (ERR "unknown toplevel-define action '%s'" (car def))))))
 
 (define (find-pragma p ps)
   (let loop ((ps ps))
@@ -1753,14 +1765,14 @@
 	    (remove-unused-vars (list-reverse output)))))))
 
 (define (compile-file do-debug opt-level in-file out-path out-port fvals)
-  (let ((decl-port out-port)
-	(code-port (open-scratch-space))
-	(func-port (open-scratch-space)))
+  (let ((decl-port (make-string-bag ()))
+	(code-port (make-string-bag ()))
+	(func-port (make-string-bag ())))
     (fluid-let ((global-out decl-port)
 		(global-decl decl-port)
 		(global-code code-port)
 		(global-func func-port))
-      (write-string global-out global-file-head)
+      (emit-str global-file-head)
       (let* ((inc-hash (hash-table-create string-hash string=?))
 	     (wlp (get-environment-variable "WILE_LIBRARY_PATH"))
 	     (dirs (string-split-by is-colon? (if wlp wlp ".")))
@@ -1827,48 +1839,48 @@
 	(when hport
 	  (write-string hport "\n#endif // " mname #\newline)
 	  (close-port hport))
-	(unless global-library
-	  (fluid-let ((global-out global-code))
-	    (emit-function-tail (compile-special-begin top-env #f exprs))))
+	(guard (err (#t (fprintf stderr "caught exception\n    %v\n" err)
+			(set! global-errors (+ global-errors 1))))
+	       (unless global-library
+		 (compile-with-output
+		  global-code
+		  (emit-function-tail (compile-special-begin top-env #f exprs))))
+	       (emit-fstr "\n// definitions\n")
+	       (transfer-all-lines global-func global-out)
+	       (unless global-library
+		 (when global-profile
+		   (emit-fstr "static struct wile_profile_t wile_profile_array[%d];\n"
+			      (list-length global-profile)))
+		 (emit-fstr "\nconst int global_tc_min_args = %d;\n\nlval scheme_main(int argc, char** argv)\n{\n" global-tc-min-args)
+		 (if global-profile
+		     (let* ((names (list-reverse global-profile))
+			    (count (list-length names)))
+		       (emit-fstr "{\nint i;\nwile_profile = wile_profile_array;\nwile_profile_size = %d;\nfor (i = 0; i < wile_profile_size; ++i) {\nwile_profile[i].count = 0;\n}\n" count)
+		       (for-each (lambda (i n)
+				   (emit-fstr
+				    "wile_profile[%d].name = \"%s\";\n" i n))
+				 (upfrom 0 count) names)
+		       (emit-fstr "}\n"))
+		     (emit-fstr "wile_profile = NULL;\nwile_profile_size = 0;\n"))
+		 (transfer-all-lines global-code global-out))
+	       (display global-out out-port)
+	       (when (and (positive? opt-level) (zero? global-errors))
+		 (let ((lines (read-all-lines out-port)))
+		   (when rm-dc
+		     (when (> global-verbose 0)
+		       (fprintf stderr "removing dead code\n"))
+		     (set! lines (remove-dead-code lines)))
+		   (when rm-ul
+		     (when (> global-verbose 0)
+		       (fprintf stderr "removing unused labels\n"))
+		     (set! lines (remove-unused-lbls lines)))
+		   (when rm-uv
+		     (when (> global-verbose 0)
+		       (fprintf stderr "removing unused variables\n"))
+		     (set! lines (remove-unused-vars lines)))
 
-	(flush-port global-decl)
-	(flush-port global-code)
-	(flush-port global-func)
-	(emit-fstr "\n// definitions\n")
-
-	(transfer-all-lines global-func global-out)
-	(unless global-library
-	  (when global-profile
-	    (emit-fstr "static struct wile_profile_t wile_profile_array[%d];\n"
-		       (list-length global-profile)))
-	  (emit-fstr "\nconst int global_tc_min_args = %d;\n\nlval scheme_main(int argc, char** argv)\n{\n" global-tc-min-args)
-	  (if global-profile
-	      (let* ((names (list-reverse global-profile))
-		     (count (list-length names)))
-		(emit-fstr "{\nint i;\nwile_profile = wile_profile_array;\nwile_profile_size = %d;\nfor (i = 0; i < wile_profile_size; ++i) {\nwile_profile[i].count = 0;\n}\n" count)
-		(for-each (lambda (i n)
-			    (emit-fstr
-			     "wile_profile[%d].name = \"%s\";\n" i n))
-			  (upfrom 0 count) names)
-		(emit-fstr "}\n"))
-	      (emit-fstr "wile_profile = NULL;\nwile_profile_size = 0;\n"))
-	  (transfer-all-lines global-code global-out))
-	(when (positive? opt-level)
-	  (let ((lines (read-all-lines global-out)))
-	    (when rm-dc
-	      (when (> global-verbose 0)
-		(fprintf stderr "removing dead code\n"))
-	      (set! lines (remove-dead-code lines)))
-	    (when rm-ul
-	      (when (> global-verbose 0)
-		(fprintf stderr "removing unused labels\n"))
-	      (set! lines (remove-unused-lbls lines)))
-	    (when rm-uv
-	      (when (> global-verbose 0)
-		(fprintf stderr "removing unused variables\n"))
-	      (set! lines (remove-unused-vars lines)))
-	    (set-file-position global-out 0 'start)
-	    (for-each (lambda (l) (write-string global-out l #\newline)) lines)
-	    (flush-port global-out)
-	    (truncate-file global-out)))
-	(close-port out-port)))))
+		   (set-file-position out-port 0 'start)
+		   (for-each (lambda (l) (write-string out-port l #\newline)) lines)
+		   (flush-port out-port)
+		   (truncate-file out-port)))
+	       (close-port out-port))))))

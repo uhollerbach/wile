@@ -1,4 +1,4 @@
-(compiler-version (0 9 0))
+(compiler-version (0 9 1))
 (float-type double)
 (integer-type long-int)
 (garbage-collection? #t)

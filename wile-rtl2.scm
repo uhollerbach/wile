@@ -154,7 +154,8 @@
 
 (define-alias partition list-partition)
 
-(define-primitive "wile_list_partition" ""
+(define-primitive "wile_list_partition"
+  "expects one test function of one argument and one list and returns a list of two lists, the first one being all those elements of the input for which the test function returns #t and the second one being all those elements of the input for which the test functions returns #f"
   (list-partition pred lst)
   (let ((ts ())
 	(fs ())
@@ -223,7 +224,7 @@
 ;;; --8><----8><----8><--
 
 (define-primitive "wile_string_append"
-  "expects any number of strings and returns a new stringwhich is the concatenation of the inputs"
+  "expects any number of strings and returns a new string which is the concatenation of the inputs"
   (string-append . strs)
   (let ((lt 0)
 	(ss strs)
@@ -362,6 +363,8 @@
 	(fore2 proc ls))))
 
 ;;; --8><----8><----8><--
+
+;;; TODO: the basic arithmetic functions are dog-slow
 
 (define-primitive "wile_add"
   "expects any number of numeric values and returns their sum"
@@ -614,13 +617,15 @@
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_memp" ""
+(define-primitive "wile_memp"
+  "expects a test function and a list and returns the first sub-list of the input for which the test applied to the car returns #t, or #f if test returns #f for all elements"
   (memp test? lst)
   (cond ((null? lst) #f)
 	((test? (car lst)) lst)
 	(else (memp test? (cdr lst)))))
 
-(define-primitive "wile_memv" ""
+(define-primitive "wile_memv"
+  "expects a value and a list and returns the first sub-list of the input for which the value is eqv? to the car, or #f if no elements are eqv? to the value"
   (memv obj lst)
   (cond ((null? lst) #f)
 	((eqv? obj (car lst)) lst)
@@ -643,7 +648,8 @@
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_list_drop_while" ""
+(define-primitive "wile_list_drop_while"
+  "expects a predicate and a list and removes all those elements at the head of the list for which the predicate returns #t"
   (list-drop-while drop? lst)
   (if (and (not (null? lst)) (drop? (car lst)))
       (list-drop-while drop? (cdr lst))
@@ -1277,7 +1283,8 @@
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_vector_map_inplace" ""
+(define-primitive "wile_vector_map_inplace"
+  "expects a function of one argument and a vector, and updates the vector in place by applying the function to each element and replacing it with that value"
   (vector-map! proc vec)
   (let ((len (vector-length vec)))
     (do ((i 0 (+ i 1)))
@@ -1313,7 +1320,8 @@
 ;;; cholesky-decompose and a vector and computes the solution of the
 ;;; matrix equation.
 
-(define-primitive "wile_cholesky_decompose" ""
+(define-primitive "wile_cholesky_decompose"
+  "expects an upper or lower half-matrix and does an L*D*L^T decomposition; returns a list containing the D matrix which is in turn a simple list of the diagonal values and the L matrix, stored in the same half-matrix form as the input"
   (cholesky-decompose mat)
   (define (wk1 r rs)
     (if (zero? r)
@@ -1338,7 +1346,8 @@
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_cholesky_solve" ""
+(define-primitive "wile_cholesky_solve"
+  "expects an L*D*L^T decomposed matrix as returned by cholesky-decompose and a list R, and solves the matrix equation L*D*L^T X = R for X"
   (cholesky-solve mat vec)
   (define (sf m v)
     (if (null? m)
@@ -1372,7 +1381,7 @@
   "expects no arguments and returns an list of various build configuration items"
   (wile-build-info)
   (let* ((binfo (wile-basic-build-info)))
-    `((compiler-version (0 9 0))
+    `((compiler-version (0 9 1))
       (float-type ,(case (bits-shift (bits-and binfo #b0011000) -3)
 		     ((0) 'double)
 		     ((1) 'long-double)

@@ -328,7 +328,7 @@
    (list 'compile-with-output 'macro -2
 	 (lambda (dest . body)
 	   (let ((tport (gensym)))
-	     `(let ((,tport (open-scratch-space)))
+	     `(let ((,tport (make-string-bag ())))
 		(fluid-let ((global-out ,tport))
 		  ,@body
 		  (when ,dest
@@ -356,8 +356,8 @@
 			  (else
 			   (loop (cdr cs) (cons (car cs) accs) acca))))))
 	     `(begin (when r (emit-decl r))
-		     (apply fprintf global-out ,@xform ())
-		     (newline global-out)
+		     (emit-str (apply sprintf ,@xform ()))
+		     (emit-str #\newline)
 		     r))))
 
    (list 'def-struct 'macro -3
@@ -2182,7 +2182,8 @@
 	 'prim 1
 	 (lambda (r a1) (emit-code "_exit(@1.v.iv);")))
 
-   (list 'floor 'prim 1
+   (list 'floor "expects one real-valued number and returns its floor. if the input is integer- or rational-typed, the output is integer-typed; otherwise, it is real"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
 	    "if (@1.vt == LV_REAL) {"
@@ -2196,7 +2197,8 @@
 	    "WILE_EX(\"floor\", \"expects one real-valued argument\");"
 	    "}")))
 
-   (list 'ceiling 'prim 1
+   (list 'ceiling "expects one real-valued number and returns its ceiling. if the input is integer- or rational-typed, the output is integer-typed; otherwise, it is real"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
 	    "if (@1.vt == LV_REAL) {"
@@ -2229,7 +2231,8 @@
 	   (emit-code
 	    "@@ = LVI_INT(@1.v.rv >= 0.0 ? FLOOR(@1.v.rv) : CEIL(@1.v.rv));")))
 
-   (list 'sqrt 'prim 1
+   (list 'sqrt "expects one number and returns its square root. positive real-valued inputs return a real-typed result, others return a complex-typed result"
+	 'prim 1
 	 (lambda (r a1)
 	   (let ((a9 (new-svar)))
 	     (promote/real a9 a1)
@@ -2279,28 +2282,36 @@
 	      "WILE_EX(\"log\", \"expects one numeric argument\");"
 	      "}"))))
 
-   (list 'sin 'prim 1
+   (list 'sin "expects one number and returns the sine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "sin" "SIN" "CSIN" r a1)))
 
-   (list 'cos 'prim 1
+   (list 'cos "expects one number and returns the cosine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "cos" "COS" "CCOS" r a1)))
 
-   (list 'tan 'prim 1
+   (list 'tan "expects one number and returns the tangent of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "tan" "TAN" "CTAN" r a1)))
 
-   (list 'sinh 'prim 1
+   (list 'sinh "expects one number and returns the hyperbolic sine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "sinh" "SINH" "CSINH" r a1)))
 
-   (list 'cosh 'prim 1
+   (list 'cosh "expects one number and returns the hyperbolic cosine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "cosh" "COSH" "CCOSH" r a1)))
 
-   (list 'tanh 'prim 1
+   (list 'tanh "expects one number and returns the hyperbolic tangent of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "tanh" "TANH" "CTANH" r a1)))
 
-   (list 'asin 'prim 1
+   (list 'asin "expects one number and returns the arc-sine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "asin" "ASIN" "CASIN" r a1)))
 
-   (list 'acos 'prim 1
+   (list 'acos "expects one number and returns the arc-cosine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "acos" "ACOS" "CACOS" r a1)))
 
    (list 'atan 'prim
@@ -2312,13 +2323,16 @@
 	       (promote/real+check "atan" a8 a2)
 	       (emit-code "@@ = LVI_REAL(ATAN2(@9.v.rv, @8.v.rv));"))))
 
-   (list 'asinh 'prim 1
+   (list 'asinh "expects one number and returns the hyperbolic arc-sine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "asinh" "ASINH" "CASINH" r a1)))
 
-   (list 'acosh 'prim 1
+   (list 'acosh "expects one number and returns the hyperbolic arc-cosine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "acosh" "ACOSH" "CACOSH" r a1)))
 
-   (list 'atanh 'prim 1
+   (list 'atanh "expects one number and returns the hyperbolic arc-tangent of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "atanh" "ATANH" "CATANH" r a1)))
 
    (list 'erfc "expects one real-valued argument and returns the complementary error function of that value"
@@ -3140,7 +3154,17 @@
    (list 'raise 'prim -1
 	 (lambda (r . as)
 	   (apply build-basic-list r as)
-	   (emit-fstr "if (%s.vt == LV_PAIR && (%s.v.pair.cdr == NULL || %s.v.pair.cdr->vt == LV_NIL)) {\n%s = (%s.v.pair.car ? *(%s.v.pair.car) : LVI_NIL());\n}\ncachalot->errval = new_lv(LV_NIL);\n*(cachalot->errval) = %s;\ncachalot->l_whence = 0;\ncachalot->c_whence = LISP_WHENCE;\nlongjmp(cachalot->cenv, 1);\n" r r r r r r r)))
+	   (let ((a1 r)
+		 (r #f))
+	     (emit-code
+	      "if (@1.vt == LV_PAIR && (@1.v.pair.cdr == NULL || @1.v.pair.cdr->vt == LV_NIL)) {"
+	      "@1 = (@1.v.pair.car ? *(@1.v.pair.car) : LVI_NIL());"
+	      "}"
+	      "cachalot->errval = new_lv(LV_NIL);"
+	      "*(cachalot->errval) = @1;"
+	      "cachalot->l_whence = 0;"
+	      "cachalot->c_whence = LISP_WHENCE;"
+	      "longjmp(cachalot->cenv, 1);"))))
 
    (list 'log-gamma "expects one complex-valued argument and returns the complex-valued log of the gamma function of that argument"
 	 'prim 1

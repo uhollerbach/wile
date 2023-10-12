@@ -36,13 +36,13 @@ static lval fn_378(lptr*, lptr);
 
 // definitions
 
-// write-string
+// @@@ write-string @@@ build-rtl.scm:13 @@@ fn_10 @@@
 static lval fn_10(lptr* var_11, lptr var_12)
 {
 lval var_14;
 var_14 = var_12[0];
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_14;
 var_14 = wile_write_string(NULL, vs);
 }
@@ -50,7 +50,7 @@ return var_14;
 }
 // end of prim fn_10
 
-// (ERR . strs)
+// @@@ (ERR . strs) @@@ build-rtl.scm:12 @@@ fn_1 @@@
 static lval fn_1(lptr* var_7, lptr var_8)
 {
 lval var_15;
@@ -70,14 +70,14 @@ return var_17;
 }
 // end of function fn_1
 
-// lambda (acc)
+// @@@ lambda (acc) @@@ build-rtl.scm:17 @@@ fn_21 @@@
 static lval fn_21(lptr* var_22, lptr var_23)
 {
 lbl_24:;
 lval var_25;
 lval var_26;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = (*(var_22[0]));
 var_26 = wile_read_line(NULL, vs);
 }
@@ -86,7 +86,7 @@ lval var_27;
 if (LV_IS_FALSE(var_25)) {
 lval var_28;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_23[0];
 var_28 = wile_list_reverse(NULL, vs);
 }
@@ -105,7 +105,7 @@ p2 = new_lv(LV_NIL);
 }
 var_29 = LVI_PAIR(p1, p2);
 }
-lval var_32[6];
+lval var_32[8];
 var_32[0] = var_29;
 var_23[0] = var_32[0];
 goto lbl_24;	// selfie
@@ -114,7 +114,7 @@ return var_27;
 }
 // end of lambda fn_21
 
-// (read-all-lines port)
+// @@@ (read-all-lines port) @@@ build-rtl.scm:16 @@@ fn_2 @@@
 static lval fn_2(lptr* var_18, lptr var_19)
 {
 lptr var_22[1];
@@ -122,20 +122,20 @@ var_22[0] = &(var_19[0]);
 lval var_33;
 var_33 = LVI_NIL();
 lval var_34;
-lval var_35[6];
+lval var_35[8];
 var_35[0] = var_33;
 var_34 = fn_21(var_22, var_35);
 return var_34;
 }
 // end of function fn_2
 
-// string-append
+// @@@ string-append @@@ build-rtl.scm:24 @@@ fn_41 @@@
 static lval fn_41(lptr* var_42, lptr var_43)
 {
 lval var_45;
 var_45 = var_43[0];
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_45;
 var_45 = wile_string_append(NULL, vs);
 }
@@ -143,7 +143,7 @@ return var_45;
 }
 // end of prim fn_41
 
-// (run-cmd str . strs)
+// @@@ (run-cmd str . strs) @@@ build-rtl.scm:23 @@@ fn_3 @@@
 static lval fn_3(lptr* var_37, lptr var_38)
 {
 lval var_40;
@@ -193,7 +193,7 @@ vs[1] = var_48;
 var_53 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_stderr;
 vs[1] = var_52;
 vs[2] = var_53;
@@ -213,7 +213,7 @@ return var_50;
 }
 // end of function fn_3
 
-// (compile-single file dflag)
+// @@@ (compile-single file dflag) @@@ build-rtl.scm:30 @@@ fn_4 @@@
 static lval fn_4(lptr* var_57, lptr var_58)
 {
 lval var_60;
@@ -288,9 +288,9 @@ lval var_74;
 var_74 = LVI_STRING("-g ");
 var_72 = var_74;
 }
-lval var_76[6];
+lval var_76[8];
 var_76[0] = var_71;
-lval var_78[6];
+lval var_78[8];
 var_78[0] = var_72;
 var_78[1] = var_58[0];
 var_76[1] = gen_list(2, var_78, NULL);
@@ -306,7 +306,7 @@ vs[1] = var_79;
 var_80 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_80;
 var_80 = wile_string_append(NULL, vs);
 }
@@ -314,7 +314,7 @@ return var_80;
 }
 // end of function fn_4
 
-// lambda (ls acc)
+// @@@ lambda (ls acc) @@@ build-rtl.scm:38 @@@ fn_84 @@@
 static lval fn_84(lptr* var_85, lptr var_86)
 {
 lbl_87:;
@@ -325,7 +325,7 @@ var_89 = LVI_BOOL(var_86[0].vt == LV_NIL);
 if (!LV_IS_FALSE(var_89)) {
 lval var_90;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_86[1];
 var_90 = wile_list_reverse(NULL, vs);
 }
@@ -348,7 +348,7 @@ WILE_EX("car", "input is not a pair!");
 var_93 = (var_86[0].v.pair.car ? *(var_86[0].v.pair.car) : LVI_NIL());
 lval var_94;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = (*(var_85[0]));
 vs[1] = var_93;
 var_94 = wile_regex_match(NULL, vs);
@@ -356,7 +356,7 @@ var_94 = wile_regex_match(NULL, vs);
 if (!LV_IS_FALSE(var_94)) {
 lval var_95;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_86[1];
 var_95 = wile_list_reverse(NULL, vs);
 }
@@ -398,7 +398,7 @@ p2 = new_lv(LV_NIL);
 }
 var_100 = LVI_PAIR(p1, p2);
 }
-lval var_103[6];
+lval var_103[8];
 var_103[0] = var_98;
 var_103[1] = var_100;
 var_86[0] = var_103[0];
@@ -409,7 +409,7 @@ return var_88;
 }
 // end of lambda fn_84
 
-// (take-section cut-pattern lines)
+// @@@ (take-section cut-pattern lines) @@@ build-rtl.scm:37 @@@ fn_5 @@@
 static lval fn_5(lptr* var_81, lptr var_82)
 {
 lptr var_85[1];
@@ -417,7 +417,7 @@ var_85[0] = &(var_82[0]);
 lval var_104;
 var_104 = LVI_NIL();
 lval var_105;
-lval var_106[6];
+lval var_106[8];
 var_106[0] = var_82[1];
 var_106[1] = var_104;
 var_105 = fn_84(var_85, var_106);
@@ -425,7 +425,7 @@ return var_105;
 }
 // end of function fn_5
 
-// lambda (l)
+// @@@ lambda (l) @@@ build-rtl.scm:75 @@@ fn_191 @@@
 static lval fn_191(lptr* var_192, lptr var_193)
 {
 lval var_195;
@@ -439,7 +439,7 @@ vs[2] = var_195;
 var_196 = gen_list(3, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_196;
 var_196 = wile_write_string(NULL, vs);
 }
@@ -447,7 +447,7 @@ return var_196;
 }
 // end of lambda fn_191
 
-// lambda (l)
+// @@@ lambda (l) @@@ build-rtl.scm:76 @@@ fn_198 @@@
 static lval fn_198(lptr* var_199, lptr var_200)
 {
 lval var_202;
@@ -461,7 +461,7 @@ vs[2] = var_202;
 var_203 = gen_list(3, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_203;
 var_203 = wile_write_string(NULL, vs);
 }
@@ -469,7 +469,7 @@ return var_203;
 }
 // end of lambda fn_198
 
-// lambda (ls ix)
+// @@@ lambda (ls ix) @@@ build-rtl.scm:64 @@@ fn_162 @@@
 static lval fn_162(lptr* var_163, lptr var_164)
 {
 lbl_165:;
@@ -486,7 +486,7 @@ lval var_171;
 var_171 = LVI_INT(6);
 lval var_172;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_169;
 vs[1] = var_170;
 vs[2] = var_171;
@@ -509,7 +509,7 @@ vs[4] = var_168;
 var_176 = gen_list(5, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_176;
 var_176 = wile_string_append(NULL, vs);
 }
@@ -523,7 +523,7 @@ vs[1] = (*(var_163[2]));
 var_178 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_178;
 var_178 = wile_string_append(NULL, vs);
 }
@@ -543,7 +543,7 @@ var_181 = LVI_BOOL(false);
 var_179 = var_181;
 lval var_182;
 lval var_183;
-lval var_184[6];
+lval var_184[8];
 var_184[0] = (*(var_163[3]));
 var_184[1] = var_164[0];
 var_183 = fn_5(NULL, var_184);
@@ -568,7 +568,7 @@ vs[2] = var_189;
 var_190 = gen_list(3, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_190;
 var_190 = wile_write_string(NULL, vs);
 }
@@ -577,7 +577,7 @@ var_192[0] = &(var_179);
 lval var_197;
 var_197 = LVI_NIL();
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_191,var_192,1);
 vs[1] = (*(var_163[4]));
 vs[2] = var_197;
@@ -588,20 +588,20 @@ var_199[0] = &(var_179);
 lval var_204;
 var_204 = LVI_NIL();
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_198,var_199,1);
 vs[1] = var_186;
 vs[2] = var_204;
 var_204 = wile_for_each(NULL, vs);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_179;
 (void)
  wile_flushport(NULL, vs);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_179;
 (void)
  wile_closeport(NULL, vs);
@@ -632,9 +632,9 @@ lval var_216;
 var_216 = LVI_STRING(".scm ");
 lval var_217;
 var_217 = LVI_STRING(".c");
-lval var_219[6];
+lval var_219[8];
 var_219[0] = var_211;
-lval var_221[6];
+lval var_221[8];
 var_221[0] = var_212;
 var_221[1] = var_215;
 var_221[2] = var_173;
@@ -649,9 +649,9 @@ lval var_222;
 var_222 = LVI_STRING("rm -f");
 lval var_223;
 var_223 = LVI_STRING("/*.h");
-lval var_225[6];
+lval var_225[8];
 var_225[0] = var_222;
-lval var_227[6];
+lval var_227[8];
 var_227[0] = (*(var_163[0]));
 var_227[1] = var_223;
 var_225[1] = gen_list(2, var_227, NULL);
@@ -675,9 +675,9 @@ lval var_233;
 var_233 = LVI_STRING(".c ");
 lval var_234;
 var_234 = LVI_STRING(".o");
-lval var_236[6];
+lval var_236[8];
 var_236[0] = var_228;
-lval var_238[6];
+lval var_238[8];
 var_238[0] = var_229;
 var_238[1] = var_232;
 var_238[2] = var_173;
@@ -716,11 +716,11 @@ vs[1] = var_241;
 var_242 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_242;
 var_242 = wile_add(NULL, vs);
 }
-lval var_245[6];
+lval var_245[8];
 var_245[0] = var_240;
 var_245[1] = var_242;
 var_164[0] = var_245[0];
@@ -736,7 +736,7 @@ vs[0] = var_246;
 var_247 = gen_list(1, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_247;
 var_247 = wile_write_string(NULL, vs);
 }
@@ -746,7 +746,7 @@ return var_166;
 }
 // end of lambda fn_162
 
-// (compile-split file bld-dir dflag)
+// @@@ (compile-split file bld-dir dflag) @@@ build-rtl.scm:46 @@@ fn_6 @@@
 static lval fn_6(lptr* var_108, lptr var_109)
 {
 lval var_111;
@@ -764,7 +764,7 @@ var_113 = LVI_BOOL(false);
 var_111 = var_113;
 lval var_114;
 lval var_115;
-lval var_116[6];
+lval var_116[8];
 var_116[0] = var_111;
 var_115 = fn_2(NULL, var_116);
 var_114 = var_115;
@@ -839,7 +839,7 @@ var_130 = LVI_STRING("(--8><--)+$");
 var_129 = var_130;
 lval var_131;
 lval var_132;
-lval var_133[6];
+lval var_133[8];
 var_133[0] = var_129;
 var_133[1] = var_114;
 var_132 = fn_5(NULL, var_133);
@@ -875,7 +875,7 @@ var_137 = var_139;
 (void)
  LVI_INT(0);
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_111;
 (void)
  wile_closeport(NULL, vs);
@@ -895,7 +895,7 @@ vs[0] = var_146;
 var_147 = gen_list(1, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_147;
 var_147 = wile_write_string(NULL, vs);
 }
@@ -933,7 +933,7 @@ vs[2] = var_157;
 var_158 = gen_list(3, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_158;
 var_158 = wile_write_string(NULL, vs);
 }
@@ -954,7 +954,7 @@ var_163[0] = &(var_109[1]);
 lval var_248;
 var_248 = LVI_INT(0);
 lval var_249;
-lval var_250[6];
+lval var_250[8];
 var_250[0] = var_137;
 var_250[1] = var_248;
 var_249 = fn_162(var_163, var_250);
@@ -962,7 +962,7 @@ return var_249;
 }
 // end of function fn_6
 
-// lambda (fs acc)
+// @@@ lambda (fs acc) @@@ build-rtl.scm:104 @@@ fn_293 @@@
 static lval fn_293(lptr* var_294, lptr var_295)
 {
 lbl_296:;
@@ -973,7 +973,7 @@ var_298 = LVI_BOOL(var_295[0].vt == LV_NIL);
 if (!LV_IS_FALSE(var_298)) {
 lval var_299;
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_295[1];
 var_299 = wile_list_reverse(NULL, vs);
 }
@@ -1003,8 +1003,8 @@ lval var_308;
 var_308 = LVI_STRING(strerror(var_307.v.iv));
 lval var_309;
 var_309 = LVI_CHAR(10);
-lval var_311[6];
-lval var_313[6];
+lval var_311[8];
+lval var_313[8];
 var_313[0] = var_305;
 var_313[1] = (*(var_294[0]));
 var_313[2] = var_306;
@@ -1025,7 +1025,7 @@ if (var_295[0].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
 var_316 = (var_295[0].v.pair.cdr ? *(var_295[0].v.pair.cdr) : LVI_NIL());
-lval var_319[6];
+lval var_319[8];
 var_319[0] = var_316;
 var_319[1] = var_295[1];
 var_295[0] = var_319[0];
@@ -1050,7 +1050,7 @@ if (var_295[0].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
 var_324 = (var_295[0].v.pair.cdr ? *(var_295[0].v.pair.cdr) : LVI_NIL());
-lval var_327[6];
+lval var_327[8];
 var_327[0] = var_324;
 var_327[1] = var_295[1];
 var_295[0] = var_327[0];
@@ -1063,7 +1063,7 @@ if (var_295[0].vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
 var_328 = (var_295[0].v.pair.car ? *(var_295[0].v.pair.car) : LVI_NIL());
-lval var_330[6];
+lval var_330[8];
 var_330[0] = var_328;
 var_330[1] = (*(var_294[0]));
 var_330[2] = (*(var_294[3]));
@@ -1074,7 +1074,7 @@ if (var_295[0].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
 var_332 = (var_295[0].v.pair.cdr ? *(var_295[0].v.pair.cdr) : LVI_NIL());
-lval var_335[6];
+lval var_335[8];
 var_335[0] = var_332;
 var_335[1] = var_295[1];
 var_295[0] = var_335[0];
@@ -1092,7 +1092,7 @@ WILE_EX("car", "input is not a pair!");
 }
 var_337 = (var_295[0].v.pair.car ? *(var_295[0].v.pair.car) : LVI_NIL());
 lval var_338;
-lval var_339[6];
+lval var_339[8];
 var_339[0] = var_337;
 var_339[1] = (*(var_294[3]));
 var_338 = fn_4(NULL, var_339);
@@ -1109,7 +1109,7 @@ p2 = new_lv(LV_NIL);
 }
 var_341 = LVI_PAIR(p1, p2);
 }
-lval var_344[6];
+lval var_344[8];
 var_344[0] = var_336;
 var_344[1] = var_341;
 var_295[0] = var_344[0];
@@ -1120,13 +1120,13 @@ return var_297;
 }
 // end of lambda fn_293
 
-// string-join-by
+// @@@ string-join-by @@@ build-rtl.scm:124 @@@ fn_350 @@@
 static lval fn_350(lptr* var_351, lptr var_352)
 {
 lval var_354;
 var_354 = var_352[1];
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_352[0];
 vs[1] = var_354;
 var_354 = wile_string_join_by(NULL, vs);
@@ -1135,7 +1135,7 @@ return var_354;
 }
 // end of prim fn_350
 
-// lambda (f)
+// @@@ lambda (f) @@@ build-rtl.scm:132 @@@ fn_378 @@@
 static lval fn_378(lptr* var_379, lptr var_380)
 {
 lval var_382;
@@ -1167,7 +1167,7 @@ vs[4] = var_388;
 var_389 = gen_list(5, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_389;
 var_389 = wile_write_string(NULL, vs);
 }
@@ -1175,7 +1175,7 @@ return var_389;
 }
 // end of lambda fn_378
 
-const int global_tc_min_args = 6;
+const int global_tc_min_args = 8;
 
 lval scheme_main(int argc, char** argv)
 {
@@ -1272,8 +1272,8 @@ if (LV_IS_FALSE(var_275)) {
 } else {
 lval var_277;
 var_277 = LVI_STRING("error: no output archive file specified!\n");
-lval var_279[6];
-lval var_281[6];
+lval var_279[8];
+lval var_281[8];
 var_281[0] = var_277;
 var_279[0] = gen_list(1, var_281, NULL);
 (void)
@@ -1301,8 +1301,8 @@ lval var_287;
 var_287 = LVI_STRING("error: build directory \'");
 lval var_288;
 var_288 = LVI_STRING("\' already exists!\n");
-lval var_290[6];
-lval var_292[6];
+lval var_290[8];
+lval var_292[8];
 var_292[0] = var_287;
 var_292[1] = var_258;
 var_292[2] = var_288;
@@ -1318,7 +1318,7 @@ var_294[0] = &(var_258);
 lval var_345;
 var_345 = LVI_NIL();
 lval var_346;
-lval var_347[6];
+lval var_347[8];
 var_347[0] = var_argv;
 var_347[1] = var_345;
 var_346 = fn_293(var_294, var_347);
@@ -1358,7 +1358,7 @@ vs[3] = var_361;
 var_362 = gen_list(4, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_362;
 var_362 = wile_string_append(NULL, vs);
 }
@@ -1398,8 +1398,8 @@ if (LV_IS_FALSE(var_366)) { break; }
 if (LV_IS_FALSE(var_366)) {
 lval var_369;
 var_369 = LVI_STRING("archive create failed!\n");
-lval var_371[6];
-lval var_373[6];
+lval var_371[8];
+lval var_373[8];
 var_373[0] = var_369;
 var_371[0] = gen_list(1, var_373, NULL);
 (void)
@@ -1414,7 +1414,7 @@ vs[0] = var_374;
 var_375 = gen_list(1, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_375;
 var_375 = wile_write_string(NULL, vs);
 }
@@ -1429,7 +1429,7 @@ lptr var_379[0];
 lval var_390;
 var_390 = LVI_NIL();
 {
-lval vs[6];
+lval vs[8];
 vs[0] = LVI_PROC(fn_378,var_379,1);
 vs[1] = var_262;
 vs[2] = var_390;
@@ -1446,7 +1446,7 @@ vs[1] = var_258;
 var_393 = gen_list(2, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_393;
 var_393 = wile_string_append(NULL, vs);
 }
@@ -1485,8 +1485,8 @@ if (LV_IS_FALSE(var_396)) {
 lval var_399;
 var_399 = LVI_STRING("build directory cleanup failed!\n");
 lval var_400;
-lval var_401[6];
-lval var_403[6];
+lval var_401[8];
+lval var_403[8];
 var_403[0] = var_399;
 var_401[0] = gen_list(1, var_403, NULL);
 var_400 = fn_1(NULL, var_401);
@@ -1501,7 +1501,7 @@ vs[0] = var_404;
 var_405 = gen_list(1, vs, NULL);
 }
 {
-lval vs[6];
+lval vs[8];
 vs[0] = var_405;
 var_405 = wile_write_string(NULL, vs);
 }

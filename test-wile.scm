@@ -23,9 +23,10 @@
 ;;; rather than wile-comp.scm
 
 (define (is-colon? c) (char=? c #\:))
+(define string-hash string-hash-64)
 
+(load-library "wile-macros.scm")
 (load-library "hash.scm")
-(load-library "struct.scm")
 (load-library "wile-comp.scm")
 
 (load-library "test.scm")
@@ -48,21 +49,35 @@
   (remove-file "wile-out.c")
   (remove-file "wile-out.o")
   (remove-file "coyote")
-  (fluid-let ((global-out (open-file "wile-out.c" "w+")))
-    (write-string global-out global-file-head)
+
+  (fluid-let ((global-out (make-string-bag ())))
+    (emit-str global-file-head)
     (for-each (lambda (v) (emit-fstr "lval var_%s;\n" v))
 	      '("argv" "cmd_name" "stdin" "stdout" "stderr"
 		"pi" "euler_gamma" "show_sign" "int_base"
 		"flt_base" "flt_precision"))
-    (emit-fstr "struct wile_profile_t* wile_profile;\nint wile_profile_size;\nconst int global_tc_min_args = %d;\n\nlval scheme_main(int argc, char** argv)\n{\nwile_profile = NULL;\nwile_profile_size = 0;\n" global-tc-min-args)
+    (let ((r #f)
+	  (a1 (number->string global-tc-min-args)))
+      (emit-code
+       "struct wile_profile_t* wile_profile;"
+       "int wile_profile_size;"
+       "const int global_tc_min_args = @1;"
+       ""
+       "lval scheme_main(int argc, char** argv)"
+       "{"
+       "wile_profile = NULL;"
+       "wile_profile_size = 0;"))
     (emit-function-tail (compile-expr (make-top-env 'singleton) #f expr))
-    (let* ((lines1 (read-all-lines global-out))
-	   (lines2 (remove-unused-vars lines1)))
-      (set-file-position global-out 0 'start)
-      (for-each (lambda (l) (write-string global-out l #\newline)) lines2)
-      (flush-port global-out)
-      (truncate-file global-out))
-    (close-port global-out))
+    (let ((out-port (open-file "wile-out.c" "w+")))
+      (display global-out out-port)
+      (set-string-bag-bag! global-out ())
+      (let* ((lines1 (read-all-lines out-port))
+	     (lines2 (remove-unused-vars lines1)))
+	(set-file-position out-port 0 'start)
+	(for-each (lambda (l) (write-string out-port l #\newline)) lines2)
+	(flush-port out-port)
+	(truncate-file out-port))
+      (close-port out-port)))
   (run-command "./wile -x wile-out.c coyote > coy.log")
   (run-command "coyote > coy-run.log 2>&1")
   (let ((fp (open-input-file "coy-run.log")))

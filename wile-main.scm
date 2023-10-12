@@ -53,7 +53,10 @@
 	 (out-port (open-file output "w+")))
     (when (positive? global-verbose)
       (write-string "#### compiling " input " to " output #\newline))
-    (compile-file do-debug opt-level input out-path out-port fvals)))
+    (compile-file do-debug opt-level input out-path out-port fvals)
+    (unless (zero? global-errors)
+      (write-string stderr "compilation failed!\n")
+      (exit 1))))
 
 (define (get-env-val env-var def-val)
   (let ((val (get-environment-variable env-var)))
