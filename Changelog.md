@@ -2,7 +2,7 @@ Last update: 2023-10-11 12:00 PST
 
 # Changelog for `wile`
 
-## Current version `wile` (0 9 1)
+## Current version `wile` (0 9 1) 2023-10-15
 
 - rework internal buffers to no longer use scratch files
 
