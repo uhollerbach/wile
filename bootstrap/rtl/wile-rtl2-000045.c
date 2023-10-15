@@ -246,7 +246,7 @@ WILE_EX("<", "inputs are not real-valued numbers");
 break;
 }
 if (!LV_IS_FALSE(var_7)) {
-lptr var_9[0];
+MK_CLOS(var_9,0);
 lval var_20;
 var_20 = LVI_NIL();
 lval var_21;
@@ -292,7 +292,7 @@ WILE_EX(">", "inputs are not real-valued numbers");
 break;
 }
 if (!LV_IS_FALSE(var_24)) {
-lptr var_26[0];
+MK_CLOS(var_26,0);
 lval var_37;
 var_37 = LVI_NIL();
 lval var_38;

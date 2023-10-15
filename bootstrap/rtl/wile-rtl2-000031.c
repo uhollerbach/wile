@@ -125,7 +125,7 @@ return var_63;
 lval wile_max(lptr* var_1, lptr var_2)
 {
 lval var_4;
-lptr var_6[0];
+MK_CLOS(var_6,0);
 lval var_19;
 {
 lval vs[3];

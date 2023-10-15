@@ -112,7 +112,7 @@ return var_8;
 // @@@ (list-take-while keep? lst) @@@ bld-rtl-dir/wile-rtl2-000037.scm:12 @@@ wile_list_take_while @@@
 lval wile_list_take_while(lptr* var_1, lptr var_2)
 {
-lptr var_5[0];
+MK_CLOS(var_5,0);
 lval var_23;
 var_23 = LVI_NIL();
 lval var_24;

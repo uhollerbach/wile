@@ -78,7 +78,7 @@ lval var_25;
 lval var_26;
 {
 lval vs[8];
-vs[0] = (*(var_22[0]));
+vs[0] = V_CLOS(var_22,0);
 var_26 = wile_read_line(NULL, vs);
 }
 var_25 = var_26;
@@ -117,8 +117,8 @@ return var_27;
 // @@@ (read-all-lines port) @@@ build-rtl.scm:16 @@@ fn_2 @@@
 static lval fn_2(lptr* var_18, lptr var_19)
 {
-lptr var_22[1];
-var_22[0] = &(var_19[0]);
+MK_CLOS(var_22,1);
+P_CLOS(var_22,0) = &(var_19[0]);
 lval var_33;
 var_33 = LVI_NIL();
 lval var_34;
@@ -349,7 +349,7 @@ var_93 = (var_86[0].v.pair.car ? *(var_86[0].v.pair.car) : LVI_NIL());
 lval var_94;
 {
 lval vs[8];
-vs[0] = (*(var_85[0]));
+vs[0] = V_CLOS(var_85,0);
 vs[1] = var_93;
 var_94 = wile_regex_match(NULL, vs);
 }
@@ -412,8 +412,8 @@ return var_88;
 // @@@ (take-section cut-pattern lines) @@@ build-rtl.scm:37 @@@ fn_5 @@@
 static lval fn_5(lptr* var_81, lptr var_82)
 {
-lptr var_85[1];
-var_85[0] = &(var_82[0]);
+MK_CLOS(var_85,1);
+P_CLOS(var_85,0) = &(var_82[0]);
 lval var_104;
 var_104 = LVI_NIL();
 lval var_105;
@@ -433,7 +433,7 @@ var_195 = LVI_CHAR(10);
 lval var_196;
 {
 lval vs[3];
-vs[0] = (*(var_192[0]));
+vs[0] = V_CLOS(var_192,0);
 vs[1] = var_193[0];
 vs[2] = var_195;
 var_196 = gen_list(3, vs, NULL);
@@ -455,7 +455,7 @@ var_202 = LVI_CHAR(10);
 lval var_203;
 {
 lval vs[3];
-vs[0] = (*(var_199[0]));
+vs[0] = V_CLOS(var_199,0);
 vs[1] = var_200[0];
 vs[2] = var_202;
 var_203 = gen_list(3, vs, NULL);
@@ -501,9 +501,9 @@ var_175 = LVI_STRING("-");
 lval var_176;
 {
 lval vs[5];
-vs[0] = (*(var_163[0]));
+vs[0] = V_CLOS(var_163,0);
 vs[1] = var_174;
-vs[2] = (*(var_163[1]));
+vs[2] = V_CLOS(var_163,1);
 vs[3] = var_175;
 vs[4] = var_168;
 var_176 = gen_list(5, vs, NULL);
@@ -519,7 +519,7 @@ lval var_178;
 {
 lval vs[2];
 vs[0] = var_173;
-vs[1] = (*(var_163[2]));
+vs[1] = V_CLOS(var_163,2);
 var_178 = gen_list(2, vs, NULL);
 }
 {
@@ -544,7 +544,7 @@ var_179 = var_181;
 lval var_182;
 lval var_183;
 lval var_184[8];
-var_184[0] = (*(var_163[3]));
+var_184[0] = V_CLOS(var_163,3);
 var_184[1] = var_164[0];
 var_183 = fn_5(NULL, var_184);
 var_182 = var_183;
@@ -572,19 +572,19 @@ lval vs[8];
 vs[0] = var_190;
 var_190 = wile_write_string(NULL, vs);
 }
-lptr var_192[1];
-var_192[0] = &(var_179);
+MK_CLOS(var_192,1);
+P_CLOS(var_192,0) = &(var_179);
 lval var_197;
 var_197 = LVI_NIL();
 {
 lval vs[8];
 vs[0] = LVI_PROC(fn_191,var_192,1);
-vs[1] = (*(var_163[4]));
+vs[1] = V_CLOS(var_163,4);
 vs[2] = var_197;
 var_197 = wile_for_each(NULL, vs);
 }
-lptr var_199[1];
-var_199[0] = &(var_179);
+MK_CLOS(var_199,1);
+P_CLOS(var_199,0) = &(var_179);
 lval var_204;
 var_204 = LVI_NIL();
 {
@@ -609,7 +609,7 @@ vs[0] = var_179;
 lval var_208;
 var_208 = LVI_STRING(".scm");
 lval var_209;
-var_209 = LVI_BOOL(strcmp((*(var_163[2])).v.str, var_208.v.str) == 0);
+var_209 = LVI_BOOL(strcmp(V_CLOS(var_163,2).v.str, var_208.v.str) == 0);
 if (LV_IS_FALSE(var_209)) {
 (void)
  LVI_BOOL(false);
@@ -617,7 +617,7 @@ if (LV_IS_FALSE(var_209)) {
 lval var_211;
 var_211 = LVI_STRING("wile -v -c ");
 lval var_212;
-if (LV_IS_FALSE((*(var_163[5])))) {
+if (LV_IS_FALSE(V_CLOS(var_163,5))) {
 lval var_213;
 var_213 = LVI_STRING("");
 var_212 = var_213;
@@ -652,7 +652,7 @@ var_223 = LVI_STRING("/*.h");
 lval var_225[8];
 var_225[0] = var_222;
 lval var_227[8];
-var_227[0] = (*(var_163[0]));
+var_227[0] = V_CLOS(var_163,0);
 var_227[1] = var_223;
 var_225[1] = gen_list(2, var_227, NULL);
 (void)
@@ -660,7 +660,7 @@ var_225[1] = gen_list(2, var_227, NULL);
 lval var_228;
 var_228 = LVI_STRING("wile -v -o ");
 lval var_229;
-if (LV_IS_FALSE((*(var_163[5])))) {
+if (LV_IS_FALSE(V_CLOS(var_163,5))) {
 lval var_230;
 var_230 = LVI_STRING("");
 var_229 = var_230;
@@ -944,13 +944,13 @@ exit(var_159.v.iv);
 (void)
  LVI_BOOL(false);
 }
-lptr var_163[6];
-var_163[5] = &(var_109[2]);
-var_163[4] = &(var_135);
-var_163[3] = &(var_129);
-var_163[2] = &(var_125);
-var_163[1] = &(var_121);
-var_163[0] = &(var_109[1]);
+MK_CLOS(var_163,6);
+P_CLOS(var_163,5) = &(var_109[2]);
+P_CLOS(var_163,4) = &(var_135);
+P_CLOS(var_163,3) = &(var_129);
+P_CLOS(var_163,2) = &(var_125);
+P_CLOS(var_163,1) = &(var_121);
+P_CLOS(var_163,0) = &(var_109[1]);
 lval var_248;
 var_248 = LVI_INT(0);
 lval var_249;
@@ -991,7 +991,7 @@ lval var_302;
 var_302 = LVI_BOOL(strcmp(var_300.v.str, var_301.v.str) == 0);
 if (!LV_IS_FALSE(var_302)) {
 lval var_304;
-var_304 = LVI_BOOL(mkdir((*(var_294[0])).v.str, 0755) == 0);
+var_304 = LVI_BOOL(mkdir(V_CLOS(var_294,0).v.str, 0755) == 0);
 if (LV_IS_FALSE(var_304)) {
 lval var_305;
 var_305 = LVI_STRING("error: create-directory \'");
@@ -1006,7 +1006,7 @@ var_309 = LVI_CHAR(10);
 lval var_311[8];
 lval var_313[8];
 var_313[0] = var_305;
-var_313[1] = (*(var_294[0]));
+var_313[1] = V_CLOS(var_294,0);
 var_313[2] = var_306;
 var_313[3] = var_308;
 var_313[4] = var_309;
@@ -1019,7 +1019,7 @@ var_311[0] = gen_list(5, var_313, NULL);
 }
 lval var_315;
 var_315 = LVI_BOOL(true);
-(*(var_294[1])) = var_315;
+V_CLOS(var_294,1) = var_315;
 lval var_316;
 if (var_295[0].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
@@ -1044,7 +1044,7 @@ var_322 = LVI_BOOL(strcmp(var_320.v.str, var_321.v.str) == 0);
 if (!LV_IS_FALSE(var_322)) {
 lval var_323;
 var_323 = LVI_BOOL(false);
-(*(var_294[2])) = var_323;
+V_CLOS(var_294,2) = var_323;
 lval var_324;
 if (var_295[0].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
@@ -1057,7 +1057,7 @@ var_295[0] = var_327[0];
 var_295[1] = var_327[1];
 goto lbl_296;	// selfie
 }
-if (!LV_IS_FALSE((*(var_294[1])))) {
+if (!LV_IS_FALSE(V_CLOS(var_294,1))) {
 lval var_328;
 if (var_295[0].vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
@@ -1065,8 +1065,8 @@ WILE_EX("car", "input is not a pair!");
 var_328 = (var_295[0].v.pair.car ? *(var_295[0].v.pair.car) : LVI_NIL());
 lval var_330[8];
 var_330[0] = var_328;
-var_330[1] = (*(var_294[0]));
-var_330[2] = (*(var_294[3]));
+var_330[1] = V_CLOS(var_294,0);
+var_330[2] = V_CLOS(var_294,3);
 (void)
  fn_6(NULL, var_330);
 lval var_332;
@@ -1094,7 +1094,7 @@ var_337 = (var_295[0].v.pair.car ? *(var_295[0].v.pair.car) : LVI_NIL());
 lval var_338;
 lval var_339[8];
 var_339[0] = var_337;
-var_339[1] = (*(var_294[3]));
+var_339[1] = V_CLOS(var_294,3);
 var_338 = fn_4(NULL, var_339);
 lval var_341;
 {
@@ -1197,8 +1197,8 @@ var_cmd_name = LVI_STRING(argv[0]);
 var_stdin = LVI_FPORT(stdin);
 var_stdout = LVI_FPORT(stdout);
 var_stderr = LVI_FPORT(stderr);
-var_pi = LVI_REAL(3.14159265358979323846264338327950280e+00Q);
-var_euler_gamma = LVI_REAL(5.77215664901532860606512090082402471e-01Q);
+var_pi = LVI_REAL(3.14159265358979311599796346854418516e+00Q);
+var_euler_gamma = LVI_REAL(5.77215664901532865549427242513047531e-01Q);
 var_show_sign = LVI_BOOL(false);
 var_int_base = LVI_INT(10);
 var_flt_base = LVI_INT(10);
@@ -1310,11 +1310,11 @@ var_290[0] = gen_list(3, var_292, NULL);
 (void)
  fn_1(NULL, var_290);
 }
-lptr var_294[4];
-var_294[3] = &(var_252);
-var_294[2] = &(var_256);
-var_294[1] = &(var_254);
-var_294[0] = &(var_258);
+MK_CLOS(var_294,4);
+P_CLOS(var_294,3) = &(var_252);
+P_CLOS(var_294,2) = &(var_256);
+P_CLOS(var_294,1) = &(var_254);
+P_CLOS(var_294,0) = &(var_258);
 lval var_345;
 var_345 = LVI_NIL();
 lval var_346;
@@ -1425,7 +1425,7 @@ lval var_377;
 var_377 = LVI_BOOL(false);
 var_376 = var_377;
 } else {
-lptr var_379[0];
+MK_CLOS(var_379,0);
 lval var_390;
 var_390 = LVI_NIL();
 {

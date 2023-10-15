@@ -33,7 +33,7 @@ lval var_17;
 {
 lval vs[2];
 vs[0] = var_15[0];
-vs[1] = (*(var_14[0]));
+vs[1] = V_CLOS(var_14,0);
 var_17 = gen_list(2, vs, NULL);
 }
 {
@@ -69,8 +69,8 @@ WILE_EX("zero?", "expects a real-valued number");
 if (LV_IS_FALSE(var_11)) {
 lval var_12;
 var_12 = LVI_INT(1);
-lptr var_14[1];
-var_14[0] = &(var_8[0]);
+MK_CLOS(var_14,1);
+P_CLOS(var_14,0) = &(var_8[0]);
 lval var_18;
 var_18 = LVI_NIL();
 {
@@ -123,7 +123,7 @@ static lval fn_25(lptr* var_26, lptr var_27)
 lval var_29;
 {
 lval vs[2];
-vs[0] = (*(var_26[0]));
+vs[0] = V_CLOS(var_26,0);
 vs[1] = var_27[1];
 var_29 = gen_list(2, vs, NULL);
 }
@@ -151,8 +151,8 @@ return var_30;
 // @@@ (wk2 r1 s r2) @@@ bld-rtl-dir/wile-rtl2-000068.scm:31 @@@ fn_5 @@@
 static lval fn_5(lptr* var_22, lptr var_23)
 {
-lptr var_26[1];
-var_26[0] = &(var_23[1]);
+MK_CLOS(var_26,1);
+P_CLOS(var_26,0) = &(var_23[1]);
 lval var_31;
 {
 lval vs[1];
@@ -352,7 +352,7 @@ return var_54;
 // @@@ (cholesky-decompose mat) @@@ bld-rtl-dir/wile-rtl2-000068.scm:26 @@@ wile_cholesky_decompose @@@
 lval wile_cholesky_decompose(lptr* var_1, lptr var_2)
 {
-lptr var_51[0];
+MK_CLOS(var_51,0);
 lval var_79;
 var_79 = LVI_NIL();
 lval var_80;

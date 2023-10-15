@@ -26,10 +26,10 @@ static lval fn_10(lptr*, lptr);
 static lval fn_10(lptr* var_11, lptr var_12)
 {
 lval var_14;
-if ((*(var_11[0])).vt != LV_PAIR) {
+if (V_CLOS(var_11,0).vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_14 = ((*(var_11[0])).v.pair.car ? *((*(var_11[0])).v.pair.car) : LVI_NIL());
+var_14 = (V_CLOS(var_11,0).v.pair.car ? *(V_CLOS(var_11,0).v.pair.car) : LVI_NIL());
 lval var_15;
 var_15 = LVI_BOOL(do_eqv(&(var_12[0]), &(var_14)));
 return var_15;
@@ -44,8 +44,8 @@ lval var_8;
 lval var_9;
 var_9 = LVI_BOOL(var_6[0].vt == LV_NIL);
 if (LV_IS_FALSE(var_9)) {
-lptr var_11[1];
-var_11[0] = &(var_6[0]);
+MK_CLOS(var_11,1);
+P_CLOS(var_11,0) = &(var_6[0]);
 lval var_16;
 if (var_6[0].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
@@ -98,7 +98,7 @@ return var_8;
 // @@@ (list-remove-dups lst) @@@ bld-rtl-dir/wile-rtl2-000038.scm:11 @@@ wile_list_remove_dups @@@
 lval wile_list_remove_dups(lptr* var_1, lptr var_2)
 {
-lptr var_5[0];
+MK_CLOS(var_5,0);
 lval var_24;
 var_24 = LVI_NIL();
 lval var_25;

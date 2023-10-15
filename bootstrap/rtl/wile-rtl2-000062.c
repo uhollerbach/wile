@@ -906,7 +906,7 @@ vs[2] = var_229;
 (void)
  wile_setfilepos3(NULL, vs);
 }
-lptr var_232[0];
+MK_CLOS(var_232,0);
 lval var_245;
 var_245 = LVI_NIL();
 lval var_246;
@@ -1902,7 +1902,7 @@ return var_259;
 // @@@ (printf-helper fstr . vals) @@@ bld-rtl-dir/wile-rtl2-000062.scm:134 @@@ fn_21 @@@
 static lval fn_21(lptr* var_249, lptr var_250)
 {
-lptr var_253[0];
+MK_CLOS(var_253,0);
 lval var_469;
 var_469 = LVI_NIL();
 lval var_470;
@@ -1934,7 +1934,7 @@ return var_480;
 // @@@ (printf fstr . vals) @@@ bld-rtl-dir/wile-rtl2-000062.scm:231 @@@ wile_printf @@@
 lval wile_printf(lptr* var_473, lptr var_474)
 {
-lptr var_477[0];
+MK_CLOS(var_477,0);
 lval var_481;
 var_481 = LVI_PROC(fn_21,NULL,-2);
 lval var_482;
@@ -1971,8 +1971,8 @@ static lval fn_488(lptr* var_489, lptr var_490)
 lval var_492;
 {
 FILE* fp;
-if ((*(var_489[0])).vt == LV_FILE_PORT || (*(var_489[0])).vt == LV_PIPE_PORT || (*(var_489[0])).vt == LV_SOCK_PORT) {
-fp = (*(var_489[0])).v.fp;
+if (V_CLOS(var_489,0).vt == LV_FILE_PORT || V_CLOS(var_489,0).vt == LV_PIPE_PORT || V_CLOS(var_489,0).vt == LV_SOCK_PORT) {
+fp = V_CLOS(var_489,0).v.fp;
 } else {
 WILE_EX("write-string", "first input is not a port!");
 }
@@ -1992,8 +1992,8 @@ return var_492;
 // @@@ (fprintf port fstr . vals) @@@ bld-rtl-dir/wile-rtl2-000062.scm:237 @@@ wile_fprintf @@@
 lval wile_fprintf(lptr* var_485, lptr var_486)
 {
-lptr var_489[1];
-var_489[0] = &(var_486[0]);
+MK_CLOS(var_489,1);
+P_CLOS(var_489,0) = &(var_486[0]);
 lval var_493;
 var_493 = LVI_PROC(fn_21,NULL,-2);
 lval var_494;
@@ -2067,7 +2067,7 @@ return var_509;
 // @@@ (sprintf fstr . vals) @@@ bld-rtl-dir/wile-rtl2-000062.scm:243 @@@ wile_sprintf @@@
 lval wile_sprintf(lptr* var_497, lptr var_498)
 {
-lptr var_506[0];
+MK_CLOS(var_506,0);
 lval var_512;
 var_512 = LVI_PROC(fn_21,NULL,-2);
 lval var_513;

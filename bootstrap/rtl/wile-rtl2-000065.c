@@ -71,10 +71,10 @@ lval var_43;
 if (var_41[0].vt != LV_VECTOR) {
 WILE_EX("vector-ref", "input is not a vector");
 }
-if ((*(var_40[0])).vt != LV_INT || (*(var_40[0])).v.iv < 0 || (size_t) (*(var_40[0])).v.iv >= var_41[0].v.vec.capa) {
+if (V_CLOS(var_40,0).vt != LV_INT || V_CLOS(var_40,0).v.iv < 0 || (size_t) V_CLOS(var_40,0).v.iv >= var_41[0].v.vec.capa) {
 WILE_EX("vector-ref", "got bad index value");
 }
-var_43 = var_41[0].v.vec.arr[(*(var_40[0])).v.iv] ? *(var_41[0].v.vec.arr[(*(var_40[0])).v.iv]) : LVI_NIL();
+var_43 = var_41[0].v.vec.arr[V_CLOS(var_40,0).v.iv] ? *(var_41[0].v.vec.arr[V_CLOS(var_40,0).v.iv]) : LVI_NIL();
 }
 return var_43;
 }
@@ -244,8 +244,8 @@ if (!LV_IS_FALSE(var_38)) {
 var_34 = var_32;
 break;
 }
-lptr var_40[1];
-var_40[0] = &(var_35);
+MK_CLOS(var_40,1);
+P_CLOS(var_40,0) = &(var_35);
 lval var_44;
 var_44 = LVI_NIL();
 {

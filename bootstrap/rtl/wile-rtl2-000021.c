@@ -34,7 +34,7 @@ var_13 = gen_list(1, vs, NULL);
 lval var_14;
 {
 lval vs[2];
-vs[0] = (*(var_10[0]));
+vs[0] = V_CLOS(var_10,0);
 vs[1] = var_13;
 var_14 = gen_list(2, vs, NULL);
 }
@@ -50,8 +50,8 @@ static lval fn_4(lptr* var_5, lptr var_6)
 {
 lbl_7:;
 lval var_8;
-lptr var_10[1];
-var_10[0] = &((*(var_5[0])));
+MK_CLOS(var_10,1);
+P_CLOS(var_10,0) = &(V_CLOS(var_5,0));
 lval var_16;
 {
 lval vs[8];
@@ -83,7 +83,7 @@ WILE_EX("cxr", "got malformed control string '%s'", var_18.v.str);
 lval var_20;
 {
 lval vs[8];
-vs[0] = (*(var_5[0]));
+vs[0] = V_CLOS(var_5,0);
 vs[1] = var_19;
 var_20 = wile_list_drop_while(NULL, vs);
 }
@@ -166,8 +166,8 @@ return var_25;
 // @@@ (string-split-by drop? str) @@@ bld-rtl-dir/wile-rtl2-000021.scm:13 @@@ wile_string_split_by @@@
 lval wile_string_split_by(lptr* var_1, lptr var_2)
 {
-lptr var_5[1];
-var_5[0] = &(var_2[0]);
+MK_CLOS(var_5,1);
+P_CLOS(var_5,0) = &(var_2[0]);
 lval var_32;
 {
 lval vs[8];

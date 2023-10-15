@@ -32,7 +32,7 @@ static lval fn_16(lptr* var_17, lptr var_18)
 lval var_20;
 {
 lval vs[2];
-vs[0] = (*(var_17[0]));
+vs[0] = V_CLOS(var_17,0);
 vs[1] = var_18[1];
 var_20 = gen_list(2, vs, NULL);
 }
@@ -76,8 +76,8 @@ if (var_9[0].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
 var_15 = (var_9[0].v.pair.cdr ? *(var_9[0].v.pair.cdr) : LVI_NIL());
-lptr var_17[1];
-var_17[0] = &(var_13);
+MK_CLOS(var_17,1);
+P_CLOS(var_17,0) = &(var_13);
 lval var_22;
 if (var_9[1].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
@@ -483,7 +483,7 @@ lval var_90;
 lval var_91[8];
 var_91[0] = var_87;
 var_90 = fn_7(NULL, var_91);
-lptr var_94[0];
+MK_CLOS(var_94,0);
 lval var_98;
 lval var_99[8];
 var_99[0] = var_87;

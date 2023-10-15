@@ -95,7 +95,7 @@ return var_8;
 // @@@ (upfrom s n0) @@@ bld-rtl-dir/wile-rtl2-000046.scm:13 @@@ wile_upfrom @@@
 lval wile_upfrom(lptr* var_1, lptr var_2)
 {
-lptr var_5[0];
+MK_CLOS(var_5,0);
 lval var_16;
 var_16 = LVI_INT(var_2[0].v.iv + var_2[1].v.iv);
 lval var_17;

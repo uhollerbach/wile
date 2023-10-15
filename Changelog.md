@@ -2,14 +2,18 @@ Last update: 2023-10-11 12:00 PST
 
 # Changelog for `wile`
 
-## Current version `wile` (x x x)
+## Current version `wile` (0 9 1)
 
-- rework internal buffers to no longer use scratch files,
-  that was not elegant
+- rework internal buffers to no longer use scratch files
 
 - still working on adding doc-strings to more and more functions
 
 - more work on making RTL stack-friendly
+
+- work toward making closures fully first-class; still a ways to go
+
+- start working on eval - a simple REPL is already possible, although
+  still very limited: proof of concept only so far
 
 ## Current version `wile` (0 9 0) 2023-10-11
 

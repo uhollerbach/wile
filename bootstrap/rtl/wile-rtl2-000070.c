@@ -336,7 +336,7 @@ var_53 = LVI_NIL();
 lval var_54;
 var_54 = LVI_NIL();
 lval var_55;
-var_55 = LVI_INT(0);
+var_55 = LVI_INT(1);
 lval var_56;
 {
 lptr p1 = NULL, p2 = NULL;

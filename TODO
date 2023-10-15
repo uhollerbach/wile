@@ -10,17 +10,19 @@ Stuff TODO
     >>> fixed I think - it works for one level of nesting; multi-level
         not tested yet
 
-  > still a couple of things missing:
-
-    + eval which is very much non-trivial, but it seems to affect only
-      use of macros; can it be worked around for now?
-
   > found & fixed a problem (or a couple) in apply: in the C code in
     wile-rtl1.c, I had a couple of instances of things like
 
 	val = *(CAR(ap));
 
     >>> possibly still an analogous instance in continuations.c
+
+* start working on (eval) function -- see repl.scm. this could be fun :-)
+
+  > it's already possible to manipulate literal strings, numbers,
+    charaacters and other atomic data, as well as a bunch of primitives;
+    the beginnings of a couple of special forms are there: if, begin,
+    quote.
 
 * stack traces: working pretty well for starters - try getting better
   location info? not sure yet how, the backtrace and addr2line stuff
@@ -60,6 +62,12 @@ Stuff TODO
 
   > quite a few tests are under continuations, in selftest-cont.scm;
     see below
+
+* defmacro is not working in compiler; it needs a runtime interpreter
+  which isn't there yet. it can be worked around by adding macros to
+  the wile primitives list, as I did for the macros used in wile itself.
+  if that's done, it needs to be done carefully... there are bootstrap
+  issues
 
 * quasiquote stuff: in progress: everything seems to be working in lists
   and vectors, bytevector stuff is not tested yet

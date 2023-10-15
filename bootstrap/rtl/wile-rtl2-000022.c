@@ -48,7 +48,7 @@ var_12 = gen_list(1, vs, NULL);
 lval var_13;
 {
 lval vs[2];
-vs[0] = (*(var_5[0]));
+vs[0] = V_CLOS(var_5,0);
 vs[1] = var_12;
 var_13 = gen_list(2, vs, NULL);
 }
@@ -88,8 +88,8 @@ return var_8;
 // @@@ (map1 proc lst) @@@ bld-rtl-dir/wile-rtl2-000022.scm:13 @@@ wile_map1 @@@
 lval wile_map1(lptr* var_1, lptr var_2)
 {
-lptr var_5[1];
-var_5[0] = &(var_2[0]);
+MK_CLOS(var_5,1);
+P_CLOS(var_5,0) = &(var_2[0]);
 lval var_19;
 var_19 = LVI_NIL();
 lval var_20;

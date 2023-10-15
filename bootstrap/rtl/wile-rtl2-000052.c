@@ -154,7 +154,7 @@ lval var_67;
 var_67 = LVI_NIL();
 {
 lval vs[8];
-vs[0] = (*(var_61[2]));
+vs[0] = V_CLOS(var_61,2);
 vs[1] = var_62[0];
 vs[2] = var_67;
 var_67 = wile_map(NULL, vs);
@@ -176,9 +176,9 @@ var_69 = LVI_STRING(");\n");
 lval var_70;
 {
 lval vs[6];
-vs[0] = (*(var_61[0]));
+vs[0] = V_CLOS(var_61,0);
 vs[1] = var_64;
-vs[2] = (*(var_61[1]));
+vs[2] = V_CLOS(var_61,1);
 vs[3] = var_65;
 vs[4] = var_68;
 vs[5] = var_69;
@@ -229,7 +229,7 @@ var_9 = LVI_BOOL(false);
 #endif // WILE_USES_SQLITE
 var_4 = var_9;
 lval var_10;
-lptr var_12[0];
+MK_CLOS(var_12,0);
 lval var_17;
 var_17 = LVI_NIL();
 {
@@ -241,7 +241,7 @@ var_17 = wile_map(NULL, vs);
 }
 var_10 = var_17;
 lval var_18;
-lptr var_20[0];
+MK_CLOS(var_20,0);
 lval var_25;
 var_25 = LVI_NIL();
 {
@@ -296,7 +296,7 @@ vs[1] = var_33;
 var_33 = wile_string_join_by(NULL, vs);
 }
 lval var_34;
-lptr var_36[0];
+MK_CLOS(var_36,0);
 var_34 = LVI_PROC(fn_35,var_36,1);
 lval var_46;
 var_46 = LVI_STRING("DROP TABLE IF EXISTS ");
@@ -306,7 +306,7 @@ lval var_48;
 var_48 = LVI_STRING(" (");
 lval var_49;
 var_49 = LVI_STRING(", ");
-lptr var_51[0];
+MK_CLOS(var_51,0);
 lval var_56;
 {
 lval vs[1];
@@ -352,10 +352,10 @@ lval vs[8];
 vs[0] = var_59;
 var_59 = wile_write_string(NULL, vs);
 }
-lptr var_61[3];
-var_61[2] = &(var_34);
-var_61[1] = &(var_2[1]);
-var_61[0] = &(var_2[2]);
+MK_CLOS(var_61,3);
+P_CLOS(var_61,2) = &(var_34);
+P_CLOS(var_61,1) = &(var_2[1]);
+P_CLOS(var_61,0) = &(var_2[2]);
 lval var_71;
 var_71 = LVI_NIL();
 {

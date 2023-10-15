@@ -322,10 +322,14 @@
 		 `(load ,filepath)
 		 `(write-string "unable to find file '" ,fname "'\n")))))
 
-   (list 'add-output 'macro 1
+   (list 'add-output
+	 "this macro is used inside wile until wile can interpret user code; do not use"
+	 'macro 1
 	 (lambda (val) `(set! output (cons ,val output))))
 
-   (list 'compile-with-output 'macro -2
+   (list 'compile-with-output
+	 "this macro is used inside wile until wile can interpret user code; do not use"
+	 'macro -2
 	 (lambda (dest . body)
 	   (let ((tport (gensym)))
 	     `(let ((,tport (make-string-bag ())))
@@ -334,7 +338,9 @@
 		  (when ,dest
 		    (transfer-all-lines ,tport ,dest)))))))
 
-   (list 'emit-code 'macro -1
+   (list 'emit-code
+	 "this macro is used inside wile until wile can interpret user code; do not use"
+	 'macro -1
 	 (lambda strs
 	   (let ((xform
 		  (let loop ((cs (string->list
@@ -961,7 +967,9 @@
 	      "@@ = LVI_BOOL(true);"
 	      "}")))
 
-   (list 'display 'prim
+   (list 'display
+	 "expects one lisp value and optionally one output port (defaults to stdout if not given) and writes some representation of the value to the port; returns nothing useful. warning: this does NOT YET do cycle detection; if given a cyclic datastructure, it will loop indefinitely"
+	 'prim
 	 1 (lambda (r a1)
 	     (emit-code
 	      "display(@1, stdout);"
@@ -1328,7 +1336,9 @@
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_INT(@1.v.iv + @2.v.iv);")))
 
-   (list 'i++ 'prim -3
+   (list 'i++
+	 "expects two or more integer-typed numbers and returns their sum, also as an integer-typed number"
+	 'prim -3
 	 (lambda (r a1 a2 . as)
 	   (emit-decl r)
 	   (emit-fstr "%s = LVI_INT(%s.v.iv + %s.v.iv" r a1 a2)
@@ -1336,12 +1346,15 @@
 	   (emit-fstr ");\n")
 	   r))
 
-   (list 'i- "expects two integer-typed numbers and returns their difference, also as an integer-typed number"
+   (list 'i-
+	 "expects two integer-typed numbers and returns their difference, also as an integer-typed number"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_INT(@1.v.iv - @2.v.iv);")))
 
-   (list 'i-- 'prim -3
+   (list 'i--
+	 "expects two or more integer-typed numbers and returns the difference between the first and the sum of the rest, also as an integer-typed number"
+	 'prim -3
 	 (lambda (r a1 a2 . as)
 	   (emit-decl r)
 	   (emit-fstr "%s = LVI_INT(%s.v.iv - %s.v.iv" r a1 a2)
@@ -1453,27 +1466,32 @@
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_CMPLX1(@1.v.cv - @2.v.cv);")))
 
-   (list 'c* "expects two complex-typed numbers and returns their product, also as a complex-typed number"
+   (list 'c*
+	 "expects two complex-typed numbers and returns their product, also as a complex-typed number"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_CMPLX1(@1.v.cv * @2.v.cv);")))
 
-   (list 'c/ "expects two complex-typed numbers and returns their ratio, also as a complex-typed number"
+   (list 'c/
+	 "expects two complex-typed numbers and returns their ratio, also as a complex-typed number"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_CMPLX1(@1.v.cv / @2.v.cv);")))
 
-   (list 'min/i "expects two integer-typed values, and returns the smaller of the two"
+   (list 'min/i
+	 "expects two integer-typed values, and returns the smaller of the two"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_INT((@1.v.iv < @2.v.iv) ? @1.v.iv : @2.v.iv);")))
 
-   (list 'max/i "expects two integer-typed values, and returns the larger of the two"
+   (list 'max/i
+	 "expects two integer-typed values, and returns the larger of the two"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_INT((@1.v.iv > @2.v.iv) ? @1.v.iv : @2.v.iv);")))
 
-   (list 'min/q "expects two rational-typed values, and returns the smaller of the two"
+   (list 'min/q
+	 "expects two rational-typed values, and returns the smaller of the two"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
@@ -1483,7 +1501,8 @@
 	    "@@ = @2;"
 	    "}")))
 
-   (list 'max/q "expects two rational-typed values, and returns the larger of the two"
+   (list 'max/q
+	 "expects two rational-typed values, and returns the larger of the two"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
@@ -1493,12 +1512,14 @@
 	    "@@ = @2;"
 	    "}")))
 
-   (list 'min/r "expects two real-typed values, and returns the smaller of the two"
+   (list 'min/r
+	 "expects two real-typed values, and returns the smaller of the two"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_REAL((@1.v.rv < @2.v.rv) ? @1.v.rv : @2.v.rv);")))
 
-   (list 'max/r "expects two real-typed values, and returns the larger of the two"
+   (list 'max/r
+	 "expects two real-typed values, and returns the larger of the two"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_REAL((@1.v.rv > @2.v.rv) ? @1.v.rv : @2.v.rv);")))
@@ -1508,7 +1529,8 @@
    ;;; return the number-tower type of a number:
    ;;; int 0, rat 1, real 2, complex 3, all other values 4
 
-   (list 'number/type "expects one value: if {integer,rational,real,complex} type respectively, return {0,1,2,3}; for all others, return 4"
+   (list 'number/type
+	 "expects one value: if {integer,rational,real,complex} type respectively, return {0,1,2,3}; for all others, return 4"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
@@ -1532,7 +1554,9 @@
 
    ;;; ditto for vector
 
-   (list 'vector-number/type 'prim 1
+   (list 'vector-number/type
+	 "expects one vector, and returns the max number-type (see number/type) for all values in the vector"
+	 'prim 1
 	 (lambda (r a1)
 	   (let ((a9 (new-svar 'lbl)))
 	     (emit-code
@@ -1577,7 +1601,8 @@
 
    ;;; promote ints to rationals, leave all else untouched
 
-   (list 'promote/rat "expects one value; integers are promoted to rational type, all others are returned unchanged"
+   (list 'promote/rat
+	 "expects one value; integers are promoted to rational type, all others are returned unchanged"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
@@ -1589,7 +1614,9 @@
 
    ;;; ditto for vector
 
-   (list 'vector-promote/rat! 'prim 1
+   (list 'vector-promote/rat!
+	 "expects one vector; all its integer elements are promoted to rational type, all others are preserved"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
 	    "{"
@@ -1607,12 +1634,15 @@
 
    ;;; promote ints and rationals to reals, leave all else untouched
 
-   (list 'promote/real "expects one value; integers and rationals are promoted to real type, all others are returned unchanged"
+   (list 'promote/real
+	 "expects one value; integers and rationals are promoted to real type, all others are returned unchanged"
 	 'prim 1 promote/real)
 
    ;;; ditto for vector
 
-   (list 'vector-promote/real! 'prim 1
+   (list 'vector-promote/real!
+	 "expects one vector; all its integer and rational elements are promoted to real type, all others are preserved"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
 	    "{"
@@ -1655,7 +1685,9 @@
 
    ;;; ditto for vector
 
-   (list 'vector-promote/cmplx! 'prim 1
+   (list 'vector-promote/cmplx!
+	 "expects one vector; all its numeric elements are promoted to complex type, all others are preserved"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
 	    "{"
@@ -1681,19 +1713,22 @@
    ;;; it can create numbers in non-canonical formats, 3/6, and also
    ;;; 0/1, 0/0 aka NaN, 1/0 and -1/0 aka infinities. use with care!
 
-   (list 'make-rational "expects two integers N and D and returns the rational number N/D; note that this can construct non-canonical numbers such as 3/6, 0/1, 1/0, etc"
+   (list 'make-rational
+	 "expects two integers N and D and returns the rational number N/D; note that this can construct non-canonical numbers such as 3/6, 0/1, 1/0, etc"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "@@ = LVI_RAT(@1.v.iv, @2.v.iv);")))
 
-   (list 'gcd "expects two integer arguments and returns their greatest common divisor"
+   (list 'gcd
+	 "expects two integer arguments and returns their greatest common divisor"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "@@ = LVI_INT(lgcd(@1.v.iv, @2.v.iv));")))
 
-   (list 'lcm "expects two integer arguments and returns their least common multiple"
+   (list 'lcm
+	 "expects two integer arguments and returns their least common multiple"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
@@ -2145,23 +2180,33 @@
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_INT((@2.v.iv >= 0) ? (@1.v.iv << @2.v.iv) : (@1.v.iv >> -@2.v.iv));")))
 
-   (list 'bits-get 'prim 2
+   (list 'bits-get
+	 "expects two integers; the first one is treated as a bit-vector and the second one is treated as an index. returns the bit of I1 that is in position I2, (I1 & (1 << I2))"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_INT((@2.v.iv >= 0) ? (@1.v.iv & ( 1 << @2.v.iv)) : 0);")))
 
-   (list 'bits-set 'prim 2
+   (list 'bits-set
+	 "expects two integers; the first one is treated as a bit-vector and the second one is treated as an index. sets the bit of I1 that is in position I2 to '1'"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_INT((@2.v.iv >= 0) ? (@1.v.iv | (1 << @2.v.iv)) : @1.v.iv);")))
 
-   (list 'bits-set? 'prim 2
+   (list 'bits-set?
+	 "expects two integers; the first one is treated as a bit-vector and the second one is treated as an index. returns the bit of I1 that is in position I2 as a boolean: 1 is #t and 0 is #f"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_BOOL((@2.v.iv >= 0) ? ((@1.v.iv & ( 1 << @2.v.iv)) != 0) : false);")))
 
-   (list 'bits-clear 'prim 2
+   (list 'bits-clear
+	 "expects two integers; the first one is treated as a bit-vector and the second one is treated as an index. sets the bit of I1 that is in position I2 to '0'"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_INT((@2.v.iv >= 0) ? (@1.v.iv & ~(1 << @2.v.iv)) : @1.v.iv);")))
 
-   (list 'bits-flip 'prim 2
+   (list 'bits-flip
+	 "expects two integers; the first one is treated as a bit-vector and the second one is treated as an index. flips the bit of I1 that is in position I2"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "@@ = LVI_INT((@2.v.iv >= 0) ? (@1.v.iv ^ (1 << @2.v.iv)) : @1.v.iv);")))
@@ -2249,7 +2294,9 @@
 	      "WILE_EX(\"sqrt\", \"expects one numeric argument\");"
 	      "}"))))
 
-   (list 'cbrt 'prim 1
+   (list 'cbrt
+	 "expects one numeric argument and returns its cube root; real-valued inputs return real-valued results, and complex-valued inputs return complex-valued results"
+	 'prim 1
 	 (lambda (r a1)
 	   (let ((a9 (new-svar)))
 	     (promote/real a9 a1)
@@ -2262,7 +2309,9 @@
 	      "WILE_EX(\"cbrt\", \"expects one numeric argument\");"
 	      "}"))))
 
-   (list 'exp 'prim 1
+   (list 'exp
+	 "expects one numeric argument and returns its exponential; real-valued results are return as real-typed, and complex-valued results are complex-typed"
+	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "exp" "EXP" "CEXP" r a1)))
 
    (list 'log 'prim 1
@@ -2685,22 +2734,26 @@
    ;;; A few internal type-check and -conversion functions,
    ;;; to help with implementing numeric tower
 
-   (list '_int? "expects one value and returns #t if the type of that value is integer, #f otherwise; mainly for internal use"
+   (list '_int?
+	 "expects one value and returns #t if the type of that value is integer, #f otherwise; mainly for internal use"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(@1.vt == LV_INT);")))
 
-   (list '_rat? "expects one value and returns #t if the type of that value is rational, #f otherwise; mainly for internal use"
+   (list '_rat?
+	 "expects one value and returns #t if the type of that value is rational, #f otherwise; mainly for internal use"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(@1.vt == LV_RAT);")))
 
-   (list '_real? "expects one value and returns #t if the type of that value is real, #f otherwise; mainly for internal use"
+   (list '_real?
+	 "expects one value and returns #t if the type of that value is real, #f otherwise; mainly for internal use"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(@1.vt == LV_REAL);")))
 
-   (list '_cmplx? "expects one value and returns #t if the type of that value is complex, #f otherwise; mainly for internal use"
+   (list '_cmplx?
+	 "expects one value and returns #t if the type of that value is complex, #f otherwise; mainly for internal use"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(@1.vt == LV_CMPLX);")))
@@ -2709,32 +2762,38 @@
 ;;; TODO: do we need these functions? from here...
 ;;; we need them for test-wile.scm...?
 
-   (list '_int->rat_ "expects one integer-typed value and returns the value converted to type rational; mainly for internal use"
+   (list '_int->rat_
+	 "expects one integer-typed value and returns the value converted to type rational; mainly for internal use"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_RAT(@1.v.iv, 1);")))
 
-   (list '_int->real_ "expects one integer-typed value and returns the value converted to type real; mainly for internal use"
+   (list '_int->real_
+	 "expects one integer-typed value and returns the value converted to type real; mainly for internal use"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_REAL((lisp_real_t) @1.v.iv);")))
 
-   (list '_int->cmplx_ "expects one integer-typed value and returns the value converted to type complex; mainly for internal use"
+   (list '_int->cmplx_
+	 "expects one integer-typed value and returns the value converted to type complex; mainly for internal use"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_CMPLX2((lisp_real_t) @1.v.iv, 0.0);")))
 
-   (list '_rat->real_ "expects one rational-typed value and returns the value converted to type real; mainly for internal use"
+   (list '_rat->real_
+	 "expects one rational-typed value and returns the value converted to type real; mainly for internal use"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_REAL(((lisp_real_t) @1.v.irv.num)/((lisp_real_t) @1.v.irv.den));")))
 
-   (list '_rat->cmplx_ "expects one rational-typed value and returns the value converted to type complex; mainly for internal use"
+   (list '_rat->cmplx_
+	 "expects one rational-typed value and returns the value converted to type complex; mainly for internal use"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_CMPLX2(((lisp_real_t) @1.v.irv.num)/((lisp_real_t) @1.v.irv.den), 0.0);")))
 
-   (list '_real->cmplx_ "expects one real-typed value and returns the value converted to type complex; mainly for internal use"
+   (list '_real->cmplx_
+	 "expects one real-typed value and returns the value converted to type complex; mainly for internal use"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_CMPLX2(@1.v.rv, 0.0);")))
@@ -2742,7 +2801,8 @@
 ;;; ... to here?
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-   (list 'is-regular-file? "expects one string and returns #t if that is the name of a regular file, #f otherwise"
+   (list 'is-regular-file?
+	 "expects one string and returns #t if that is the name of a regular file, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
@@ -2751,7 +2811,8 @@
 	    "@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISREG(sb.st_mode));"
 	    "}")))
 
-   (list 'is-directory? "expects one string and returns #t if that is the name of a directory, #f otherwise"
+   (list 'is-directory?
+	 "expects one string and returns #t if that is the name of a directory, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
@@ -2760,7 +2821,8 @@
 	    "@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISDIR(sb.st_mode));"
 	    "}")))
 
-   (list 'is-char-device? "expects one string and returns #t if that is the name of a character device, #f otherwise"
+   (list 'is-char-device?
+	 "expects one string and returns #t if that is the name of a character device, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
@@ -2769,7 +2831,8 @@
 	    "@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISCHR(sb.st_mode));"
 	    "}")))
 
-   (list 'is-block-device? "expects one string and returns #t if that is the name of a block device, #f otherwise"
+   (list 'is-block-device?
+	 "expects one string and returns #t if that is the name of a block device, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
@@ -2778,7 +2841,8 @@
 	    "@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISBLK(sb.st_mode));"
 	    "}")))
 
-   (list 'is-named-pipe? "expects one string and returns #t if that is the name of a named pipe, #f otherwise"
+   (list 'is-named-pipe?
+	 "expects one string and returns #t if that is the name of a named pipe, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
@@ -2787,7 +2851,8 @@
 	    "@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISFIFO(sb.st_mode));"
 	    "}")))
 
-   (list 'is-symbolic-link? "expects one string and returns #t if that is the name of a symbolic link, #f otherwise"
+   (list 'is-symbolic-link?
+	 "expects one string and returns #t if that is the name of a symbolic link, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
@@ -2796,7 +2861,8 @@
 	    "@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISLNK(sb.st_mode));"
 	    "}")))
 
-   (list 'is-socket? "expects one string and returns #t if that is the name of a socket, #f otherwise"
+   (list 'is-socket?
+	 "expects one string and returns #t if that is the name of a socket, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
@@ -2805,27 +2871,32 @@
 	    "@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISSOCK(sb.st_mode));"
 	    "}")))
 
-   (list 'file-exists? "expects one string and returns #t if that is the name of an existing file, #f otherwise"
+   (list 'file-exists?
+	 "expects one string and returns #t if that is the name of an existing file, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(access(@1.v.str, F_OK) == 0);")))
 
-   (list 'file-readable? "expects one string and returns #t if that is the name of an existing and readable file, #f otherwise"
+   (list 'file-readable?
+	 "expects one string and returns #t if that is the name of an existing and readable file, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(access(@1.v.str, R_OK) == 0);")))
 
-   (list 'file-writable? "expects one string and returns #t if that is the name of an existing and writable file, #f otherwise"
+   (list 'file-writable?
+	 "expects one string and returns #t if that is the name of an existing and writable file, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(access(@1.v.str, W_OK) == 0);")))
 
-   (list 'file-executable?  "expects one string and returns #t if that is the name of an existing and executable file, #f otherwise"
+   (list 'file-executable?
+	 "expects one string and returns #t if that is the name of an existing and executable file, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(access(@1.v.str, X_OK) == 0);")))
 
-   (list 'create-directory "expects a string and optionally an integer, and creates a directory with that name; the integer is the mode, which defaults to octal 0755 if not specified"
+   (list 'create-directory
+	 "expects a string and optionally an integer, and creates a directory with that name; the integer is the mode, which defaults to octal 0755 if not specified"
 	 'prim
 	 1 (lambda (r a1)
 	     (emit-code
@@ -2834,25 +2905,30 @@
 	     (emit-code
 	      "@@ = LVI_BOOL(mkdir(@1.v.str, @2.v.iv) == 0);")))
 
-   (list 'rename-file "expects two strings: the first is the name of an existing file, and the second is the new name to which it will be renamed"
+   (list 'rename-file
+	 "expects two strings: the first is the name of an existing file, and the second is the new name to which it will be renamed; returns #t if the call succeeded, #f otherwise"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "@@ = LVI_BOOL(rename(@1.v.str, @2.v.str) == 0);")))
 
-   (list 'remove-file "expects one string, and removes (using unlink) a file of that name"
+   (list 'remove-file
+	 "expects one string, and removes (using unlink) a file of that name; returns #t if the call succeeded, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
 	    "@@ = LVI_BOOL(unlink(@1.v.str) == 0);")))
 
-   (list 'remove-directory "expects one string, and removes (using rmdir) a directory of that name"
+   (list 'remove-directory
+	 "expects one string and removes a directory of that name; returns #t if the call succeeded, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
 	    "@@ = LVI_BOOL(rmdir(@1.v.str) == 0);")))
 
-   (list 'change-root-directory 'prim 1
+   (list 'change-root-directory
+	 "expects one string and changes the process root to a directory of that name; returns #t if the call succeeded, #f otherwise"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
 	    "@@ = LVI_BOOL(chroot(@1.v.str) == 0);")))

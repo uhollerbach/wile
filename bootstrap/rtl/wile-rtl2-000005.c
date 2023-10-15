@@ -123,7 +123,7 @@ return var_8;
 // @@@ (list-head lst n) @@@ bld-rtl-dir/wile-rtl2-000005.scm:13 @@@ wile_list_head @@@
 lval wile_list_head(lptr* var_1, lptr var_2)
 {
-lptr var_5[0];
+MK_CLOS(var_5,0);
 lval var_22;
 var_22 = LVI_NIL();
 lval var_23;
