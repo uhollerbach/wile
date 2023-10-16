@@ -59,7 +59,7 @@ lval vs[3];
 vs[0] = LVI_PROC(fn_10,NULL,-1);
 vs[1] = var_stderr;
 vs[2] = var_8[0];
-var_15 = gen_list(3, vs, NULL);
+var_15 = wile_gen_list(3, vs, NULL);
 }
 var_15 = wile_apply_function(&(var_15), __FILE__, __LINE__);
 lval var_16;
@@ -156,13 +156,13 @@ vs[0] = LVI_PROC(fn_41,NULL,-1);
 vs[1] = var_38[0];
 vs[2] = var_46;
 vs[3] = var_38[1];
-var_47 = gen_list(4, vs, NULL);
+var_47 = wile_gen_list(4, vs, NULL);
 }
 var_47 = wile_apply_function(&(var_47), __FILE__, __LINE__);
 var_40 = var_47;
 lval var_48;
 lval var_49;
-var_49 = run_system_command(var_40, __FILE__, __LINE__);
+var_49 = wile_run_system_command(var_40, __FILE__, __LINE__);
 var_48 = var_49;
 lval var_50;
 lval var_51;
@@ -190,7 +190,7 @@ lval var_53;
 lval vs[2];
 vs[0] = var_40;
 vs[1] = var_48;
-var_53 = gen_list(2, vs, NULL);
+var_53 = wile_gen_list(2, vs, NULL);
 }
 {
 lval vs[8];
@@ -293,7 +293,7 @@ var_76[0] = var_71;
 lval var_78[8];
 var_78[0] = var_72;
 var_78[1] = var_58[0];
-var_76[1] = gen_list(2, var_78, NULL);
+var_76[1] = wile_gen_list(2, var_78, NULL);
 (void)
  fn_3(NULL, var_76);
 lval var_79;
@@ -303,7 +303,7 @@ lval var_80;
 lval vs[2];
 vs[0] = var_63;
 vs[1] = var_79;
-var_80 = gen_list(2, vs, NULL);
+var_80 = wile_gen_list(2, vs, NULL);
 }
 {
 lval vs[8];
@@ -336,7 +336,7 @@ lval var_92;
 lval vs[2];
 vs[0] = var_90;
 vs[1] = var_91;
-var_92 = gen_list(2, vs, NULL);
+var_92 = wile_gen_list(2, vs, NULL);
 }
 var_88 = var_92;
 break;
@@ -370,7 +370,7 @@ lval var_97;
 lval vs[2];
 vs[0] = var_95;
 vs[1] = var_96;
-var_97 = gen_list(2, vs, NULL);
+var_97 = wile_gen_list(2, vs, NULL);
 }
 var_88 = var_97;
 break;
@@ -436,7 +436,7 @@ lval vs[3];
 vs[0] = V_CLOS(var_192,0);
 vs[1] = var_193[0];
 vs[2] = var_195;
-var_196 = gen_list(3, vs, NULL);
+var_196 = wile_gen_list(3, vs, NULL);
 }
 {
 lval vs[8];
@@ -458,7 +458,7 @@ lval vs[3];
 vs[0] = V_CLOS(var_199,0);
 vs[1] = var_200[0];
 vs[2] = var_202;
-var_203 = gen_list(3, vs, NULL);
+var_203 = wile_gen_list(3, vs, NULL);
 }
 {
 lval vs[8];
@@ -479,7 +479,7 @@ var_167 = LVI_BOOL(var_164[0].vt == LV_NIL);
 if (LV_IS_FALSE(var_167)) {
 lval var_168;
 lval var_169;
-var_169 = num2string(var_164[1], 10, INT_MIN, __FILE__, __LINE__);
+var_169 = wile_num2string(var_164[1], 10, INT_MIN, __FILE__, __LINE__);
 lval var_170;
 var_170 = LVI_CHAR(48);
 lval var_171;
@@ -506,7 +506,7 @@ vs[1] = var_174;
 vs[2] = V_CLOS(var_163,1);
 vs[3] = var_175;
 vs[4] = var_168;
-var_176 = gen_list(5, vs, NULL);
+var_176 = wile_gen_list(5, vs, NULL);
 }
 {
 lval vs[8];
@@ -520,7 +520,7 @@ lval var_178;
 lval vs[2];
 vs[0] = var_173;
 vs[1] = V_CLOS(var_163,2);
-var_178 = gen_list(2, vs, NULL);
+var_178 = wile_gen_list(2, vs, NULL);
 }
 {
 lval vs[8];
@@ -565,7 +565,7 @@ lval vs[3];
 vs[0] = var_188;
 vs[1] = var_177;
 vs[2] = var_189;
-var_190 = gen_list(3, vs, NULL);
+var_190 = wile_gen_list(3, vs, NULL);
 }
 {
 lval vs[8];
@@ -641,7 +641,7 @@ var_221[2] = var_173;
 var_221[3] = var_216;
 var_221[4] = var_173;
 var_221[5] = var_217;
-var_219[1] = gen_list(6, var_221, NULL);
+var_219[1] = wile_gen_list(6, var_221, NULL);
 (void)
  fn_3(NULL, var_219);
 }
@@ -654,7 +654,7 @@ var_225[0] = var_222;
 lval var_227[8];
 var_227[0] = V_CLOS(var_163,0);
 var_227[1] = var_223;
-var_225[1] = gen_list(2, var_227, NULL);
+var_225[1] = wile_gen_list(2, var_227, NULL);
 (void)
  fn_3(NULL, var_225);
 lval var_228;
@@ -684,7 +684,7 @@ var_238[2] = var_173;
 var_238[3] = var_233;
 var_238[4] = var_173;
 var_238[5] = var_234;
-var_236[1] = gen_list(6, var_238, NULL);
+var_236[1] = wile_gen_list(6, var_238, NULL);
 (void)
  fn_3(NULL, var_236);
 lval var_239;
@@ -713,7 +713,7 @@ lval var_242;
 lval vs[2];
 vs[0] = var_164[1];
 vs[1] = var_241;
-var_242 = gen_list(2, vs, NULL);
+var_242 = wile_gen_list(2, vs, NULL);
 }
 {
 lval vs[8];
@@ -733,7 +733,7 @@ lval var_247;
 {
 lval vs[1];
 vs[0] = var_246;
-var_247 = gen_list(1, vs, NULL);
+var_247 = wile_gen_list(1, vs, NULL);
 }
 {
 lval vs[8];
@@ -892,7 +892,7 @@ lval var_147;
 {
 lval vs[1];
 vs[0] = var_146;
-var_147 = gen_list(1, vs, NULL);
+var_147 = wile_gen_list(1, vs, NULL);
 }
 {
 lval vs[8];
@@ -930,7 +930,7 @@ lval vs[3];
 vs[0] = var_156;
 vs[1] = var_125;
 vs[2] = var_157;
-var_158 = gen_list(3, vs, NULL);
+var_158 = wile_gen_list(3, vs, NULL);
 }
 {
 lval vs[8];
@@ -1010,7 +1010,7 @@ var_313[1] = V_CLOS(var_294,0);
 var_313[2] = var_306;
 var_313[3] = var_308;
 var_313[4] = var_309;
-var_311[0] = gen_list(5, var_313, NULL);
+var_311[0] = wile_gen_list(5, var_313, NULL);
 (void)
  fn_1(NULL, var_311);
 } else {
@@ -1164,7 +1164,7 @@ vs[1] = var_380[0];
 vs[2] = var_383;
 vs[3] = var_384;
 vs[4] = var_388;
-var_389 = gen_list(5, vs, NULL);
+var_389 = wile_gen_list(5, vs, NULL);
 }
 {
 lval vs[8];
@@ -1191,14 +1191,14 @@ LISP_ASSERT(sas != NULL);
 for (i = 1; i < argc; ++i) {
 sas[i-1] = LVI_STRING(argv[i]);
 }
-var_argv = gen_list(argc - 1, sas, NULL);
+var_argv = wile_gen_list(argc - 1, sas, NULL);
 }
 var_cmd_name = LVI_STRING(argv[0]);
 var_stdin = LVI_FPORT(stdin);
 var_stdout = LVI_FPORT(stdout);
 var_stderr = LVI_FPORT(stderr);
-var_pi = LVI_REAL(3.14159265358979311599796346854418516e+00Q);
-var_euler_gamma = LVI_REAL(5.77215664901532865549427242513047531e-01Q);
+var_pi = LVI_REAL(3.14159265358979323846264338327950280e+00Q);
+var_euler_gamma = LVI_REAL(5.77215664901532860606512090082402471e-01Q);
 var_show_sign = LVI_BOOL(false);
 var_int_base = LVI_INT(10);
 var_flt_base = LVI_INT(10);
@@ -1275,7 +1275,7 @@ var_277 = LVI_STRING("error: no output archive file specified!\n");
 lval var_279[8];
 lval var_281[8];
 var_281[0] = var_277;
-var_279[0] = gen_list(1, var_281, NULL);
+var_279[0] = wile_gen_list(1, var_281, NULL);
 (void)
  fn_1(NULL, var_279);
 }
@@ -1306,7 +1306,7 @@ lval var_292[8];
 var_292[0] = var_287;
 var_292[1] = var_258;
 var_292[2] = var_288;
-var_290[0] = gen_list(3, var_292, NULL);
+var_290[0] = wile_gen_list(3, var_292, NULL);
 (void)
  fn_1(NULL, var_290);
 }
@@ -1336,7 +1336,7 @@ vs[1] = var_355;
 vs[2] = var_356;
 vs[3] = var_260;
 vs[4] = var_262;
-var_357 = gen_list(5, vs, NULL);
+var_357 = wile_gen_list(5, vs, NULL);
 }
 var_357 = wile_apply_function(&(var_357), __FILE__, __LINE__);
 var_349 = var_357;
@@ -1355,7 +1355,7 @@ vs[0] = var_349;
 vs[1] = var_360;
 vs[2] = var_258;
 vs[3] = var_361;
-var_362 = gen_list(4, vs, NULL);
+var_362 = wile_gen_list(4, vs, NULL);
 }
 {
 lval vs[8];
@@ -1366,7 +1366,7 @@ var_349 = var_362;
 }
 lval var_363;
 lval var_364;
-var_364 = run_system_command(var_349, __FILE__, __LINE__);
+var_364 = wile_run_system_command(var_349, __FILE__, __LINE__);
 var_363 = var_364;
 lval var_366;
 var_366 = LVI_BOOL(true);
@@ -1401,7 +1401,7 @@ var_369 = LVI_STRING("archive create failed!\n");
 lval var_371[8];
 lval var_373[8];
 var_373[0] = var_369;
-var_371[0] = gen_list(1, var_373, NULL);
+var_371[0] = wile_gen_list(1, var_373, NULL);
 (void)
  fn_1(NULL, var_371);
 } else {
@@ -1411,7 +1411,7 @@ lval var_375;
 {
 lval vs[1];
 vs[0] = var_374;
-var_375 = gen_list(1, vs, NULL);
+var_375 = wile_gen_list(1, vs, NULL);
 }
 {
 lval vs[8];
@@ -1443,7 +1443,7 @@ lval var_393;
 lval vs[2];
 vs[0] = var_392;
 vs[1] = var_258;
-var_393 = gen_list(2, vs, NULL);
+var_393 = wile_gen_list(2, vs, NULL);
 }
 {
 lval vs[8];
@@ -1451,7 +1451,7 @@ vs[0] = var_393;
 var_393 = wile_string_append(NULL, vs);
 }
 lval var_394;
-var_394 = run_system_command(var_393, __FILE__, __LINE__);
+var_394 = wile_run_system_command(var_393, __FILE__, __LINE__);
 var_391 = var_394;
 lval var_395;
 lval var_396;
@@ -1488,7 +1488,7 @@ lval var_400;
 lval var_401[8];
 lval var_403[8];
 var_403[0] = var_399;
-var_401[0] = gen_list(1, var_403, NULL);
+var_401[0] = wile_gen_list(1, var_403, NULL);
 var_400 = fn_1(NULL, var_401);
 var_395 = var_400;
 } else {
@@ -1498,7 +1498,7 @@ lval var_405;
 {
 lval vs[1];
 vs[0] = var_404;
-var_405 = gen_list(1, vs, NULL);
+var_405 = wile_gen_list(1, vs, NULL);
 }
 {
 lval vs[8];

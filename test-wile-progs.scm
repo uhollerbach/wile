@@ -5,6 +5,7 @@
 (define tname "twp-executable")
 
 (define show-diffs? #f)
+(define compile-only? #f)
 
 (define (status flag . strs)
   (list flag (string-join-by " " strs)))
@@ -61,14 +62,19 @@
 	  (close-port port)
 	  (set! msg line))
 	(set! msg ""))
-    (if (run-command (string-append "wile " (if cla cla "") " " scm " " tname))
-	(if (run-command
-	     (if (file-exists? inp)
-		 (string-append tname " < " inp " > " tst)
-		 (string-append tname " > " tst)))
-	    (run-comparisons file tst ref msg)
-	    (status #f file "run"))
-	(status #f file "compile 1"))))
+    (if compile-only?
+	(begin
+	  (run-command (string-append "wile -c " (if cla cla "") " " scm))
+	  (status #t file "compiled"))
+	(if (run-command (string-append "wile " (if cla cla "")
+					" " scm " " tname))
+	    (if (run-command
+		 (if (file-exists? inp)
+		     (string-append tname " < " inp " > " tst)
+		     (string-append tname " > " tst)))
+		(run-comparisons file tst ref msg)
+		(status #f file "run"))
+	    (status #f file "compile 1")))))
 
 (define (f-pred s)
   (regex-match "^test_[0-9]+\.scm$" s))
@@ -82,10 +88,13 @@
   (vector-set! v i (+ 1 (vector-ref v i))))
 
 (when (and (not (null? command-line-arguments))
-	   (or (string=? (car command-line-arguments) "-d")
+	   (or (string=? (car command-line-arguments) "-c")
+	       (string=? (car command-line-arguments) "-d")
 	       (string=? (car command-line-arguments) "--diff")))
-  (set! command-line-arguments (cdr command-line-arguments))
-  (set! show-diffs? #t))
+  (if (string=? (car command-line-arguments) "-d")
+      (set! show-diffs? #t)
+      (set! compile-only? #t))
+  (set! command-line-arguments (cdr command-line-arguments)))
 
 (when (null? command-line-arguments)
   (write-string stderr "usage: " command-name " test-loc\n")

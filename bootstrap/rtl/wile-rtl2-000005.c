@@ -17,121 +17,21 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval fn_4(lptr*, lptr);
 
 // definitions
 
-// @@@ lambda (l1 l2 nl) @@@ bld-rtl-dir/wile-rtl2-000005.scm:14 @@@ fn_4 @@@
-static lval fn_4(lptr* var_5, lptr var_6)
+// @@@ (list-length<? n lst) @@@ bld-rtl-dir/wile-rtl2-000005.scm:13 @@@ wile_list_length_lt @@@
+lval wile_list_length_lt(lptr* var_1, lptr var_2)
 {
-lbl_7:;
-lval var_8;
-lval var_9;
-var_9 = LVI_BOOL(false);
-do {
-lval var_10;
-var_10 = LVI_BOOL(var_6[0].vt == LV_NIL);
-var_9 = var_10;
-if (!LV_IS_FALSE(var_9)) { break; }
-lval var_11;
-var_11 = LVI_INT(0);
-lval var_12;
-switch (TYPE_COMBO(var_6[2].vt,var_11.vt)) {
-case TYPE_COMBO(LV_INT,LV_INT):
-var_12 = LVI_BOOL(var_6[2].v.iv <= var_11.v.iv);
-break;
-case TYPE_COMBO(LV_INT,LV_RAT):
-var_12 = LVI_BOOL(var_6[2].v.iv * var_11.v.irv.den <= var_11.v.irv.num);
-break;
-case TYPE_COMBO(LV_INT,LV_REAL):
-var_12 = LVI_BOOL(var_6[2].v.iv <= var_11.v.rv);
-break;
-case TYPE_COMBO(LV_RAT,LV_INT):
-var_12 = LVI_BOOL(var_6[2].v.irv.num <= var_11.v.iv * var_6[2].v.irv.den);
-break;
-case TYPE_COMBO(LV_RAT,LV_RAT):
-var_12 = LVI_BOOL(var_6[2].v.irv.num * var_11.v.irv.den <= var_11.v.irv.num * var_6[2].v.irv.den);
-break;
-case TYPE_COMBO(LV_RAT,LV_REAL):
-var_12 = LVI_BOOL(var_6[2].v.irv.num <= var_11.v.rv * var_6[2].v.irv.den);
-break;
-case TYPE_COMBO(LV_REAL,LV_INT):
-var_12 = LVI_BOOL(var_6[2].v.rv <= var_11.v.iv);
-break;
-case TYPE_COMBO(LV_REAL,LV_RAT):
-var_12 = LVI_BOOL(var_6[2].v.rv * var_11.v.irv.den <= var_11.v.irv.num);
-break;
-case TYPE_COMBO(LV_REAL,LV_REAL):
-var_12 = LVI_BOOL(var_6[2].v.rv <= var_11.v.rv);
-break;
-default:
-WILE_EX("<=", "inputs are not real-valued numbers");
-break;
-}
-var_9 = var_12;
-if (!LV_IS_FALSE(var_9)) { break; }
-} while (0);
-if (LV_IS_FALSE(var_9)) {
-lval var_13;
-if (var_6[0].vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
-}
-var_13 = (var_6[0].v.pair.cdr ? *(var_6[0].v.pair.cdr) : LVI_NIL());
-lval var_14;
-if (var_6[0].vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_14 = (var_6[0].v.pair.car ? *(var_6[0].v.pair.car) : LVI_NIL());
-lval var_15;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_14.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_14;
-}
-if (var_6[1].vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = var_6[1];
-}
-var_15 = LVI_PAIR(p1, p2);
-}
-lval var_16;
-var_16 = LVI_INT(1);
-lval var_17;
-var_17 = LVI_INT(var_6[2].v.iv - var_16.v.iv);
-lval var_20[8];
-var_20[0] = var_13;
-var_20[1] = var_15;
-var_20[2] = var_17;
-var_6[0] = var_20[0];
-var_6[1] = var_20[1];
-var_6[2] = var_20[2];
-goto lbl_7;	// selfie
-} else {
-lval var_21;
+lval var_4;
 {
 lval vs[8];
-vs[0] = var_6[1];
-var_21 = wile_list_reverse(NULL, vs);
+vs[0] = var_2[0];
+vs[1] = var_2[1];
+var_4 = wile_list_length_ge(NULL, vs);
 }
-var_8 = var_21;
+lval var_5;
+var_5 = LVI_BOOL(LV_IS_FALSE(var_4));
+return var_5;
 }
-return var_8;
-}
-// end of lambda fn_4
-
-// @@@ (list-head lst n) @@@ bld-rtl-dir/wile-rtl2-000005.scm:13 @@@ wile_list_head @@@
-lval wile_list_head(lptr* var_1, lptr var_2)
-{
-MK_CLOS(var_5,0);
-lval var_22;
-var_22 = LVI_NIL();
-lval var_23;
-lval var_24[8];
-var_24[0] = var_2[0];
-var_24[1] = var_22;
-var_24[2] = var_2[1];
-var_23 = fn_4(var_5, var_24);
-return var_23;
-}
-// end of function wile_list_head
+// end of function wile_list_length_lt

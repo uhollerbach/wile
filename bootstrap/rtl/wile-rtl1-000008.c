@@ -48,6 +48,6 @@ lval wile_temp_file(lptr*, lptr args)
 	wile_exception("open-temporary-file", "could not create temporary file");
     }
     vs[0] = LVI_FPORT(fp);
-    return gen_list(2, vs, NULL);
+    return wile_gen_list(2, vs, NULL);
 }
 

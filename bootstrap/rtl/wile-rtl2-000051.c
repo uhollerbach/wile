@@ -17,61 +17,99 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
+static lval fn_4(lptr*, lptr);
 
 // definitions
 
-// @@@ (sqlite-meta-schema port tbl) @@@ bld-rtl-dir/wile-rtl2-000051.scm:16 @@@ wile_sql_meta_schema @@@
-lval wile_sql_meta_schema(lptr* var_1, lptr var_2)
+// @@@ lambda (s n acc) @@@ bld-rtl-dir/wile-rtl2-000051.scm:14 @@@ fn_4 @@@
+static lval fn_4(lptr* var_5, lptr var_6)
 {
-lval var_4;
-var_4 = LVI_STRING("caar");
-lval var_5;
-var_5 = LVI_STRING("");
-lval var_6;
-var_6 = LVI_STRING("select sql from sqlite_schema where (name = \'");
-lval var_7;
-var_7 = LVI_STRING("\')");
+lbl_7:;
 lval var_8;
-{
-lval vs[3];
-vs[0] = var_6;
-vs[1] = var_2[1];
-vs[2] = var_7;
-var_8 = gen_list(3, vs, NULL);
-}
-{
-lval vs[8];
-vs[0] = var_5;
-vs[1] = var_8;
-var_8 = wile_string_join_by(NULL, vs);
-}
 lval var_9;
-#ifdef WILE_USES_SQLITE
-if (var_2[0].vt == LV_SQLITE_PORT && var_8.vt == LV_STRING) {
-var_9 = wile_sql_run(var_2[0].v.sqlite_conn, var_8.v.str, __FILE__, __LINE__);
-} else {
-WILE_EX("sqlite-run", "expects one sqlite-port and one string");
+switch (TYPE_COMBO(var_6[1].vt,var_6[0].vt)) {
+case TYPE_COMBO(LV_INT,LV_INT):
+var_9 = LVI_BOOL(var_6[1].v.iv < var_6[0].v.iv);
+break;
+case TYPE_COMBO(LV_INT,LV_RAT):
+var_9 = LVI_BOOL(var_6[1].v.iv * var_6[0].v.irv.den < var_6[0].v.irv.num);
+break;
+case TYPE_COMBO(LV_INT,LV_REAL):
+var_9 = LVI_BOOL(var_6[1].v.iv < var_6[0].v.rv);
+break;
+case TYPE_COMBO(LV_RAT,LV_INT):
+var_9 = LVI_BOOL(var_6[1].v.irv.num < var_6[0].v.iv * var_6[1].v.irv.den);
+break;
+case TYPE_COMBO(LV_RAT,LV_RAT):
+var_9 = LVI_BOOL(var_6[1].v.irv.num * var_6[0].v.irv.den < var_6[0].v.irv.num * var_6[1].v.irv.den);
+break;
+case TYPE_COMBO(LV_RAT,LV_REAL):
+var_9 = LVI_BOOL(var_6[1].v.irv.num < var_6[0].v.rv * var_6[1].v.irv.den);
+break;
+case TYPE_COMBO(LV_REAL,LV_INT):
+var_9 = LVI_BOOL(var_6[1].v.rv < var_6[0].v.iv);
+break;
+case TYPE_COMBO(LV_REAL,LV_RAT):
+var_9 = LVI_BOOL(var_6[1].v.rv * var_6[0].v.irv.den < var_6[0].v.irv.num);
+break;
+case TYPE_COMBO(LV_REAL,LV_REAL):
+var_9 = LVI_BOOL(var_6[1].v.rv < var_6[0].v.rv);
+break;
+default:
+WILE_EX("<", "inputs are not real-valued numbers");
+break;
 }
-#else
-var_9 = LVI_BOOL(false);
-#endif // WILE_USES_SQLITE
+if (LV_IS_FALSE(var_9)) {
 lval var_10;
+var_10 = LVI_INT(1);
+lval var_11;
+var_11 = LVI_INT(var_6[1].v.iv - var_10.v.iv);
+lval var_12;
 {
-char* cp = strchr(var_4.v.str, 'r');
-var_10 = var_9;
-while (*(--cp) != 'c') {
-if (var_10.vt != LV_PAIR) {
-WILE_EX("cxr", "input does not have the right structure!");
+lptr p1 = NULL, p2 = NULL;
+if (var_6[1].vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_6[1];
 }
-if (*cp == 'a') {
-var_10 = (var_10.v.pair.car ? *(var_10.v.pair.car) : LVI_NIL());
-} else if (*cp == 'd') {
-var_10 = (var_10.v.pair.cdr ? *(var_10.v.pair.cdr) : LVI_NIL());
+if (var_6[2].vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_6[2];
+}
+var_12 = LVI_PAIR(p1, p2);
+}
+lval var_15[8];
+var_15[0] = var_6[0];
+var_15[1] = var_11;
+var_15[2] = var_12;
+var_6[0] = var_15[0];
+var_6[1] = var_15[1];
+var_6[2] = var_15[2];
+goto lbl_7;	// selfie
 } else {
-WILE_EX("cxr", "got malformed control string '%s'", var_4.v.str);
+var_8 = var_6[2];
 }
+return var_8;
 }
+// end of lambda fn_4
+
+// @@@ (upfrom s n0) @@@ bld-rtl-dir/wile-rtl2-000051.scm:13 @@@ wile_upfrom @@@
+lval wile_upfrom(lptr* var_1, lptr var_2)
+{
+MK_CLOS(var_5,0);
+lval var_16;
+var_16 = LVI_INT(var_2[0].v.iv + var_2[1].v.iv);
+lval var_17;
+var_17 = LVI_INT(1);
+lval var_18;
+var_18 = LVI_INT(var_16.v.iv - var_17.v.iv);
+lval var_19;
+var_19 = LVI_NIL();
+lval var_20;
+lval var_21[8];
+var_21[0] = var_2[0];
+var_21[1] = var_18;
+var_21[2] = var_19;
+var_20 = fn_4(var_5, var_21);
+return var_20;
 }
-return var_10;
-}
-// end of function wile_sql_meta_schema
+// end of function wile_upfrom

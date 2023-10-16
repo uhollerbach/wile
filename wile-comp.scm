@@ -417,7 +417,7 @@
 		   "for (i = 1; i < argc; ++i) {"
 		   "sas[i-1] = LVI_STRING(argv[i]);"
 		   "}"
-		   "%s = gen_list(argc - 1, sas, NULL);"
+		   "%s = wile_gen_list(argc - 1, sas, NULL);"
 		   "}"
 		   "")))
 	(special-decl tmp compile-type)
@@ -505,8 +505,8 @@
 				     i (compile-immediate cur-env v)))
 			(upfrom 0 aal) vals)
 	      (if (positive? alen)
-		  (emit-fstr "%s = gen_list(%d, vs, NULL);\n" vname alen)
-		  (emit-fstr "%s = gen_list(%d, vs, vs + %d);\n"
+		  (emit-fstr "%s = wile_gen_list(%d, vs, NULL);\n" vname alen)
+		  (emit-fstr "%s = wile_gen_list(%d, vs, vs + %d);\n"
 			     vname (- aal 1) (- aal 1)))))
        (when global-library
 	 (emit-fstr "do_init_%s = false;\n" vname))
@@ -613,7 +613,7 @@
 
 (define (compile-special-if cur-env tcall exprs)
   (debug-trace 'compile-special-if cur-env tcall exprs)
-  (if (= 3 (list-length exprs))
+  (if (list-length=? 3 exprs)
       (let ((res (new-svar)))
 	(emit-decl res)
 	;;; do not optimize these by combining them;
@@ -627,7 +627,7 @@
 		   res (maybe-compile-expr cur-env tcall (cadr exprs)))
 	(emit-fstr "}\n")
 	res)
-      (ERR "malformed if '%v'" exprs)))
+      (ERR "malformed 'if' expression '%v'" exprs)))
 
 (define (compile-special-do cur-env tcall exprs)
   (debug-trace 'compile-special-do cur-env tcall exprs)
@@ -688,6 +688,7 @@
 	 "cachalot->errval = @1.errval;"
 	 "cachalot->l_whence = 0;"
 	 "cachalot->c_whence = LISP_WHENCE;"
+	 "fflush(NULL);"
 	 "longjmp(cachalot->cenv, 1);"))
       (emit-fstr "%s = LVI_BOOL(false);\n" res)))
 
@@ -714,7 +715,7 @@
 	(emit-decl res)
 	(emit-fstr "do {\n")
 	(cond ((any-true? (map is-else? rest-t))
-	       (ERR "malformed cond '%v'" clauses))
+	       (ERR "malformed 'cond' expression '%v'" clauses))
 	      ((is-else? last-t)
 	       (for-each doit (list-untail clauses 1))
 	       (emit-fstr "%s = %s;\n" res
@@ -726,14 +727,27 @@
 	(emit-fstr "} while (0);\n")
 	res)))
 
+(define (check-let-bindings type llist)
+  (if (and (list? llist) (list-length>=? 2 llist))
+      (let ((blist (car llist)))
+	(unless (list? blist)
+	  (ERR "malformed '%s' bindings '%v' are not a list" type blist))
+	(for-each (lambda (bv)
+		    (unless (list? bv)
+		      (ERR "malformed '%s' binding '%v' is not a list"
+			   type bv)))
+		  blist)
+	(let ((vs (map car blist)))
+	  (unless (unique-symbols? vs)
+	    (ERR "malformed '%s' bindings list '%v'" type vs))))
+      (ERR "malformed '%s' expression '%v'" llist)))
+
 (define (compile-special-lettish advance-in-place cur-env tcall clauses)
   (debug-trace 'compile-special-lettish cur-env tcall clauses)
   (cond ((or (null? clauses) (null? (cdr clauses)))
-	 (ERR "malformed let '%v'" clauses))
-	((symbol? (car clauses))		;;; named let
-	 (unless (list? (cadr clauses))
-	   (ERR "malformed named-let '%s' clauses '%v'"
-		(car clauses) (cadr clauses)))
+	 (ERR "malformed 'let' '%v'" clauses))
+	((and (list? clauses) (symbol? (car clauses)))		;;; named let
+	 (check-let-bindings "named-let" (cdr clauses))
 	 (let* ((s-name (car clauses))
 		(nargs (list-length (cadr clauses)))
 		(formals (map car (cadr clauses)))
@@ -748,21 +762,18 @@
 				   lambda-env #f lambda-clauses)
 	   (compile-expr lambda-env #f (cons s-name args))))
 	(else					;;; let or let*
-	 (unless (list? (car clauses))
-	   (ERR "malformed let clauses '%v'" (car clauses)))
+	 (check-let-bindings (if advance-in-place "let*" "let") clauses)
 	 (let ((ndefs
 		(map (lambda (def)
-		       (if (symbol? (car def))
-			   (let ((tmp (new-svar)))
-			     (emit-decl tmp)
-			     (emit-fstr "%s = %s;\n" tmp
-					(maybe-compile-expr
-					 cur-env #f (cadr def)))
-			     (let ((d (make-var-def (car def) tmp)))
-			       (when advance-in-place
-				 (set! cur-env (cons d cur-env)))
-			       d))
-			   (ERR "malformed let definition '%s'" def)))
+		       (let ((tmp (new-svar)))
+			 (emit-decl tmp)
+			 (emit-fstr "%s = %s;\n" tmp
+				    (maybe-compile-expr
+				     cur-env #f (cadr def)))
+			 (let ((d (make-var-def (car def) tmp)))
+			   (when advance-in-place
+			     (set! cur-env (cons d cur-env)))
+			   d)))
 		     (car clauses))))
 	   (unless advance-in-place
 	     (for-each (lambda (d) (set! cur-env (cons d cur-env))) ndefs))
@@ -770,31 +781,30 @@
 
 (define (compile-special-letrec cur-env tcall clauses)
   (debug-trace 'compile-special-letrec cur-env tcall clauses)
-  (if (or (null? clauses) (null? (cdr clauses)))
-      (ERR "malformed letrec '%v'" clauses)
-      (let ((vars
-	     (map (lambda (def)
-		    (if (symbol? (car def))
-			(let* ((tmp (new-svar))
-			       (d (make-var-def (car def) tmp)))
+  (check-let-bindings "letrec" clauses)
+  (let ((vars
+	 (map (lambda (def)
+		(if (symbol? (car def))
+		    (let* ((tmp (new-svar))
+			   (d (make-var-def (car def) tmp)))
 ;;; TODO: is this right? or should it write the declaration to global-decl?
-			  (compile-with-output global-func (emit-decl tmp))
-			  (set! cur-env (cons d cur-env))
-			  tmp)
-			(ERR "malformed let definition '%s'" def)))
-		  (car clauses))))
-	(for-each (lambda (var def)
-		    (if (symbol? (car def))
-			(emit-fstr "%s = %s;\n" var
-				   (maybe-compile-expr cur-env #f (cadr def)))
-			(ERR "malformed let definition '%s'" def)))
-		  vars (car clauses))
-	(compile-special-begin cur-env tcall (cdr clauses)))))
+		      (compile-with-output global-func (emit-decl tmp))
+		      (set! cur-env (cons d cur-env))
+		      tmp)
+		    (ERR "malformed 'letrec' definition '%s'" def)))
+	      (car clauses))))
+    (for-each (lambda (var def)
+		(if (symbol? (car def))
+		    (emit-fstr "%s = %s;\n" var
+			       (maybe-compile-expr cur-env #f (cadr def)))
+		    (ERR "malformed 'letrec' definition '%s'" def)))
+	      vars (car clauses))
+    (compile-special-begin cur-env tcall (cdr clauses))))
 
 (define (compile-special-set! cur-env tcall clauses)
   (debug-trace 'compile-special-set! cur-env tcall clauses)
   (if (or (null? clauses) (null? (cdr clauses)) (not (symbol? (car clauses))))
-      (ERR "malformed set! '%v'" clauses)
+      (ERR "malformed 'set!' expressioin '%v'" clauses)
 
       ;;; TODO: here, if we get a proc or prim, that means redefinition of
       ;;; said proc or prim. That would mean modifying the current environment
@@ -808,7 +818,7 @@
 	    (emit-fstr "%s = %s;\n"
 		       (cadr si) (maybe-compile-expr
 				  cur-env #f (cadr clauses)))
-	    (ERR "set!: symbol '%s' does not resolve to a c-var"
+	    (ERR "malformed 'set!' symbol '%s' does not resolve to a c-var"
 		 (car clauses)))
 	(cadr si))))
 
@@ -840,9 +850,12 @@
 
 (define (compile-special-lambda c-fn-name c-cl-name cur-env tcall def)
   (debug-trace 'compile-special-lambda cur-env tcall def)
-  (let* ((argies (args-list (car def)))
+  (let* ((args (car def))
+	 (argies (args-list (car def)))
 	 (arity (car argies))
 	 (sas (cadr argies))
+	 (ig (unless (unique-symbols? sas)
+	       (ERR "malformed 'lambda' args list '%v'" args)))
 	 (tmp-fn (if c-fn-name c-fn-name (new-svar 'fn)))
 	 (c-name (if c-cl-name c-cl-name (new-svar)))
 	 (a-name (new-svar))
@@ -873,7 +886,7 @@
   (emit-fstr "{\n")
   (emit-fstr
    "%s = %s;\nbreak;\n}\n" res
-   (if (and (= 3 (list-length clause))
+   (if (and (list-length=? 3 clause)
 	    (symbol? (cadr clause))
 	    (symbol=? (cadr clause) '=>))
        (let ((proc (compile-expr cur-env tcall (caddr clause)))
@@ -950,29 +963,29 @@
 				 ((eq? (car vs) (cadr vs)) #f)
 				 (else (loop (cdr vs))))))))
     (when (any-true? (map is-else? rest-cs))
-      (ERR "malformed case '%v'" clauses))
+      (ERR "malformed 'case' expression '%v'" clauses))
     (cond ((all-true? (map char? typed-cs))
 	   (if (check-unique char<? char=? typed-cs)
 	       (do-compile-case1 "LV_CHAR" ".v.chr" char->integer
 				 default? cur-env tcall clauses)
-	       (ERR "duplicated cases in case '%v'" clauses)))
+	       (ERR "duplicated cases in 'case' expression '%v'" clauses)))
 	  ((all-true? (map integer? typed-cs))
 	   (if (check-unique < = typed-cs)
 	       (do-compile-case1 "LV_INT" ".v.iv" (lambda (x) x)
 				 default? cur-env tcall clauses)
-	       (ERR "duplicated cases in case '%v'" clauses)))
+	       (ERR "duplicated cases in 'case' expression '%v'" clauses)))
 	  ((all-true? (map string? typed-cs))
 	   (if (check-unique string<? string=? typed-cs)
 	       (do-compile-case2 "LV_STRING" ".v.str" (lambda (x) x)
 				 default? cur-env tcall clauses)
-	       (ERR "duplicated cases in case '%v'" clauses)))
+	       (ERR "duplicated cases in 'case' expression '%v'" clauses)))
 	  ((all-true? (map symbol? typed-cs))
 	   (if (check-unique symbol<? symbol=? typed-cs)
 	       (do-compile-case2 "LV_SYMBOL" ".v.str" symbol->string
 				 default? cur-env tcall clauses)
-	       (ERR "duplicated cases in case '%v'" clauses)))
+	       (ERR "duplicated cases in 'case' expression '%v'" clauses)))
 	  ;;; TODO: possibly also support boolean
-	  (else (ERR "mixed types are not supported in case '%v'" clauses)))))
+	  (else (ERR "mixed types are not supported in 'case' expression '%v'" clauses)))))
 
 ;;; Note: the stuff near provide-loc is an EXTENSION:
 ;;;
@@ -1033,7 +1046,7 @@
 			    ecv new-env #f
 			    ((if provide-loc cddar cdar) clauses)))
 	res)
-      (ERR "malformed guard expression '%v'" clauses)))
+      (ERR "malformed 'guard' expression '%v'" clauses)))
 
 (define (compile-qq-ordinary-list level cur-env expr)
   (let* ((lt (compile-qq level cur-env (cdr expr)))
@@ -1043,7 +1056,7 @@
 		       (symbol=? (caar expr) 'unquote-splicing)))
 	 (merge-fn (cdr (lookup-symbol cur-env (if splice? 'append 'cons)))))
     (unless (symbol=? 'prim (car merge-fn))
-      (ERR "quasiquote merge lookup failed!"))
+      (ERR "'quasiquote' merge lookup failed!!"))
     (apply-prim "quasiquote merge" (cdr merge-fn) (list lh lt))))
 
 (define (compile-qq level cur-env expr)
@@ -1071,27 +1084,32 @@
 		     level cur-env (vector->list expr)))
 	       (conv-fn (cdr (lookup-symbol cur-env 'list->vector))))
 	   (unless (symbol=? 'prim (car conv-fn))
-	     (ERR "quasiquote conversion lookup failed!"))
+	     (ERR "'quasiquote' conversion lookup failed!"))
 	   (apply-prim "quasiquote convert" (cdr conv-fn) (list tmp))))
-	((bytevector? expr)
-	 ;;; TODO: this is untested; skeem doesn't have bytevector literals
-	 ;;; also it prevents self-compilation, because bytevector->list is
-	 ;;; unimplemented
+
+;;; bytevectors are a little problematic, because they assume the contents
+;;; are always bytes, and thus only have space for bytes. so storing some
+;;; arbitrary expression in there is not possible, even if it evaluates to
+;;; a byte at the end. probably not going to support this for a while if
+;;; ever. instead, use a vector, generate only bytes, and then convert it
+;;; to a bytevector
+
+;;;	((bytevector? expr)
 ;;;	 (let ((tmp (compile-qq-ordinary-list
 ;;;		     level cur-env (bytevector->list expr)))
 ;;;	       (conv-fn (cdr (lookup-symbol cur-env 'list->bytevector))))
 ;;;	   (unless (symbol=? 'prim (car conv-fn))
-;;;	     (ERR "quasiquote conversion lookup failed!"))
+;;;	     (ERR "'quasiquote' conversion lookup failed!!"))
 ;;;	   (apply-prim "quasiquote convert" (cdr conv-fn) (list tmp))))
-	 (compile-immediate cur-env 'BYTEVECTOR))
+;;;	 (compile-immediate cur-env 'BYTEVECTOR))
 	(else				;;; unimplemented or impossible cases
-	 (ERR "maltyped quasiquote expression '%v'" expr))))
+	 (ERR "malformed 'quasiquote' expression '%v'" expr))))
 
 (define (compile-special-qq cur-env tcall expr)
   (debug-trace 'compile-special-qq cur-env tcall expr)
-  (if (= (list-length expr) 1)
+  (if (list-length=? 1 expr)
       (compile-qq 1 cur-env (car expr))
-      (ERR "malformed quasiquote expression '%v'" expr)))
+      (ERR "malformed 'quasiquote' expression '%v'" expr)))
 
 (define (compile-special cur-env tcall expr)
   (debug-trace 'compile-special cur-env tcall expr)
@@ -1125,9 +1143,9 @@
 	((symbol=? (car expr) 'quasiquote)
 	 (compile-special-qq cur-env tcall (cdr expr)))
 	((symbol=? (car expr) 'unquote)
-	 (ERR "naked unquote form '%v'" expr))
+	 (ERR "naked 'unquote' form '%v'" expr))
 	((symbol=? (car expr) 'unquote-splicing)
-	 (ERR "naked unquote-splicing form '%v'" expr))
+	 (ERR "naked 'unquote-splicing' form '%v'" expr))
 	(else (ERR "special form '%v' is not implemented yet" expr))))
 
 (define (is-special-form? val)
@@ -1189,7 +1207,7 @@
 	 (nargs (list-length args))
 	 (aop (let loop ((os ops))
 		(if (null? os)
-		    (ERR "'%v' does not have a version for %d args"
+		    (ERR "primitive '%v' does not have a version for %d args"
 			 s-name nargs)
 		    (let ((arity (car os)))
 		      (if (or (and (or (zero? arity)
@@ -1307,7 +1325,7 @@
 				    (emit-fstr "%s[%d] = %s;\n" olst oix a)
 				    (set! oix (+ oix 1)))
 				  oars)
-			(emit-fstr "%s[%d] = gen_list(%d, %s, NULL);\n"
+			(emit-fstr "%s[%d] = wile_gen_list(%d, %s, NULL);\n"
 				   parr pix noar olst)))
 	     (when tcall
 	       (for-each (lambda (i)
@@ -1426,20 +1444,50 @@
 (define (compile-const c-var-name cur-env def port)
   (debug-trace 'compile-const cur-env #f def)
   (let ((const-name (car def))
-	(tmp (if c-var-name c-var-name (new-svar))))
+	(tmp (if c-var-name c-var-name (new-svar)))
+	(do-init #f))
     (compile-with-output
      global-decl
-     (emit-fstr "static lval %s;\t\t// %v\n" tmp const-name))
-    (compile-with-output
-     global-code
-     (emit-fstr "%s = %s;\n"
-		tmp (maybe-compile-expr cur-env #f (cadr def))))
+     ;;; statically initialize nil, boolean, char, and numeric data
+     (cond ((null? (cadr def))
+	    (emit-fstr "static lval %s = LVI_NIL();\t\t// %v\n"
+		       tmp const-name))
+	   ((boolean? (cadr def))
+	    (emit-fstr "static lval %s = LVI_BOOL(%s);\t\t// %v\n"
+		       tmp (if (cadr def) "true" "false") const-name))
+	   ((char? (cadr def))
+	    (emit-fstr "static lval %s = LVI_CHAR(%d);\t\t// %v\n"
+		       tmp (char->integer (cadr def)) const-name))
+	   ((integer? (cadr def))
+	    (emit-fstr "static lval %s = LVI_INT(%d);\t\t// %v\n"
+		       tmp (cadr def) const-name))
+	   ((rational? (cadr def))
+	    (emit-fstr "static lval %s = LVI_RAT(%d,%d);\t\t// %v\n"
+		       tmp (numerator (cadr def))
+		       (denominator (cadr def)) const-name))
+	   ((real? (cadr def))
+	    (emit-fstr "static lval %s = LVI_REAL(%s);\t\t// %v\n"
+		       tmp (format-real (cadr def)) const-name))
+	   ;;; we don't have complex literals: (cmplx) is a runtime
+	   ;;; constructor. so no way to do complex values here atm
+	   (else
+	    (emit-fstr "static lval %s;\t\t// %v\n" tmp const-name)
+	    (set! do-init #t))))
+    (when do-init
+      (compile-with-output
+       global-code
+       (emit-fstr "%s = %s;\n"
+		  tmp (maybe-compile-expr cur-env #f (cadr def)))))
     (make-var-def const-name tmp)))
 
 (define (declare-function c-fn-name cur-env def c-port s-port doc-string)
   (debug-trace 'declare-function cur-env #f def)
-  (let ((arity (car (args-list (cdar def))))
-	(tmp-fn (if c-fn-name c-fn-name (new-svar 'fn))))
+  (let* ((args (cdar def))
+	 (argies (args-list args))
+	 (ig (unless (unique-symbols? (cadr argies))
+	       (ERR "malformed 'define' args list '%v'" args)))
+	 (arity (car argies))
+	 (tmp-fn (if c-fn-name c-fn-name (new-svar 'fn))))
     (if c-fn-name
 	(begin
 	  (when c-port
@@ -1460,7 +1508,11 @@
 
 (define (compile-function c-fn-name cur-env def)
   (debug-trace 'compile-function cur-env #f def)
-  (let* ((sas (cdadr (args-list (car def))))
+  (let* ((args (car def))
+	 (argies (args-list args))
+	 (ig (unless (unique-symbols? (cadr argies))
+	       (ERR "malformed 'define' args list '%v'" args)))
+	 (sas (cdadr argies))
 	 (tmp (lookup-symbol cur-env (caar def)))
 	 (fc (car tmp))
 	 (si (cdr tmp))
@@ -1488,8 +1540,14 @@
   (let* ((s-name (caar def))
 	 (args (cdar def))
 	 (body (cdr def))
-	 (arity (car (args-list args))))
-    (make-macro-def s-name (eval (cons 'lambda (cons args body))) arity)))
+	 (argies (args-list args))
+	 (arity (car argies))
+;;; TODO: implement wile-standard-environment
+;;;	 (stdenv (wile-standard-environment)))
+	 (stdenv ()))
+    (unless (unique-symbols? (cadr argies))
+      (ERR "malformed 'defmacro' args list '%v'" args))
+    (make-macro-def s-name (make-iproc args arity body stdenv #t) arity)))
 
 (define (declare-deffish cur-env def c-port s-port)
   (debug-trace 'declare-deffish cur-env #f def)
@@ -1514,7 +1572,7 @@
     (if (symbol? (cadr def))
 	(ERR "sorry, macro symbols are not supported")
 	(declare-macro (cdr def))))
-   (else (ERR "unknown toplevel-define action '%s'" (car def)))))
+   (else (ERR "unknown toplevel 'define' action '%s'" (car def)))))
 
 (define (compile-deffish cur-env def)
   (debug-trace 'compile-deffish cur-env #f def)
@@ -1537,7 +1595,7 @@
 	     (compile-function (cadr def) cur-env (cdddr def))))
 	  ((symbol=? (car def) 'define-alias) #t)	;;; relax, all good
 	  ((symbol=? (car def) 'defmacro) #t)		;;; relax, all good
-	  (else (ERR "unknown toplevel-define action '%s'" (car def))))))
+	  (else (ERR "unknown toplevel 'define' action '%s'" (car def))))))
 
 (define (find-pragma p ps)
   (let loop ((ps ps))
@@ -1695,7 +1753,7 @@
   (let ((decl (hash-table-create string-hash string=?))
 	(set (hash-table-create string-hash string=?))
 	(used (hash-table-create string-hash string=?))
-	(re-dec "^((__attribute__[(][(]unused[)][)]|static)[ \t]+)?(lval|lptr|lptr[*]) var_[0-9]+(\[[0-9]+\])?;")
+	(re-dec "^((__attribute__[(][(]unused[)][)]|static)[ \t]+)?(lval|lptr|lptr[*]) var_[0-9]+(\[[0-9]+\])?(;| = LVI_(NIL|BOOL|INT|CHAR|REAL|RAT))")
 	(re-set "^var_[0-9]+ =")
 	(re-use "var_[0-9]+")
 	(re-num "[0-9]+")
@@ -1783,9 +1841,6 @@
 	     ;;; the code... that's not hard, but a bit messy.
 	     ;;; the local variable gets ignored, set! is what we want.
 	     (ig1 (set! global-library (find-pragma 'library prags)))
-	     ;;; tco is not fully reliable yet... in one program, I'm
-	     ;;; seeing random crashes with tco active. use this for
-	     ;;; the time being to allow switching tco off.
 	     (ig2 (when (find-pragma 'suppress-tail-call-generation prags)
 		    (set! global-tc-min-args -1)))
 	     (hname (if global-library (list-ref global-library 0) #f))

@@ -20,41 +20,33 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (any-true? vals) @@@ bld-rtl-dir/wile-rtl2-000047.scm:13 @@@ wile_any_true @@@
-lval wile_any_true(lptr* var_1, lptr var_2)
+// @@@ (string-trim-left drop? str) @@@ bld-rtl-dir/wile-rtl2-000047.scm:13 @@@ wile_string_trim_left @@@
+lval wile_string_trim_left(lptr* var_1, lptr var_2)
 {
-lbl_3:;
 lval var_4;
-do {
+{
+lval vs[8];
+vs[0] = var_2[1];
+var_4 = wile_string2list(NULL, vs);
+}
 lval var_5;
-var_5 = LVI_BOOL(var_2[0].vt == LV_NIL);
-if (!LV_IS_FALSE(var_5)) {
+{
+lval vs[8];
+vs[0] = var_2[0];
+vs[1] = var_4;
+var_5 = wile_list_drop_while(NULL, vs);
+}
 lval var_6;
-var_6 = LVI_BOOL(false);
-var_4 = var_6;
-break;
+{
+lval vs[1];
+vs[0] = var_5;
+var_6 = wile_gen_list(1, vs, NULL);
 }
-lval var_7;
-if (var_2[0].vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+{
+lval vs[8];
+vs[0] = var_6;
+var_6 = wile_char2string(NULL, vs);
 }
-var_7 = (var_2[0].v.pair.car ? *(var_2[0].v.pair.car) : LVI_NIL());
-if (!LV_IS_FALSE(var_7)) {
-lval var_8;
-var_8 = LVI_BOOL(true);
-var_4 = var_8;
-break;
+return var_6;
 }
-lval var_9;
-if (var_2[0].vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
-}
-var_9 = (var_2[0].v.pair.cdr ? *(var_2[0].v.pair.cdr) : LVI_NIL());
-lval var_12[8];
-var_12[0] = var_9;
-var_2[0] = var_12[0];
-goto lbl_3;	// selfie
-} while (0);
-return var_4;
-}
-// end of function wile_any_true
+// end of function wile_string_trim_left

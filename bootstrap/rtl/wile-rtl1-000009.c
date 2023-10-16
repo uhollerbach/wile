@@ -21,12 +21,12 @@ extern lisp_escape_t cachalot;
 void set_start_state(struct ulex_context* context);
 #endif // WILE_NEEDS_ULEX
 
-lval string2num(lval str, const char* fname, int lno)
+lval wile_string2num(lval str, const char* fname, int lno)
 {
     lval val1, val2;
     unsigned char* text;
 
-    set_lisp_loc_file(NULL);
+    wile_set_lisp_loc_file(NULL);
     struct ulex_context* context = ulex_init(ulex_TEXT, str.v.str);
     if (context == NULL) {
 	wile_exception2("string->number", fname, lno,

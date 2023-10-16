@@ -2395,7 +2395,7 @@
 (test "()" (doco '(list-last ())))
 ;;; TODO: after compiling the code, the error message gets generated elsewhere
 ;;; fix, but it's low priority
-(test "caught exception from <bld-rtl-dir/wile-rtl2-000002.c:45>\n    'car' input is not a pair!"
+(test "caught exception from <bld-rtl-dir/wile-rtl2-000007.c:45>\n    'car' input is not a pair!"
       (doco '(list-last (cons 1 (cons 2 (cons 3 4))))))
 
 (test "14" (doco '(integer 14)))
@@ -2731,7 +2731,7 @@
 
 (test "#u8(#x61 #x62 #x63 #x64 #x65)" (doco '(bytevector #\a #\b #\c #\d #\e)))
 (test "#u8()" (doco '(bytevector)))
-(test "caught exception from bld-rtl-dir/wile-rtl2-000013.c:209\n    list->bytevector got a bad value"
+(test "caught exception from bld-rtl-dir/wile-rtl2-000018.c:209\n    list->bytevector got a bad value"
       (doco '(bytevector 311)))
 
 (test "2" (doco '(string-find-first-char "breep" #\e)))

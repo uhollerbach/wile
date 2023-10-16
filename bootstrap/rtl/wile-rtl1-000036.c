@@ -31,7 +31,7 @@ lval wile_symlinkstat(lptr*, lptr args)
 	vs[10] = LVI_INT(sbuf.st_atime);
 	vs[11] = LVI_INT(sbuf.st_mtime);
 	vs[12] = LVI_INT(sbuf.st_ctime);
-	return gen_list(13, vs, NULL);
+	return wile_gen_list(13, vs, NULL);
     } else {
 	return LVI_BOOL(false);
     }

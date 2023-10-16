@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lval read_directory(lptr*, lptr args)
+lval wile_read_directory(lptr*, lptr args)
 {
     DIR* dp;
     struct dirent* de;

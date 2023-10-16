@@ -45,6 +45,12 @@ libwrtl-dbg.a:	$(WRSRC) wile-rtl1.c wile-rtl2.scm math-funcs.c
 wilec:	wile-main.scm wile-comp.scm wile-prims.scm libwrtl.a
 	wile -x -v wile-main.scm wilec
 
+repl:	repl.scm libwrtl.a
+	wile -x -v repl.scm repl
+
+repl-dbg:	repl.scm libwrtl-dbg.a
+	wile -x -v -g repl.scm repl-dbg
+
 twp:	test-wile-progs.scm
 	wile -x -v test-wile-progs.scm twp
 

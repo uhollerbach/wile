@@ -3,6 +3,11 @@
 
 lval wile_list_reverse(lptr*, lptr);	// (list-reverse lst)
 lval wile_list_length(lptr*, lptr);	// (list-length lst)
+lval wile_list_length_eq(lptr*, lptr);	// (list-length=? n lst)
+lval wile_list_length_ge(lptr*, lptr);	// (list-length>=? n lst)
+lval wile_list_length_gt(lptr*, lptr);	// (list-length>? n lst)
+lval wile_list_length_lt(lptr*, lptr);	// (list-length<? n lst)
+lval wile_list_length_le(lptr*, lptr);	// (list-length<=? n lst)
 lval wile_list_last(lptr*, lptr);	// (list-last lst)
 lval wile_list_append(lptr*, lptr);	// (list-append . lsts)
 lval wile_list_flatten(lptr*, lptr);	// (list-flatten lst)
@@ -79,5 +84,6 @@ lval wile_cholesky_solve(lptr*, lptr);	// (cholesky-solve mat vec)
 lval wile_build_info(lptr*, lptr);	// (wile-build-info)
 lval wile_display_stack_trace(lptr*, lptr);	// (display-stack-trace trace-data port)
 lval wile_stack_trace(lptr*, lptr);	// (stack-trace port)
+lval wile_std_env(lptr*, lptr);	// (wile-standard-environment)
 
 #endif // WILE_RTL2_H_2569976297095881579

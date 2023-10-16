@@ -28,7 +28,8 @@
 #define IS_STRING(a)		((a) != NULL && (a)->vt == LV_STRING)
 #define IS_INT(a)		((a) != NULL && (a)->vt == LV_INT)
 
-#define IS_LAMBDA(a)		((a) != NULL && (a)->vt == LV_LAMBDA)
+#define IS_CLAMBDA(a)		((a) != NULL && (a)->vt == LV_CLAMBDA)
+#define IS_ILAMBDA(a)		((a) != NULL && (a)->vt == LV_ILAMBDA)
 #define IS_CONT(a)		((a) != NULL && (a)->vt == LV_CONT)
 #define IS_FPORT(a)		((a) != NULL && (a)->vt == LV_FILE_PORT)
 #define IS_PPORT(a)		((a) != NULL && (a)->vt == LV_PIPE_PORT)

@@ -28,7 +28,7 @@ lval wile_sql_version(lptr*, lptr)
 #ifdef WILE_USES_SQLITE
     return LVI_STRING(sqlite3_libversion());
 #else
-    return LVI_NIL();
+    return LVI_BOOL(false);
 #endif // WILE_USES_SQLITE
 }
 

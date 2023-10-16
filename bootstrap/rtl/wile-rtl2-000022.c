@@ -17,86 +17,51 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval fn_4(lptr*, lptr);
 
 // definitions
 
-// @@@ lambda (l1 l2) @@@ bld-rtl-dir/wile-rtl2-000022.scm:14 @@@ fn_4 @@@
-static lval fn_4(lptr* var_5, lptr var_6)
+// @@@ (foldr func end lst) @@@ bld-rtl-dir/wile-rtl2-000022.scm:13 @@@ wile_foldr @@@
+lval wile_foldr(lptr* var_1, lptr var_2)
 {
-lbl_7:;
-lval var_8;
-lval var_9;
-var_9 = LVI_BOOL(var_6[0].vt == LV_NIL);
-if (LV_IS_FALSE(var_9)) {
-lval var_10;
-if (var_6[0].vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
-}
-var_10 = (var_6[0].v.pair.cdr ? *(var_6[0].v.pair.cdr) : LVI_NIL());
-lval var_11;
-if (var_6[0].vt != LV_PAIR) {
+lval var_4;
+lval var_5;
+var_5 = LVI_BOOL(var_2[2].vt == LV_NIL);
+if (LV_IS_FALSE(var_5)) {
+lval var_6;
+if (var_2[2].vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_11 = (var_6[0].v.pair.car ? *(var_6[0].v.pair.car) : LVI_NIL());
-lval var_12;
-{
-lval vs[1];
-vs[0] = var_11;
-var_12 = gen_list(1, vs, NULL);
+var_6 = (var_2[2].v.pair.car ? *(var_2[2].v.pair.car) : LVI_NIL());
+lval var_7;
+if (var_2[2].vt != LV_PAIR) {
+WILE_EX("cdr", "input is not a pair!");
 }
-lval var_13;
+var_7 = (var_2[2].v.pair.cdr ? *(var_2[2].v.pair.cdr) : LVI_NIL());
+lval var_8;
+lval var_9[8];
+var_9[0] = var_2[0];
+var_9[1] = var_2[1];
+var_9[2] = var_7;
+var_8 = wile_foldr(NULL, var_9);
+lval var_11;
 {
 lval vs[2];
-vs[0] = V_CLOS(var_5,0);
-vs[1] = var_12;
-var_13 = gen_list(2, vs, NULL);
+vs[0] = var_6;
+vs[1] = var_8;
+var_11 = wile_gen_list(2, vs, NULL);
 }
-var_13 = wile_apply_function(&(var_13), __FILE__, __LINE__);
-lval var_14;
+lval var_12;
 {
-lptr p1 = NULL, p2 = NULL;
-if (var_13.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_13;
+lval vs[2];
+vs[0] = var_2[0];
+vs[1] = var_11;
+var_12 = wile_gen_list(2, vs, NULL);
 }
-if (var_6[1].vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = var_6[1];
-}
-var_14 = LVI_PAIR(p1, p2);
-}
-lval var_17[8];
-var_17[0] = var_10;
-var_17[1] = var_14;
-var_6[0] = var_17[0];
-var_6[1] = var_17[1];
-goto lbl_7;	// selfie
+var_12 = wile_apply_function(&(var_12), __FILE__, __LINE__);
+var_4 = var_12;
 } else {
-lval var_18;
-{
-lval vs[8];
-vs[0] = var_6[1];
-var_18 = wile_list_reverse(NULL, vs);
+var_4 = var_2[1];
 }
-var_8 = var_18;
+return var_4;
 }
-return var_8;
-}
-// end of lambda fn_4
-
-// @@@ (map1 proc lst) @@@ bld-rtl-dir/wile-rtl2-000022.scm:13 @@@ wile_map1 @@@
-lval wile_map1(lptr* var_1, lptr var_2)
-{
-MK_CLOS(var_5,1);
-P_CLOS(var_5,0) = &(var_2[0]);
-lval var_19;
-var_19 = LVI_NIL();
-lval var_20;
-lval var_21[8];
-var_21[0] = var_2[1];
-var_21[1] = var_19;
-var_20 = fn_4(var_5, var_21);
-return var_20;
-}
-// end of function wile_map1
+// end of function wile_foldr

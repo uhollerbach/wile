@@ -32,7 +32,7 @@ lval wile_gmtime(lptr*, lptr args)
 	vs[6] = LVI_INT(tval.tm_wday);
 	vs[7] = LVI_INT(tval.tm_yday);
 	vs[8] = LVI_INT(tval.tm_isdst);
-	return gen_list(9, vs, NULL);
+	return wile_gen_list(9, vs, NULL);
     } else {
 	return LVI_BOOL(false);
     }

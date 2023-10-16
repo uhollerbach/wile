@@ -20,25 +20,42 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (offset-date year month day offset) @@@ bld-rtl-dir/wile-rtl2-000055.scm:16 @@@ wile_offset_date @@@
-lval wile_offset_date(lptr* var_1, lptr var_2)
+// @@@ car @@@ bld-rtl-dir/wile-rtl2-000055.scm:14 @@@ fn_4 @@@
+static lval fn_4(lptr* var_5, lptr var_6)
 {
-lval var_4;
+lval var_8;
+if (var_6[0].vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
+}
+var_8 = (var_6[0].v.pair.car ? *(var_6[0].v.pair.car) : LVI_NIL());
+return var_8;
+}
+// end of prim fn_4
+
+// @@@ (sqlite-meta-tables port) @@@ bld-rtl-dir/wile-rtl2-000055.scm:13 @@@ wile_sql_meta_tables @@@
+lval wile_sql_meta_tables(lptr* var_1, lptr var_2)
+{
+lval var_9;
+var_9 = LVI_STRING("select name from sqlite_schema");
+lval var_10;
+#ifdef WILE_USES_SQLITE
+if (var_2[0].vt == LV_SQLITE_PORT && var_9.vt == LV_STRING) {
+var_10 = wile_sql_run(var_2[0].v.sqlite_conn, var_9.v.str, __FILE__, __LINE__);
+} else {
+WILE_EX("sqlite-run", "expects one sqlite-port and one string");
+}
+#else
+var_10 = LVI_BOOL(false);
+#endif // WILE_USES_SQLITE
+lval var_11;
+var_11 = LVI_NIL();
 {
 lval vs[8];
-vs[0] = var_2[0];
-vs[1] = var_2[1];
-vs[2] = var_2[2];
-var_4 = wile_julian_day(NULL, vs);
+vs[0] = LVI_PROC(fn_4,NULL,1);
+vs[1] = var_10;
+vs[2] = var_11;
+var_11 = wile_map(NULL, vs);
 }
-lval var_5;
-var_5 = LVI_INT(var_4.v.iv + var_2[3].v.iv);
-lval var_6;
-{
-lval vs[8];
-vs[0] = var_5;
-var_6 = wile_gregorian_date(NULL, vs);
+return var_11;
 }
-return var_6;
-}
-// end of function wile_offset_date
+// end of function wile_sql_meta_tables

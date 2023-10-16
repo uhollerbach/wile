@@ -76,10 +76,18 @@
 
 #define LVI_SPORT(q)		((lval) { .v.fp = (q), .vt = LV_SOCK_PORT})
 
-#define LVI_PROC(qf,qc,qa)	((lval) { .v.lambda.fn = (qf),		\
-					  .v.lambda.closure = (qc),	\
-					  .v.lambda.arity = (qa),	\
-					  .vt = LV_LAMBDA})
+#define LVI_PROC(qf,qc,qa)	((lval) { .v.clambda.fn = (qf),		\
+					  .v.clambda.closure = (qc),	\
+					  .v.clambda.arity = (qa),	\
+					  .vt = LV_CLAMBDA})
+
+#define LVI_IPROC(qargs,qari,qb,qe,qf)					\
+    ((lval) { .v.ilambda.args = (qargs),				\
+	      .v.ilambda.arity = (qari),				\
+	      .v.ilambda.body = (qb),					\
+	      .v.ilambda.env = (qe),					\
+	      .v.ilambda.macro = (qf),					\
+	      .vt = LV_ILAMBDA})
 
 #define LV_IS_FALSE(q)		((q).vt == LV_BOOL && (q).v.bv == false)
 
@@ -101,6 +109,10 @@
 #define V_CLOS(nm,ix)		(*(P_CLOS(nm,ix)))
 
 uint16_t wile_binfo(void);
+lval wile_sql_version(lptr* clos, lptr args);
+lval wile_gc_version(lptr*, lptr);
+lval wile_os_name(void);
+lval wile_arch_name(void);
 
 void wile_stack_trace_minimal(int fd);
 
@@ -118,15 +130,16 @@ void wile_exception2(const char* func_name, const char* file_name,
 #define WILE_EX(fname, ...) \
     wile_exception2(fname, __FILE__, __LINE__, __VA_ARGS__)
 
-void display(lval val, FILE* fp);
-lval register_display_proc(const char* sym, lval proc,
+void wile_display(lval val, FILE* fp);
+lval wile_register_display_proc(const char* sym, lval proc,
+				const char* fname, int lno);
+lval wile_get_gensym(void);
+lval wile_run_system_command(lval cmd, const char* fname, int lno);
+lval wile_run_pipe_command(lval cmd, const char* rw,
 			   const char* fname, int lno);
-lval get_gensym(void);
-lval run_system_command(lval cmd, const char* fname, int lno);
-lval run_pipe_command(lval cmd, const char* rw, const char* fname, int lno);
 lval wile_temp_file(lptr* clos, lptr args);
-lval string2num(lval str, const char* fname, int lno);
-lval num2string(lval num, int base, int prec, const char* fname, int lno);
+lval wile_string2num(lval str, const char* fname, int lno);
+lval wile_num2string(lval num, int base, int prec, const char* fname, int lno);
 
 lisp_int_t powi(lisp_int_t a, lisp_int_t b);
 
@@ -147,18 +160,18 @@ void ceil_qr(lisp_int_t n1, lisp_int_t n2, lisp_int_t* nq, lisp_int_t* nr);
 // and the program will crash. The tail is for generating improper lists;
 // passing NULL in makes a proper list.
 
-lval gen_list(size_t nitems, lval* items, lval* tail);
+lval wile_gen_list(size_t nitems, lval* items, lval* tail);
 
-bool do_eqv(lptr arg1, lptr arg2);
+bool wile_do_eqv(lptr arg1, lptr arg2);
 
 lval wile_read_line(lptr* clos, lptr args);
 
-lval parse_string(lptr* clos, lptr args);
-lval parse_file(lptr* clos, lptr args);
+lval wile_parse_string(lptr* clos, lptr args);
+lval wile_parse_file(lptr* clos, lptr args);
 
 lval wile_regex_match(lptr* clos, lptr args);
 lval wile_apply_function(lptr args, const char* file_name, int line_no);
-lval read_directory(lptr* clos, lptr args);
+lval wile_read_directory(lptr* clos, lptr args);
 lval wile_char2string(lptr* clos, lptr args);
 lval wile_listen_port(lptr* clos, lptr args);
 lval wile_accept_connection(lptr* clos, lptr args);
@@ -237,8 +250,6 @@ lval wile_cfft_good_n(lptr* clos, lptr args);
 lval wile_cfft(lptr* clos, lptr args);
 
 // sqlite interface
-
-lval wile_sql_version(lptr* clos, lptr args);
 
 lval wile_sql_open(const char* fname, int mode,
 		   const char* file_name, int line_no);

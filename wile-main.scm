@@ -170,10 +170,10 @@
       (set! do-debug #t)))
   (when (hash-table-ref fvals "-V" #f)
     (write-string
-     "Wile, the extremely stable scheming genius compiler\n"
-     "Wile is available from https://github.com/uhollerbach/wile\n"
-     "under GPLv3 or later for the compiler, LGPLv3 or later for the RTL\n"
-     "Copyright 2023, Uwe Hollerbach\n")
+     ";;; Wile, the extremely stable scheming genius compiler\n"
+     ";;; Wile is available from https://github.com/uhollerbach/wile\n"
+     ";;; under GPLv3 or later for the compiler, LGPLv3 or later for the RTL\n"
+     ";;; Copyright 2023, Uwe Hollerbach\n")
     (for-each (lambda (v)
 		(display v)
 		(newline))

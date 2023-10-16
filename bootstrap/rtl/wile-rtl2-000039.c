@@ -20,81 +20,96 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (string-pad-left str pch lmin) @@@ bld-rtl-dir/wile-rtl2-000039.scm:13 @@@ wile_string_pad_left @@@
-lval wile_string_pad_left(lptr* var_1, lptr var_2)
+// @@@ (memp test? lst) @@@ bld-rtl-dir/wile-rtl2-000039.scm:13 @@@ wile_memp @@@
+lval wile_memp(lptr* var_1, lptr var_2)
 {
+lbl_3:;
 lval var_4;
+do {
 lval var_5;
-var_5 = LVI_INT(strlen(var_2[0].v.str));
-var_4 = var_5;
+var_5 = LVI_BOOL(var_2[1].vt == LV_NIL);
+if (!LV_IS_FALSE(var_5)) {
 lval var_6;
+var_6 = LVI_BOOL(false);
+var_4 = var_6;
+break;
+}
 lval var_7;
-switch (TYPE_COMBO(var_4.vt,var_2[2].vt)) {
-case TYPE_COMBO(LV_INT,LV_INT):
-var_7 = LVI_BOOL(var_4.v.iv < var_2[2].v.iv);
-break;
-case TYPE_COMBO(LV_INT,LV_RAT):
-var_7 = LVI_BOOL(var_4.v.iv * var_2[2].v.irv.den < var_2[2].v.irv.num);
-break;
-case TYPE_COMBO(LV_INT,LV_REAL):
-var_7 = LVI_BOOL(var_4.v.iv < var_2[2].v.rv);
-break;
-case TYPE_COMBO(LV_RAT,LV_INT):
-var_7 = LVI_BOOL(var_4.v.irv.num < var_2[2].v.iv * var_4.v.irv.den);
-break;
-case TYPE_COMBO(LV_RAT,LV_RAT):
-var_7 = LVI_BOOL(var_4.v.irv.num * var_2[2].v.irv.den < var_2[2].v.irv.num * var_4.v.irv.den);
-break;
-case TYPE_COMBO(LV_RAT,LV_REAL):
-var_7 = LVI_BOOL(var_4.v.irv.num < var_2[2].v.rv * var_4.v.irv.den);
-break;
-case TYPE_COMBO(LV_REAL,LV_INT):
-var_7 = LVI_BOOL(var_4.v.rv < var_2[2].v.iv);
-break;
-case TYPE_COMBO(LV_REAL,LV_RAT):
-var_7 = LVI_BOOL(var_4.v.rv * var_2[2].v.irv.den < var_2[2].v.irv.num);
-break;
-case TYPE_COMBO(LV_REAL,LV_REAL):
-var_7 = LVI_BOOL(var_4.v.rv < var_2[2].v.rv);
-break;
-default:
-WILE_EX("<", "inputs are not real-valued numbers");
-break;
+if (var_2[1].vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
 }
-if (LV_IS_FALSE(var_7)) {
-var_6 = var_2[0];
-} else {
+var_7 = (var_2[1].v.pair.car ? *(var_2[1].v.pair.car) : LVI_NIL());
 lval var_8;
-var_8 = LVI_STRING("");
+{
+lval vs[1];
+vs[0] = var_7;
+var_8 = wile_gen_list(1, vs, NULL);
+}
 lval var_9;
-var_9 = LVI_INT(var_2[2].v.iv - var_4.v.iv);
-lval var_10;
-if (var_9.vt != LV_INT || var_9.v.iv < 0) {
-WILE_EX("string-create", "first input is not a non-negative integer");
-}
-if (var_2[1].vt != LV_CHAR || var_2[1].v.chr == '\0') {
-WILE_EX("string-create", "second input is not a valid character");
-}
-var_10.vt = LV_STRING;
-var_10.v.str = LISP_ALLOC(char, 1 + var_9.v.iv);
-LISP_ASSERT(var_10.v.str != NULL);
-memset(var_10.v.str, var_2[1].v.chr, var_9.v.iv);
-var_10.v.str[var_9.v.iv] = '\0';
-lval var_11;
 {
 lval vs[2];
-vs[0] = var_10;
-vs[1] = var_2[0];
-var_11 = gen_list(2, vs, NULL);
+vs[0] = var_2[0];
+vs[1] = var_8;
+var_9 = wile_gen_list(2, vs, NULL);
 }
+var_9 = wile_apply_function(&(var_9), __FILE__, __LINE__);
+if (!LV_IS_FALSE(var_9)) {
+var_4 = var_2[1];
+break;
+}
+lval var_10;
+if (var_2[1].vt != LV_PAIR) {
+WILE_EX("cdr", "input is not a pair!");
+}
+var_10 = (var_2[1].v.pair.cdr ? *(var_2[1].v.pair.cdr) : LVI_NIL());
+lval var_13[8];
+var_13[0] = var_2[0];
+var_13[1] = var_10;
+var_2[0] = var_13[0];
+var_2[1] = var_13[1];
+goto lbl_3;	// selfie
+} while (0);
+return var_4;
+}
+// end of function wile_memp
+
+// @@@ (memv obj lst) @@@ bld-rtl-dir/wile-rtl2-000039.scm:20 @@@ wile_memv @@@
+lval wile_memv(lptr* var_14, lptr var_15)
 {
-lval vs[8];
-vs[0] = var_8;
-vs[1] = var_11;
-var_11 = wile_string_join_by(NULL, vs);
+lbl_16:;
+lval var_17;
+do {
+lval var_18;
+var_18 = LVI_BOOL(var_15[1].vt == LV_NIL);
+if (!LV_IS_FALSE(var_18)) {
+lval var_19;
+var_19 = LVI_BOOL(false);
+var_17 = var_19;
+break;
 }
-var_6 = var_11;
+lval var_20;
+if (var_15[1].vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
 }
-return var_6;
+var_20 = (var_15[1].v.pair.car ? *(var_15[1].v.pair.car) : LVI_NIL());
+lval var_21;
+var_21 = LVI_BOOL(wile_do_eqv(&(var_15[0]), &(var_20)));
+if (!LV_IS_FALSE(var_21)) {
+var_17 = var_15[1];
+break;
 }
-// end of function wile_string_pad_left
+lval var_22;
+if (var_15[1].vt != LV_PAIR) {
+WILE_EX("cdr", "input is not a pair!");
+}
+var_22 = (var_15[1].v.pair.cdr ? *(var_15[1].v.pair.cdr) : LVI_NIL());
+lval var_25[8];
+var_25[0] = var_15[0];
+var_25[1] = var_22;
+var_15[0] = var_25[0];
+var_15[1] = var_25[1];
+goto lbl_16;	// selfie
+} while (0);
+return var_17;
+}
+// end of function wile_memv

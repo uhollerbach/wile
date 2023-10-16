@@ -17,12 +17,13 @@ Stuff TODO
 
     >>> possibly still an analogous instance in continuations.c
 
-* start working on (eval) function -- see repl.scm. this could be fun :-)
+* start working on (eval) function -- see repl.scm
 
-  > it's already possible to manipulate literal strings, numbers,
-    charaacters and other atomic data, as well as a bunch of primitives;
-    the beginnings of a couple of special forms are there: if, begin,
-    quote.
+  > almost all special forms are there except 'do' and 'delay' etc;
+    lambdas are present, but only in a trial form as vector objects;
+    as far as the runtime library is concerned, they don't exist. so a
+    number of things like (define (foo a) ...) ... (map foo ...) don't
+    work yet. Should be straightforward to fix.
 
 * stack traces: working pretty well for starters - try getting better
   location info? not sure yet how, the backtrace and addr2line stuff
@@ -115,8 +116,6 @@ Stuff TODO
   (read-bytes port nbytes)		analogout to fread
   (write-bytes port bytevector)		analogous to fwrite
 
-  change-file-owner
-  change-symbolic-link-owner
   matrix-lu-decompose
   matrix-lu-solve
   sat2-solve

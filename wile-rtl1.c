@@ -32,6 +32,7 @@ extern int wile_profile_size;
 
 int main(int argc, char** argv)
 {
+    int ret;
     lptr val;
     struct lisp_escape_info tcatch;
     void* pl;
@@ -60,6 +61,7 @@ int main(int argc, char** argv)
     tcatch.errval = NULL;
     tcatch.next = NULL;
     cachalot = &tcatch;
+    ret = EXIT_SUCCESS;
     if (setjmp(tcatch.cenv) == 0) {
 	scheme_main(argc, argv);
     } else {
@@ -75,14 +77,14 @@ int main(int argc, char** argv)
 		if (IS_STRING(CDR(cachalot->errval))) {
 		    fputs((CDR(cachalot->errval))->v.str, stderr);
 		} else if (CDR(cachalot->errval)) {
-		    display(*(CDR(cachalot->errval)), stderr);
+		    wile_display(*(CDR(cachalot->errval)), stderr);
 		} else {
 		    fputs("()!", stderr);
 		}
 	    } else if (IS_STRING(cachalot->errval)) {
 		fputs(cachalot->errval->v.str, stderr);
 	    } else {
-		display(*(cachalot->errval), stderr);
+		wile_display(*(cachalot->errval), stderr);
 	    }
 	} else {
 	    fputc('!', stderr);
@@ -92,6 +94,7 @@ int main(int argc, char** argv)
 	    fprintf(stderr, "errno is set to %d :: %s\n",
 		    errno, strerror(errno));
 	}
+	ret = EXIT_FAILURE;
     }
 
     if (wile_profile) {
@@ -110,50 +113,35 @@ int main(int argc, char** argv)
 	}
     }
 
-    return 0;
+    return ret;
 }
 
-static lptr display_hooks = NULL;
+// trivial function to get gc code version
 
-void display(lval val, FILE* fp)
+lval wile_gc_version(lptr*, lptr)
+{
+#ifdef WILE_USES_GC
+    char buf[64];
+    snprintf(buf, sizeof(buf), "%d.%d.%d",
+	     GC_VERSION_MAJOR, GC_VERSION_MINOR, GC_VERSION_MICRO);
+    return LVI_STRING(buf);
+#else
+    return LVI_BOOL(false);
+#endif // WILE_USES_GC
+}
+
+lptr display_hooks = NULL;
+
+void wile_display(lval val, FILE* fp)
 {
     if (fp == NULL) {
 	fp = stdout;
     }
-    if (val.vt == LV_VECTOR &&
-	val.v.vec.arr != NULL &&
-	val.v.vec.capa > 0 && 
-	val.v.vec.arr[0] != NULL &&
-	val.v.vec.arr[0]->vt == LV_SYMBOL) {
-	const char* vname = val.v.vec.arr[0]->v.str;
-	LISP_ASSERT(vname != NULL);
-
-	lptr hooks = display_hooks;
-	while (hooks) {
-	    LISP_ASSERT(hooks->vt == LV_PAIR);
-	    lptr hp = CAR(hooks);
-	    LISP_ASSERT(hp != NULL && hp->vt == LV_PAIR);
-	    lptr rsym = CAR(hp);
-	    LISP_ASSERT(rsym != NULL &&
-			rsym->vt == LV_SYMBOL &&
-			rsym->v.str != NULL);
-	    if (strcmp(rsym->v.str, vname) == 0) {
-		rsym = CDR(hp);
-		LISP_ASSERT(rsym != NULL && rsym->vt == LV_LAMBDA);
-		lval vs[2];
-		vs[0] = val;
-		vs[1] = LVI_FPORT(fp);
-		(void) rsym->v.lambda.fn(rsym->v.lambda.closure, vs);
-		return;
-	    }
-	    hooks = CDR(hooks);
-	}
-    }
-    print_lisp_val(&val, fp, NULL);
+    wile_print_lisp_val(&val, fp, NULL);
 }
 
-lval register_display_proc(const char* sym, lval proc,
-			   const char* fname, int lno)
+lval wile_register_display_proc(const char* sym, lval proc,
+				const char* fname, int lno)
 {
     if (sym) {
 	lptr p1, p2, p3, p4;
@@ -172,7 +160,7 @@ lval register_display_proc(const char* sym, lval proc,
     }
 }
 
-lval num2string(lval num, int base, int prec, const char* fname, int lno)
+lval wile_num2string(lval num, int base, int prec, const char* fname, int lno)
 {
     char buf[1280];
 
@@ -186,7 +174,7 @@ lval num2string(lval num, int base, int prec, const char* fname, int lno)
 	    wile_exception2("number->string", fname, lno,
 			    "precision %d is illegal", prec);
 	}
-	sprint_lisp_num(buf, sizeof(buf), &num, base, prec, false);
+	wile_sprint_lisp_num(buf, sizeof(buf), &num, base, prec, false);
 	return LVI_STRING(buf);
     } else {
 	wile_exception2("number->string", fname, lno,
@@ -240,6 +228,82 @@ uint16_t wile_binfo(void)
     shift += 2;
 
     return ret;
+}
+
+lval wile_os_name(void)
+{
+#if defined(__linux__)
+    return LVI_STRING("GNU/Linux");
+#elif defined(__OpenBSD__)
+    return LVI_STRING("OpenBSD");
+#elif defined(__cygwin__)
+    // TODO: what's the right thing here for cygwin?
+    return LVI_STRING("Cygwin");
+#else
+    return LVI_STRING("Unknown-OS");
+#endif
+}
+
+// get machine architecture; original found in approximately this form
+// on stackexchange, coded by Freak -- thank you. these are all hugely
+// aspirational, and entirely untested except for the first
+
+lval wile_arch_name(void)
+{
+#if defined(__x86_64__) || defined(_M_X64)
+    return LVI_STRING("x86-64");
+#elif defined(i386) || defined(__i386__) ||	\
+    defined(__i386) || defined(_M_IX86)
+    return LVI_STRING("x86-32");
+#elif defined(__ARM_ARCH_2__)
+    return LVI_STRING("arm2");
+#elif defined(__ARM_ARCH_3__) || defined(__ARM_ARCH_3M__)
+    return LVI_STRING("arm3");
+#elif defined(__ARM_ARCH_4T__) || defined(__TARGET_ARM_4T)
+    return LVI_STRING("arm4t");
+#elif defined(__ARM_ARCH_5_) || defined(__ARM_ARCH_5E_)
+    return LVI_STRING("arm5");
+#elif defined(__ARM_ARCH_6T2_) || defined(__ARM_ARCH_6T2_)
+    return LVI_STRING("arm6t2");
+#elif defined(__ARM_ARCH_6__) || defined(__ARM_ARCH_6J__) ||	\
+    defined(__ARM_ARCH_6K__) || defined(__ARM_ARCH_6Z__) ||	\
+    defined(__ARM_ARCH_6ZK__)
+    return LVI_STRING("arm6");
+#elif defined(__ARM_ARCH_7__) || defined(__ARM_ARCH_7A__) ||	\
+    defined(__ARM_ARCH_7R__) || defined(__ARM_ARCH_7M__) ||	\
+    defined(__ARM_ARCH_7S__)
+    return LVI_STRING("arm7");
+#elif defined(__ARM_ARCH_7A__) || defined(__ARM_ARCH_7R__) ||	\
+    defined(__ARM_ARCH_7M__) || defined(__ARM_ARCH_7S__)
+    return LVI_STRING("arm7a");
+#elif defined(__ARM_ARCH_7R__) || defined(__ARM_ARCH_7M__) ||	\
+    defined(__ARM_ARCH_7S__)
+    return LVI_STRING("arm7r");
+#elif defined(__ARM_ARCH_7M__)
+    return LVI_STRING("arm7m");
+#elif defined(__ARM_ARCH_7S__)
+    return LVI_STRING("arm7s");
+#elif defined(__aarch64__) || defined(_M_ARM64)
+    return LVI_STRING("arm64");
+#elif defined(mips) || defined(__mips__) || defined(__mips)
+    return LVI_STRING("mips");
+#elif defined(_riscv) || defined(__riscv__) || defined(__riscv)
+    return LVI_STRING("risc-v");
+#elif defined(__sh__)
+    return LVI_STRING("superh");
+#elif defined(__powerpc) || defined(__powerpc__) ||		\
+    defined(__powerpc64__) || defined(__POWERPC__) ||		\
+    defined(__ppc__) || defined(__PPC__) || defined(_ARCH_PPC)
+    return LVI_STRING("powerpc");
+#elif defined(__PPC64__) || defined(__ppc64__) || defined(_ARCH_PPC64)
+    return LVI_STRING("powerpc64");
+#elif defined(__sparc__) || defined(__sparc)
+    return LVI_STRING("sparc");
+#elif defined(__m68k__)
+    return LVI_STRING("m68k");
+#else
+    return LVI_STRING("unknown-arch");
+#endif
 }
 
 // --8><----8><----8><--
@@ -311,7 +375,7 @@ void wile_exception2(const char* func_name, const char* file_name,
 
 // --8><----8><----8><--
 
-lval get_gensym(void)
+lval wile_get_gensym(void)
 {
     static unsigned long count = 0;
     char buf[64];
@@ -325,7 +389,7 @@ lval get_gensym(void)
 
 // --8><----8><----8><--
 
-lval run_system_command(lval cmd, const char* fname, int lno)
+lval wile_run_system_command(lval cmd, const char* fname, int lno)
 {
     if (cmd.vt != LV_STRING) {
 	wile_exception2("run-command", fname, lno, "got bad input type!");
@@ -347,7 +411,8 @@ lval run_system_command(lval cmd, const char* fname, int lno)
 
 // --8><----8><----8><--
 
-lval run_pipe_command(lval cmd, const char* rw, const char* fname, int lno)
+lval wile_run_pipe_command(lval cmd, const char* rw,
+			   const char* fname, int lno)
 {
     if (cmd.vt != LV_STRING ||
 	(strcmp(rw, "r") != 0 && strcmp(rw, "w") != 0)) {
@@ -407,7 +472,7 @@ lval wile_temp_file(lptr*, lptr args)
 	wile_exception("open-temporary-file", "could not create temporary file");
     }
     vs[0] = LVI_FPORT(fp);
-    return gen_list(2, vs, NULL);
+    return wile_gen_list(2, vs, NULL);
 }
 
 // --8><----8><----8><--
@@ -424,12 +489,12 @@ lval wile_temp_file(lptr*, lptr args)
 void set_start_state(struct ulex_context* context);
 #endif // WILE_NEEDS_ULEX
 
-lval string2num(lval str, const char* fname, int lno)
+lval wile_string2num(lval str, const char* fname, int lno)
 {
     lval val1, val2;
     unsigned char* text;
 
-    set_lisp_loc_file(NULL);
+    wile_set_lisp_loc_file(NULL);
     struct ulex_context* context = ulex_init(ulex_TEXT, str.v.str);
     if (context == NULL) {
 	wile_exception2("string->number", fname, lno,
@@ -662,7 +727,7 @@ void ceil_qr(lisp_int_t n1, lisp_int_t n2, lisp_int_t* nq, lisp_int_t* nr)
 // if 0 items are passed in, a NULL pointer dereference will result
 // and the program will crash.
 
-lval gen_list(size_t nitems, lval* items, lval* tail)
+lval wile_gen_list(size_t nitems, lval* items, lval* tail)
 {
     lptr p1, list = NULL;
 
@@ -680,7 +745,7 @@ lval gen_list(size_t nitems, lval* items, lval* tail)
 
 // --8><----8><----8><--
 
-bool do_eqv(lptr arg1, lptr arg2)
+bool wile_do_eqv(lptr arg1, lptr arg2)
 {
     size_t i;
 
@@ -714,7 +779,7 @@ bool do_eqv(lptr arg1, lptr arg2)
 		     (ISNAN(CREAL(arg2->v.cv)) || ISNAN(CIMAG(arg2->v.cv)))));
 
 	case LV_PAIR:
-	    if (!do_eqv(CAR(arg1), CAR(arg2))) {
+	    if (!wile_do_eqv(CAR(arg1), CAR(arg2))) {
 		return false;
 	    }
 	    arg1 = CDR(arg1);
@@ -737,7 +802,7 @@ bool do_eqv(lptr arg1, lptr arg2)
 		return false;
 	    }
 	    for (i = 0; i < arg1->v.vec.capa; ++i) {
-		if (!do_eqv(arg1->v.vec.arr[i], arg2->v.vec.arr[i])) {
+		if (!wile_do_eqv(arg1->v.vec.arr[i], arg2->v.vec.arr[i])) {
 		    return false;
 		}
 	    }
@@ -757,7 +822,8 @@ bool do_eqv(lptr arg1, lptr arg2)
 	// TODO: implement these
 //////	case LV_STR_PORT:
 //	case LV_PROMISE:
-//	case LV_LAMBDA:
+//	case LV_CLAMBDA:
+//	case LV_ILAMBDA:
 
 	default:		return false;
 	}
@@ -827,7 +893,7 @@ lval wile_read_line(lptr*, lptr args)
 void set_start_state(struct ulex_context* context);
 #endif // WILE_NEEDS_ULEX
 
-lval parse_string(lptr*, lptr args)
+lval wile_parse_string(lptr*, lptr args)
 {
     lval res;
 
@@ -836,7 +902,7 @@ lval parse_string(lptr*, lptr args)
     }
 
     lptr lp = NULL;
-    set_lisp_loc_file(NULL);
+    wile_set_lisp_loc_file(NULL);
     struct ulex_context* context = ulex_init(ulex_TEXT, args[0].v.str);
 
     if (context == NULL) {
@@ -867,7 +933,7 @@ lval parse_string(lptr*, lptr args)
 void set_start_state(struct ulex_context* context);
 #endif // WILE_NEEDS_ULEX
 
-lval parse_file(lptr*, lptr args)
+lval wile_parse_file(lptr*, lptr args)
 {
     lval res;
 
@@ -878,7 +944,7 @@ lval parse_file(lptr*, lptr args)
     }
 
     lptr lp = NULL;
-    set_lisp_loc_file(IS_STRING(args) ? args->v.str : NULL);
+    wile_set_lisp_loc_file(IS_STRING(args) ? args->v.str : NULL);
     struct ulex_context* context =
 	IS_STRING(args)
 	? ulex_init(ulex_FILE, args->v.str)
@@ -989,8 +1055,10 @@ lval wile_apply_function(lptr args, const char* file_name, int line_no)
     }
     len = lv.v.iv;
 
-    if (proc.vt == LV_LAMBDA) {
-	arity = proc.v.lambda.arity;
+    if (proc.vt == LV_CLAMBDA || proc.vt == LV_ILAMBDA) {
+	arity = (proc.vt == LV_CLAMBDA) ?
+	    proc.v.clambda.arity :
+	    proc.v.ilambda->arity;
 	if (arity >= 0) {
 	    if (arity != len) {
 		wile_exception2("apply", file_name, line_no,
@@ -1008,30 +1076,37 @@ lval wile_apply_function(lptr args, const char* file_name, int line_no)
 	    caboose = true;
 	}
 
-	i = arity + (caboose ? 1 : 0);
-	if (i < global_tc_min_args) {
-	    i = global_tc_min_args;
-	}
-	ap = LISP_ALLOC(lval, i);
-	LISP_ASSERT(ap != NULL);
-	for (i = 0; i < arity; ++i) {
-	    ap[i] = CAR(args) ? *(CAR(args)) : LVI_NIL();
-	    args = CDR(args);
-	}
-	if (caboose) {
-	    ap[arity] = args ? *args : LVI_NIL();
-	}
+	if (proc.vt == LV_CLAMBDA) {
+	    i = arity + (caboose ? 1 : 0);
+	    if (i < global_tc_min_args) {
+		i = global_tc_min_args;
+	    }
+	    ap = LISP_ALLOC(lval, i);
+	    LISP_ASSERT(ap != NULL);
+	    for (i = 0; i < arity; ++i) {
+		ap[i] = CAR(args) ? *(CAR(args)) : LVI_NIL();
+		args = CDR(args);
+	    }
+	    if (caboose) {
+		ap[arity] = args ? *args : LVI_NIL();
+	    }
 
-	if (global_tc_min_args > 0) {
-	    // Oddly, openbsd cc and clang do not like this as a TAIL_CALL
-	    return proc.v.lambda.fn(proc.v.lambda.closure, ap);
+	    if (global_tc_min_args > 0) {
+		// Oddly, clang does not like this as a TAIL_CALL
+		return proc.v.clambda.fn(proc.v.clambda.closure, ap);
+	    } else {
+		lv = proc.v.clambda.fn(proc.v.clambda.closure, ap);
+		LISP_FREE(ap);
+		return lv;
+	    }
 	} else {
-	    lv = proc.v.lambda.fn(proc.v.lambda.closure, ap);
-	    LISP_FREE(ap);
-	    return lv;
+	    // TODO: ILAMBDA - some part of the above is reusable: what?
+fputs("warning! calling ilambda! implement!\n", stderr);
+fflush(stderr);
+	    return LVI_NIL();
 	}
     } else if (proc.vt == LV_CONT) {
-	invoke_continuation(&proc, args);
+	wile_invoke_continuation(&proc, args);
     } else {
 	wile_exception2("apply", file_name, line_no,
 			"failed while fetching proc - bad type %d", proc.vt);
@@ -1040,7 +1115,7 @@ lval wile_apply_function(lptr args, const char* file_name, int line_no)
 
 // --8><----8><----8><--
 
-lval read_directory(lptr*, lptr args)
+lval wile_read_directory(lptr*, lptr args)
 {
     DIR* dp;
     struct dirent* de;
@@ -1088,11 +1163,15 @@ lval wile_char2string(lptr*, lptr args)
 	ac = CAR(args) ? *(CAR(args)) : LVI_NIL();
 	if (ac.vt == LV_PAIR || ac.vt == LV_NIL) {
 	    args = CAR(args);
-	    lv = wile_list_length(NULL, args);
-	    if (lv.vt != LV_INT || lv.v.iv < 0) {
-		wile_exception("char->string", "got a bad list length!?!");
+	    if (args == NULL) {
+		len = 0;
+	    } else {
+		lv = wile_list_length(NULL, args);
+		if (lv.vt != LV_INT || lv.v.iv < 0) {
+		    wile_exception("char->string", "got a bad list length!?!");
+		}
+		len = lv.v.iv;
 	    }
-	    len = lv.v.iv;
 	}
     }
 
@@ -1208,7 +1287,7 @@ lval wile_accept_connection(lptr*, lptr args)
 		vs[1] = LVI_STRING("<unknown>");
 	    }
 	    vs[2] = LVI_INT(ntohs(peer.sin_port));
-	    return gen_list(3, vs, NULL);
+	    return wile_gen_list(3, vs, NULL);
 	}
     }
 }
@@ -1282,7 +1361,7 @@ lval wile_rand_normal_pair(lisp_real_t m, lisp_real_t s)
 	    s *= SQRT(-2.0*LOG(r2)/r2);
 	    vs[0] = LVI_REAL(m + s*v1);
 	    vs[1] = LVI_REAL(m + s*v2);
-	    return gen_list(2, vs, NULL);
+	    return wile_gen_list(2, vs, NULL);
 	}
     }
 }
@@ -1333,7 +1412,7 @@ lval wile_cputime(lptr*, lptr)
 	lval vs[2];
 	vs[0] = LVI_REAL(usage.ru_utime.tv_sec + 1.0e-6*usage.ru_utime.tv_usec);
 	vs[1] = LVI_REAL(usage.ru_stime.tv_sec + 1.0e-6*usage.ru_stime.tv_usec);
-	return gen_list(2, vs, NULL);
+	return wile_gen_list(2, vs, NULL);
     } else {
 	return LVI_BOOL(false);
     }
@@ -1362,7 +1441,7 @@ lval wile_filestat(lptr*, lptr args)
 	vs[10] = LVI_INT(sbuf.st_atime);
 	vs[11] = LVI_INT(sbuf.st_mtime);
 	vs[12] = LVI_INT(sbuf.st_ctime);
-	return gen_list(13, vs, NULL);
+	return wile_gen_list(13, vs, NULL);
     } else {
 	return LVI_BOOL(false);
     }
@@ -1392,7 +1471,7 @@ lval wile_symlinkstat(lptr*, lptr args)
 	vs[10] = LVI_INT(sbuf.st_atime);
 	vs[11] = LVI_INT(sbuf.st_mtime);
 	vs[12] = LVI_INT(sbuf.st_ctime);
-	return gen_list(13, vs, NULL);
+	return wile_gen_list(13, vs, NULL);
     } else {
 	return LVI_BOOL(false);
     }
@@ -1419,7 +1498,7 @@ lval wile_getuserinfo(lptr*, lptr args)
 	vs[4] = LVI_STRING(pwp->pw_gecos);
 	vs[5] = LVI_STRING(pwp->pw_dir);
 	vs[6] = LVI_STRING(pwp->pw_shell);
-	return gen_list(7, vs, NULL);
+	return wile_gen_list(7, vs, NULL);
     } else {
 	return LVI_BOOL(false);
     }
@@ -1450,7 +1529,7 @@ lval wile_localtime(lptr*, lptr args)
 	vs[6] = LVI_INT(tval.tm_wday);
 	vs[7] = LVI_INT(tval.tm_yday);
 	vs[8] = LVI_INT(tval.tm_isdst);
-	return gen_list(9, vs, NULL);
+	return wile_gen_list(9, vs, NULL);
     } else {
 	return LVI_BOOL(false);
     }
@@ -1481,7 +1560,7 @@ lval wile_gmtime(lptr*, lptr args)
 	vs[6] = LVI_INT(tval.tm_wday);
 	vs[7] = LVI_INT(tval.tm_yday);
 	vs[8] = LVI_INT(tval.tm_isdst);
-	return gen_list(9, vs, NULL);
+	return wile_gen_list(9, vs, NULL);
     } else {
 	return LVI_BOOL(false);
     }
@@ -1703,7 +1782,7 @@ lval wile_cfft_good_n(lptr*, lptr args)
     if (args[0].vt != LV_INT) {
 	wile_exception("cfft-good-n?", "expects an integer argument");
     }
-    return LVI_BOOL(swll_cfft_good_n(args[0].v.iv));
+    return LVI_BOOL(wilec_cfft_good_n(args[0].v.iv));
 }
 
 lval wile_cfft(lptr*, lptr args)
@@ -1717,7 +1796,7 @@ lval wile_cfft(lptr*, lptr args)
     size_t n = 0, i;
     lisp_cmplx_t *a1, *a2, *ap;
 
-    swll_cfft_init();
+    wilec_cfft_init();
 
     if (args[0].v.iv > 0) {
 	si = 1;
@@ -1729,7 +1808,7 @@ lval wile_cfft(lptr*, lptr args)
     }
 
     n = args[1].v.vec.capa;
-    if (!swll_cfft_good_n(n)) {
+    if (!wilec_cfft_good_n(n)) {
 	wile_exception("vector-cfft!",
 		       "%zu is not a multiple of (2,3,5,7,11)", n);
     }
@@ -1758,7 +1837,7 @@ lval wile_cfft(lptr*, lptr args)
     }
     a2 = LISP_ALLOC(lisp_cmplx_t, n);
 
-    ap = swll_cfft(si, n, n, a1, a2);
+    ap = wilec_cfft(si, n, n, a1, a2);
 
     for (i = 0; i < n; ++i) {
 	arr[i]->vt = LV_CMPLX;

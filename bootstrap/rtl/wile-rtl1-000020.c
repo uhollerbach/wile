@@ -14,7 +14,7 @@ extern lisp_escape_t cachalot;
 // if 0 items are passed in, a NULL pointer dereference will result
 // and the program will crash.
 
-lval gen_list(size_t nitems, lval* items, lval* tail)
+lval wile_gen_list(size_t nitems, lval* items, lval* tail)
 {
     lptr p1, list = NULL;
 

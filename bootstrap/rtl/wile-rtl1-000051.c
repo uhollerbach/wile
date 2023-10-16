@@ -14,7 +14,7 @@ lval wile_cfft_good_n(lptr*, lptr args)
     if (args[0].vt != LV_INT) {
 	wile_exception("cfft-good-n?", "expects an integer argument");
     }
-    return LVI_BOOL(swll_cfft_good_n(args[0].v.iv));
+    return LVI_BOOL(wilec_cfft_good_n(args[0].v.iv));
 }
 
 lval wile_cfft(lptr*, lptr args)
@@ -28,7 +28,7 @@ lval wile_cfft(lptr*, lptr args)
     size_t n = 0, i;
     lisp_cmplx_t *a1, *a2, *ap;
 
-    swll_cfft_init();
+    wilec_cfft_init();
 
     if (args[0].v.iv > 0) {
 	si = 1;
@@ -40,7 +40,7 @@ lval wile_cfft(lptr*, lptr args)
     }
 
     n = args[1].v.vec.capa;
-    if (!swll_cfft_good_n(n)) {
+    if (!wilec_cfft_good_n(n)) {
 	wile_exception("vector-cfft!",
 		       "%zu is not a multiple of (2,3,5,7,11)", n);
     }
@@ -69,7 +69,7 @@ lval wile_cfft(lptr*, lptr args)
     }
     a2 = LISP_ALLOC(lisp_cmplx_t, n);
 
-    ap = swll_cfft(si, n, n, a1, a2);
+    ap = wilec_cfft(si, n, n, a1, a2);
 
     for (i = 0; i < n; ++i) {
 	arr[i]->vt = LV_CMPLX;

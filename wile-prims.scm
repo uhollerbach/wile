@@ -40,7 +40,7 @@
 	      (for-each (lambda (i v)
 			  (emit-fstr "vs[%d] = %s;\n" (- i 1) v))
 			(fromto 1 ac) as)
-	      (emit-fstr "%s = gen_list(%d, vs, NULL);\n}\n" r ac)))
+	      (emit-fstr "%s = wile_gen_list(%d, vs, NULL);\n}\n" r ac)))
 	r)))
 
 ;;; used here for apply and in wile-comp.scm
@@ -220,34 +220,43 @@
 (define prim-table-internal
   (list
 
-   (list 'creal 'alias 'real-part)
-   (list 'cimag 'alias 'imag-part)
-   (list 'last 'alias 'list-last)
-   (list 'make-rectangular 'alias 'cmplx)
-   (list 'phase 'alias 'angle)
-   (list 'complex-conjugate 'alias 'cconj)
-   (list 'conj 'alias 'cconj)
-   (list 'number? 'alias 'complex?)
-   (list 'char-lower-case? 'alias 'char-lowercase?)
-   (list 'char-upper-case? 'alias 'char-uppercase?)
-   (list 'list->string 'alias 'char->string)
-   (list 'magnitude 'alias 'abs)
-   (list 'modulo 'alias 'floor-remainder)
-   (list 'quotient 'alias 'truncate-quotient)
-   (list 'remainder 'alias 'truncate-remainder)
-   (list 'quot-rem 'alias 'truncate/)
-   (list 'directory-exists? 'alias 'file-exists?)
-   (list 'rename-directory 'alias 'rename-file)
-   (list 'make-vector 'alias 'vector-create)
-   (list 'make-string 'alias 'string-create)
-   (list 'vector-capacity 'alias 'vector-length)
-   (list 'make-bytevector 'alias 'bytevector-create)
-   (list 'substring 'alias 'string-copy)
-   (list 'read-all 'alias 'parse-file)
-   (list 'sqlite-close 'alias 'close-port)
-   (list 'agm 'alias 'arithmetic-geometric-mean)
+   '(creal alias real-part)
+   '(cimag alias imag-part)
+   '(last alias list-last)
+   '(make-rectangular alias cmplx)
+   '(phase alias angle)
+   '(complex-conjugate alias cconj)
+   '(conj alias cconj)
+   '(number? alias complex?)
+   '(char-lower-case? alias char-lowercase?)
+   '(char-upper-case? alias char-uppercase?)
+   '(list->string alias char->string)
+   '(magnitude alias abs)
+   '(modulo alias floor-remainder)
+   '(quotient alias truncate-quotient)
+   '(remainder alias truncate-remainder)
+   '(quot-rem alias truncate/)
+   '(directory-exists? alias file-exists?)
+   '(rename-directory alias rename-file)
+   '(make-vector alias vector-create)
+   '(make-string alias string-create)
+   '(vector-capacity alias vector-length)
+   '(make-bytevector alias bytevector-create)
+   '(substring alias string-copy)
+   '(read-all alias parse-file)
+   '(sqlite-close alias close-port)
+   '(agm alias arithmetic-geometric-mean)
 
-   (list 'call-with-current-continuation 'alias 'call/cc)
+   '(call-with-current-continuation alias call/cc)
+
+   '(make-iproc alias make-interpreted-procedure)
+   '(set-iproc-env! alias set-interpreted-procedure-environment!)
+   '(set-iproc-macro! alias set-interpreted-procedure-macro!)
+   '(get-iproc-args alias get-interpreted-procedure-arguments)
+   '(get-iproc-arity alias get-interpreted-procedure-arity)
+   '(get-iproc-env alias get-interpreted-procedure-environment)
+   '(get-iproc-body alias get-interpreted-procedure-body)
+   '(get-iproc-macro alias get-interpreted-procedure-macro)
 
    (list 'when "expects a predicate and any number of actions; if the predicate is true, the actions are evaluated"
 	 'macro -2
@@ -300,6 +309,38 @@
 		(let ((,result (begin ,@body)))
 		  ,@(map (lambda (v s) `(set! ,v ,s)) vars svals)
 		  ,result)))))
+
+   ;;; if not exactly case-lambda, then a lot like it
+
+   (list 'case-lambic 'macro -3
+	 (lambda (n lam . fns)
+	   (let* ((args (gensym))
+		  (group
+		   (let loop ((cs (list (list n lam)))
+			      (fs fns))
+		     (cond ((null? fs)
+			    (list-reverse (cons (list #f ()) cs)))
+			   ((null? (cdr fs))
+			    (list-reverse (cons (list #t (car fs)) cs)))
+			   (else
+			    (loop (cons (list (car fs) (cadr fs)) cs)
+				  (cddr fs))))))
+		  (cases (map (lambda (nl)
+				(let ((n (car nl))
+				      (l (cadr nl)))
+				  (cond ((integer? n)
+					 `((,n) (apply ,l ,args)))
+					((boolean? n)
+					 (if n
+					     `(else (apply ,l ,args))
+					     '(else (raise "case-lambic exhausted all cases, no match found!"))))
+					((all-true? (map integer? n))
+					 `(,n (apply ,l ,args)))
+					(else (ERR "bad n-args spec %v" n)))))
+			      group)))
+	     `(lambda ,args
+		(case (list-length ,args)
+		  ,@cases)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; these macros are part of closing the loop for wile to compile itself
@@ -738,7 +779,7 @@
 
    (list 'eqv? 'prim 2
 	 (lambda (r a1 a2)
-	   (emit-code "@@ = LVI_BOOL(do_eqv(&(@1), &(@2)));")))
+	   (emit-code "@@ = LVI_BOOL(wile_do_eqv(&(@1), &(@2)));")))
 
    (list 'vector?
 	 "expects one argument and returns #t if that value is a vector, #f otherwise"
@@ -762,7 +803,19 @@
 	 "expects one argument and returns #t if that value is a procedure, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
-	   (emit-code "@@ = LVI_BOOL(@1.vt == LV_LAMBDA);")))
+	   (emit-code "@@ = LVI_BOOL(@1.vt == LV_CLAMBDA || @1.vt == LV_ILAMBDA);")))
+
+   (list 'compiled-procedure?
+	 "expects one argument and returns #t if that value is a procedure, #f otherwise"
+	 'prim 1
+	 (lambda (r a1)
+	   (emit-code "@@ = LVI_BOOL(@1.vt == LV_CLAMBDA);")))
+
+   (list 'interpreted-procedure?
+	 "expects one argument and returns #t if that value is an interpreted procedure, #f otherwise"
+	 'prim 1
+	 (lambda (r a1)
+	   (emit-code "@@ = LVI_BOOL(@1.vt == LV_ILAMBDA);")))
 
    (list 'continuation?
 	 "expects one argument and returns #t if that value is a continuation, #f otherwise"
@@ -841,22 +894,22 @@
    (list 'gensym
 	 "expects no arguments, returns one newly-generated symbol which is supposed to be unique unless the user takes hostile measures to defeat the uniqueness"
 	 'prim 0 (lambda (r)
-		   (emit-code "@@ = get_gensym();")))
+		   (emit-code "@@ = wile_get_gensym();")))
 
    (list 'run-command "expects one string argument, runs that as a separate process, and returns the exit status of that run or #f if the underlying system() call failed"
 	 'prim 1
 	 (lambda (r a1)
-	   (emit-code "@@ = run_system_command(@1, __FILE__, __LINE__);")))
+	   (emit-code "@@ = wile_run_system_command(@1, __FILE__, __LINE__);")))
 
    (list 'run-read-command "expects one string argument, launches that as a separate process while opening a readable pipe to its stdout, and returns that pipe-handle, or #f if the underlying popen() call failed"
 	 'prim 1
 	 (lambda (r a1)
-	   (emit-code "@@ = run_pipe_command(@1, \"r\", __FILE__, __LINE__);")))
+	   (emit-code "@@ = wile_run_pipe_command(@1, \"r\", __FILE__, __LINE__);")))
 
    (list 'run-write-command "expects one string argument, launches that as a separate process while opening a writable pipe to its stdin, and returns that pipe-handle, or #f if the underlying popen() call failed"
 	 'prim 1
 	 (lambda (r a1)
-	   (emit-code "@@ = run_pipe_command(@1, \"w\", __FILE__, __LINE__);")))
+	   (emit-code "@@ = wile_run_pipe_command(@1, \"w\", __FILE__, __LINE__);")))
 
    (list 'fork-process "expects no arguments and forks the process into parent and child processes; returns 0 in the child process and the child's process id in the parent process, or #f if the underlying fork() call failed"
 	 'prim 0
@@ -972,12 +1025,12 @@
 	 'prim
 	 1 (lambda (r a1)
 	     (emit-code
-	      "display(@1, stdout);"
+	      "wile_display(@1, stdout);"
 	      "@@ = @1;"))
 	 2 (lambda (r a1 a2)
 	     (emit-code
 	      "if (@2.vt == LV_FILE_PORT || @2.vt == LV_PIPE_PORT || @2.vt == LV_SOCK_PORT) {"
-	      "display(@1, @2.v.fp);"
+	      "wile_display(@1, @2.v.fp);"
 	      "@@ = @1;"
 	      "} else {"
 	      "WILE_EX(\"display\", \"expects a scheme value and a port\");"
@@ -986,18 +1039,18 @@
    (list 'string->number "expects one string, parses it as a number, and returns the number"
 	 'prim 1
 	 (lambda (r a1)
-	   (emit-code "@@ = string2num(@1, __FILE__, __LINE__);")))
+	   (emit-code "@@ = wile_string2num(@1, __FILE__, __LINE__);")))
 
    (list 'number->string 'prim
 	 ;;; number
 	 1 (lambda (r a1)
 	     (emit-code
-	      "@@ = num2string(@1, 10, INT_MIN, __FILE__, __LINE__);"))
+	      "@@ = wile_num2string(@1, 10, INT_MIN, __FILE__, __LINE__);"))
 	 ;;; number base
 	 2 (lambda (r a1 a2)
 	     (emit-code
 	      "if (@2.vt == LV_INT) {"
-	      "@@ = num2string(@1, @2.v.iv, INT_MIN, __FILE__, __LINE__);"
+	      "@@ = wile_num2string(@1, @2.v.iv, INT_MIN, __FILE__, __LINE__);"
 	      "} else {"
 	      "WILE_EX(\"number->string\", \"base is not numeric\");"
 	      "}"))
@@ -1005,7 +1058,7 @@
 	 3 (lambda (r a1 a2 a3)
 	     (emit-code
 	      "if (@2.vt == LV_INT && @3.vt == LV_INT) {"
-	      "@@ = num2string(@1, @2.v.iv, @3.v.iv, __FILE__, __LINE__);"
+	      "@@ = wile_num2string(@1, @2.v.iv, @3.v.iv, __FILE__, __LINE__);"
 	      "} else {"
 	      "WILE_EX(\"number->string\", \"base or precision is not numeric\");"
 	      "}")))
@@ -2410,7 +2463,7 @@
 	    "ex = 0;"
 	    "}"
 	    "vs[1] = LVI_INT(ex);"
-	    "@@ = gen_list(2, vs, NULL);"
+	    "@@ = wile_gen_list(2, vs, NULL);"
 	    "}")))
 
    (list 'fmod 'prim 2
@@ -2704,7 +2757,7 @@
 	    "floor_qr(@1.v.iv, @2.v.iv, &nq, &nr);"
 	    "vs[0] = LVI_INT(nq);"
 	    "vs[1] = LVI_INT(nr);"
-	    "@@ = gen_list(2, vs, NULL);"
+	    "@@ = wile_gen_list(2, vs, NULL);"
 	    "}")))
 
    (list 'truncate/ 'prim 2
@@ -2716,7 +2769,7 @@
 	    "trunc_qr(@1.v.iv, @2.v.iv, &nq, &nr);"
 	    "vs[0] = LVI_INT(nq);"
 	    "vs[1] = LVI_INT(nr);"
-	    "@@ = gen_list(2, vs, NULL);"
+	    "@@ = wile_gen_list(2, vs, NULL);"
 	    "}")))
 
    (list 'ceiling/ 'prim 2
@@ -2728,7 +2781,7 @@
 	    "ceil_qr(@1.v.iv, @2.v.iv, &nq, &nr);"
 	    "vs[0] = LVI_INT(nq);"
 	    "vs[1] = LVI_INT(nr);"
-	    "@@ = gen_list(2, vs, NULL);"
+	    "@@ = wile_gen_list(2, vs, NULL);"
 	    "}")))
 
    ;;; A few internal type-check and -conversion functions,
@@ -2932,6 +2985,66 @@
 	 (lambda (r a1)
 	   (emit-code
 	    "@@ = LVI_BOOL(chroot(@1.v.str) == 0);")))
+
+   (list 'change-file-owner
+	 "expects one string or file-port and two integers or #f and changes the ownership or default group associated with that filename or file-port"
+	 'prim 3
+	 (lambda (r a1 a2 a3)
+	   (emit-code
+	    "{"
+	    "uid_t uid;"
+	    "gid_t gid;"
+	    "if (@2.vt == LV_INT) {"
+	    "uid = @2.v.iv;"
+	    "} else if (@2.vt == LV_BOOL && @2.v.bv == false) {"
+	    "uid = -1;"
+	    "} else {"
+	    "WILE_EX(\"change-file-owner\", \"expects a file name or port, a user id or #f, and a group id or #f\");"
+	    "}"
+	    "if (@3.vt == LV_INT) {"
+	    "gid = @3.v.iv;"
+	    "} else if (@3.vt == LV_BOOL && @3.v.bv == false) {"
+	    "gid = -1;"
+	    "} else {"
+	    "WILE_EX(\"change-file-owner\", \"expects a file name or port, a user id or #f, and a group id or #f\");"
+	    "}"
+	    "if (@1.vt == LV_STRING) {"
+	    "@@ = LVI_BOOL(chown(@1.v.str, uid, gid) == 0);"
+	    "} else if (@1.vt == LV_FILE_PORT) {"
+	    "@@ = LVI_BOOL(fchown(fileno(@1.v.fp), uid, gid) == 0);"
+	    "} else {"
+	    "WILE_EX(\"change-file-owner\", \"expects a file name or port, a user id or #f, and a group id or #f\");"
+	    "}"
+	    "}")))
+
+   (list 'change-symbolic-link-owner
+	 "expects one string and two integers or #f and changes the ownership or default group associated with that symbolic link or file name"
+	 'prim 3
+	 (lambda (r a1 a2 a3)
+	   (emit-code
+	    "{"
+	    "uid_t uid;"
+	    "gid_t gid;"
+	    "if (@2.vt == LV_INT) {"
+	    "uid = @2.v.iv;"
+	    "} else if (@2.vt == LV_BOOL && @2.v.bv == false) {"
+	    "uid = -1;"
+	    "} else {"
+	    "WILE_EX(\"change-symbolic-link-owner\", \"expects a file name, a user id or #f, and a group id or #f\");"
+	    "}"
+	    "if (@3.vt == LV_INT) {"
+	    "gid = @3.v.iv;"
+	    "} else if (@3.vt == LV_BOOL && @3.v.bv == false) {"
+	    "gid = -1;"
+	    "} else {"
+	    "WILE_EX(\"change-symbolic-link-owner\", \"expects a file name, a user id or #f, and a group id or #f\");"
+	    "}"
+	    "if (@1.vt == LV_STRING) {"
+	    "@@ = LVI_BOOL(lchown(@1.v.str, uid, gid) == 0);"
+	    "} else {"
+	    "WILE_EX(\"change-symbolic-link-owner\", \"expects a file name, a user id or #f, and a group id or #f\");"
+	    "}"
+	    "}")))
 
    (list 'describe-system-error "expects one integer, a system error code, and returns the corresponding description using strerror"
 	 'prim 1
@@ -3217,12 +3330,12 @@
 	 'prim 1 "wile_filestat")
    (list 'get-symbolic-link-status "expects one string, the name of an existing file or symbolic link, and returns a 13-element list of integers as returned by lstat()"
 	 'prim 1 "wile_symlinkstat")
-   (list 'parse-string 'prim 1 "parse_string")
-   (list 'parse-file 'prim 1 "parse_file")
+   (list 'parse-string 'prim 1 "wile_parse_string")
+   (list 'parse-file 'prim 1 "wile_parse_file")
    (list 'regex-match 'prim 2 "wile_regex_match")
    ;;; TODO: 0-arg version that returns all users
    (list 'get-user-information 'prim 1 "wile_getuserinfo")
-   (list 'read-directory "expects a string argument which is the name of some directory (default if no argument is \".\" which is the current working directory) and returns a list of directory entries; each entry is a list of length 2 containing the name and inode for each directory entry" 'prim 0 "read_directory" 1 "read_directory")
+   (list 'read-directory "expects a string argument which is the name of some directory (default if no argument is \".\" which is the current working directory) and returns a list of directory entries; each entry is a list of length 2 containing the name and inode for each directory entry" 'prim 0 "wile_read_directory" 1 "wile_read_directory")
    (list 'listen-on 'prim 1 "wile_listen_port")
    (list 'accept 'prim 1 "wile_accept_connection")
    (list 'connect-to 'prim 2 "wile_connect_to")
@@ -3306,6 +3419,7 @@
 	      "}"))))
 
    (list 'sqlite-version "returns the version of sqlite against which the program is linked" 'prim 0 "wile_sql_version")
+   (list 'gc-version "returns the version of the Boehm GC against which the program is linked" 'prim 0 "wile_gc_version")
 
    (list 'sqlite-open 'prim
 	 0 (lambda (r)
@@ -3370,6 +3484,16 @@
 	 (lambda (r)
 	   (emit-code "@@ = LVI_INT(wile_binfo());")))
 
+   (list 'wile-os-name "expects no arguments and returns a string which describes the OS"
+	 'prim 0
+	 (lambda (r)
+	   (emit-code "@@ = wile_os_name();")))
+
+   (list 'wile-architecture-name "expects no arguments and returns a string which describes the machine architecture"
+	 'prim 0
+	 (lambda (r)
+	   (emit-code "@@ = wile_arch_name();")))
+
    (list 'stack-trace-minimal "expects one optional output file port to which the stack trace is written; the default is stderr. returns nothing useful"
 	 'prim
 	 0 (lambda (r)
@@ -3385,8 +3509,10 @@
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
-	    "if (@1.vt == LV_SYMBOL && @2.vt == LV_LAMBDA && @2.v.lambda.arity == 2) {"
-	    "@@ = register_display_proc(@1.v.str, @2, __FILE__, __LINE__);"
+	    "if (@1.vt == LV_SYMBOL &&"
+	    "((@2.vt == LV_CLAMBDA && @2.v.clambda.arity == 2) ||"
+	    "(@2.vt == LV_ILAMBDA && @2.v.ilambda->arity == 2))) {"
+	    "@@ = wile_register_display_proc(@1.v.str, @2, __FILE__, __LINE__);"
 	    "} else {"
 	    "WILE_EX(\"display-object-hook\", \"expects one symbol and one procedure of two arguments\");"
 	    "}")))
@@ -3410,7 +3536,105 @@
    (list 'token-source-line "expects one argument and returns its location in source code"
 	 'prim 1
 	 (lambda (r a1)
-	   (emit-code "@@ = LVI_STRING(decode_line_loc(get_lisp_loc(&@1)));")))
+	   (emit-code "@@ = LVI_STRING(wile_decode_line_loc(wile_get_lisp_loc(&@1)));")))
+
+   (list 'make-interpreted-procedure "expects a list of arguments, an integer arity, a list of body expressions, an environment list, and a macro boolean"
+	 'prim 5
+	 (lambda (r a1 a2 a3 a4 a5)
+	   (emit-code
+	    "if ((@1.vt == LV_PAIR || @1.vt == LV_NIL) && @2.vt == LV_INT &&(@3.vt == LV_PAIR || @3.vt == LV_NIL) &&(@4.vt == LV_PAIR || @4.vt == LV_NIL) && @5.vt == LV_BOOL) {"
+	    "@@.vt = LV_ILAMBDA;"
+	    "@@.v.ilambda = LISP_ALLOC(lisp_ifunc_t, 1);"
+	    "if (@@.v.ilambda == NULL) {"
+	    "WILE_EX(\"make-interpreted-procedure\", \"memory allocation failed!\");"
+	    "}"
+	    "@@.v.ilambda->args = @1;"
+	    "@@.v.ilambda->arity = @2.v.iv;"
+	    "@@.v.ilambda->body = @3;"
+	    "@@.v.ilambda->env = @4;"
+	    "@@.v.ilambda->macro = @5.v.bv;"
+	    "} else {"
+	    "WILE_EX(\"make-interpreted-procedure\", \"expects a list of arguments, an integer arity, a list of body expressions, an environment list, and a macro boolean\");"
+	    "}")))
+
+   (list 'set-interpreted-procedure-environment!
+	 "expects an interpreted procedure and an environment list"
+	 'prim 2
+	 (lambda (r a1 a2)
+	   (emit-code
+	    "if (@1.vt == LV_ILAMBDA && @2.vt == LV_PAIR) {"
+	    "@1.v.ilambda->env = @2;"
+	    "@@ = @1;"
+	    "} else {"
+	    "WILE_EX(\"set-interpreted-procedure-environment!\", \"expects an interpreted procedure and an environment list\");"
+	    "}")))
+
+   (list 'set-interpreted-procedure-macro!
+	 "expects an interpreted procedure and a boolean"
+	 'prim 2
+	 (lambda (r a1 a2)
+	   (emit-code
+	    "if (@1.vt == LV_ILAMBDA && @2.vt == LV_BOOL) {"
+	    "@1.v.ilambda->macro = @2.v.bv;"
+	    "@@ = @1;"
+	    "} else {"
+	    "WILE_EX(\"set-interpreted-procedure-macro!\", \"expects an interpreted procedure and a boolean\");"
+	    "}")))
+
+   (list 'get-interpreted-procedure-arguments
+	 "expects an interpreted procedure and returns its arguments list"
+	 'prim 1
+	 (lambda (r a1)
+	   (emit-code
+	    "if (@1.vt == LV_ILAMBDA) {"
+	    "@@ = @1.v.ilambda->args;"
+	    "} else {"
+	    "WILE_EX(\"get-interpreted-procedure-arguments\", \"expects an interpreted procedure\");"
+	    "}")))
+
+   (list 'get-interpreted-procedure-arity
+	 "expects an interpreted procedure and returns its arity"
+	 'prim 1
+	 (lambda (r a1)
+	   (emit-code
+	    "if (@1.vt == LV_ILAMBDA) {"
+	    "@@ = LVI_INT(@1.v.ilambda->arity);"
+	    "} else {"
+	    "WILE_EX(\"get-interpreted-procedure-arity\", \"expects an interpreted procedure\");"
+	    "}")))
+
+   (list 'get-interpreted-procedure-environment
+	 "expects an interpreted procedure and returns its environment"
+	 'prim 1
+	 (lambda (r a1)
+	   (emit-code
+	    "if (@1.vt == LV_ILAMBDA) {"
+	    "@@ = @1.v.ilambda->env;"
+	    "} else {"
+	    "WILE_EX(\"get-interpreted-procedure-environment\", \"expects an interpreted procedure\");"
+	    "}")))
+
+   (list 'get-interpreted-procedure-body
+	 "expects an interpreted procedure and returns its body"
+	 'prim 1
+	 (lambda (r a1)
+	   (emit-code
+	    "if (@1.vt == LV_ILAMBDA) {"
+	    "@@ = @1.v.ilambda->body;"
+	    "} else {"
+	    "WILE_EX(\"get-interpreted-procedure-body\", \"expects an interpreted procedure\");"
+	    "}")))
+
+   (list 'get-interpreted-procedure-macro
+	 "expects an interpreted procedure and returns its macro-flag"
+	 'prim 1
+	 (lambda (r a1)
+	   (emit-code
+	    "if (@1.vt == LV_ILAMBDA) {"
+	    "@@ = LVI_BOOL(@1.v.ilambda->macro);"
+	    "} else {"
+	    "WILE_EX(\"get-interpreted-procedure-macro\", \"expects an interpreted procedure\");"
+	    "}")))
 
 ;;; ################ TODO: implement this stub!!!
 
@@ -3495,3 +3719,17 @@
 			  (symbol=? (cadr entry) 'alias))
 		(write-string (symbol->string (car entry)) #\newline)))
 	    prim-table))
+
+(define (unique-symbols? lst)
+  (let ((syms? (let loop ((ls lst))	;;; check symbolness
+		 (cond ((null? ls) #t)
+		       ((symbol? (car ls)) (loop (cdr ls)))
+		       (else #f)))))
+    (if syms?				;;; if symbolness, check uniqueness
+	(let loop ((ss (list-sort (lambda (a b) (string<? a b))
+				   (map symbol->string lst))))
+	  (cond ((null? ss) #t)
+		((null? (cdr ss)) #t)
+		((string=? (car ss) (cadr ss)) #f)
+		(else (loop (cdr ss)))))
+	#f)))

@@ -323,7 +323,7 @@ static void cfft_m4(size_t n, size_t nc, int si,
 #define SETUP_M(d)							\
     do {								\
 	cfft_sep(n, nc, d, a1, a2);					\
-	ar = swll_cfft(si, n, nc/d, a2, a1);				\
+	ar = wilec_cfft(si, n, nc/d, a2, a1);				\
 	if (ar == a2) {							\
 	    ar = a1;							\
 	    a1 = a2;							\
@@ -333,7 +333,7 @@ static void cfft_m4(size_t n, size_t nc, int si,
 	cfft_twid_mul(n, nc, d, a1, a2);				\
     } while (0)
 
-void swll_cfft_init(void)
+void wilec_cfft_init(void)
 {
     if (!cfft_init) {
 	cfft_init_n(3, cfft_w3f, cfft_w3b);
@@ -345,7 +345,7 @@ void swll_cfft_init(void)
     }
 }
 
-bool swll_cfft_good_n(lisp_int_t n)
+bool wilec_cfft_good_n(lisp_int_t n)
 {
     if (n <= 0) {
 	return false;
@@ -369,8 +369,8 @@ bool swll_cfft_good_n(lisp_int_t n)
     return (n == 1);
 }
 
-lisp_cmplx_t* swll_cfft(int si, size_t n, size_t nc,
-			lisp_cmplx_t* a1, lisp_cmplx_t* a2)
+lisp_cmplx_t* wilec_cfft(int si, size_t n, size_t nc,
+			 lisp_cmplx_t* a1, lisp_cmplx_t* a2)
 {
     lisp_cmplx_t* ar;
 

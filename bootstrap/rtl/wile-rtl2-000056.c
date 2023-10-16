@@ -20,27 +20,58 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (delta-dates y1 m1 d1 y2 m2 d2) @@@ bld-rtl-dir/wile-rtl2-000056.scm:15 @@@ wile_delta_dates @@@
-lval wile_delta_dates(lptr* var_1, lptr var_2)
+// @@@ (sqlite-meta-schema port tbl) @@@ bld-rtl-dir/wile-rtl2-000056.scm:16 @@@ wile_sql_meta_schema @@@
+lval wile_sql_meta_schema(lptr* var_1, lptr var_2)
 {
 lval var_4;
-{
-lval vs[8];
-vs[0] = var_2[3];
-vs[1] = var_2[4];
-vs[2] = var_2[5];
-var_4 = wile_julian_day(NULL, vs);
-}
+var_4 = LVI_STRING("caar");
 lval var_5;
+var_5 = LVI_STRING("");
+lval var_6;
+var_6 = LVI_STRING("select sql from sqlite_schema where (name = \'");
+lval var_7;
+var_7 = LVI_STRING("\')");
+lval var_8;
+{
+lval vs[3];
+vs[0] = var_6;
+vs[1] = var_2[1];
+vs[2] = var_7;
+var_8 = wile_gen_list(3, vs, NULL);
+}
 {
 lval vs[8];
-vs[0] = var_2[0];
-vs[1] = var_2[1];
-vs[2] = var_2[2];
-var_5 = wile_julian_day(NULL, vs);
+vs[0] = var_5;
+vs[1] = var_8;
+var_8 = wile_string_join_by(NULL, vs);
 }
-lval var_6;
-var_6 = LVI_INT(var_4.v.iv - var_5.v.iv);
-return var_6;
+lval var_9;
+#ifdef WILE_USES_SQLITE
+if (var_2[0].vt == LV_SQLITE_PORT && var_8.vt == LV_STRING) {
+var_9 = wile_sql_run(var_2[0].v.sqlite_conn, var_8.v.str, __FILE__, __LINE__);
+} else {
+WILE_EX("sqlite-run", "expects one sqlite-port and one string");
 }
-// end of function wile_delta_dates
+#else
+var_9 = LVI_BOOL(false);
+#endif // WILE_USES_SQLITE
+lval var_10;
+{
+char* cp = strchr(var_4.v.str, 'r');
+var_10 = var_9;
+while (*(--cp) != 'c') {
+if (var_10.vt != LV_PAIR) {
+WILE_EX("cxr", "input does not have the right structure!");
+}
+if (*cp == 'a') {
+var_10 = (var_10.v.pair.car ? *(var_10.v.pair.car) : LVI_NIL());
+} else if (*cp == 'd') {
+var_10 = (var_10.v.pair.cdr ? *(var_10.v.pair.cdr) : LVI_NIL());
+} else {
+WILE_EX("cxr", "got malformed control string '%s'", var_4.v.str);
+}
+}
+}
+return var_10;
+}
+// end of function wile_sql_meta_schema

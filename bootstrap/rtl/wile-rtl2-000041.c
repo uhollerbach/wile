@@ -20,110 +20,57 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (string-pad-center str pch lmin) @@@ bld-rtl-dir/wile-rtl2-000041.scm:13 @@@ wile_string_pad_center @@@
-lval wile_string_pad_center(lptr* var_1, lptr var_2)
+// @@@ (list-drop-while drop? lst) @@@ bld-rtl-dir/wile-rtl2-000041.scm:13 @@@ wile_list_drop_while @@@
+lval wile_list_drop_while(lptr* var_1, lptr var_2)
 {
+lbl_3:;
 lval var_4;
 lval var_5;
-var_5 = LVI_INT(strlen(var_2[0].v.str));
-var_4 = var_5;
+var_5 = LVI_BOOL(true);
+do {
 lval var_6;
+var_6 = LVI_BOOL(var_2[1].vt == LV_NIL);
 lval var_7;
-switch (TYPE_COMBO(var_4.vt,var_2[2].vt)) {
-case TYPE_COMBO(LV_INT,LV_INT):
-var_7 = LVI_BOOL(var_4.v.iv < var_2[2].v.iv);
-break;
-case TYPE_COMBO(LV_INT,LV_RAT):
-var_7 = LVI_BOOL(var_4.v.iv * var_2[2].v.irv.den < var_2[2].v.irv.num);
-break;
-case TYPE_COMBO(LV_INT,LV_REAL):
-var_7 = LVI_BOOL(var_4.v.iv < var_2[2].v.rv);
-break;
-case TYPE_COMBO(LV_RAT,LV_INT):
-var_7 = LVI_BOOL(var_4.v.irv.num < var_2[2].v.iv * var_4.v.irv.den);
-break;
-case TYPE_COMBO(LV_RAT,LV_RAT):
-var_7 = LVI_BOOL(var_4.v.irv.num * var_2[2].v.irv.den < var_2[2].v.irv.num * var_4.v.irv.den);
-break;
-case TYPE_COMBO(LV_RAT,LV_REAL):
-var_7 = LVI_BOOL(var_4.v.irv.num < var_2[2].v.rv * var_4.v.irv.den);
-break;
-case TYPE_COMBO(LV_REAL,LV_INT):
-var_7 = LVI_BOOL(var_4.v.rv < var_2[2].v.iv);
-break;
-case TYPE_COMBO(LV_REAL,LV_RAT):
-var_7 = LVI_BOOL(var_4.v.rv * var_2[2].v.irv.den < var_2[2].v.irv.num);
-break;
-case TYPE_COMBO(LV_REAL,LV_REAL):
-var_7 = LVI_BOOL(var_4.v.rv < var_2[2].v.rv);
-break;
-default:
-WILE_EX("<", "inputs are not real-valued numbers");
-break;
-}
-if (LV_IS_FALSE(var_7)) {
-var_6 = var_2[0];
-} else {
+var_7 = LVI_BOOL(LV_IS_FALSE(var_6));
+var_5 = var_7;
+if (LV_IS_FALSE(var_5)) { break; }
 lval var_8;
+if (var_2[1].vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
+}
+var_8 = (var_2[1].v.pair.car ? *(var_2[1].v.pair.car) : LVI_NIL());
 lval var_9;
-var_9 = LVI_INT(var_2[2].v.iv - var_4.v.iv);
-var_8 = var_9;
+{
+lval vs[1];
+vs[0] = var_8;
+var_9 = wile_gen_list(1, vs, NULL);
+}
 lval var_10;
+{
+lval vs[2];
+vs[0] = var_2[0];
+vs[1] = var_9;
+var_10 = wile_gen_list(2, vs, NULL);
+}
+var_10 = wile_apply_function(&(var_10), __FILE__, __LINE__);
+var_5 = var_10;
+if (LV_IS_FALSE(var_5)) { break; }
+} while (0);
+if (LV_IS_FALSE(var_5)) {
+var_4 = var_2[1];
+} else {
 lval var_11;
-var_11 = LVI_INT(2);
-lval var_12;
-{
-lisp_int_t nq, nr;
-trunc_qr(var_8.v.iv, var_11.v.iv, &nq, &nr);
-var_12 = LVI_INT(nq);
+if (var_2[1].vt != LV_PAIR) {
+WILE_EX("cdr", "input is not a pair!");
 }
-var_10 = var_12;
-lval var_13;
-lval var_14;
-var_14 = LVI_INT(var_8.v.iv - var_10.v.iv);
-var_13 = var_14;
-lval var_15;
-var_15 = LVI_STRING("");
-lval var_16;
-if (var_10.vt != LV_INT || var_10.v.iv < 0) {
-WILE_EX("string-create", "first input is not a non-negative integer");
+var_11 = (var_2[1].v.pair.cdr ? *(var_2[1].v.pair.cdr) : LVI_NIL());
+lval var_14[8];
+var_14[0] = var_2[0];
+var_14[1] = var_11;
+var_2[0] = var_14[0];
+var_2[1] = var_14[1];
+goto lbl_3;	// selfie
 }
-if (var_2[1].vt != LV_CHAR || var_2[1].v.chr == '\0') {
-WILE_EX("string-create", "second input is not a valid character");
+return var_4;
 }
-var_16.vt = LV_STRING;
-var_16.v.str = LISP_ALLOC(char, 1 + var_10.v.iv);
-LISP_ASSERT(var_16.v.str != NULL);
-memset(var_16.v.str, var_2[1].v.chr, var_10.v.iv);
-var_16.v.str[var_10.v.iv] = '\0';
-lval var_17;
-if (var_13.vt != LV_INT || var_13.v.iv < 0) {
-WILE_EX("string-create", "first input is not a non-negative integer");
-}
-if (var_2[1].vt != LV_CHAR || var_2[1].v.chr == '\0') {
-WILE_EX("string-create", "second input is not a valid character");
-}
-var_17.vt = LV_STRING;
-var_17.v.str = LISP_ALLOC(char, 1 + var_13.v.iv);
-LISP_ASSERT(var_17.v.str != NULL);
-memset(var_17.v.str, var_2[1].v.chr, var_13.v.iv);
-var_17.v.str[var_13.v.iv] = '\0';
-lval var_18;
-{
-lval vs[3];
-vs[0] = var_16;
-vs[1] = var_2[0];
-vs[2] = var_17;
-var_18 = gen_list(3, vs, NULL);
-}
-{
-lval vs[8];
-vs[0] = var_15;
-vs[1] = var_18;
-var_18 = wile_string_join_by(NULL, vs);
-}
-var_6 = var_18;
-}
-return var_6;
-}
-// end of function wile_string_pad_center
+// end of function wile_list_drop_while

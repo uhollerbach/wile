@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lval run_system_command(lval cmd, const char* fname, int lno)
+lval wile_run_system_command(lval cmd, const char* fname, int lno)
 {
     if (cmd.vt != LV_STRING) {
 	wile_exception2("run-command", fname, lno, "got bad input type!");

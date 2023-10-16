@@ -50,7 +50,8 @@ enum val_type {
     LV_SQLITE_STMT,
     LV_PROMISE,
 
-    LV_LAMBDA,
+    LV_CLAMBDA,
+    LV_ILAMBDA,
     LV_CONT,
 
     LV_TYPES_COUNT		// must be last
@@ -436,7 +437,9 @@ typedef struct {
     wile_cfunc_t* fn;
     lptr* closure;
     int arity;
-} lisp_func_t;
+} lisp_cfunc_t;
+
+struct lisp_ifunc;
 
 typedef struct lisp_val {
     union {
@@ -448,7 +451,8 @@ typedef struct lisp_val {
 	lisp_real_t rv;
 	lisp_cmplx_t cv;
 	lisp_pair_t pair;
-	lisp_func_t lambda;
+	lisp_cfunc_t clambda;
+	struct lisp_ifunc* ilambda;
 	FILE* fp;
 	lisp_vector_t vec;
 	lisp_bytevector_t bvec;
@@ -461,6 +465,14 @@ typedef struct lisp_val {
     lisp_loc_t origin;
     enum val_type vt;
 } lval;
+
+typedef struct lisp_ifunc {
+    lval args;
+    int arity;
+    lval body;
+    lval env;
+    bool macro;
+} lisp_ifunc_t;
 
 #define YYSTYPE		lval
 
@@ -501,16 +513,14 @@ lptr clear_display_hook(const char* sym);
 lptr get_display_hook(const char* sym);
 lptr set_display_hook(const char* sym, lptr hook);
 
-//// DEBUG_GUARD_CRASH: prototype print_jmpbuf -- need volatile?
-void print_jmpbuf(jmp_buf jbu, FILE* fp);
-void print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp);
-void sprint_lisp_num(char* buf, size_t bsize, lptr num,
-		     int base, int prec, bool psign);
+void wile_print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp);
+void wile_sprint_lisp_num(char* buf, size_t bsize, lptr num,
+			  int base, int prec, bool psign);
 
-lisp_loc_t encode_line_loc(size_t lineno);
-char* decode_line_loc(lisp_loc_t lloc);
-void set_lisp_loc_file(const char* fname);
-lisp_loc_t get_lisp_loc(lptr vp);
+lisp_loc_t wile_encode_line_loc(size_t lineno);
+char* wile_decode_line_loc(lisp_loc_t lloc);
+void wile_set_lisp_loc_file(const char* fname);
+lisp_loc_t wile_get_lisp_loc(lptr vp);
 
 void err_print(const char* fname, lisp_loc_t l_whence,
 	       const char* c_whence, const char* fmt, ...)
@@ -522,21 +532,21 @@ void bv_putc(unsigned char c, lisp_bytevector_t* bvp);
 void bv_puts(const unsigned char* s, lisp_bytevector_t* bvp);
 void bv_putbytes(size_t sl, const unsigned char* s, lisp_bytevector_t* bvp);
 
-bool do_eqv(lptr arg1, lptr arg2);
+bool wile_do_eqv(lptr arg1, lptr arg2);
 
 // continuation stuff
 
 int stack_check(int verbose);
 void stack_base(void* st_bptr);
-void invoke_continuation(lptr cc, lptr args)
+void wile_invoke_continuation(lptr cc, lptr args)
     WILE_ATTR((noreturn));
 
 // wile low-level CFFT routines
 
-void swll_cfft_init(void);
-bool swll_cfft_good_n(lisp_int_t n);
-lisp_cmplx_t* swll_cfft(int si, size_t n, size_t nc,
-			lisp_cmplx_t* a1, lisp_cmplx_t* a2);
+void wilec_cfft_init(void);
+bool wilec_cfft_good_n(lisp_int_t n);
+lisp_cmplx_t* wilec_cfft(int si, size_t n, size_t nc,
+			 lisp_cmplx_t* a1, lisp_cmplx_t* a2);
 
 #define LISP_ASSERT(expr)						\
     do {								\

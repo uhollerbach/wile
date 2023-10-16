@@ -17,99 +17,113 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval fn_4(lptr*, lptr);
 
 // definitions
 
-// @@@ lambda (s n acc) @@@ bld-rtl-dir/wile-rtl2-000046.scm:14 @@@ fn_4 @@@
-static lval fn_4(lptr* var_5, lptr var_6)
+// @@@ (string-pad-center str pch lmin) @@@ bld-rtl-dir/wile-rtl2-000046.scm:13 @@@ wile_string_pad_center @@@
+lval wile_string_pad_center(lptr* var_1, lptr var_2)
 {
-lbl_7:;
-lval var_8;
-lval var_9;
-switch (TYPE_COMBO(var_6[1].vt,var_6[0].vt)) {
+lval var_4;
+lval var_5;
+var_5 = LVI_INT(strlen(var_2[0].v.str));
+var_4 = var_5;
+lval var_6;
+lval var_7;
+switch (TYPE_COMBO(var_4.vt,var_2[2].vt)) {
 case TYPE_COMBO(LV_INT,LV_INT):
-var_9 = LVI_BOOL(var_6[1].v.iv < var_6[0].v.iv);
+var_7 = LVI_BOOL(var_4.v.iv < var_2[2].v.iv);
 break;
 case TYPE_COMBO(LV_INT,LV_RAT):
-var_9 = LVI_BOOL(var_6[1].v.iv * var_6[0].v.irv.den < var_6[0].v.irv.num);
+var_7 = LVI_BOOL(var_4.v.iv * var_2[2].v.irv.den < var_2[2].v.irv.num);
 break;
 case TYPE_COMBO(LV_INT,LV_REAL):
-var_9 = LVI_BOOL(var_6[1].v.iv < var_6[0].v.rv);
+var_7 = LVI_BOOL(var_4.v.iv < var_2[2].v.rv);
 break;
 case TYPE_COMBO(LV_RAT,LV_INT):
-var_9 = LVI_BOOL(var_6[1].v.irv.num < var_6[0].v.iv * var_6[1].v.irv.den);
+var_7 = LVI_BOOL(var_4.v.irv.num < var_2[2].v.iv * var_4.v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_RAT):
-var_9 = LVI_BOOL(var_6[1].v.irv.num * var_6[0].v.irv.den < var_6[0].v.irv.num * var_6[1].v.irv.den);
+var_7 = LVI_BOOL(var_4.v.irv.num * var_2[2].v.irv.den < var_2[2].v.irv.num * var_4.v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_REAL):
-var_9 = LVI_BOOL(var_6[1].v.irv.num < var_6[0].v.rv * var_6[1].v.irv.den);
+var_7 = LVI_BOOL(var_4.v.irv.num < var_2[2].v.rv * var_4.v.irv.den);
 break;
 case TYPE_COMBO(LV_REAL,LV_INT):
-var_9 = LVI_BOOL(var_6[1].v.rv < var_6[0].v.iv);
+var_7 = LVI_BOOL(var_4.v.rv < var_2[2].v.iv);
 break;
 case TYPE_COMBO(LV_REAL,LV_RAT):
-var_9 = LVI_BOOL(var_6[1].v.rv * var_6[0].v.irv.den < var_6[0].v.irv.num);
+var_7 = LVI_BOOL(var_4.v.rv * var_2[2].v.irv.den < var_2[2].v.irv.num);
 break;
 case TYPE_COMBO(LV_REAL,LV_REAL):
-var_9 = LVI_BOOL(var_6[1].v.rv < var_6[0].v.rv);
+var_7 = LVI_BOOL(var_4.v.rv < var_2[2].v.rv);
 break;
 default:
 WILE_EX("<", "inputs are not real-valued numbers");
 break;
 }
-if (LV_IS_FALSE(var_9)) {
+if (LV_IS_FALSE(var_7)) {
+var_6 = var_2[0];
+} else {
+lval var_8;
+lval var_9;
+var_9 = LVI_INT(var_2[2].v.iv - var_4.v.iv);
+var_8 = var_9;
 lval var_10;
-var_10 = LVI_INT(1);
 lval var_11;
-var_11 = LVI_INT(var_6[1].v.iv - var_10.v.iv);
+var_11 = LVI_INT(2);
 lval var_12;
 {
-lptr p1 = NULL, p2 = NULL;
-if (var_6[1].vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_6[1];
+lisp_int_t nq, nr;
+trunc_qr(var_8.v.iv, var_11.v.iv, &nq, &nr);
+var_12 = LVI_INT(nq);
 }
-if (var_6[2].vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = var_6[2];
-}
-var_12 = LVI_PAIR(p1, p2);
-}
-lval var_15[8];
-var_15[0] = var_6[0];
-var_15[1] = var_11;
-var_15[2] = var_12;
-var_6[0] = var_15[0];
-var_6[1] = var_15[1];
-var_6[2] = var_15[2];
-goto lbl_7;	// selfie
-} else {
-var_8 = var_6[2];
-}
-return var_8;
-}
-// end of lambda fn_4
-
-// @@@ (upfrom s n0) @@@ bld-rtl-dir/wile-rtl2-000046.scm:13 @@@ wile_upfrom @@@
-lval wile_upfrom(lptr* var_1, lptr var_2)
-{
-MK_CLOS(var_5,0);
+var_10 = var_12;
+lval var_13;
+lval var_14;
+var_14 = LVI_INT(var_8.v.iv - var_10.v.iv);
+var_13 = var_14;
+lval var_15;
+var_15 = LVI_STRING("");
 lval var_16;
-var_16 = LVI_INT(var_2[0].v.iv + var_2[1].v.iv);
-lval var_17;
-var_17 = LVI_INT(1);
-lval var_18;
-var_18 = LVI_INT(var_16.v.iv - var_17.v.iv);
-lval var_19;
-var_19 = LVI_NIL();
-lval var_20;
-lval var_21[8];
-var_21[0] = var_2[0];
-var_21[1] = var_18;
-var_21[2] = var_19;
-var_20 = fn_4(var_5, var_21);
-return var_20;
+if (var_10.vt != LV_INT || var_10.v.iv < 0) {
+WILE_EX("string-create", "first input is not a non-negative integer");
 }
-// end of function wile_upfrom
+if (var_2[1].vt != LV_CHAR || var_2[1].v.chr == '\0') {
+WILE_EX("string-create", "second input is not a valid character");
+}
+var_16.vt = LV_STRING;
+var_16.v.str = LISP_ALLOC(char, 1 + var_10.v.iv);
+LISP_ASSERT(var_16.v.str != NULL);
+memset(var_16.v.str, var_2[1].v.chr, var_10.v.iv);
+var_16.v.str[var_10.v.iv] = '\0';
+lval var_17;
+if (var_13.vt != LV_INT || var_13.v.iv < 0) {
+WILE_EX("string-create", "first input is not a non-negative integer");
+}
+if (var_2[1].vt != LV_CHAR || var_2[1].v.chr == '\0') {
+WILE_EX("string-create", "second input is not a valid character");
+}
+var_17.vt = LV_STRING;
+var_17.v.str = LISP_ALLOC(char, 1 + var_13.v.iv);
+LISP_ASSERT(var_17.v.str != NULL);
+memset(var_17.v.str, var_2[1].v.chr, var_13.v.iv);
+var_17.v.str[var_13.v.iv] = '\0';
+lval var_18;
+{
+lval vs[3];
+vs[0] = var_16;
+vs[1] = var_2[0];
+vs[2] = var_17;
+var_18 = wile_gen_list(3, vs, NULL);
+}
+{
+lval vs[8];
+vs[0] = var_15;
+vs[1] = var_18;
+var_18 = wile_string_join_by(NULL, vs);
+}
+var_6 = var_18;
+}
+return var_6;
+}
+// end of function wile_string_pad_center

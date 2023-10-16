@@ -54,8 +54,10 @@ lval wile_apply_function(lptr args, const char* file_name, int line_no)
     }
     len = lv.v.iv;
 
-    if (proc.vt == LV_LAMBDA) {
-	arity = proc.v.lambda.arity;
+    if (proc.vt == LV_CLAMBDA || proc.vt == LV_ILAMBDA) {
+	arity = (proc.vt == LV_CLAMBDA) ?
+	    proc.v.clambda.arity :
+	    proc.v.ilambda->arity;
 	if (arity >= 0) {
 	    if (arity != len) {
 		wile_exception2("apply", file_name, line_no,
@@ -73,30 +75,37 @@ lval wile_apply_function(lptr args, const char* file_name, int line_no)
 	    caboose = true;
 	}
 
-	i = arity + (caboose ? 1 : 0);
-	if (i < global_tc_min_args) {
-	    i = global_tc_min_args;
-	}
-	ap = LISP_ALLOC(lval, i);
-	LISP_ASSERT(ap != NULL);
-	for (i = 0; i < arity; ++i) {
-	    ap[i] = CAR(args) ? *(CAR(args)) : LVI_NIL();
-	    args = CDR(args);
-	}
-	if (caboose) {
-	    ap[arity] = args ? *args : LVI_NIL();
-	}
+	if (proc.vt == LV_CLAMBDA) {
+	    i = arity + (caboose ? 1 : 0);
+	    if (i < global_tc_min_args) {
+		i = global_tc_min_args;
+	    }
+	    ap = LISP_ALLOC(lval, i);
+	    LISP_ASSERT(ap != NULL);
+	    for (i = 0; i < arity; ++i) {
+		ap[i] = CAR(args) ? *(CAR(args)) : LVI_NIL();
+		args = CDR(args);
+	    }
+	    if (caboose) {
+		ap[arity] = args ? *args : LVI_NIL();
+	    }
 
-	if (global_tc_min_args > 0) {
-	    // Oddly, openbsd cc and clang do not like this as a TAIL_CALL
-	    return proc.v.lambda.fn(proc.v.lambda.closure, ap);
+	    if (global_tc_min_args > 0) {
+		// Oddly, clang does not like this as a TAIL_CALL
+		return proc.v.clambda.fn(proc.v.clambda.closure, ap);
+	    } else {
+		lv = proc.v.clambda.fn(proc.v.clambda.closure, ap);
+		LISP_FREE(ap);
+		return lv;
+	    }
 	} else {
-	    lv = proc.v.lambda.fn(proc.v.lambda.closure, ap);
-	    LISP_FREE(ap);
-	    return lv;
+	    // TODO: ILAMBDA - some part of the above is reusable: what?
+fputs("warning! calling ilambda! implement!\n", stderr);
+fflush(stderr);
+	    return LVI_NIL();
 	}
     } else if (proc.vt == LV_CONT) {
-	invoke_continuation(&proc, args);
+	wile_invoke_continuation(&proc, args);
     } else {
 	wile_exception2("apply", file_name, line_no,
 			"failed while fetching proc - bad type %d", proc.vt);

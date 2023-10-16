@@ -28,7 +28,7 @@ lval wile_getuserinfo(lptr*, lptr args)
 	vs[4] = LVI_STRING(pwp->pw_gecos);
 	vs[5] = LVI_STRING(pwp->pw_dir);
 	vs[6] = LVI_STRING(pwp->pw_shell);
-	return gen_list(7, vs, NULL);
+	return wile_gen_list(7, vs, NULL);
     } else {
 	return LVI_BOOL(false);
     }

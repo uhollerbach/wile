@@ -5,4 +5,4 @@
 "foo": string
 (): nil
 (a b): pair
-<lambda>: procedure
+<compiled-procedure>: procedure

@@ -32,14 +32,14 @@ static char* file_names[N_FILES];
 // is the right file number - line numbers greater than 4 million (N_LINES
 // above) will wrap around and start over at 0.
 
-lisp_loc_t encode_line_loc(size_t lineno)
+lisp_loc_t wile_encode_line_loc(size_t lineno)
 {
     return (cur_file << BITS_LINE) | (((lisp_loc_t) lineno) & LINE_MASK);
 }
 
 // convert a lisp_loc_t into a string "FILE:LINE"
 
-char* decode_line_loc(lisp_loc_t lloc)
+char* wile_decode_line_loc(lisp_loc_t lloc)
 {
     char buf[1024];
     lisp_loc_t fno, lno;
@@ -59,7 +59,7 @@ char* decode_line_loc(lisp_loc_t lloc)
 
 // set file name
 
-void set_lisp_loc_file(const char* fname)
+void wile_set_lisp_loc_file(const char* fname)
 {
     lisp_loc_t i;
 
@@ -82,7 +82,7 @@ void set_lisp_loc_file(const char* fname)
     }
 }
 
-lisp_loc_t get_lisp_loc(lptr vp)
+lisp_loc_t wile_get_lisp_loc(lptr vp)
 {
     size_t i;
     lisp_loc_t o;
@@ -90,7 +90,8 @@ lisp_loc_t get_lisp_loc(lptr vp)
     if (vp) {
 	switch (vp->vt) {
 	case LV_NIL:
-	    WARN("<get_lisp_loc>", "got nil with location %u", vp->origin);
+	    WARN("<wile_get_lisp_loc>",
+		 "got nil with location %u", vp->origin);
 	    return 0;
 
 	case LV_SYMBOL:
@@ -107,14 +108,15 @@ lisp_loc_t get_lisp_loc(lptr vp)
 	case LV_STR_PORT:
 	case LV_SQLITE_PORT:
 	case LV_SQLITE_STMT:
-	case LV_LAMBDA:
+	case LV_CLAMBDA:
+	case LV_ILAMBDA:
 	case LV_CONT:
 	case LV_BVECTOR:		// TODO: this one could be tricky
 	    return vp->origin;
 
 	case LV_PAIR:
 	recurse:
-	    o = get_lisp_loc(CAR(vp));
+	    o = wile_get_lisp_loc(CAR(vp));
 	    if (o > 0) {
 		return o;
 	    } else {
@@ -123,7 +125,7 @@ lisp_loc_t get_lisp_loc(lptr vp)
 			vp = CDR(vp);
 			goto recurse;
 		    } else {
-			return get_lisp_loc(CDR(vp));
+			return wile_get_lisp_loc(CDR(vp));
 		    }
 		}
 	    }
@@ -135,15 +137,15 @@ lisp_loc_t get_lisp_loc(lptr vp)
 		if (o > 0) {
 		    return o;
 		}
-		o = get_lisp_loc(vp->v.vec.arr[i]);
+		o = wile_get_lisp_loc(vp->v.vec.arr[i]);
 	    }
 	    return o;
 
 	case LV_PROMISE:
-	    FATAL("<get_lisp_loc>", "promises are not implemented yet!");
+	    FATAL("<wile_get_lisp_loc>", "promises are not implemented yet!");
 
 	default:
-	    FATAL("<get_lisp_loc>", "bad type %d", vp->vt);
+	    FATAL("<wile_get_lisp_loc>", "bad type %d", vp->vt);
 	}
     } else {
 	return 0;

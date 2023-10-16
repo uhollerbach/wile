@@ -196,7 +196,7 @@ static void do_restore(lisp_cont_t* cont, int safety)
 
 static lval cc_ret_in_flight = LVI_NIL();
 
-void invoke_continuation(lptr cc, lptr args)
+void wile_invoke_continuation(lptr cc, lptr args)
 {
     if (wile_cont_stack_grow_dir == 0) {
 	FATAL("<continuation>", "stack-grow direction was not set!");
@@ -211,10 +211,11 @@ lval wile_call_cc(lptr*, lptr args)
     lval cc;
 
     // TODO: handle primitives, special forms, macros...?
-    if (!(IS_LAMBDA(args) || IS_CONT(args))) {
+    if (!(IS_CLAMBDA(args) || IS_ILAMBDA(args) || IS_CONT(args))) {
 	wile_exception("call/cc", "expects one procedure or continuation");
     }
-    if (IS_LAMBDA(args) && args->v.lambda.arity != 1) {
+    if ((IS_CLAMBDA(args) && args->v.clambda.arity != 1) ||
+	(IS_ILAMBDA(args) && args->v.ilambda->arity != 1)) {
 	wile_exception("call/cc",
 		       "procedure expects other than exactly one argument");
     }
@@ -231,13 +232,20 @@ lval wile_call_cc(lptr*, lptr args)
 	fargs[0] = cc;
 
 	switch (args->vt) {
-	case LV_LAMBDA:
+	case LV_CLAMBDA:
 	    // if we return from ths call, the continuation
 	    // was not invoked; so just return the results
-	    return args->v.lambda.fn(args->v.lambda.closure, fargs);
+	    return args->v.clambda.fn(args->v.clambda.closure, fargs);
+
+	case LV_ILAMBDA:
+	    // if we return from ths call, the continuation
+	    // was not invoked; so just return the results
+	    return LVI_NIL();
+//// TODO: implement this
+////	    return args->v.clambda.fn(args->v.clambda.closure, fargs);
 
 	case LV_CONT:
-	    invoke_continuation(args, fargs);
+	    wile_invoke_continuation(args, fargs);
 
 	default:
 	    FATAL("call/cc", "impossible input type!");

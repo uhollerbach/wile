@@ -16,7 +16,7 @@ lval wile_cputime(lptr*, lptr)
 	lval vs[2];
 	vs[0] = LVI_REAL(usage.ru_utime.tv_sec + 1.0e-6*usage.ru_utime.tv_usec);
 	vs[1] = LVI_REAL(usage.ru_stime.tv_sec + 1.0e-6*usage.ru_stime.tv_usec);
-	return gen_list(2, vs, NULL);
+	return wile_gen_list(2, vs, NULL);
     } else {
 	return LVI_BOOL(false);
     }

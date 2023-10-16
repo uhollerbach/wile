@@ -5,7 +5,37 @@
 (set-environment-variable "SKEEM_LIBRARY_PATH"
 			  (get-environment-variable "WILE_LIBRARY_PATH"))
 
+;;; stuff that skeem doesn't know about
+
 (define list-append append)
+
+(define list-reverse reverse)
+
+(define(list-length=? n lst)
+  (cond ((and (zero? n) (null? lst)) #t)
+	((or (zero? n) (null? lst)) #f)
+	(else (list-length=? (- n 1) (cdr lst)))))
+
+(define (list-length>=? n lst)
+  (cond ((zero? n) #t)
+	((null? lst) #f)
+	(else (list-length>=? (- n 1) (cdr lst)))))
+
+(define (list-length>? n lst)
+  (cond ((zero? n) (not (null? lst)))
+	((null? lst) #f)
+	(else (list-length>? (- n 1) (cdr lst)))))
+
+(define (list-length<? n lst)
+  (not (list-length>=? n lst)))
+
+(define (list-length<=? n lst)
+  (not (list-length>? n lst)))
+
+(define (make-iproc args ig-arity body ig-env ig-mac)
+  (eval (cons 'lambda (cons args body))))
+
+;;; the first group of macros are somewhat generic
 
 (defmacro (load-library fname)
   (letrec* ((paths (string-split-by
@@ -22,6 +52,38 @@
 	   (if filepath
 	       `(load ,filepath)
 	       `(write-string "unable to find file '" ,fname "'\n"))))
+
+(defmacro (case-lambic n lam . fns)
+  (let* ((args (gensym))
+	 (group
+	  (let loop ((cs (list (list n lam)))
+		     (fs fns))
+	    (cond ((null? fs)
+		   (list-reverse (cons (list #f ()) cs)))
+		  ((null? (cdr fs))
+		   (list-reverse (cons (list #t (car fs)) cs)))
+		  (else
+		   (loop (cons (list (car fs) (cadr fs)) cs) (cddr fs))))))
+	 (cases (map (lambda (nl)
+		       (let ((n (car nl))
+			     (l (cadr nl)))
+			 (cond ((integer? n)
+				`((,n) (apply ,l ,args)))
+			       ((boolean? n)
+				(if n
+				    `(else (apply ,l ,args))
+				    '(else (raise "case-lambic exhausted all cases, no match found!"))))
+			       ((all-true? (map integer? n))
+				`(,n (apply ,l ,args)))
+			       (else (ERR "bad n-args spec %v" n)))))
+		     group)))
+    `(lambda ,args
+       (case (list-length ,args)
+	 ,@cases))))
+
+(load-library "struct.scm")
+
+;;; the macros below are very specific to wile
 
 (defmacro (compile-with-output dest . body)
   (let ((tport (gensym)))
@@ -55,5 +117,3 @@
 	    r)))
 
 (defmacro (add-output val) `(set! output (cons ,val output)))
-
-(load-library "struct.scm")

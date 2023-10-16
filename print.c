@@ -60,25 +60,6 @@ void err_print(const char* fname, lisp_loc_t l_whence,
     longjmp(cachalot->cenv, 1);
 }
 
-//// DEBUG_GUARD_CRASH -- need volatile here?
-void print_jmpbuf(jmp_buf jbu, FILE* fp)
-{
-#ifdef __linux__
-    fprintf(fp, "\n\t%16lx %16lx\n\t%16lx %16lx\n\t%16lx %16lx\n\t%16lx %16lx\n",
-	    jbu[0].__jmpbuf[0], jbu[0].__jmpbuf[1], jbu[0].__jmpbuf[2],
-	    jbu[0].__jmpbuf[3], jbu[0].__jmpbuf[4], jbu[0].__jmpbuf[5],
-	    jbu[0].__jmpbuf[6], jbu[0].__jmpbuf[7]);
-#else
-#ifdef __OpenBSD__
-    fprintf(fp, "\n\t%16lx %16lx\n\t%16lx %16lx\n\t%16lx %16lx\n\t%16lx %16lx\n\t%16lx %16lx\n\t%16lx\n",
-	    jbu[0], jbu[1], jbu[2], jbu[3], jbu[4], jbu[5],
-	    jbu[6], jbu[7], jbu[8], jbu[9], jbu[10]);
-#else
-    fprintf(fp, "\n\t<opaque-jmp_buf>\n");
-#endif
-#endif // __linux__/__OpenBSD__/whatever
-}
-
 #define PUTC(c)							\
     do {							\
 	if (fp) {						\
@@ -99,7 +80,9 @@ void print_jmpbuf(jmp_buf jbu, FILE* fp)
 	}							\
     } while (0)
 
-void print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp)
+extern lptr display_hooks;
+
+void wile_print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp)
 {
     char buf[BSIZE];
     size_t i;
@@ -112,6 +95,36 @@ void print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp)
     prec = INT_MIN;
     psign = false;
     if (vp) {
+	if (vp->vt == LV_VECTOR &&
+	    vp->v.vec.arr != NULL &&
+	    vp->v.vec.capa > 0 && 
+	    vp->v.vec.arr[0] != NULL &&
+	    vp->v.vec.arr[0]->vt == LV_SYMBOL) {
+	    const char* vname = vp->v.vec.arr[0]->v.str;
+	    LISP_ASSERT(vname != NULL);
+
+	    lptr hooks = display_hooks;
+	    while (hooks) {
+		LISP_ASSERT(hooks->vt == LV_PAIR);
+		lptr hp = CAR(hooks);
+		LISP_ASSERT(hp != NULL && hp->vt == LV_PAIR);
+		lptr rsym = CAR(hp);
+		LISP_ASSERT(rsym != NULL &&
+			    rsym->vt == LV_SYMBOL &&
+			    rsym->v.str != NULL);
+		if (strcmp(rsym->v.str, vname) == 0) {
+		    rsym = CDR(hp);
+		    LISP_ASSERT(rsym != NULL && rsym->vt == LV_CLAMBDA);
+		    lval vs[2];
+		    vs[0] = *vp;
+		    vs[1] = LVI_FPORT(fp);
+		    (void) rsym->v.clambda.fn(rsym->v.clambda.closure, vs);
+		    return;
+		}
+		hooks = CDR(hooks);
+	    }
+	}
+
 	switch (vp->vt) {
 	case LV_NIL:
 	    PUTS("()");
@@ -145,7 +158,7 @@ void print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp)
 	    }
 	    psign = !(var_show_sign.vt == LV_BOOL &&
 		      var_show_sign.v.bv == false);
-	    sprint_lisp_num(buf, sizeof(buf), vp, base, INT_MIN, psign);
+	    wile_sprint_lisp_num(buf, sizeof(buf), vp, base, INT_MIN, psign);
 	    PUTS(buf);
 	    break;
 
@@ -165,14 +178,14 @@ void print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp)
 	    }
 	    psign = !(var_show_sign.vt == LV_BOOL &&
 		      var_show_sign.v.bv == false);
-	    sprint_lisp_num(buf, sizeof(buf), vp, base, prec, psign);
+	    wile_sprint_lisp_num(buf, sizeof(buf), vp, base, prec, psign);
 	    PUTS(buf);
 	    break;
 
 	case LV_PAIR:
 	    PUTC('(');
 	recurse:
-	    print_lisp_val(CAR(vp), fp, bvp);
+	    wile_print_lisp_val(CAR(vp), fp, bvp);
 	    if (CDR(vp)) {
 		PUTC(' ');
 		if (IS_PAIR(CDR(vp))) {
@@ -181,7 +194,7 @@ void print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp)
 		} else {
 		    PUTC('.');
 		    PUTC(' ');
-		    print_lisp_val(CDR(vp), fp, bvp);
+		    wile_print_lisp_val(CDR(vp), fp, bvp);
 		}
 	    }
 	    PUTC(')');
@@ -192,7 +205,7 @@ void print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp)
 	    sep = '(';
 	    for (i = 0; i < vp->v.vec.capa; ++i) {
 		PUTC(sep);
-		print_lisp_val(vp->v.vec.arr[i], fp, bvp);
+		wile_print_lisp_val(vp->v.vec.arr[i], fp, bvp);
 		sep = ' ';
 	    }
 	    if (sep == '(') {
@@ -223,7 +236,8 @@ void print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp)
 	case LV_STR_PORT:	PUTS("<string-port>");		break;
 	case LV_SQLITE_PORT:	PUTS("<sqlite-port>");		break;
 	case LV_SQLITE_STMT:	PUTS("<sqlite-statement>");	break;
-	case LV_LAMBDA:		PUTS("<lambda>");		break;
+	case LV_CLAMBDA:	PUTS("<compiled-procedure>");	break;
+	case LV_ILAMBDA:	PUTS("<interpreted-procedure>");break;
 	case LV_CONT:		PUTS("<continuation>");		break;
 
 //// TODO: print the actual code
@@ -280,8 +294,8 @@ static void print_lisp_char(unsigned char cv, FILE* fp, lisp_bytevector_t* bvp)
     }
 }
 
-void sprint_lisp_num(char* buf, size_t bsize, lptr num,
-		     int base, int prec, bool psign)
+void wile_sprint_lisp_num(char* buf, size_t bsize, lptr num,
+			  int base, int prec, bool psign)
 {
     char b0[8], b1[BSIZE], b2[BSIZE];
     lisp_real_t rval;
@@ -397,18 +411,18 @@ void sprint_lisp_num(char* buf, size_t bsize, lptr num,
 		ISINF(CREAL(num->v.cv)) ||
 		CREAL(num->v.cv) != 0.0) {
 		part.v.rv = CREAL(num->v.cv);
-		sprint_lisp_num(b1, sizeof(b1), &part, base, prec, psign);
+		wile_sprint_lisp_num(b1, sizeof(b1), &part, base, prec, psign);
 		part.v.rv = CIMAG(num->v.cv);
-		sprint_lisp_num(b2, sizeof(b2), &part, base, prec, true);
+		wile_sprint_lisp_num(b2, sizeof(b2), &part, base, prec, true);
 		snprintf(buf, bsize, "%s%si", b1, (*b2 == '#') ? b2 + 2 : b2);
 	    } else {
 		part.v.rv = CIMAG(num->v.cv);
-		sprint_lisp_num(b2, sizeof(b2), &part, base, prec, psign);
+		wile_sprint_lisp_num(b2, sizeof(b2), &part, base, prec, psign);
 		snprintf(buf, bsize, "%si", b2);
 	    }
 	} else {
 	    part.v.rv = CREAL(num->v.cv);
-	    sprint_lisp_num(buf, bsize, &part, base, prec, psign);
+	    wile_sprint_lisp_num(buf, bsize, &part, base, prec, psign);
 	}
 	break;
 
@@ -648,7 +662,8 @@ const char* typename(enum val_type vt)
     case LV_VECTOR:		return "vector";
     case LV_BVECTOR:		return "bytevector";
     case LV_PROMISE:		return "promise";
-    case LV_LAMBDA:		return "procedure";
+    case LV_CLAMBDA:		return "compiled-procedure";
+    case LV_ILAMBDA:		return "interpreted-procedure";
     case LV_CONT:		return "continuation";
 
     case VT_UNINIT:		FATAL("typename", "uninitialized lisp-val!");

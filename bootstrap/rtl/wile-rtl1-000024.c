@@ -21,7 +21,7 @@ extern lisp_escape_t cachalot;
 void set_start_state(struct ulex_context* context);
 #endif // WILE_NEEDS_ULEX
 
-lval parse_file(lptr*, lptr args)
+lval wile_parse_file(lptr*, lptr args)
 {
     lval res;
 
@@ -32,7 +32,7 @@ lval parse_file(lptr*, lptr args)
     }
 
     lptr lp = NULL;
-    set_lisp_loc_file(IS_STRING(args) ? args->v.str : NULL);
+    wile_set_lisp_loc_file(IS_STRING(args) ? args->v.str : NULL);
     struct ulex_context* context =
 	IS_STRING(args)
 	? ulex_init(ulex_FILE, args->v.str)

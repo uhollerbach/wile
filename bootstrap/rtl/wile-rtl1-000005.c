@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lval get_gensym(void)
+lval wile_get_gensym(void)
 {
     static unsigned long count = 0;
     char buf[64];

@@ -31,6 +31,7 @@ extern int wile_profile_size;
 
 int main(int argc, char** argv)
 {
+    int ret;
     lptr val;
     struct lisp_escape_info tcatch;
     void* pl;
@@ -59,6 +60,7 @@ int main(int argc, char** argv)
     tcatch.errval = NULL;
     tcatch.next = NULL;
     cachalot = &tcatch;
+    ret = EXIT_SUCCESS;
     if (setjmp(tcatch.cenv) == 0) {
 	scheme_main(argc, argv);
     } else {
@@ -74,14 +76,14 @@ int main(int argc, char** argv)
 		if (IS_STRING(CDR(cachalot->errval))) {
 		    fputs((CDR(cachalot->errval))->v.str, stderr);
 		} else if (CDR(cachalot->errval)) {
-		    display(*(CDR(cachalot->errval)), stderr);
+		    wile_display(*(CDR(cachalot->errval)), stderr);
 		} else {
 		    fputs("()!", stderr);
 		}
 	    } else if (IS_STRING(cachalot->errval)) {
 		fputs(cachalot->errval->v.str, stderr);
 	    } else {
-		display(*(cachalot->errval), stderr);
+		wile_display(*(cachalot->errval), stderr);
 	    }
 	} else {
 	    fputc('!', stderr);
@@ -91,6 +93,7 @@ int main(int argc, char** argv)
 	    fprintf(stderr, "errno is set to %d :: %s\n",
 		    errno, strerror(errno));
 	}
+	ret = EXIT_FAILURE;
     }
 
     if (wile_profile) {
@@ -109,50 +112,35 @@ int main(int argc, char** argv)
 	}
     }
 
-    return 0;
+    return ret;
 }
 
-static lptr display_hooks = NULL;
+// trivial function to get gc code version
 
-void display(lval val, FILE* fp)
+lval wile_gc_version(lptr*, lptr)
+{
+#ifdef WILE_USES_GC
+    char buf[64];
+    snprintf(buf, sizeof(buf), "%d.%d.%d",
+	     GC_VERSION_MAJOR, GC_VERSION_MINOR, GC_VERSION_MICRO);
+    return LVI_STRING(buf);
+#else
+    return LVI_BOOL(false);
+#endif // WILE_USES_GC
+}
+
+lptr display_hooks = NULL;
+
+void wile_display(lval val, FILE* fp)
 {
     if (fp == NULL) {
 	fp = stdout;
     }
-    if (val.vt == LV_VECTOR &&
-	val.v.vec.arr != NULL &&
-	val.v.vec.capa > 0 && 
-	val.v.vec.arr[0] != NULL &&
-	val.v.vec.arr[0]->vt == LV_SYMBOL) {
-	const char* vname = val.v.vec.arr[0]->v.str;
-	LISP_ASSERT(vname != NULL);
-
-	lptr hooks = display_hooks;
-	while (hooks) {
-	    LISP_ASSERT(hooks->vt == LV_PAIR);
-	    lptr hp = CAR(hooks);
-	    LISP_ASSERT(hp != NULL && hp->vt == LV_PAIR);
-	    lptr rsym = CAR(hp);
-	    LISP_ASSERT(rsym != NULL &&
-			rsym->vt == LV_SYMBOL &&
-			rsym->v.str != NULL);
-	    if (strcmp(rsym->v.str, vname) == 0) {
-		rsym = CDR(hp);
-		LISP_ASSERT(rsym != NULL && rsym->vt == LV_LAMBDA);
-		lval vs[2];
-		vs[0] = val;
-		vs[1] = LVI_FPORT(fp);
-		(void) rsym->v.lambda.fn(rsym->v.lambda.closure, vs);
-		return;
-	    }
-	    hooks = CDR(hooks);
-	}
-    }
-    print_lisp_val(&val, fp, NULL);
+    wile_print_lisp_val(&val, fp, NULL);
 }
 
-lval register_display_proc(const char* sym, lval proc,
-			   const char* fname, int lno)
+lval wile_register_display_proc(const char* sym, lval proc,
+				const char* fname, int lno)
 {
     if (sym) {
 	lptr p1, p2, p3, p4;
@@ -171,7 +159,7 @@ lval register_display_proc(const char* sym, lval proc,
     }
 }
 
-lval num2string(lval num, int base, int prec, const char* fname, int lno)
+lval wile_num2string(lval num, int base, int prec, const char* fname, int lno)
 {
     char buf[1280];
 
@@ -185,7 +173,7 @@ lval num2string(lval num, int base, int prec, const char* fname, int lno)
 	    wile_exception2("number->string", fname, lno,
 			    "precision %d is illegal", prec);
 	}
-	sprint_lisp_num(buf, sizeof(buf), &num, base, prec, false);
+	wile_sprint_lisp_num(buf, sizeof(buf), &num, base, prec, false);
 	return LVI_STRING(buf);
     } else {
 	wile_exception2("number->string", fname, lno,

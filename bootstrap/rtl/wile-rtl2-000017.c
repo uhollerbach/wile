@@ -20,48 +20,109 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (foldr func end lst) @@@ bld-rtl-dir/wile-rtl2-000017.scm:13 @@@ wile_foldr @@@
-lval wile_foldr(lptr* var_1, lptr var_2)
+// @@@ (list->vector lst) @@@ bld-rtl-dir/wile-rtl2-000017.scm:13 @@@ wile_list2vector @@@
+lval wile_list2vector(lptr* var_1, lptr var_2)
 {
 lval var_4;
 lval var_5;
-var_5 = LVI_BOOL(var_2[2].vt == LV_NIL);
-if (LV_IS_FALSE(var_5)) {
+{
+lval vs[8];
+vs[0] = var_2[0];
+var_5 = wile_list_length(NULL, vs);
+}
+var_4 = var_5;
 lval var_6;
-if (var_2[2].vt != LV_PAIR) {
+lval var_7;
+{
+size_t i, capa;
+var_7.vt = LV_VECTOR;
+capa = var_4.v.iv;
+var_7.v.vec.capa = capa;
+var_7.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
+if (var_7.v.vec.arr == NULL) {
+WILE_EX("vector-create", "memory allocation failed!");
+}
+for (i = 0; i < capa; ++i) {
+var_7.v.vec.arr[i] = NULL;
+}
+}
+var_6 = var_7;
+lval var_9;
+lval var_11;
+lval var_13;
+var_13 = LVI_INT(0);
+var_9 = var_13;
+lval var_10;
+lval var_12;
+var_10 = var_2[0];
+lval var_8;
+do {
+lval var_14;
+switch (TYPE_COMBO(var_9.vt,var_4.vt)) {
+case TYPE_COMBO(LV_INT,LV_INT):
+var_14 = LVI_BOOL(var_9.v.iv == var_4.v.iv);
+break;
+case TYPE_COMBO(LV_INT,LV_RAT):
+var_14 = LVI_BOOL(var_9.v.iv * var_4.v.irv.den == var_4.v.irv.num);
+break;
+case TYPE_COMBO(LV_INT,LV_REAL):
+var_14 = LVI_BOOL(var_9.v.iv == var_4.v.rv);
+break;
+case TYPE_COMBO(LV_RAT,LV_INT):
+var_14 = LVI_BOOL(var_9.v.irv.num == var_4.v.iv * var_9.v.irv.den);
+break;
+case TYPE_COMBO(LV_RAT,LV_RAT):
+var_14 = LVI_BOOL(var_9.v.irv.num * var_4.v.irv.den == var_4.v.irv.num * var_9.v.irv.den);
+break;
+case TYPE_COMBO(LV_RAT,LV_REAL):
+var_14 = LVI_BOOL(var_9.v.irv.num == var_4.v.rv * var_9.v.irv.den);
+break;
+case TYPE_COMBO(LV_REAL,LV_INT):
+var_14 = LVI_BOOL(var_9.v.rv == var_4.v.iv);
+break;
+case TYPE_COMBO(LV_REAL,LV_RAT):
+var_14 = LVI_BOOL(var_9.v.rv * var_4.v.irv.den == var_4.v.irv.num);
+break;
+case TYPE_COMBO(LV_REAL,LV_REAL):
+var_14 = LVI_BOOL(var_9.v.rv == var_4.v.rv);
+break;
+default:
+WILE_EX("==", "inputs are not real-valued numbers");
+break;
+}
+if (!LV_IS_FALSE(var_14)) {
+var_8 = var_6;
+break;
+}
+lval var_15;
+if (var_10.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_6 = (var_2[2].v.pair.car ? *(var_2[2].v.pair.car) : LVI_NIL());
-lval var_7;
-if (var_2[2].vt != LV_PAIR) {
+var_15 = (var_10.v.pair.car ? *(var_10.v.pair.car) : LVI_NIL());
+{
+if (var_6.vt != LV_VECTOR) {
+WILE_EX("vector-set!", "input is not a vector");
+}
+if (var_9.vt != LV_INT || var_9.v.iv < 0 || (size_t) var_9.v.iv >= var_6.v.vec.capa) {
+WILE_EX("vector-set!", "got bad index value");
+}
+var_6.v.vec.arr[var_9.v.iv] = new_lv(LV_NIL);
+*(var_6.v.vec.arr[var_9.v.iv]) = var_15;
+}
+lval var_17;
+var_17 = LVI_INT(1);
+lval var_18;
+var_18 = LVI_INT(var_9.v.iv + var_17.v.iv);
+var_11 = var_18;
+lval var_19;
+if (var_10.vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_7 = (var_2[2].v.pair.cdr ? *(var_2[2].v.pair.cdr) : LVI_NIL());
-lval var_8;
-lval var_9[8];
-var_9[0] = var_2[0];
-var_9[1] = var_2[1];
-var_9[2] = var_7;
-var_8 = wile_foldr(NULL, var_9);
-lval var_11;
-{
-lval vs[2];
-vs[0] = var_6;
-vs[1] = var_8;
-var_11 = gen_list(2, vs, NULL);
+var_19 = (var_10.v.pair.cdr ? *(var_10.v.pair.cdr) : LVI_NIL());
+var_12 = var_19;
+var_9 = var_11;
+var_10 = var_12;
+} while (1);
+return var_8;
 }
-lval var_12;
-{
-lval vs[2];
-vs[0] = var_2[0];
-vs[1] = var_11;
-var_12 = gen_list(2, vs, NULL);
-}
-var_12 = wile_apply_function(&(var_12), __FILE__, __LINE__);
-var_4 = var_12;
-} else {
-var_4 = var_2[1];
-}
-return var_4;
-}
-// end of function wile_foldr
+// end of function wile_list2vector

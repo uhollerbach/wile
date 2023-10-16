@@ -99,7 +99,7 @@ lval wile_accept_connection(lptr*, lptr args)
 		vs[1] = LVI_STRING("<unknown>");
 	    }
 	    vs[2] = LVI_INT(ntohs(peer.sin_port));
-	    return gen_list(3, vs, NULL);
+	    return wile_gen_list(3, vs, NULL);
 	}
     }
 }

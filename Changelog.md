@@ -2,6 +2,46 @@ Last update: 2023-10-11 12:00 PST
 
 # Changelog for `wile`
 
+## Current version `wile` (0 9 2)
+
+- implement something very like case-lambda, for convenient wrapping
+  of the ambiguous primitives - can't use it inside the prims-table,
+  since those internal lambdas include one more argument than the
+  externally-visible ones
+
+- stick basically all the wile primitives into the interpreter
+
+- most of the special forms are in the interpreter
+
+- add a batch mode to the interpreter
+
+- add better error checking of let-binding and function args lists:
+  must be all symbols, must be unique. kinda important.
+
+- add functions to list GC version, architecture name
+
+- fix a bug in (display): objects registered with display-object-hook
+  were only printing correctly as top-level singletons; if stored in a
+  list or vector, they'd show as ordinary not-special vectors.
+
+- add repl and repl-dbg recipes into Makefile
+
+- add change-file-owner and change-symbolic-link-owner primitives
+
+- a whole lot of progress in adding macros into repl, some but not yet as
+  much into wile
+
+- move standard environment into wile-rtl2.scm
+
+- add a compile-only mode to test-wile-progs.scm, to allow comparison
+  between what the interpreted compiler and the compiled compiler produce
+
+- add a limited ability to immediately define global variables in library
+  mode: if the initializing value is nil or a boolean, char, int, rational,
+  or real, it gets added on the declaration line. Can't handle complex
+  numbers yet, or compound initializers, or ... but this is already a good
+  beginning.
+
 ## Current version `wile` (0 9 1) 2023-10-15
 
 - rework internal buffers to no longer use scratch files

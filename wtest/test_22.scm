@@ -1,4 +1,4 @@
-(define flag (null? command-line-arguments))
+(define flag (even? (epochtime)))
 
 (defmacro (whenne pred . actions) `(if ,pred (begin ,@actions) #f))
 (defmacro (excepting pred . actions) `(if ,pred #f (begin ,@actions)))

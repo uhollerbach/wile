@@ -20,84 +20,85 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (vector->list vec) @@@ bld-rtl-dir/wile-rtl2-000015.scm:13 @@@ wile_vector2list @@@
-lval wile_vector2list(lptr* var_1, lptr var_2)
+// @@@ (list-filter pred lst) @@@ bld-rtl-dir/wile-rtl2-000015.scm:15 @@@ wile_list_filter @@@
+lval wile_list_filter(lptr* var_1, lptr var_2)
 {
 lval var_4;
 lval var_5;
-{
-if (var_2[0].vt != LV_VECTOR) {
-WILE_EX("vector-length", "input is not a vector");
-}
-var_5 = LVI_INT(var_2[0].v.vec.capa);
-}
+var_5 = LVI_NIL();
 var_4 = var_5;
 lval var_6;
-lval var_7;
-var_7 = LVI_NIL();
-var_6 = var_7;
+var_6 = var_2[1];
+lval var_8;
 lval var_9;
 lval var_10;
-lval var_11;
-var_11 = LVI_INT(0);
-var_9 = var_11;
+var_10 = LVI_INT(0);
+var_8 = var_10;
 do {
+lval var_11;
+var_11 = LVI_BOOL(var_6.vt == LV_NIL);
+if (!LV_IS_FALSE(var_11)) {
+break;
+}
 lval var_12;
-switch (var_4.vt) {
-case LV_REAL:
-var_12 = LVI_BOOL(var_4.v.rv == 0.0);
-break;
-case LV_RAT:
-var_12 = LVI_BOOL((var_4.v.irv.num == 0 && var_4.v.irv.den != 0));
-break;
-case LV_INT:
-var_12 = LVI_BOOL(var_4.v.iv == 0);
-break;
-case LV_CMPLX:
-var_12 = LVI_BOOL(CREAL(var_4.v.cv) == 0.0 && CIMAG(var_4.v.cv) == 0.0);
-break;
-default:
-WILE_EX("zero?", "expects a real-valued number");
-}
-if (!LV_IS_FALSE(var_12)) {
-break;
-}
 lval var_13;
-var_13 = LVI_INT(1);
-lval var_14;
-var_14 = LVI_INT(var_4.v.iv - var_13.v.iv);
-var_4 = var_14;
+if (var_6.vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
+}
+var_13 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
+var_12 = var_13;
 lval var_15;
 {
-if (var_2[0].vt != LV_VECTOR) {
-WILE_EX("vector-ref", "input is not a vector");
-}
-if (var_4.vt != LV_INT || var_4.v.iv < 0 || (size_t) var_4.v.iv >= var_2[0].v.vec.capa) {
-WILE_EX("vector-ref", "got bad index value");
-}
-var_15 = var_2[0].v.vec.arr[var_4.v.iv] ? *(var_2[0].v.vec.arr[var_4.v.iv]) : LVI_NIL();
+lval vs[1];
+vs[0] = var_12;
+var_15 = wile_gen_list(1, vs, NULL);
 }
 lval var_16;
 {
-lptr p1 = NULL, p2 = NULL;
-if (var_15.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_15;
+lval vs[2];
+vs[0] = var_2[0];
+vs[1] = var_15;
+var_16 = wile_gen_list(2, vs, NULL);
 }
-if (var_6.vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = var_6;
-}
-var_16 = LVI_PAIR(p1, p2);
-}
-var_6 = var_16;
-lval var_17;
-var_17 = LVI_INT(1);
+var_16 = wile_apply_function(&(var_16), __FILE__, __LINE__);
+if (LV_IS_FALSE(var_16)) {
+(void)
+ LVI_BOOL(false);
+} else {
 lval var_18;
-var_18 = LVI_INT(var_9.v.iv + var_17.v.iv);
-var_10 = var_18;
-var_9 = var_10;
-} while (1);
-return var_6;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_12.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_12;
 }
-// end of function wile_vector2list
+if (var_4.vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_4;
+}
+var_18 = LVI_PAIR(p1, p2);
+}
+var_4 = var_18;
+}
+lval var_19;
+if (var_6.vt != LV_PAIR) {
+WILE_EX("cdr", "input is not a pair!");
+}
+var_19 = (var_6.v.pair.cdr ? *(var_6.v.pair.cdr) : LVI_NIL());
+var_6 = var_19;
+lval var_20;
+var_20 = LVI_INT(1);
+lval var_21;
+var_21 = LVI_INT(var_8.v.iv + var_20.v.iv);
+var_9 = var_21;
+var_8 = var_9;
+} while (1);
+lval var_22;
+{
+lval vs[8];
+vs[0] = var_4;
+var_22 = wile_list_reverse(NULL, vs);
+}
+return var_22;
+}
+// end of function wile_list_filter

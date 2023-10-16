@@ -13,6 +13,12 @@ Last update: 2023-10-08 10:00 PST
 * `wile` can't compile definitions of new macros yet, which means it
   can't compile itself yet -> need to implement (eval).
 
+  + a workaround has been to stick the particular macros used in wile
+    into the wile primitives table; that way, they are not evaluated
+    at the compiler's runtime, but rather at its own compile time;
+    that makes things work, makes the compiler able to compile itself,
+    and everything is good
+
 * No true bignums
 
 * Need to work on macro expansion, interaction with (load) is not
@@ -43,3 +49,18 @@ Last update: 2023-10-08 10:00 PST
   isolate it. Stack trace says "caught exception from
   <test_46-int.c:1233>;'apply' failed while fetching proc - bad type
   6" which means that apply got handed an int instead of a proc...?
+
+  More digging into this seems to show that:
+
+  + it (almost?) only happens with the version that initializes the
+    test-cases via '(( ...)), not when explicit (list (list ...) (list
+    ...))  is used
+
+  + it (almost?) only happens when garbage collection is active; the
+    -dbg version of the compiler does not show this problem
+
+  + all of the above would seem to indicate that the actual error
+    message is a red herring, that it's some interaction with the GC?
+
+  For now, just solve the problem by initializing the test cases with
+  explicit (list (list ...) ...) rather than '((... ) ...)

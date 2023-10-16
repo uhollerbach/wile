@@ -27,11 +27,15 @@ lval wile_char2string(lptr*, lptr args)
 	ac = CAR(args) ? *(CAR(args)) : LVI_NIL();
 	if (ac.vt == LV_PAIR || ac.vt == LV_NIL) {
 	    args = CAR(args);
-	    lv = wile_list_length(NULL, args);
-	    if (lv.vt != LV_INT || lv.v.iv < 0) {
-		wile_exception("char->string", "got a bad list length!?!");
+	    if (args == NULL) {
+		len = 0;
+	    } else {
+		lv = wile_list_length(NULL, args);
+		if (lv.vt != LV_INT || lv.v.iv < 0) {
+		    wile_exception("char->string", "got a bad list length!?!");
+		}
+		len = lv.v.iv;
 	    }
-	    len = lv.v.iv;
 	}
     }
 

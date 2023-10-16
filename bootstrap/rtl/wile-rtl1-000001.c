@@ -55,3 +55,79 @@ uint16_t wile_binfo(void)
     return ret;
 }
 
+lval wile_os_name(void)
+{
+#if defined(__linux__)
+    return LVI_STRING("GNU/Linux");
+#elif defined(__OpenBSD__)
+    return LVI_STRING("OpenBSD");
+#elif defined(__cygwin__)
+    // TODO: what's the right thing here for cygwin?
+    return LVI_STRING("Cygwin");
+#else
+    return LVI_STRING("Unknown-OS");
+#endif
+}
+
+// get machine architecture; original found in approximately this form
+// on stackexchange, coded by Freak -- thank you. these are all hugely
+// aspirational, and entirely untested except for the first
+
+lval wile_arch_name(void)
+{
+#if defined(__x86_64__) || defined(_M_X64)
+    return LVI_STRING("x86-64");
+#elif defined(i386) || defined(__i386__) ||	\
+    defined(__i386) || defined(_M_IX86)
+    return LVI_STRING("x86-32");
+#elif defined(__ARM_ARCH_2__)
+    return LVI_STRING("arm2");
+#elif defined(__ARM_ARCH_3__) || defined(__ARM_ARCH_3M__)
+    return LVI_STRING("arm3");
+#elif defined(__ARM_ARCH_4T__) || defined(__TARGET_ARM_4T)
+    return LVI_STRING("arm4t");
+#elif defined(__ARM_ARCH_5_) || defined(__ARM_ARCH_5E_)
+    return LVI_STRING("arm5");
+#elif defined(__ARM_ARCH_6T2_) || defined(__ARM_ARCH_6T2_)
+    return LVI_STRING("arm6t2");
+#elif defined(__ARM_ARCH_6__) || defined(__ARM_ARCH_6J__) ||	\
+    defined(__ARM_ARCH_6K__) || defined(__ARM_ARCH_6Z__) ||	\
+    defined(__ARM_ARCH_6ZK__)
+    return LVI_STRING("arm6");
+#elif defined(__ARM_ARCH_7__) || defined(__ARM_ARCH_7A__) ||	\
+    defined(__ARM_ARCH_7R__) || defined(__ARM_ARCH_7M__) ||	\
+    defined(__ARM_ARCH_7S__)
+    return LVI_STRING("arm7");
+#elif defined(__ARM_ARCH_7A__) || defined(__ARM_ARCH_7R__) ||	\
+    defined(__ARM_ARCH_7M__) || defined(__ARM_ARCH_7S__)
+    return LVI_STRING("arm7a");
+#elif defined(__ARM_ARCH_7R__) || defined(__ARM_ARCH_7M__) ||	\
+    defined(__ARM_ARCH_7S__)
+    return LVI_STRING("arm7r");
+#elif defined(__ARM_ARCH_7M__)
+    return LVI_STRING("arm7m");
+#elif defined(__ARM_ARCH_7S__)
+    return LVI_STRING("arm7s");
+#elif defined(__aarch64__) || defined(_M_ARM64)
+    return LVI_STRING("arm64");
+#elif defined(mips) || defined(__mips__) || defined(__mips)
+    return LVI_STRING("mips");
+#elif defined(_riscv) || defined(__riscv__) || defined(__riscv)
+    return LVI_STRING("risc-v");
+#elif defined(__sh__)
+    return LVI_STRING("superh");
+#elif defined(__powerpc) || defined(__powerpc__) ||		\
+    defined(__powerpc64__) || defined(__POWERPC__) ||		\
+    defined(__ppc__) || defined(__PPC__) || defined(_ARCH_PPC)
+    return LVI_STRING("powerpc");
+#elif defined(__PPC64__) || defined(__ppc64__) || defined(_ARCH_PPC64)
+    return LVI_STRING("powerpc64");
+#elif defined(__sparc__) || defined(__sparc)
+    return LVI_STRING("sparc");
+#elif defined(__m68k__)
+    return LVI_STRING("m68k");
+#else
+    return LVI_STRING("unknown-arch");
+#endif
+}
+

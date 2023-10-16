@@ -21,7 +21,7 @@ lval wile_rand_normal_pair(lisp_real_t m, lisp_real_t s)
 	    s *= SQRT(-2.0*LOG(r2)/r2);
 	    vs[0] = LVI_REAL(m + s*v1);
 	    vs[1] = LVI_REAL(m + s*v2);
-	    return gen_list(2, vs, NULL);
+	    return wile_gen_list(2, vs, NULL);
 	}
     }
 }

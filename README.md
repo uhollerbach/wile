@@ -5,11 +5,14 @@ Last update: 2023-10-10 22:15 PST
 `wile` is a small scheme-to-c compiler which I'm writing; it's by no
 means complete, but it's capable enough that writing small to medium
 programs with it is starting to be pretty pleasant. `wile` **is
-self-hosting**. (I did make one mistaken claim in the previous version
+self-hosting**. I did make one mistaken claim in the previous version
 of this README: I said `wile` could compile a number of files in the
 `library/` subdirectory; that's wrong, those files are full of
 user-defined macros, which is the major area where `wile` is still
-incomplete. My bad.)
+incomplete. My bad. <--- Because user-defined macros are code which
+runs at compile-time, `wile` needs some kind of interpreter somewhere
+in its innards; so I'm writing an interpreter too. That's less complete
+than the compiler, but coming along well too.
 
 My design philosophy for it is the unix way of small simple tools; I
 have tried to keep it simple and self-contained, with minimal
@@ -77,6 +80,7 @@ to detect and prevent these crazinesses.
   ~~This is why it can't compile itself yet.~~ In order to get around
   this and make `wile` self-hosting, I took the few macros that `wile`
   defines and stuck them as built-in macros into its list of primitives.
+  An interpreter is in progress and coming along nicely.
 
 * Closures are incomplete: closures which obey stack discipline are
   ok, but closures which have indefinite lifetime beyond where they
@@ -108,7 +112,7 @@ to detect and prevent these crazinesses.
   128-bit integers, and I have support for that in `wile`, but no true
   unlimited-size integers.
 
-* A few special forms are missing: `delay`, `force`.
+* A few special forms are still missing: `delay`, `force`.
 
 * There are huge amounts of documentation still to be written.
 

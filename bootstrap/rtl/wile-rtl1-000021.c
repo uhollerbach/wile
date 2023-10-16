@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-bool do_eqv(lptr arg1, lptr arg2)
+bool wile_do_eqv(lptr arg1, lptr arg2)
 {
     size_t i;
 
@@ -43,7 +43,7 @@ bool do_eqv(lptr arg1, lptr arg2)
 		     (ISNAN(CREAL(arg2->v.cv)) || ISNAN(CIMAG(arg2->v.cv)))));
 
 	case LV_PAIR:
-	    if (!do_eqv(CAR(arg1), CAR(arg2))) {
+	    if (!wile_do_eqv(CAR(arg1), CAR(arg2))) {
 		return false;
 	    }
 	    arg1 = CDR(arg1);
@@ -66,7 +66,7 @@ bool do_eqv(lptr arg1, lptr arg2)
 		return false;
 	    }
 	    for (i = 0; i < arg1->v.vec.capa; ++i) {
-		if (!do_eqv(arg1->v.vec.arr[i], arg2->v.vec.arr[i])) {
+		if (!wile_do_eqv(arg1->v.vec.arr[i], arg2->v.vec.arr[i])) {
 		    return false;
 		}
 	    }
@@ -86,7 +86,8 @@ bool do_eqv(lptr arg1, lptr arg2)
 	// TODO: implement these
 //////	case LV_STR_PORT:
 //	case LV_PROMISE:
-//	case LV_LAMBDA:
+//	case LV_CLAMBDA:
+//	case LV_ILAMBDA:
 
 	default:		return false;
 	}

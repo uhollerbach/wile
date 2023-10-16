@@ -88,55 +88,55 @@ static void unescape(char* s)
     *d = '\0';
 }
 
-#define set_tag(tag,ret)				\
-    do {						\
-	lexval->vt = tag;				\
-	lexval->origin =				\
-	    encode_line_loc(ulex_lineno(yyl_context));	\
-	return ret;					\
+#define set_tag(tag,ret)					\
+    do {							\
+	lexval->vt = tag;					\
+	lexval->origin =					\
+	    wile_encode_line_loc(ulex_lineno(yyl_context));	\
+	return ret;						\
     } while (0)
 
-#define set_char(ch)					\
-    do {						\
-	lexval->v.chr = ch;				\
-	set_tag(LV_CHAR, CHARACTER);			\
+#define set_char(ch)						\
+    do {							\
+	lexval->v.chr = ch;					\
+	set_tag(LV_CHAR, CHARACTER);				\
     } while (0)
 
-#define set_int(b,t)					\
-    do {						\
-	read_int(b,t,&lexval->v.iv);			\
-	set_tag(LV_INT, INTEGER);			\
+#define set_int(b,t)						\
+    do {							\
+	read_int(b,t,&lexval->v.iv);				\
+	set_tag(LV_INT, INTEGER);				\
     } while (0)
 
-#define set_rat(b,t)					\
-    do {						\
-	char* slash = strchr((char*) (t), '/');		\
-	read_int(b, (t), &lexval->v.irv.num);		\
-	read_int(b, (unsigned char*) slash+1,		\
-		 &lexval->v.irv.den);			\
-	set_tag(LV_RAT, RATIONAL);			\
+#define set_rat(b,t)						\
+    do {							\
+	char* slash = strchr((char*) (t), '/');			\
+	read_int(b, (t), &lexval->v.irv.num);			\
+	read_int(b, (unsigned char*) slash+1,			\
+		 &lexval->v.irv.den);				\
+	set_tag(LV_RAT, RATIONAL);				\
     } while (0)
 
-#define set_special_real(var,val)			\
-    do {						\
-	lexval->v.var = val;				\
-	lexval->origin =				\
-	    encode_line_loc(ulex_lineno(yyl_context));	\
-	if (yytext[ix] == '-') {			\
-	    lexval->v.var =				\
-		COPYSIGN(lexval->v.var, -1.0);		\
-	}						\
+#define set_special_real(var,val)				\
+    do {							\
+	lexval->v.var = val;					\
+	lexval->origin =					\
+	    wile_encode_line_loc(ulex_lineno(yyl_context));	\
+	if (yytext[ix] == '-') {				\
+	    lexval->v.var =					\
+		COPYSIGN(lexval->v.var, -1.0);			\
+	}							\
     } while (0)
 
-#define set_special_imag(val)				\
-    do {						\
-	lisp_real_t tv = val;				\
-	lexval->origin =				\
-	    encode_line_loc(ulex_lineno(yyl_context));	\
-	if (yytext[ix] == '-') {			\
-	    tv = COPYSIGN(tv, -1.0);			\
-	}						\
-	lexval->v.cv = tv*I;				\
+#define set_special_imag(val)					\
+    do {							\
+	lisp_real_t tv = val;					\
+	lexval->origin =					\
+	    wile_encode_line_loc(ulex_lineno(yyl_context));	\
+	if (yytext[ix] == '-') {				\
+	    tv = COPYSIGN(tv, -1.0);				\
+	}							\
+	lexval->v.cv = tv*I;					\
     } while (0)
 
 
