@@ -84,6 +84,12 @@ lval wile_cholesky_solve(lptr*, lptr);	// (cholesky-solve mat vec)
 lval wile_build_info(lptr*, lptr);	// (wile-build-info)
 lval wile_display_stack_trace(lptr*, lptr);	// (display-stack-trace trace-data port)
 lval wile_stack_trace(lptr*, lptr);	// (stack-trace port)
-lval wile_std_env(lptr*, lptr);	// (wile-standard-environment)
+lval wile_std_env_no_macros(lptr*, lptr);	// (wile-standard-environment)
+lval wile_env_add_macros(lptr*, lptr);	// (wile-environment-with-macros env)
+lval wile_eval_define_form(lptr*, lptr);	// (define-form? expr)
+lval wile_eval_define(lptr*, lptr);	// (eval-define macro env expr)
+lval wile_eval_apply_lambda(lptr*, lptr);	// (apply-lambda fn args)
+lval wile_eval_apply_interp(lptr*, lptr);	// (apply-interp fn . args)
+lval wile_eval(lptr*, lptr);	// (eval env expr)
 
 #endif // WILE_RTL2_H_2569976297095881579

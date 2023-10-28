@@ -1,18 +1,11 @@
-Last update: 2023-10-10 22:15 PST
+Last update: 2023-11-1 10:45 PST
 
 # `wile` -- the extremely stable scheming genius compiler
 
 `wile` is a small scheme-to-c compiler which I'm writing; it's by no
 means complete, but it's capable enough that writing small to medium
 programs with it is starting to be pretty pleasant. `wile` **is
-self-hosting**. I did make one mistaken claim in the previous version
-of this README: I said `wile` could compile a number of files in the
-`library/` subdirectory; that's wrong, those files are full of
-user-defined macros, which is the major area where `wile` is still
-incomplete. My bad. <--- Because user-defined macros are code which
-runs at compile-time, `wile` needs some kind of interpreter somewhere
-in its innards; so I'm writing an interpreter too. That's less complete
-than the compiler, but coming along well too.
+self-hosting**.
 
 My design philosophy for it is the unix way of small simple tools; I
 have tried to keep it simple and self-contained, with minimal
@@ -75,13 +68,6 @@ to detect and prevent these crazinesses.
 
 ### Stuff that's missing:
 
-* `wile` can't compile user-defined macros, which are user-defined code
-  that runs at compile time: it doesn't have an interpreter built in.
-  ~~This is why it can't compile itself yet.~~ In order to get around
-  this and make `wile` self-hosting, I took the few macros that `wile`
-  defines and stuck them as built-in macros into its list of primitives.
-  An interpreter is in progress and coming along nicely.
-
 * Closures are incomplete: closures which obey stack discipline are
   ok, but closures which have indefinite lifetime beyond where they
   were defined are not implmented yet.
@@ -91,8 +77,7 @@ to detect and prevent these crazinesses.
   hurt). Sometimes code with continuations crashes.
 
 * There is no high-level macro system yet. `wile` does have some
-  low-level macros built in, `def-macro` style. Macros are not available
-  in user programs yet.
+  low-level macros built in, `def-macro` style.
 
 * There is no unicode support; `wile` speaks only ASCII so far.
 

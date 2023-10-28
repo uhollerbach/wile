@@ -1448,7 +1448,8 @@
 	(do-init #f))
     (compile-with-output
      global-decl
-     ;;; statically initialize nil, boolean, char, and numeric data
+     ;;; statically initialize nil, boolean, char, string,
+     ;;; and real-valued numeric LITERAL data
      (cond ((null? (cadr def))
 	    (emit-fstr "static lval %s = LVI_NIL();\t\t// %v\n"
 		       tmp const-name))
@@ -1470,6 +1471,9 @@
 		       tmp (format-real (cadr def)) const-name))
 	   ;;; we don't have complex literals: (cmplx) is a runtime
 	   ;;; constructor. so no way to do complex values here atm
+	   ((string? (cadr def))
+	    (emit-fstr "static lval %s = LVI_STRING_NOCPY(\"%s\");\t\t// %v\n"
+		       tmp (escapify (cadr def)) const-name))
 	   (else
 	    (emit-fstr "static lval %s;\t\t// %v\n" tmp const-name)
 	    (set! do-init #t))))
@@ -1542,12 +1546,11 @@
 	 (body (cdr def))
 	 (argies (args-list args))
 	 (arity (car argies))
-;;; TODO: implement wile-standard-environment
-;;;	 (stdenv (wile-standard-environment)))
-	 (stdenv ()))
-    (unless (unique-symbols? (cadr argies))
+	 (formals (cadr argies))
+	 (stdenv (wile-environment-with-macros #f)))
+    (unless (unique-symbols? formals)
       (ERR "malformed 'defmacro' args list '%v'" args))
-    (make-macro-def s-name (make-iproc args arity body stdenv #t) arity)))
+    (make-macro-def s-name (make-iproc formals arity body stdenv #t) arity)))
 
 (define (declare-deffish cur-env def c-port s-port)
   (debug-trace 'declare-deffish cur-env #f def)
@@ -1746,8 +1749,7 @@
 		      acc
 		      (cons l acc))))))))
 
-;;; comment this out for closing the self-hosting loop
-;;; (defmacro (add-output val) `(set! output (cons ,val output)))
+(defmacro (add-output val) `(set! output (cons ,val output)))
 
 (define (remove-unused-vars lines)
   (let ((decl (hash-table-create string-hash string=?))
@@ -1906,7 +1908,7 @@
 		 (when global-profile
 		   (emit-fstr "static struct wile_profile_t wile_profile_array[%d];\n"
 			      (list-length global-profile)))
-		 (emit-fstr "\nconst int global_tc_min_args = %d;\n\nlval scheme_main(int argc, char** argv)\n{\n" global-tc-min-args)
+		 (emit-fstr "\nconst int wile_tc_min_args = %d;\n\nlval wile_main(int argc, char** argv)\n{\n" global-tc-min-args)
 		 (if global-profile
 		     (let* ((names (list-reverse global-profile))
 			    (count (list-length names)))

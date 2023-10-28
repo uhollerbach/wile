@@ -61,9 +61,9 @@
       (emit-code
        "struct wile_profile_t* wile_profile;"
        "int wile_profile_size;"
-       "const int global_tc_min_args = @1;"
+       "const int wile_tc_min_args = @1;"
        ""
-       "lval scheme_main(int argc, char** argv)"
+       "lval wile_main(int argc, char** argv)"
        "{"
        "wile_profile = NULL;"
        "wile_profile_size = 0;"))

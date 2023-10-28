@@ -18,538 +18,545 @@ extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
 static lval fn_1(lptr*, lptr);	// (type-mismatch v c)
-static lval fn_18(lptr*, lptr);	// (split-format-string fstr)
-static lval fn_19(lptr*, lptr);	// (align-str width align str)
-static lval fn_20(lptr*, lptr);	// (disp-obj val)
-static lval fn_21(lptr*, lptr);	// (printf-helper fstr . vals)
-static lval fn_231(lptr*, lptr);
-static lval fn_252(lptr*, lptr);
-static lval fn_476(lptr*, lptr);
-static lval fn_488(lptr*, lptr);
-static lval fn_505(lptr*, lptr);
+static lval var_2 = LVI_STRING_NOCPY("%c");		// r-chr
+static lval var_3 = LVI_STRING_NOCPY("%v");		// r-obj
+static lval var_4 = LVI_STRING_NOCPY("%[0-9]*%");		// r-pct
+static lval var_5 = LVI_STRING_NOCPY("%[lrm]?[0-9]*s");		// r-str
+static lval var_6 = LVI_STRING_NOCPY("%[lrm]?[ +]?[0-9]*[bodx]");		// r-exact
+static lval var_7 = LVI_STRING_NOCPY("%[lrm]?[ +]?[0-9]*(.[0-9]*)?[fe]");		// r-float
+static lval var_8 = LVI_BOOL(false);		// regex-all
+static lval fn_9(lptr*, lptr);	// (split-format-string fstr)
+static lval fn_10(lptr*, lptr);	// (align-str width align str)
+static lval fn_11(lptr*, lptr);	// (disp-obj val)
+static lval fn_12(lptr*, lptr);	// (printf-helper fstr . vals)
+static lval fn_222(lptr*, lptr);
+static lval fn_248(lptr*, lptr);
+static lval fn_471(lptr*, lptr);
+static lval fn_483(lptr*, lptr);
+static lval fn_500(lptr*, lptr);
 
 // definitions
 
 // @@@ (type-mismatch v c) @@@ bld-rtl-dir/wile-rtl2-000067.scm:21 @@@ fn_1 @@@
-static lval fn_1(lptr* var_22, lptr var_23)
+static lval fn_1(lptr* var_13, lptr var_14)
 {
-lval var_25;
-var_25 = LVI_STRING("*printf type/value mismatch: got ");
-lval var_26;
+lval var_16;
+var_16 = LVI_STRING("*printf type/value mismatch: got ");
+lval var_17;
 {
 lval vs[8];
-vs[0] = var_23[0];
-var_26 = wile_typeof(NULL, vs);
+vs[0] = var_14[0];
+var_17 = wile_typeof(NULL, vs);
 }
-lval var_27;
-var_27 = LVI_STRING(var_26.v.str);
-lval var_28;
-var_28 = LVI_STRING(" object for %");
-lval var_29;
+lval var_18;
+var_18 = LVI_STRING(var_17.v.str);
+lval var_19;
+var_19 = LVI_STRING(" object for %");
+lval var_20;
 {
 lval vs[1];
-vs[0] = var_23[1];
-var_29 = wile_gen_list(1, vs, NULL);
+vs[0] = var_14[1];
+var_20 = wile_gen_list(1, vs, NULL);
 }
 {
 lval vs[8];
-vs[0] = var_29;
-var_29 = wile_char2string(NULL, vs);
+vs[0] = var_20;
+var_20 = wile_char2string(NULL, vs);
 }
-lval var_30;
-var_30 = LVI_STRING(" specifier");
-lval var_31;
+lval var_21;
+var_21 = LVI_STRING(" specifier");
+lval var_22;
 {
 lval vs[5];
-vs[0] = var_25;
-vs[1] = var_27;
-vs[2] = var_28;
-vs[3] = var_29;
-vs[4] = var_30;
-var_31 = wile_gen_list(5, vs, NULL);
+vs[0] = var_16;
+vs[1] = var_18;
+vs[2] = var_19;
+vs[3] = var_20;
+vs[4] = var_21;
+var_22 = wile_gen_list(5, vs, NULL);
 }
 {
 lval vs[8];
-vs[0] = var_31;
-var_31 = wile_string_append(NULL, vs);
+vs[0] = var_22;
+var_22 = wile_string_append(NULL, vs);
 }
-return var_31;
+return var_22;
 }
 // end of function fn_1
 
-// @@@ (split-format-string fstr) @@@ bld-rtl-dir/wile-rtl2-000067.scm:50 @@@ fn_18 @@@
-static lval fn_18(lptr* var_32, lptr var_33)
+// @@@ (split-format-string fstr) @@@ bld-rtl-dir/wile-rtl2-000067.scm:46 @@@ fn_9 @@@
+static lval fn_9(lptr* var_23, lptr var_24)
 {
-lval var_35;
-lval var_36;
+lval var_26;
+lval var_27;
 {
 lval vs[8];
-vs[0] = var_33[0];
-var_36 = wile_string2list(NULL, vs);
+vs[0] = var_24[0];
+var_27 = wile_string2list(NULL, vs);
 }
+var_26 = var_27;
+lval var_28;
+lval var_29;
+var_29 = LVI_CHAR(48);
+lval var_30;
+var_30 = LVI_INT((unsigned char) var_29.v.chr);
+var_28 = var_30;
+lval var_31;
+lval var_32;
+var_32 = LVI_CHAR(108);
+var_31 = var_32;
+lval var_33;
+lval var_34;
+var_34 = LVI_STRING("");
+var_33 = var_34;
+lval var_35;
+lval var_36;
+var_36 = LVI_INT(0);
 var_35 = var_36;
 lval var_37;
 lval var_38;
-var_38 = LVI_CHAR(48);
+var_38 = LVI_BOOL(false);
+var_37 = var_38;
 lval var_39;
-var_39 = LVI_INT((unsigned char) var_38.v.chr);
-var_37 = var_39;
 lval var_40;
-lval var_41;
-var_41 = LVI_CHAR(108);
-var_40 = var_41;
+var_40 = LVI_BOOL(false);
+var_39 = var_40;
 lval var_42;
-lval var_43;
-var_43 = LVI_STRING("");
-var_42 = var_43;
-lval var_44;
-lval var_45;
-var_45 = LVI_INT(0);
-var_44 = var_45;
-lval var_46;
-lval var_47;
-var_47 = LVI_BOOL(false);
-var_46 = var_47;
-lval var_48;
-lval var_49;
-var_49 = LVI_BOOL(false);
-var_48 = var_49;
-lval var_51;
-if (var_35.vt != LV_PAIR) {
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_51 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
+var_42 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_43;
+var_43 = LVI_CHAR(37);
+lval var_44;
+var_44 = LVI_BOOL(var_42.v.chr == var_43.v.chr);
+if (LV_IS_FALSE(var_44)) {
+lval var_45;
+var_45 = LVI_STRING("*printf error: malformed format string ");
+lval var_46;
+{
+lval vs[2];
+vs[0] = var_45;
+vs[1] = var_24[0];
+var_46 = wile_gen_list(2, vs, NULL);
+}
+{
+lval vs[8];
+vs[0] = var_46;
+var_46 = wile_string_append(NULL, vs);
+}
+lval var_47;
+{
+lval vs[1];
+vs[0] = var_46;
+var_47 = wile_gen_list(1, vs, NULL);
+}
+if (var_47.vt == LV_PAIR && (var_47.v.pair.cdr == NULL || var_47.v.pair.cdr->vt == LV_NIL)) {
+var_47 = (var_47.v.pair.car ? *(var_47.v.pair.car) : LVI_NIL());
+}
+cachalot->errval = new_lv(LV_NIL);
+*(cachalot->errval) = var_47;
+cachalot->l_whence = 0;
+cachalot->c_whence = LISP_WHENCE;
+longjmp(cachalot->cenv, 1);
+} else {
+lval var_48;
+if (var_26.vt != LV_PAIR) {
+WILE_EX("cdr", "input is not a pair!");
+}
+var_48 = (var_26.v.pair.cdr ? *(var_26.v.pair.cdr) : LVI_NIL());
+var_26 = var_48;
+}
+lval var_50;
+var_50 = LVI_BOOL(false);
+do {
+lval var_51;
+if (var_26.vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
+}
+var_51 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
 lval var_52;
-var_52 = LVI_CHAR(37);
+var_52 = LVI_CHAR(108);
 lval var_53;
 var_53 = LVI_BOOL(var_51.v.chr == var_52.v.chr);
-if (LV_IS_FALSE(var_53)) {
+var_50 = var_53;
+if (!LV_IS_FALSE(var_50)) { break; }
 lval var_54;
-var_54 = LVI_STRING("*printf error: malformed format string ");
+if (var_26.vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
+}
+var_54 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
 lval var_55;
-{
-lval vs[2];
-vs[0] = var_54;
-vs[1] = var_33[0];
-var_55 = wile_gen_list(2, vs, NULL);
-}
-{
-lval vs[8];
-vs[0] = var_55;
-var_55 = wile_string_append(NULL, vs);
-}
+var_55 = LVI_CHAR(114);
 lval var_56;
-{
-lval vs[1];
-vs[0] = var_55;
-var_56 = wile_gen_list(1, vs, NULL);
-}
-if (var_56.vt == LV_PAIR && (var_56.v.pair.cdr == NULL || var_56.v.pair.cdr->vt == LV_NIL)) {
-var_56 = (var_56.v.pair.car ? *(var_56.v.pair.car) : LVI_NIL());
-}
-cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_56;
-cachalot->l_whence = 0;
-cachalot->c_whence = LISP_WHENCE;
-longjmp(cachalot->cenv, 1);
-} else {
+var_56 = LVI_BOOL(var_54.v.chr == var_55.v.chr);
+var_50 = var_56;
+if (!LV_IS_FALSE(var_50)) { break; }
 lval var_57;
-if (var_35.vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
+if (var_26.vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
 }
-var_57 = (var_35.v.pair.cdr ? *(var_35.v.pair.cdr) : LVI_NIL());
-var_35 = var_57;
-}
+var_57 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_58;
+var_58 = LVI_CHAR(109);
 lval var_59;
-var_59 = LVI_BOOL(false);
-do {
-lval var_60;
-if (var_35.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_60 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_61;
-var_61 = LVI_CHAR(108);
-lval var_62;
-var_62 = LVI_BOOL(var_60.v.chr == var_61.v.chr);
-var_59 = var_62;
-if (!LV_IS_FALSE(var_59)) { break; }
-lval var_63;
-if (var_35.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_63 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_64;
-var_64 = LVI_CHAR(114);
-lval var_65;
-var_65 = LVI_BOOL(var_63.v.chr == var_64.v.chr);
-var_59 = var_65;
-if (!LV_IS_FALSE(var_59)) { break; }
-lval var_66;
-if (var_35.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_66 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_67;
-var_67 = LVI_CHAR(109);
-lval var_68;
-var_68 = LVI_BOOL(var_66.v.chr == var_67.v.chr);
-var_59 = var_68;
-if (!LV_IS_FALSE(var_59)) { break; }
+var_59 = LVI_BOOL(var_57.v.chr == var_58.v.chr);
+var_50 = var_59;
+if (!LV_IS_FALSE(var_50)) { break; }
 } while (0);
-if (LV_IS_FALSE(var_59)) {
+if (LV_IS_FALSE(var_50)) {
 (void)
  LVI_BOOL(false);
 } else {
-lval var_70;
-if (var_35.vt != LV_PAIR) {
+lval var_61;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_70 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-var_40 = var_70;
-lval var_71;
-if (var_35.vt != LV_PAIR) {
+var_61 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+var_31 = var_61;
+lval var_62;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_71 = (var_35.v.pair.cdr ? *(var_35.v.pair.cdr) : LVI_NIL());
-var_35 = var_71;
+var_62 = (var_26.v.pair.cdr ? *(var_26.v.pair.cdr) : LVI_NIL());
+var_26 = var_62;
 }
-lval var_73;
-var_73 = LVI_BOOL(false);
+lval var_64;
+var_64 = LVI_BOOL(false);
 do {
-lval var_74;
-if (var_35.vt != LV_PAIR) {
+lval var_65;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_74 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_75;
-var_75 = LVI_CHAR(32);
-lval var_76;
-var_76 = LVI_BOOL(var_74.v.chr == var_75.v.chr);
-var_73 = var_76;
-if (!LV_IS_FALSE(var_73)) { break; }
-lval var_77;
-if (var_35.vt != LV_PAIR) {
+var_65 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_66;
+var_66 = LVI_CHAR(32);
+lval var_67;
+var_67 = LVI_BOOL(var_65.v.chr == var_66.v.chr);
+var_64 = var_67;
+if (!LV_IS_FALSE(var_64)) { break; }
+lval var_68;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_77 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_78;
-var_78 = LVI_CHAR(43);
-lval var_79;
-var_79 = LVI_BOOL(var_77.v.chr == var_78.v.chr);
-var_73 = var_79;
-if (!LV_IS_FALSE(var_73)) { break; }
+var_68 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_69;
+var_69 = LVI_CHAR(43);
+lval var_70;
+var_70 = LVI_BOOL(var_68.v.chr == var_69.v.chr);
+var_64 = var_70;
+if (!LV_IS_FALSE(var_64)) { break; }
 } while (0);
-if (LV_IS_FALSE(var_73)) {
+if (LV_IS_FALSE(var_64)) {
 (void)
  LVI_BOOL(false);
 } else {
-lval var_81;
-if (var_35.vt != LV_PAIR) {
+lval var_72;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_81 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_82;
+var_72 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_73;
 {
 lval vs[1];
-vs[0] = var_81;
-var_82 = wile_gen_list(1, vs, NULL);
+vs[0] = var_72;
+var_73 = wile_gen_list(1, vs, NULL);
 }
 {
 lval vs[8];
-vs[0] = var_82;
-var_82 = wile_char2string(NULL, vs);
+vs[0] = var_73;
+var_73 = wile_char2string(NULL, vs);
 }
-var_42 = var_82;
-lval var_83;
-if (var_35.vt != LV_PAIR) {
+var_33 = var_73;
+lval var_74;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_83 = (var_35.v.pair.cdr ? *(var_35.v.pair.cdr) : LVI_NIL());
-var_35 = var_83;
+var_74 = (var_26.v.pair.cdr ? *(var_26.v.pair.cdr) : LVI_NIL());
+var_26 = var_74;
 }
-lval var_84;
-if (var_35.vt != LV_PAIR) {
+lval var_75;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_84 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_85;
-var_85 = LVI_CHAR(48);
-lval var_86;
-var_86 = LVI_BOOL(var_84.v.chr == var_85.v.chr);
-var_46 = var_86;
-lval var_88;
-lval var_89;
-lval var_90;
-var_90 = LVI_INT(0);
-var_88 = var_90;
+var_75 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_76;
+var_76 = LVI_CHAR(48);
+lval var_77;
+var_77 = LVI_BOOL(var_75.v.chr == var_76.v.chr);
+var_37 = var_77;
+lval var_79;
+lval var_80;
+lval var_81;
+var_81 = LVI_INT(0);
+var_79 = var_81;
 do {
-lval var_91;
-if (var_35.vt != LV_PAIR) {
+lval var_82;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_91 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_92;
-var_92 = LVI_BOOL(isdigit(var_91.v.chr));
-lval var_93;
-var_93 = LVI_BOOL(LV_IS_FALSE(var_92));
-if (!LV_IS_FALSE(var_93)) {
+var_82 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_83;
+var_83 = LVI_BOOL(isdigit(var_82.v.chr));
+lval var_84;
+var_84 = LVI_BOOL(LV_IS_FALSE(var_83));
+if (!LV_IS_FALSE(var_84)) {
 break;
 }
-lval var_94;
-var_94 = LVI_INT(10);
-lval var_95;
-var_95 = LVI_INT(var_94.v.iv * var_44.v.iv);
-lval var_96;
-if (var_35.vt != LV_PAIR) {
+lval var_85;
+var_85 = LVI_INT(10);
+lval var_86;
+var_86 = LVI_INT(var_85.v.iv * var_35.v.iv);
+lval var_87;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_96 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_97;
-var_97 = LVI_INT((unsigned char) var_96.v.chr);
-lval var_98;
-var_98 = LVI_INT(var_97.v.iv - var_37.v.iv);
-lval var_99;
-var_99 = LVI_INT(var_95.v.iv + var_98.v.iv);
-var_44 = var_99;
-lval var_100;
-if (var_35.vt != LV_PAIR) {
+var_87 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_88;
+var_88 = LVI_INT((unsigned char) var_87.v.chr);
+lval var_89;
+var_89 = LVI_INT(var_88.v.iv - var_28.v.iv);
+lval var_90;
+var_90 = LVI_INT(var_86.v.iv + var_89.v.iv);
+var_35 = var_90;
+lval var_91;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_100 = (var_35.v.pair.cdr ? *(var_35.v.pair.cdr) : LVI_NIL());
-var_35 = var_100;
-lval var_101;
-var_101 = LVI_INT(1);
-lval var_102;
-var_102 = LVI_INT(var_88.v.iv + var_101.v.iv);
-var_89 = var_102;
-var_88 = var_89;
+var_91 = (var_26.v.pair.cdr ? *(var_26.v.pair.cdr) : LVI_NIL());
+var_26 = var_91;
+lval var_92;
+var_92 = LVI_INT(1);
+lval var_93;
+var_93 = LVI_INT(var_79.v.iv + var_92.v.iv);
+var_80 = var_93;
+var_79 = var_80;
 } while (1);
-lval var_104;
-if (var_35.vt != LV_PAIR) {
+lval var_95;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_104 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_105;
-var_105 = LVI_CHAR(46);
-lval var_106;
-var_106 = LVI_BOOL(var_104.v.chr == var_105.v.chr);
-if (LV_IS_FALSE(var_106)) {
+var_95 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_96;
+var_96 = LVI_CHAR(46);
+lval var_97;
+var_97 = LVI_BOOL(var_95.v.chr == var_96.v.chr);
+if (LV_IS_FALSE(var_97)) {
 (void)
  LVI_BOOL(false);
 } else {
-lval var_108;
-if (var_35.vt != LV_PAIR) {
+lval var_99;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_108 = (var_35.v.pair.cdr ? *(var_35.v.pair.cdr) : LVI_NIL());
-var_35 = var_108;
-lval var_109;
-var_109 = LVI_INT(0);
-var_48 = var_109;
-lval var_111;
-lval var_112;
-lval var_113;
-var_113 = LVI_INT(0);
-var_111 = var_113;
+var_99 = (var_26.v.pair.cdr ? *(var_26.v.pair.cdr) : LVI_NIL());
+var_26 = var_99;
+lval var_100;
+var_100 = LVI_INT(0);
+var_39 = var_100;
+lval var_102;
+lval var_103;
+lval var_104;
+var_104 = LVI_INT(0);
+var_102 = var_104;
 do {
-lval var_114;
-if (var_35.vt != LV_PAIR) {
+lval var_105;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_114 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_115;
-var_115 = LVI_BOOL(isdigit(var_114.v.chr));
-lval var_116;
-var_116 = LVI_BOOL(LV_IS_FALSE(var_115));
-if (!LV_IS_FALSE(var_116)) {
+var_105 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_106;
+var_106 = LVI_BOOL(isdigit(var_105.v.chr));
+lval var_107;
+var_107 = LVI_BOOL(LV_IS_FALSE(var_106));
+if (!LV_IS_FALSE(var_107)) {
 break;
 }
-lval var_117;
-var_117 = LVI_INT(10);
-lval var_118;
-var_118 = LVI_INT(var_117.v.iv * var_48.v.iv);
-lval var_119;
-if (var_35.vt != LV_PAIR) {
+lval var_108;
+var_108 = LVI_INT(10);
+lval var_109;
+var_109 = LVI_INT(var_108.v.iv * var_39.v.iv);
+lval var_110;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_119 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_120;
-var_120 = LVI_INT((unsigned char) var_119.v.chr);
-lval var_121;
-var_121 = LVI_INT(var_120.v.iv - var_37.v.iv);
-lval var_122;
-var_122 = LVI_INT(var_118.v.iv + var_121.v.iv);
-var_48 = var_122;
-lval var_123;
-if (var_35.vt != LV_PAIR) {
+var_110 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_111;
+var_111 = LVI_INT((unsigned char) var_110.v.chr);
+lval var_112;
+var_112 = LVI_INT(var_111.v.iv - var_28.v.iv);
+lval var_113;
+var_113 = LVI_INT(var_109.v.iv + var_112.v.iv);
+var_39 = var_113;
+lval var_114;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_123 = (var_35.v.pair.cdr ? *(var_35.v.pair.cdr) : LVI_NIL());
-var_35 = var_123;
-lval var_124;
-var_124 = LVI_INT(1);
-lval var_125;
-var_125 = LVI_INT(var_111.v.iv + var_124.v.iv);
-var_112 = var_125;
-var_111 = var_112;
+var_114 = (var_26.v.pair.cdr ? *(var_26.v.pair.cdr) : LVI_NIL());
+var_26 = var_114;
+lval var_115;
+var_115 = LVI_INT(1);
+lval var_116;
+var_116 = LVI_INT(var_102.v.iv + var_115.v.iv);
+var_103 = var_116;
+var_102 = var_103;
 } while (1);
 }
-lval var_127;
-var_127 = LVI_BOOL(true);
+lval var_118;
+var_118 = LVI_BOOL(true);
 do {
-lval var_128;
-if (var_35.vt != LV_PAIR) {
+lval var_119;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_128 = (var_35.v.pair.cdr ? *(var_35.v.pair.cdr) : LVI_NIL());
-lval var_129;
-var_129 = LVI_BOOL(var_128.vt == LV_NIL);
-var_127 = var_129;
-if (LV_IS_FALSE(var_127)) { break; }
-lval var_130;
-var_130 = LVI_BOOL(false);
+var_119 = (var_26.v.pair.cdr ? *(var_26.v.pair.cdr) : LVI_NIL());
+lval var_120;
+var_120 = LVI_BOOL(var_119.vt == LV_NIL);
+var_118 = var_120;
+if (LV_IS_FALSE(var_118)) { break; }
+lval var_121;
+var_121 = LVI_BOOL(false);
 do {
-lval var_131;
-if (var_35.vt != LV_PAIR) {
+lval var_122;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_131 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
+var_122 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_123;
+var_123 = LVI_CHAR(37);
+lval var_124;
+var_124 = LVI_BOOL(var_122.v.chr == var_123.v.chr);
+var_121 = var_124;
+if (!LV_IS_FALSE(var_121)) { break; }
+lval var_125;
+if (var_26.vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
+}
+var_125 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_126;
+var_126 = LVI_CHAR(115);
+lval var_127;
+var_127 = LVI_BOOL(var_125.v.chr == var_126.v.chr);
+var_121 = var_127;
+if (!LV_IS_FALSE(var_121)) { break; }
+lval var_128;
+if (var_26.vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
+}
+var_128 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_129;
+var_129 = LVI_CHAR(99);
+lval var_130;
+var_130 = LVI_BOOL(var_128.v.chr == var_129.v.chr);
+var_121 = var_130;
+if (!LV_IS_FALSE(var_121)) { break; }
+lval var_131;
+if (var_26.vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
+}
+var_131 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
 lval var_132;
-var_132 = LVI_CHAR(37);
+var_132 = LVI_CHAR(118);
 lval var_133;
 var_133 = LVI_BOOL(var_131.v.chr == var_132.v.chr);
-var_130 = var_133;
-if (!LV_IS_FALSE(var_130)) { break; }
+var_121 = var_133;
+if (!LV_IS_FALSE(var_121)) { break; }
 lval var_134;
-if (var_35.vt != LV_PAIR) {
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_134 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
+var_134 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
 lval var_135;
-var_135 = LVI_CHAR(115);
+var_135 = LVI_CHAR(98);
 lval var_136;
 var_136 = LVI_BOOL(var_134.v.chr == var_135.v.chr);
-var_130 = var_136;
-if (!LV_IS_FALSE(var_130)) { break; }
+var_121 = var_136;
+if (!LV_IS_FALSE(var_121)) { break; }
 lval var_137;
-if (var_35.vt != LV_PAIR) {
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_137 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
+var_137 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
 lval var_138;
-var_138 = LVI_CHAR(99);
+var_138 = LVI_CHAR(111);
 lval var_139;
 var_139 = LVI_BOOL(var_137.v.chr == var_138.v.chr);
-var_130 = var_139;
-if (!LV_IS_FALSE(var_130)) { break; }
+var_121 = var_139;
+if (!LV_IS_FALSE(var_121)) { break; }
 lval var_140;
-if (var_35.vt != LV_PAIR) {
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_140 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
+var_140 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
 lval var_141;
-var_141 = LVI_CHAR(118);
+var_141 = LVI_CHAR(100);
 lval var_142;
 var_142 = LVI_BOOL(var_140.v.chr == var_141.v.chr);
-var_130 = var_142;
-if (!LV_IS_FALSE(var_130)) { break; }
+var_121 = var_142;
+if (!LV_IS_FALSE(var_121)) { break; }
 lval var_143;
-if (var_35.vt != LV_PAIR) {
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_143 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
+var_143 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
 lval var_144;
-var_144 = LVI_CHAR(98);
+var_144 = LVI_CHAR(120);
 lval var_145;
 var_145 = LVI_BOOL(var_143.v.chr == var_144.v.chr);
-var_130 = var_145;
-if (!LV_IS_FALSE(var_130)) { break; }
+var_121 = var_145;
+if (!LV_IS_FALSE(var_121)) { break; }
 lval var_146;
-if (var_35.vt != LV_PAIR) {
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_146 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
+var_146 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
 lval var_147;
-var_147 = LVI_CHAR(111);
+var_147 = LVI_CHAR(102);
 lval var_148;
 var_148 = LVI_BOOL(var_146.v.chr == var_147.v.chr);
-var_130 = var_148;
-if (!LV_IS_FALSE(var_130)) { break; }
+var_121 = var_148;
+if (!LV_IS_FALSE(var_121)) { break; }
 lval var_149;
-if (var_35.vt != LV_PAIR) {
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_149 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
+var_149 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
 lval var_150;
-var_150 = LVI_CHAR(100);
+var_150 = LVI_CHAR(101);
 lval var_151;
 var_151 = LVI_BOOL(var_149.v.chr == var_150.v.chr);
-var_130 = var_151;
-if (!LV_IS_FALSE(var_130)) { break; }
+var_121 = var_151;
+if (!LV_IS_FALSE(var_121)) { break; }
+} while (0);
+var_118 = var_121;
+if (LV_IS_FALSE(var_118)) { break; }
+} while (0);
+if (LV_IS_FALSE(var_118)) {
 lval var_152;
-if (var_35.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_152 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
+var_152 = LVI_STRING("*printf error: malformed format string ");
 lval var_153;
-var_153 = LVI_CHAR(120);
-lval var_154;
-var_154 = LVI_BOOL(var_152.v.chr == var_153.v.chr);
-var_130 = var_154;
-if (!LV_IS_FALSE(var_130)) { break; }
-lval var_155;
-if (var_35.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_155 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_156;
-var_156 = LVI_CHAR(102);
-lval var_157;
-var_157 = LVI_BOOL(var_155.v.chr == var_156.v.chr);
-var_130 = var_157;
-if (!LV_IS_FALSE(var_130)) { break; }
-lval var_158;
-if (var_35.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_158 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_159;
-var_159 = LVI_CHAR(101);
-lval var_160;
-var_160 = LVI_BOOL(var_158.v.chr == var_159.v.chr);
-var_130 = var_160;
-if (!LV_IS_FALSE(var_130)) { break; }
-} while (0);
-var_127 = var_130;
-if (LV_IS_FALSE(var_127)) { break; }
-} while (0);
-if (LV_IS_FALSE(var_127)) {
-lval var_161;
-var_161 = LVI_STRING("*printf error: malformed format string ");
-lval var_162;
 {
 lval vs[2];
-vs[0] = var_161;
-vs[1] = var_33[0];
-var_162 = wile_gen_list(2, vs, NULL);
+vs[0] = var_152;
+vs[1] = var_24[0];
+var_153 = wile_gen_list(2, vs, NULL);
 }
 {
 lval vs[8];
-vs[0] = var_162;
-var_162 = wile_string_append(NULL, vs);
+vs[0] = var_153;
+var_153 = wile_string_append(NULL, vs);
 }
-lval var_163;
+lval var_154;
 {
 lval vs[1];
-vs[0] = var_162;
-var_163 = wile_gen_list(1, vs, NULL);
+vs[0] = var_153;
+var_154 = wile_gen_list(1, vs, NULL);
 }
-if (var_163.vt == LV_PAIR && (var_163.v.pair.cdr == NULL || var_163.v.pair.cdr->vt == LV_NIL)) {
-var_163 = (var_163.v.pair.car ? *(var_163.v.pair.car) : LVI_NIL());
+if (var_154.vt == LV_PAIR && (var_154.v.pair.cdr == NULL || var_154.v.pair.cdr->vt == LV_NIL)) {
+var_154 = (var_154.v.pair.car ? *(var_154.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_163;
+*(cachalot->errval) = var_154;
 cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
@@ -557,368 +564,382 @@ longjmp(cachalot->cenv, 1);
 (void)
  LVI_BOOL(false);
 }
+lval var_157;
+var_157 = LVI_BOOL(true);
+do {
+lval var_158;
+var_158 = LVI_STRING("+");
+lval var_159;
+var_159 = LVI_BOOL(strcmp(var_33.v.str, var_158.v.str) == 0);
+var_157 = var_159;
+if (LV_IS_FALSE(var_157)) { break; }
+lval var_160;
+var_160 = LVI_BOOL(false);
+do {
+lval var_161;
+if (var_26.vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
+}
+var_161 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_162;
+var_162 = LVI_CHAR(98);
+lval var_163;
+var_163 = LVI_BOOL(var_161.v.chr == var_162.v.chr);
+var_160 = var_163;
+if (!LV_IS_FALSE(var_160)) { break; }
+lval var_164;
+if (var_26.vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
+}
+var_164 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_165;
+var_165 = LVI_CHAR(111);
 lval var_166;
-var_166 = LVI_BOOL(true);
-do {
+var_166 = LVI_BOOL(var_164.v.chr == var_165.v.chr);
+var_160 = var_166;
+if (!LV_IS_FALSE(var_160)) { break; }
 lval var_167;
-var_167 = LVI_STRING("+");
+if (var_26.vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
+}
+var_167 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
 lval var_168;
-var_168 = LVI_BOOL(strcmp(var_42.v.str, var_167.v.str) == 0);
-var_166 = var_168;
-if (LV_IS_FALSE(var_166)) { break; }
+var_168 = LVI_CHAR(120);
 lval var_169;
-var_169 = LVI_BOOL(false);
-do {
-lval var_170;
-if (var_35.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_170 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_171;
-var_171 = LVI_CHAR(98);
-lval var_172;
-var_172 = LVI_BOOL(var_170.v.chr == var_171.v.chr);
-var_169 = var_172;
-if (!LV_IS_FALSE(var_169)) { break; }
-lval var_173;
-if (var_35.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_173 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_174;
-var_174 = LVI_CHAR(111);
-lval var_175;
-var_175 = LVI_BOOL(var_173.v.chr == var_174.v.chr);
-var_169 = var_175;
-if (!LV_IS_FALSE(var_169)) { break; }
-lval var_176;
-if (var_35.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_176 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_177;
-var_177 = LVI_CHAR(120);
-lval var_178;
-var_178 = LVI_BOOL(var_176.v.chr == var_177.v.chr);
-var_169 = var_178;
-if (!LV_IS_FALSE(var_169)) { break; }
+var_169 = LVI_BOOL(var_167.v.chr == var_168.v.chr);
+var_160 = var_169;
+if (!LV_IS_FALSE(var_160)) { break; }
 } while (0);
-var_166 = var_169;
-if (LV_IS_FALSE(var_166)) { break; }
+var_157 = var_160;
+if (LV_IS_FALSE(var_157)) { break; }
 } while (0);
-if (LV_IS_FALSE(var_166)) {
+if (LV_IS_FALSE(var_157)) {
 (void)
  LVI_BOOL(false);
 } else {
-lval var_180;
-var_180 = LVI_STRING(" ");
-var_42 = var_180;
+lval var_171;
+var_171 = LVI_STRING(" ");
+var_33 = var_171;
 }
-lval var_181;
-if (var_35.vt != LV_PAIR) {
+lval var_172;
+if (var_26.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_181 = (var_35.v.pair.car ? *(var_35.v.pair.car) : LVI_NIL());
-lval var_182;
+var_172 = (var_26.v.pair.car ? *(var_26.v.pair.car) : LVI_NIL());
+lval var_173;
 {
 lval vs[6];
-vs[0] = var_181;
-vs[1] = var_44;
-vs[2] = var_40;
-vs[3] = var_42;
-vs[4] = var_48;
-vs[5] = var_46;
-var_182 = wile_gen_list(6, vs, NULL);
+vs[0] = var_172;
+vs[1] = var_35;
+vs[2] = var_31;
+vs[3] = var_33;
+vs[4] = var_39;
+vs[5] = var_37;
+var_173 = wile_gen_list(6, vs, NULL);
+}
+return var_173;
+}
+// end of function fn_9
+
+// @@@ string-pad-right @@@ bld-rtl-dir/wile-rtl2-000067.scm:96 @@@ fn_178 @@@
+static lval fn_178(lptr* var_179, lptr var_180)
+{
+lval var_182;
+{
+lval vs[8];
+vs[0] = var_180[0];
+vs[1] = var_180[1];
+vs[2] = var_180[2];
+var_182 = wile_string_pad_right(NULL, vs);
 }
 return var_182;
 }
-// end of function fn_18
+// end of prim fn_178
 
-// @@@ string-pad-right @@@ bld-rtl-dir/wile-rtl2-000067.scm:100 @@@ fn_187 @@@
-static lval fn_187(lptr* var_188, lptr var_189)
+// @@@ string-pad-center @@@ bld-rtl-dir/wile-rtl2-000067.scm:97 @@@ fn_183 @@@
+static lval fn_183(lptr* var_184, lptr var_185)
 {
-lval var_191;
+lval var_187;
 {
 lval vs[8];
-vs[0] = var_189[0];
-vs[1] = var_189[1];
-vs[2] = var_189[2];
-var_191 = wile_string_pad_right(NULL, vs);
+vs[0] = var_185[0];
+vs[1] = var_185[1];
+vs[2] = var_185[2];
+var_187 = wile_string_pad_center(NULL, vs);
 }
-return var_191;
+return var_187;
 }
-// end of prim fn_187
+// end of prim fn_183
 
-// @@@ string-pad-center @@@ bld-rtl-dir/wile-rtl2-000067.scm:101 @@@ fn_192 @@@
-static lval fn_192(lptr* var_193, lptr var_194)
+// @@@ string-pad-left @@@ bld-rtl-dir/wile-rtl2-000067.scm:98 @@@ fn_188 @@@
+static lval fn_188(lptr* var_189, lptr var_190)
 {
-lval var_196;
+lval var_192;
 {
 lval vs[8];
-vs[0] = var_194[0];
-vs[1] = var_194[1];
-vs[2] = var_194[2];
-var_196 = wile_string_pad_center(NULL, vs);
+vs[0] = var_190[0];
+vs[1] = var_190[1];
+vs[2] = var_190[2];
+var_192 = wile_string_pad_left(NULL, vs);
 }
-return var_196;
+return var_192;
 }
-// end of prim fn_192
+// end of prim fn_188
 
-// @@@ string-pad-left @@@ bld-rtl-dir/wile-rtl2-000067.scm:102 @@@ fn_197 @@@
-static lval fn_197(lptr* var_198, lptr var_199)
+// @@@ (align-str width align str) @@@ bld-rtl-dir/wile-rtl2-000067.scm:94 @@@ fn_10 @@@
+static lval fn_10(lptr* var_174, lptr var_175)
 {
-lval var_201;
-{
-lval vs[8];
-vs[0] = var_199[0];
-vs[1] = var_199[1];
-vs[2] = var_199[2];
-var_201 = wile_string_pad_left(NULL, vs);
-}
-return var_201;
-}
-// end of prim fn_197
-
-// @@@ (align-str width align str) @@@ bld-rtl-dir/wile-rtl2-000067.scm:98 @@@ fn_19 @@@
-static lval fn_19(lptr* var_183, lptr var_184)
-{
-lval var_186;
-if (var_184[1].vt != LV_CHAR) {
+lval var_177;
+if (var_175[1].vt != LV_CHAR) {
 wile_exception2("case", __FILE__, __LINE__, "case-value type does not match case type");
 }
-switch (var_184[1].v.chr) {
+switch (var_175[1].v.chr) {
 case 108:
 {
-var_186 = LVI_PROC(fn_187,NULL,3);
+var_177 = LVI_PROC(fn_178,NULL,3);
 break;
 }
 case 109:
 {
-var_186 = LVI_PROC(fn_192,NULL,3);
+var_177 = LVI_PROC(fn_183,NULL,3);
 break;
 }
 case 114:
 {
-var_186 = LVI_PROC(fn_197,NULL,3);
+var_177 = LVI_PROC(fn_188,NULL,3);
 break;
 }
 default:
 {
-lval var_202;
-var_202 = LVI_STRING("*printf error: malformed alignment");
-lval var_203;
+lval var_193;
+var_193 = LVI_STRING("*printf error: malformed alignment");
+lval var_194;
 {
 lval vs[1];
-vs[0] = var_202;
-var_203 = wile_gen_list(1, vs, NULL);
+vs[0] = var_193;
+var_194 = wile_gen_list(1, vs, NULL);
 }
-if (var_203.vt == LV_PAIR && (var_203.v.pair.cdr == NULL || var_203.v.pair.cdr->vt == LV_NIL)) {
-var_203 = (var_203.v.pair.car ? *(var_203.v.pair.car) : LVI_NIL());
+if (var_194.vt == LV_PAIR && (var_194.v.pair.cdr == NULL || var_194.v.pair.cdr->vt == LV_NIL)) {
+var_194 = (var_194.v.pair.car ? *(var_194.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_203;
+*(cachalot->errval) = var_194;
 cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
-var_186 = var_203;
+var_177 = var_194;
 break;
 }
 }
-lval var_204;
-var_204 = LVI_CHAR(32);
-lval var_205;
+lval var_195;
+var_195 = LVI_CHAR(32);
+lval var_196;
 {
 lval vs[3];
-vs[0] = var_184[2];
-vs[1] = var_204;
-vs[2] = var_184[0];
-var_205 = wile_gen_list(3, vs, NULL);
+vs[0] = var_175[2];
+vs[1] = var_195;
+vs[2] = var_175[0];
+var_196 = wile_gen_list(3, vs, NULL);
 }
-lval var_206;
+lval var_197;
 {
 lval vs[2];
-vs[0] = var_186;
-vs[1] = var_205;
-var_206 = wile_gen_list(2, vs, NULL);
+vs[0] = var_177;
+vs[1] = var_196;
+var_197 = wile_gen_list(2, vs, NULL);
 }
-var_206 = wile_apply_function(&(var_206), __FILE__, __LINE__);
-return var_206;
+var_197 = wile_apply_function(&(var_197), __FILE__, __LINE__);
+return var_197;
 }
-// end of function fn_19
+// end of function fn_10
 
-// @@@ lambda (p a) @@@ bld-rtl-dir/wile-rtl2-000067.scm:120 @@@ fn_231 @@@
-static lval fn_231(lptr* var_232, lptr var_233)
+// @@@ lambda (p a) @@@ bld-rtl-dir/wile-rtl2-000067.scm:116 @@@ fn_222 @@@
+static lval fn_222(lptr* var_223, lptr var_224)
 {
-lbl_234:;
-lval var_235;
-lval var_236;
-if (var_233[0].vt == LV_FILE_PORT || var_233[0].vt == LV_PIPE_PORT || var_233[0].vt == LV_SOCK_PORT) {
-int c = fgetc(var_233[0].v.fp);
-var_236 = ((c == EOF) ? LVI_BOOL(false) : LVI_CHAR(c));
+lbl_225:;
+lval var_226;
+lval var_227;
+if (var_224[0].vt == LV_FILE_PORT || var_224[0].vt == LV_PIPE_PORT || var_224[0].vt == LV_SOCK_PORT) {
+int c = fgetc(var_224[0].v.fp);
+var_227 = ((c == EOF) ? LVI_BOOL(false) : LVI_CHAR(c));
 } else {
 WILE_EX("read-char", "input is not a port");
 }
-var_235 = var_236;
-lval var_237;
-if (LV_IS_FALSE(var_235)) {
+var_226 = var_227;
+lval var_228;
+if (LV_IS_FALSE(var_226)) {
 {
 lval vs[8];
-vs[0] = var_233[0];
+vs[0] = var_224[0];
 (void)
  wile_closeport(NULL, vs);
 }
-lval var_239;
+lval var_230;
 {
 lval vs[8];
-vs[0] = var_233[1];
-var_239 = wile_list_reverse(NULL, vs);
+vs[0] = var_224[1];
+var_230 = wile_list_reverse(NULL, vs);
 }
-lval var_240;
+lval var_231;
 {
 lval vs[1];
-vs[0] = var_239;
-var_240 = wile_gen_list(1, vs, NULL);
+vs[0] = var_230;
+var_231 = wile_gen_list(1, vs, NULL);
 }
 {
 lval vs[8];
-vs[0] = var_240;
-var_240 = wile_char2string(NULL, vs);
+vs[0] = var_231;
+var_231 = wile_char2string(NULL, vs);
 }
-var_237 = var_240;
+var_228 = var_231;
 } else {
-lval var_241;
+lval var_232;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_235.vt != LV_NIL) {
+if (var_226.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_235;
+*p1 = var_226;
 }
-if (var_233[1].vt != LV_NIL) {
+if (var_224[1].vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_233[1];
+*p2 = var_224[1];
 }
-var_241 = LVI_PAIR(p1, p2);
+var_232 = LVI_PAIR(p1, p2);
 }
-lval var_244[8];
-var_244[0] = var_233[0];
-var_244[1] = var_241;
-var_233[0] = var_244[0];
-var_233[1] = var_244[1];
-goto lbl_234;	// selfie
+lval var_235[8];
+var_235[0] = var_224[0];
+var_235[1] = var_232;
+var_224[0] = var_235[0];
+var_224[1] = var_235[1];
+goto lbl_225;	// selfie
 }
-return var_237;
+return var_228;
 }
-// end of lambda fn_231
+// end of lambda fn_222
 
-// @@@ (disp-obj val) @@@ bld-rtl-dir/wile-rtl2-000067.scm:110 @@@ fn_20 @@@
-static lval fn_20(lptr* var_207, lptr var_208)
+// @@@ (disp-obj val) @@@ bld-rtl-dir/wile-rtl2-000067.scm:106 @@@ fn_11 @@@
+static lval fn_11(lptr* var_198, lptr var_199)
 {
-lval var_210;
-lval var_211;
-var_211 = LVI_STRING("WILE_SCRATCH_DIRECTORY");
-lval var_212;
+lval var_201;
+lval var_202;
+var_202 = LVI_STRING("WILE_SCRATCH_DIRECTORY");
+lval var_203;
 {
-char* ev = getenv(var_211.v.str);
-var_212 = (ev ? LVI_STRING(ev) : LVI_BOOL(false));
+char* ev = getenv(var_202.v.str);
+var_203 = (ev ? LVI_STRING(ev) : LVI_BOOL(false));
 }
-var_210 = var_212;
-lval var_213;
-lval var_214;
-var_214 = LVI_STRING("sprintf-scratch.XXXXXX");
-var_213 = var_214;
-lval var_215;
-lval var_216;
-if (LV_IS_FALSE(var_210)) {
-var_216 = var_213;
+var_201 = var_203;
+lval var_204;
+lval var_205;
+var_205 = LVI_STRING("sprintf-scratch.XXXXXX");
+var_204 = var_205;
+lval var_206;
+lval var_207;
+if (LV_IS_FALSE(var_201)) {
+var_207 = var_204;
 } else {
-lval var_217;
-var_217 = LVI_STRING("/");
-lval var_218;
+lval var_208;
+var_208 = LVI_STRING("/");
+lval var_209;
 {
 lval vs[3];
-vs[0] = var_210;
-vs[1] = var_217;
-vs[2] = var_213;
-var_218 = wile_gen_list(3, vs, NULL);
+vs[0] = var_201;
+vs[1] = var_208;
+vs[2] = var_204;
+var_209 = wile_gen_list(3, vs, NULL);
 }
 {
 lval vs[8];
-vs[0] = var_218;
-var_218 = wile_string_append(NULL, vs);
+vs[0] = var_209;
+var_209 = wile_string_append(NULL, vs);
 }
-var_216 = var_218;
+var_207 = var_209;
 }
-var_215 = var_216;
-lval var_219;
-lval var_220;
+var_206 = var_207;
+lval var_210;
+lval var_211;
 {
 lval vs[8];
-vs[0] = var_215;
-var_220 = wile_temp_file(NULL, vs);
+vs[0] = var_206;
+var_211 = wile_temp_file(NULL, vs);
 }
-var_219 = var_220;
-lval var_221;
-lval var_222;
-if (var_219.vt != LV_PAIR) {
+var_210 = var_211;
+lval var_212;
+lval var_213;
+if (var_210.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_222 = (var_219.v.pair.car ? *(var_219.v.pair.car) : LVI_NIL());
-var_221 = var_222;
-lval var_223;
-lval var_224;
-var_224 = LVI_STRING("cadr");
-lval var_225;
+var_213 = (var_210.v.pair.car ? *(var_210.v.pair.car) : LVI_NIL());
+var_212 = var_213;
+lval var_214;
+lval var_215;
+var_215 = LVI_STRING("cadr");
+lval var_216;
 {
-char* cp = strchr(var_224.v.str, 'r');
-var_225 = var_219;
+char* cp = strchr(var_215.v.str, 'r');
+var_216 = var_210;
 while (*(--cp) != 'c') {
-if (var_225.vt != LV_PAIR) {
+if (var_216.vt != LV_PAIR) {
 WILE_EX("cxr", "input does not have the right structure!");
 }
 if (*cp == 'a') {
-var_225 = (var_225.v.pair.car ? *(var_225.v.pair.car) : LVI_NIL());
+var_216 = (var_216.v.pair.car ? *(var_216.v.pair.car) : LVI_NIL());
 } else if (*cp == 'd') {
-var_225 = (var_225.v.pair.cdr ? *(var_225.v.pair.cdr) : LVI_NIL());
+var_216 = (var_216.v.pair.cdr ? *(var_216.v.pair.cdr) : LVI_NIL());
 } else {
-WILE_EX("cxr", "got malformed control string '%s'", var_224.v.str);
+WILE_EX("cxr", "got malformed control string '%s'", var_215.v.str);
 }
 }
 }
-var_223 = var_225;
+var_214 = var_216;
 (void)
- LVI_BOOL(unlink(var_223.v.str) == 0);
-if (var_221.vt == LV_FILE_PORT || var_221.vt == LV_PIPE_PORT || var_221.vt == LV_SOCK_PORT) {
-wile_display(var_208[0], var_221.v.fp);
+ LVI_BOOL(unlink(var_214.v.str) == 0);
+if (var_212.vt == LV_FILE_PORT || var_212.vt == LV_PIPE_PORT || var_212.vt == LV_SOCK_PORT) {
+wile_display(var_199[0], var_212.v.fp);
 (void)
- var_208[0];
+ var_199[0];
 } else {
 WILE_EX("display", "expects a scheme value and a port");
 }
-lval var_228;
-var_228 = LVI_INT(0);
-lval var_229;
-var_229 = LVI_SYMBOL("start");
+lval var_219;
+var_219 = LVI_INT(0);
+lval var_220;
+var_220 = LVI_SYMBOL("start");
 {
 lval vs[8];
-vs[0] = var_221;
-vs[1] = var_228;
-vs[2] = var_229;
+vs[0] = var_212;
+vs[1] = var_219;
+vs[2] = var_220;
 (void)
  wile_setfilepos3(NULL, vs);
 }
-MK_CLOS(var_232,0);
-lval var_245;
-var_245 = LVI_NIL();
-lval var_246;
-lval var_247[8];
-var_247[0] = var_221;
-var_247[1] = var_245;
-var_246 = fn_231(var_232, var_247);
-return var_246;
+MK_CLOS(var_223,0);
+lval var_236;
+var_236 = LVI_NIL();
+lval var_237;
+lval var_238[8];
+var_238[0] = var_212;
+var_238[1] = var_236;
+var_237 = fn_222(var_223, var_238);
+return var_237;
 }
-// end of function fn_20
+// end of function fn_11
 
-// @@@ - @@@ bld-rtl-dir/wile-rtl2-000067.scm:209 @@@ fn_432 @@@
+// @@@ - @@@ bld-rtl-dir/wile-rtl2-000067.scm:207 @@@ fn_427 @@@
+static lval fn_427(lptr* var_428, lptr var_429)
+{
+lval var_431;
+var_431 = var_429[0];
+{
+lval vs[8];
+vs[0] = var_431;
+var_431 = wile_subtract(NULL, vs);
+}
+return var_431;
+}
+// end of prim fn_427
+
+// @@@ + @@@ bld-rtl-dir/wile-rtl2-000067.scm:207 @@@ fn_432 @@@
 static lval fn_432(lptr* var_433, lptr var_434)
 {
 lval var_436;
@@ -926,119 +947,103 @@ var_436 = var_434[0];
 {
 lval vs[8];
 vs[0] = var_436;
-var_436 = wile_subtract(NULL, vs);
+var_436 = wile_add(NULL, vs);
 }
 return var_436;
 }
 // end of prim fn_432
 
-// @@@ + @@@ bld-rtl-dir/wile-rtl2-000067.scm:209 @@@ fn_437 @@@
-static lval fn_437(lptr* var_438, lptr var_439)
+// @@@ lambda (acc fstr vs) @@@ bld-rtl-dir/wile-rtl2-000067.scm:134 @@@ fn_248 @@@
+static lval fn_248(lptr* var_249, lptr var_250)
 {
-lval var_441;
-var_441 = var_439[0];
+lbl_251:;
+lval var_252;
+lval var_253;
 {
 lval vs[8];
-vs[0] = var_441;
-var_441 = wile_add(NULL, vs);
+vs[0] = var_8;
+vs[1] = var_250[1];
+var_253 = wile_regex_match(NULL, vs);
 }
-return var_441;
-}
-// end of prim fn_437
-
-// @@@ lambda (acc fstr vs) @@@ bld-rtl-dir/wile-rtl2-000067.scm:135 @@@ fn_252 @@@
-static lval fn_252(lptr* var_253, lptr var_254)
-{
-lbl_255:;
+var_252 = var_253;
+lval var_254;
+if (LV_IS_FALSE(var_252)) {
+lval var_255;
 lval var_256;
+var_256 = LVI_CHAR(37);
 lval var_257;
-var_257 = LVI_STRING("%[0-9]*%|%c|%v|%[lrm]?[0-9]*s|%[lrm]?[ +]?[0-9]*[bodx]|%[lrm]?[ +]?[0-9]*(.[0-9]*)?[fe]");
-lval var_258;
-{
-lval vs[8];
-vs[0] = var_257;
-vs[1] = var_254[1];
-var_258 = wile_regex_match(NULL, vs);
-}
-var_256 = var_258;
-lval var_259;
-if (LV_IS_FALSE(var_256)) {
-lval var_260;
-lval var_261;
-var_261 = LVI_CHAR(37);
-lval var_262;
-if (var_254[1].vt != LV_STRING || var_261.vt != LV_CHAR) {
+if (var_250[1].vt != LV_STRING || var_256.vt != LV_CHAR) {
 WILE_EX("string-find-first-char", "expects a string and a character input");
 }
 {
-char* pos = strchr(var_254[1].v.str, var_261.v.chr);
+char* pos = strchr(var_250[1].v.str, var_256.v.chr);
 if (pos) {
-var_262 = LVI_INT(pos - var_254[1].v.str);
+var_257 = LVI_INT(pos - var_250[1].v.str);
 } else {
-var_262 = LVI_BOOL(false);
+var_257 = LVI_BOOL(false);
 }
 }
-var_260 = var_262;
-if (LV_IS_FALSE(var_260)) {
+var_255 = var_257;
+if (LV_IS_FALSE(var_255)) {
 (void)
  LVI_BOOL(false);
 } else {
-lval var_265;
-var_265 = LVI_STRING("*printf error: unknown format directive ");
-lval var_266;
-if (var_254[1].vt != LV_STRING) {
+lval var_260;
+var_260 = LVI_STRING("*printf error: unknown format directive ");
+lval var_261;
+if (var_250[1].vt != LV_STRING) {
 WILE_EX("string-copy", "expects a string input");
 }
 {
-size_t len = strlen(var_254[1].v.str);
-if (var_260.v.iv < 0 || (size_t) var_260.v.iv >= len) {
+size_t len = strlen(var_250[1].v.str);
+if (var_255.v.iv < 0 || (size_t) var_255.v.iv >= len) {
 WILE_EX("string-copy", "start index is out of range");
 }
-var_266 = LVI_STRING(var_254[1].v.str + var_260.v.iv);
+var_261 = LVI_STRING(var_250[1].v.str + var_255.v.iv);
 }
-lval var_267;
+lval var_262;
 {
 lval vs[2];
-vs[0] = var_265;
-vs[1] = var_266;
-var_267 = wile_gen_list(2, vs, NULL);
+vs[0] = var_260;
+vs[1] = var_261;
+var_262 = wile_gen_list(2, vs, NULL);
 }
 {
 lval vs[8];
-vs[0] = var_267;
-var_267 = wile_string_append(NULL, vs);
+vs[0] = var_262;
+var_262 = wile_string_append(NULL, vs);
 }
-lval var_268;
+lval var_263;
 {
 lval vs[1];
-vs[0] = var_267;
-var_268 = wile_gen_list(1, vs, NULL);
+vs[0] = var_262;
+var_263 = wile_gen_list(1, vs, NULL);
 }
-if (var_268.vt == LV_PAIR && (var_268.v.pair.cdr == NULL || var_268.v.pair.cdr->vt == LV_NIL)) {
-var_268 = (var_268.v.pair.car ? *(var_268.v.pair.car) : LVI_NIL());
+if (var_263.vt == LV_PAIR && (var_263.v.pair.cdr == NULL || var_263.v.pair.cdr->vt == LV_NIL)) {
+var_263 = (var_263.v.pair.car ? *(var_263.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_268;
+*(cachalot->errval) = var_263;
 cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
 }
-lval var_270;
-var_270 = LVI_BOOL(var_254[2].vt == LV_NIL);
-if (LV_IS_FALSE(var_270)) {
-lval var_271;
-var_271 = LVI_STRING("*printf error: excess arguments");
-lval var_272;
+lval var_265;
+var_265 = LVI_BOOL(var_250[2].vt == LV_NIL);
+if (LV_IS_FALSE(var_265)) {
+lval var_266;
+var_266 = LVI_STRING("*printf error: excess arguments");
+lval var_267;
 {
 lval vs[1];
-vs[0] = var_271;
-var_272 = wile_gen_list(1, vs, NULL);
+vs[0] = var_266;
+var_267 = wile_gen_list(1, vs, NULL);
 }
-if (var_272.vt == LV_PAIR && (var_272.v.pair.cdr == NULL || var_272.v.pair.cdr->vt == LV_NIL)) {
-var_272 = (var_272.v.pair.car ? *(var_272.v.pair.car) : LVI_NIL());
+if (var_267.vt == LV_PAIR && (var_267.v.pair.cdr == NULL || var_267.v.pair.cdr->vt == LV_NIL)) {
+var_267 = (var_267.v.pair.car ? *(var_267.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_272;
+*(cachalot->errval) = var_267;
 cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
@@ -1046,525 +1051,525 @@ longjmp(cachalot->cenv, 1);
 (void)
  LVI_BOOL(false);
 }
-lval var_274;
+lval var_269;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_254[1].vt != LV_NIL) {
+if (var_250[1].vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_254[1];
+*p1 = var_250[1];
 }
-if (var_254[0].vt != LV_NIL) {
+if (var_250[0].vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_254[0];
+*p2 = var_250[0];
 }
-var_274 = LVI_PAIR(p1, p2);
+var_269 = LVI_PAIR(p1, p2);
 }
-var_259 = var_274;
+var_254 = var_269;
 } else {
+lval var_270;
+lval var_271;
+var_271 = LVI_STRING("cadr");
+lval var_272;
+{
+char* cp = strchr(var_271.v.str, 'r');
+var_272 = var_252;
+while (*(--cp) != 'c') {
+if (var_272.vt != LV_PAIR) {
+WILE_EX("cxr", "input does not have the right structure!");
+}
+if (*cp == 'a') {
+var_272 = (var_272.v.pair.car ? *(var_272.v.pair.car) : LVI_NIL());
+} else if (*cp == 'd') {
+var_272 = (var_272.v.pair.cdr ? *(var_272.v.pair.cdr) : LVI_NIL());
+} else {
+WILE_EX("cxr", "got malformed control string '%s'", var_271.v.str);
+}
+}
+}
+var_270 = var_272;
+lval var_273;
+lval var_274;
+var_274 = LVI_STRING("caddr");
 lval var_275;
+{
+char* cp = strchr(var_274.v.str, 'r');
+var_275 = var_252;
+while (*(--cp) != 'c') {
+if (var_275.vt != LV_PAIR) {
+WILE_EX("cxr", "input does not have the right structure!");
+}
+if (*cp == 'a') {
+var_275 = (var_275.v.pair.car ? *(var_275.v.pair.car) : LVI_NIL());
+} else if (*cp == 'd') {
+var_275 = (var_275.v.pair.cdr ? *(var_275.v.pair.cdr) : LVI_NIL());
+} else {
+WILE_EX("cxr", "got malformed control string '%s'", var_274.v.str);
+}
+}
+}
+var_273 = var_275;
 lval var_276;
-var_276 = LVI_STRING("cadr");
 lval var_277;
-{
-char* cp = strchr(var_276.v.str, 'r');
-var_277 = var_256;
-while (*(--cp) != 'c') {
-if (var_277.vt != LV_PAIR) {
-WILE_EX("cxr", "input does not have the right structure!");
-}
-if (*cp == 'a') {
-var_277 = (var_277.v.pair.car ? *(var_277.v.pair.car) : LVI_NIL());
-} else if (*cp == 'd') {
-var_277 = (var_277.v.pair.cdr ? *(var_277.v.pair.cdr) : LVI_NIL());
-} else {
-WILE_EX("cxr", "got malformed control string '%s'", var_276.v.str);
-}
-}
-}
-var_275 = var_277;
-lval var_278;
-lval var_279;
-var_279 = LVI_STRING("caddr");
+lval var_278[8];
+var_278[0] = var_270;
+var_277 = fn_9(NULL, var_278);
+var_276 = var_277;
 lval var_280;
-{
-char* cp = strchr(var_279.v.str, 'r');
-var_280 = var_256;
-while (*(--cp) != 'c') {
-if (var_280.vt != LV_PAIR) {
-WILE_EX("cxr", "input does not have the right structure!");
-}
-if (*cp == 'a') {
-var_280 = (var_280.v.pair.car ? *(var_280.v.pair.car) : LVI_NIL());
-} else if (*cp == 'd') {
-var_280 = (var_280.v.pair.cdr ? *(var_280.v.pair.cdr) : LVI_NIL());
-} else {
-WILE_EX("cxr", "got malformed control string '%s'", var_279.v.str);
-}
-}
-}
-var_278 = var_280;
 lval var_281;
-lval var_282;
-lval var_283[8];
-var_283[0] = var_275;
-var_282 = fn_18(NULL, var_283);
-var_281 = var_282;
-lval var_285;
-lval var_286;
-if (var_281.vt != LV_PAIR) {
+if (var_276.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_286 = (var_281.v.pair.car ? *(var_281.v.pair.car) : LVI_NIL());
-var_285 = var_286;
+var_281 = (var_276.v.pair.car ? *(var_276.v.pair.car) : LVI_NIL());
+var_280 = var_281;
+lval var_282;
+lval var_283;
+var_283 = LVI_STRING("cadr");
+lval var_284;
+{
+char* cp = strchr(var_283.v.str, 'r');
+var_284 = var_276;
+while (*(--cp) != 'c') {
+if (var_284.vt != LV_PAIR) {
+WILE_EX("cxr", "input does not have the right structure!");
+}
+if (*cp == 'a') {
+var_284 = (var_284.v.pair.car ? *(var_284.v.pair.car) : LVI_NIL());
+} else if (*cp == 'd') {
+var_284 = (var_284.v.pair.cdr ? *(var_284.v.pair.cdr) : LVI_NIL());
+} else {
+WILE_EX("cxr", "got malformed control string '%s'", var_283.v.str);
+}
+}
+}
+var_282 = var_284;
+lval var_285;
+lval var_286;
+var_286 = LVI_STRING("caddr");
 lval var_287;
+{
+char* cp = strchr(var_286.v.str, 'r');
+var_287 = var_276;
+while (*(--cp) != 'c') {
+if (var_287.vt != LV_PAIR) {
+WILE_EX("cxr", "input does not have the right structure!");
+}
+if (*cp == 'a') {
+var_287 = (var_287.v.pair.car ? *(var_287.v.pair.car) : LVI_NIL());
+} else if (*cp == 'd') {
+var_287 = (var_287.v.pair.cdr ? *(var_287.v.pair.cdr) : LVI_NIL());
+} else {
+WILE_EX("cxr", "got malformed control string '%s'", var_286.v.str);
+}
+}
+}
+var_285 = var_287;
 lval var_288;
-var_288 = LVI_STRING("cadr");
 lval var_289;
-{
-char* cp = strchr(var_288.v.str, 'r');
-var_289 = var_281;
-while (*(--cp) != 'c') {
-if (var_289.vt != LV_PAIR) {
-WILE_EX("cxr", "input does not have the right structure!");
-}
-if (*cp == 'a') {
-var_289 = (var_289.v.pair.car ? *(var_289.v.pair.car) : LVI_NIL());
-} else if (*cp == 'd') {
-var_289 = (var_289.v.pair.cdr ? *(var_289.v.pair.cdr) : LVI_NIL());
-} else {
-WILE_EX("cxr", "got malformed control string '%s'", var_288.v.str);
-}
-}
-}
-var_287 = var_289;
+var_289 = LVI_INT(3);
 lval var_290;
+{
+lval vs[8];
+vs[0] = var_276;
+vs[1] = var_289;
+var_290 = wile_list_ref(NULL, vs);
+}
+var_288 = var_290;
 lval var_291;
-var_291 = LVI_STRING("caddr");
 lval var_292;
-{
-char* cp = strchr(var_291.v.str, 'r');
-var_292 = var_281;
-while (*(--cp) != 'c') {
-if (var_292.vt != LV_PAIR) {
-WILE_EX("cxr", "input does not have the right structure!");
-}
-if (*cp == 'a') {
-var_292 = (var_292.v.pair.car ? *(var_292.v.pair.car) : LVI_NIL());
-} else if (*cp == 'd') {
-var_292 = (var_292.v.pair.cdr ? *(var_292.v.pair.cdr) : LVI_NIL());
-} else {
-WILE_EX("cxr", "got malformed control string '%s'", var_291.v.str);
-}
-}
-}
-var_290 = var_292;
+var_292 = LVI_INT(4);
 lval var_293;
-lval var_294;
-var_294 = LVI_INT(3);
+{
+lval vs[8];
+vs[0] = var_276;
+vs[1] = var_292;
+var_293 = wile_list_ref(NULL, vs);
+}
+var_291 = var_293;
 lval var_295;
+var_295 = LVI_INT(5);
 {
 lval vs[8];
-vs[0] = var_281;
-vs[1] = var_294;
-var_295 = wile_list_ref(NULL, vs);
-}
-var_293 = var_295;
-lval var_296;
-lval var_297;
-var_297 = LVI_INT(4);
-lval var_298;
-{
-lval vs[8];
-vs[0] = var_281;
-vs[1] = var_297;
-var_298 = wile_list_ref(NULL, vs);
-}
-var_296 = var_298;
-lval var_300;
-var_300 = LVI_INT(5);
-{
-lval vs[8];
-vs[0] = var_281;
-vs[1] = var_300;
+vs[0] = var_276;
+vs[1] = var_295;
 (void)
  wile_list_ref(NULL, vs);
 }
-lval var_302;
-if (var_256.vt != LV_PAIR) {
+lval var_297;
+if (var_252.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_302 = (var_256.v.pair.car ? *(var_256.v.pair.car) : LVI_NIL());
-lval var_303;
+var_297 = (var_252.v.pair.car ? *(var_252.v.pair.car) : LVI_NIL());
+lval var_298;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_302.vt != LV_NIL) {
+if (var_297.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_302;
+*p1 = var_297;
 }
-if (var_254[0].vt != LV_NIL) {
+if (var_250[0].vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_254[0];
+*p2 = var_250[0];
 }
-var_303 = LVI_PAIR(p1, p2);
+var_298 = LVI_PAIR(p1, p2);
 }
-var_254[0] = var_303;
-lval var_304;
-lval var_305;
-var_305 = LVI_CHAR(37);
-lval var_306;
-var_306 = LVI_BOOL(var_285.v.chr == var_305.v.chr);
-if (LV_IS_FALSE(var_306)) {
-lval var_308;
-var_308 = LVI_BOOL(var_254[2].vt == LV_NIL);
-if (LV_IS_FALSE(var_308)) {
+var_250[0] = var_298;
+lval var_299;
+lval var_300;
+var_300 = LVI_CHAR(37);
+lval var_301;
+var_301 = LVI_BOOL(var_280.v.chr == var_300.v.chr);
+if (LV_IS_FALSE(var_301)) {
+lval var_303;
+var_303 = LVI_BOOL(var_250[2].vt == LV_NIL);
+if (LV_IS_FALSE(var_303)) {
 (void)
  LVI_BOOL(false);
 } else {
-lval var_310;
-var_310 = LVI_STRING("*printf error: not enough arguments");
-lval var_311;
+lval var_305;
+var_305 = LVI_STRING("*printf error: not enough arguments");
+lval var_306;
 {
 lval vs[1];
-vs[0] = var_310;
-var_311 = wile_gen_list(1, vs, NULL);
+vs[0] = var_305;
+var_306 = wile_gen_list(1, vs, NULL);
 }
-if (var_311.vt == LV_PAIR && (var_311.v.pair.cdr == NULL || var_311.v.pair.cdr->vt == LV_NIL)) {
-var_311 = (var_311.v.pair.car ? *(var_311.v.pair.car) : LVI_NIL());
+if (var_306.vt == LV_PAIR && (var_306.v.pair.cdr == NULL || var_306.v.pair.cdr->vt == LV_NIL)) {
+var_306 = (var_306.v.pair.car ? *(var_306.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_311;
+*(cachalot->errval) = var_306;
 cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
 }
-lval var_312;
-lval var_313;
-if (var_254[2].vt != LV_PAIR) {
+lval var_307;
+lval var_308;
+if (var_250[2].vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_313 = (var_254[2].v.pair.car ? *(var_254[2].v.pair.car) : LVI_NIL());
-var_312 = var_313;
+var_308 = (var_250[2].v.pair.car ? *(var_250[2].v.pair.car) : LVI_NIL());
+var_307 = var_308;
+lval var_309;
+do {
+lval var_310;
+var_310 = LVI_CHAR(99);
+lval var_311;
+var_311 = LVI_BOOL(var_280.v.chr == var_310.v.chr);
+if (!LV_IS_FALSE(var_311)) {
+lval var_312;
+do {
+lval var_313;
+var_313 = LVI_BOOL(var_307.vt == LV_CHAR);
+if (!LV_IS_FALSE(var_313)) {
 lval var_314;
-do {
-lval var_315;
-var_315 = LVI_CHAR(99);
-lval var_316;
-var_316 = LVI_BOOL(var_285.v.chr == var_315.v.chr);
-if (!LV_IS_FALSE(var_316)) {
-lval var_317;
-do {
-lval var_318;
-var_318 = LVI_BOOL(var_312.vt == LV_CHAR);
-if (!LV_IS_FALSE(var_318)) {
-lval var_319;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_312.vt != LV_NIL) {
+if (var_307.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_312;
+*p1 = var_307;
 }
-if (var_254[0].vt != LV_NIL) {
+if (var_250[0].vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_254[0];
+*p2 = var_250[0];
 }
-var_319 = LVI_PAIR(p1, p2);
+var_314 = LVI_PAIR(p1, p2);
 }
-lval var_320;
-if (var_254[2].vt != LV_PAIR) {
+lval var_315;
+if (var_250[2].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_320 = (var_254[2].v.pair.cdr ? *(var_254[2].v.pair.cdr) : LVI_NIL());
-lval var_323[8];
-var_323[0] = var_319;
-var_323[1] = var_278;
-var_323[2] = var_320;
-var_254[0] = var_323[0];
-var_254[1] = var_323[1];
-var_254[2] = var_323[2];
-goto lbl_255;	// selfie
+var_315 = (var_250[2].v.pair.cdr ? *(var_250[2].v.pair.cdr) : LVI_NIL());
+lval var_318[8];
+var_318[0] = var_314;
+var_318[1] = var_273;
+var_318[2] = var_315;
+var_250[0] = var_318[0];
+var_250[1] = var_318[1];
+var_250[2] = var_318[2];
+goto lbl_251;	// selfie
 }
-lval var_324;
-var_324 = LVI_CHAR(99);
-lval var_325;
-lval var_326[8];
-var_326[0] = var_312;
-var_326[1] = var_324;
-var_325 = fn_1(NULL, var_326);
-lval var_328;
+lval var_319;
+var_319 = LVI_CHAR(99);
+lval var_320;
+lval var_321[8];
+var_321[0] = var_307;
+var_321[1] = var_319;
+var_320 = fn_1(NULL, var_321);
+lval var_323;
 {
 lval vs[1];
-vs[0] = var_325;
-var_328 = wile_gen_list(1, vs, NULL);
+vs[0] = var_320;
+var_323 = wile_gen_list(1, vs, NULL);
 }
-if (var_328.vt == LV_PAIR && (var_328.v.pair.cdr == NULL || var_328.v.pair.cdr->vt == LV_NIL)) {
-var_328 = (var_328.v.pair.car ? *(var_328.v.pair.car) : LVI_NIL());
+if (var_323.vt == LV_PAIR && (var_323.v.pair.cdr == NULL || var_323.v.pair.cdr->vt == LV_NIL)) {
+var_323 = (var_323.v.pair.car ? *(var_323.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_328;
+*(cachalot->errval) = var_323;
 cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
-var_317 = var_328;
+var_312 = var_323;
 } while (0);
-var_314 = var_317;
+var_309 = var_312;
 break;
 }
-lval var_329;
-var_329 = LVI_CHAR(118);
-lval var_330;
-var_330 = LVI_BOOL(var_285.v.chr == var_329.v.chr);
-if (!LV_IS_FALSE(var_330)) {
-lval var_331;
-lval var_332;
-var_332 = LVI_BOOL(false);
+lval var_324;
+var_324 = LVI_CHAR(118);
+lval var_325;
+var_325 = LVI_BOOL(var_280.v.chr == var_324.v.chr);
+if (!LV_IS_FALSE(var_325)) {
+lval var_326;
+lval var_327;
+var_327 = LVI_BOOL(false);
 do {
-lval var_333;
-var_333 = LVI_BOOL(var_312.vt == LV_STRING);
-var_332 = var_333;
-if (!LV_IS_FALSE(var_332)) { break; }
-lval var_334;
-var_334 = LVI_BOOL(var_312.vt == LV_CHAR);
-var_332 = var_334;
-if (!LV_IS_FALSE(var_332)) { break; }
+lval var_328;
+var_328 = LVI_BOOL(var_307.vt == LV_STRING);
+var_327 = var_328;
+if (!LV_IS_FALSE(var_327)) { break; }
+lval var_329;
+var_329 = LVI_BOOL(var_307.vt == LV_CHAR);
+var_327 = var_329;
+if (!LV_IS_FALSE(var_327)) { break; }
 } while (0);
-if (LV_IS_FALSE(var_332)) {
-lval var_335;
-lval var_336[8];
-var_336[0] = var_312;
-var_335 = fn_20(NULL, var_336);
-var_331 = var_335;
+if (LV_IS_FALSE(var_327)) {
+lval var_330;
+lval var_331[8];
+var_331[0] = var_307;
+var_330 = fn_11(NULL, var_331);
+var_326 = var_330;
 } else {
-var_331 = var_312;
+var_326 = var_307;
+}
+lval var_333;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_326.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_326;
+}
+if (var_250[0].vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_250[0];
+}
+var_333 = LVI_PAIR(p1, p2);
+}
+lval var_334;
+if (var_250[2].vt != LV_PAIR) {
+WILE_EX("cdr", "input is not a pair!");
+}
+var_334 = (var_250[2].v.pair.cdr ? *(var_250[2].v.pair.cdr) : LVI_NIL());
+lval var_337[8];
+var_337[0] = var_333;
+var_337[1] = var_273;
+var_337[2] = var_334;
+var_250[0] = var_337[0];
+var_250[1] = var_337[1];
+var_250[2] = var_337[2];
+goto lbl_251;	// selfie
 }
 lval var_338;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_331.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_331;
-}
-if (var_254[0].vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = var_254[0];
-}
-var_338 = LVI_PAIR(p1, p2);
-}
+var_338 = LVI_CHAR(115);
 lval var_339;
-if (var_254[2].vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
-}
-var_339 = (var_254[2].v.pair.cdr ? *(var_254[2].v.pair.cdr) : LVI_NIL());
-lval var_342[8];
-var_342[0] = var_338;
-var_342[1] = var_278;
-var_342[2] = var_339;
-var_254[0] = var_342[0];
-var_254[1] = var_342[1];
-var_254[2] = var_342[2];
-goto lbl_255;	// selfie
-}
-lval var_343;
-var_343 = LVI_CHAR(115);
-lval var_344;
-var_344 = LVI_BOOL(var_285.v.chr == var_343.v.chr);
-if (!LV_IS_FALSE(var_344)) {
-lval var_345;
+var_339 = LVI_BOOL(var_280.v.chr == var_338.v.chr);
+if (!LV_IS_FALSE(var_339)) {
+lval var_340;
 do {
-lval var_346;
-var_346 = LVI_BOOL(var_312.vt == LV_STRING);
-if (!LV_IS_FALSE(var_346)) {
-lval var_347;
-lval var_348[8];
-var_348[0] = var_287;
-var_348[1] = var_290;
-var_348[2] = var_312;
-var_347 = fn_19(NULL, var_348);
-lval var_350;
+lval var_341;
+var_341 = LVI_BOOL(var_307.vt == LV_STRING);
+if (!LV_IS_FALSE(var_341)) {
+lval var_342;
+lval var_343[8];
+var_343[0] = var_282;
+var_343[1] = var_285;
+var_343[2] = var_307;
+var_342 = fn_10(NULL, var_343);
+lval var_345;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_347.vt != LV_NIL) {
+if (var_342.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_347;
+*p1 = var_342;
 }
-if (var_254[0].vt != LV_NIL) {
+if (var_250[0].vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_254[0];
+*p2 = var_250[0];
 }
-var_350 = LVI_PAIR(p1, p2);
+var_345 = LVI_PAIR(p1, p2);
 }
-lval var_351;
-if (var_254[2].vt != LV_PAIR) {
+lval var_346;
+if (var_250[2].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_351 = (var_254[2].v.pair.cdr ? *(var_254[2].v.pair.cdr) : LVI_NIL());
-lval var_354[8];
-var_354[0] = var_350;
-var_354[1] = var_278;
-var_354[2] = var_351;
-var_254[0] = var_354[0];
-var_254[1] = var_354[1];
-var_254[2] = var_354[2];
-goto lbl_255;	// selfie
+var_346 = (var_250[2].v.pair.cdr ? *(var_250[2].v.pair.cdr) : LVI_NIL());
+lval var_349[8];
+var_349[0] = var_345;
+var_349[1] = var_273;
+var_349[2] = var_346;
+var_250[0] = var_349[0];
+var_250[1] = var_349[1];
+var_250[2] = var_349[2];
+goto lbl_251;	// selfie
 }
-lval var_355;
-var_355 = LVI_BOOL(var_312.vt == LV_CHAR);
-if (!LV_IS_FALSE(var_355)) {
-lval var_356;
+lval var_350;
+var_350 = LVI_BOOL(var_307.vt == LV_CHAR);
+if (!LV_IS_FALSE(var_350)) {
+lval var_351;
 {
 lval vs[1];
-vs[0] = var_312;
-var_356 = wile_gen_list(1, vs, NULL);
+vs[0] = var_307;
+var_351 = wile_gen_list(1, vs, NULL);
 }
 {
 lval vs[8];
-vs[0] = var_356;
-var_356 = wile_char2string(NULL, vs);
+vs[0] = var_351;
+var_351 = wile_char2string(NULL, vs);
 }
-lval var_357;
-lval var_358[8];
-var_358[0] = var_287;
-var_358[1] = var_290;
-var_358[2] = var_356;
-var_357 = fn_19(NULL, var_358);
+lval var_352;
+lval var_353[8];
+var_353[0] = var_282;
+var_353[1] = var_285;
+var_353[2] = var_351;
+var_352 = fn_10(NULL, var_353);
+lval var_355;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_352.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_352;
+}
+if (var_250[0].vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_250[0];
+}
+var_355 = LVI_PAIR(p1, p2);
+}
+lval var_356;
+if (var_250[2].vt != LV_PAIR) {
+WILE_EX("cdr", "input is not a pair!");
+}
+var_356 = (var_250[2].v.pair.cdr ? *(var_250[2].v.pair.cdr) : LVI_NIL());
+lval var_359[8];
+var_359[0] = var_355;
+var_359[1] = var_273;
+var_359[2] = var_356;
+var_250[0] = var_359[0];
+var_250[1] = var_359[1];
+var_250[2] = var_359[2];
+goto lbl_251;	// selfie
+}
 lval var_360;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_357.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_357;
-}
-if (var_254[0].vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = var_254[0];
-}
-var_360 = LVI_PAIR(p1, p2);
-}
+var_360 = LVI_BOOL(var_307.vt == LV_SYMBOL);
+if (!LV_IS_FALSE(var_360)) {
 lval var_361;
-if (var_254[2].vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
-}
-var_361 = (var_254[2].v.pair.cdr ? *(var_254[2].v.pair.cdr) : LVI_NIL());
-lval var_364[8];
-var_364[0] = var_360;
-var_364[1] = var_278;
-var_364[2] = var_361;
-var_254[0] = var_364[0];
-var_254[1] = var_364[1];
-var_254[2] = var_364[2];
-goto lbl_255;	// selfie
-}
+var_361 = LVI_STRING(var_307.v.str);
+lval var_362;
+lval var_363[8];
+var_363[0] = var_282;
+var_363[1] = var_285;
+var_363[2] = var_361;
+var_362 = fn_10(NULL, var_363);
 lval var_365;
-var_365 = LVI_BOOL(var_312.vt == LV_SYMBOL);
-if (!LV_IS_FALSE(var_365)) {
-lval var_366;
-var_366 = LVI_STRING(var_312.v.str);
-lval var_367;
-lval var_368[8];
-var_368[0] = var_287;
-var_368[1] = var_290;
-var_368[2] = var_366;
-var_367 = fn_19(NULL, var_368);
-lval var_370;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_367.vt != LV_NIL) {
+if (var_362.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_367;
+*p1 = var_362;
 }
-if (var_254[0].vt != LV_NIL) {
+if (var_250[0].vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_254[0];
+*p2 = var_250[0];
 }
-var_370 = LVI_PAIR(p1, p2);
+var_365 = LVI_PAIR(p1, p2);
 }
-lval var_371;
-if (var_254[2].vt != LV_PAIR) {
+lval var_366;
+if (var_250[2].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_371 = (var_254[2].v.pair.cdr ? *(var_254[2].v.pair.cdr) : LVI_NIL());
-lval var_374[8];
-var_374[0] = var_370;
-var_374[1] = var_278;
-var_374[2] = var_371;
-var_254[0] = var_374[0];
-var_254[1] = var_374[1];
-var_254[2] = var_374[2];
-goto lbl_255;	// selfie
+var_366 = (var_250[2].v.pair.cdr ? *(var_250[2].v.pair.cdr) : LVI_NIL());
+lval var_369[8];
+var_369[0] = var_365;
+var_369[1] = var_273;
+var_369[2] = var_366;
+var_250[0] = var_369[0];
+var_250[1] = var_369[1];
+var_250[2] = var_369[2];
+goto lbl_251;	// selfie
 }
-lval var_375;
-var_375 = LVI_CHAR(115);
-lval var_376;
-lval var_377[8];
-var_377[0] = var_312;
-var_377[1] = var_375;
-var_376 = fn_1(NULL, var_377);
-lval var_379;
+lval var_370;
+var_370 = LVI_CHAR(115);
+lval var_371;
+lval var_372[8];
+var_372[0] = var_307;
+var_372[1] = var_370;
+var_371 = fn_1(NULL, var_372);
+lval var_374;
 {
 lval vs[1];
-vs[0] = var_376;
-var_379 = wile_gen_list(1, vs, NULL);
+vs[0] = var_371;
+var_374 = wile_gen_list(1, vs, NULL);
 }
-if (var_379.vt == LV_PAIR && (var_379.v.pair.cdr == NULL || var_379.v.pair.cdr->vt == LV_NIL)) {
-var_379 = (var_379.v.pair.car ? *(var_379.v.pair.car) : LVI_NIL());
+if (var_374.vt == LV_PAIR && (var_374.v.pair.cdr == NULL || var_374.v.pair.cdr->vt == LV_NIL)) {
+var_374 = (var_374.v.pair.car ? *(var_374.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_379;
+*(cachalot->errval) = var_374;
 cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
-var_345 = var_379;
+var_340 = var_374;
 } while (0);
-var_314 = var_345;
+var_309 = var_340;
 break;
 }
-lval var_380;
-var_380 = LVI_BOOL(false);
+lval var_375;
+var_375 = LVI_BOOL(false);
 do {
+lval var_376;
+var_376 = LVI_CHAR(98);
+lval var_377;
+var_377 = LVI_BOOL(var_280.v.chr == var_376.v.chr);
+var_375 = var_377;
+if (!LV_IS_FALSE(var_375)) { break; }
+lval var_378;
+var_378 = LVI_CHAR(111);
+lval var_379;
+var_379 = LVI_BOOL(var_280.v.chr == var_378.v.chr);
+var_375 = var_379;
+if (!LV_IS_FALSE(var_375)) { break; }
+lval var_380;
+var_380 = LVI_CHAR(100);
 lval var_381;
-var_381 = LVI_CHAR(98);
+var_381 = LVI_BOOL(var_280.v.chr == var_380.v.chr);
+var_375 = var_381;
+if (!LV_IS_FALSE(var_375)) { break; }
 lval var_382;
-var_382 = LVI_BOOL(var_285.v.chr == var_381.v.chr);
-var_380 = var_382;
-if (!LV_IS_FALSE(var_380)) { break; }
+var_382 = LVI_CHAR(120);
 lval var_383;
-var_383 = LVI_CHAR(111);
-lval var_384;
-var_384 = LVI_BOOL(var_285.v.chr == var_383.v.chr);
-var_380 = var_384;
-if (!LV_IS_FALSE(var_380)) { break; }
-lval var_385;
-var_385 = LVI_CHAR(100);
-lval var_386;
-var_386 = LVI_BOOL(var_285.v.chr == var_385.v.chr);
-var_380 = var_386;
-if (!LV_IS_FALSE(var_380)) { break; }
-lval var_387;
-var_387 = LVI_CHAR(120);
-lval var_388;
-var_388 = LVI_BOOL(var_285.v.chr == var_387.v.chr);
-var_380 = var_388;
-if (!LV_IS_FALSE(var_380)) { break; }
+var_383 = LVI_BOOL(var_280.v.chr == var_382.v.chr);
+var_375 = var_383;
+if (!LV_IS_FALSE(var_375)) { break; }
 } while (0);
-if (!LV_IS_FALSE(var_380)) {
-lval var_390;
-var_390 = LVI_BOOL(var_312.vt == LV_RAT || var_312.vt == LV_INT);
-if (LV_IS_FALSE(var_390)) {
-lval var_391;
-lval var_392[8];
-var_392[0] = var_312;
-var_392[1] = var_285;
-var_391 = fn_1(NULL, var_392);
-lval var_394;
+if (!LV_IS_FALSE(var_375)) {
+lval var_385;
+var_385 = LVI_BOOL(var_307.vt == LV_RAT || var_307.vt == LV_INT);
+if (LV_IS_FALSE(var_385)) {
+lval var_386;
+lval var_387[8];
+var_387[0] = var_307;
+var_387[1] = var_280;
+var_386 = fn_1(NULL, var_387);
+lval var_389;
 {
 lval vs[1];
-vs[0] = var_391;
-var_394 = wile_gen_list(1, vs, NULL);
+vs[0] = var_386;
+var_389 = wile_gen_list(1, vs, NULL);
 }
-if (var_394.vt == LV_PAIR && (var_394.v.pair.cdr == NULL || var_394.v.pair.cdr->vt == LV_NIL)) {
-var_394 = (var_394.v.pair.car ? *(var_394.v.pair.car) : LVI_NIL());
+if (var_389.vt == LV_PAIR && (var_389.v.pair.cdr == NULL || var_389.v.pair.cdr->vt == LV_NIL)) {
+var_389 = (var_389.v.pair.car ? *(var_389.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_394;
+*(cachalot->errval) = var_389;
 cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
@@ -1572,155 +1577,155 @@ longjmp(cachalot->cenv, 1);
 (void)
  LVI_BOOL(false);
 }
-lval var_396;
-lval var_397;
-if (var_285.vt != LV_CHAR) {
+lval var_391;
+lval var_392;
+if (var_280.vt != LV_CHAR) {
 wile_exception2("case", __FILE__, __LINE__, "case-value type does not match case type");
 }
-switch (var_285.v.chr) {
+switch (var_280.v.chr) {
 case 98:
 {
-lval var_398;
-var_398 = LVI_INT(2);
-var_397 = var_398;
+lval var_393;
+var_393 = LVI_INT(2);
+var_392 = var_393;
 break;
 }
 case 111:
 {
-lval var_399;
-var_399 = LVI_INT(8);
-var_397 = var_399;
+lval var_394;
+var_394 = LVI_INT(8);
+var_392 = var_394;
 break;
 }
 case 100:
 {
-lval var_400;
-var_400 = LVI_INT(10);
-var_397 = var_400;
+lval var_395;
+var_395 = LVI_INT(10);
+var_392 = var_395;
 break;
 }
 case 120:
 {
-lval var_401;
-var_401 = LVI_INT(16);
-var_397 = var_401;
+lval var_396;
+var_396 = LVI_INT(16);
+var_392 = var_396;
 break;
 }
 default:
-var_397 = LVI_BOOL(false);
+var_392 = LVI_BOOL(false);
 }
-var_396 = var_397;
-lval var_402;
-lval var_403;
-if (var_396.vt == LV_INT) {
-var_403 = wile_num2string(var_312, var_396.v.iv, INT_MIN, __FILE__, __LINE__);
+var_391 = var_392;
+lval var_397;
+lval var_398;
+if (var_391.vt == LV_INT) {
+var_398 = wile_num2string(var_307, var_391.v.iv, INT_MIN, __FILE__, __LINE__);
 } else {
 WILE_EX("number->string", "base is not numeric");
 }
-var_402 = var_403;
-lval var_404;
-lval var_405;
-lval var_406;
-switch (var_312.vt) {
+var_397 = var_398;
+lval var_399;
+lval var_400;
+lval var_401;
+switch (var_307.vt) {
 case LV_REAL:
-var_406 = LVI_BOOL(var_312.v.rv < 0.0);
+var_401 = LVI_BOOL(var_307.v.rv < 0.0);
 break;
 case LV_RAT:
-var_406 = LVI_BOOL((var_312.v.irv.num < 0 && var_312.v.irv.den >= 0) || (var_312.v.irv.num > 0 && var_312.v.irv.den < 0));
+var_401 = LVI_BOOL((var_307.v.irv.num < 0 && var_307.v.irv.den >= 0) || (var_307.v.irv.num > 0 && var_307.v.irv.den < 0));
 break;
 case LV_INT:
-var_406 = LVI_BOOL(var_312.v.iv < 0);
+var_401 = LVI_BOOL(var_307.v.iv < 0);
 break;
 default:
 WILE_EX("negative?", "expects a real-valued number");
 }
-if (LV_IS_FALSE(var_406)) {
-lval var_407;
+if (LV_IS_FALSE(var_401)) {
+lval var_402;
 {
 lval vs[2];
-vs[0] = var_293;
-vs[1] = var_402;
-var_407 = wile_gen_list(2, vs, NULL);
+vs[0] = var_288;
+vs[1] = var_397;
+var_402 = wile_gen_list(2, vs, NULL);
 }
 {
 lval vs[8];
-vs[0] = var_407;
-var_407 = wile_string_append(NULL, vs);
+vs[0] = var_402;
+var_402 = wile_string_append(NULL, vs);
 }
-var_405 = var_407;
+var_400 = var_402;
 } else {
-var_405 = var_402;
+var_400 = var_397;
 }
-var_404 = var_405;
-lval var_408;
-lval var_409[8];
-var_409[0] = var_287;
-var_409[1] = var_290;
-var_409[2] = var_404;
-var_408 = fn_19(NULL, var_409);
-lval var_411;
+var_399 = var_400;
+lval var_403;
+lval var_404[8];
+var_404[0] = var_282;
+var_404[1] = var_285;
+var_404[2] = var_399;
+var_403 = fn_10(NULL, var_404);
+lval var_406;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_408.vt != LV_NIL) {
+if (var_403.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_408;
+*p1 = var_403;
 }
-if (var_254[0].vt != LV_NIL) {
+if (var_250[0].vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_254[0];
+*p2 = var_250[0];
 }
-var_411 = LVI_PAIR(p1, p2);
+var_406 = LVI_PAIR(p1, p2);
 }
-lval var_412;
-if (var_254[2].vt != LV_PAIR) {
+lval var_407;
+if (var_250[2].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_412 = (var_254[2].v.pair.cdr ? *(var_254[2].v.pair.cdr) : LVI_NIL());
-lval var_415[8];
-var_415[0] = var_411;
-var_415[1] = var_278;
-var_415[2] = var_412;
-var_254[0] = var_415[0];
-var_254[1] = var_415[1];
-var_254[2] = var_415[2];
-goto lbl_255;	// selfie
+var_407 = (var_250[2].v.pair.cdr ? *(var_250[2].v.pair.cdr) : LVI_NIL());
+lval var_410[8];
+var_410[0] = var_406;
+var_410[1] = var_273;
+var_410[2] = var_407;
+var_250[0] = var_410[0];
+var_250[1] = var_410[1];
+var_250[2] = var_410[2];
+goto lbl_251;	// selfie
 }
-lval var_416;
-var_416 = LVI_BOOL(false);
+lval var_411;
+var_411 = LVI_BOOL(false);
 do {
-lval var_417;
-var_417 = LVI_CHAR(102);
-lval var_418;
-var_418 = LVI_BOOL(var_285.v.chr == var_417.v.chr);
-var_416 = var_418;
-if (!LV_IS_FALSE(var_416)) { break; }
-lval var_419;
-var_419 = LVI_CHAR(101);
-lval var_420;
-var_420 = LVI_BOOL(var_285.v.chr == var_419.v.chr);
-var_416 = var_420;
-if (!LV_IS_FALSE(var_416)) { break; }
+lval var_412;
+var_412 = LVI_CHAR(102);
+lval var_413;
+var_413 = LVI_BOOL(var_280.v.chr == var_412.v.chr);
+var_411 = var_413;
+if (!LV_IS_FALSE(var_411)) { break; }
+lval var_414;
+var_414 = LVI_CHAR(101);
+lval var_415;
+var_415 = LVI_BOOL(var_280.v.chr == var_414.v.chr);
+var_411 = var_415;
+if (!LV_IS_FALSE(var_411)) { break; }
 } while (0);
-if (!LV_IS_FALSE(var_416)) {
-lval var_422;
-var_422 = LVI_BOOL(var_312.vt == LV_CMPLX || var_312.vt == LV_REAL || var_312.vt == LV_RAT || var_312.vt == LV_INT);
-if (LV_IS_FALSE(var_422)) {
-lval var_423;
-lval var_424[8];
-var_424[0] = var_312;
-var_424[1] = var_285;
-var_423 = fn_1(NULL, var_424);
-lval var_426;
+if (!LV_IS_FALSE(var_411)) {
+lval var_417;
+var_417 = LVI_BOOL(var_307.vt == LV_CMPLX || var_307.vt == LV_REAL || var_307.vt == LV_RAT || var_307.vt == LV_INT);
+if (LV_IS_FALSE(var_417)) {
+lval var_418;
+lval var_419[8];
+var_419[0] = var_307;
+var_419[1] = var_280;
+var_418 = fn_1(NULL, var_419);
+lval var_421;
 {
 lval vs[1];
-vs[0] = var_423;
-var_426 = wile_gen_list(1, vs, NULL);
+vs[0] = var_418;
+var_421 = wile_gen_list(1, vs, NULL);
 }
-if (var_426.vt == LV_PAIR && (var_426.v.pair.cdr == NULL || var_426.v.pair.cdr->vt == LV_NIL)) {
-var_426 = (var_426.v.pair.car ? *(var_426.v.pair.car) : LVI_NIL());
+if (var_421.vt == LV_PAIR && (var_421.v.pair.cdr == NULL || var_421.v.pair.cdr->vt == LV_NIL)) {
+var_421 = (var_421.v.pair.car ? *(var_421.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_426;
+*(cachalot->errval) = var_421;
 cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
@@ -1728,380 +1733,411 @@ longjmp(cachalot->cenv, 1);
 (void)
  LVI_BOOL(false);
 }
-lval var_428;
-lval var_429;
-lval var_430;
-var_430 = LVI_CHAR(102);
-lval var_431;
-var_431 = LVI_BOOL(var_285.v.chr == var_430.v.chr);
-if (LV_IS_FALSE(var_431)) {
-var_429 = LVI_PROC(fn_432,NULL,-1);
+lval var_423;
+lval var_424;
+lval var_425;
+var_425 = LVI_CHAR(102);
+lval var_426;
+var_426 = LVI_BOOL(var_280.v.chr == var_425.v.chr);
+if (LV_IS_FALSE(var_426)) {
+var_424 = LVI_PROC(fn_427,NULL,-1);
 } else {
-var_429 = LVI_PROC(fn_437,NULL,-1);
+var_424 = LVI_PROC(fn_432,NULL,-1);
 }
-lval var_442;
-if (LV_IS_FALSE(var_296)) {
-lval var_443;
-var_443 = LVI_INT(12);
-var_442 = var_443;
+lval var_437;
+if (LV_IS_FALSE(var_291)) {
+lval var_438;
+var_438 = LVI_INT(12);
+var_437 = var_438;
 } else {
-var_442 = var_296;
+var_437 = var_291;
 }
-lval var_444;
+lval var_439;
 {
 lval vs[1];
-vs[0] = var_442;
-var_444 = wile_gen_list(1, vs, NULL);
+vs[0] = var_437;
+var_439 = wile_gen_list(1, vs, NULL);
 }
-lval var_445;
+lval var_440;
 {
 lval vs[2];
-vs[0] = var_429;
-vs[1] = var_444;
-var_445 = wile_gen_list(2, vs, NULL);
+vs[0] = var_424;
+vs[1] = var_439;
+var_440 = wile_gen_list(2, vs, NULL);
 }
-var_445 = wile_apply_function(&(var_445), __FILE__, __LINE__);
-var_428 = var_445;
-lval var_446;
-lval var_447;
-var_447 = LVI_INT(10);
-lval var_448;
-if (var_447.vt == LV_INT && var_428.vt == LV_INT) {
-var_448 = wile_num2string(var_312, var_447.v.iv, var_428.v.iv, __FILE__, __LINE__);
+var_440 = wile_apply_function(&(var_440), __FILE__, __LINE__);
+var_423 = var_440;
+lval var_441;
+lval var_442;
+var_442 = LVI_INT(10);
+lval var_443;
+if (var_442.vt == LV_INT && var_423.vt == LV_INT) {
+var_443 = wile_num2string(var_307, var_442.v.iv, var_423.v.iv, __FILE__, __LINE__);
 } else {
 WILE_EX("number->string", "base or precision is not numeric");
 }
-var_446 = var_448;
-lval var_449;
-lval var_450;
-lval var_451;
-switch (var_312.vt) {
+var_441 = var_443;
+lval var_444;
+lval var_445;
+lval var_446;
+switch (var_307.vt) {
 case LV_REAL:
-var_451 = LVI_BOOL(var_312.v.rv < 0.0);
+var_446 = LVI_BOOL(var_307.v.rv < 0.0);
 break;
 case LV_RAT:
-var_451 = LVI_BOOL((var_312.v.irv.num < 0 && var_312.v.irv.den >= 0) || (var_312.v.irv.num > 0 && var_312.v.irv.den < 0));
+var_446 = LVI_BOOL((var_307.v.irv.num < 0 && var_307.v.irv.den >= 0) || (var_307.v.irv.num > 0 && var_307.v.irv.den < 0));
 break;
 case LV_INT:
-var_451 = LVI_BOOL(var_312.v.iv < 0);
+var_446 = LVI_BOOL(var_307.v.iv < 0);
 break;
 default:
 WILE_EX("negative?", "expects a real-valued number");
 }
-if (LV_IS_FALSE(var_451)) {
-lval var_452;
+if (LV_IS_FALSE(var_446)) {
+lval var_447;
 {
 lval vs[2];
-vs[0] = var_293;
-vs[1] = var_446;
-var_452 = wile_gen_list(2, vs, NULL);
+vs[0] = var_288;
+vs[1] = var_441;
+var_447 = wile_gen_list(2, vs, NULL);
 }
 {
 lval vs[8];
-vs[0] = var_452;
-var_452 = wile_string_append(NULL, vs);
+vs[0] = var_447;
+var_447 = wile_string_append(NULL, vs);
 }
-var_450 = var_452;
+var_445 = var_447;
 } else {
-var_450 = var_446;
+var_445 = var_441;
 }
-var_449 = var_450;
-lval var_453;
-lval var_454[8];
-var_454[0] = var_287;
-var_454[1] = var_290;
-var_454[2] = var_449;
-var_453 = fn_19(NULL, var_454);
-lval var_456;
+var_444 = var_445;
+lval var_448;
+lval var_449[8];
+var_449[0] = var_282;
+var_449[1] = var_285;
+var_449[2] = var_444;
+var_448 = fn_10(NULL, var_449);
+lval var_451;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_453.vt != LV_NIL) {
+if (var_448.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_453;
+*p1 = var_448;
 }
-if (var_254[0].vt != LV_NIL) {
+if (var_250[0].vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_254[0];
+*p2 = var_250[0];
 }
-var_456 = LVI_PAIR(p1, p2);
+var_451 = LVI_PAIR(p1, p2);
 }
-lval var_457;
-if (var_254[2].vt != LV_PAIR) {
+lval var_452;
+if (var_250[2].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_457 = (var_254[2].v.pair.cdr ? *(var_254[2].v.pair.cdr) : LVI_NIL());
-lval var_460[8];
-var_460[0] = var_456;
-var_460[1] = var_278;
-var_460[2] = var_457;
-var_254[0] = var_460[0];
-var_254[1] = var_460[1];
-var_254[2] = var_460[2];
-goto lbl_255;	// selfie
+var_452 = (var_250[2].v.pair.cdr ? *(var_250[2].v.pair.cdr) : LVI_NIL());
+lval var_455[8];
+var_455[0] = var_451;
+var_455[1] = var_273;
+var_455[2] = var_452;
+var_250[0] = var_455[0];
+var_250[1] = var_455[1];
+var_250[2] = var_455[2];
+goto lbl_251;	// selfie
 }
-var_314 = LVI_BOOL(false);
+var_309 = LVI_BOOL(false);
 } while (0);
-var_304 = var_314;
+var_299 = var_309;
 } else {
-lval var_461;
-var_461 = LVI_INT(1);
-lval var_462;
+lval var_456;
+var_456 = LVI_INT(1);
+lval var_457;
 {
 lval vs[2];
-vs[0] = var_287;
-vs[1] = var_461;
-var_462 = wile_gen_list(2, vs, NULL);
+vs[0] = var_282;
+vs[1] = var_456;
+var_457 = wile_gen_list(2, vs, NULL);
 }
 {
 lval vs[8];
-vs[0] = var_462;
-var_462 = wile_max(NULL, vs);
+vs[0] = var_457;
+var_457 = wile_max(NULL, vs);
 }
-lval var_463;
-var_463 = LVI_CHAR(37);
-lval var_464;
-if (var_462.vt != LV_INT || var_462.v.iv < 0) {
+lval var_458;
+var_458 = LVI_CHAR(37);
+lval var_459;
+if (var_457.vt != LV_INT || var_457.v.iv < 0) {
 WILE_EX("string-create", "first input is not a non-negative integer");
 }
-if (var_463.vt != LV_CHAR || var_463.v.chr == '\0') {
+if (var_458.vt != LV_CHAR || var_458.v.chr == '\0') {
 WILE_EX("string-create", "second input is not a valid character");
 }
-var_464.vt = LV_STRING;
-var_464.v.str = LISP_ALLOC(char, 1 + var_462.v.iv);
-LISP_ASSERT(var_464.v.str != NULL);
-memset(var_464.v.str, var_463.v.chr, var_462.v.iv);
-var_464.v.str[var_462.v.iv] = '\0';
-lval var_465;
+var_459.vt = LV_STRING;
+var_459.v.str = LISP_ALLOC(char, 1 + var_457.v.iv);
+LISP_ASSERT(var_459.v.str != NULL);
+memset(var_459.v.str, var_458.v.chr, var_457.v.iv);
+var_459.v.str[var_457.v.iv] = '\0';
+lval var_460;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_464.vt != LV_NIL) {
+if (var_459.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_464;
+*p1 = var_459;
 }
-if (var_254[0].vt != LV_NIL) {
+if (var_250[0].vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_254[0];
+*p2 = var_250[0];
 }
-var_465 = LVI_PAIR(p1, p2);
+var_460 = LVI_PAIR(p1, p2);
 }
-lval var_468[8];
-var_468[0] = var_465;
-var_468[1] = var_278;
-var_468[2] = var_254[2];
-var_254[0] = var_468[0];
-var_254[1] = var_468[1];
-var_254[2] = var_468[2];
-goto lbl_255;	// selfie
+lval var_463[8];
+var_463[0] = var_460;
+var_463[1] = var_273;
+var_463[2] = var_250[2];
+var_250[0] = var_463[0];
+var_250[1] = var_463[1];
+var_250[2] = var_463[2];
+goto lbl_251;	// selfie
 }
-var_259 = var_304;
+var_254 = var_299;
 }
-return var_259;
+return var_254;
 }
-// end of lambda fn_252
+// end of lambda fn_248
 
-// @@@ (printf-helper fstr . vals) @@@ bld-rtl-dir/wile-rtl2-000067.scm:134 @@@ fn_21 @@@
-static lval fn_21(lptr* var_249, lptr var_250)
+// @@@ (printf-helper fstr . vals) @@@ bld-rtl-dir/wile-rtl2-000067.scm:130 @@@ fn_12 @@@
+static lval fn_12(lptr* var_240, lptr var_241)
 {
-MK_CLOS(var_253,0);
-lval var_469;
-var_469 = LVI_NIL();
-lval var_470;
-lval var_471[8];
-var_471[0] = var_469;
-var_471[1] = var_250[0];
-var_471[2] = var_250[1];
-var_470 = fn_252(var_253, var_471);
-return var_470;
+if (LV_IS_FALSE(var_8)) {
+lval var_244;
+var_244 = LVI_STRING("|");
+lval var_245;
+{
+lval vs[6];
+vs[0] = var_4;
+vs[1] = var_2;
+vs[2] = var_3;
+vs[3] = var_5;
+vs[4] = var_6;
+vs[5] = var_7;
+var_245 = wile_gen_list(6, vs, NULL);
 }
-// end of function fn_21
-
-// @@@ lambda (s) @@@ bld-rtl-dir/wile-rtl2-000067.scm:232 @@@ fn_476 @@@
-static lval fn_476(lptr* var_477, lptr var_478)
+lval var_246;
 {
-lval var_480;
-if (var_478[0].vt == LV_CHAR) {
-fputc(var_478[0].v.chr, stdout);
-} else if (var_478[0].vt == LV_STRING) {
-fputs(var_478[0].v.str, stdout);
+lval vs[1];
+vs[0] = var_245;
+var_246 = wile_gen_list(1, vs, NULL);
+}
+{
+lval vs[8];
+vs[0] = var_244;
+vs[1] = var_246;
+var_246 = wile_string_join_by(NULL, vs);
+}
+var_8 = var_246;
+} else {
+(void)
+ LVI_BOOL(false);
+}
+MK_CLOS(var_249,0);
+lval var_464;
+var_464 = LVI_NIL();
+lval var_465;
+lval var_466[8];
+var_466[0] = var_464;
+var_466[1] = var_241[0];
+var_466[2] = var_241[1];
+var_465 = fn_248(var_249, var_466);
+return var_465;
+}
+// end of function fn_12
+
+// @@@ lambda (s) @@@ bld-rtl-dir/wile-rtl2-000067.scm:230 @@@ fn_471 @@@
+static lval fn_471(lptr* var_472, lptr var_473)
+{
+lval var_475;
+if (var_473[0].vt == LV_CHAR) {
+fputc(var_473[0].v.chr, stdout);
+} else if (var_473[0].vt == LV_STRING) {
+fputs(var_473[0].v.str, stdout);
 } else {
 WILE_EX("write-string", "input is not a string or char!");
 }
-var_480 = LVI_BOOL(true);
-return var_480;
+var_475 = LVI_BOOL(true);
+return var_475;
 }
-// end of lambda fn_476
+// end of lambda fn_471
 
-// @@@ (printf fstr . vals) @@@ bld-rtl-dir/wile-rtl2-000067.scm:231 @@@ wile_printf @@@
-lval wile_printf(lptr* var_473, lptr var_474)
+// @@@ (printf fstr . vals) @@@ bld-rtl-dir/wile-rtl2-000067.scm:229 @@@ wile_printf @@@
+lval wile_printf(lptr* var_468, lptr var_469)
 {
-MK_CLOS(var_477,0);
-lval var_481;
-var_481 = LVI_PROC(fn_21,NULL,-2);
-lval var_482;
+MK_CLOS(var_472,0);
+lval var_476;
+var_476 = LVI_PROC(fn_12,NULL,-2);
+lval var_477;
 {
 lval vs[3];
-vs[0] = var_481;
-vs[1] = var_474[0];
-vs[2] = var_474[1];
-var_482 = wile_gen_list(3, vs, NULL);
+vs[0] = var_476;
+vs[1] = var_469[0];
+vs[2] = var_469[1];
+var_477 = wile_gen_list(3, vs, NULL);
 }
-var_482 = wile_apply_function(&(var_482), __FILE__, __LINE__);
-lval var_483;
+var_477 = wile_apply_function(&(var_477), __FILE__, __LINE__);
+lval var_478;
 {
 lval vs[8];
-vs[0] = var_482;
-var_483 = wile_list_reverse(NULL, vs);
+vs[0] = var_477;
+var_478 = wile_list_reverse(NULL, vs);
 }
-lval var_484;
-var_484 = LVI_NIL();
+lval var_479;
+var_479 = LVI_NIL();
 {
 lval vs[8];
-vs[0] = LVI_PROC(fn_476,var_477,1);
-vs[1] = var_483;
-vs[2] = var_484;
-var_484 = wile_for_each(NULL, vs);
+vs[0] = LVI_PROC(fn_471,var_472,1);
+vs[1] = var_478;
+vs[2] = var_479;
+var_479 = wile_for_each(NULL, vs);
 }
-return var_484;
+return var_479;
 }
 // end of function wile_printf
 
-// @@@ lambda (s) @@@ bld-rtl-dir/wile-rtl2-000067.scm:238 @@@ fn_488 @@@
-static lval fn_488(lptr* var_489, lptr var_490)
+// @@@ lambda (s) @@@ bld-rtl-dir/wile-rtl2-000067.scm:236 @@@ fn_483 @@@
+static lval fn_483(lptr* var_484, lptr var_485)
 {
-lval var_492;
+lval var_487;
 {
 FILE* fp;
-if (V_CLOS(var_489,0).vt == LV_FILE_PORT || V_CLOS(var_489,0).vt == LV_PIPE_PORT || V_CLOS(var_489,0).vt == LV_SOCK_PORT) {
-fp = V_CLOS(var_489,0).v.fp;
+if (V_CLOS(var_484,0).vt == LV_FILE_PORT || V_CLOS(var_484,0).vt == LV_PIPE_PORT || V_CLOS(var_484,0).vt == LV_SOCK_PORT) {
+fp = V_CLOS(var_484,0).v.fp;
 } else {
 WILE_EX("write-string", "first input is not a port!");
 }
-if (var_490[0].vt == LV_CHAR) {
-fputc(var_490[0].v.chr, fp);
-} else if (var_490[0].vt == LV_STRING) {
-fputs(var_490[0].v.str, fp);
+if (var_485[0].vt == LV_CHAR) {
+fputc(var_485[0].v.chr, fp);
+} else if (var_485[0].vt == LV_STRING) {
+fputs(var_485[0].v.str, fp);
 } else {
 WILE_EX("write-string", "second input is not a string or char!");
 }
-var_492 = LVI_BOOL(true);
+var_487 = LVI_BOOL(true);
 }
-return var_492;
+return var_487;
 }
-// end of lambda fn_488
+// end of lambda fn_483
 
-// @@@ (fprintf port fstr . vals) @@@ bld-rtl-dir/wile-rtl2-000067.scm:237 @@@ wile_fprintf @@@
-lval wile_fprintf(lptr* var_485, lptr var_486)
+// @@@ (fprintf port fstr . vals) @@@ bld-rtl-dir/wile-rtl2-000067.scm:235 @@@ wile_fprintf @@@
+lval wile_fprintf(lptr* var_480, lptr var_481)
 {
-MK_CLOS(var_489,1);
-P_CLOS(var_489,0) = &(var_486[0]);
-lval var_493;
-var_493 = LVI_PROC(fn_21,NULL,-2);
-lval var_494;
+MK_CLOS(var_484,1);
+P_CLOS(var_484,0) = &(var_481[0]);
+lval var_488;
+var_488 = LVI_PROC(fn_12,NULL,-2);
+lval var_489;
 {
 lval vs[3];
-vs[0] = var_493;
-vs[1] = var_486[1];
-vs[2] = var_486[2];
-var_494 = wile_gen_list(3, vs, NULL);
+vs[0] = var_488;
+vs[1] = var_481[1];
+vs[2] = var_481[2];
+var_489 = wile_gen_list(3, vs, NULL);
 }
-var_494 = wile_apply_function(&(var_494), __FILE__, __LINE__);
-lval var_495;
+var_489 = wile_apply_function(&(var_489), __FILE__, __LINE__);
+lval var_490;
 {
 lval vs[8];
-vs[0] = var_494;
-var_495 = wile_list_reverse(NULL, vs);
+vs[0] = var_489;
+var_490 = wile_list_reverse(NULL, vs);
 }
-lval var_496;
-var_496 = LVI_NIL();
+lval var_491;
+var_491 = LVI_NIL();
 {
 lval vs[8];
-vs[0] = LVI_PROC(fn_488,var_489,1);
-vs[1] = var_495;
-vs[2] = var_496;
-var_496 = wile_for_each(NULL, vs);
+vs[0] = LVI_PROC(fn_483,var_484,1);
+vs[1] = var_490;
+vs[2] = var_491;
+var_491 = wile_for_each(NULL, vs);
 }
-return var_496;
+return var_491;
 }
 // end of function wile_fprintf
 
-// @@@ string-append @@@ bld-rtl-dir/wile-rtl2-000067.scm:244 @@@ fn_500 @@@
+// @@@ string-append @@@ bld-rtl-dir/wile-rtl2-000067.scm:242 @@@ fn_495 @@@
+static lval fn_495(lptr* var_496, lptr var_497)
+{
+lval var_499;
+var_499 = var_497[0];
+{
+lval vs[8];
+vs[0] = var_499;
+var_499 = wile_string_append(NULL, vs);
+}
+return var_499;
+}
+// end of prim fn_495
+
+// @@@ lambda (v) @@@ bld-rtl-dir/wile-rtl2-000067.scm:243 @@@ fn_500 @@@
 static lval fn_500(lptr* var_501, lptr var_502)
 {
 lval var_504;
-var_504 = var_502[0];
+lval var_505;
+var_505 = LVI_BOOL(var_502[0].vt == LV_STRING);
+if (LV_IS_FALSE(var_505)) {
+lval var_506;
+{
+lval vs[1];
+vs[0] = var_502[0];
+var_506 = wile_gen_list(1, vs, NULL);
+}
 {
 lval vs[8];
-vs[0] = var_504;
-var_504 = wile_string_append(NULL, vs);
+vs[0] = var_506;
+var_506 = wile_char2string(NULL, vs);
+}
+var_504 = var_506;
+} else {
+var_504 = var_502[0];
 }
 return var_504;
 }
-// end of prim fn_500
+// end of lambda fn_500
 
-// @@@ lambda (v) @@@ bld-rtl-dir/wile-rtl2-000067.scm:245 @@@ fn_505 @@@
-static lval fn_505(lptr* var_506, lptr var_507)
+// @@@ (sprintf fstr . vals) @@@ bld-rtl-dir/wile-rtl2-000067.scm:241 @@@ wile_sprintf @@@
+lval wile_sprintf(lptr* var_492, lptr var_493)
 {
-lval var_509;
-lval var_510;
-var_510 = LVI_BOOL(var_507[0].vt == LV_STRING);
-if (LV_IS_FALSE(var_510)) {
-lval var_511;
-{
-lval vs[1];
-vs[0] = var_507[0];
-var_511 = wile_gen_list(1, vs, NULL);
-}
-{
-lval vs[8];
-vs[0] = var_511;
-var_511 = wile_char2string(NULL, vs);
-}
-var_509 = var_511;
-} else {
-var_509 = var_507[0];
-}
-return var_509;
-}
-// end of lambda fn_505
-
-// @@@ (sprintf fstr . vals) @@@ bld-rtl-dir/wile-rtl2-000067.scm:243 @@@ wile_sprintf @@@
-lval wile_sprintf(lptr* var_497, lptr var_498)
-{
-MK_CLOS(var_506,0);
-lval var_512;
-var_512 = LVI_PROC(fn_21,NULL,-2);
-lval var_513;
+MK_CLOS(var_501,0);
+lval var_507;
+var_507 = LVI_PROC(fn_12,NULL,-2);
+lval var_508;
 {
 lval vs[3];
-vs[0] = var_512;
-vs[1] = var_498[0];
-vs[2] = var_498[1];
-var_513 = wile_gen_list(3, vs, NULL);
+vs[0] = var_507;
+vs[1] = var_493[0];
+vs[2] = var_493[1];
+var_508 = wile_gen_list(3, vs, NULL);
 }
-var_513 = wile_apply_function(&(var_513), __FILE__, __LINE__);
-lval var_514;
+var_508 = wile_apply_function(&(var_508), __FILE__, __LINE__);
+lval var_509;
 {
 lval vs[8];
-vs[0] = var_513;
-var_514 = wile_list_reverse(NULL, vs);
+vs[0] = var_508;
+var_509 = wile_list_reverse(NULL, vs);
 }
-lval var_515;
-var_515 = LVI_NIL();
+lval var_510;
+var_510 = LVI_NIL();
 {
 lval vs[8];
-vs[0] = LVI_PROC(fn_505,var_506,1);
-vs[1] = var_514;
-vs[2] = var_515;
-var_515 = wile_map(NULL, vs);
+vs[0] = LVI_PROC(fn_500,var_501,1);
+vs[1] = var_509;
+vs[2] = var_510;
+var_510 = wile_map(NULL, vs);
 }
-lval var_516;
+lval var_511;
 {
 lval vs[2];
-vs[0] = LVI_PROC(fn_500,NULL,-1);
-vs[1] = var_515;
-var_516 = wile_gen_list(2, vs, NULL);
+vs[0] = LVI_PROC(fn_495,NULL,-1);
+vs[1] = var_510;
+var_511 = wile_gen_list(2, vs, NULL);
 }
-var_516 = wile_apply_function(&(var_516), __FILE__, __LINE__);
-return var_516;
+var_511 = wile_apply_function(&(var_511), __FILE__, __LINE__);
+return var_511;
 }
 // end of function wile_sprintf

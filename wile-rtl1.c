@@ -63,7 +63,7 @@ int main(int argc, char** argv)
     cachalot = &tcatch;
     ret = EXIT_SUCCESS;
     if (setjmp(tcatch.cenv) == 0) {
-	scheme_main(argc, argv);
+	wile_main(argc, argv);
     } else {
 	fputs("caught exception", stderr);
 	if (cachalot->c_whence) {
@@ -1010,7 +1010,7 @@ lval wile_regex_match(lptr*, lptr args)
 
 // --8><----8><----8><--
 
-extern const int global_tc_min_args;
+extern const int wile_tc_min_args;
 
 // (apply proc arg1 . . . args)
 // The apply procedure calls proc with the elements of the list
@@ -1078,8 +1078,8 @@ lval wile_apply_function(lptr args, const char* file_name, int line_no)
 
 	if (proc.vt == LV_CLAMBDA) {
 	    i = arity + (caboose ? 1 : 0);
-	    if (i < global_tc_min_args) {
-		i = global_tc_min_args;
+	    if (i < wile_tc_min_args) {
+		i = wile_tc_min_args;
 	    }
 	    ap = LISP_ALLOC(lval, i);
 	    LISP_ASSERT(ap != NULL);
@@ -1091,7 +1091,7 @@ lval wile_apply_function(lptr args, const char* file_name, int line_no)
 		ap[arity] = args ? *args : LVI_NIL();
 	    }
 
-	    if (global_tc_min_args > 0) {
+	    if (wile_tc_min_args > 0) {
 		// Oddly, clang does not like this as a TAIL_CALL
 		return proc.v.clambda.fn(proc.v.clambda.closure, ap);
 	    } else {
@@ -1100,10 +1100,15 @@ lval wile_apply_function(lptr args, const char* file_name, int line_no)
 		return lv;
 	    }
 	} else {
-	    // TODO: ILAMBDA - some part of the above is reusable: what?
-fputs("warning! calling ilambda! implement!\n", stderr);
-fflush(stderr);
-	    return LVI_NIL();
+	    i = 2;
+	    if (i < wile_tc_min_args) {
+		i = wile_tc_min_args;
+	    }
+	    app = LISP_ALLOC(lval, i);
+	    LISP_ASSERT(app != NULL);
+	    app[0] = proc;
+	    app[1] = args ? *args : LVI_NIL();
+	    return wile_eval_apply_lambda(NULL, app);
 	}
     } else if (proc.vt == LV_CONT) {
 	wile_invoke_continuation(&proc, args);

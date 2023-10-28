@@ -363,11 +363,6 @@
 		 `(load ,filepath)
 		 `(write-string "unable to find file '" ,fname "'\n")))))
 
-   (list 'add-output
-	 "this macro is used inside wile until wile can interpret user code; do not use"
-	 'macro 1
-	 (lambda (val) `(set! output (cons ,val output))))
-
    (list 'compile-with-output
 	 "this macro is used inside wile until wile can interpret user code; do not use"
 	 'macro -2
@@ -3635,15 +3630,6 @@
 	    "} else {"
 	    "WILE_EX(\"get-interpreted-procedure-macro\", \"expects an interpreted procedure\");"
 	    "}")))
-
-;;; ################ TODO: implement this stub!!!
-
-   (list 'eval
-	 'prim -1
-	 (lambda (r . as)
-	   (fprintf stderr "WARNING! using stub for eval\n")
-	   (emit-code "@@ = LVI_STRING(\"TODO implement eval\");")))
-
    ))
 
 ;;; Add the stuff in wile-rtl2.scm to the primitives list

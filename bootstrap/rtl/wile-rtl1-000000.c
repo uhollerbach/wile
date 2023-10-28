@@ -62,7 +62,7 @@ int main(int argc, char** argv)
     cachalot = &tcatch;
     ret = EXIT_SUCCESS;
     if (setjmp(tcatch.cenv) == 0) {
-	scheme_main(argc, argv);
+	wile_main(argc, argv);
     } else {
 	fputs("caught exception", stderr);
 	if (cachalot->c_whence) {

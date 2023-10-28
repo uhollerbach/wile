@@ -1,5 +1,2 @@
-Ugh. I just realized that all of these are full of macros. I can
-compile them with my interpreted version of wile, but that relies on
-my environment which I'm trying to escape. The compiled version of
-wile is not yet clever enough to do much of anything here. Please
-consider this a preview of coming attractions, mea culpa!
+Previously, these were all not working, because the compiler couldn't
+handle user-defined macros. Now they all look good.

@@ -38,44 +38,49 @@
 
 (define (translate-stack-trace trace-data)
   (let* ((exe-name #f)
-	 (data2 #f)
-	 (cmd #f)
-	 (pport #f))
-    (set! data2
-	  (list-filter
-	   (lambda (x) x)		;;; filter out false values
-	   (map (lambda (l)
-		  (let ((m (regex-match "\\(\\+0x[0-9a-fA-F]+\\)" l)))
-		    (when m
-		      (unless exe-name
-			(set! exe-name (car m)))
-		      (set! m (string-copy (cadr m) 2))
-		      (set! m (string-copy m 0 (- (string-length m) 1))))
-		    m))
-		trace-data))
-	  port)
-    (set! cmd (apply string-join-by " "
-		     "addr2line -f -p -e" exe-name "-a" data2))
-    (set! pport (run-read-command cmd))
-    (let ((lines (let loop ((acc ()))
-		   (let ((line (read-line pport)))
-		     (if line
-			 (loop (cons (string-split-by char-whitespace? line) acc))
-			 acc)))))
-      (close-port pport)
-      (list-reverse lines))))
+	 (data2 (filter
+		 (lambda (x) x)		;;; filter out false values
+		 (map (lambda (l)
+			(let ((m (regex-match "\\(\\+0x[0-9a-fA-F]+\\)" l)))
+			  (when m
+			    (unless exe-name
+			      (set! exe-name (car m)))
+			    (set! m (string-copy (cadr m) 2))
+			    (set! m (string-copy m 0 (- (string-length m) 1))))
+			  m))
+		      trace-data))))
+    (let loop ((port (run-read-command (apply string-join-by " "
+					      "addr2line -f -p -e"
+					      exe-name "-a" data2)))
+	       (acc ()))
+      (let ((line (read-line port)))
+	(if line
+	    (let* ((vs1 (string-split-by char-whitespace? line))
+		   (vs2 (filter (lambda (s) (string/=? s "at")) vs1)))
+	      (loop port (cons vs2 acc)))
+	    (begin
+	      (close-port port)
+	      (list-reverse acc)))))))
 
 ;;; Take a comment line from the emitted C source that maps scheme
 ;;; functions with line number to C functions, and split it into the
 ;;; important pieces
 
+(define at-reg (char->string #\space #\* #\@ #\@ #\@ #\space #\*))
+
 (define (at-split line)
   (let loop ((lc line)
 	     (acc ()))
-    (let ((spl (regex-match " *@@@ *" lc)))
+    (let ((spl (regex-match at-reg lc)))
       (if spl
 	  (loop (caddr spl) (cons (car spl) acc))
 	  (list-reverse acc)))))
+
+(define debug #f)
+(when (and (not (null? command-line-arguments))
+	   (string=? (car command-line-arguments) "-d"))
+  (set! debug #t)
+  (set! command-line-arguments (cdr command-line-arguments)))
 
 ;;; Main program: create the C->scheme map, if the c-source-file was
 ;;; given, then read the stack trace, do stage-1 translation through
@@ -86,12 +91,17 @@
   (when (null? command-line-arguments)
     (write-string stderr command-name " stack-trace-file [c-source-file]\n")
     (exit 1))
-  (unless (null? (cadr command-line-arguments))
+  (unless (null? (cdr command-line-arguments))
+    ;;; need to split up the three '@', otherwise there is a foot-gun
+    (when debug
+      (write-string "# scanning source file\n"))
     (let ((port (run-read-command
 		 (string-append
-		  "grep \"@@@\" " (cadr command-line-arguments)))))
+		  "grep \"@" "@" "@\" " (cadr command-line-arguments)))))
+;;;    (let ((port (open-file (cadr command-line-arguments) "r")))
       (let loop ()
 	(let ((line (read-line port)))
+	  (flush-port)
 	  (if line
 	      (let* ((at-map (at-split line))
 		     (s-fn (cadr at-map))
@@ -101,16 +111,17 @@
 				 (string-append s-fn " :: " s-loc))
 		(loop))
 	      (close-port port))))))
-
   (let* ((port (open-file (car command-line-arguments) "r"))
 	 (lines (read-all-lines port))
 	 (filts (filter-stack-trace lines))
 	 (stak1 (translate-stack-trace filts)))
     (close-port port)
+    (when debug
+      (for-each (lambda (v) (display v) (newline)) stak1))
     (for-each (lambda (v)
 		(let ((val (hash-table-ref fmap (cadr v) #f)))
 		  (if val
 		      (write-string (car v) " # " val #\newline)
 		      (write-string (car v) "   " (cadr v) " :: "
-				    (cadddr v) #\newline))))
+				    (caddr v) #\newline))))
 	      stak1)))

@@ -1,8 +1,23 @@
-Last update: 2023-10-11 12:00 PST
+Last update: 2023-11-1 11:00 PST
 
 # Changelog for `wile`
 
-## Current version `wile` (0 9 2)
+## Current version `wile` (0 10 0) 2023-11-1
+
+- implement 'do' special form in interpreter
+
+- add literal strings to the stuff that can be immediately defined
+  in library code, and use that to clean up an infelicity in printf
+
+- move standard interpreter environment stuff into RTL; remove 'when
+  'until 'while etc as special forms from interpretr code; add them as
+  generic standard macros in interpreter environment; move interpreter
+  code into RTL
+
+- close the loop on applying interpreted functions to args... defmacro
+  seems to work ok in compiler
+
+## Current version `wile` (0 9 2) 2023-10-27
 
 - implement something very like case-lambda, for convenient wrapping
   of the ambiguous primitives - can't use it inside the prims-table,

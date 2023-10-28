@@ -294,7 +294,7 @@ var_47 = LVI_NIL();
 lval var_48;
 var_48 = LVI_NIL();
 lval var_49;
-var_49 = LVI_INT(2);
+var_49 = LVI_INT(0);
 lval var_50;
 {
 lptr p1 = NULL, p2 = NULL;
@@ -309,7 +309,7 @@ p2 = new_lv(LV_NIL);
 var_50 = LVI_PAIR(p1, p2);
 }
 lval var_51;
-var_51 = LVI_INT(9);
+var_51 = LVI_INT(10);
 lval var_52;
 {
 lptr p1 = NULL, p2 = NULL;

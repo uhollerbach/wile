@@ -19,11 +19,20 @@ Stuff TODO
 
 * start working on (eval) function -- see repl.scm
 
-  > almost all special forms are there except 'do' and 'delay' etc;
-    lambdas are present, but only in a trial form as vector objects;
-    as far as the runtime library is concerned, they don't exist. so a
+  > almost all special forms are there except 'delay' etc; lambdas are
+    present, but not quite connected all the way through: apply and
+    continuations can't deal with interpreted procedures yet so a
     number of things like (define (foo a) ...) ... (map foo ...) don't
     work yet. Should be straightforward to fix.
+
+* investigate difference in behavior among mit-scheme, (ha)skeem, repl,
+  wile: mit-scheme, (ha)skeem and repl agree that the following is a
+  quine (this is good):
+
+    ((lambda (x) (display `(,x ',x))) '(lambda (x) (display `(,x ',x))))
+
+  wile is slightly defective, it misses retaining one inner quote which
+  then after one iteration causes the whole thing to collapse
 
 * stack traces: working pretty well for starters - try getting better
   location info? not sure yet how, the backtrace and addr2line stuff

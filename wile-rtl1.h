@@ -66,6 +66,9 @@
 #define LVI_SYMBOL(q)		((lval) { .v.str = LISP_STRDUP(q),	\
 					  .vt = LV_SYMBOL})
 
+#define LVI_STRING_NOCPY(q)	((lval) { .v.str = (q),			\
+					  .vt = LV_STRING})
+
 #define LVI_PAIR(qa,qd)		((lval) { .v.pair.car = (qa),		\
 					  .v.pair.cdr = (qd),		\
 					  .vt = LV_PAIR})
@@ -269,7 +272,7 @@ lval wile_sql_stmt_run(lptr* clos, lptr args);
 
 lval wile_call_cc(lptr* clos, lptr args);
 
-lval scheme_main(int argc, char** argv);
+lval wile_main(int argc, char** argv);
 
 struct wile_profile_t {
     uint64_t count;

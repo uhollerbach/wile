@@ -25,21 +25,25 @@ CFLAGS = $(CFDEF) $(CGCOV) $(WILE_CONFIG)
 ASRC =	wile-lex.[ch] wile-parse.[ch] wile-parse.txt
 HDRS =	wile.h alloc.h wile-lex.h wile-parse.h lib-macros.h
 
-WRSRC = wile-sql.c alloc.c print.c location.c wile-parse.c wile-lex.c \
+WRSRC1 = wile-sql.c alloc.c print.c location.c wile-parse.c wile-lex.c \
 	swll-cfft.c continuations.c fsi_set.c nfa.c regex.c ulexlib.c
+
+WRSRC2 = wile-rtl1.c wile-rtl2.scm math-funcs.c
+
+wrtl.sch:	wile-rtl2.scm
+	wile -v -c wile-rtl2.scm wile-rtl2.c
 
 # in an emergency, it also can work to build wile-rtl2.[co] as one unified
 # object file; that does mean that every link pulls in everything
 
-libwrtl.a:	$(WRSRC) wile-rtl1.c wile-rtl2.scm math-funcs.c
-	wile -v wile-rtl2.scm wile-rtl2.c
-	build-rtl libwrtl.a $(WRSRC) -s wile-rtl1.c wile-rtl2.scm math-funcs.c
+libwrtl.a:	wrtl.sch $(WRSRC1) $(WRSRC2)
+	rm -rf bld-rtl-dir
+	build-rtl libwrtl.a $(WRSRC1) -s $(WRSRC2)
 	nm -a libwrtl.a | grep wile_config
 
-libwrtl-dbg.a:	$(WRSRC) wile-rtl1.c wile-rtl2.scm math-funcs.c
-	wile -v wile-rtl2.scm wile-rtl2.c
-	build-rtl -g libwrtl-dbg.a $(WRSRC) -s \
-		wile-rtl1.c wile-rtl2.scm math-funcs.c
+libwrtl-dbg.a:	wrtl.sch $(WRSRC1) $(WRSRC2) wrtl.sch
+	rm -rf bld-rtl-dir
+	build-rtl -g libwrtl-dbg.a $(WRSRC1) -s $(WRSRC2)
 	nm -a libwrtl-dbg.a | grep wile_config
 
 wilec:	wile-main.scm wile-comp.scm wile-prims.scm libwrtl.a
@@ -68,7 +72,7 @@ tarball:
 # don't delete build-rtl, otherwise there is a bootstrap problem!
 
 realclean:	clean
-	rm -f libwrtl.a libwrtl-dbg.a wrtl.sch wile-rtl2.h twp
+	rm -f libwrtl.a libwrtl-dbg.a wrtl.sch wile-rtl2.h twp repl repl-dbg
 
 clean:	semiclean
 	rm -f wile-rtl2.c wtest/test_*.tst
@@ -106,12 +110,7 @@ wile-sql.o:	wile-sql.c $(HDRS) wile-rtl1.h wile-rtl2.h
 
 wile-rtl2.o:	wile-rtl2.c $(HDRS)
 
-wile-rtl2.c:	wile-rtl2.scm
-	wile -v wile-rtl2.scm wile-rtl2.c
-
 wile-rtl2.h:	wile-rtl2.c
-
-wrtl.sch:	wile-rtl2.c
 
 ## wile-parse.c wile-parse.h:	wile.yucc
 ## 	yucc wile.yucc
