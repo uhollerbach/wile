@@ -67,47 +67,47 @@ var_15[0] = var_13;
 var_14 = wile_list_flatten(NULL, var_15);
 lval var_17;
 {
-lval vs[2];
-vs[0] = var_10;
-vs[1] = var_14;
-var_17 = wile_gen_list(2, vs, NULL);
+lval var_19[2];
+var_19[0] = var_10;
+var_19[1] = var_14;
+var_17 = wile_gen_list(2, var_19, NULL);
 }
 {
-lval vs[8];
-vs[0] = var_17;
-var_17 = wile_list_append(NULL, vs);
+lval var_18[8];
+var_18[0] = var_17;
+var_17 = wile_list_append(NULL, var_18);
 }
 var_4 = var_17;
 break;
 }
-lval var_18;
+lval var_20;
 if (var_2[0].vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_18 = (var_2[0].v.pair.car ? *(var_2[0].v.pair.car) : LVI_NIL());
-lval var_19;
+var_20 = (var_2[0].v.pair.car ? *(var_2[0].v.pair.car) : LVI_NIL());
+lval var_21;
 if (var_2[0].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_19 = (var_2[0].v.pair.cdr ? *(var_2[0].v.pair.cdr) : LVI_NIL());
-lval var_20;
-lval var_21[8];
-var_21[0] = var_19;
-var_20 = wile_list_flatten(NULL, var_21);
-lval var_23;
+var_21 = (var_2[0].v.pair.cdr ? *(var_2[0].v.pair.cdr) : LVI_NIL());
+lval var_22;
+lval var_23[8];
+var_23[0] = var_21;
+var_22 = wile_list_flatten(NULL, var_23);
+lval var_25;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_18.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_18;
-}
 if (var_20.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_20;
+}
+if (var_22.vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_20;
+*p2 = var_22;
 }
-var_23 = LVI_PAIR(p1, p2);
+var_25 = LVI_PAIR(p1, p2);
 }
-var_4 = var_23;
+var_4 = var_25;
 } while (0);
 return var_4;
 }

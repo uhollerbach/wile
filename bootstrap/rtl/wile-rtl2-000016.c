@@ -53,20 +53,20 @@ var_15 = (var_8.v.pair.car ? *(var_8.v.pair.car) : LVI_NIL());
 var_14 = var_15;
 lval var_17;
 {
-lval vs[1];
-vs[0] = var_14;
-var_17 = wile_gen_list(1, vs, NULL);
+lval var_18[1];
+var_18[0] = var_14;
+var_17 = wile_gen_list(1, var_18, NULL);
 }
-lval var_18;
-{
-lval vs[2];
-vs[0] = var_2[0];
-vs[1] = var_17;
-var_18 = wile_gen_list(2, vs, NULL);
-}
-var_18 = wile_apply_function(&(var_18), __FILE__, __LINE__);
-if (LV_IS_FALSE(var_18)) {
 lval var_19;
+{
+lval var_20[2];
+var_20[0] = var_2[0];
+var_20[1] = var_17;
+var_19 = wile_gen_list(2, var_20, NULL);
+}
+var_19 = wile_apply_function(&(var_19), __FILE__, __LINE__);
+if (LV_IS_FALSE(var_19)) {
+lval var_21;
 {
 lptr p1 = NULL, p2 = NULL;
 if (var_14.vt != LV_NIL) {
@@ -77,11 +77,11 @@ if (var_6.vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
 *p2 = var_6;
 }
-var_19 = LVI_PAIR(p1, p2);
+var_21 = LVI_PAIR(p1, p2);
 }
-var_6 = var_19;
+var_6 = var_21;
 } else {
-lval var_20;
+lval var_22;
 {
 lptr p1 = NULL, p2 = NULL;
 if (var_14.vt != LV_NIL) {
@@ -92,42 +92,42 @@ if (var_4.vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
 *p2 = var_4;
 }
-var_20 = LVI_PAIR(p1, p2);
+var_22 = LVI_PAIR(p1, p2);
 }
-var_4 = var_20;
+var_4 = var_22;
 }
-lval var_21;
+lval var_23;
 if (var_8.vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_21 = (var_8.v.pair.cdr ? *(var_8.v.pair.cdr) : LVI_NIL());
-var_8 = var_21;
-lval var_22;
-var_22 = LVI_INT(1);
-lval var_23;
-var_23 = LVI_INT(var_10.v.iv + var_22.v.iv);
-var_11 = var_23;
+var_23 = (var_8.v.pair.cdr ? *(var_8.v.pair.cdr) : LVI_NIL());
+var_8 = var_23;
+lval var_24;
+var_24 = LVI_INT(1);
+lval var_25;
+var_25 = LVI_INT(var_10.v.iv + var_24.v.iv);
+var_11 = var_25;
 var_10 = var_11;
 } while (1);
-lval var_24;
-{
-lval vs[8];
-vs[0] = var_4;
-var_24 = wile_list_reverse(NULL, vs);
-}
-lval var_25;
-{
-lval vs[8];
-vs[0] = var_6;
-var_25 = wile_list_reverse(NULL, vs);
-}
 lval var_26;
 {
-lval vs[2];
-vs[0] = var_24;
-vs[1] = var_25;
-var_26 = wile_gen_list(2, vs, NULL);
+lval var_27[8];
+var_27[0] = var_4;
+var_26 = wile_list_reverse(NULL, var_27);
 }
-return var_26;
+lval var_28;
+{
+lval var_29[8];
+var_29[0] = var_6;
+var_28 = wile_list_reverse(NULL, var_29);
+}
+lval var_30;
+{
+lval var_31[2];
+var_31[0] = var_26;
+var_31[1] = var_28;
+var_30 = wile_gen_list(2, var_31, NULL);
+}
+return var_30;
 }
 // end of function wile_list_partition

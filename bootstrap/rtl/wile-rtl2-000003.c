@@ -61,26 +61,26 @@ lval var_9;
 var_9 = LVI_INT(1);
 lval var_10;
 {
-lval vs[2];
-vs[0] = var_2[0];
-vs[1] = var_9;
-var_10 = wile_gen_list(2, vs, NULL);
+lval var_12[2];
+var_12[0] = var_2[0];
+var_12[1] = var_9;
+var_10 = wile_gen_list(2, var_12, NULL);
 }
 {
-lval vs[8];
-vs[0] = var_10;
-var_10 = wile_subtract(NULL, vs);
+lval var_11[8];
+var_11[0] = var_10;
+var_10 = wile_subtract(NULL, var_11);
 }
-lval var_11;
+lval var_13;
 if (var_2[1].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_11 = (var_2[1].v.pair.cdr ? *(var_2[1].v.pair.cdr) : LVI_NIL());
-lval var_14[8];
-var_14[0] = var_10;
-var_14[1] = var_11;
-var_2[0] = var_14[0];
-var_2[1] = var_14[1];
+var_13 = (var_2[1].v.pair.cdr ? *(var_2[1].v.pair.cdr) : LVI_NIL());
+lval var_16[8];
+var_16[0] = var_10;
+var_16[1] = var_13;
+var_2[0] = var_16[0];
+var_2[1] = var_16[1];
 goto lbl_3;	// selfie
 } while (0);
 return var_4;

@@ -4,9 +4,14 @@
 ;;; Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
 ;;; License: GPLv3 or later, see file 'LICENSE' for details
 
+(unless (and (get-environment-variable "WILE_CONFIG")
+	     (get-environment-variable "WILE_INCLUDE_DIRECTORIES")
+	     (get-environment-variable "WILE_LINK_DIRECTORIES")
+	     (get-environment-variable "WILE_LINK_LIBRARIES")
+	     (get-environment-variable "WILE_LIBRARY_PATH"))
+  (write-string stderr "wile warning: environment is not fully set up\n"))
+
 (unless (get-environment-variable "WILE_LIBRARY_PATH")
-  (write-string "wile warning: WILE_LIBRARY_PATH is not set\n"
-		"setting up minimal WILE_LIBRARY_PATH environment\n")
   (set-environment-variable "WILE_LIBRARY_PATH" "."))
 
 ;;; comment this out for closing the self-hosting loop
@@ -63,14 +68,9 @@
     (if val val def-val)))
 
 (define cc-default "gcc")
-;;; (define cc-default "clang")
 
 (define cf-default "-ansi -std=c11 -Wall -Wstrict-prototypes -Wmissing-prototypes -Winline -Wpointer-arith -Wshadow -Wnested-externs -Wformat-security -Wunused -Wsign-compare -D_DEFAULT_SOURCE")
 
-;;; sane cautious default settings but my environment is set to
-;;; WILE_CONFIG=-DWILE_USES_SQLITE -DWILE_USES_INT128 \
-;;;     -DWILE_USES_GC -DWILE_USES_QUAD_DOUBLE
-;;;
 ;;; currently turned off: -DWILE_USES_RC4_RAND
 
 (define wc-default "-DWILE_USES_LONG_INT -DWILE_USES_LONG_DOUBLE")
@@ -83,7 +83,8 @@
       wc))
 
 (define (colon-split-string val)
-  (if (or (null? val) (string=? val "")) () (string-split-by is-colon? val)))
+  (if (or (not val) (null? val) (string=? val ""))
+      () (string-split-by is-colon? val)))
 
 (define (compile-c2o do-debug opt-level input output)
   (let* ((cc (get-env-val "CC" cc-default))

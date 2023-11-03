@@ -20,73 +20,102 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (day-of-week v . vs) @@@ bld-rtl-dir/wile-rtl2-000062.scm:13 @@@ wile_day_of_week @@@
-lval wile_day_of_week(lptr* var_1, lptr var_2)
+// @@@ (is-leap-year? y) @@@ bld-rtl-dir/wile-rtl2-000062.scm:15 @@@ wile_is_leap_year @@@
+lval wile_is_leap_year(lptr* var_1, lptr var_2)
 {
 lval var_4;
+var_4 = LVI_BOOL(true);
+do {
 lval var_5;
-var_5 = LVI_BOOL(var_2[1].vt == LV_NIL);
-if (LV_IS_FALSE(var_5)) {
+var_5 = LVI_INT(4);
 lval var_6;
-var_6 = LVI_INT(1);
-lval var_7;
-if (var_2[1].vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_7 = (var_2[1].v.pair.car ? *(var_2[1].v.pair.car) : LVI_NIL());
-lval var_8;
-var_8 = LVI_STRING("cadr");
-lval var_9;
 {
-char* cp = strchr(var_8.v.str, 'r');
-var_9 = var_2[1];
-while (*(--cp) != 'c') {
-if (var_9.vt != LV_PAIR) {
-WILE_EX("cxr", "input does not have the right structure!");
+lisp_int_t nq, nr;
+trunc_qr(var_2[0].v.iv, var_5.v.iv, &nq, &nr);
+var_6 = LVI_INT(nr);
 }
-if (*cp == 'a') {
-var_9 = (var_9.v.pair.car ? *(var_9.v.pair.car) : LVI_NIL());
-} else if (*cp == 'd') {
-var_9 = (var_9.v.pair.cdr ? *(var_9.v.pair.cdr) : LVI_NIL());
-} else {
-WILE_EX("cxr", "got malformed control string '%s'", var_8.v.str);
+lval var_7;
+switch (var_6.vt) {
+case LV_REAL:
+var_7 = LVI_BOOL(var_6.v.rv == 0.0);
+break;
+case LV_RAT:
+var_7 = LVI_BOOL((var_6.v.irv.num == 0 && var_6.v.irv.den != 0));
+break;
+case LV_INT:
+var_7 = LVI_BOOL(var_6.v.iv == 0);
+break;
+case LV_CMPLX:
+var_7 = LVI_BOOL(CREAL(var_6.v.cv) == 0.0 && CIMAG(var_6.v.cv) == 0.0);
+break;
+default:
+WILE_EX("zero?", "expects a real-valued number");
 }
-}
-}
+var_4 = var_7;
+if (LV_IS_FALSE(var_4)) { break; }
+lval var_8;
+var_8 = LVI_BOOL(false);
+do {
+lval var_9;
+var_9 = LVI_INT(100);
 lval var_10;
 {
-lval vs[8];
-vs[0] = var_2[0];
-vs[1] = var_7;
-vs[2] = var_9;
-var_10 = wile_julian_day(NULL, vs);
+lisp_int_t nq, nr;
+trunc_qr(var_2[0].v.iv, var_9.v.iv, &nq, &nr);
+var_10 = LVI_INT(nr);
 }
 lval var_11;
-var_11 = LVI_INT(var_6.v.iv + var_10.v.iv);
+switch (var_10.vt) {
+case LV_REAL:
+var_11 = LVI_BOOL(var_10.v.rv == 0.0);
+break;
+case LV_RAT:
+var_11 = LVI_BOOL((var_10.v.irv.num == 0 && var_10.v.irv.den != 0));
+break;
+case LV_INT:
+var_11 = LVI_BOOL(var_10.v.iv == 0);
+break;
+case LV_CMPLX:
+var_11 = LVI_BOOL(CREAL(var_10.v.cv) == 0.0 && CIMAG(var_10.v.cv) == 0.0);
+break;
+default:
+WILE_EX("zero?", "expects a real-valued number");
+}
 lval var_12;
-var_12 = LVI_INT(7);
+var_12 = LVI_BOOL(LV_IS_FALSE(var_11));
+var_8 = var_12;
+if (!LV_IS_FALSE(var_8)) { break; }
 lval var_13;
-{
-lisp_int_t nq, nr;
-floor_qr(var_11.v.iv, var_12.v.iv, &nq, &nr);
-var_13 = LVI_INT(nr);
-}
-var_4 = var_13;
-} else {
+var_13 = LVI_INT(400);
 lval var_14;
-var_14 = LVI_INT(1);
-lval var_15;
-var_15 = LVI_INT(var_14.v.iv + var_2[0].v.iv);
-lval var_16;
-var_16 = LVI_INT(7);
-lval var_17;
 {
 lisp_int_t nq, nr;
-floor_qr(var_15.v.iv, var_16.v.iv, &nq, &nr);
-var_17 = LVI_INT(nr);
+trunc_qr(var_2[0].v.iv, var_13.v.iv, &nq, &nr);
+var_14 = LVI_INT(nr);
 }
-var_4 = var_17;
+lval var_15;
+switch (var_14.vt) {
+case LV_REAL:
+var_15 = LVI_BOOL(var_14.v.rv == 0.0);
+break;
+case LV_RAT:
+var_15 = LVI_BOOL((var_14.v.irv.num == 0 && var_14.v.irv.den != 0));
+break;
+case LV_INT:
+var_15 = LVI_BOOL(var_14.v.iv == 0);
+break;
+case LV_CMPLX:
+var_15 = LVI_BOOL(CREAL(var_14.v.cv) == 0.0 && CIMAG(var_14.v.cv) == 0.0);
+break;
+default:
+WILE_EX("zero?", "expects a real-valued number");
 }
+var_8 = var_15;
+if (!LV_IS_FALSE(var_8)) { break; }
+} while (0);
+var_4 = var_8;
+if (LV_IS_FALSE(var_4)) { break; }
+} while (0);
 return var_4;
 }
-// end of function wile_day_of_week
+// end of function wile_is_leap_year

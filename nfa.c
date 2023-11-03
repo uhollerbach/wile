@@ -1,12 +1,8 @@
-/*
-This file is part of ulex -- Uwe's lex
-Copyright 2013, Uwe Hollerbach <uhollerbach@gmail.com>
-License: 2clause BSD, see file 'LICENSE' for details
+// Wile -- the extremely stable scheming genius compiler
+// Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+// License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
 
-$Id: nfa.c,v 1.17 2017/03/05 20:12:53 uwe Exp $
-
-Routines for dealing with NFA states and NFAs
-*/
+// Routines for dealing with NFA states and NFAs
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -14,8 +10,10 @@ Routines for dealing with NFA states and NFAs
 #include <limits.h>
 #include <ctype.h>
 
+#include "wile.h"
 #include "fsi_set.h"
 #include "nfa.h"
+#include "alloc.h"
 
 /* Allocate & free NFA state structs */
 
@@ -30,13 +28,8 @@ static void wk_zero(struct nfa_state* ns)
 
 struct nfa_state* nfa_state_alloc(void)
 {
-    struct nfa_state* ret;
-
-    ret = malloc(sizeof(struct nfa_state));
-    if (ret == NULL) {
-	fprintf(stderr, "NFA: memory allocation error\n");
-	exit(99);
-    }
+    struct nfa_state* ret = LISP_ALLOC(struct nfa_state, 1);
+    LISP_ASSERT(ret != NULL);
     wk_zero(ret);
     return(ret);
 }
@@ -47,7 +40,7 @@ void nfa_state_free(struct nfa_state* ns)
 	fsi_set_free(ns->tr_cc);
 	fsi_set_free(ns->eps_closure);
 	wk_zero(ns);
-	free(ns);
+	LISP_FREE(ns);
     }
 }
 
@@ -57,7 +50,7 @@ void nfa_state_shallow_free(struct nfa_state* ns)
 {
     if (ns != NULL) {
 	wk_zero(ns);
-	free(ns);
+	LISP_FREE(ns);
     }
 }
 

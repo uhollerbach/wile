@@ -300,11 +300,8 @@ static void yy_print_context(unsigned char** toks, int n_toks, size_t line_no)
 	if (yy_vss >= yy_vsmax) {			\
 	    yy_vsmax *= 2;				\
 	    yy_vs =					\
-		(YYSTYPE*) realloc(yy_vs,		\
-				   yy_vsmax*sizeof(yy_lcur));	\
-	    if (yy_vs == NULL) {			\
-		yy_exit(1, "wile_parse error: unable to grow value stack!\n");\
-	    }						\
+		LISP_REALLOC(YYSTYPE, yy_vs, yy_vsmax);	\
+	    LISP_ASSERT(yy_vs != NULL);			\
 	}						\
     } while (0)
 
@@ -353,12 +350,12 @@ static void yy_print_context(unsigned char** toks, int n_toks, size_t line_no)
 	    if (yy_new == 0) {				\
 		yy_new = yy_end_id;			\
 	    }						\
-	    free(yy_toks[0]);				\
+	    LISP_FREE(yy_toks[0]);			\
 	    for (yy_i = 0; yy_i < YY_N_TOKS - 1; ++yy_i) {\
 		yy_toks[yy_i] = yy_toks[yy_i+1];	\
 	    }						\
 	    yy_toks[YY_N_TOKS-1] =			\
-		(unsigned char*) strdup((char*) yy_text);\
+		(unsigned char*) LISP_STRDUP((char*) yy_text);	\
 	    if (yy_get_sym(yy_new, YY_EXTERNAL) == &yy_unknown) {\
 		fprintf(stderr, "wile_parse error: unknown token '%s'", yy_text);\
 		yy_print_context(yy_toks, YY_N_TOKS,	\
@@ -421,11 +418,10 @@ unsigned int wile_parse(struct ulex_context* yy_context,
     lptr* ret = (lptr*) user_data;
 
     yy_tsmax = yy_vsmax = 16;
-    yy_ts = (unsigned int*) malloc(yy_tsmax*sizeof(*yy_ts));
-    yy_vs = (YYSTYPE*) malloc(yy_vsmax*sizeof(yy_lcur));
-    if (yy_ts == NULL || yy_vs == NULL) {
-	yy_exit(1, "wile_parse error: unable to initialize stacks!\n");
-    }
+    yy_ts = LISP_ALLOC(unsigned int, yy_tsmax);
+    LISP_ASSERT(yy_ts != NULL);
+    yy_vs = LISP_ALLOC(YYSTYPE, yy_vsmax);
+    LISP_ASSERT(yy_vs != NULL);
     yy_tss = yy_vss = 0;
     yy_ts[yy_tss++] = yy_end_id;
     yy_ts[yy_tss++] = yy_start_id;
@@ -525,10 +521,8 @@ case 12: {
 		while (yy_i-- > 0) {
 		    if (yy_tss >= yy_tsmax) {
 			yy_tsmax *= 2;
-			yy_ts = (unsigned int*) realloc(yy_ts, yy_tsmax*sizeof(*yy_ts));
-			if (yy_ts == NULL) {
-			    yy_exit(1, "wile_parse error: unable to grow token stack!\n");
-			}
+			yy_ts = LISP_REALLOC(unsigned int, yy_ts, yy_tsmax);
+			LISP_ASSERT(yy_ts != NULL);
 		    }
 		    yy_ts[yy_tss++] = yy_rp->rhs[yy_i];
 		}
@@ -570,8 +564,8 @@ case 12: {
 	}
     }
   yy_finish:
-    free(yy_ts);
-    free(yy_vs);
+    LISP_FREE(yy_ts);
+    LISP_FREE(yy_vs);
     return(yy_err);
 }
 

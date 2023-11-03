@@ -45,20 +45,20 @@ var_9[2] = var_7;
 var_8 = wile_foldr(NULL, var_9);
 lval var_11;
 {
-lval vs[2];
-vs[0] = var_6;
-vs[1] = var_8;
-var_11 = wile_gen_list(2, vs, NULL);
+lval var_12[2];
+var_12[0] = var_6;
+var_12[1] = var_8;
+var_11 = wile_gen_list(2, var_12, NULL);
 }
-lval var_12;
+lval var_13;
 {
-lval vs[2];
-vs[0] = var_2[0];
-vs[1] = var_11;
-var_12 = wile_gen_list(2, vs, NULL);
+lval var_14[2];
+var_14[0] = var_2[0];
+var_14[1] = var_11;
+var_13 = wile_gen_list(2, var_14, NULL);
 }
-var_12 = wile_apply_function(&(var_12), __FILE__, __LINE__);
-var_4 = var_12;
+var_13 = wile_apply_function(&(var_13), __FILE__, __LINE__);
+var_4 = var_13;
 } else {
 var_4 = var_2[1];
 }

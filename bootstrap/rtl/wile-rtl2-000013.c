@@ -25,19 +25,19 @@ lval wile_list_untail(lptr* var_1, lptr var_2)
 {
 lval var_4;
 {
-lval vs[8];
-vs[0] = var_2[0];
-var_4 = wile_list_length(NULL, vs);
+lval var_5[8];
+var_5[0] = var_2[0];
+var_4 = wile_list_length(NULL, var_5);
 }
-lval var_5;
-var_5 = LVI_INT(var_4.v.iv - var_2[1].v.iv);
 lval var_6;
+var_6 = LVI_INT(var_4.v.iv - var_2[1].v.iv);
+lval var_7;
 {
-lval vs[8];
-vs[0] = var_2[0];
-vs[1] = var_5;
-var_6 = wile_list_head(NULL, vs);
+lval var_8[8];
+var_8[0] = var_2[0];
+var_8[1] = var_6;
+var_7 = wile_list_head(NULL, var_8);
 }
-return var_6;
+return var_7;
 }
 // end of function wile_list_untail

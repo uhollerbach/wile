@@ -361,17 +361,6 @@
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_map1"
-  "expects one procedure of one argument and one list, applies the procedure to each element of the list, and returns the list of results"
-  (map1 proc lst)
-  (let loop ((l1 lst)
-	     (l2 ()))
-    (if (null? l1)
-	(list-reverse l2)
-	(loop (cdr l1) (cons (proc (car l1)) l2)))))
-
-;;; --8><----8><----8><--
-
 (define-primitive "wile_foldl1"
   "expects a values-combining function and a non-empty list, and returns the left fold of that function over that list, using the first element of the list as the initial value"
   (foldl1 proc lst)
@@ -379,18 +368,112 @@
 
 ;;; --8><----8><----8><--
 
+(define (map1 proc lst)
+  (let loop ((l1 lst)
+	     (acc ()))
+    (if (null? l1)
+	(list-reverse acc)
+	(loop (cdr l1) (cons (proc (car l1)) acc)))))
+
+(define (map2 proc lst1 lst2)
+  (let ((l1 (list-length lst1))
+	(l2 (list-length lst2)))
+    (if (= l1 l2)
+	(let loop ((l1 lst1)
+		   (l2 lst2)
+		   (acc ()))
+	  (if (null? l1)
+	      (list-reverse acc)
+	      (loop (cdr l1)
+		    (cdr l2)
+		    (cons (proc (car l1) (car l2))
+			  acc))))
+	(raise (sprintf "map: list lengths differ %d %d" l1 l2)))))
+
+(define (map3 proc lst1 lst2 lst3)
+  (let ((l1 (list-length lst1))
+	(l2 (list-length lst2))
+	(l3 (list-length lst3)))
+    (if (and (= l1 l2) (= l1 l3))
+	(let loop ((l1 lst1)
+		   (l2 lst2)
+		   (l3 lst3)
+		   (acc ()))
+	  (if (null? l1)
+	      (list-reverse acc)
+	      (loop (cdr l1)
+		    (cdr l2)
+		    (cdr l3)
+		    (cons (proc (car l1) (car l2) (car l3))
+			  acc))))
+	(raise (sprintf "map: list lengths differ %d %d %d" l1 l2 l3)))))
+
+(define (map4 proc lst1 lst2 lst3 lst4)
+  (let ((l1 (list-length lst1))
+	(l2 (list-length lst2))
+	(l3 (list-length lst3))
+	(l4 (list-length lst4)))
+    (if (and (= l1 l2) (= l1 l3) (= l1 l4))
+	(let loop ((l1 lst1)
+		   (l2 lst2)
+		   (l3 lst3)
+		   (l4 lst4)
+		   (acc ()))
+	  (if (null? l1)
+	      (list-reverse acc)
+	      (loop (cdr l1)
+		    (cdr l2)
+		    (cdr l3)
+		    (cdr l4)
+		    (cons (proc (car l1) (car l2) (car l3) (car l4))
+			  acc))))
+	(raise (sprintf "map: list lengths differ %d %d %d %d"
+			l1 l2 l3 l4)))))
+
+(define (map5 proc lst1 lst2 lst3 lst4 lst5)
+  (let ((l1 (list-length lst1))
+	(l2 (list-length lst2))
+	(l3 (list-length lst3))
+	(l4 (list-length lst4))
+	(l5 (list-length lst5)))
+    (if (and (= l1 l2) (= l1 l3) (= l1 l4) (= l1 l5))
+	(let loop ((l1 lst1)
+		   (l2 lst2)
+		   (l3 lst3)
+		   (l4 lst4)
+		   (l5 lst5)
+		   (acc ()))
+	  (if (null? l1)
+	      (list-reverse acc)
+	      (loop (cdr l1)
+		    (cdr l2)
+		    (cdr l3)
+		    (cdr l4)
+		    (cdr l5)
+		    (cons (proc (car l1) (car l2) (car l3) (car l4) (car l5))
+			  acc))))
+	(raise (sprintf "map: list lengths differ %d %d %d %d %d"
+			l1 l2 l3 l4 l5)))))
+
 (define-primitive "wile_map"
   "expects a procedure of N arguments and N lists all of the same length, where N is at least 1; applies the procedure to each tuple consisting of taking the jth entry from each of the lists, and returns the list of results"
-  (map proc lst . lsts)
-  (define (map2 proc acc ls)
+  (map proc lst . ls)
+  (define (m2 proc acc ls)
     (if (null? (car ls))
 	(list-reverse acc)
-	(map2 proc (cons (apply proc (map1 car ls)) acc) (map1 cdr ls))))
-  (let* ((ls (cons lst lsts))
-	 (ll (map1 list-length ls)))
-    (if (/= (foldl1 min/i ll) (foldl1 max/i ll))
-	(raise "map got lists of different lengths")
-	(map2 proc () ls))))
+	(m2 proc (cons (apply proc (map1 car ls)) acc) (map1 cdr ls))))
+  (case (list-length ls)
+    ;;; special-case for better performance
+    ((0) (map1 proc lst))
+    ((1) (map2 proc lst (car ls)))
+    ((2) (map3 proc lst (car ls) (cadr ls)))
+    ((3) (map4 proc lst (car ls) (cadr ls) (caddr ls)))
+    ((4) (map5 proc lst (car ls) (cadr ls) (caddr ls) (cadddr ls)))
+    (else (let* ((ls (cons lst ls))
+		 (ll (map1 list-length ls)))
+	    (if (/= (foldl1 min/i ll) (foldl1 max/i ll))
+		(raise "map got lists of different lengths")
+		(m2 proc () ls))))))
 
 ;;; --8><----8><----8><--
 
@@ -400,10 +483,10 @@
   (define (fore2 proc ls)
     (if (null? (car ls))
 	#t
-	(begin (apply proc (map1 car ls))
-	       (fore2 proc (map1 cdr ls)))))
+	(begin (apply proc (map car ls))
+	       (fore2 proc (map cdr ls)))))
   (let* ((ls (cons lst lsts))
-	 (ll (map1 list-length ls)))
+	 (ll (map list-length ls)))
     (if (/= (foldl1 min/i ll) (foldl1 max/i ll))
 	(raise "for-each got lists of different lengths")
 	(fore2 proc ls))))
@@ -589,9 +672,9 @@
 	       (car vs)
 	       (raise "min got a non-real argument")))
 	  (else
-	   (let ((type (foldl max/i 0 (map1 number/type vs))))
+	   (let ((type (foldl max/i 0 (map number/type vs))))
 	     (if (< type 3)
-		 (foldl1 (list-ref m-ops type) (map1 (list-ref p-ops type) vs))
+		 (foldl1 (list-ref m-ops type) (map (list-ref p-ops type) vs))
 		 (raise "min got a non-real argument")))))))
 
 ;;; --8><----8><----8><--
@@ -607,9 +690,9 @@
 	       (car vs)
 	       (raise "max got a non-real argument")))
 	  (else
-	   (let ((type (foldl max/i 0 (map1 number/type vs))))
+	   (let ((type (foldl max/i 0 (map number/type vs))))
 	     (if (< type 3)
-		 (foldl1 (list-ref m-ops type) (map1 (list-ref p-ops type) vs))
+		 (foldl1 (list-ref m-ops type) (map (list-ref p-ops type) vs))
 		 (raise "max got a non-real argument")))))))
 
 ;;; --8><----8><----8><--
@@ -643,7 +726,7 @@
 		(cons (list-reverse (merge2 is-lt? (car lst) (cadr lst) ()))
 		      acc)))))
   (let ((ll (list-length lst))
-	(vs (map1 list lst))
+	(vs (map list lst))
 	(cl 1))
     (if (positive? ll)
 	(begin (while (< cl ll)
@@ -900,7 +983,7 @@
 ;;; 4-digit (or whatever is appropriate) year, month from 1 to 12, day from
 ;;; 1 to 28/31 as appropriate.
 
-; Jan 1 2000 = 2451545
+;;; Jan 1 2000 = 2451545
 
 (define-primitive "wile_julian_day"
   "expects three integers which represent year, month, and day respectively and returns the Julian day number corresponding to that date in the proleptic Gregorian calendar"
@@ -1305,21 +1388,21 @@
 	 (k n)
 	 (i 0))
     (do-while (> k 1)
-      (set! k (max (quotient (i- (i* 5 k) 1) 11) 1))
-      (do ((j k (i+ j 1)))
-	  ((>= j n) vec)
-	(let ((v (vector-ref vec j)))
-	  (do ((i (i- j k) (i- i k)))
-	      ((or (negative? i) (is-le? (vector-ref vec i) v))
-	       (vector-set! vec (i+ i k) v))
-	    (vector-set! vec (i+ i k) (vector-ref vec i))))))))
+	      (set! k (max (quotient (i- (i* 5 k) 1) 11) 1))
+	      (do ((j k (i+ j 1)))
+		  ((>= j n) vec)
+		(let ((v (vector-ref vec j)))
+		  (do ((i (i- j k) (i- i k)))
+		      ((or (negative? i) (is-le? (vector-ref vec i) v))
+		       (vector-set! vec (i+ i k) v))
+		    (vector-set! vec (i+ i k) (vector-ref vec i))))))))
 
 ;;; --8><----8><----8><--
 
 (define-primitive "wile_vector_map" ""
   (vector-map proc vec . vecs)
   (let* ((vs (cons vec vecs))
-	 (ls (map1 vector-length vs)))
+	 (ls (map vector-length vs)))
     (unless (= (apply min ls) (apply max ls))
       (raise "vector-map: unequal vector lengths"))
     (let* ((len (car ls))
@@ -1431,7 +1514,7 @@
   (let* ((binfo (wile-basic-build-info)))
     `((operating-system ,(wile-os-name))
       (machine-architecture ,(wile-architecture-name))
-      (wile-version (0 10 0))
+      (wile-version (0 10 1))
       (float-type ,(case (bits-shift (bits-and binfo #b0011000) -3)
 		     ((0) 'double)
 		     ((1) 'long-double)
@@ -1495,10 +1578,10 @@
     (flush-port tport)
     (set-file-position tport 0 'start)
     (set! data1 (let loop ((acc ()))
-		 (let ((line (read-line tport)))
-		   (if line
-		       (loop (cons line acc))
-		       (list-reverse acc)))))
+		  (let ((line (read-line tport)))
+		    (if line
+			(loop (cons line acc))
+			(list-reverse acc)))))
     (close-port tport)
     (display-stack-trace data1 port)))
 
@@ -1888,8 +1971,6 @@
 	(cons 'list-untail list-untail)
 	(cons 'list? list?)
 	(cons 'listen-on listen-on)
-;;; TODO: breaking somehow? can't figure it out yet... later
-;;;	(list 'load-library load-library)
 	(cons 'localtime (case-lambic 0 (lambda ()
 					  (localtime))
 				      1 (lambda (a1)
@@ -1899,7 +1980,7 @@
 	(cons 'make-polar make-polar)
 	(cons 'make-rational make-rational)
 	(cons 'map map)
-	(cons 'map1 map1)
+	(cons 'map map)
 	(cons 'max max)
 	(cons 'max/i max/i)
 	(cons 'max/q max/q)
@@ -2213,7 +2294,8 @@
 		      '((let* ((nm (gensym))
 			       (sa (gensym))
 			       (s0 (map (lambda (s)
-					  (if (symbol? s) (list s s) s)) syms))
+					  (if (symbol? s)
+					      (list s s) s)) syms))
 			       (s1 (map (lambda (s)
 					  (let ((p (cadr s)))
 					    `(define ,p #f))) s0))
@@ -2497,6 +2579,40 @@
        (or (symbol=? (car expr) 'define)
 	   (symbol=? (car expr) 'defmacro))))
 
+(define-primitive "wile_eval_load_path"
+  ""
+  (load-file-path pathy? fname)
+  (if pathy?
+      (let* ((paths (string-split-by
+		     (lambda (c) (eqv? c #\:))
+		     (get-environment-variable "WILE_LIBRARY_PATH")))
+	     (filepath (let loop ((ps paths))
+			 (if (null? ps)
+			     #f
+			     (let ((fp (string-join-by "/" (car ps) fname)))
+			       (if (file-exists? fp) fp (loop (cdr ps))))))))
+	(if filepath
+	    filepath
+	    (raise (string-append "unable to find file '" fname "'"))))
+      fname))
+
+(define-primitive "wile_eval_load_form"
+  ""
+  (load-form? expr)
+  (and (pair? expr)
+       (symbol? (car expr))
+       (or (symbol=? (car expr) 'load)
+	   (symbol=? (car expr) 'load-library))
+       (list-length=? 2 expr)))
+
+(define-primitive "wile_eval_begin_form"
+  ""
+  (begin-form? expr)
+  (and (pair? expr)
+       (symbol? (car expr))
+       (symbol=? (car expr) 'begin)
+       (list-length>=? 2 expr)))
+
 (define (unique-symbols? lst)
   (let ((syms? (let loop ((ls lst))	;;; check symbolness
 		 (cond ((null? ls) #t)
@@ -2542,16 +2658,19 @@
       (set-iproc-env! bv new-env))
     new-env))
 
-(define (eval-begin env expr)
+(define-primitive "wile_eval_begin"
+  ""
+  (eval-begin ebox env expr)
   (if (null? expr)
       ()		;;; TODO: this could alternately be an error
       (let loop ((es expr))
-	(let ((ev (if (define-form? (car es))
-		      (begin
-			(set! env (eval-define (symbol=? (caar es) 'defmacro)
-					       env (cdar es)))
-			(get-bbox-value (car env)))
-		      (eval env (car es)))
+	(let ((ev (cond ((define-form? (car es))
+			 (set! env (eval-define (symbol=? (caar es) 'defmacro)
+						env (cdar es)))
+			 (when ebox (set-bbox-value! ebox env))
+			 (get-bbox-value (car env)))
+			;;; TODO: load -- needs to recursively update env
+			(else (eval env (car es))))
 		  ))
 	  (if (null? (cdr es))
 	      ev
@@ -2590,7 +2709,7 @@
 	    (ERR "malformed '%s' bindings list '%v'" type vs))))
       (ERR "malformed '%s' expression '%v'" type llist)))
 
-(define (eval-let star? env exprs)
+(define (eval-let rec? star? env exprs)
   (cond ((null? exprs)
 	 (ERR "malformed 'let' expression '%v'" exprs))
 	((and (list? exprs) (symbol? (car exprs)))
@@ -2602,7 +2721,8 @@
 	   (set-iproc-env! fn new-env)
 	   (apply-lambda fn vals)))
 	(else
-	 (check-let-bindings (if star? "let*" "let") exprs)
+	 (check-let-bindings
+	  (string-append "let" (if rec? "rec" "") (if star? "*" "")) exprs)
 	 (let* ((new-env env)
 		(lvs (map (lambda (iex)
 			    (let ((lv (eval-binding new-env iex)))
@@ -2611,25 +2731,13 @@
 			  (car exprs))))
 	   (unless star?
 	     (set! new-env (list-append (list-reverse lvs) env)))
-	   (eval-begin new-env (cdr exprs))))))
-
-(define (eval-letrec env exprs)
-  (if (null? exprs)
-      (ERR "malformed 'letrec' expression '%v'" exprs)
-      (begin
-	(check-let-bindings "letrec" exprs)
-	(let* ((ts (map (lambda (iex) (cons (car iex) #f)) (car exprs)))
-	       (tmp-env (list-append (list-reverse ts) env))
-	       (lvs (map (lambda (iex)
-			   (eval-binding tmp-env iex))
-			 (car exprs)))
-	       (new-env (list-append (list-reverse lvs) env)))
-	  (for-each (lambda (box)
-		      (let ((bval (get-bbox-value box)))
-			(when (interpreted-procedure? bval)
-			  (set-iproc-env! bval new-env))))
-		    lvs)
-	  (eval-begin new-env (cdr exprs))))))
+	   (when rec?
+	     (for-each (lambda (box)
+			 (let ((bval (get-bbox-value box)))
+			   (when (interpreted-procedure? bval)
+			     (set-iproc-env! bval new-env))))
+		       lvs))
+	   (eval-begin #f new-env (cdr exprs))))))
 
 (define (eval-qq-olist level env expr)
   (let* ((lh (eval-qq level env (car expr)))
@@ -2679,7 +2787,7 @@
   (cond ((null? expr) #f)
 	((pair? (car expr))
 	 (if (eval env (caar expr))
-	     (eval-begin env (cdar expr))
+	     (eval-begin #f env (cdar expr))
 	     (eval-cond env (cdr expr))))
 	(else (ERR "malformed 'cond' expression '%v'" expr))))
 
@@ -2703,9 +2811,9 @@
 				     (set! re-raise #t)
 				     (set! re-err err))
 				    ((eval err-env (caar cs))
-				     (eval-begin err-env (cdar cs)))
+				     (eval-begin #f err-env (cdar cs)))
 				    (else (loop (cdr cs))))))))
-		 (eval-begin env (cdr expr)))))
+		 (eval-begin #f env (cdr expr)))))
     (if re-raise
 	(raise re-err)
 	guard-val)))
@@ -2725,7 +2833,7 @@
 		       (not (null? (cdar cs))))
 		  (if (or (eqv? (caar cs) 'else)
 			  (memv val (caar cs)))
-		      (eval-begin env (cdar cs))
+		      (eval-begin #f env (cdar cs))
 		      (loop (cdr cs)))
 		  (ERR "malformed 'case' clause '%v'" (car cs))))))
       (ERR "malformed 'case' expression '%v'" expr)))
@@ -2785,7 +2893,7 @@
 			 var-info)))
 	  (let ((new-env (list-append new-bindings env)))
 	    (if (eval new-env (car test))
-		(eval-begin new-env (cdr test))
+		(eval-begin #f new-env (cdr test))
 		(begin
 		  (for-each (lambda (e) (eval new-env e)) body)
 		  (loop (map (lambda (vdef)
@@ -2814,6 +2922,7 @@
 	  (ERR "malformed 'lambda' evaluation: %d formal vs %d actual args"
 	       arity a-len)))
     (eval-begin
+     #f
      (let loop ((fs formals)
 		(as args)
 		(env (get-iproc-env fn)))
@@ -2837,7 +2946,7 @@
 	(apply fn a2))))
 
 (define-primitive "wile_eval"
-  "expects one environment list and and expression and returns the result of evaluating the experssion in that environment"
+  "expects one environment list and and expression and returns the result of evaluating the expression in that environment"
   (eval env expr)
   (cond ((or (atom? expr) (vector? expr) (bytevector? expr)) expr)
 	((symbol? expr)
@@ -2846,13 +2955,14 @@
 	 (cond ((special-form? (car expr))
 		(case (car expr)
 		  ((quote) (cadr expr))
-		  ((begin) (eval-begin env (cdr expr)))
+		  ((begin) (eval-begin #f env (cdr expr)))
 		  ((if) (eval-if env (cdr expr)))
 		  ((and) (eval-and #t env (cdr expr)))
 		  ((or) (eval-or #f env (cdr expr)))
-		  ((let) (eval-let #f env (cdr expr)))
-		  ((let*) (eval-let #t env (cdr expr)))
-		  ((letrec letrec*) (eval-letrec env (cdr expr)))
+		  ((let) (eval-let #f #f env (cdr expr)))
+		  ((let*) (eval-let #f #t env (cdr expr)))
+		  ((letrec) (eval-let #t #f env (cdr expr)))
+		  ((letrec*) (eval-let #t #t env (cdr expr)))
 		  ((cond) (eval-cond
 			   (cons (make-bbox 'else #t) env) (cdr expr)))
 		  ((set!) (eval-set! env (cdr expr)))

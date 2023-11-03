@@ -1,6 +1,16 @@
-Last update: 2023-11-1 11:00 PST
+Last update: 2023-11-5 22:30 PDT
 
 # Changelog for `wile`
+
+## Current version `wile` (0 10 1) 2023-11-5
+
+- add a few special cases mapN to make things a bit faster
+
+- treat a few cases specially in interpreter, attempt to properly
+  update environment - still in progress
+
+- change a number of calls to system malloc to call GC_malloc instead;
+  I believe this fixes my heisenbug!!!
 
 ## Current version `wile` (0 10 0) 2023-11-1
 

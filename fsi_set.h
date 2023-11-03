@@ -1,13 +1,11 @@
 #ifndef FSI_SET_H
 #define FSI_SET_H
 
+// Wile -- the extremely stable scheming genius compiler
+// Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+// License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
+
 /*
-This file is part of ulex -- Uwe's lex
-Copyright 2013, Uwe Hollerbach <uhollerbach@gmail.com>
-License: 2clause BSD, see file 'LICENSE' for details
-
-$Id: fsi_set.h,v 1.9 2013/09/09 13:11:42 uwe Exp $
-
 Routines to manipulate finite sets of generally-small integers.
 Sets are represented as bit-sets stored in unsigned char, with
 <n>-present-in-set represented as a 1-bit, and <n>-not-present

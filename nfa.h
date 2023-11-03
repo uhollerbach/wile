@@ -1,13 +1,9 @@
 #ifndef NFA_H
 #define NFA_H
 
-/*
-This file is part of ulex -- Uwe's lex
-Copyright 2013, Uwe Hollerbach <uhollerbach@gmail.com>
-License: 2clause BSD, see file 'LICENSE' for details
-
-$Id: nfa.h,v 1.12 2013/09/09 13:11:42 uwe Exp $
-*/
+// Wile -- the extremely stable scheming genius compiler
+// Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+// License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
 
 enum nfa_state_type
 {

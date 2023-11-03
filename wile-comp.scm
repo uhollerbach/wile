@@ -499,15 +499,17 @@
 	      (emit-fstr "%s = %s;\n"
 			 vname (compile-immediate cur-env (car vals))))
 	     (else
-	      (emit-decl "vs" aal)
-	      (for-each (lambda (i v)
-			  (emit-fstr "vs[%d] = %s;\n"
-				     i (compile-immediate cur-env v)))
-			(upfrom 0 aal) vals)
-	      (if (positive? alen)
-		  (emit-fstr "%s = wile_gen_list(%d, vs, NULL);\n" vname alen)
-		  (emit-fstr "%s = wile_gen_list(%d, vs, vs + %d);\n"
-			     vname (- aal 1) (- aal 1)))))
+	      (let ((tmp (new-svar)))
+		(emit-decl tmp aal)
+		(for-each (lambda (i v)
+			    (emit-fstr "%s[%d] = %s;\n"
+				       tmp i (compile-immediate cur-env v)))
+			  (upfrom 0 aal) vals)
+		(if (positive? alen)
+		    (emit-fstr "%s = wile_gen_list(%d, %s, NULL);\n"
+			       vname alen tmp)
+		    (emit-fstr "%s = wile_gen_list(%d, %s, %s + %d);\n"
+			       vname (- aal 1) tmp tmp (- aal 1))))))
        (when global-library
 	 (emit-fstr "do_init_%s = false;\n" vname))
        (emit-fstr "}\n")))
@@ -1180,27 +1182,29 @@
 (define (build-regular-prim res nargs arity c-fn args)
   (cond ((negative? arity)
 	 (let* ((narity (- arity))
-		(req (- narity 1)))
+		(req (- narity 1))
+		(tmp (new-svar)))
 	   (apply build-basic-list res (list-tail args req))
 	   (emit-fstr "{\n")
-	   (emit-decl "vs" narity)
+	   (emit-decl tmp narity)
 	   (when (positive? req)
-	     (for-each (lambda (ix v) (emit-fstr "vs[%d] = %s;\n" ix v))
+	     (for-each (lambda (ix v) (emit-fstr "%s[%d] = %s;\n" tmp ix v))
 		       (upfrom 0 req) (list-head args req)))
-	   (emit-fstr "vs[%d] = %s;\n" req res)
-	   (emit-function-call res c-fn #f "vs" #f #f)
+	   (emit-fstr "%s[%d] = %s;\n" tmp req res)
+	   (emit-function-call res c-fn #f tmp #f #f)
 	   (emit-fstr "}\n")))
 	((zero? nargs)
 	 (emit-decl res)
 	 (emit-function-call res c-fn #f "NULL" #f #f))
 	(else
-	 (emit-decl res)
-	 (emit-fstr "{\n")
-	 (emit-decl "vs" nargs)
-	 (for-each (lambda (ix v) (emit-fstr "vs[%d] = %s;\n" ix v))
-		   (upfrom 0 nargs) args)
-	 (emit-function-call res c-fn #f "vs" #f #f)
-	 (emit-fstr "}\n"))))
+	 (let ((tmp (new-svar)))
+	   (emit-decl res)
+	   (emit-fstr "{\n")
+	   (emit-decl tmp nargs)
+	   (for-each (lambda (ix v) (emit-fstr "%s[%d] = %s;\n" tmp ix v))
+		     (upfrom 0 nargs) args)
+	   (emit-function-call res c-fn #f tmp #f #f)
+	   (emit-fstr "}\n")))))
 
 (define (apply-prim s-name ops args)
   (let* ((res (new-svar))
@@ -1358,15 +1362,7 @@
 			       (string-append "a" (number->string i))))
 			    (fromto 1 arity))))
 	     `(lambda (,@args) (,mac ,@args))))
-
-	  ;;; TODO: implement this bit - how? wile would need to be able
-	  ;;; to handle quasiquotes, and we're not there yet: generate
-	  ;;;     (lambda (,@areq . ,aopt) (,mac ,@areq ,@aopt))
-	  ;;; where the ,@areq get expanded, but the ,@aopt keeps the ,@ part
-	  ;;; literal... what does that mean? alternative is to expand into
-	  ;;;     (lambda (,@areq . ,aopt) (apply ,mac ,@areq ,aopt))
-	  ;;; which leads to an infinite regression of lambdas for the macro
-
+	  ;;; TODO: implement this bit
 	  (else (ERR "negative arity macro wrap is not implemented yet")))))
 
 (define (compile-expr cur-env tcall expr)

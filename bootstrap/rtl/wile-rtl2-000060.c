@@ -20,25 +20,27 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (offset-date year month day offset) @@@ bld-rtl-dir/wile-rtl2-000060.scm:16 @@@ wile_offset_date @@@
-lval wile_offset_date(lptr* var_1, lptr var_2)
+// @@@ (delta-dates y1 m1 d1 y2 m2 d2) @@@ bld-rtl-dir/wile-rtl2-000060.scm:15 @@@ wile_delta_dates @@@
+lval wile_delta_dates(lptr* var_1, lptr var_2)
 {
 lval var_4;
 {
-lval vs[8];
-vs[0] = var_2[0];
-vs[1] = var_2[1];
-vs[2] = var_2[2];
-var_4 = wile_julian_day(NULL, vs);
+lval var_5[8];
+var_5[0] = var_2[3];
+var_5[1] = var_2[4];
+var_5[2] = var_2[5];
+var_4 = wile_julian_day(NULL, var_5);
 }
-lval var_5;
-var_5 = LVI_INT(var_4.v.iv + var_2[3].v.iv);
 lval var_6;
 {
-lval vs[8];
-vs[0] = var_5;
-var_6 = wile_gregorian_date(NULL, vs);
+lval var_7[8];
+var_7[0] = var_2[0];
+var_7[1] = var_2[1];
+var_7[2] = var_2[2];
+var_6 = wile_julian_day(NULL, var_7);
 }
-return var_6;
+lval var_8;
+var_8 = LVI_INT(var_4.v.iv - var_6.v.iv);
+return var_8;
 }
-// end of function wile_offset_date
+// end of function wile_delta_dates

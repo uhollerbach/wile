@@ -35,12 +35,12 @@
 	(emit-decl r)
 	(if build-variadic-bypass
 	    (emit-fstr "%s = %s;\n" r build-variadic-bypass)
-	    (begin
-	      (emit-fstr "{\nlval vs[%d];\n" ac)
+	    (let ((tmp (new-svar)))
+	      (emit-fstr "{\nlval %s[%d];\n" tmp ac)
 	      (for-each (lambda (i v)
-			  (emit-fstr "vs[%d] = %s;\n" (- i 1) v))
+			  (emit-fstr "%s[%d] = %s;\n" tmp (- i 1) v))
 			(fromto 1 ac) as)
-	      (emit-fstr "%s = wile_gen_list(%d, vs, NULL);\n}\n" r ac)))
+	      (emit-fstr "%s = wile_gen_list(%d, %s, NULL);\n}\n" r ac tmp)))
 	r)))
 
 ;;; used here for apply and in wile-comp.scm
@@ -2447,19 +2447,20 @@
    (list 'frexp "expects one real-valued argument and returns a 2-list which is decomposition of it into a normalized fraction in [0.5,1) and an exponent; 0, NaN, and Inf are special cases"
 	 'prim 1
 	 (lambda (r a1)
-	   (emit-code
-	    "{"
-	    "lval vs[2];"
-	    "int ex;"
-	    "if (ISFINITE(@1.v.rv)) {"
-	    "vs[0] = LVI_REAL(FREXP(@1.v.rv, &ex));"
-	    "} else {"
-	    "vs[0] = LVI_REAL(@1.v.rv);"
-	    "ex = 0;"
-	    "}"
-	    "vs[1] = LVI_INT(ex);"
-	    "@@ = wile_gen_list(2, vs, NULL);"
-	    "}")))
+	   (let ((a9 (new-svar)))
+	     (emit-code
+	      "{"
+	      "lval @9[2];"
+	      "int ex;"
+	      "if (ISFINITE(@1.v.rv)) {"
+	      "@9[0] = LVI_REAL(FREXP(@1.v.rv, &ex));"
+	      "} else {"
+	      "@9[0] = LVI_REAL(@1.v.rv);"
+	      "ex = 0;"
+	      "}"
+	      "@9[1] = LVI_INT(ex);"
+	      "@@ = wile_gen_list(2, @9, NULL);"
+	      "}"))))
 
    (list 'fmod 'prim 2
 	 (lambda (r a1 a2)
@@ -2745,39 +2746,42 @@
 
    (list 'floor/ 'prim 2
 	 (lambda (r a1 a2)
-	   (emit-code
-	    "{"
-	    "lval vs[2];"
-	    "lisp_int_t nq, nr;"
-	    "floor_qr(@1.v.iv, @2.v.iv, &nq, &nr);"
-	    "vs[0] = LVI_INT(nq);"
-	    "vs[1] = LVI_INT(nr);"
-	    "@@ = wile_gen_list(2, vs, NULL);"
-	    "}")))
+	   (let ((a9 (new-svar)))
+	     (emit-code
+	      "{"
+	      "lval @9[2];"
+	      "lisp_int_t nq, nr;"
+	      "floor_qr(@1.v.iv, @2.v.iv, &nq, &nr);"
+	      "@9[0] = LVI_INT(nq);"
+	      "@9[1] = LVI_INT(nr);"
+	      "@@ = wile_gen_list(2, @9, NULL);"
+	      "}"))))
 
    (list 'truncate/ 'prim 2
 	 (lambda (r a1 a2)
-	   (emit-code
-	    "{"
-	    "lval vs[2];"
-	    "lisp_int_t nq, nr;"
-	    "trunc_qr(@1.v.iv, @2.v.iv, &nq, &nr);"
-	    "vs[0] = LVI_INT(nq);"
-	    "vs[1] = LVI_INT(nr);"
-	    "@@ = wile_gen_list(2, vs, NULL);"
-	    "}")))
+	   (let ((a9 (new-svar)))
+	     (emit-code
+	      "{"
+	      "lval @9[2];"
+	      "lisp_int_t nq, nr;"
+	      "trunc_qr(@1.v.iv, @2.v.iv, &nq, &nr);"
+	      "@9[0] = LVI_INT(nq);"
+	      "@9[1] = LVI_INT(nr);"
+	      "@@ = wile_gen_list(2, @9, NULL);"
+	      "}"))))
 
    (list 'ceiling/ 'prim 2
 	 (lambda (r a1 a2)
-	   (emit-code
-	    "{"
-	    "lval vs[2];"
-	    "lisp_int_t nq, nr;"
-	    "ceil_qr(@1.v.iv, @2.v.iv, &nq, &nr);"
-	    "vs[0] = LVI_INT(nq);"
-	    "vs[1] = LVI_INT(nr);"
-	    "@@ = wile_gen_list(2, vs, NULL);"
-	    "}")))
+	   (let ((a9 (new-svar)))
+	     (emit-code
+	      "{"
+	      "lval @9[2];"
+	      "lisp_int_t nq, nr;"
+	      "ceil_qr(@1.v.iv, @2.v.iv, &nq, &nr);"
+	      "@9[0] = LVI_INT(nq);"
+	      "@9[1] = LVI_INT(nr);"
+	      "@@ = wile_gen_list(2, @9, NULL);"
+	      "}"))))
 
    ;;; A few internal type-check and -conversion functions,
    ;;; to help with implementing numeric tower

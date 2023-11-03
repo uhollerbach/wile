@@ -20,33 +20,28 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (string-trim-left drop? str) @@@ bld-rtl-dir/wile-rtl2-000047.scm:13 @@@ wile_string_trim_left @@@
-lval wile_string_trim_left(lptr* var_1, lptr var_2)
+// @@@ (string-trim-right drop? str) @@@ bld-rtl-dir/wile-rtl2-000047.scm:13 @@@ wile_string_trim_right @@@
+lval wile_string_trim_right(lptr* var_1, lptr var_2)
 {
 lval var_4;
 {
-lval vs[8];
-vs[0] = var_2[1];
-var_4 = wile_string2list(NULL, vs);
-}
-lval var_5;
-{
-lval vs[8];
-vs[0] = var_2[0];
-vs[1] = var_4;
-var_5 = wile_list_drop_while(NULL, vs);
+lval var_5[8];
+var_5[0] = var_2[1];
+var_4 = wile_string_reverse(NULL, var_5);
 }
 lval var_6;
 {
-lval vs[1];
-vs[0] = var_5;
-var_6 = wile_gen_list(1, vs, NULL);
+lval var_7[8];
+var_7[0] = var_2[0];
+var_7[1] = var_4;
+var_6 = wile_string_trim_left(NULL, var_7);
 }
+lval var_8;
 {
-lval vs[8];
-vs[0] = var_6;
-var_6 = wile_char2string(NULL, vs);
+lval var_9[8];
+var_9[0] = var_6;
+var_8 = wile_string_reverse(NULL, var_9);
 }
-return var_6;
+return var_8;
 }
-// end of function wile_string_trim_left
+// end of function wile_string_trim_right

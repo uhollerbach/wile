@@ -17,118 +17,257 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
+static lval fn_44(lptr*, lptr);
 
 // definitions
 
-// @@@ (vector-map! proc vec) @@@ bld-rtl-dir/wile-rtl2-000071.scm:13 @@@ wile_vector_map_inplace @@@
-lval wile_vector_map_inplace(lptr* var_1, lptr var_2)
+// @@@ vector-length @@@ bld-rtl-dir/wile-rtl2-000071.scm:15 @@@ fn_7 @@@
+static lval fn_7(lptr* var_8, lptr var_9)
+{
+lval var_11;
+{
+if (var_9[0].vt != LV_VECTOR) {
+WILE_EX("vector-length", "input is not a vector");
+}
+var_11 = LVI_INT(var_9[0].v.vec.capa);
+}
+return var_11;
+}
+// end of prim fn_7
+
+// @@@ min @@@ bld-rtl-dir/wile-rtl2-000071.scm:16 @@@ fn_15 @@@
+static lval fn_15(lptr* var_16, lptr var_17)
+{
+lval var_19;
+var_19 = var_17[0];
+{
+lval var_20[8];
+var_20[0] = var_19;
+var_19 = wile_min(NULL, var_20);
+}
+return var_19;
+}
+// end of prim fn_15
+
+// @@@ max @@@ bld-rtl-dir/wile-rtl2-000071.scm:16 @@@ fn_23 @@@
+static lval fn_23(lptr* var_24, lptr var_25)
+{
+lval var_27;
+var_27 = var_25[0];
+{
+lval var_28[8];
+var_28[0] = var_27;
+var_27 = wile_max(NULL, var_28);
+}
+return var_27;
+}
+// end of prim fn_23
+
+// @@@ lambda (v) @@@ bld-rtl-dir/wile-rtl2-000071.scm:21 @@@ fn_44 @@@
+static lval fn_44(lptr* var_45, lptr var_46)
+{
+lval var_48;
+{
+if (var_46[0].vt != LV_VECTOR) {
+WILE_EX("vector-ref", "input is not a vector");
+}
+if (V_CLOS(var_45,0).vt != LV_INT || V_CLOS(var_45,0).v.iv < 0 || (size_t) V_CLOS(var_45,0).v.iv >= var_46[0].v.vec.capa) {
+WILE_EX("vector-ref", "got bad index value");
+}
+var_48 = var_46[0].v.vec.arr[V_CLOS(var_45,0).v.iv] ? *(var_46[0].v.vec.arr[V_CLOS(var_45,0).v.iv]) : LVI_NIL();
+}
+return var_48;
+}
+// end of lambda fn_44
+
+// @@@ (vector-for-each proc vec . vecs) @@@ bld-rtl-dir/wile-rtl2-000071.scm:13 @@@ wile_vector_foreach @@@
+lval wile_vector_foreach(lptr* var_1, lptr var_2)
 {
 lval var_4;
 lval var_5;
 {
-if (var_2[1].vt != LV_VECTOR) {
-WILE_EX("vector-length", "input is not a vector");
+lptr p1 = NULL, p2 = NULL;
+if (var_2[1].vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_2[1];
 }
-var_5 = LVI_INT(var_2[1].v.vec.capa);
+if (var_2[2].vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_2[2];
+}
+var_5 = LVI_PAIR(p1, p2);
 }
 var_4 = var_5;
-lval var_7;
-lval var_8;
-lval var_9;
-var_9 = LVI_INT(0);
-var_7 = var_9;
 lval var_6;
-do {
-lval var_10;
-switch (TYPE_COMBO(var_7.vt,var_4.vt)) {
+lval var_12;
+var_12 = LVI_NIL();
+{
+lval var_13[8];
+var_13[0] = LVI_PROC(fn_7,NULL,1);
+var_13[1] = var_4;
+var_13[2] = var_12;
+var_12 = wile_map(NULL, var_13);
+}
+var_6 = var_12;
+lval var_21;
+{
+lval var_22[2];
+var_22[0] = LVI_PROC(fn_15,NULL,-1);
+var_22[1] = var_6;
+var_21 = wile_gen_list(2, var_22, NULL);
+}
+var_21 = wile_apply_function(&(var_21), __FILE__, __LINE__);
+lval var_29;
+{
+lval var_30[2];
+var_30[0] = LVI_PROC(fn_23,NULL,-1);
+var_30[1] = var_6;
+var_29 = wile_gen_list(2, var_30, NULL);
+}
+var_29 = wile_apply_function(&(var_29), __FILE__, __LINE__);
+lval var_31;
+switch (TYPE_COMBO(var_21.vt,var_29.vt)) {
 case TYPE_COMBO(LV_INT,LV_INT):
-var_10 = LVI_BOOL(var_7.v.iv == var_4.v.iv);
+var_31 = LVI_BOOL(var_21.v.iv == var_29.v.iv);
 break;
 case TYPE_COMBO(LV_INT,LV_RAT):
-var_10 = LVI_BOOL(var_7.v.iv * var_4.v.irv.den == var_4.v.irv.num);
+var_31 = LVI_BOOL(var_21.v.iv * var_29.v.irv.den == var_29.v.irv.num);
 break;
 case TYPE_COMBO(LV_INT,LV_REAL):
-var_10 = LVI_BOOL(var_7.v.iv == var_4.v.rv);
+var_31 = LVI_BOOL(var_21.v.iv == var_29.v.rv);
 break;
 case TYPE_COMBO(LV_RAT,LV_INT):
-var_10 = LVI_BOOL(var_7.v.irv.num == var_4.v.iv * var_7.v.irv.den);
+var_31 = LVI_BOOL(var_21.v.irv.num == var_29.v.iv * var_21.v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_RAT):
-var_10 = LVI_BOOL(var_7.v.irv.num * var_4.v.irv.den == var_4.v.irv.num * var_7.v.irv.den);
+var_31 = LVI_BOOL(var_21.v.irv.num * var_29.v.irv.den == var_29.v.irv.num * var_21.v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_REAL):
-var_10 = LVI_BOOL(var_7.v.irv.num == var_4.v.rv * var_7.v.irv.den);
+var_31 = LVI_BOOL(var_21.v.irv.num == var_29.v.rv * var_21.v.irv.den);
 break;
 case TYPE_COMBO(LV_REAL,LV_INT):
-var_10 = LVI_BOOL(var_7.v.rv == var_4.v.iv);
+var_31 = LVI_BOOL(var_21.v.rv == var_29.v.iv);
 break;
 case TYPE_COMBO(LV_REAL,LV_RAT):
-var_10 = LVI_BOOL(var_7.v.rv * var_4.v.irv.den == var_4.v.irv.num);
+var_31 = LVI_BOOL(var_21.v.rv * var_29.v.irv.den == var_29.v.irv.num);
 break;
 case TYPE_COMBO(LV_REAL,LV_REAL):
-var_10 = LVI_BOOL(var_7.v.rv == var_4.v.rv);
+var_31 = LVI_BOOL(var_21.v.rv == var_29.v.rv);
 break;
 default:
 WILE_EX("==", "inputs are not real-valued numbers");
 break;
 }
-if (!LV_IS_FALSE(var_10)) {
-var_6 = var_2[1];
+if (LV_IS_FALSE(var_31)) {
+lval var_32;
+var_32 = LVI_STRING("vector-for-each: unequal vector lengths");
+lval var_33;
+{
+lval var_34[1];
+var_34[0] = var_32;
+var_33 = wile_gen_list(1, var_34, NULL);
+}
+if (var_33.vt == LV_PAIR && (var_33.v.pair.cdr == NULL || var_33.v.pair.cdr->vt == LV_NIL)) {
+var_33 = (var_33.v.pair.car ? *(var_33.v.pair.car) : LVI_NIL());
+}
+cachalot->errval = new_lv(LV_NIL);
+*(cachalot->errval) = var_33;
+cachalot->l_whence = 0;
+cachalot->c_whence = LISP_WHENCE;
+longjmp(cachalot->cenv, 1);
+} else {
+(void)
+ LVI_BOOL(false);
+}
+lval var_36;
+lval var_37;
+if (var_6.vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
+}
+var_37 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
+var_36 = var_37;
+lval var_39;
+lval var_40;
+lval var_41;
+var_41 = LVI_INT(0);
+var_39 = var_41;
+lval var_38;
+do {
+lval var_42;
+switch (TYPE_COMBO(var_39.vt,var_36.vt)) {
+case TYPE_COMBO(LV_INT,LV_INT):
+var_42 = LVI_BOOL(var_39.v.iv == var_36.v.iv);
+break;
+case TYPE_COMBO(LV_INT,LV_RAT):
+var_42 = LVI_BOOL(var_39.v.iv * var_36.v.irv.den == var_36.v.irv.num);
+break;
+case TYPE_COMBO(LV_INT,LV_REAL):
+var_42 = LVI_BOOL(var_39.v.iv == var_36.v.rv);
+break;
+case TYPE_COMBO(LV_RAT,LV_INT):
+var_42 = LVI_BOOL(var_39.v.irv.num == var_36.v.iv * var_39.v.irv.den);
+break;
+case TYPE_COMBO(LV_RAT,LV_RAT):
+var_42 = LVI_BOOL(var_39.v.irv.num * var_36.v.irv.den == var_36.v.irv.num * var_39.v.irv.den);
+break;
+case TYPE_COMBO(LV_RAT,LV_REAL):
+var_42 = LVI_BOOL(var_39.v.irv.num == var_36.v.rv * var_39.v.irv.den);
+break;
+case TYPE_COMBO(LV_REAL,LV_INT):
+var_42 = LVI_BOOL(var_39.v.rv == var_36.v.iv);
+break;
+case TYPE_COMBO(LV_REAL,LV_RAT):
+var_42 = LVI_BOOL(var_39.v.rv * var_36.v.irv.den == var_36.v.irv.num);
+break;
+case TYPE_COMBO(LV_REAL,LV_REAL):
+var_42 = LVI_BOOL(var_39.v.rv == var_36.v.rv);
+break;
+default:
+WILE_EX("==", "inputs are not real-valued numbers");
 break;
 }
-lval var_11;
+if (!LV_IS_FALSE(var_42)) {
+lval var_43;
+var_43 = LVI_BOOL(true);
+var_38 = var_43;
+break;
+}
+MK_CLOS(var_45,1);
+P_CLOS(var_45,0) = &(var_39);
+lval var_49;
+var_49 = LVI_NIL();
 {
-if (var_2[1].vt != LV_VECTOR) {
-WILE_EX("vector-ref", "input is not a vector");
+lval var_50[8];
+var_50[0] = LVI_PROC(fn_44,var_45,1);
+var_50[1] = var_4;
+var_50[2] = var_49;
+var_49 = wile_map(NULL, var_50);
 }
-if (var_7.vt != LV_INT || var_7.v.iv < 0 || (size_t) var_7.v.iv >= var_2[1].v.vec.capa) {
-WILE_EX("vector-ref", "got bad index value");
-}
-var_11 = var_2[1].v.vec.arr[var_7.v.iv] ? *(var_2[1].v.vec.arr[var_7.v.iv]) : LVI_NIL();
-}
-lval var_12;
+lval var_51;
 {
-lval vs[1];
-vs[0] = var_11;
-var_12 = wile_gen_list(1, vs, NULL);
+lval var_52[2];
+var_52[0] = var_2[0];
+var_52[1] = var_49;
+var_51 = wile_gen_list(2, var_52, NULL);
 }
-lval var_13;
+var_51 = wile_apply_function(&(var_51), __FILE__, __LINE__);
+lval var_53;
+var_53 = LVI_INT(1);
+lval var_54;
 {
-lval vs[2];
-vs[0] = var_2[0];
-vs[1] = var_12;
-var_13 = wile_gen_list(2, vs, NULL);
-}
-var_13 = wile_apply_function(&(var_13), __FILE__, __LINE__);
-{
-if (var_2[1].vt != LV_VECTOR) {
-WILE_EX("vector-set!", "input is not a vector");
-}
-if (var_7.vt != LV_INT || var_7.v.iv < 0 || (size_t) var_7.v.iv >= var_2[1].v.vec.capa) {
-WILE_EX("vector-set!", "got bad index value");
-}
-var_2[1].v.vec.arr[var_7.v.iv] = new_lv(LV_NIL);
-*(var_2[1].v.vec.arr[var_7.v.iv]) = var_13;
-(void)
- var_2[1];
-}
-lval var_15;
-var_15 = LVI_INT(1);
-lval var_16;
-{
-lval vs[2];
-vs[0] = var_7;
-vs[1] = var_15;
-var_16 = wile_gen_list(2, vs, NULL);
+lval var_56[2];
+var_56[0] = var_39;
+var_56[1] = var_53;
+var_54 = wile_gen_list(2, var_56, NULL);
 }
 {
-lval vs[8];
-vs[0] = var_16;
-var_16 = wile_add(NULL, vs);
+lval var_55[8];
+var_55[0] = var_54;
+var_54 = wile_add(NULL, var_55);
 }
-var_8 = var_16;
-var_7 = var_8;
+var_40 = var_54;
+var_39 = var_40;
 } while (1);
-return var_6;
+return var_38;
 }
-// end of function wile_vector_map_inplace
+// end of function wile_vector_foreach

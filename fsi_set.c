@@ -1,22 +1,21 @@
-/*
-This file is part of ulex -- Uwe's lex
-Copyright 2013, Uwe Hollerbach <uhollerbach@gmail.com>
-License: 2clause BSD, see file 'LICENSE' for details
+// Wile -- the extremely stable scheming genius compiler
+// Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+// License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
 
-$Id: fsi_set.c,v 1.15 2016/02/01 06:31:54 uwe Exp $
-
-This file contains routines to manipulate finite sets of
-generally-small integers. Sets are represented as bit-sets stored in
-unsigned char, with <n>-present-in-set represented as a 1-bit, and
-<n>-not-present represented as a 0 bit, in the <n>th location in the
-bit-set. */
+// This file contains routines to manipulate finite sets of
+// generally-small integers. Sets are represented as bit-sets stored in
+// unsigned char, with <n>-present-in-set represented as a 1-bit, and
+// <n>-not-present represented as a 0 bit, in the <n>th location in the
+// bit-set.
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
 
+#include "wile.h"
 #include "fsi_set.h"
+#include "alloc.h"
 
 /* Allocate a fsi_set, specifying the number of integers which it can hold */
 
@@ -25,18 +24,12 @@ struct fsi_set* fsi_set_alloc(unsigned int ni)
     unsigned int nb;
     struct fsi_set* set;
 
-    set = malloc(sizeof(struct fsi_set));
+    set = LISP_ALLOC(struct fsi_set, 1);
+    LISP_ASSERT(set != NULL);
     nb = 1 + ni/CHAR_BIT;
-    if (set == NULL) {
-	fprintf(stderr, "fsi_set error: can't allocate fsi_set!\n");
-	exit(99);
-    }
     set->n_ints = CHAR_BIT*nb;
-    set->bits = malloc(nb);
-    if (set->bits == NULL) {
-	fprintf(stderr, "fsi_set error: can't allocate fsi_set->bits!\n");
-	exit(99);
-    }
+    set->bits = LISP_ALLOC(unsigned char, nb);
+    LISP_ASSERT(set->bits != NULL);
     memset(set->bits, 0, nb);
     return(set);
 }
@@ -48,17 +41,11 @@ struct fsi_set* fsi_set_copy(struct fsi_set* set)
     struct fsi_set* copy;
 
     if (set) {
-	copy = malloc(sizeof(struct fsi_set));
-	if (copy == NULL) {
-	    fprintf(stderr, "fsi_set error: can't allocate fsi_set!\n");
-	    exit(99);
-	}
+	copy = LISP_ALLOC(struct fsi_set, 1);
+	LISP_ASSERT(copy != NULL);
 	copy->n_ints = set->n_ints;
-	copy->bits = malloc(copy->n_ints/CHAR_BIT);
-	if (copy->bits == NULL) {
-	    fprintf(stderr, "fsi_set error: can't allocate fsi_set->bits!\n");
-	    exit(99);
-	}
+	copy->bits = LISP_ALLOC(unsigned char, copy->n_ints/CHAR_BIT);
+	LISP_ASSERT(copy->bits != NULL);
 	memcpy(copy->bits, set->bits, copy->n_ints/CHAR_BIT);
 	return(copy);
     } else {
@@ -71,8 +58,8 @@ struct fsi_set* fsi_set_copy(struct fsi_set* set)
 void fsi_set_free(struct fsi_set* set)
 {
     if (set) {
-	free(set->bits);
-	free(set);
+	LISP_FREE(set->bits);
+	LISP_FREE(set);
     }
 }
 

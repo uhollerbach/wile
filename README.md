@@ -23,6 +23,13 @@ implemented yet, less because bugs). See below for a roadmap.
 The name `wile` is, of course, the name of that extremely stable
 super-genius schemer, Wile E. Coyote. 'nuff said
 
+**Important**: I did find one significant heisenbug: I had a couple of
+low-level routines that were still using system `malloc` even when the
+garbage collector was active. That caused occasional crashes. I can't
+prove that anything got mis-compiled in the absence of crashes, but it
+seems safe to assume undefined behavior. Thus, if you are by chance using
+a version before `(0 10 1)`, you should upgrade.
+
 ## Table of contents
 
 - [License](#license)
@@ -46,16 +53,15 @@ desire.
 ## Short installation
 
 The tl;dr you set the environment variable CC to your c compiler, for
-example `export CC=gcc`, then run `cd bootstrap && ./boot1.sh` which
-should build a very minimal `wilec` to play with. Then edit the file
-`setup.env` in the `bootstrap/` directory to specify the right location
-for the `wile` home, source that file, and you should be able to play.
+example `export CC=gcc`, then run `bootstrap.sh` which should build a
+functional `wilec` to play with. Then edit the file `setup.env` in the
+`bootstrap/` directory to specify the right location for the `wile`
+home, source that file, and you should be able to play.
 
 If you are feeling slightly more ambitious and want a slightly
-better-configured compiler, read the section below, edit the
+differently-configured compiler, read the section below, edit the
 `bootstrap.sh` file in the main directory according to taste, still
-set CC as above, and run that `bootstrap.sh`. There is also a
-`setup.env` in the `wile` main directory.
+set CC as above, and rerun `bootstrap.sh`.
 
 If you get link errors like `undefined reference to
 wile_config_real_QD_int_I128_gc_Y_sqlite_Y`, make sure the
@@ -211,7 +217,7 @@ to detect and prevent these crazinesses.
   `list-untail` `list?` `listen-on` `load-library` `localtime` `log`
   `log-gamma` `magnitude` `make-bytevector` `make-polar`
   `make-rational` `make-rectangular` `make-string` `make-vector` `map`
-  `map1` `max` `max/i` `max/q` `max/r` `memp` `memv` `min` `min/i`
+  `max` `max/i` `max/q` `max/r` `memp` `memv` `min` `min/i`
   `min/q` `min/r` `modulo` `namespace` `nan?` `negative` `negative?`
   `newline` `not` `null?` `number->string` `number/type` `number?`
   `numerator` `odd?` `offset-date` `open-file` `open-temporary-file`

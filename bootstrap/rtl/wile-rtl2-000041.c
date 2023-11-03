@@ -17,60 +17,110 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
+static lval fn_4(lptr*, lptr);
 
 // definitions
 
-// @@@ (list-drop-while drop? lst) @@@ bld-rtl-dir/wile-rtl2-000041.scm:13 @@@ wile_list_drop_while @@@
-lval wile_list_drop_while(lptr* var_1, lptr var_2)
+// @@@ lambda (keep? lst acc) @@@ bld-rtl-dir/wile-rtl2-000041.scm:13 @@@ fn_4 @@@
+static lval fn_4(lptr* var_5, lptr var_6)
 {
-lbl_3:;
-lval var_4;
-lval var_5;
-var_5 = LVI_BOOL(true);
-do {
-lval var_6;
-var_6 = LVI_BOOL(var_2[1].vt == LV_NIL);
-lval var_7;
-var_7 = LVI_BOOL(LV_IS_FALSE(var_6));
-var_5 = var_7;
-if (LV_IS_FALSE(var_5)) { break; }
+lbl_7:;
 lval var_8;
-if (var_2[1].vt != LV_PAIR) {
+lval var_9;
+var_9 = LVI_BOOL(true);
+do {
+lval var_10;
+var_10 = LVI_BOOL(var_6[1].vt == LV_NIL);
+lval var_11;
+var_11 = LVI_BOOL(LV_IS_FALSE(var_10));
+var_9 = var_11;
+if (LV_IS_FALSE(var_9)) { break; }
+lval var_12;
+if (var_6[1].vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_8 = (var_2[1].v.pair.car ? *(var_2[1].v.pair.car) : LVI_NIL());
-lval var_9;
+var_12 = (var_6[1].v.pair.car ? *(var_6[1].v.pair.car) : LVI_NIL());
+lval var_13;
 {
-lval vs[1];
-vs[0] = var_8;
-var_9 = wile_gen_list(1, vs, NULL);
+lval var_14[1];
+var_14[0] = var_12;
+var_13 = wile_gen_list(1, var_14, NULL);
 }
-lval var_10;
+lval var_15;
 {
-lval vs[2];
-vs[0] = var_2[0];
-vs[1] = var_9;
-var_10 = wile_gen_list(2, vs, NULL);
+lval var_16[2];
+var_16[0] = var_6[0];
+var_16[1] = var_13;
+var_15 = wile_gen_list(2, var_16, NULL);
 }
-var_10 = wile_apply_function(&(var_10), __FILE__, __LINE__);
-var_5 = var_10;
-if (LV_IS_FALSE(var_5)) { break; }
+var_15 = wile_apply_function(&(var_15), __FILE__, __LINE__);
+var_9 = var_15;
+if (LV_IS_FALSE(var_9)) { break; }
 } while (0);
-if (LV_IS_FALSE(var_5)) {
-var_4 = var_2[1];
+if (LV_IS_FALSE(var_9)) {
+lval var_17;
+{
+lval var_18[8];
+var_18[0] = var_6[2];
+var_17 = wile_list_reverse(NULL, var_18);
+}
+lval var_19;
+{
+lval var_20[2];
+var_20[0] = var_17;
+var_20[1] = var_6[1];
+var_19 = wile_gen_list(2, var_20, NULL);
+}
+var_8 = var_19;
 } else {
-lval var_11;
-if (var_2[1].vt != LV_PAIR) {
+lval var_21;
+if (var_6[1].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_11 = (var_2[1].v.pair.cdr ? *(var_2[1].v.pair.cdr) : LVI_NIL());
-lval var_14[8];
-var_14[0] = var_2[0];
-var_14[1] = var_11;
-var_2[0] = var_14[0];
-var_2[1] = var_14[1];
-goto lbl_3;	// selfie
+var_21 = (var_6[1].v.pair.cdr ? *(var_6[1].v.pair.cdr) : LVI_NIL());
+lval var_22;
+if (var_6[1].vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
 }
-return var_4;
+var_22 = (var_6[1].v.pair.car ? *(var_6[1].v.pair.car) : LVI_NIL());
+lval var_23;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_22.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_22;
 }
-// end of function wile_list_drop_while
+if (var_6[2].vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_6[2];
+}
+var_23 = LVI_PAIR(p1, p2);
+}
+lval var_26[8];
+var_26[0] = var_6[0];
+var_26[1] = var_21;
+var_26[2] = var_23;
+var_6[0] = var_26[0];
+var_6[1] = var_26[1];
+var_6[2] = var_26[2];
+goto lbl_7;	// selfie
+}
+return var_8;
+}
+// end of lambda fn_4
+
+// @@@ (list-take-while keep? lst) @@@ bld-rtl-dir/wile-rtl2-000041.scm:12 @@@ wile_list_take_while @@@
+lval wile_list_take_while(lptr* var_1, lptr var_2)
+{
+MK_CLOS(var_5,0);
+lval var_27;
+var_27 = LVI_NIL();
+lval var_28;
+lval var_29[8];
+var_29[0] = var_2[0];
+var_29[1] = var_2[1];
+var_29[2] = var_27;
+var_28 = fn_4(var_5, var_29);
+return var_28;
+}
+// end of function wile_list_take_while

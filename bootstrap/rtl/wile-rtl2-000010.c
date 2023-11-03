@@ -110,9 +110,9 @@ goto lbl_7;	// selfie
 } else {
 lval var_21;
 {
-lval vs[8];
-vs[0] = var_6[1];
-var_21 = wile_list_reverse(NULL, vs);
+lval var_22[8];
+var_22[0] = var_6[1];
+var_21 = wile_list_reverse(NULL, var_22);
 }
 var_8 = var_21;
 }
@@ -124,14 +124,14 @@ return var_8;
 lval wile_list_head(lptr* var_1, lptr var_2)
 {
 MK_CLOS(var_5,0);
-lval var_22;
-var_22 = LVI_NIL();
 lval var_23;
-lval var_24[8];
-var_24[0] = var_2[0];
-var_24[1] = var_22;
-var_24[2] = var_2[1];
-var_23 = fn_4(var_5, var_24);
-return var_23;
+var_23 = LVI_NIL();
+lval var_24;
+lval var_25[8];
+var_25[0] = var_2[0];
+var_25[1] = var_23;
+var_25[2] = var_2[1];
+var_24 = fn_4(var_5, var_25);
+return var_24;
 }
 // end of function wile_list_head

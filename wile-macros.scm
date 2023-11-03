@@ -454,8 +454,6 @@
 	(cons 'list-untail list-untail)
 	(cons 'list? list?)
 	(cons 'listen-on listen-on)
-;;; TODO: breaking somehow? can't figure it out yet... later
-;;;	(list 'load-library load-library)
 	(cons 'localtime (case-lambic 0 (lambda ()
 					  (localtime))
 				      1 (lambda (a1)
@@ -465,7 +463,6 @@
 	(cons 'make-polar make-polar)
 	(cons 'make-rational (lambda (n d) (/ n d)))
 	(cons 'map map)
-	(cons 'map1 map)
 	(cons 'max max)
 	(cons 'max/i max)
 	(cons 'max/q max)

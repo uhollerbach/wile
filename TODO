@@ -19,11 +19,7 @@ Stuff TODO
 
 * start working on (eval) function -- see repl.scm
 
-  > almost all special forms are there except 'delay' etc; lambdas are
-    present, but not quite connected all the way through: apply and
-    continuations can't deal with interpreted procedures yet so a
-    number of things like (define (foo a) ...) ... (map foo ...) don't
-    work yet. Should be straightforward to fix.
+  > almost all special forms are there except 'delay' etc
 
 * investigate difference in behavior among mit-scheme, (ha)skeem, repl,
   wile: mit-scheme, (ha)skeem and repl agree that the following is a
@@ -73,15 +69,6 @@ Stuff TODO
   > quite a few tests are under continuations, in selftest-cont.scm;
     see below
 
-* defmacro is not working in compiler; it needs a runtime interpreter
-  which isn't there yet. it can be worked around by adding macros to
-  the wile primitives list, as I did for the macros used in wile itself.
-  if that's done, it needs to be done carefully... there are bootstrap
-  issues
-
-* quasiquote stuff: in progress: everything seems to be working in lists
-  and vectors, bytevector stuff is not tested yet
-
 * more tail-call optimization: want to do tail self-recursion, ie routine
   calls itself directly in a tail call, regardless of the pragma; it's a
   simple goto which should be safe in all cases, so want to do it. but
@@ -128,8 +115,6 @@ Stuff TODO
   matrix-lu-decompose
   matrix-lu-solve
   sat2-solve
-
-  eval
 
   special cases in the compiler:
 

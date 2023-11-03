@@ -1,10 +1,8 @@
+// Wile -- the extremely stable scheming genius compiler
+// Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+// License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
+
 /*
-This file is part of ulex -- Uwe's lex
-Copyright 2013, Uwe Hollerbach <uhollerbach@gmail.com>
-License: 2clause BSD, see file 'LICENSE' for details
-
-$Id: regex.c,v 1.34 2016/12/18 06:22:12 uwe Exp $
-
 This is the regular-expression parser, which converts a regular expression
 in the usual textual format into an NFA. The target is roughly something
 like POSIX ERE or a bare-bones version of perl regular expressions, although
@@ -31,9 +29,11 @@ of ordinary characters.
 #include <limits.h>
 #include <ctype.h>
 
+#include "wile.h"
 #include "fsi_set.h"
 #include "nfa.h"
 #include "regex.h"
+#include "alloc.h"
 
 #define LPAREN		'('
 #define RPAREN		')'
@@ -727,20 +727,12 @@ struct nfa_work* regex_wrap(struct nfa_state* nfa, unsigned int options)
 	exit(99);
     }
 
-    wrapper = malloc(sizeof(struct nfa_work));
-    if (wrapper == NULL) {
-	fprintf(stderr, "regex parse error: unable to allocate memory!\n");
-	exit(99);
-    }
-
+    wrapper = LISP_ALLOC(struct nfa_work, 1);
+    LISP_ASSERT(wrapper != NULL);
     wrapper->nfa = nfa;
     wrapper->n_states = nfa_gen_epsilon_closure(nfa);
-    wrapper->states = malloc(wrapper->n_states*sizeof(struct nfa_state*));
-    if (wrapper->states == NULL) {
-	fprintf(stderr, "regex parse error: unable to allocate memory!\n");
-	exit(99);
-    }
-
+    wrapper->states = LISP_ALLOC(struct nfa_state*, wrapper->n_states);
+    LISP_ASSERT(wrapper->states != NULL);
     wrapper->n_chars =
 	1 + ((options & REGEX_OPTION_8BIT) ? UCHAR_MAX : CHAR_MAX);
 
@@ -872,11 +864,8 @@ struct regex_defs* regex_defs_alloc()
 {
     struct regex_defs* ret;
 
-    ret = malloc(sizeof(struct regex_defs));
-    if (ret == NULL) {
-	fprintf(stderr, "regex_defs error: unable to allocate memory!\n");
-	exit(99);
-    }
+    ret = LISP_ALLOC(struct regex_defs, 1);
+    LISP_ASSERT(ret != NULL);
     ret->name = ret->regex = NULL;
     ret->next = NULL;
     return(ret);
@@ -885,20 +874,20 @@ struct regex_defs* regex_defs_alloc()
 void regex_defs_free(struct regex_defs* rd)
 {
     if (rd) {
-	free(rd->name);
-	free(rd->regex);
+	LISP_FREE(rd->name);
+	LISP_FREE(rd->regex);
 	rd->name = rd->regex = NULL;
 	rd->next = NULL;
-	free(rd);
+	LISP_FREE(rd);
     }
 }
 
 void regex_free(struct nfa_work* wk)
 {
     if (wk) {
-	free(wk->states);
+	LISP_FREE(wk->states);
 	fsi_set_free(wk->st_old);
 	fsi_set_free(wk->st_new);
-	free(wk);
+	LISP_FREE(wk);
     }
 }

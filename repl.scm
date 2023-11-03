@@ -26,15 +26,29 @@
 			  (loop))
 			 (else
 			  (let ((expr (car (parse-string line))))
-			    (display (if (define-form? expr)
-					 (begin
-					   (set! env
-						 (eval-define
-						  (symbol=? (car expr)
-							    'defmacro)
-						  env (cdr expr)))
-					   (get-bbox-value (car env)))
-					 (eval env expr)))
+			    (display
+			     (cond ((define-form? expr)
+				    (set! env (eval-define
+					       (symbol=? (car expr) 'defmacro)
+					       env (cdr expr)))
+				    (get-bbox-value (car env)))
+				   ((load-form? expr)
+				    (let* ((fname (load-file-path
+						   (symbol=? (car expr)
+							     'load-library)
+						   (eval env (cadr expr))))
+					   (data (parse-file fname))
+					   (ebox (make-bbox #f env))
+					   (val (eval-begin ebox env data)))
+				      (set! env (get-bbox-value ebox))
+				      val))
+				   ((begin-form? expr)
+				    (let* ((ebox (make-bbox #f env))
+					   (val (eval-begin
+						 ebox env (cdr expr))))
+				      (set! env (get-bbox-value ebox))
+				      val))
+				   (else (eval env expr))))
 			    (newline)
 			    (loop)))))
 		 (finish "\n"))))))
@@ -48,6 +62,20 @@
 	    (set! env (eval-define
 		       (symbol=? (caar es) 'defmacro) env (cdar es)))
 	    (get-bbox-value (car env)))
+	   ((load-form? (car es))
+	    (let* ((fname (load-file-path
+			   (symbol=? (caar es) 'load-library)
+			   (eval env (cadar es))))
+		   (data (parse-file fname))
+		   (ebox (make-bbox #f env))
+		   (val (eval-begin ebox env data)))
+	      (set! env (get-bbox-value ebox))
+	      val))
+	   ((begin-form? (car es))
+	    (let* ((ebox (make-bbox #f env))
+		   (val (eval-begin ebox env (cdar es))))
+	      (set! env (get-bbox-value ebox))
+	      val))
 	   (else (eval env (car es))))
      (loop (cdr es)))))
 

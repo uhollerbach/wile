@@ -1,15 +1,13 @@
-/*
-This file is part of ulex -- Uwe's lex
-Copyright 2014, Uwe Hollerbach <uhollerbach@gmail.com>
-License: 2clause BSD, see file 'LICENSE' for details
-
-$Id: ulexlib.c,v 1.3 2019/02/27 19:31:44 uwe Exp $
-*/
+// Wile -- the extremely stable scheming genius compiler
+// Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+// License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
+#include "wile.h"
+#include "alloc.h"
 #define ULEX_PRIVATE_DEFS
 #include "ulexlib.h"
 
@@ -75,14 +73,10 @@ unsigned int ulex_generic(const struct ulex_scanner_spec* scan_spec,
 		scan_ctx->buf_data -= otext;
 		if (2*scan_ctx->buf_data > scan_ctx->buf_size) {
 		    scan_ctx->buf_size *= 2;
-		    match_txt = malloc(scan_ctx->buf_size);
-		    if (match_txt == NULL) {
-			fprintf(stderr,
-				"ulex lexer memory allocation error\n");
-			exit(1);
-		    }
+		    match_txt = LISP_ALLOC(unsigned char, scan_ctx->buf_size);
+		    LISP_ASSERT(match_txt != NULL);
 		    memmove(match_txt, scan_ctx->text, scan_ctx->buf_data);
-		    free(scan_ctx->buf);
+		    LISP_FREE(scan_ctx->buf);
 		    scan_ctx->buf = match_txt;
 		} else {
 		    memmove(scan_ctx->buf, scan_ctx->text, scan_ctx->buf_data);
@@ -208,11 +202,8 @@ struct ulex_context* ulex_init(enum ulex_input_source stype, void* sptr)
 {
     struct ulex_context* context;
 
-    context = malloc(sizeof(struct ulex_context));
-    if (context == NULL) {
-	fprintf(stderr, "ulex lexer error: unable to allocate context!\n");
-	exit(1);
-    }
+    context = LISP_ALLOC(struct ulex_context, 1);
+    LISP_ASSERT(context != NULL);
 
     /* turn on "begin" context initially */
     context->is_begin = 1;
@@ -239,7 +230,7 @@ struct ulex_context* ulex_init(enum ulex_input_source stype, void* sptr)
 	context->own_input = true;
 	if (context->input_src == NULL) {
 	    fprintf(stderr, "error: unable to open file %s\n", (char*) sptr);
-	    free(context);
+	    LISP_FREE(context);
 	    return NULL;
 	}
 	/* fall-through desired */
@@ -247,11 +238,8 @@ struct ulex_context* ulex_init(enum ulex_input_source stype, void* sptr)
 	if (context->input_src == NULL) {
 	    context->input_src = sptr ? (FILE*) sptr : stdin;
 	}
-	context->buf = malloc(BUFFER_SIZE);
-	if (context->buf == NULL) {
-	    fprintf(stderr, "ulex lexer memory allocation error\n");
-	    exit(1);
-	}
+	context->buf = LISP_ALLOC(unsigned char, BUFFER_SIZE);
+	LISP_ASSERT(context->buf != NULL);
 	context->buf_size = BUFFER_SIZE;
 	context->buf_data =
 	    fread(context->buf, 1, context->buf_size, context->input_src);
@@ -271,13 +259,13 @@ struct ulex_context* ulex_init(enum ulex_input_source stype, void* sptr)
 void ulex_cleanup(struct ulex_context* context)
 {
     if (context) {
-	free(context->buf);
+	LISP_FREE(context->buf);
 	if (context->own_input &&
 	    context->input_src &&
 	    context->input_src != stdin) {
 	    fclose(context->input_src);
 	}
-	free(context);
+	LISP_FREE(context);
     }
 }
 

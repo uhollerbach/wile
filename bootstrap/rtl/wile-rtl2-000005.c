@@ -25,13 +25,13 @@ lval wile_list_length_lt(lptr* var_1, lptr var_2)
 {
 lval var_4;
 {
-lval vs[8];
-vs[0] = var_2[0];
-vs[1] = var_2[1];
-var_4 = wile_list_length_ge(NULL, vs);
+lval var_5[8];
+var_5[0] = var_2[0];
+var_5[1] = var_2[1];
+var_4 = wile_list_length_ge(NULL, var_5);
 }
-lval var_5;
-var_5 = LVI_BOOL(LV_IS_FALSE(var_4));
-return var_5;
+lval var_6;
+var_6 = LVI_BOOL(LV_IS_FALSE(var_4));
+return var_6;
 }
 // end of function wile_list_length_lt

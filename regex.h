@@ -1,13 +1,9 @@
 #ifndef REGEX_H
 #define REGEX_H
 
-/*
-This file is part of ulex -- Uwe's lex
-Copyright 2013, Uwe Hollerbach <uhollerbach@gmail.com>
-License: 2clause BSD, see file 'LICENSE' for details
-
-$Id: regex.h,v 1.20 2016/12/17 07:24:19 uwe Exp $
-*/
+// Wile -- the extremely stable scheming genius compiler
+// Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+// License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
 
 #define REGEX_OK	0
 #define REGEX_ERR	1
