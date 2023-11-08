@@ -133,7 +133,6 @@ void wile_exception2(const char* func_name, const char* file_name,
 #define WILE_EX(fname, ...) \
     wile_exception2(fname, __FILE__, __LINE__, __VA_ARGS__)
 
-void wile_display(lval val, FILE* fp);
 lval wile_register_display_proc(const char* sym, lval proc,
 				const char* fname, int lno);
 lval wile_get_gensym(void);
@@ -186,6 +185,9 @@ lval wile_cputime(lptr* clos, lptr args);
 lval wile_filestat(lptr* clos, lptr args);
 lval wile_symlinkstat(lptr* clos, lptr args);
 lval wile_getuserinfo(lptr* clos, lptr args);
+lval wile_getalluserinfo(lptr*, lptr args);
+lval wile_getgroupinfo(lptr* clos, lptr args);
+lval wile_getallgroupinfo(lptr*, lptr args);
 lval wile_localtime(lptr* clos, lptr args);
 lval wile_gmtime(lptr* clos, lptr args);
 lval wile_closeport(lptr* clos, lptr args);

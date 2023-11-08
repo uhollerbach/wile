@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (list->bytevector lst) @@@ bld-rtl-dir/wile-rtl2-000018.scm:12 @@@ wile_list2bytevector @@@
+// @@@ (list->bytevector lst) @@@ bld-rtl-dir/wile-rtl2-000018.scm:13 @@@ wile_list2bytevector @@@
 lval wile_list2bytevector(lptr* var_1, lptr var_2)
 {
 lval var_4;

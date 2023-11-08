@@ -513,7 +513,7 @@ lptr clear_display_hook(const char* sym);
 lptr get_display_hook(const char* sym);
 lptr set_display_hook(const char* sym, lptr hook);
 
-void wile_print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp);
+void wile_print_lisp_val(lptr vp, FILE* fp);
 void wile_sprint_lisp_num(char* buf, size_t bsize, lptr num,
 			  int base, int prec, bool psign);
 

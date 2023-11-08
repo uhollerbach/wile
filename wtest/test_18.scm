@@ -13,6 +13,7 @@
 (dn (sqlite-meta-schema db "cars"))
 
 (sqlite-dump-table db "cars" stdout)
+(sqlite-dump-table db "; bobby tables" stdout)
 
 (dn (sqlite-run db "SELECT * FROM cars WHERE price = 4"))
 

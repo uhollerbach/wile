@@ -9,32 +9,30 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_localtime(lptr*, lptr args)
+lval wile_getalluserinfo(lptr*, lptr args)
 {
-    time_t now;
-    if (args == NULL) {
-	now = time(NULL);
-    } else if (args[0].vt != LV_INT) {
-	wile_exception("localtime",
-		       "expects no argument or one integer argument");
-    } else {
-	now = (time_t) args[0].v.iv;
-    }
-    struct tm tval;
-    if (localtime_r(&now, &tval)) {
-	lval vs[9];
-	vs[0] = LVI_INT(tval.tm_year + 1900);
-	vs[1] = LVI_INT(tval.tm_mon + 1);
-	vs[2] = LVI_INT(tval.tm_mday);
-	vs[3] = LVI_INT(tval.tm_hour);
-	vs[4] = LVI_INT(tval.tm_min);
-	vs[5] = LVI_INT(tval.tm_sec);
-	vs[6] = LVI_INT(tval.tm_wday);
-	vs[7] = LVI_INT(tval.tm_yday);
-	vs[8] = LVI_INT(tval.tm_isdst);
-	return wile_gen_list(9, vs, NULL);
-    } else {
-	return LVI_BOOL(false);
+    struct passwd* pwp;
+    lptr p1, res = NULL;
+
+    setpwent();
+    while (1) {
+	pwp = getpwent();
+	if (pwp) {
+	    lval vs[7];
+	    vs[0] = LVI_STRING(pwp->pw_name);
+	    vs[1] = LVI_STRING(pwp->pw_passwd);
+	    vs[2] = LVI_INT(pwp->pw_uid);
+	    vs[3] = LVI_INT(pwp->pw_gid);
+	    vs[4] = LVI_STRING(pwp->pw_gecos);
+	    vs[5] = LVI_STRING(pwp->pw_dir);
+	    vs[6] = LVI_STRING(pwp->pw_shell);
+	    p1 = new_lv(LV_NIL);
+	    *p1 = wile_gen_list(7, vs, NULL);
+	    res = new_pair(p1, res);
+	} else {
+	    endpwent();
+	    return (res ? *res : LVI_NIL());
+	}
     }
 }
 

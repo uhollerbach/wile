@@ -20,58 +20,65 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (sqlite-meta-schema port tbl) @@@ bld-rtl-dir/wile-rtl2-000055.scm:16 @@@ wile_sql_meta_schema @@@
+// @@@ (sqlite-meta-schema port tbl) @@@ bld-rtl-dir/wile-rtl2-000055.scm:13 @@@ wile_sql_meta_schema @@@
 lval wile_sql_meta_schema(lptr* var_1, lptr var_2)
 {
 lval var_4;
-var_4 = LVI_STRING("caar");
 lval var_5;
-var_5 = LVI_STRING("");
+var_5 = LVI_STRING("select sql from sqlite_schema where (name = ?1)");
 lval var_6;
-var_6 = LVI_STRING("select sql from sqlite_schema where (name = \'");
-lval var_7;
-var_7 = LVI_STRING("\')");
-lval var_8;
 {
-lval var_10[3];
-var_10[0] = var_6;
-var_10[1] = var_2[1];
-var_10[2] = var_7;
-var_8 = wile_gen_list(3, var_10, NULL);
+lval var_7[8];
+var_7[0] = var_2[0];
+var_7[1] = var_5;
+var_6 = wile_sql_stmt_prep(NULL, var_7);
+}
+var_4 = var_6;
+lval var_9;
+{
+lval var_11[1];
+var_11[0] = var_2[1];
+var_9 = wile_gen_list(1, var_11, NULL);
 }
 {
-lval var_9[8];
-var_9[0] = var_5;
-var_9[1] = var_8;
-var_8 = wile_string_join_by(NULL, var_9);
+lval var_10[8];
+var_10[0] = var_4;
+var_10[1] = var_9;
+var_9 = wile_sql_stmt_bind(NULL, var_10);
 }
-lval var_11;
-#ifdef WILE_USES_SQLITE
-if (var_2[0].vt == LV_SQLITE_PORT && var_8.vt == LV_STRING) {
-var_11 = wile_sql_run(var_2[0].v.sqlite_conn, var_8.v.str, __FILE__, __LINE__);
-} else {
-WILE_EX("sqlite-run", "expects one sqlite-port and one string");
-}
-#else
-var_11 = LVI_BOOL(false);
-#endif // WILE_USES_SQLITE
 lval var_12;
+lval var_13;
 {
-char* cp = strchr(var_4.v.str, 'r');
-var_12 = var_11;
+lval var_14[8];
+var_14[0] = var_4;
+var_13 = wile_sql_stmt_run(NULL, var_14);
+}
+var_12 = var_13;
+{
+lval var_16[8];
+var_16[0] = var_4;
+(void)
+ wile_sql_stmt_clean(NULL, var_16);
+}
+lval var_17;
+var_17 = LVI_STRING("caadr");
+lval var_18;
+{
+char* cp = strchr(var_17.v.str, 'r');
+var_18 = var_12;
 while (*(--cp) != 'c') {
-if (var_12.vt != LV_PAIR) {
+if (var_18.vt != LV_PAIR) {
 WILE_EX("cxr", "input does not have the right structure!");
 }
 if (*cp == 'a') {
-var_12 = (var_12.v.pair.car ? *(var_12.v.pair.car) : LVI_NIL());
+var_18 = (var_18.v.pair.car ? *(var_18.v.pair.car) : LVI_NIL());
 } else if (*cp == 'd') {
-var_12 = (var_12.v.pair.cdr ? *(var_12.v.pair.cdr) : LVI_NIL());
+var_18 = (var_18.v.pair.cdr ? *(var_18.v.pair.cdr) : LVI_NIL());
 } else {
-WILE_EX("cxr", "got malformed control string '%s'", var_4.v.str);
+WILE_EX("cxr", "got malformed control string '%s'", var_17.v.str);
 }
 }
 }
-return var_12;
+return var_18;
 }
 // end of function wile_sql_meta_schema

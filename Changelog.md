@@ -1,6 +1,16 @@
-Last update: 2023-11-5 22:30 PDT
+Last update: 2023-11-11 22:15 PDT
 
 # Changelog for `wile`
+
+## Current version `wile` (0 10 2) 2023-11-11
+
+- add a couple of primitives: read-bytes, write-bytes, no-args version
+  of get-user-information, get-file-eof, get-file-error, clear-file-error,
+  get-group-information
+
+- harden a couple of SQL routines against injection attacks
+
+- finish adding at least minimal non-empty doc-string for all primitives
 
 ## Current version `wile` (0 10 1) 2023-11-5
 
@@ -20,7 +30,7 @@ Last update: 2023-11-5 22:30 PDT
   in library code, and use that to clean up an infelicity in printf
 
 - move standard interpreter environment stuff into RTL; remove 'when
-  'until 'while etc as special forms from interpretr code; add them as
+  'until 'while etc as special forms from interpreter code; add them as
   generic standard macros in interpreter environment; move interpreter
   code into RTL
 

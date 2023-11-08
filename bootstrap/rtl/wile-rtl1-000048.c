@@ -9,20 +9,24 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_string_hash_64(lptr*, lptr args)
+lval wile_setfilepos3(lptr*, lptr args)
 {
-    uint64_t hash;
-    size_t i, n_os;
-
-    if (args[0].vt != LV_STRING) {
-	wile_exception("string-hash-64", "expects a string argument");
+    if (args[0].vt != LV_FILE_PORT ||
+	args[1].vt != LV_INT ||
+	args[2].vt != LV_SYMBOL) {
+	wile_exception("set-file-position",
+		       "expects a file port, an offset, and a location symbol");
     }
-    n_os = strlen(args[0].v.str);
-    hash = 14695981039346656037UL;
-    for (i = 0; i < n_os; ++i) {
-	hash ^= (unsigned char) (args[0].v.str[i]);
-	hash *= 1099511628211UL;
+    int whence;
+    if (strcmp(args[2].v.str, "start") == 0) {
+	whence = SEEK_SET;
+    } else if (strcmp(args[2].v.str, "cur") == 0) {
+	whence = SEEK_CUR;
+    } else if (strcmp(args[2].v.str, "end") == 0) {
+	whence = SEEK_END;
+    } else {
+	wile_exception("set-file-position", "got an unknown location symbol");
     }
-    return LVI_INT(hash);
+    return LVI_BOOL(fseek(args[0].v.fp, args[1].v.iv, whence) == 0);
 }
 

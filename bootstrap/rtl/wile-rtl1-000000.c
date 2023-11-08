@@ -76,14 +76,14 @@ int main(int argc, char** argv)
 		if (IS_STRING(CDR(cachalot->errval))) {
 		    fputs((CDR(cachalot->errval))->v.str, stderr);
 		} else if (CDR(cachalot->errval)) {
-		    wile_display(*(CDR(cachalot->errval)), stderr);
+		    wile_print_lisp_val(CDR(cachalot->errval), stderr);
 		} else {
 		    fputs("()!", stderr);
 		}
 	    } else if (IS_STRING(cachalot->errval)) {
 		fputs(cachalot->errval->v.str, stderr);
 	    } else {
-		wile_display(*(cachalot->errval), stderr);
+		wile_print_lisp_val(cachalot->errval, stderr);
 	    }
 	} else {
 	    fputc('!', stderr);
@@ -131,28 +131,16 @@ lval wile_gc_version(lptr*, lptr)
 
 lptr display_hooks = NULL;
 
-void wile_display(lval val, FILE* fp)
-{
-    if (fp == NULL) {
-	fp = stdout;
-    }
-    wile_print_lisp_val(&val, fp, NULL);
-}
-
 lval wile_register_display_proc(const char* sym, lval proc,
 				const char* fname, int lno)
 {
     if (sym) {
-	lptr p1, p2, p3, p4;
+	lptr p1, p2;
 	p1 = new_lv(LV_NIL);
 	*p1 = LVI_SYMBOL(sym);
 	p2 = new_lv(LV_NIL);
 	*p2 = proc;
-	p3 = new_lv(LV_NIL);
-	*p3 = LVI_PAIR(p1, p2);
-	p4 = new_lv(LV_NIL);
-	*p4 = LVI_PAIR(p3, display_hooks);
-	display_hooks = p4;
+	display_hooks = new_pair(new_pair(p1, p2), display_hooks);
 	return LVI_BOOL(true);
     } else {
 	wile_exception2("display-object-hook", fname, lno, "no symbol!");

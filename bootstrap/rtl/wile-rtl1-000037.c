@@ -17,7 +17,7 @@ lval wile_getuserinfo(lptr*, lptr args)
     } else if (args[0].vt == LV_INT) {
 	pwp = getpwuid(args[0].v.iv);
     } else {
-	wile_exception("get-user-information", "expects a username or uid");
+	wile_exception("get-user-information", "expects a user name or uid");
     }
     if (pwp) {
 	lval vs[7];

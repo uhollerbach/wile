@@ -9,30 +9,28 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_gmtime(lptr*, lptr args)
+lval wile_getgroupinfo(lptr*, lptr args)
 {
-    time_t now;
-    if (args == NULL) {
-	now = time(NULL);
-    } else if (args[0].vt != LV_INT) {
-	wile_exception("UTCtime",
-		       "expects no argument or one integer argument");
+    struct group* grp;
+    if (args[0].vt == LV_STRING) {
+	grp = getgrnam(args[0].v.str);
+    } else if (args[0].vt == LV_INT) {
+	grp = getgrgid(args[0].v.iv);
     } else {
-	now = (time_t) args[0].v.iv;
+	wile_exception("get-group-information", "expects a group name or uid");
     }
-    struct tm tval;
-    if (gmtime_r(&now, &tval)) {
-	lval vs[9];
-	vs[0] = LVI_INT(tval.tm_year + 1900);
-	vs[1] = LVI_INT(tval.tm_mon + 1);
-	vs[2] = LVI_INT(tval.tm_mday);
-	vs[3] = LVI_INT(tval.tm_hour);
-	vs[4] = LVI_INT(tval.tm_min);
-	vs[5] = LVI_INT(tval.tm_sec);
-	vs[6] = LVI_INT(tval.tm_wday);
-	vs[7] = LVI_INT(tval.tm_yday);
-	vs[8] = LVI_INT(tval.tm_isdst);
-	return wile_gen_list(9, vs, NULL);
+    if (grp) {
+	lptr res = NULL;
+	char** mem = grp->gr_mem;
+	while (*mem) {
+	    res = new_pair(new_string(*mem), res);
+	    ++mem;
+	}
+	res = new_pair(res, NULL);
+	res = new_pair(new_int(grp->gr_gid), res);
+	res = new_pair(new_string(grp->gr_passwd), res);
+	res = new_pair(new_string(grp->gr_name), res);
+	return *res;
     } else {
 	return LVI_BOOL(false);
     }

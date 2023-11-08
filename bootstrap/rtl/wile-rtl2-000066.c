@@ -895,7 +895,7 @@ var_238 = var_240;
 (void)
  LVI_BOOL(unlink(var_238.v.str) == 0);
 if (var_236.vt == LV_FILE_PORT || var_236.vt == LV_PIPE_PORT || var_236.vt == LV_SOCK_PORT) {
-wile_display(var_220[0], var_236.v.fp);
+wile_print_lisp_val(&(var_220[0]), var_236.v.fp);
 (void)
  var_220[0];
 } else {

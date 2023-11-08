@@ -20,7 +20,7 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (assp test? lst) @@@ bld-rtl-dir/wile-rtl2-000039.scm:12 @@@ wile_assp @@@
+// @@@ (assp test? lst) @@@ bld-rtl-dir/wile-rtl2-000039.scm:13 @@@ wile_assp @@@
 lval wile_assp(lptr* var_1, lptr var_2)
 {
 lbl_3:;
@@ -92,7 +92,7 @@ return var_4;
 }
 // end of function wile_assp
 
-// @@@ (assv obj lst) @@@ bld-rtl-dir/wile-rtl2-000039.scm:19 @@@ wile_assv @@@
+// @@@ (assv obj lst) @@@ bld-rtl-dir/wile-rtl2-000039.scm:20 @@@ wile_assv @@@
 lval wile_assv(lptr* var_18, lptr var_19)
 {
 lbl_20:;

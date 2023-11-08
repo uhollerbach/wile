@@ -160,8 +160,8 @@ to detect and prevent these crazinesses.
   `let*` `letrec` `letrec*` `or` `quasiquote` `unquote`
   `unquote-splicing` `quote` `set!`
 
-* A reasonably good number of functions in the standard library:
-  `*` `+` `-` `/` `/=` `<` `<=` `=` `>` `>=` `UTCtime` `_cmplx?`
+* A reasonably good number of functions in the standard library: `*`
+  `+` `-` `/` `/=` `<` `<=` `=` `>` `>=` `UTCtime` `_cmplx?`
   `_int->cmplx_` `_int->rat_` `_int->real_` `_int?` `_rat->cmplx_`
   `_rat->real_` `_rat?` `_real->cmplx_` `_real?` `abs` `accept` `acos`
   `acosh` `agm` `all-true?` `angle` `any-true?` `append` `apply`
@@ -185,9 +185,9 @@ to detect and prevent these crazinesses.
   `char-printable?` `char-upcase` `char-upper-case?` `char-uppercase?`
   `char-whitespace?` `char/=?` `char<=?` `char<?` `char=?` `char>=?`
   `char>?` `char?` `cholesky-decompose` `cholesky-solve` `cimag`
-  `close-port` `cmplx` `complex-conjugate` `complex?` `conj`
-  `connect-to` `cons` `continuation?` `cos` `cosh` `cosine-integral`
-  `cputime` `creal` `create-directory` `create-link`
+  `clear-file-error` `close-port` `cmplx` `complex-conjugate`
+  `complex?` `conj` `connect-to` `cons` `continuation?` `cos` `cosh`
+  `cosine-integral` `cputime` `creal` `create-directory` `create-link`
   `create-symbolic-link` `cxr` `day-of-week` `day-of-year`
   `delta-dates` `denominator` `describe-system-error` `digamma`
   `directory-exists?` `display` `display-object-hook`
@@ -200,8 +200,9 @@ to detect and prevent these crazinesses.
   `foldl1` `foldr` `for-each` `fork-process` `fprintf` `frexp`
   `fromto` `gcd` `gensym` `get-current-directory` `get-domain-name`
   `get-effective-group-id` `get-effective-user-id`
-  `get-environment-variable` `get-errno` `get-file-position`
-  `get-file-status` `get-group-id` `get-host-name`
+  `get-environment-variable` `get-errno` `get-file-eof`
+  `get-file-error` `get-file-position` `get-file-status`
+  `get-group-id` `get-group-information` `get-host-name`
   `get-parent-process-id` `get-process-id` `get-session-id`
   `get-symbolic-link-status` `get-user-id` `get-user-information`
   `gregorian-date` `hypot` `i*` `i+` `i++` `i-` `i--` `i/` `ilog`
@@ -217,45 +218,46 @@ to detect and prevent these crazinesses.
   `list-untail` `list?` `listen-on` `load-library` `localtime` `log`
   `log-gamma` `magnitude` `make-bytevector` `make-polar`
   `make-rational` `make-rectangular` `make-string` `make-vector` `map`
-  `max` `max/i` `max/q` `max/r` `memp` `memv` `min` `min/i`
-  `min/q` `min/r` `modulo` `namespace` `nan?` `negative` `negative?`
-  `newline` `not` `null?` `number->string` `number/type` `number?`
-  `numerator` `odd?` `offset-date` `open-file` `open-temporary-file`
-  `pair?` `parse-file` `parse-string` `partition` `phase` `pipe-port?`
+  `max` `max/i` `max/q` `max/r` `memp` `memv` `min` `min/i` `min/q`
+  `min/r` `modulo` `namespace` `nan?` `negative` `negative?` `newline`
+  `not` `null?` `number->string` `number/type` `number?` `numerator`
+  `odd?` `offset-date` `open-file` `open-temporary-file` `pair?`
+  `parse-file` `parse-string` `partition` `phase` `pipe-port?`
   `poly-chebyshev1` `poly-chebyshev2` `poly-hermite1` `poly-hermite2`
   `poly-laguerre` `poly-legendre` `port?` `positive?` `printf`
   `procedure?` `promise?` `promote/cmplx` `promote/rat` `promote/real`
   `q*` `q+` `q-` `q/` `quot-rem` `quotient` `r*` `r+` `r-` `r/`
   `raise` `random-exponential` `random-normal-pair`
   `random-permutation` `random-poisson` `random-seed!`
-  `random-uniform` `rational?` `read-all` `read-char` `read-directory`
-  `read-line` `real-part` `real?` `reciprocal` `regex-match`
-  `remainder` `remove-directory` `remove-file` `rename-directory`
-  `rename-file` `replicate` `reverse` `round` `run-command`
-  `run-read-command` `run-write-command` `send-signal` `set-car!`
-  `set-cdr!` `set-current-directory` `set-effective-group-id`
-  `set-effective-user-id` `set-environment-variable` `set-errno!`
-  `set-file-position` `set-group-id` `set-line-buffering!`
-  `set-no-buffering!` `set-session-id` `set-user-id` `sign` `sin`
-  `sine-integral` `sinh` `sleep` `socket-port?` `sprintf`
-  `sqlite-close` `sqlite-dump-table` `sqlite-meta-schema`
-  `sqlite-meta-tables` `sqlite-open` `sqlite-port?` `sqlite-run`
-  `sqlite-statement-bind` `sqlite-statement-cleanup`
-  `sqlite-statement-info` `sqlite-statement-prepare`
-  `sqlite-statement-run` `sqlite-statement?` `sqlite-version` `sqrt`
-  `stack-trace` `stack-trace-minimal` `string->char` `string->list`
-  `string->number` `string->symbol` `string-append`
-  `string-ci-hash-32` `string-ci-hash-64` `string-ci/=?`
-  `string-ci<=?` `string-ci<?` `string-ci=?` `string-ci>=?`
-  `string-ci>?` `string-copy` `string-create` `string-downcase`
-  `string-find-first-char` `string-find-last-char` `string-hash-32`
-  `string-hash-64` `string-join-by` `string-length`
-  `string-pad-center` `string-pad-left` `string-pad-right`
-  `string-port?` `string-ref` `string-reverse` `string-set!`
-  `string-split-by` `string-split-by-whitespace` `string-trim`
-  `string-trim-left` `string-trim-right` `string-upcase` `string/=?`
-  `string<=?` `string<?` `string=?` `string>=?` `string>?` `string?`
-  `substring` `symbol->string` `symbol=?` `symbol?` `tan` `tanh`
+  `random-uniform` `rational?` `read-all` `read-bytes` `read-char`
+  `read-directory` `read-line` `real-part` `real?` `reciprocal`
+  `regex-match` `remainder` `remove-directory` `remove-file`
+  `rename-directory` `rename-file` `replicate` `reverse` `round`
+  `run-command` `run-read-command` `run-write-command` `send-signal`
+  `set-car!` `set-cdr!` `set-current-directory`
+  `set-effective-group-id` `set-effective-user-id`
+  `set-environment-variable` `set-errno!` `set-file-position`
+  `set-group-id` `set-line-buffering!` `set-no-buffering!`
+  `set-session-id` `set-user-id` `sign` `sin` `sine-integral` `sinh`
+  `sleep` `socket-port?` `sprintf` `sqlite-close` `sqlite-dump-table`
+  `sqlite-meta-schema` `sqlite-meta-tables` `sqlite-open`
+  `sqlite-port?` `sqlite-run` `sqlite-statement-bind`
+  `sqlite-statement-cleanup` `sqlite-statement-info`
+  `sqlite-statement-prepare` `sqlite-statement-run`
+  `sqlite-statement?` `sqlite-version` `sqrt` `stack-trace`
+  `stack-trace-minimal` `string->char` `string->list` `string->number`
+  `string->symbol` `string-append` `string-ci-hash-32`
+  `string-ci-hash-64` `string-ci/=?` `string-ci<=?` `string-ci<?`
+  `string-ci=?` `string-ci>=?` `string-ci>?` `string-copy`
+  `string-create` `string-downcase` `string-find-first-char`
+  `string-find-last-char` `string-hash-32` `string-hash-64`
+  `string-join-by` `string-length` `string-pad-center`
+  `string-pad-left` `string-pad-right` `string-port?` `string-ref`
+  `string-reverse` `string-set!` `string-split-by`
+  `string-split-by-whitespace` `string-trim` `string-trim-left`
+  `string-trim-right` `string-upcase` `string/=?` `string<=?`
+  `string<?` `string=?` `string>=?` `string>?` `string?` `substring`
+  `symbol->string` `symbol=?` `symbol?` `tan` `tanh`
   `token-source-line` `truncate` `truncate-file` `truncate-quotient`
   `truncate-remainder` `truncate/` `type-of` `unless`
   `unset-environment-variable` `until` `upfrom` `vector`
@@ -272,8 +274,11 @@ to detect and prevent these crazinesses.
 - `arg-parse.scm`
 - `deque.scm`
 - `hash.scm`
+- `monad.scm` and `monad-list.scm`
 - `stack.scm`
 - `stats.scm`
+- `struct.scm`
+- `test.scm`
 
 * A modest set of test programs in `wtest/` which can serve as a
   starting point for exploration, plus a couple of programs in the
@@ -292,6 +297,9 @@ to detect and prevent these crazinesses.
   requiring real precision!)
 
 - `net-client.scm` is the client corresponding to the above server.
+
+- `n-queens.scm` solves the N-queens problem, using the `monad` code
+  in the library.
 
 ## Configuration and installation details
 

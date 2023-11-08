@@ -9,24 +9,20 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_setfilepos3(lptr*, lptr args)
+lval wile_setlinebuffering(lptr*, lptr args)
 {
-    if (args[0].vt != LV_FILE_PORT ||
-	args[1].vt != LV_INT ||
-	args[2].vt != LV_SYMBOL) {
-	wile_exception("set-file-position",
-		       "expects a file port, an offset, and a location symbol");
-    }
-    int whence;
-    if (strcmp(args[2].v.str, "start") == 0) {
-	whence = SEEK_SET;
-    } else if (strcmp(args[2].v.str, "cur") == 0) {
-	whence = SEEK_CUR;
-    } else if (strcmp(args[2].v.str, "end") == 0) {
-	whence = SEEK_END;
+    if (args[0].vt == LV_FILE_PORT ||
+	args[0].vt == LV_PIPE_PORT ||
+	args[0].vt == LV_SOCK_PORT) {
+	return LVI_BOOL(setvbuf(args[0].v.fp, NULL, _IOLBF, 0) == 0);
+    } else if (args[0].vt == LV_STR_PORT) {
+	return LVI_BOOL(true);
+#ifdef WILE_USES_SQLITE
+    } else if (args[0].vt == LV_SQLITE_PORT) {
+	return LVI_BOOL(false);
+#endif // WILE_USES_SQLITE
     } else {
-	wile_exception("set-file-position", "got an unknown location symbol");
+	wile_exception("set-line-buffering!", "expects one port argument");
     }
-    return LVI_BOOL(fseek(args[0].v.fp, args[1].v.iv, whence) == 0);
 }
 

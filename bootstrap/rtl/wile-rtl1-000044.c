@@ -9,13 +9,21 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_setfilepos2(lptr*, lptr args)
+lval wile_flushport(lptr*, lptr args)
 {
-    if (args[0].vt != LV_FILE_PORT ||
-	args[1].vt != LV_INT) {
-	wile_exception("set-file-position",
-		       "expects a file port and an offset");
+    if (args[0].vt == LV_FILE_PORT ||
+	args[0].vt == LV_PIPE_PORT ||
+	args[0].vt == LV_SOCK_PORT) {
+	return LVI_BOOL(fflush(args[0].v.fp) == 0);
+    } else if (args[0].vt == LV_STR_PORT) {
+	return LVI_BOOL(true);
+#ifdef WILE_USES_SQLITE
+    } else if (args[0].vt == LV_SQLITE_PORT) {
+	// TODO: issue some kind of commit command?
+	return LVI_BOOL(false);
+#endif // WILE_USES_SQLITE
+    } else {
+	wile_exception("flush-port", "expects one port argument");
     }
-    return LVI_BOOL(fseek(args[0].v.fp, args[1].v.iv, SEEK_SET) == 0);
 }
 

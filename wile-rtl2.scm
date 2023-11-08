@@ -228,7 +228,8 @@
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_list2bytevector" ""
+(define-primitive "wile_list2bytevector"
+  "expects one list of characters or small integers and returns a bytevector containing all those bytes"
   (list->bytevector lst)
   (let* ((l (list-length lst))
 	 (v (bytevector-create l)))
@@ -312,7 +313,7 @@
 ;;; --8><----8><----8><--
 
 (define-primitive "wile_expmod"
-  "expects three non-negative integer inputs a n m and returns (a^n) modulo m computed in an efficient manner that avoids extremely large numbers"
+  "expects three non-negative integer inputs A N M and returns (A^N) modulo M computed in an efficient manner that avoids extremely large numbers"
   (expmod a n m)
   (cond ((negative? n) #f)  ;;; (raise "expmod got a negative exponent"))
 	((zero? n) (modulo 1 m))
@@ -762,14 +763,15 @@
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_assp" ""
+(define-primitive "wile_assp"
+  "expects a predicate and a list of pairs, and returns the first pair for which the predicate applied to its CAR returns non-false, or #f if no such pair exists"
   (assp test? lst)
   (cond ((null? lst) #f)
 	((test? (caar lst)) (car lst))
 	(else (assp test? (cdr lst)))))
 
 (define-primitive "wile_assv"
-  ""
+  "expects a test value and a list of pairs, and returns the first pair for which the test value is equivalent to its CAR, or #f if no such pair exists"
   (assv obj lst)
   (cond ((null? lst) #f)
 	((eqv? obj (caar lst)) (car lst))
@@ -786,7 +788,8 @@
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_list_take_while" ""
+(define-primitive "wile_list_take_while"
+  "expects a predicate and a list, and returns all those values at the head of the list for which the predicate returns non-false"
   (list-take-while keep? lst)
   (let loop ((keep? keep?)
 	     (lst lst)
@@ -797,7 +800,9 @@
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_list_remove_dups" "" (list-remove-dups lst)
+(define-primitive "wile_list_remove_dups"
+  "expects one list and returns a new list with all adjacent duplicates collapsed into one instance"
+  (list-remove-dups lst)
   (let loop ((lst lst)
 	     (acc ()))
     (if (null? lst)
@@ -933,46 +938,51 @@
 
 ;;; --8><----8><----8><--
 
-;;; TODO: should really redo these to use sqlite bind stuff instead of
-;;; plain run... little Bobby Tables
-
 (define-primitive "wile_sql_meta_schema"
   "expects one sqlite port and one string which is the name of a table, and returns the schema for that table in the form of an SQL CREATE statement"
   (sqlite-meta-schema port tbl)
-  (caar
-   (sqlite-run port
-	       (string-join-by ""
-			       "select sql from sqlite_schema where (name = '"
-			       tbl "')"))))
+  (let* ((stmt (sqlite-statement-prepare
+		port "select sql from sqlite_schema where (name = ?1)"))
+	 (ig (sqlite-statement-bind stmt tbl))
+	 (res (sqlite-statement-run stmt)))
+    (sqlite-statement-cleanup stmt)
+    (caadr res)))
 
 ;;; --8><----8><----8><--
+
+;;; need to protect against SQL injection, but sqlite-statement-prepare
+;;; etc does not work: can't use parametrized table names. so validate
+;;; the given table against the list of known tables.
 
 (define-primitive "wile_sql_dump_table"
   "expects one sqlite port, one string which is the name of a table, and one output port, and dumps the named table into the output port in SQL format"
   (sqlite-dump-table sport tbl oport)
-  (let* ((cols (sqlite-run sport
-			   (string-join-by "" "pragma table_info('" tbl "')")))
-	 (names (map cadr cols))
-	 (types (map caddr cols))
-	 (vals (sqlite-run sport (string-join-by " " "select * from" tbl)))
-	 (nl (string-join-by "," names))
+  (if (memv tbl (sqlite-meta-tables sport))
+      (let* ((cols (sqlite-run
+		    sport (string-append "pragma table_info('" tbl "')")))
+	     (names (map cadr cols))
+	     (types (map caddr cols))
+	     (vals (sqlite-run sport (string-append "select * from " tbl)))
+	     (nl (string-join-by "," names))
 	 ;;; TODO: also check for real-number match
-	 (squo (lambda (s)
-		 (if (regex-match "^[-+]?[0-9]+$" s)
-		     s
-		     (string-join-by "" "'" s "'")))))
-    (write-string oport "DROP TABLE IF EXISTS " tbl
-		  ";\n\nCREATE TABLE " tbl " ("
-		  (string-join-by ", "
-				  (map (lambda (n t) (string-join-by " " n t))
-				       names types))
-		  ");\n\nBEGIN TRANSACTION;\n\n")
-    (map (lambda (v)
-	   (write-string
-	    oport "INSERT INTO " tbl " VALUES ("
-	    (string-join-by "," (map squo v)) ");\n"))
-	 vals)
-    (write-string oport "\nCOMMIT;\n")))
+	     (squo (lambda (s)
+		     (if (regex-match "^[-+]?[0-9]+$" s)
+			 s
+			 (string-join-by "" "'" s "'")))))
+	(write-string oport "DROP TABLE IF EXISTS " tbl
+		      ";\n\nCREATE TABLE " tbl " ("
+		      (string-join-by ", "
+				      (map (lambda (n t)
+					     (string-join-by " " n t))
+					   names types))
+		      ");\n\nBEGIN TRANSACTION;\n\n")
+	(map (lambda (v)
+	       (write-string
+		oport "INSERT INTO " tbl " VALUES ("
+		(string-join-by "," (map squo v)) ");\n"))
+	     vals)
+	(write-string oport "\nCOMMIT;\n"))
+      (write-string oport "-- No such table '" tbl "'\n")))
 
 ;;; --8><----8><----8><--
 
@@ -1399,7 +1409,7 @@
 
 ;;; --8><----8><----8><--
 
-(define-primitive "wile_vector_map" ""
+(define-primitive "wile_vector_map" "expects a function of N arguments and N equal-length vectors, and returns a vector of the same length whose entries are the values of the function applied to the corresponding entries of the input vectors"
   (vector-map proc vec . vecs)
   (let* ((vs (cons vec vecs))
 	 (ls (map vector-length vs)))
@@ -1514,7 +1524,7 @@
   (let* ((binfo (wile-basic-build-info)))
     `((operating-system ,(wile-os-name))
       (machine-architecture ,(wile-architecture-name))
-      (wile-version (0 10 1))
+      (wile-version (0 10 2))
       (float-type ,(case (bits-shift (bits-and binfo #b0011000) -3)
 		     ((0) 'double)
 		     ((1) 'long-double)
@@ -1909,13 +1919,22 @@
 	(cons 'get-file-position get-file-position)
 	(cons 'get-file-status get-file-status)
 	(cons 'get-group-id get-group-id)
+	(cons 'get-group-information
+	      (case-lambic 0 (lambda ()
+			       (get-group-information))
+			   1 (lambda (a1)
+			       (get-group-information a1))))
 	(cons 'get-host-name get-host-name)
 	(cons 'get-parent-process-id get-parent-process-id)
 	(cons 'get-process-id get-process-id)
 	(cons 'get-session-id get-session-id)
 	(cons 'get-symbolic-link-status get-symbolic-link-status)
 	(cons 'get-user-id get-user-id)
-	(cons 'get-user-information get-user-information)
+	(cons 'get-user-information
+	      (case-lambic 0 (lambda ()
+			       (get-user-information))
+			   1 (lambda (a1)
+			       (get-user-information a1))))
 	(cons 'gregorian-date gregorian-date)
 	(cons 'hypot hypot)
 	(cons 'i* i*)
@@ -2572,7 +2591,7 @@
 	   )))
 
 (define-primitive "wile_eval_define_form"
-  ""
+  "this is part of the wile interpreter; do not use"
   (define-form? expr)
   (and (pair? expr)
        (symbol? (car expr))
@@ -2580,7 +2599,7 @@
 	   (symbol=? (car expr) 'defmacro))))
 
 (define-primitive "wile_eval_load_path"
-  ""
+  "this is part of the wile interpreter; do not use"
   (load-file-path pathy? fname)
   (if pathy?
       (let* ((paths (string-split-by
@@ -2597,7 +2616,7 @@
       fname))
 
 (define-primitive "wile_eval_load_form"
-  ""
+  "this is part of the wile interpreter; do not use"
   (load-form? expr)
   (and (pair? expr)
        (symbol? (car expr))
@@ -2606,7 +2625,7 @@
        (list-length=? 2 expr)))
 
 (define-primitive "wile_eval_begin_form"
-  ""
+  "this is part of the wile interpreter; do not use"
   (begin-form? expr)
   (and (pair? expr)
        (symbol? (car expr))
@@ -2640,7 +2659,7 @@
       (ERR "malformed binding expression '%v'" expr)))
 
 (define-primitive "wile_eval_define"
-  ""
+  "this is part of the wile interpreter; do not use"
   (eval-define macro env expr)
   (let* ((bbv (cond ((symbol? (car expr))
 		     (eval-binding env expr))
@@ -2659,7 +2678,7 @@
     new-env))
 
 (define-primitive "wile_eval_begin"
-  ""
+  "this is part of the wile interpreter; do not use"
   (eval-begin ebox env expr)
   (if (null? expr)
       ()		;;; TODO: this could alternately be an error

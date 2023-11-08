@@ -2769,9 +2769,12 @@
 (test "#f" (doco '(cfft-good-n? -5)))
 (test "#t" (doco '(cfft-good-n? 6553600)))
 
+(test "#u8(#x53 #x51 #x4c #x69 #x74 #x65 #x20 #x66 #x6f #x72 #x6d #x61 #x74 #x20 #x33 #x0)"
+      (doco '(let ((port (open-file "cars.db" "rb"))) (read-bytes port 16))))
+
 (test-report "wile compiler tests")
 
-(if (test-expected 1755 0 12 0)
+(if (test-expected 1756 0 12 0)
     (write-string "results are as expected\n")
     (write-string "results are unexpected!\n"))
 

@@ -22,7 +22,7 @@ static lval fn_10(lptr*, lptr);
 
 // definitions
 
-// @@@ lambda (x) @@@ bld-rtl-dir/wile-rtl2-000042.scm:16 @@@ fn_10 @@@
+// @@@ lambda (x) @@@ bld-rtl-dir/wile-rtl2-000042.scm:18 @@@ fn_10 @@@
 static lval fn_10(lptr* var_11, lptr var_12)
 {
 lval var_14;
@@ -36,7 +36,7 @@ return var_15;
 }
 // end of lambda fn_10
 
-// @@@ lambda (lst acc) @@@ bld-rtl-dir/wile-rtl2-000042.scm:12 @@@ fn_4 @@@
+// @@@ lambda (lst acc) @@@ bld-rtl-dir/wile-rtl2-000042.scm:14 @@@ fn_4 @@@
 static lval fn_4(lptr* var_5, lptr var_6)
 {
 lbl_7:;
@@ -95,7 +95,7 @@ return var_8;
 }
 // end of lambda fn_4
 
-// @@@ (list-remove-dups lst) @@@ bld-rtl-dir/wile-rtl2-000042.scm:11 @@@ wile_list_remove_dups @@@
+// @@@ (list-remove-dups lst) @@@ bld-rtl-dir/wile-rtl2-000042.scm:13 @@@ wile_list_remove_dups @@@
 lval wile_list_remove_dups(lptr* var_1, lptr var_2)
 {
 MK_CLOS(var_5,0);

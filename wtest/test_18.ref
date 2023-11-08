@@ -29,6 +29,7 @@ INSERT INTO cars VALUES (19,'Hot Wheels',4);
 INSERT INTO cars VALUES (20,'Lego',20);
 
 COMMIT;
+-- No such table '; bobby tables'
 (("19" "Hot Wheels" "4"))
 (("99000"))
 (("Toyota") ("VW") ("Cadillac") ("Mustang") ("Honda") ("Subaru") ("Audi") ("Lexus"))

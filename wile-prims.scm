@@ -298,7 +298,9 @@
 		  ((and (positive? ,mc) ,some-cond) ,mc)
 		,@some-actions))))
 
-   (list 'fluid-let 'macro -2
+   (list 'fluid-let
+	 "this is analogous to the various let-forms, except that it does not introduce new bindings, but rather gives temporary values to existing bindings; after all the expressions of the fluid-let form are evaluated, the prior values are reinstated"
+	 'macro -2
 	 (lambda (vals . body)
 	   (let ((svals (map (lambda (ig) (gensym)) vals))
 		 (result (gensym))
@@ -312,7 +314,9 @@
 
    ;;; if not exactly case-lambda, then a lot like it
 
-   (list 'case-lambic 'macro -3
+   (list 'case-lambic
+	 "expects a positive and even number of arguments, alternating argument counts and lambdas which take those numbers of arguments, and constructs a wrapper function which takes any number of arguments and dispatches to the proper specific case; similar to case-lambda, but slightly different syntax"
+	 'macro -3
 	 (lambda (n lam . fns)
 	   (let* ((args (gensym))
 		  (group
@@ -345,7 +349,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; these macros are part of closing the loop for wile to compile itself
 
-   (list 'load-library 'macro 1
+   (list 'load-library
+	 "expects a file name and looks for that file in any of the directories given in the colon-separated list specified by the environment variable WILE_LIBRARY_PATH; if found, loads the file as though it were specified by its absolute path, thereby making its contents available for compilation or interpretation"
+	 'macro 1
 	 (lambda (fname)
 	   (letrec* ((paths (string-split-by
 			     (lambda (c) (eqv? c #\:))
@@ -364,7 +370,7 @@
 		 `(write-string "unable to find file '" ,fname "'\n")))))
 
    (list 'compile-with-output
-	 "this macro is used inside wile until wile can interpret user code; do not use"
+	 "this macro is used inside wile; do not use"
 	 'macro -2
 	 (lambda (dest . body)
 	   (let ((tport (gensym)))
@@ -375,7 +381,7 @@
 		    (transfer-all-lines ,tport ,dest)))))))
 
    (list 'emit-code
-	 "this macro is used inside wile until wile can interpret user code; do not use"
+	 "this macro is used inside wile; do not use"
 	 'macro -1
 	 (lambda strs
 	   (let ((xform
@@ -402,7 +408,9 @@
 		     (emit-str #\newline)
 		     r))))
 
-   (list 'def-struct 'macro -3
+   (list 'def-struct
+	 "expects a structure name and one or more field names, and defines a set of creation, test, and access functions for that structure. structures are simply vectors that know their own struct type"
+	 'macro -3
 	 (lambda (name field . fields)
 	   (let* ((fs (cons field fields))
 		  (lfs (list-length fs))
@@ -439,7 +447,9 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-   (list 'begin-breakable 'macro -2
+   (list 'begin-breakable
+	 "expects a tag symbol and any number of expressions, and evaluates the expressions; if any of them is a (raise) which throws that tag symbol, the evaluations are terminated"
+	 'macro -2
 	 (lambda (tag . actions)
 	   (let ((cname (gensym)))
 	     `(guard (,cname ((symbol=? ,cname ,tag))) ,@actions))))
@@ -484,7 +494,9 @@
 ;;; 				   (lambda (,sa) (cond ,@s2))))))
 ;;; 		       ,@s3)))))
 
-   (list 'namespace 'macro -2
+   (list 'namespace
+	 "expects a list of symbols which are functions to make visible, then any number of function definitions, which will be private except for those listed as public. CURRENTLY BROKEN"
+	 'macro -2
 	 (lambda (syms . defs)
 	   `(begin ,@defs)))
 
@@ -523,7 +535,8 @@
 	    "}"
 	    "@@ = (@1.v.pair.cdr ? *(@1.v.pair.cdr) : LVI_NIL());")))
 
-   (list 'set-car! 'prim 2
+   (list 'set-car! "expects one pair and one general value, and sets the pair's CAR to the specified general value. WARNING: THIS IS CURRENTLY BROKEN!"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "{"
@@ -539,7 +552,8 @@
 	    "@@ = @1;"
 	    "}")))
 
-   (list 'set-cdr! 'prim 2
+   (list 'set-cdr! "expects one pair and one general value, and sets the pair's CDR to the specified general value. WARNING: THIS IS CURRENTLY BROKEN!"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "{"
@@ -678,7 +692,9 @@
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(@1.vt == LV_PAIR);")))
 
-   (list 'list 'prim -1 build-basic-list)
+   (list 'list
+	 "expects any number of values and returns the list containing those values"
+	 'prim -1 build-basic-list)
 
    (list 'list?
 	 "expects one argument and returns #t if that value is a proper list, #f otherwise"
@@ -693,9 +709,12 @@
 	    "@@ = LVI_BOOL(@@.vt == LV_NIL);"
 	    "}")))
 
-   (list 'vector "expects any number of values and returns a vector containing those values"
+   (list 'vector
+	 "expects any number of values and returns a vector containing those values"
 	 'prim -1 "wile_list2vector")
-   (list 'bytevector 'prim -1 "wile_list2bytevector")
+   (list 'bytevector
+	 "expects any number of character or small integer values and returns a bytevector containing those values"
+	 'prim -1 "wile_list2bytevector")
 
    ;;; TODO: update for string and sqlite ports?
    (list 'port?
@@ -764,15 +783,27 @@
    (list 'close-port "expects one expects one port argument, and closes it; returns #t if the close succeeded, #f otherwise"
 	 'prim 1 "wile_closeport")
 
-   (list 'create-link 'prim 2
+   (list 'create-link "expects two string arguments, the first one of which should be the name of an existing file, and creates a new hard link under the second name"
+	 'prim 2
 	 (lambda (r a1 a2)
-	   (emit-code "@@ = LVI_BOOL(link(@1.v.str, @2.v.str) == 0);")))
+	   (emit-code
+	    "if (@1.vt != LV_STRING || @2.vt != LV_STRING) {"
+	    "WILE_EX(\"create-link\", \"inputs are not strings\");"
+	    "}"
+	    "@@ = LVI_BOOL(link(@1.v.str, @2.v.str) == 0);")))
 
-   (list 'create-symbolic-link 'prim 2
+   (list 'create-symbolic-link "expects two string arguments, the first one of which should be the name of an existing file, and creates a new symbolic link under the second name"
+	 'prim 2
 	 (lambda (r a1 a2)
-	   (emit-code "@@ = LVI_BOOL(symlink(@1.v.str, @2.v.str) == 0);")))
+	   (emit-code
+	    "if (@1.vt != LV_STRING || @2.vt != LV_STRING) {"
+	    "WILE_EX(\"create-symbolic-link\", \"inputs are not strings\");"
+	    "}"
+	    "@@ = LVI_BOOL(symlink(@1.v.str, @2.v.str) == 0);")))
 
-   (list 'eqv? 'prim 2
+   (list 'eqv?
+	 "expects two general values, and returns whether or not they are equivalent"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_BOOL(wile_do_eqv(&(@1), &(@2)));")))
 
@@ -818,57 +849,71 @@
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(@1.vt == LV_CONT);")))
 
-   (list 'get-process-id "expects no arguments, returns the process id of the running process" 'prim 0
+   (list 'get-process-id
+	 "expects no arguments, returns the process id of the running process" 'prim 0
 	 (lambda (r)
 	   (emit-code "@@ = LVI_INT(getpid());")))
 
-   (list 'get-parent-process-id "expects no arguments, returns the process id of the parent process of the running process" 'prim 0
+   (list 'get-parent-process-id
+	 "expects no arguments, returns the process id of the parent process of the running process" 'prim 0
 	 (lambda (r)
 	   (emit-code "@@ = LVI_INT(getppid());")))
 
-   (list 'get-user-id "expects no arguments, returns the user id of the running process" 'prim 0
+   (list 'get-user-id
+	 "expects no arguments, returns the user id of the running process" 'prim 0
 	 (lambda (r)
 	   (emit-code "@@ = LVI_INT(getuid());")))
 
-   (list 'set-user-id "expects one integer and sets the user id of the running process to that value; returns #t if the operation succeeded, #f otherwise"
+   (list 'set-user-id
+	 "expects one integer and sets the user id of the running process to that value; returns #t if the operation succeeded, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(setuid(@1.v.iv) == 0);")))
 
-   (list 'get-effective-user-id "expects no arguments, returns the effective user id of the running process"
+   (list 'get-effective-user-id
+	 "expects no arguments, returns the effective user id of the running process"
 	 'prim 0
 	 (lambda (r)
 	   (emit-code "@@ = LVI_INT(geteuid());")))
 
-   (list 'set-effective-user-id "expects one integer and sets the effective user id of the running process to that value; returns #t if the operation succeeded, #f otherwise"
+   (list 'set-effective-user-id
+	 "expects one integer and sets the effective user id of the running process to that value; returns #t if the operation succeeded, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(seteuid(@1.v.iv) == 0);")))
 
-   (list 'get-group-id "expects no arguments, returns the group id of the running process" 'prim 0
+   (list 'get-group-id
+	 "expects no arguments, returns the group id of the running process" 'prim 0
 	 (lambda (r)
 	   (emit-code "@@ = LVI_INT(getgid());")))
 
-   (list 'set-group-id "expects one integer and sets the group id of the running process to that value; returns #t if the operation succeeded, #f otherwise"
+   (list 'set-group-id
+	 "expects one integer and sets the group id of the running process to that value; returns #t if the operation succeeded, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(setgid(@1.v.iv) == 0);")))
 
-   (list 'get-effective-group-id "expects no arguments, returns the effective group id of the running process"
+   (list 'get-effective-group-id
+	 "expects no arguments, returns the effective group id of the running process"
 	 'prim 0
 	 (lambda (r)
 	   (emit-code "@@ = LVI_INT(getegid());")))
 
-   (list 'set-effective-group-id "expects one integer and sets the effective group id of the running process to that value; returns #t if the operation succeeded, #f otherwise"
+   (list 'set-effective-group-id
+	 "expects one integer and sets the effective group id of the running process to that value; returns #t if the operation succeeded, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(setegid(@1.v.iv) == 0);")))
 
-   (list 'get-session-id 'prim 1
+   (list 'get-session-id
+	 "expects one integer argument and returns the session id of the process with that process id"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_INT(getsid(@1.v.iv));")))
 
-   (list 'set-session-id 'prim 0
+   (list 'set-session-id
+	 "expects no arguments and creates a new session"
+	 'prim 0
 	 (lambda (r)
 	   (emit-code
 	    "{"
@@ -880,33 +925,40 @@
 	    "}"
 	    "}")))
 
-   (list 'epochtime "expects no arguments, returns the number of seconds since the epoch, 1970-01-01 00:00:00 UTC" 'prim 0
+   (list 'epochtime
+	 "expects no arguments, returns the number of seconds since the epoch, 1970-01-01 00:00:00 UTC" 'prim 0
 	 (lambda (r)
 	   (emit-code "@@ = LVI_INT(time(NULL));")))
 
-   (list 'apply 'prim -3 compile-runtime-apply)
+   (list 'apply
+	 "expects one procedure and any number of arguments, and returns the result of applying the procedure to those arguments"
+	 'prim -3 compile-runtime-apply)
 
    (list 'gensym
 	 "expects no arguments, returns one newly-generated symbol which is supposed to be unique unless the user takes hostile measures to defeat the uniqueness"
 	 'prim 0 (lambda (r)
 		   (emit-code "@@ = wile_get_gensym();")))
 
-   (list 'run-command "expects one string argument, runs that as a separate process, and returns the exit status of that run or #f if the underlying system() call failed"
+   (list 'run-command
+	 "expects one string argument, runs that as a separate process, and returns the exit status of that run or #f if the underlying system() call failed"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = wile_run_system_command(@1, __FILE__, __LINE__);")))
 
-   (list 'run-read-command "expects one string argument, launches that as a separate process while opening a readable pipe to its stdout, and returns that pipe-handle, or #f if the underlying popen() call failed"
+   (list 'run-read-command
+	 "expects one string argument, launches that as a separate process while opening a readable pipe to its stdout, and returns that pipe-handle, or #f if the underlying popen() call failed"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = wile_run_pipe_command(@1, \"r\", __FILE__, __LINE__);")))
 
-   (list 'run-write-command "expects one string argument, launches that as a separate process while opening a writable pipe to its stdin, and returns that pipe-handle, or #f if the underlying popen() call failed"
+   (list 'run-write-command
+	 "expects one string argument, launches that as a separate process while opening a writable pipe to its stdin, and returns that pipe-handle, or #f if the underlying popen() call failed"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = wile_run_pipe_command(@1, \"w\", __FILE__, __LINE__);")))
 
-   (list 'fork-process "expects no arguments and forks the process into parent and child processes; returns 0 in the child process and the child's process id in the parent process, or #f if the underlying fork() call failed"
+   (list 'fork-process
+	 "expects no arguments and forks the process into parent and child processes; returns 0 in the child process and the child's process id in the parent process, or #f if the underlying fork() call failed"
 	 'prim 0
 	 (lambda (r)
 	   (emit-code
@@ -919,14 +971,18 @@
 	    "}"
 	    "}")))
 
-   (list 'get-current-directory "expects no arguments and returns a string which is the name of the current working directory" 'prim 0 "wile_getcwd")
+   (list 'get-current-directory
+	 "expects no arguments and returns a string which is the name of the current working directory" 'prim 0 "wile_getcwd")
 
-   (list 'set-current-directory "expects one string argument, attempts to change the current working directory to that location, and returns #t if that succeeds or #f if it fails"
+   (list 'set-current-directory
+	 "expects one string argument, attempts to change the current working directory to that location, and returns #t if that succeeds or #f if it fails"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_BOOL(chdir(@1.v.str) == 0);")))
 
-   (list 'get-file-position 'prim 1
+   (list 'get-file-position
+	 "expects one file-port argument and returns the current value of its file position indicator"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
 	    "if (@1.vt == LV_FILE_PORT) {"
@@ -941,16 +997,29 @@
 	    "}")))
 
    ;;; offset relative to start for 2-arg
-   (list 'set-file-position 'prim 2 "wile_setfilepos2" 3 "wile_setfilepos3")
-   (list 'set-line-buffering! "expects one argument which is a port of some kind: for file, pipe, or socket-type ports, set buffering mode to line buffering; for string or sqlite ports, this is a no-op. return #t or #f according to whether the call succeeds or fails"
+   (list 'set-file-position
+	 "expects a file port, an integer offset, and an optional position indicator symbol 'start 'cur or 'end; sets the file position indicator as an offset from the given location. if no location is specified, the offset is from the start of the file"
+	 'prim 2 "wile_setfilepos2" 3 "wile_setfilepos3")
+
+   (list 'set-line-buffering!
+	 "expects one argument which is a port of some kind: for file, pipe, or socket-type ports, set buffering mode to line buffering; for string or sqlite ports, this is a no-op. return #t or #f according to whether the call succeeds or fails"
 	 'prim 1 "wile_setlinebuffering")
-   (list 'set-no-buffering! "expects one argument which is a port of some kind: for file, pipe, or socket-type ports, set buffering mode to no buffering; for string or sqlite ports, this is a no-op. return #t or #f according to whether the call succeeds or fails"
+
+   (list 'set-no-buffering!
+	 "expects one argument which is a port of some kind: for file, pipe, or socket-type ports, set buffering mode to no buffering; for string or sqlite ports, this is a no-op. return #t or #f according to whether the call succeeds or fails"
 	 'prim 1 "wile_setnobuffering")
-   (list 'get-host-name "expects no arguments and returns the system's host name as given by gethostname(), or #f if gethostname fails"
+
+   (list 'get-host-name
+	 "expects no arguments and returns the system's host name as given by gethostname(), or #f if gethostname fails"
 	 'prim 0 "wile_gethostname")
-   (list 'get-domain-name "expects no arguments and returns the system's domain name as given by getdomainname(), or #f if getdomainname fails"
+
+   (list 'get-domain-name
+	 "expects no arguments and returns the system's domain name as given by getdomainname(), or #f if getdomainname fails"
 	 'prim 0 "wile_getdomainname")
-   (list 'read-line 'prim 1 "wile_read_line")
+
+   (list 'read-line
+	 "expects one input port argument and reads and returns one line, ie, up to the next #\newline character; if the port is positioned at EOF, ie, there are no more characters to be read, returns #f"
+	 'prim 1 "wile_read_line")
 
    (list 'read-char "expects no arguments or one port argument, attempts to read one character from stdin or the port, and returns the character if the read was successful, #f otherwise"
 	 'prim
@@ -1020,12 +1089,12 @@
 	 'prim
 	 1 (lambda (r a1)
 	     (emit-code
-	      "wile_display(@1, stdout);"
+	      "wile_print_lisp_val(&(@1), stdout);"
 	      "@@ = @1;"))
 	 2 (lambda (r a1 a2)
 	     (emit-code
 	      "if (@2.vt == LV_FILE_PORT || @2.vt == LV_PIPE_PORT || @2.vt == LV_SOCK_PORT) {"
-	      "wile_display(@1, @2.v.fp);"
+	      "wile_print_lisp_val(&(@1), @2.v.fp);"
 	      "@@ = @1;"
 	      "} else {"
 	      "WILE_EX(\"display\", \"expects a scheme value and a port\");"
@@ -1036,7 +1105,9 @@
 	 (lambda (r a1)
 	   (emit-code "@@ = wile_string2num(@1, __FILE__, __LINE__);")))
 
-   (list 'number->string 'prim
+   (list 'number->string
+	 "expects a number, an optional base, and an optional precision, and returns a textual representation of the number. for integers, any base from 2 to 36 is allowed; if a precision is specified, the number is formatted as a floating-point number, and only bases 2, 8, 10, and 16 are allowed. if the precision is negative, scientific notation is used, otherwise regular notation is used"
+	 'prim
 	 ;;; number
 	 1 (lambda (r a1)
 	     (emit-code
@@ -1058,7 +1129,8 @@
 	      "WILE_EX(\"number->string\", \"base or precision is not numeric\");"
 	      "}")))
 
-   (list 'cmplx "expects two real-valued arguments X and Y and returns the complex number X+I*Y"
+   (list 'cmplx
+	 "expects two real-valued arguments X and Y and returns the complex number X+I*Y"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a9 (new-svar))
@@ -1067,7 +1139,8 @@
 	     (promote/real+check "cmplx" a8 a2)
 	     (emit-code "@@ = LVI_CMPLX2(@9.v.rv, @8.v.rv);"))))
 
-   (list 'make-polar "expects two real-valued arguments R and THETA and returns the complex number R*exp(I*THETA)"
+   (list 'make-polar
+	 "expects two real-valued arguments R and THETA and returns the complex number R*exp(I*THETA)"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a9 (new-svar))
@@ -1077,7 +1150,9 @@
 	     (emit-code
 	      "@@ = LVI_CMPLX2(@9.v.rv*COS(@8.v.rv), @9.v.rv*SIN(@8.v.rv));"))))
 
-   (list 'angle 'prim 1
+   (list 'angle
+	 "expects one complex argument and returns its phase angle in radians"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_REAL(ATAN2(CIMAG(@1.v.cv), CREAL(@1.v.cv)));")))
 
@@ -1782,7 +1857,9 @@
 	   (emit-code
 	    "@@ = LVI_INT(@1.v.iv*(@2.v.iv/lgcd(@1.v.iv, @2.v.iv)));")))
 
-   (list 'ilog 'prim 1
+   (list 'ilog
+	 "expects one integer, and returns the integer binary logarithm of the absolute value; as a special case, it returns 0 for input 0"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
 	    "{"
@@ -2014,7 +2091,8 @@
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_CHAR(toupper(@1.v.chr));")))
 
-   (list 'string-create 'prim
+   (list 'string-create "expects one non-negative integer N and optionally a fill character C, and returns a string composed of N copies of the character C; if no fill character is specified, 'X' is used"
+	 'prim
 	 1 (lambda (r a1)
 	     (emit-code
 	      "if (@1.vt != LV_INT || @1.v.iv < 0) {"
@@ -2065,7 +2143,9 @@
 	    "}"
 	    "}")))
 
-   (list 'string-copy 'prim
+   (list 'string-copy
+	 "expects a string, an optional start index, and an optional end index, and returns a newly-allocated copy of the substring from the start to but not including the end index; if the end index is not specified, it defaults to the end of the string, and if the start index is also not specified, it defaults to the beginning of the string"
+	 'prim
 	 1 (lambda (r a1)
 	     (emit-code
 	      "if (@1.vt != LV_STRING) {"
@@ -2121,7 +2201,8 @@
 	    "}"
 	    "@@ = LVI_CHAR(@1.v.str[@2.v.iv]);")))
 
-   (list 'string-find-first-char "expects one string and one character, and returns the index of the left-most occurrence of that character in the string, or #f if the character does not occur in the string"
+   (list 'string-find-first-char
+	 "expects one string and one character, and returns the index of the left-most occurrence of that character in the string, or #f if the character does not occur in the string"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
@@ -2137,7 +2218,8 @@
 	    "}"
 	    "}")))
 
-   (list 'string-find-last-char "expects one string and one character, and returns the index of the right-most occurrence of that character in the string, or #f if the character does not occur in the string"
+   (list 'string-find-last-char
+	 "expects one string and one character, and returns the index of the right-most occurrence of that character in the string, or #f if the character does not occur in the string"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
@@ -2153,7 +2235,9 @@
 	    "}"
 	    "}")))
 
-   (list 'string-set! 'prim 3
+   (list 'string-set!
+	 "expects a string, an index, and a character, and sets that position of the string to the specified character"
+	 'prim 3
 	 (lambda (r a1 a2 a3)
 	   (emit-code
 	    "if (@1.vt != LV_STRING || @2.vt != LV_INT || @3.vt != LV_CHAR) {"
@@ -2165,29 +2249,38 @@
 	    "@1.v.str[@2.v.iv] = @3.v.chr;"
 	    "@@ = @1;")))
 
-   (list 'string-reverse "expects one string and returns the front-to-back reverse of it"
+   (list 'string-reverse
+	 "expects one string and returns the front-to-back reverse of it"
 	 'prim 1 "wile_string_reverse")
 
-   (list 'string-hash-32 "expects one string and returns the 32-bit FNV hash of it"
+   (list 'string-hash-32
+	 "expects one string and returns the 32-bit FNV hash of it"
 	 'prim 1 "wile_string_hash_32")
-   (list 'string-ci-hash-32 "expects one string and returns the 32-bit FNV hash of the lowercase version of it"
+   (list 'string-ci-hash-32
+	 "expects one string and returns the 32-bit FNV hash of the lowercase version of it"
 	 'prim 1 "wile_string_ci_hash_32")
-   (list 'string-hash-64 "expects one string and returns the 64-bit FNV hash of it"
+   (list 'string-hash-64
+	 "expects one string and returns the 64-bit FNV hash of it"
 	 'prim 1 "wile_string_hash_64")
-   (list 'string-ci-hash-64 "expects one string and returns the 64-bit FNV hash of the lowercase version of it it"
+   (list 'string-ci-hash-64
+	 "expects one string and returns the 64-bit FNV hash of the lowercase version of it it"
 	 'prim 1 "wile_string_ci_hash_64")
 
-   (list 'char->integer "expects one character and returns its integer code equivalent"
+   (list 'char->integer
+	 "expects one character and returns its integer code equivalent"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_INT((unsigned char) @1.v.chr);")))
 
-   (list 'integer->char "expects one integer and returns its character equivalent"
+   (list 'integer->char
+	 "expects one integer and returns its character equivalent"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_CHAR((unsigned char) @1.v.iv);")))
 
-   (list 'char->string 'prim -1 "wile_char2string")
+   (list 'char->string
+	 "expects any number of characters and returns a string composed of those characters"
+	 'prim -1 "wile_char2string")
 
    (list 'symbol->string "expects one symbol argument and returns the text of it as a string"
 	 'prim 1
@@ -2224,7 +2317,9 @@
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_INT(~@1.v.iv);")))
 
-   (list 'bits-shift 'prim 2
+   (list 'bits-shift
+	 "expects two integers N and S and shifts N left by S bits (effectively right if S < 0); this is an arithmetic shift, negative N stay negative when right-shifted"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_INT((@2.v.iv >= 0) ? (@1.v.iv << @2.v.iv) : (@1.v.iv >> -@2.v.iv));")))
 
@@ -2259,7 +2354,8 @@
 	   (emit-code
 	    "@@ = LVI_INT((@2.v.iv >= 0) ? (@1.v.iv ^ (1 << @2.v.iv)) : @1.v.iv);")))
 
-   (list 'sleep "expects one real-valued number, which is used to delay or sleep the process for the given number of seconds"
+   (list 'sleep
+	 "expects one real-valued number, which is used to delay or sleep the process for the given number of seconds"
 	 'prim 1
 	 (lambda (r a1)
 	   (let ((a9 (new-svar)))
@@ -2267,15 +2363,18 @@
 	     (emit-code
 	      "@@ = LVI_BOOL(usleep(1000000*@9.v.rv) == 0);"))))
 
-   (list 'exit "expects one integer, the normal exit status, which is reported to the calling process; this call does not return"
+   (list 'exit
+	 "expects one integer, the normal exit status, which is reported to the calling process; this call does not return"
 	 'prim 1
 	 (lambda (r a1) (emit-code "exit(@1.v.iv);")))
 
-   (list 'emergency-exit "expects one integer, the emergency exit status, which is reported to the calling process; this call does not return"
+   (list 'emergency-exit
+	 "expects one integer, the emergency exit status, which is reported to the calling process; this call does not return"
 	 'prim 1
 	 (lambda (r a1) (emit-code "_exit(@1.v.iv);")))
 
-   (list 'floor "expects one real-valued number and returns its floor. if the input is integer- or rational-typed, the output is integer-typed; otherwise, it is real"
+   (list 'floor
+	 "expects one real-valued number and returns its floor. if the input is integer- or rational-typed, the output is integer-typed; otherwise, it is real"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
@@ -2290,7 +2389,8 @@
 	    "WILE_EX(\"floor\", \"expects one real-valued argument\");"
 	    "}")))
 
-   (list 'ceiling "expects one real-valued number and returns its ceiling. if the input is integer- or rational-typed, the output is integer-typed; otherwise, it is real"
+   (list 'ceiling
+	 "expects one real-valued number and returns its ceiling. if the input is integer- or rational-typed, the output is integer-typed; otherwise, it is real"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
@@ -2305,7 +2405,9 @@
 	    "WILE_EX(\"ceiling\", \"expects one real-valued argument\");"
 	    "}")))
 
-   (list 'round 'prim 1
+   (list 'round
+	 "expects one real-valued number and returns its value rounded to the nearest integer"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
 	    "if (@1.vt == LV_REAL) {"
@@ -2319,12 +2421,16 @@
 	    "WILE_EX(\"round\", \"expects one real-valued argument\");"
 	    "}")))
 
-   (list 'truncate 'prim 1
+   ;;; TODO: deal with other types of inputs
+   (list 'truncate
+	 "expects one real number and returns its value rounded to the nearest integer toward zero"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
 	    "@@ = LVI_INT(@1.v.rv >= 0.0 ? FLOOR(@1.v.rv) : CEIL(@1.v.rv));")))
 
-   (list 'sqrt "expects one number and returns its square root. positive real-valued inputs return a real-typed result, others return a complex-typed result"
+   (list 'sqrt
+	 "expects one number and returns its square root. positive real-valued inputs return a real-typed result, others return a complex-typed result"
 	 'prim 1
 	 (lambda (r a1)
 	   (let ((a9 (new-svar)))
@@ -2362,7 +2468,9 @@
 	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "exp" "EXP" "CEXP" r a1)))
 
-   (list 'log 'prim 1
+   (list 'log
+	 "expects one numeric argument and returns its natural logarithm"
+	 'prim 1
 	 (lambda (r a1)
 	   (let ((a9 (new-svar)))
 	     (promote/real a9 a1)
@@ -2379,39 +2487,49 @@
 	      "WILE_EX(\"log\", \"expects one numeric argument\");"
 	      "}"))))
 
-   (list 'sin "expects one number and returns the sine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+   (list 'sin
+	 "expects one number and returns the sine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
 	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "sin" "SIN" "CSIN" r a1)))
 
-   (list 'cos "expects one number and returns the cosine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+   (list 'cos
+	 "expects one number and returns the cosine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
 	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "cos" "COS" "CCOS" r a1)))
 
-   (list 'tan "expects one number and returns the tangent of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+   (list 'tan
+	 "expects one number and returns the tangent of that number. real-valued inputs return real-typed results, complex inputs return complex results"
 	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "tan" "TAN" "CTAN" r a1)))
 
-   (list 'sinh "expects one number and returns the hyperbolic sine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+   (list 'sinh
+	 "expects one number and returns the hyperbolic sine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
 	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "sinh" "SINH" "CSINH" r a1)))
 
-   (list 'cosh "expects one number and returns the hyperbolic cosine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+   (list 'cosh
+	 "expects one number and returns the hyperbolic cosine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
 	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "cosh" "COSH" "CCOSH" r a1)))
 
-   (list 'tanh "expects one number and returns the hyperbolic tangent of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+   (list 'tanh
+	 "expects one number and returns the hyperbolic tangent of that number. real-valued inputs return real-typed results, complex inputs return complex results"
 	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "tanh" "TANH" "CTANH" r a1)))
 
-   (list 'asin "expects one number and returns the arc-sine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+   (list 'asin
+	 "expects one number and returns the arc-sine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
 	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "asin" "ASIN" "CASIN" r a1)))
 
-   (list 'acos "expects one number and returns the arc-cosine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+   (list 'acos
+	 "expects one number and returns the arc-cosine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
 	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "acos" "ACOS" "CACOS" r a1)))
 
-   (list 'atan 'prim
+   (list 'atan
+	 "expects one or two real-valued numbers; if one, returns the arc-tangent of that number in the range -pi/2 to +pi/2; if two, the first is interpreted as the Y-coordinate and the second as the X-coordinate of a point, and the return value is the angle between the X-axis and the vector from the origin to the point, in the range -pi to +pi"
+	 'prim
 	 1 (lambda (r a1) (build-special-math-rc "atan" "ATAN" "CATAN" r a1))
 	 2 (lambda (r a1 a2)
 	     (let ((a9 (new-svar))
@@ -2420,19 +2538,23 @@
 	       (promote/real+check "atan" a8 a2)
 	       (emit-code "@@ = LVI_REAL(ATAN2(@9.v.rv, @8.v.rv));"))))
 
-   (list 'asinh "expects one number and returns the hyperbolic arc-sine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+   (list 'asinh
+	 "expects one number and returns the hyperbolic arc-sine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
 	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "asinh" "ASINH" "CASINH" r a1)))
 
-   (list 'acosh "expects one number and returns the hyperbolic arc-cosine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+   (list 'acosh
+	 "expects one number and returns the hyperbolic arc-cosine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
 	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "acosh" "ACOSH" "CACOSH" r a1)))
 
-   (list 'atanh "expects one number and returns the hyperbolic arc-tangent of that number. real-valued inputs return real-typed results, complex inputs return complex results"
+   (list 'atanh
+	 "expects one number and returns the hyperbolic arc-tangent of that number. real-valued inputs return real-typed results, complex inputs return complex results"
 	 'prim 1
 	 (lambda (r a1) (build-special-math-rc "atanh" "ATANH" "CATANH" r a1)))
 
-   (list 'erfc "expects one real-valued argument and returns the complementary error function of that value"
+   (list 'erfc
+	 "expects one real-valued argument and returns the complementary error function of that value"
 	 'prim 1
 	 (lambda (r a1)
 	   (let ((a9 (new-svar)))
@@ -2444,7 +2566,8 @@
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_REAL(LDEXP(@1.v.rv, @2.v.iv));")))
 
-   (list 'frexp "expects one real-valued argument and returns a 2-list which is decomposition of it into a normalized fraction in [0.5,1) and an exponent; 0, NaN, and Inf are special cases"
+   (list 'frexp
+	 "expects one real-valued argument and returns a 2-list which is decomposition of it into a normalized fraction in [0.5,1) and an exponent; 0, NaN, and Inf are special cases"
 	 'prim 1
 	 (lambda (r a1)
 	   (let ((a9 (new-svar)))
@@ -2462,11 +2585,14 @@
 	      "@@ = wile_gen_list(2, @9, NULL);"
 	      "}"))))
 
-   (list 'fmod 'prim 2
+   (list 'fmod
+	 "expects two real-valued arguments X and Y and returns M = X - N*Y for some integer N such that M has the same sign as X and magnitude less than the magnitude of Y"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code "@@ = LVI_REAL(FMOD(@1.v.rv, @2.v.rv));")))
 
-   (list 'hypot "expects two real-valued arguments and returns the square root of the sum of their squares"
+   (list 'hypot
+	 "expects two real-valued arguments and returns the square root of the sum of their squares"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a8 (new-svar))
@@ -2475,49 +2601,56 @@
 	     (promote/real+check "hypot" a9 a2)
 	     (emit-code "@@ = LVI_REAL(HYPOT(@8.v.rv, @9.v.rv));"))))
 
-   (list 'poly-chebyshev1 "expects one non-negative integer N and one real-valued argument X and returns the value of the Nth-order Chebyshev polynomial of the first kind at X"
+   (list 'poly-chebyshev1
+	 "expects one non-negative integer N and one real-valued argument X and returns the value of the Nth-order Chebyshev polynomial of the first kind at X"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a9 (new-svar)))
 	     (promote/real+check "poly-chebyshev1" a9 a2)
 	     (emit-code "@@ = LVI_REAL(pcheby1(@1.v.iv, @9.v.rv));"))))
 
-   (list 'poly-chebyshev2 "expects one non-negative integer N and one real-valued argument X and returns the value of the Nth-order Chebyshev polynomial of the second kind at X"
+   (list 'poly-chebyshev2
+	 "expects one non-negative integer N and one real-valued argument X and returns the value of the Nth-order Chebyshev polynomial of the second kind at X"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a9 (new-svar)))
 	     (promote/real+check "poly-chebyshev2" a9 a2)
 	     (emit-code "@@ = LVI_REAL(pcheby2(@1.v.iv, @9.v.rv));"))))
 
-   (list 'poly-hermite1 "expects one non-negative integer N and one real-valued argument X and returns the value of the Nth-order Hermite polynomial of the \"physicist\" flavor at X"
+   (list 'poly-hermite1
+	 "expects one non-negative integer N and one real-valued argument X and returns the value of the Nth-order Hermite polynomial of the \"physicist\" flavor at X"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a9 (new-svar)))
 	     (promote/real+check "poly-hermite1" a9 a2)
 	     (emit-code "@@ = LVI_REAL(phermite1(@1.v.iv, @9.v.rv));"))))
 
-   (list 'poly-hermite2 "expects one non-negative integer N and one real-valued argument X and returns the value of the Nth-order Hermite polynomial of the \"probabilist\" flavor at X"
+   (list 'poly-hermite2
+	 "expects one non-negative integer N and one real-valued argument X and returns the value of the Nth-order Hermite polynomial of the \"probabilist\" flavor at X"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a9 (new-svar)))
 	     (promote/real+check "poly-hermite2" a9 a2)
 	     (emit-code "@@ = LVI_REAL(phermite2(@1.v.iv, @9.v.rv));"))))
 
-   (list 'poly-legendre "expects one non-negative integer N and one real-valued argument X and returns the value of the Nth-order Legendre polynomial at X"
+   (list 'poly-legendre
+	 "expects one non-negative integer N and one real-valued argument X and returns the value of the Nth-order Legendre polynomial at X"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a9 (new-svar)))
 	     (promote/real+check "poly-legendre" a9 a2)
 	     (emit-code "@@ = LVI_REAL(plegendre(@1.v.iv, @9.v.rv));"))))
 
-   (list 'poly-laguerre "expects one non-negative integer N and one real-valued argument X and returns the value of the Nth-order Laguerre polynomial at X"
+   (list 'poly-laguerre
+	 "expects one non-negative integer N and one real-valued argument X and returns the value of the Nth-order Laguerre polynomial at X"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a9 (new-svar)))
 	     (promote/real+check "poly-laguerre" a9 a2)
 	     (emit-code "@@ = LVI_REAL(plaguerre(@1.v.iv, @9.v.rv));"))))
 
-   (list 'bessel-j "expects one integer N and one real-valued argument X and returns the value of the Nth-order Bessel function of the first kind at X"
+   (list 'bessel-j
+	 "expects one integer N and one real-valued argument X and returns the value of the Nth-order Bessel function of the first kind at X"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a9 (new-svar)))
@@ -2535,7 +2668,8 @@
 	      "@@ = LVI_REAL(s*JN(n, @9.v.rv));"
 	      "}"))))
 
-   (list 'bessel-y "expects one integer N and one positive real-valued argument X and returns the value of the Nth-order Bessel function of the second kind at X"
+   (list 'bessel-y
+	 "expects one integer N and one positive real-valued argument X and returns the value of the Nth-order Bessel function of the second kind at X"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a9 (new-svar)))
@@ -2558,7 +2692,8 @@
    ;;; not likely that there will be very many separate calls to AGM
    ;;; in a program.
 
-   (list 'arithmetic-geometric-mean "expects to numeric values and returns their arithmetic-geometric mean"
+   (list 'arithmetic-geometric-mean
+	 "expects two numeric values and returns their arithmetic-geometric mean"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a9 (new-svar))
@@ -2594,7 +2729,9 @@
 	      "}"
 	      "}"))))
 
-   (list 'integer 'prim 1
+   (list 'integer
+	 "expects one real-valued number and returns its integer part as an integer-typed value"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
 	    "if (@1.vt == LV_INT) {"
@@ -2607,17 +2744,20 @@
 	    "WILE_EX(\"integer\", \"expects one real-valued argument\");"
 	    "}")))
 
-   (list 'float "expects one real-valued argument and returns it as a floating-point value"
+   (list 'float
+	 "expects one real-valued argument and returns it as a floating-point value"
 	 'prim 1
 	 (lambda (r a1) (promote/real+check "float" r a1)))
 
    (list 'expt
+	 "expects two real-valued numbers A and B, and returns A raised to the power of B"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "@@ = wile_expt(&@1, &@2);")))
 
-   (list 'random-seed! "expects one optional integer argument, and resets the random number generator using that value as a seed. if no argument is given, a default value is generated from the current time and process id"
+   (list 'random-seed!
+	 "expects one optional integer argument, and resets the random number generator using that value as a seed. if no argument is given, a default value is generated from the current time and process id"
 	 'prim
 	 0 (lambda (r)
 	     (emit-code
@@ -2628,7 +2768,9 @@
 	      "srand48(@1.v.iv);"
 	      "@@ = LVI_BOOL(true);")))
 
-   (list 'random-uniform 'prim
+   (list 'random-uniform
+	 "expects 0 or 2 real-valued arguments L1 and L2 and returns a uniformly distributed random variable in the range [L1,L2); if no arguments are given, L1 and L2 are assumed to be 0 and 1 respectively"
+	 'prim
 	 0 (lambda (r)
 	     (emit-code "@@ = LVI_REAL(drand48());"))
 	 2 (lambda (r a1 a2)
@@ -2639,7 +2781,9 @@
 	       (emit-code
 		"@@ = LVI_REAL(@9.v.rv + (@8.v.rv - @9.v.rv)*drand48());"))))
 
-   (list 'random-exponential 'prim
+   (list 'random-exponential
+	 "expects no arguments or one positive real-valued argument and returns an exponentially-distributed random variable with the specified rate parameter, or with rate 1 if no rate parameter is specified"
+	 'prim
 	 0 (lambda (r)
 	     (emit-code "@@ = LVI_REAL(-LOG(1.0 -drand48()));"))
 	 ;;; TODO: need to check that rate parameter is positive
@@ -2649,7 +2793,8 @@
 	       (emit-code "@@ = LVI_REAL(-LOG(1.0 - drand48())/@9.v.rv);"))))
 
    ;;; TODO: need to check for positive real lambda
-   (list 'random-poisson "expects one positive real-valued argument and returns a Poisson-distributed random variable"
+   (list 'random-poisson
+	 "expects one positive real-valued argument and returns a Poisson-distributed random variable"
 	 'prim 1
 	 (lambda (r a1)
 	   (let ((a9 (new-svar)))
@@ -2665,7 +2810,9 @@
 	      "@@ = LVI_INT(k - 1);"
 	      "}"))))
 
-   (list 'random-normal-pair 'prim
+   (list 'random-normal-pair
+	 "expects either 0 or 2 numeric arguments M and S, and returns a pair of random numbers drawn from a normal distribution with mean M and standard deviation S; if no arguments are given, M is assumed to be 0 and S is assumed to be 1"
+	 'prim
 	 0 (lambda (r)
 	     (emit-code
 	      "@@ = wile_rand_normal_pair(0.0, 1.0);"))
@@ -2678,7 +2825,8 @@
 		"@@ = wile_rand_normal_pair(@9.v.rv, @8.v.rv);"))))
 
    ;;; TODO: need to check for negative n
-   (list 'factorial "expects one non-negative integer argument and returns the factorial of the input"
+   (list 'factorial
+	 "expects one non-negative integer argument and returns the factorial of the input"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
@@ -2690,7 +2838,9 @@
 	    "@@ = LVI_INT(f);"
 	    "}")))
 
-   (list 'floor-quotient 'prim 2
+   (list 'floor-quotient
+	 "expects two integers N1 and N2 and returns their quotient Q_f = floor(N1/N2)"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "{"
@@ -2699,7 +2849,9 @@
 	    "@@ = LVI_INT(nq);"
 	    "}")))
 
-   (list 'floor-remainder 'prim 2
+   (list 'floor-remainder
+	 "expects two integers N1 and N2 and returns the remainder R_f = N1 - N2*Q_f; see floor-quotient"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "{"
@@ -2708,7 +2860,9 @@
 	    "@@ = LVI_INT(nr);"
 	    "}")))
 
-   (list 'truncate-quotient 'prim 2
+   (list 'truncate-quotient
+	 "expects two integers N1 and N2 and returns their quotient Q_t = truncate(N1/N2)"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "{"
@@ -2717,7 +2871,9 @@
 	    "@@ = LVI_INT(nq);"
 	    "}")))
 
-   (list 'truncate-remainder 'prim 2
+   (list 'truncate-remainder
+	 "expects two integers N1 and N2 and returns the remainder R_f = N1 - N2*Q_t; see truncate-quotient"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "{"
@@ -2726,7 +2882,9 @@
 	    "@@ = LVI_INT(nr);"
 	    "}")))
 
-   (list 'ceiling-quotient 'prim 2
+   (list 'ceiling-quotient
+	 "expects two integers N1 and N2 and returns their quotient Q_c = ceiling(N1/N2)"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "{"
@@ -2735,7 +2893,9 @@
 	    "@@ = LVI_INT(nq);"
 	    "}")))
 
-   (list 'ceiling-remainder 'prim 2
+   (list 'ceiling-remainder
+	 "expects two integers N1 and N2 and returns the remainder R_c = N1 - N2*Q_c; see ceiling-quotient"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "{"
@@ -2744,7 +2904,9 @@
 	    "@@ = LVI_INT(nr);"
 	    "}")))
 
-   (list 'floor/ 'prim 2
+   (list 'floor/
+	 "expects two integers N1 and N2 and returns a two-element list containing their floor-quotient and floor-remainder"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a9 (new-svar)))
 	     (emit-code
@@ -2757,7 +2919,9 @@
 	      "@@ = wile_gen_list(2, @9, NULL);"
 	      "}"))))
 
-   (list 'truncate/ 'prim 2
+   (list 'truncate/
+	 "expects two integers N1 and N2 and returns a two-element list containing their truncate-quotient and truncate-remainder"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a9 (new-svar)))
 	     (emit-code
@@ -2770,7 +2934,9 @@
 	      "@@ = wile_gen_list(2, @9, NULL);"
 	      "}"))))
 
-   (list 'ceiling/ 'prim 2
+   (list 'ceiling/
+	 "expects two integers N1 and N2 and returns a two-element list containing their ceiling-quotient and ceiling-remainder"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a9 (new-svar)))
 	     (emit-code
@@ -3077,7 +3243,9 @@
 	   (emit-code
 	    "@@ = LVI_BOOL(kill(@1.v.iv, @2.v.iv) == 0);")))
 
-   (list 'truncate-file 'prim
+   (list 'truncate-file
+	 "expects a file port and optionally an integer position; truncates the file at the specified position, or at the current file position indicator if no position was specified. returns #t if the truncation was successful, #f otherwise"
+	 'prim
 	 1 (lambda (r a1)
 	     (emit-code
 	      "{"
@@ -3139,7 +3307,9 @@
 	      "}"
 	      "}")))
 
-   (list 'vector-fill! 'prim 2
+   (list 'vector-fill!
+	 "expects one vector and one general value and fills all slots of the vector with that value"
+	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
 	    "{"
@@ -3156,7 +3326,8 @@
 	    "@@ = @1;"
 	    "}")))
 
-   (list 'vector-length "expects one vector and returns its length"
+   (list 'vector-length
+	 "expects one vector and returns its length"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
@@ -3167,7 +3338,8 @@
 	    "@@ = LVI_INT(@1.v.vec.capa);"
 	    "}")))
 
-   (list 'vector-ref "expects one vector and one index, bounds-checks the index, and returns the value stored in the vector at that index"
+   (list 'vector-ref
+	 "expects one vector and one index, bounds-checks the index, and returns the value stored in the vector at that index"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
@@ -3181,7 +3353,8 @@
 	    "@@ = @1.v.vec.arr[@2.v.iv] ? *(@1.v.vec.arr[@2.v.iv]) : LVI_NIL();"
 	    "}")))
 
-   (list 'vector-set! "expects a vector, an index, and a value, bounds-checks the index, and saves the value in the vector at that index; modifies the vector in-place"
+   (list 'vector-set!
+	 "expects a vector, an index, and a value, bounds-checks the index, and saves the value in the vector at that index; modifies the vector in-place"
 	 'prim 3
 	 (lambda (r a1 a2 a3)
 	   (emit-code
@@ -3197,7 +3370,8 @@
 	    "@@ = @1;"
 	    "}")))
 
-   (list 'vector-swap! "expects one vector and two indices, bounds-checks the indices, and swaps the values stored in the vector at those two indices"
+   (list 'vector-swap!
+	 "expects one vector and two indices, bounds-checks the indices, and swaps the values stored in the vector at those two indices"
 	 'prim 3
 	 (lambda (r a1 a2 a3)
 	   (emit-code
@@ -3214,7 +3388,8 @@
 	    "@@ = @1;"
 	    "}")))
 
-   (list 'bytevector-create "expects one integer, the size of the bytevector to be created, and optionally a second argument, a char or small integer, which is used to fill all slots of the new bytevector; returns a new bytevector of the given size"
+   (list 'bytevector-create
+	 "expects one integer, the size of the bytevector to be created, and optionally a second argument, a char or small integer, which is used to fill all slots of the new bytevector; returns a new bytevector of the given size"
 	 'prim
 	 1 (lambda (r a1)
 	     (emit-code
@@ -3250,7 +3425,8 @@
 	      "}"
 	      "}")))
 
-   (list 'bytevector-length "expects one bytevector and returns its length"
+   (list 'bytevector-length
+	 "expects one bytevector and returns its length"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
@@ -3261,7 +3437,8 @@
 	    "@@ = LVI_INT(@1.v.bvec.capa);"
 	    "}")))
 
-   (list 'bytevector-ref "expects one bytevector and one index, bounds-checks the index, and returns the value stored in the bytevector at that index"
+   (list 'bytevector-ref
+	 "expects one bytevector and one index, bounds-checks the index, and returns the value stored in the bytevector at that index"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
@@ -3275,7 +3452,8 @@
 	    "@@ = LVI_CHAR(@1.v.bvec.arr[@2.v.iv]);"
 	    "}")))
 
-   (list 'bytevector-set! "expects a bytevector, an index, and a char or small integer, bounds-checks the index, and saves the char/int in the bytevector at that index; modifies the bytevector in-place"
+   (list 'bytevector-set!
+	 "expects a bytevector, an index, and a char or small integer, bounds-checks the index, and saves the char/int in the bytevector at that index; modifies the bytevector in-place"
 	 'prim 3
 	 (lambda (r a1 a2 a3)
 	   (emit-code
@@ -3293,7 +3471,8 @@
 	    "@@ = @1;"
 	    "}")))
 
-   (list 'bytevector-swap! "expects one bytevector and two indices, bounds-checks the indices, and swaps the values stored in the bytevector at those two indices"
+   (list 'bytevector-swap!
+	 "expects one bytevector and two indices, bounds-checks the indices, and swaps the values stored in the bytevector at those two indices"
 	 'prim 3
 	 (lambda (r a1 a2 a3)
 	   (emit-code
@@ -3311,7 +3490,9 @@
 	    "@@ = @1;"
 	    "}")))
 
-   (list 'bytevector->string 'prim 1
+   (list 'bytevector->string
+	 "expects one bytevector and returns a string containing the bytes stored in the bytevector. note that if any bytes are zero, it is not possible to access any part of the string that is located after the zero bytes"
+	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
 	    "if (@1.vt != LV_BVECTOR) {"
@@ -3323,23 +3504,59 @@
 	    "memcpy(@@.v.str, @1.v.bvec.arr, @1.v.bvec.capa);"
 	    "@@.v.str[@1.v.bvec.capa] = 0;")))
 
-   (list 'UTCtime "returns a 9-element list (Y M D h m s dow doy dst?) corresponding to UTC time 'now'" 'prim 0 "wile_gmtime" 1 "wile_gmtime")
-   (list 'localtime "returns a 9-element list (Y M D h m s dow doy dst?) corresponding to local time 'now'" 'prim 0 "wile_localtime" 1 "wile_localtime")
-   (list 'get-file-status "expects one string, the name of an existing file, and returns a 13-element list of integers as returned by stat()"
-	 'prim 1 "wile_filestat")
-   (list 'get-symbolic-link-status "expects one string, the name of an existing file or symbolic link, and returns a 13-element list of integers as returned by lstat()"
-	 'prim 1 "wile_symlinkstat")
-   (list 'parse-string 'prim 1 "wile_parse_string")
-   (list 'parse-file 'prim 1 "wile_parse_file")
-   (list 'regex-match 'prim 2 "wile_regex_match")
-   ;;; TODO: 0-arg version that returns all users
-   (list 'get-user-information 'prim 1 "wile_getuserinfo")
-   (list 'read-directory "expects a string argument which is the name of some directory (default if no argument is \".\" which is the current working directory) and returns a list of directory entries; each entry is a list of length 2 containing the name and inode for each directory entry" 'prim 0 "wile_read_directory" 1 "wile_read_directory")
-   (list 'listen-on 'prim 1 "wile_listen_port")
-   (list 'accept 'prim 1 "wile_accept_connection")
-   (list 'connect-to 'prim 2 "wile_connect_to")
+   (list 'UTCtime
+	 "returns a 9-element list (Y M D h m s dow doy dst?) corresponding to UTC time 'now'"
+	 'prim 0 "wile_gmtime" 1 "wile_gmtime")
 
-   (list 'raise 'prim -1
+   (list 'localtime
+	 "returns a 9-element list (Y M D h m s dow doy dst?) corresponding to local time 'now'"
+	 'prim 0 "wile_localtime" 1 "wile_localtime")
+
+   (list 'get-file-status
+	 "expects one string, the name of an existing file, and returns a 13-element list of integers as returned by stat()"
+	 'prim 1 "wile_filestat")
+
+   (list 'get-symbolic-link-status
+	 "expects one string, the name of an existing file or symbolic link, and returns a 13-element list of integers as returned by lstat()"
+	 'prim 1 "wile_symlinkstat")
+
+   (list 'parse-string
+	 "expects one string, parses it into a list of s-expressions, and returns that list"
+	 'prim 1 "wile_parse_string")
+
+   (list 'parse-file
+	 "expects one string, the name of an existing file, parses the contents of that file into a list of s-expressions, and returns that list"
+	 'prim 1 "wile_parse_file")
+
+   (list 'regex-match
+	 "expects two strings: a regular expression and a string to match on. returns a 3-list of strings: the pre-match, match, and post-match pieces; if no match, returns #f"
+ 'prim 2 "wile_regex_match")
+
+   (list 'get-user-information
+	 "expects no arguments or one integer or one string: if no arguments are given, returns user information for all users; if a string is given, it is assumed to be a user name; if an integer is given, it is assumed to be a user id. in either of these cases, the user information belonging to that user is returned"
+	 'prim 0 "wile_getalluserinfo" 1 "wile_getuserinfo")
+
+   (list 'get-group-information
+	 "expects no arguments or one integer or one string: if no arguments are given, returns group information for all groups; if a string is given, it is assumed to be a group name; if an integer is given, it is assumed to be a group id. in either of these cases, the group information belonging to that group is returned"
+	 'prim 0 "wile_getallgroupinfo" 1 "wile_getgroupinfo")
+
+   (list 'read-directory
+	 "expects a string argument which is the name of some directory (default if no argument is \".\" which is the current working directory) and returns a list of directory entries; each entry is a list of length 2 containing the name and inode for each directory entry"
+	 'prim 0 "wile_read_directory" 1 "wile_read_directory")
+
+   (list 'listen-on
+	 "expects one integer argument in the range 0 to 65535, creates a TCP socket on that port, and sets up that socket to accept connections; returns the socket-port if successful, or #f if unsuccessful"
+	 'prim 1 "wile_listen_port")
+   (list 'accept
+	 "expects one socket port argument and accepts a connection on that port; if successful, returns a 3-list consisting of the new connected port, the remote peer's IP address in text form, and the remote peer's port, otherwise #f"
+	 'prim 1 "wile_accept_connection")
+   (list 'connect-to
+	 "expects a host name string (which may be in textual dotted-quad form) and a port number, and connects to the specified host and port; returns a socket port if successful, or #f if unsuccessful"
+	 'prim 2 "wile_connect_to")
+
+   (list 'raise
+	 "expects any number of arguments, combines them into a list, and throws that list as an exception"
+	 'prim -1
 	 (lambda (r . as)
 	   (apply build-basic-list r as)
 	   (let ((a1 r)
@@ -3393,6 +3610,7 @@
 	   (build-special-math-real "lambert-W-" "lambert_wn_fn" r a1)))
 
    (list 'lambert-W
+	 "expects one complex argument and one integer, and returns the complex value of the Lambert W function of that argument on that branch"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (let ((a9 (new-svar)))
@@ -3420,7 +3638,9 @@
    (list 'sqlite-version "returns the version of sqlite against which the program is linked" 'prim 0 "wile_sql_version")
    (list 'gc-version "returns the version of the Boehm GC against which the program is linked" 'prim 0 "wile_gc_version")
 
-   (list 'sqlite-open 'prim
+   (list 'sqlite-open
+	 "expects an optional file name and an optional mode: if no arguments are specified, an in-memory database is opened read-write; if only a file name is specified, that is taken to be the name of an existing database which is opened read-only; if the mode is also specified, it must be one of 'read-only 'read-write or 'create. if 'read-only or 'read-write, the database must already exist; if 'create, it is created if it does not already exist, and it is opened read-write"
+	 'prim
 	 0 (lambda (r)
 	     (emit-code "@@ = wile_sql_open(NULL, 1, __FILE__, __LINE__);"))
 	 1 (lambda (r a1)
@@ -3448,7 +3668,8 @@
 	      "WILE_EX(\"sqlite-open\", \"expects a filename\");"
 	      "}")))
 
-   (list 'sqlite-run "expects an sqlite port and a string, and runs the string as a command. warning! do not use this with user-supplied strings, this is a security hole"
+   (list 'sqlite-run
+	 "expects an sqlite port and a string, and runs the string as a command. warning! do not use this with user-supplied strings, this is a security hole"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
@@ -3462,38 +3683,58 @@
 	    "@@ = LVI_BOOL(false);"
 	    "#endif // WILE_USES_SQLITE")))
  
-   (list 'sqlite-statement-cleanup 'prim 1 "wile_sql_stmt_clean")
-   (list 'sqlite-statement-info 'prim 1 "wile_sql_stmt_info")
-   (list 'sqlite-statement-prepare 'prim 2 "wile_sql_stmt_prep")
-   (list 'sqlite-statement-run 'prim 1 "wile_sql_stmt_run")
-   (list 'sqlite-statement-bind 'prim -2 "wile_sql_stmt_bind")
+   (list 'sqlite-statement-cleanup
+	 "expects one sqlite-statement object and performs any necessary cleanup, rendering it no longer usable"
+	 'prim 1 "wile_sql_stmt_clean")
+
+   (list 'sqlite-statement-info
+	 "expects one sqlite-statement object and returns a list of the parameters which can be bound to values"
+	 'prim 1 "wile_sql_stmt_info")
+
+   (list 'sqlite-statement-prepare
+	 "expects an sqlite database handle and a string containing an SQL statement, and returns an sqlite-statement object"
+	 'prim 2 "wile_sql_stmt_prep")
+
+   (list 'sqlite-statement-run
+	 "expects an sqlite-statement object with all parameters bound to values, runs it, and returns the results"
+	 'prim 1 "wile_sql_stmt_run")
+
+   (list 'sqlite-statement-bind
+	 "expects an sqlite-statement object and any number of values and binds the values to the corresponding parameters"
+	 'prim -2 "wile_sql_stmt_bind")
 
    (list 'cfft-good-n?
 	 "expects one integer input, returns #t if that integer is a good size for a vector to be transformed by the vector-cfft! routine, #f otherwise. 'good size' means a number which is a power of only the prime factors (2,3,5,7,11)"
 	 'prim 1 "wile_cfft_good_n")
 
-   (list 'vector-cfft! "expects one vector of a \"good\" length (see cfft-good-n?)  containing only numeric values, and computes the Fourier transform of that sequence in-place"
+   (list 'vector-cfft!
+	 "expects one vector of a \"good\" length (see cfft-good-n?)  containing only numeric values, and computes the Fourier transform of that sequence in-place"
 	 'prim 2 "wile_cfft")
 
-   (list 'call/cc "expects one argument which is a procedure of one argument, and returns... well... it's complicated"
+   (list 'call/cc
+	 "expects one argument which is a procedure of one argument, and returns... well... it's complicated"
 	 'prim 1 "wile_call_cc")
 
-   (list 'wile-basic-build-info "expects no arguments and returns an integer which encodes various build flags"
+   (list 'wile-basic-build-info
+	 "expects no arguments and returns an integer which encodes various build flags"
 	 'prim 0
 	 (lambda (r)
 	   (emit-code "@@ = LVI_INT(wile_binfo());")))
 
-   (list 'wile-os-name "expects no arguments and returns a string which describes the OS"
+   (list 'wile-os-name
+	 "expects no arguments and returns a string which describes the OS"
 	 'prim 0
 	 (lambda (r)
 	   (emit-code "@@ = wile_os_name();")))
 
-   (list 'wile-architecture-name "expects no arguments and returns a string which describes the machine architecture"
+   (list 'wile-architecture-name
+	 "expects no arguments and returns a string which describes the machine architecture"
 	 'prim 0
 	 (lambda (r)
 	   (emit-code "@@ = wile_arch_name();")))
 
-   (list 'stack-trace-minimal "expects one optional output file port to which the stack trace is written; the default is stderr. returns nothing useful"
+   (list 'stack-trace-minimal
+	 "expects one optional output file port to which the stack trace is written; the default is stderr. returns nothing useful"
 	 'prim
 	 0 (lambda (r)
 	     (emit-code
@@ -3504,7 +3745,8 @@
 	      "wile_stack_trace_minimal(fileno((@1.vt == LV_FILE_PORT) ? @1.v.fp : stderr));"
 	      "@@ = LVI_NIL();")))
 
-   (list 'display-object-hook "expects one symbol and one procedure of two arguments and records that procedure as the display method for objects of that type. this allows displaying objects with cycles"
+   (list 'display-object-hook
+	 "expects one symbol and one procedure of two arguments and records that procedure as the display method for objects of that type. this allows displaying objects with cycles"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
@@ -3516,12 +3758,14 @@
 	    "WILE_EX(\"display-object-hook\", \"expects one symbol and one procedure of two arguments\");"
 	    "}")))
 
-   (list 'get-errno "expects no arguments and returns the current value of errno"
+   (list 'get-errno
+	 "expects no arguments and returns the current value of errno"
 	 'prim 0
 	 (lambda (r)
 	   (emit-code "@@ = LVI_INT(errno);")))
 
-   (list 'set-errno! "expects one integer argument and sets errno to that value. returns nothing useful"
+   (list 'set-errno!
+	 "expects one integer argument and sets errno to that value. returns nothing useful"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
@@ -3532,12 +3776,14 @@
 	    "WILE_EX(\"set-errno!\", \"expects one integer\");"
 	    "}")))
 
-   (list 'token-source-line "expects one argument and returns its location in source code"
+   (list 'token-source-line
+	 "expects one argument and returns its location in source code"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code "@@ = LVI_STRING(wile_decode_line_loc(wile_get_lisp_loc(&@1)));")))
 
-   (list 'make-interpreted-procedure "expects a list of arguments, an integer arity, a list of body expressions, an environment list, and a macro boolean"
+   (list 'make-interpreted-procedure
+	 "expects a list of arguments, an integer arity, a list of body expressions, an environment list, and a macro boolean"
 	 'prim 5
 	 (lambda (r a1 a2 a3 a4 a5)
 	   (emit-code
@@ -3634,6 +3880,62 @@
 	    "} else {"
 	    "WILE_EX(\"get-interpreted-procedure-macro\", \"expects an interpreted procedure\");"
 	    "}")))
+
+   (list 'get-file-eof
+	 "expects one file port and returns #t if its EOF indicator is set, #f otherwise"
+	 'prim 1
+	 (lambda (r a1)
+	   (emit-code
+	    "if (@1.vt != LV_FILE_PORT) {"
+	    "WILE_EX(\"get-file-eof\", \"expects a file port\");"
+	    "}"
+	    "@@ = LVI_BOOL(feof(@1.v.fp) != 0);")))
+
+   (list 'get-file-error
+	 "expects one file port and returns #t if its error indicator is set, #f otherwise"
+	 'prim 1
+	 (lambda (r a1)
+	   (emit-code
+	    "if (@1.vt != LV_FILE_PORT) {"
+	    "WILE_EX(\"get-file-error\", \"expects a file port\");"
+	    "}"
+	    "@@ = LVI_BOOL(ferror(@1.v.fp) != 0);")))
+
+   (list 'clear-file-error
+	 "expects one file port and clears its EOF and error indicators; returns nothing useful"
+	 'prim 1
+	 (lambda (r a1)
+	   (emit-code
+	    "if (@1.vt != LV_FILE_PORT) {"
+	    "WILE_EX(\"get-file-error\", \"expects a file port\");"
+	    "}"
+	    "clearerr(@1.v.fp);"
+	    "@@ = LVI_BOOL(true);")))
+
+   (list 'read-bytes
+	 "expects a file port and a number of bytes to read and returns a bytevector containing the bytes read"
+	 'prim 2
+	 (lambda (r a1 a2)
+	   (emit-code
+	    "if (@1.vt != LV_FILE_PORT || @2.vt != LV_INT || @2.v.iv <= 0) {"
+	    "WILE_EX(\"read-bytes\", \"expects a file port and number of bytes to read\");"
+	    "}"
+	    "@@.vt = LV_BVECTOR;"
+	    "@@.v.bvec.capa = @2.v.iv;"
+	    "@@.v.bvec.arr = LISP_ALLOC(unsigned char, @2.v.iv);"
+	    "LISP_ASSERT(@@.v.bvec.arr != NULL);"
+	    "@@.v.bvec.capa = fread(@@.v.bvec.arr, 1, @2.v.iv, @1.v.fp);")))
+
+   (list 'write-bytes
+	 "expects a file port and a bytevector to write and returns the number of bytes written"
+	 'prim 2
+	 (lambda (r a1 a2)
+	   (emit-code
+	    "if (@1.vt != LV_FILE_PORT || @2.vt != LV_BVECTOR) {"
+	    "WILE_EX(\"write-bytes\", \"expects a file port and a bytevector to write\");"
+	    "}"
+	    "@@ = LVI_INT(fwrite(@2.v.bvec.arr, 1, @2.v.bvec.capa, @1.v.fp));")))
+
    ))
 
 ;;; Add the stuff in wile-rtl2.scm to the primitives list

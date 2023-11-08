@@ -90,7 +90,8 @@ Stuff TODO
   def-struct seem to be a bit wiggy: the def-struct stuff is not getting
   expanded? might need to add a full separate macro-expansion pass
 
-* Implement more special forms: delay, force
+* Implement more special forms: delay, force, fully general mixed version
+  of case
 
   > test => syntax for (case)
 
@@ -106,11 +107,6 @@ Stuff TODO
 
   eq?
   bytevector-unpack
-  get-group-information
-  get-user-information			partially done: got 1-arg, need 0-arg
-
-  (read-bytes port nbytes)		analogout to fread
-  (write-bytes port bytevector)		analogous to fwrite
 
   matrix-lu-decompose
   matrix-lu-solve
@@ -125,8 +121,6 @@ Stuff TODO
   dump-bindings		;;; it's not clear what the bindings are
   procedure->data	;;; this is "uncompile", not clear how to do that
   macro?		;;; at runtime, don't have macros anymore
-
-* add some kind of doc-string to prim-table entries - in progress
 
 * performance... hmmm. on vector-sort! test case, skeem is ~4x *faster*
   than wile's compiled code. that's not nice! ... same seems to be true

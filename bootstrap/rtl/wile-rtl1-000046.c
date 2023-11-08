@@ -9,21 +9,20 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_string_reverse(lptr*, lptr args)
+lval wile_setnobuffering(lptr*, lptr args)
 {
-    size_t i, j;
-    char c;
-    if (args[0].vt != LV_STRING) {
-	wile_exception("string-reverse", "expects a string argument");
+    if (args[0].vt == LV_FILE_PORT ||
+	args[0].vt == LV_PIPE_PORT ||
+	args[0].vt == LV_SOCK_PORT) {
+	return LVI_BOOL(setvbuf(args[0].v.fp, NULL, _IONBF, 0) == 0);
+    } else if (args[0].vt == LV_STR_PORT) {
+	return LVI_BOOL(true);
+#ifdef WILE_USES_SQLITE
+    } else if (args[0].vt == LV_SQLITE_PORT) {
+	return LVI_BOOL(false);
+#endif // WILE_USES_SQLITE
+    } else {
+	wile_exception("set-no-buffering!", "expects one port argument");
     }
-    lval ret = LVI_STRING(args[0].v.str);
-    i = 0;
-    j = strlen(ret.v.str);
-    while (i < j) {
-	c = ret.v.str[--j];
-	ret.v.str[j] = ret.v.str[i];
-	ret.v.str[i++] = c;
-    }
-    return ret;
 }
 

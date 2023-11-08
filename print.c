@@ -20,7 +20,7 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 
-static void print_lisp_char(unsigned char cv, FILE* fp, lisp_bytevector_t* bvp);
+static void print_lisp_char(unsigned char cv, FILE* fp);
 
 static void print_int_bin(lisp_int_t n, char* buf, bool psign);
 static void print_int_oct(lisp_int_t n, char* buf, bool psign);
@@ -60,29 +60,12 @@ void err_print(const char* fname, lisp_loc_t l_whence,
     longjmp(cachalot->cenv, 1);
 }
 
-#define PUTC(c)							\
-    do {							\
-	if (fp) {						\
-	    fputc((c), fp);					\
-	}							\
-	if (bvp) {						\
-	    bv_putc((c), bvp);					\
-	}							\
-    } while (0)
-
-#define PUTS(s)							\
-    do {							\
-	if (fp) {						\
-	    fputs((s), fp);					\
-	}							\
-	if (bvp) {						\
-	    bv_puts((unsigned char*) (s), bvp);			\
-	}							\
-    } while (0)
+#define PUTC(c)		fputc((c), fp)
+#define PUTS(s)		fputs((s), fp)
 
 extern lptr display_hooks;
 
-void wile_print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp)
+void wile_print_lisp_val(lptr vp, FILE* fp)
 {
     char buf[BSIZE];
     size_t i;
@@ -90,7 +73,7 @@ void wile_print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp)
     char sep;
     bool psign;
 
-    LISP_ASSERT((fp == NULL) != (bvp == NULL));
+    LISP_ASSERT(fp != NULL);
     base = 10;
     prec = INT_MIN;
     psign = false;
@@ -140,7 +123,7 @@ void wile_print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp)
 	    break;
 
 	case LV_CHAR:
-	    print_lisp_char(vp->v.chr, fp, bvp);
+	    print_lisp_char(vp->v.chr, fp);
 	    break;
 
 	case LV_STRING:
@@ -185,7 +168,7 @@ void wile_print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp)
 	case LV_PAIR:
 	    PUTC('(');
 	recurse:
-	    wile_print_lisp_val(CAR(vp), fp, bvp);
+	    wile_print_lisp_val(CAR(vp), fp);
 	    if (CDR(vp)) {
 		PUTC(' ');
 		if (IS_PAIR(CDR(vp))) {
@@ -194,7 +177,7 @@ void wile_print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp)
 		} else {
 		    PUTC('.');
 		    PUTC(' ');
-		    wile_print_lisp_val(CDR(vp), fp, bvp);
+		    wile_print_lisp_val(CDR(vp), fp);
 		}
 	    }
 	    PUTC(')');
@@ -205,7 +188,7 @@ void wile_print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp)
 	    sep = '(';
 	    for (i = 0; i < vp->v.vec.capa; ++i) {
 		PUTC(sep);
-		wile_print_lisp_val(vp->v.vec.arr[i], fp, bvp);
+		wile_print_lisp_val(vp->v.vec.arr[i], fp);
 		sep = ' ';
 	    }
 	    if (sep == '(') {
@@ -251,7 +234,7 @@ void wile_print_lisp_val(lptr vp, FILE* fp, lisp_bytevector_t* bvp)
     }
 }
 
-static void print_lisp_char(unsigned char cv, FILE* fp, lisp_bytevector_t* bvp)
+static void print_lisp_char(unsigned char cv, FILE* fp)
 {
     char buf[32];
 
@@ -668,43 +651,5 @@ const char* typename(enum val_type vt)
 
     case VT_UNINIT:		FATAL("typename", "uninitialized lisp-val!");
     default:			FATAL("typename", "unknown type!?!");
-    }
-}
-
-void bv_putc(unsigned char c, lisp_bytevector_t* bvp)
-{
-    if (bvp->size + 1 >= bvp->capa) {
-	while (bvp->size + 1 >= bvp->capa) {
-	    bvp->capa *= 2;
-	}
-	bvp->arr = LISP_REALLOC(unsigned char, bvp->arr, bvp->capa);
-	LISP_ASSERT(bvp->arr != NULL);
-    }
-    bvp->arr[bvp->size++] = c;
-}
-
-void bv_puts(const unsigned char* s, lisp_bytevector_t* bvp)
-{
-    if (s) {
-	size_t sl = strlen((char*) s);
-	bv_putbytes(sl, s, bvp);
-    }
-}
-
-void bv_putbytes(size_t sl, const unsigned char* s, lisp_bytevector_t* bvp)
-{
-    size_t i;
-
-    if (s) {
-	if (bvp->size + sl >= bvp->capa) {
-	    while (bvp->size + sl >= bvp->capa) {
-		bvp->capa *= 2;
-	    }
-	    bvp->arr = LISP_REALLOC(unsigned char, bvp->arr, bvp->capa);
-	    LISP_ASSERT(bvp->arr != NULL);
-	}
-	for (i = 0; i < sl; ++i) {
-	    bvp->arr[bvp->size++] = *s++;
-	}
     }
 }
