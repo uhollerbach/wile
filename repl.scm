@@ -91,6 +91,6 @@
 	(write-string
 	 ";;; Welcome to wile          https://github.com/uhollerbach/wile\n"
 	 ";;; Copyright 2023 Uwe Hollerbach         available under GPLv3+\n")
-	(for-each (lambda (v) (printf ";;;   %v\n" v)) (wile-build-info))
+	(for-each (lambda (v) (printf ";;;   %v\n" v)) (wile-build-info #t))
 	(run-repl std-env))
       (run-batch std-env (car command-line-arguments))))

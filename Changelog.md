@@ -2,6 +2,20 @@ Last update: 2023-11-11 22:15 PDT
 
 # Changelog for `wile`
 
+## Current version `wile` (0 11 0)
+
+- implement first-class closures
+
+- move compile-with-output macro out of prims, make it a simple (defmacro)
+
+- try to move emit-code out of prims, but revert that; it leads to
+  instability, perhaps not of the executables themselves, but at least
+  of the MD5 sums of the executables: something changes from build to
+  build. until that's cleared up, keep this as a macro in prims.
+
+- add root-finding routines to RTL, check a couple of inputs to primitives
+  a bit more carefully
+
 ## Current version `wile` (0 10 2) 2023-11-11
 
 - add a couple of primitives: read-bytes, write-bytes, no-args version

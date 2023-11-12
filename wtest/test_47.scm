@@ -5,7 +5,7 @@
 ;;; long-double		eps 5.42e-20 nbits 64
 ;;; quad-double		eps 9.63e-35 nbits 113
 
-(let* ((cdata (wile-build-info))
+(let* ((cdata (wile-build-info #f))
        (dtype (cxr "cadadddr" cdata))
        (eps 1.0)
        (nbits 0)

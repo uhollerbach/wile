@@ -44,41 +44,43 @@ lval var_8;
 lval var_9;
 var_9 = LVI_INT(0);
 var_7 = var_9;
+lptr var_10 = new_lv(VT_UNINIT);
+var_10->v.pair.car = &(var_7); // i
 do {
-lval var_10;
+lval var_11;
 switch (TYPE_COMBO(var_7.vt,var_2[0].vt)) {
 case TYPE_COMBO(LV_INT,LV_INT):
-var_10 = LVI_BOOL(var_7.v.iv == var_2[0].v.iv);
+var_11 = LVI_BOOL(var_7.v.iv == var_2[0].v.iv);
 break;
 case TYPE_COMBO(LV_INT,LV_RAT):
-var_10 = LVI_BOOL(var_7.v.iv * var_2[0].v.irv.den == var_2[0].v.irv.num);
+var_11 = LVI_BOOL(var_7.v.iv * var_2[0].v.irv.den == var_2[0].v.irv.num);
 break;
 case TYPE_COMBO(LV_INT,LV_REAL):
-var_10 = LVI_BOOL(var_7.v.iv == var_2[0].v.rv);
+var_11 = LVI_BOOL(var_7.v.iv == var_2[0].v.rv);
 break;
 case TYPE_COMBO(LV_RAT,LV_INT):
-var_10 = LVI_BOOL(var_7.v.irv.num == var_2[0].v.iv * var_7.v.irv.den);
+var_11 = LVI_BOOL(var_7.v.irv.num == var_2[0].v.iv * var_7.v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_RAT):
-var_10 = LVI_BOOL(var_7.v.irv.num * var_2[0].v.irv.den == var_2[0].v.irv.num * var_7.v.irv.den);
+var_11 = LVI_BOOL(var_7.v.irv.num * var_2[0].v.irv.den == var_2[0].v.irv.num * var_7.v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_REAL):
-var_10 = LVI_BOOL(var_7.v.irv.num == var_2[0].v.rv * var_7.v.irv.den);
+var_11 = LVI_BOOL(var_7.v.irv.num == var_2[0].v.rv * var_7.v.irv.den);
 break;
 case TYPE_COMBO(LV_REAL,LV_INT):
-var_10 = LVI_BOOL(var_7.v.rv == var_2[0].v.iv);
+var_11 = LVI_BOOL(var_7.v.rv == var_2[0].v.iv);
 break;
 case TYPE_COMBO(LV_REAL,LV_RAT):
-var_10 = LVI_BOOL(var_7.v.rv * var_2[0].v.irv.den == var_2[0].v.irv.num);
+var_11 = LVI_BOOL(var_7.v.rv * var_2[0].v.irv.den == var_2[0].v.irv.num);
 break;
 case TYPE_COMBO(LV_REAL,LV_REAL):
-var_10 = LVI_BOOL(var_7.v.rv == var_2[0].v.rv);
+var_11 = LVI_BOOL(var_7.v.rv == var_2[0].v.rv);
 break;
 default:
 WILE_EX("==", "inputs are not real-valued numbers");
 break;
 }
-if (!LV_IS_FALSE(var_10)) {
+if (!LV_IS_FALSE(var_11)) {
 (void)
  LVI_BOOL(true);
 break;
@@ -93,74 +95,77 @@ WILE_EX("vector-set!", "got bad index value");
 var_4.v.vec.arr[var_7.v.iv] = new_lv(LV_NIL);
 *(var_4.v.vec.arr[var_7.v.iv]) = var_7;
 }
-lval var_13;
-var_13 = LVI_INT(1);
 lval var_14;
-var_14 = LVI_INT(var_7.v.iv + var_13.v.iv);
-var_8 = var_14;
+var_14 = LVI_INT(1);
+lval var_15;
+var_15 = LVI_INT(var_7.v.iv + var_14.v.iv);
+var_8 = var_15;
 var_7 = var_8;
 } while (1);
-lval var_16;
+*var_10 = var_7;
 lval var_17;
 lval var_18;
-var_18 = LVI_INT(1);
 lval var_19;
-var_19 = LVI_INT(var_2[0].v.iv - var_18.v.iv);
-var_16 = var_19;
-lval var_15;
-do {
+var_19 = LVI_INT(1);
 lval var_20;
-switch (var_16.vt) {
+var_20 = LVI_INT(var_2[0].v.iv - var_19.v.iv);
+var_17 = var_20;
+lval var_16;
+lptr var_21 = new_lv(VT_UNINIT);
+var_21->v.pair.car = &(var_17); // i
+do {
+lval var_22;
+switch (var_17.vt) {
 case LV_REAL:
-var_20 = LVI_BOOL(var_16.v.rv == 0.0);
+var_22 = LVI_BOOL(var_17.v.rv == 0.0);
 break;
 case LV_RAT:
-var_20 = LVI_BOOL((var_16.v.irv.num == 0 && var_16.v.irv.den != 0));
+var_22 = LVI_BOOL((var_17.v.irv.num == 0 && var_17.v.irv.den != 0));
 break;
 case LV_INT:
-var_20 = LVI_BOOL(var_16.v.iv == 0);
+var_22 = LVI_BOOL(var_17.v.iv == 0);
 break;
 case LV_CMPLX:
-var_20 = LVI_BOOL(CREAL(var_16.v.cv) == 0.0 && CIMAG(var_16.v.cv) == 0.0);
+var_22 = LVI_BOOL(CREAL(var_17.v.cv) == 0.0 && CIMAG(var_17.v.cv) == 0.0);
 break;
 default:
 WILE_EX("zero?", "expects a real-valued number");
 }
-if (!LV_IS_FALSE(var_20)) {
-var_15 = var_4;
+if (!LV_IS_FALSE(var_22)) {
+var_16 = var_4;
 break;
 }
-lval var_21;
-var_21 = LVI_INT(0);
 lval var_23;
-if (var_21.vt == LV_INT) {
-var_23 = LVI_REAL((lisp_real_t) var_21.v.iv);
-} else if (var_21.vt == LV_RAT) {
-var_23 = LVI_REAL(LV_RAT2REAL(var_21));
-} else if (var_21.vt == LV_REAL) {
-var_23 = var_21;
+var_23 = LVI_INT(0);
+lval var_25;
+if (var_23.vt == LV_INT) {
+var_25 = LVI_REAL((lisp_real_t) var_23.v.iv);
+} else if (var_23.vt == LV_RAT) {
+var_25 = LVI_REAL(LV_RAT2REAL(var_23));
+} else if (var_23.vt == LV_REAL) {
+var_25 = var_23;
+} else {
+WILE_EX("random-uniform", "expects a real-valued input");
+}
+lval var_26;
+if (var_17.vt == LV_INT) {
+var_26 = LVI_REAL((lisp_real_t) var_17.v.iv);
+} else if (var_17.vt == LV_RAT) {
+var_26 = LVI_REAL(LV_RAT2REAL(var_17));
+} else if (var_17.vt == LV_REAL) {
+var_26 = var_17;
 } else {
 WILE_EX("random-uniform", "expects a real-valued input");
 }
 lval var_24;
-if (var_16.vt == LV_INT) {
-var_24 = LVI_REAL((lisp_real_t) var_16.v.iv);
-} else if (var_16.vt == LV_RAT) {
-var_24 = LVI_REAL(LV_RAT2REAL(var_16));
-} else if (var_16.vt == LV_REAL) {
-var_24 = var_16;
-} else {
-WILE_EX("random-uniform", "expects a real-valued input");
-}
-lval var_22;
-var_22 = LVI_REAL(var_23.v.rv + (var_24.v.rv - var_23.v.rv)*drand48());
-lval var_25;
-if (var_22.vt == LV_INT) {
-var_25 = var_22;
-} else if (var_22.vt == LV_RAT) {
-var_25 = LVI_INT(var_22.v.irv.num/var_22.v.irv.den);
-} else if (var_22.vt == LV_REAL) {
-var_25 = LVI_INT((var_22.v.rv >= 0.0) ? FLOOR(var_22.v.rv) : CEIL(var_22.v.rv));
+var_24 = LVI_REAL(var_25.v.rv + (var_26.v.rv - var_25.v.rv)*drand48());
+lval var_27;
+if (var_24.vt == LV_INT) {
+var_27 = var_24;
+} else if (var_24.vt == LV_RAT) {
+var_27 = LVI_INT(var_24.v.irv.num/var_24.v.irv.den);
+} else if (var_24.vt == LV_REAL) {
+var_27 = LVI_INT((var_24.v.rv >= 0.0) ? FLOOR(var_24.v.rv) : CEIL(var_24.v.rv));
 } else {
 WILE_EX("integer", "expects one real-valued argument");
 }
@@ -168,20 +173,21 @@ WILE_EX("integer", "expects one real-valued argument");
 if (var_4.vt != LV_VECTOR) {
 WILE_EX("vector-swap!", "input is not a vector");
 }
-if (var_16.vt != LV_INT || var_16.v.iv < 0 || (size_t) var_16.v.iv >= var_4.v.vec.capa || var_25.vt != LV_INT || var_25.v.iv < 0 || (size_t) var_25.v.iv >= var_4.v.vec.capa) {
+if (var_17.vt != LV_INT || var_17.v.iv < 0 || (size_t) var_17.v.iv >= var_4.v.vec.capa || var_27.vt != LV_INT || var_27.v.iv < 0 || (size_t) var_27.v.iv >= var_4.v.vec.capa) {
 WILE_EX("vector-swap!", "got bad index value");
 }
-lptr tmp = var_4.v.vec.arr[var_16.v.iv];
-var_4.v.vec.arr[var_16.v.iv] = var_4.v.vec.arr[var_25.v.iv];
-var_4.v.vec.arr[var_25.v.iv] = tmp;
+lptr tmp = var_4.v.vec.arr[var_17.v.iv];
+var_4.v.vec.arr[var_17.v.iv] = var_4.v.vec.arr[var_27.v.iv];
+var_4.v.vec.arr[var_27.v.iv] = tmp;
 }
-lval var_27;
-var_27 = LVI_INT(1);
-lval var_28;
-var_28 = LVI_INT(var_16.v.iv - var_27.v.iv);
-var_17 = var_28;
-var_16 = var_17;
+lval var_29;
+var_29 = LVI_INT(1);
+lval var_30;
+var_30 = LVI_INT(var_17.v.iv - var_29.v.iv);
+var_18 = var_30;
+var_17 = var_18;
 } while (1);
-return var_15;
+*var_21 = var_17;
+return var_16;
 }
 // end of function wile_random_permutation

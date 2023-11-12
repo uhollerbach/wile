@@ -10,6 +10,8 @@ extern lisp_escape_t cachalot;
 
 
 #include <inttypes.h>
+#include <sys/time.h>
+#include <sys/resource.h>
 
 lisp_escape_t cachalot;
 
@@ -33,6 +35,7 @@ int main(int argc, char** argv)
 {
     int ret;
     lptr val;
+    struct rlimit lims;
     struct lisp_escape_info tcatch;
     void* pl;
 
@@ -55,6 +58,11 @@ int main(int argc, char** argv)
     }
     wile_cont_stack_base = pl;
 
+    getrlimit(RLIMIT_STACK, &lims);
+    if (lims.rlim_cur < 64*1024*1024) {
+	lims.rlim_cur = 64*1024*1024;
+	setrlimit(RLIMIT_STACK, &lims);
+    }
     srand48((time(NULL)) ^ (getpid() << 4));
 
     tcatch.errval = NULL;

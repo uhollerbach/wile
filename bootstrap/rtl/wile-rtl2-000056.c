@@ -382,33 +382,42 @@ var_85[0] = var_84;
 var_84 = wile_write_string(NULL, var_85);
 }
 MK_CLOS(var_88,3);
-P_CLOS(var_88,2) = &(var_50);
-P_CLOS(var_88,1) = &(var_2[1]);
-P_CLOS(var_88,0) = &(var_2[2]);
-lval var_103;
-var_103 = LVI_NIL();
-{
-lval var_104[8];
-var_104[0] = LVI_PROC(fn_87,var_88,1);
-var_104[1] = var_39;
-var_104[2] = var_103;
-var_103 = wile_map(NULL, var_104);
-}
-lval var_105;
-var_105 = LVI_STRING("\nCOMMIT;\n");
+lptr var_103 = new_lv(VT_UNINIT);
+var_103->v.pair.car = &(var_50);
+P_CLOS(var_88,2) = var_103;
+lptr var_104 = new_lv(VT_UNINIT);
+var_104->v.pair.car = &(var_2[1]);
+P_CLOS(var_88,1) = var_104;
+lptr var_105 = new_lv(VT_UNINIT);
+var_105->v.pair.car = &(var_2[2]);
+P_CLOS(var_88,0) = var_105;
 lval var_106;
-{
-lval var_108[2];
-var_108[0] = var_2[2];
-var_108[1] = var_105;
-var_106 = wile_gen_list(2, var_108, NULL);
-}
+var_106 = LVI_NIL();
 {
 lval var_107[8];
-var_107[0] = var_106;
-var_106 = wile_write_string(NULL, var_107);
+var_107[0] = LVI_PROC(fn_87,var_88,1);
+var_107[1] = var_39;
+var_107[2] = var_106;
+var_106 = wile_map(NULL, var_107);
 }
-var_4 = var_106;
+lval var_108;
+var_108 = LVI_STRING("\nCOMMIT;\n");
+lval var_109;
+{
+lval var_111[2];
+var_111[0] = var_2[2];
+var_111[1] = var_108;
+var_109 = wile_gen_list(2, var_111, NULL);
+}
+{
+lval var_110[8];
+var_110[0] = var_109;
+var_109 = wile_write_string(NULL, var_110);
+}
+*var_103 = var_50;
+*var_104 = var_2[1];
+*var_105 = var_2[2];
+var_4 = var_109;
 }
 return var_4;
 }

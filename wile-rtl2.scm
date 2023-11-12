@@ -1518,25 +1518,39 @@
 
 ;;; --8><----8><----8><--
 
+;;; TODO: this is nice and all, but it destroys the ability to compare files;
+;;; they will all have different embedded timestamps, and that will kill MD5
+;;; (defmacro (compile-time)
+;;;   (let ((now (list-head (UTCtime) 6)))
+;;;     `(list ,@now)))
+
+(load-library "wile-version.scm")
+
 (define-primitive "wile_build_info"
-  "expects no arguments and returns a list of various build configuration items"
-  (wile-build-info)
-  (let* ((binfo (wile-basic-build-info)))
-    `((operating-system ,(wile-os-name))
-      (machine-architecture ,(wile-architecture-name))
-      (wile-version (0 10 2))
-      (float-type ,(case (bits-shift (bits-and binfo #b0011000) -3)
-		     ((0) 'double)
-		     ((1) 'long-double)
-		     ((2) 'quad-double)
-		     (else 'unknown-float-type!?!)))
-      (integer-type ,(case (bits-shift (bits-and binfo #b1100000) -5)
-		       ((0) 'long-int)
-		       ((1) 'int-128)
-		       ((2) 'semi-big-int-untested)
-		       (else 'unknown-int-type!?!)))
-      (garbage-collection-version ,(gc-version))
-      (sqlite-version ,(sqlite-version)))))
+  "expects a flag and returns a list of various build configuration items"
+  (wile-build-info add-ctime?)
+  (let* ((binfo (wile-basic-build-info))
+	 (info1 `((operating-system ,(wile-os-name))
+		  (machine-architecture ,(wile-architecture-name))
+		  (wile-version (,wile-version-major
+				 ,wile-version-minor
+				 ,wile-version-patch))
+		  (float-type ,(case (bits-shift (bits-and binfo #b0011000) -3)
+				 ((0) 'double)
+				 ((1) 'long-double)
+				 ((2) 'quad-double)
+				 (else 'unknown-float-type!?!)))
+		  (integer-type ,(case (bits-shift (bits-and binfo #b1100000) -5)
+				   ((0) 'long-int)
+				   ((1) 'int-128)
+				   ((2) 'semi-big-int-untested)
+				   (else 'unknown-int-type!?!)))
+		  (garbage-collection-version ,(gc-version))
+		  (sqlite-version ,(sqlite-version)))))
+    info1))
+;;;    (if add-ctime?
+;;;	(list-append info1 (list `(wrtl-compiled-on ,(compile-time))))
+;;;	info1)))
 
 ;;; --8><----8><----8><--
 
@@ -1594,6 +1608,111 @@
 			(list-reverse acc)))))
     (close-port tport)
     (display-stack-trace data1 port)))
+
+;;; --8><----8><----8><--
+
+;;; A bit of numerical  analysis stuff: root-finding
+
+(define (bracket-error)
+  (raise "un-bracketed root or minimum"))
+
+(define (budget-error val)
+  (raise (list "function evaluation budget exhausted" val)))
+
+(define (exact v)
+  (list v 0))
+
+(define (approx v v1 v2)
+  (list v (abs (- v1 v2))))
+
+(define-primitive "wile_root_bracket"
+  "expects a function of one real variable, a real-valued starting position, and a real-valued scale factor; returns a bracket on a root of the function"
+  (root-bracket f x scale)
+  (let iter ((s scale))
+    (let* ((x1 (- x s))
+	   (x2 (+ x s))
+	   (f1 (f x1))
+	   (f2 (f x2)))
+      (if (/= (sign f1) (sign f2))
+	  (list x1 x2)
+	  (iter (* 1.414 s))))))
+
+;;; Root finder using bisection method
+
+(define-primitive "wile_root_bisect"
+  "expects an error-testing function, the function whose root is to be found, and two real values which bracket a root; returns a 2-list containing a root and the function value at that root"
+  (root-bisect et fn a0 b0)
+  (letrec ((fa (fn a0))
+	   (fb (fn b0))
+	   (budget 128)
+	   (iter (lambda (ne a fa b fb)
+		   (let* ((c (* 0.5 (+ a b)))
+			  (fc (fn c))
+			  (rv (approx c a b))
+			  (nn (- ne 1)))
+		     (cond ((zero? ne) (budget-error rv))
+			   ((zero? fc) (exact c))
+			   ((et a b) rv)
+			   ((negative? fc) (iter nn c fc b fb))
+			   (else (iter nn a fa c fc)))))))
+    (cond ((zero? fa) (exact a0))
+	  ((zero? fb) (exact b0))
+	  ((= (sign fa) (sign fb)) (bracket-error))
+	  ((negative? fa) (iter budget a0 fa b0 fb))
+	  (else (iter budget b0 fb a0 fa)))))
+
+;;; Root finder using false-position method:
+;;; identical to root-bisect except for calculation of "c"
+
+;;; TODO: something wrong here: interval is not getting smaller
+
+;;; (define (root-false-position et fn a0 b0)
+;;;   (letrec ((fa (fn a0))
+;;; 	   (fb (fn b0))
+;;; 	   (budget 128)
+;;; 	   (iter (lambda (ne a fa b fb)
+;;; 		   (let* ((c (/ (- (* fa b) (* fb a)) (- fa fb)))
+;;; 			  (fc (fn c))
+;;; 			  (rv (approx c a b))
+;;; 			  (nn (- ne 1)))
+;;; 		     (cond ((zero? ne) (budget-error rv))
+;;; 			   ((zero? fc) (exact c))
+;;; 			   ((et a b) rv)
+;;; 			   ((negative? fc) (iter nn c fc b fb))
+;;; 			   (else (iter nn a fa c fc)))))))
+;;;     (cond ((zero? fa) (exact a0))
+;;; 	  ((zero? fb) (exact b0))
+;;; 	  ((= (sign fa) (sign fb)) (bracket-error))
+;;; 	  ((negative? fa) (iter budget a0 fa b0 fb))
+;;; 	  (else (iter budget b0 fb a0 fa)))))
+
+;;; Root finder using Ridders' method
+
+(define-primitive "wile_root_ridders"
+  "expects an error-testing function, the function whose root is to be found, and two real values which bracket a root; returns a 2-list containing a root and the function value at that root"
+  (root-ridders et fn a0 b0)
+  (letrec ((fa (fn a0))
+	   (fb (fn b0))
+	   (budget 128)
+	   (iter (lambda (ne a fa b fb)
+		   (let* ((c (* 0.5 (+ a b)))
+			  (fc (fn c))
+			  (d (+ c (/ (* (- c a) fc (sign (- fa fb)))
+				     (sqrt (- (* fc fc) (* fa fb))))))
+			  (fd (fn d))
+			  (rv (approx d c d))
+			  (nn (- ne 1)))
+		     (cond ((zero? ne) (budget-error rv))
+			   ((zero? fc) (exact c))
+			   ((zero? fd) (exact d))
+			   ((et a b) rv)
+			   ((/= (sign fd) (sign fc)) (iter nn c fc d fd))
+			   ((/= (sign fd) (sign fa)) (iter nn a fa d fd))
+			   (else (iter nn d fd b fb)))))))
+    (cond ((zero? fa) (exact a0))
+	  ((zero? fb) (exact b0))
+	  ((= (sign fa) (sign fb)) (bracket-error))
+	  (else (iter budget a0 fa b0 fb)))))
 
 ;;; --8><----8><----8><--
 

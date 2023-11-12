@@ -75,71 +75,74 @@ lval var_15;
 lval var_16;
 var_15 = var_5;
 lval var_14;
-do {
-lval var_17;
-var_17 = LVI_BOOL(false);
+lptr var_17 = new_lv(VT_UNINIT);
+var_17->v.pair.car = &(var_15); // j
 do {
 lval var_18;
+var_18 = LVI_BOOL(false);
+do {
+lval var_19;
 switch (var_15.vt) {
 case LV_REAL:
-var_18 = LVI_BOOL(var_15.v.rv == 0.0);
+var_19 = LVI_BOOL(var_15.v.rv == 0.0);
 break;
 case LV_RAT:
-var_18 = LVI_BOOL((var_15.v.irv.num == 0 && var_15.v.irv.den != 0));
+var_19 = LVI_BOOL((var_15.v.irv.num == 0 && var_15.v.irv.den != 0));
 break;
 case LV_INT:
-var_18 = LVI_BOOL(var_15.v.iv == 0);
+var_19 = LVI_BOOL(var_15.v.iv == 0);
 break;
 case LV_CMPLX:
-var_18 = LVI_BOOL(CREAL(var_15.v.cv) == 0.0 && CIMAG(var_15.v.cv) == 0.0);
+var_19 = LVI_BOOL(CREAL(var_15.v.cv) == 0.0 && CIMAG(var_15.v.cv) == 0.0);
 break;
 default:
 WILE_EX("zero?", "expects a real-valued number");
 }
-var_17 = var_18;
-if (!LV_IS_FALSE(var_17)) { break; }
-lval var_19;
-var_19 = LVI_BOOL(var_4.vt == LV_NIL);
-var_17 = var_19;
-if (!LV_IS_FALSE(var_17)) { break; }
-} while (0);
-if (!LV_IS_FALSE(var_17)) {
+var_18 = var_19;
+if (!LV_IS_FALSE(var_18)) { break; }
 lval var_20;
+var_20 = LVI_BOOL(var_4.vt == LV_NIL);
+var_18 = var_20;
+if (!LV_IS_FALSE(var_18)) { break; }
+} while (0);
+if (!LV_IS_FALSE(var_18)) {
 lval var_21;
-var_21 = LVI_BOOL(var_4.vt == LV_NIL);
-if (LV_IS_FALSE(var_21)) {
 lval var_22;
+var_22 = LVI_BOOL(var_4.vt == LV_NIL);
+if (LV_IS_FALSE(var_22)) {
+lval var_23;
 if (var_4.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_22 = (var_4.v.pair.car ? *(var_4.v.pair.car) : LVI_NIL());
-var_20 = var_22;
+var_23 = (var_4.v.pair.car ? *(var_4.v.pair.car) : LVI_NIL());
+var_21 = var_23;
 } else {
-lval var_23;
-var_23 = LVI_NIL();
-var_20 = var_23;
+lval var_24;
+var_24 = LVI_NIL();
+var_21 = var_24;
 }
-var_14 = var_20;
+var_14 = var_21;
 break;
 }
-lval var_24;
+lval var_25;
 if (var_4.vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_24 = (var_4.v.pair.cdr ? *(var_4.v.pair.cdr) : LVI_NIL());
-var_4 = var_24;
-lval var_25;
-var_25 = LVI_INT(1);
+var_25 = (var_4.v.pair.cdr ? *(var_4.v.pair.cdr) : LVI_NIL());
+var_4 = var_25;
 lval var_26;
-var_26 = LVI_INT(var_15.v.iv - var_25.v.iv);
-var_16 = var_26;
+var_26 = LVI_INT(1);
+lval var_27;
+var_27 = LVI_INT(var_15.v.iv - var_26.v.iv);
+var_16 = var_27;
 var_15 = var_16;
 } while (1);
+*var_17 = var_15;
 var_12 = var_14;
 } else {
-lval var_27;
-var_27 = LVI_NIL();
-var_12 = var_27;
+lval var_28;
+var_28 = LVI_NIL();
+var_12 = var_28;
 }
 return var_12;
 }

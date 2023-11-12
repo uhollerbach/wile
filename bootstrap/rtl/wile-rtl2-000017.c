@@ -56,49 +56,53 @@ lval var_11;
 lval var_13;
 var_11 = var_2[0];
 lval var_9;
+lptr var_15 = new_lv(VT_UNINIT);
+var_15->v.pair.car = &(var_10); // i
+lptr var_16 = new_lv(VT_UNINIT);
+var_16->v.pair.car = &(var_11); // lp
 do {
-lval var_15;
+lval var_17;
 switch (TYPE_COMBO(var_10.vt,var_4.vt)) {
 case TYPE_COMBO(LV_INT,LV_INT):
-var_15 = LVI_BOOL(var_10.v.iv == var_4.v.iv);
+var_17 = LVI_BOOL(var_10.v.iv == var_4.v.iv);
 break;
 case TYPE_COMBO(LV_INT,LV_RAT):
-var_15 = LVI_BOOL(var_10.v.iv * var_4.v.irv.den == var_4.v.irv.num);
+var_17 = LVI_BOOL(var_10.v.iv * var_4.v.irv.den == var_4.v.irv.num);
 break;
 case TYPE_COMBO(LV_INT,LV_REAL):
-var_15 = LVI_BOOL(var_10.v.iv == var_4.v.rv);
+var_17 = LVI_BOOL(var_10.v.iv == var_4.v.rv);
 break;
 case TYPE_COMBO(LV_RAT,LV_INT):
-var_15 = LVI_BOOL(var_10.v.irv.num == var_4.v.iv * var_10.v.irv.den);
+var_17 = LVI_BOOL(var_10.v.irv.num == var_4.v.iv * var_10.v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_RAT):
-var_15 = LVI_BOOL(var_10.v.irv.num * var_4.v.irv.den == var_4.v.irv.num * var_10.v.irv.den);
+var_17 = LVI_BOOL(var_10.v.irv.num * var_4.v.irv.den == var_4.v.irv.num * var_10.v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_REAL):
-var_15 = LVI_BOOL(var_10.v.irv.num == var_4.v.rv * var_10.v.irv.den);
+var_17 = LVI_BOOL(var_10.v.irv.num == var_4.v.rv * var_10.v.irv.den);
 break;
 case TYPE_COMBO(LV_REAL,LV_INT):
-var_15 = LVI_BOOL(var_10.v.rv == var_4.v.iv);
+var_17 = LVI_BOOL(var_10.v.rv == var_4.v.iv);
 break;
 case TYPE_COMBO(LV_REAL,LV_RAT):
-var_15 = LVI_BOOL(var_10.v.rv * var_4.v.irv.den == var_4.v.irv.num);
+var_17 = LVI_BOOL(var_10.v.rv * var_4.v.irv.den == var_4.v.irv.num);
 break;
 case TYPE_COMBO(LV_REAL,LV_REAL):
-var_15 = LVI_BOOL(var_10.v.rv == var_4.v.rv);
+var_17 = LVI_BOOL(var_10.v.rv == var_4.v.rv);
 break;
 default:
 WILE_EX("==", "inputs are not real-valued numbers");
 break;
 }
-if (!LV_IS_FALSE(var_15)) {
+if (!LV_IS_FALSE(var_17)) {
 var_9 = var_7;
 break;
 }
-lval var_16;
+lval var_18;
 if (var_11.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_16 = (var_11.v.pair.car ? *(var_11.v.pair.car) : LVI_NIL());
+var_18 = (var_11.v.pair.car ? *(var_11.v.pair.car) : LVI_NIL());
 {
 if (var_7.vt != LV_VECTOR) {
 WILE_EX("vector-set!", "input is not a vector");
@@ -107,22 +111,24 @@ if (var_10.vt != LV_INT || var_10.v.iv < 0 || (size_t) var_10.v.iv >= var_7.v.ve
 WILE_EX("vector-set!", "got bad index value");
 }
 var_7.v.vec.arr[var_10.v.iv] = new_lv(LV_NIL);
-*(var_7.v.vec.arr[var_10.v.iv]) = var_16;
+*(var_7.v.vec.arr[var_10.v.iv]) = var_18;
 }
-lval var_18;
-var_18 = LVI_INT(1);
-lval var_19;
-var_19 = LVI_INT(var_10.v.iv + var_18.v.iv);
-var_12 = var_19;
 lval var_20;
+var_20 = LVI_INT(1);
+lval var_21;
+var_21 = LVI_INT(var_10.v.iv + var_20.v.iv);
+var_12 = var_21;
+lval var_22;
 if (var_11.vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_20 = (var_11.v.pair.cdr ? *(var_11.v.pair.cdr) : LVI_NIL());
-var_13 = var_20;
+var_22 = (var_11.v.pair.cdr ? *(var_11.v.pair.cdr) : LVI_NIL());
+var_13 = var_22;
 var_10 = var_12;
 var_11 = var_13;
 } while (1);
+*var_15 = var_10;
+*var_16 = var_11;
 return var_9;
 }
 // end of function wile_list2vector

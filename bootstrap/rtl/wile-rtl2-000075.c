@@ -19,8 +19,8 @@ extern lval var_flt_precision;
 #include "wile-rtl2.h"
 static lval fn_12(lptr*, lptr);
 static lval fn_16(lptr*, lptr);
-static lval fn_60(lptr*, lptr);
-static lval fn_114(lptr*, lptr);
+static lval fn_61(lptr*, lptr);
+static lval fn_117(lptr*, lptr);
 
 // definitions
 
@@ -137,63 +137,63 @@ return var_20;
 }
 // end of lambda fn_16
 
-// @@@ string-join-by @@@ bld-rtl-dir/wile-rtl2-000075.scm:31 @@@ fn_44 @@@
-static lval fn_44(lptr* var_45, lptr var_46)
+// @@@ string-join-by @@@ bld-rtl-dir/wile-rtl2-000075.scm:31 @@@ fn_45 @@@
+static lval fn_45(lptr* var_46, lptr var_47)
 {
-lval var_48;
-var_48 = var_46[1];
+lval var_49;
+var_49 = var_47[1];
 {
-lval var_49[8];
-var_49[0] = var_46[0];
-var_49[1] = var_48;
-var_48 = wile_string_join_by(NULL, var_49);
+lval var_50[8];
+var_50[0] = var_47[0];
+var_50[1] = var_49;
+var_49 = wile_string_join_by(NULL, var_50);
 }
-return var_48;
+return var_49;
 }
-// end of prim fn_44
+// end of prim fn_45
 
-// @@@ lambda () @@@ bld-rtl-dir/wile-rtl2-000075.scm:36 @@@ fn_60 @@@
-static lval fn_60(lptr* var_61, lptr var_62)
+// @@@ lambda () @@@ bld-rtl-dir/wile-rtl2-000075.scm:36 @@@ fn_61 @@@
+static lval fn_61(lptr* var_62, lptr var_63)
 {
-lbl_63:;
-lval var_64;
+lbl_64:;
 lval var_65;
+lval var_66;
 {
-lval var_66[8];
-var_66[0] = V_CLOS(var_61,0);
-var_65 = wile_read_line(NULL, var_66);
+lval var_67[8];
+var_67[0] = V_CLOS(var_62,0);
+var_66 = wile_read_line(NULL, var_67);
 }
-var_64 = var_65;
-lval var_67;
-if (LV_IS_FALSE(var_64)) {
+var_65 = var_66;
 lval var_68;
+if (LV_IS_FALSE(var_65)) {
+lval var_69;
 {
-lval var_69[8];
-var_69[0] = V_CLOS(var_61,0);
-var_68 = wile_closeport(NULL, var_69);
+lval var_70[8];
+var_70[0] = V_CLOS(var_62,0);
+var_69 = wile_closeport(NULL, var_70);
 }
-var_67 = var_68;
+var_68 = var_69;
 } else {
-lval var_70;
-var_70 = LVI_CHAR(10);
 lval var_71;
+var_71 = LVI_CHAR(10);
+lval var_72;
 {
-lval var_73[3];
-var_73[0] = V_CLOS(var_61,1);
-var_73[1] = var_64;
-var_73[2] = var_70;
-var_71 = wile_gen_list(3, var_73, NULL);
+lval var_74[3];
+var_74[0] = V_CLOS(var_62,1);
+var_74[1] = var_65;
+var_74[2] = var_71;
+var_72 = wile_gen_list(3, var_74, NULL);
 }
 {
-lval var_72[8];
-var_72[0] = var_71;
-var_71 = wile_write_string(NULL, var_72);
+lval var_73[8];
+var_73[0] = var_72;
+var_72 = wile_write_string(NULL, var_73);
 }
-goto lbl_63;	// selfie
+goto lbl_64;	// selfie
 }
-return var_67;
+return var_68;
 }
-// end of lambda fn_60
+// end of lambda fn_61
 
 // @@@ (display-stack-trace trace-data port) @@@ bld-rtl-dir/wile-rtl2-000075.scm:13 @@@ wile_display_stack_trace @@@
 lval wile_display_stack_trace(lptr* var_1, lptr var_2)
@@ -216,173 +216,182 @@ var_11 = LVI_BOOL(false);
 var_10 = var_11;
 MK_CLOS(var_13,0);
 MK_CLOS(var_17,1);
-P_CLOS(var_17,0) = &(var_4);
-lval var_40;
-var_40 = LVI_NIL();
+lptr var_40 = new_lv(VT_UNINIT);
+var_40->v.pair.car = &(var_4);
+P_CLOS(var_17,0) = var_40;
+lval var_41;
+var_41 = LVI_NIL();
 {
-lval var_41[8];
-var_41[0] = LVI_PROC(fn_16,var_17,1);
-var_41[1] = var_2[0];
-var_41[2] = var_40;
-var_40 = wile_map(NULL, var_41);
+lval var_42[8];
+var_42[0] = LVI_PROC(fn_16,var_17,1);
+var_42[1] = var_2[0];
+var_42[2] = var_41;
+var_41 = wile_map(NULL, var_42);
 }
-lval var_42;
+lval var_43;
 {
-lval var_43[8];
-var_43[0] = LVI_PROC(fn_12,var_13,1);
-var_43[1] = var_40;
-var_42 = wile_list_filter(NULL, var_43);
+lval var_44[8];
+var_44[0] = LVI_PROC(fn_12,var_13,1);
+var_44[1] = var_41;
+var_43 = wile_list_filter(NULL, var_44);
 }
-var_6 = var_42;
-lval var_50;
-var_50 = LVI_STRING(" ");
+var_6 = var_43;
 lval var_51;
-var_51 = LVI_STRING("addr2line -f -p -e");
+var_51 = LVI_STRING(" ");
 lval var_52;
-var_52 = LVI_STRING("-a");
+var_52 = LVI_STRING("addr2line -f -p -e");
 lval var_53;
+var_53 = LVI_STRING("-a");
+lval var_54;
 {
-lval var_54[6];
-var_54[0] = LVI_PROC(fn_44,NULL,-2);
-var_54[1] = var_50;
-var_54[2] = var_51;
-var_54[3] = var_4;
-var_54[4] = var_52;
-var_54[5] = var_6;
-var_53 = wile_gen_list(6, var_54, NULL);
+lval var_55[6];
+var_55[0] = LVI_PROC(fn_45,NULL,-2);
+var_55[1] = var_51;
+var_55[2] = var_52;
+var_55[3] = var_4;
+var_55[4] = var_53;
+var_55[5] = var_6;
+var_54 = wile_gen_list(6, var_55, NULL);
 }
-var_53 = wile_apply_function(&(var_53), __FILE__, __LINE__);
-var_8 = var_53;
-lval var_55;
-var_55 = wile_run_pipe_command(var_8, "r", __FILE__, __LINE__);
-var_10 = var_55;
+var_54 = wile_apply_function(&(var_54), __FILE__, __LINE__);
+var_8 = var_54;
 lval var_56;
-var_56 = LVI_STRING("wile stack trace begin\n");
+var_56 = wile_run_pipe_command(var_8, "r", __FILE__, __LINE__);
+var_10 = var_56;
 lval var_57;
+var_57 = LVI_STRING("wile stack trace begin\n");
+lval var_58;
 {
-lval var_59[2];
-var_59[0] = var_2[1];
-var_59[1] = var_56;
-var_57 = wile_gen_list(2, var_59, NULL);
+lval var_60[2];
+var_60[0] = var_2[1];
+var_60[1] = var_57;
+var_58 = wile_gen_list(2, var_60, NULL);
 }
 {
-lval var_58[8];
-var_58[0] = var_57;
-var_57 = wile_write_string(NULL, var_58);
+lval var_59[8];
+var_59[0] = var_58;
+var_58 = wile_write_string(NULL, var_59);
 }
-MK_CLOS(var_61,2);
-P_CLOS(var_61,1) = &(var_2[1]);
-P_CLOS(var_61,0) = &(var_10);
-lval var_78[8];
+MK_CLOS(var_62,2);
+lptr var_78 = new_lv(VT_UNINIT);
+var_78->v.pair.car = &(var_2[1]);
+P_CLOS(var_62,1) = var_78;
+lptr var_79 = new_lv(VT_UNINIT);
+var_79->v.pair.car = &(var_10);
+P_CLOS(var_62,0) = var_79;
+lval var_81[8];
 (void)
- fn_60(var_61, var_78);
-lval var_80;
-var_80 = LVI_STRING("wile stack trace end\n");
-lval var_81;
+ fn_61(var_62, var_81);
+*var_79 = var_10;
+*var_78 = var_2[1];
+lval var_83;
+var_83 = LVI_STRING("wile stack trace end\n");
+lval var_84;
 {
-lval var_83[2];
-var_83[0] = var_2[1];
-var_83[1] = var_80;
-var_81 = wile_gen_list(2, var_83, NULL);
+lval var_86[2];
+var_86[0] = var_2[1];
+var_86[1] = var_83;
+var_84 = wile_gen_list(2, var_86, NULL);
 }
 {
-lval var_82[8];
-var_82[0] = var_81;
-var_81 = wile_write_string(NULL, var_82);
+lval var_85[8];
+var_85[0] = var_84;
+var_84 = wile_write_string(NULL, var_85);
 }
-return var_81;
+*var_40 = var_4;
+return var_84;
 }
 // end of function wile_display_stack_trace
 
-// @@@ lambda (acc) @@@ bld-rtl-dir/wile-rtl2-000075.scm:58 @@@ fn_114 @@@
-static lval fn_114(lptr* var_115, lptr var_116)
+// @@@ lambda (acc) @@@ bld-rtl-dir/wile-rtl2-000075.scm:58 @@@ fn_117 @@@
+static lval fn_117(lptr* var_118, lptr var_119)
 {
-lbl_117:;
-lval var_118;
-lval var_119;
-{
-lval var_120[8];
-var_120[0] = V_CLOS(var_115,0);
-var_119 = wile_read_line(NULL, var_120);
-}
-var_118 = var_119;
+lbl_120:;
 lval var_121;
-if (LV_IS_FALSE(var_118)) {
 lval var_122;
 {
 lval var_123[8];
-var_123[0] = var_116[0];
-var_122 = wile_list_reverse(NULL, var_123);
+var_123[0] = V_CLOS(var_118,0);
+var_122 = wile_read_line(NULL, var_123);
 }
 var_121 = var_122;
-} else {
 lval var_124;
+if (LV_IS_FALSE(var_121)) {
+lval var_125;
+{
+lval var_126[8];
+var_126[0] = var_119[0];
+var_125 = wile_list_reverse(NULL, var_126);
+}
+var_124 = var_125;
+} else {
+lval var_127;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_118.vt != LV_NIL) {
+if (var_121.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_118;
+*p1 = var_121;
 }
-if (var_116[0].vt != LV_NIL) {
+if (var_119[0].vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_116[0];
+*p2 = var_119[0];
 }
-var_124 = LVI_PAIR(p1, p2);
+var_127 = LVI_PAIR(p1, p2);
 }
-lval var_127[8];
-var_127[0] = var_124;
-var_116[0] = var_127[0];
-goto lbl_117;	// selfie
+lval var_130[8];
+var_130[0] = var_127;
+var_119[0] = var_130[0];
+goto lbl_120;	// selfie
 }
-return var_121;
+return var_124;
 }
-// end of lambda fn_114
+// end of lambda fn_117
 
 // @@@ (stack-trace port) @@@ bld-rtl-dir/wile-rtl2-000075.scm:45 @@@ wile_stack_trace @@@
-lval wile_stack_trace(lptr* var_84, lptr var_85)
+lval wile_stack_trace(lptr* var_87, lptr var_88)
 {
-lval var_87;
-lval var_88;
-var_88 = LVI_STRING("wile-scratch.XXXXXX");
-lval var_89;
-{
-lval var_90[8];
-var_90[0] = var_88;
-var_89 = wile_temp_file(NULL, var_90);
-}
-var_87 = var_89;
+lval var_90;
 lval var_91;
+var_91 = LVI_STRING("wile-scratch.XXXXXX");
 lval var_92;
-if (var_87.vt != LV_PAIR) {
+{
+lval var_93[8];
+var_93[0] = var_91;
+var_92 = wile_temp_file(NULL, var_93);
+}
+var_90 = var_92;
+lval var_94;
+lval var_95;
+if (var_90.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_92 = (var_87.v.pair.car ? *(var_87.v.pair.car) : LVI_NIL());
-var_91 = var_92;
-lval var_93;
-lval var_94;
-var_94 = LVI_STRING("cadr");
-lval var_95;
+var_95 = (var_90.v.pair.car ? *(var_90.v.pair.car) : LVI_NIL());
+var_94 = var_95;
+lval var_96;
+lval var_97;
+var_97 = LVI_STRING("cadr");
+lval var_98;
 {
-char* cp = strchr(var_94.v.str, 'r');
-var_95 = var_87;
+char* cp = strchr(var_97.v.str, 'r');
+var_98 = var_90;
 while (*(--cp) != 'c') {
-if (var_95.vt != LV_PAIR) {
+if (var_98.vt != LV_PAIR) {
 WILE_EX("cxr", "input does not have the right structure!");
 }
 if (*cp == 'a') {
-var_95 = (var_95.v.pair.car ? *(var_95.v.pair.car) : LVI_NIL());
+var_98 = (var_98.v.pair.car ? *(var_98.v.pair.car) : LVI_NIL());
 } else if (*cp == 'd') {
-var_95 = (var_95.v.pair.cdr ? *(var_95.v.pair.cdr) : LVI_NIL());
+var_98 = (var_98.v.pair.cdr ? *(var_98.v.pair.cdr) : LVI_NIL());
 } else {
-WILE_EX("cxr", "got malformed control string '%s'", var_94.v.str);
+WILE_EX("cxr", "got malformed control string '%s'", var_97.v.str);
 }
 }
 }
-var_93 = var_95;
-lval var_96;
-lval var_97;
-var_97 = LVI_BOOL(false);
-var_96 = var_97;
+var_96 = var_98;
+lval var_99;
+lval var_100;
+var_100 = LVI_BOOL(false);
+var_99 = var_100;
 (void)
  LVI_BOOL(false);
 (void)
@@ -392,48 +401,51 @@ var_96 = var_97;
 (void)
  LVI_BOOL(false);
 (void)
- LVI_BOOL(unlink(var_93.v.str) == 0);
-wile_stack_trace_minimal(fileno((var_91.vt == LV_FILE_PORT) ? var_91.v.fp : stderr));
+ LVI_BOOL(unlink(var_96.v.str) == 0);
+wile_stack_trace_minimal(fileno((var_94.vt == LV_FILE_PORT) ? var_94.v.fp : stderr));
 (void)
  LVI_NIL();
 {
-lval var_109[8];
-var_109[0] = var_91;
+lval var_112[8];
+var_112[0] = var_94;
 (void)
- wile_flushport(NULL, var_109);
+ wile_flushport(NULL, var_112);
 }
-lval var_110;
-var_110 = LVI_INT(0);
-lval var_111;
-var_111 = LVI_SYMBOL("start");
+lval var_113;
+var_113 = LVI_INT(0);
+lval var_114;
+var_114 = LVI_SYMBOL("start");
 {
-lval var_113[8];
-var_113[0] = var_91;
-var_113[1] = var_110;
-var_113[2] = var_111;
+lval var_116[8];
+var_116[0] = var_94;
+var_116[1] = var_113;
+var_116[2] = var_114;
 (void)
- wile_setfilepos3(NULL, var_113);
+ wile_setfilepos3(NULL, var_116);
 }
-MK_CLOS(var_115,1);
-P_CLOS(var_115,0) = &(var_91);
-lval var_128;
-var_128 = LVI_NIL();
-lval var_129;
-lval var_130[8];
-var_130[0] = var_128;
-var_129 = fn_114(var_115, var_130);
-var_96 = var_129;
+MK_CLOS(var_118,1);
+lptr var_131 = new_lv(VT_UNINIT);
+var_131->v.pair.car = &(var_94);
+P_CLOS(var_118,0) = var_131;
+lval var_132;
+var_132 = LVI_NIL();
+lval var_133;
+lval var_134[8];
+var_134[0] = var_132;
+var_133 = fn_117(var_118, var_134);
+*var_131 = var_94;
+var_99 = var_133;
 {
-lval var_133[8];
-var_133[0] = var_91;
+lval var_137[8];
+var_137[0] = var_94;
 (void)
- wile_closeport(NULL, var_133);
+ wile_closeport(NULL, var_137);
 }
-lval var_136[8];
-var_136[0] = var_96;
-var_136[1] = var_85[0];
-var_85[0] = var_136[0];
-var_85[1] = var_136[1];
-TAIL_CALL wile_display_stack_trace(NULL, var_85);
+lval var_140[8];
+var_140[0] = var_99;
+var_140[1] = var_88[0];
+var_88[0] = var_140[0];
+var_88[1] = var_140[1];
+TAIL_CALL wile_display_stack_trace(NULL, var_88);
 }
 // end of function wile_stack_trace

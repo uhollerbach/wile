@@ -61,6 +61,9 @@ twp:	test-wile-progs.scm
 build-rtl:	build-rtl.scm
 	wile -x -v build-rtl.scm build-rtl
 
+build-stages:	build-stages.scm
+	wile -x -v build-stages.scm build-stages
+
 test:	libwrtl.a twp
 	test-wile.scm
 	twp wtest

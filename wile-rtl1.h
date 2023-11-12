@@ -107,9 +107,10 @@
 #define TAIL_CALL		return
 #endif
 
-#define MK_CLOS(nm,sz)		lptr nm[sz]
-#define P_CLOS(nm,ix)		(nm[ix])
-#define V_CLOS(nm,ix)		(*(P_CLOS(nm,ix)))
+#define MK_CLOS(n,s)	lptr* n = LISP_ALLOC(lptr, s); LISP_ASSERT(n != NULL)
+#define P_CLOS(n,i)	(n[i])
+#define V_CLOS(n,i)	(*((P_CLOS(n,i)->vt == VT_UNINIT) \
+			   ? P_CLOS(n,i)->v.pair.car : P_CLOS(n,i)))
 
 uint16_t wile_binfo(void);
 lval wile_sql_version(lptr* clos, lptr args);

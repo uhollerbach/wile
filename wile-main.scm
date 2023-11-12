@@ -125,6 +125,12 @@
       (write-string stderr "link failed!\n")
       (exit 1))))
 
+;;; TODO: this is nice and all, but it destroys the ability to compare files;
+;;; they will all have different embedded timestamps, and that will kill MD5
+;;; (defmacro (compile-time)
+;;;   (let ((now (list-head (UTCtime) 6)))
+;;;     `(list ,@now)))
+
 (let* ((fvals (parse-command-line-flags
 	       '("-v" flags "provide more details of compilation process")
 	       '("-P" flag "show brief hint list of primitives")
@@ -178,7 +184,9 @@
     (for-each (lambda (v)
 		(display v)
 		(newline))
-	      (wile-build-info))
+	      (wile-build-info #t))
+;;;    (display `(wile-compiled-on ,(compile-time)))
+;;;    (newline)
     (exit 0))
   (when (hash-table-ref fvals "-P" #f)
     (show-prims-table)

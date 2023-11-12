@@ -20,13 +20,15 @@ rm -f wilecxx.c
 mv wilecxx wilec1
 
 ln -fs ./wilec1 ./wile
+mv libwrtl.a libwrtl.stage1.a
+ln -s  libwrtl.stage1.a libwrtl.a
 
 echo "################################"
 echo "build stage2"
 
 rm -f build-rtl
 make build-rtl
-make realclean libwrtl.a libwrtl-dbg.a twp
+make realclean libwrtl.a
 
 ./wilec1 -c -v wile-main.scm wilec2.c
 ln -fs wilec2.c wilecxx.c
@@ -35,18 +37,37 @@ rm -f wilecxx.c
 mv wilecxx wilec2
 
 ln -fs ./wilec2 ./wile
+mv libwrtl.a libwrtl.stage2.a
+ln -s  libwrtl.stage2.a libwrtl.a
+
+echo "################################"
+echo "build stage3"
+
+rm -f build-rtl
+make build-rtl
+make realclean libwrtl.a twp
+
+./wilec2 -c -v wile-main.scm wilec3.c
+ln -fs wilec3.c wilecxx.c
+./wilec2 -x -v wilecxx.c wilecxx
+rm -f wilecxx.c
+mv wilecxx wilec3
+
+ln -fs ./wilec3 ./wile
+mv libwrtl.a libwrtl.stage3.a
+ln -s libwrtl.stage3.a libwrtl.a
 
 ./twp wtest
 
-# a little bit of cleanup, we know these will fail
-rm -f test_2[26]-int.c
-
 echo "################################"
-echo diffs between wilec1.c and wilec2.c
-diff wilec[12].c
+echo diffs between wilec2.c and wilec3.c
+diff wilec[23].c
 echo "################################"
-echo MD5sums of wilec1 and wilec2
-md5sum wilec[12]
+echo MD5sums of wilec?
+md5sum wilec?
+echo "################################"
+echo MD5sums of libwrtl.stage?.a
+md5sum libwrtl.stage?.a
 echo "################################"
 
 echo still TODO: move everything into final locations:

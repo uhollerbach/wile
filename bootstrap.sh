@@ -24,4 +24,4 @@ export WILE_INCLUDE_DIRECTORIES=.:$WHOME:$HOME/tools/include
 export WILE_LINK_DIRECTORIES=.:$WHOME:$HOME/tools/lib
 export WILE_LIBRARY_PATH=.:$WHOME:$WHOME/library
 
-./build-stage12.sh
+./build-stage123.sh

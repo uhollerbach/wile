@@ -20,21 +20,11 @@
 	  (loop (cons line acc))
 	  (list-reverse acc)))))
 
-(define (run-cmd-or-die retry? str . strs)
+(define (run-cmd-or-die str . strs)
   (let ((cmd (apply string-append str " " strs)))
     (unless (zero? (run-command cmd))
       (fprintf stderr "command %s failed!\n" cmd)
-      (if retry?
-	  (let ((cmv (string-append cmd " -v")))
-	    (unless (zero? (run-command cmv))
-	      (fprintf stderr "command %s failed!\n" cmv)
-	      (if retry?
-		  (let ((cmvv (string-append cmv " -v")))
-		    (unless (zero? (run-command cmvv))
-		      (fprintf stderr "command %s failed!\n" cmvv)
-		      (exit 1)))
-		  (exit 1))))
-	  (exit 1)))))
+      (exit 1))))
 
 (define (run-cmd str . strs)
   (let* ((cmd (apply string-append str " " strs))
@@ -47,7 +37,7 @@
   (let* ((dix (string-find-last-char file #\.))
 	 (prefix (if dix (string-copy file 0 dix) file))
 	 (suffix (if dix (string-copy file dix) "")))
-    (run-cmd-or-die #t "wile -o" (if dflag "-g " "") file)
+    (run-cmd-or-die "wile -o" (if dflag "-g " "") file)
     (string-append prefix ".o")))
 
 (define (take-section cut-pattern lines)
@@ -93,10 +83,10 @@
 	    (flush-port oport)
 	    (close-port oport)
 	    (when (string=? suffix ".scm")
-	      (run-cmd-or-die #t "wile -c " (if dflag "-g" "") " "
+	      (run-cmd-or-die "wile -c " (if dflag "-g" "") " "
 		       prefix2 ".scm " prefix2 ".c"))
-	    (run-cmd-or-die #f "rm -f" bld-dir "/*.h")
-	    (run-cmd-or-die #t "wile -o " (if dflag "-g" "") " "
+	    (run-cmd-or-die "rm -f" bld-dir "/*.h")
+	    (run-cmd-or-die "wile -o " (if dflag "-g" "") " "
 		     prefix2 ".c " prefix2 ".o")
 	    (loop (cadr sd) (+ ix 1)))))))
 

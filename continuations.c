@@ -9,6 +9,7 @@
 
 #include "wile.h"
 #include "wile-rtl1.h"
+#include "wile-rtl2.h"
 #include "alloc.h"
 #include "lib-macros.h"
 
@@ -206,6 +207,8 @@ void wile_invoke_continuation(lptr cc, lptr args)
     do_restore(cc->v.cont, 1);
 }
 
+extern const int wile_tc_min_args;
+
 lval wile_call_cc(lptr*, lptr args)
 {
     lval cc;
@@ -224,13 +227,17 @@ lval wile_call_cc(lptr*, lptr args)
     if (setjmp(cc.v.cont->registers) == 0) {
 	// initial capture of the continuation
 
-	lval fargs[8];	// we only need 1, but want to leave a little
-			// headroom for tail calls down the line
-			// TODO: need to clean this up and make the
-			// size conform
+	lval fargs[16];
+
+////    int i;
+////	i = 2;
+////	if (i < wile_tc_min_args) {
+////	    i = wile_tc_min_args;
+////	}
+////	lptr fargs = LISP_ALLOC(lval, i);
+////	LISP_ASSERT(fargs != NULL);
 
 	fargs[0] = cc;
-
 	switch (args->vt) {
 	case LV_CLAMBDA:
 	    // if we return from ths call, the continuation
@@ -240,9 +247,10 @@ lval wile_call_cc(lptr*, lptr args)
 	case LV_ILAMBDA:
 	    // if we return from ths call, the continuation
 	    // was not invoked; so just return the results
-	    return LVI_NIL();
-//// TODO: implement this
-////	    return args->v.clambda.fn(args->v.clambda.closure, fargs);
+
+	    fargs[0] = args[0];
+	    fargs[1] = cc;
+	    return wile_eval_apply_lambda(NULL, fargs);
 
 	case LV_CONT:
 	    wile_invoke_continuation(args, fargs);

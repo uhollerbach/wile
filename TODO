@@ -61,10 +61,7 @@ Stuff TODO
 * make all the configurable stuff that's currently in environment variables
   come from a config file
 
-* closures
-
-  > well damn... they seem to be working, at least in obey-stack-discipline
-    mode. still can't have them escaping arbitrarily
+* closures - working?!? omg
 
   > quite a few tests are under continuations, in selftest-cont.scm;
     see below
@@ -156,8 +153,6 @@ Stuff TODO
   > good progress, a bunch of pieces are in place already
 
   > generic multi-argument + - * / seem to be working; ditto min/max
-
-* Go back to everything living in heap? it would make closures etc easier...?
 
 ################################################################
 

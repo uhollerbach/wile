@@ -85,14 +85,6 @@
 
 ;;; the macros below are very specific to wile
 
-(defmacro (compile-with-output dest . body)
-  (let ((tport (gensym)))
-    `(let ((,tport (make-string-bag ())))
-       (fluid-let ((global-out ,tport))
-	 ,@body
-	 (when ,dest
-	   (transfer-all-lines ,tport ,dest))))))
-
 (defmacro (emit-code . strs)
   (let ((xform
 	 (let loop ((cs (string->list (apply string-join-by "\n" strs)))

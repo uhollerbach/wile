@@ -45,51 +45,54 @@ lval var_9;
 var_9 = LVI_BOOL(var_6[0].vt == LV_NIL);
 if (LV_IS_FALSE(var_9)) {
 MK_CLOS(var_11,1);
-P_CLOS(var_11,0) = &(var_6[0]);
-lval var_16;
+lptr var_16 = new_lv(VT_UNINIT);
+var_16->v.pair.car = &(var_6[0]);
+P_CLOS(var_11,0) = var_16;
+lval var_17;
 if (var_6[0].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_16 = (var_6[0].v.pair.cdr ? *(var_6[0].v.pair.cdr) : LVI_NIL());
-lval var_17;
+var_17 = (var_6[0].v.pair.cdr ? *(var_6[0].v.pair.cdr) : LVI_NIL());
+lval var_18;
 {
-lval var_18[8];
-var_18[0] = LVI_PROC(fn_10,var_11,1);
-var_18[1] = var_16;
-var_17 = wile_list_drop_while(NULL, var_18);
+lval var_19[8];
+var_19[0] = LVI_PROC(fn_10,var_11,1);
+var_19[1] = var_17;
+var_18 = wile_list_drop_while(NULL, var_19);
 }
-lval var_19;
+lval var_20;
 if (var_6[0].vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_19 = (var_6[0].v.pair.car ? *(var_6[0].v.pair.car) : LVI_NIL());
-lval var_20;
+var_20 = (var_6[0].v.pair.car ? *(var_6[0].v.pair.car) : LVI_NIL());
+lval var_21;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_19.vt != LV_NIL) {
+if (var_20.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_19;
+*p1 = var_20;
 }
 if (var_6[1].vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
 *p2 = var_6[1];
 }
-var_20 = LVI_PAIR(p1, p2);
+var_21 = LVI_PAIR(p1, p2);
 }
-lval var_23[8];
-var_23[0] = var_17;
-var_23[1] = var_20;
-var_6[0] = var_23[0];
-var_6[1] = var_23[1];
+lval var_24[8];
+var_24[0] = var_18;
+var_24[1] = var_21;
+*var_16 = var_6[0];
+var_6[0] = var_24[0];
+var_6[1] = var_24[1];
 goto lbl_7;	// selfie
 } else {
-lval var_24;
+lval var_25;
 {
-lval var_25[8];
-var_25[0] = var_6[1];
-var_24 = wile_list_reverse(NULL, var_25);
+lval var_26[8];
+var_26[0] = var_6[1];
+var_25 = wile_list_reverse(NULL, var_26);
 }
-var_8 = var_24;
+var_8 = var_25;
 }
 return var_8;
 }
@@ -99,13 +102,13 @@ return var_8;
 lval wile_list_remove_dups(lptr* var_1, lptr var_2)
 {
 MK_CLOS(var_5,0);
-lval var_26;
-var_26 = LVI_NIL();
 lval var_27;
-lval var_28[8];
-var_28[0] = var_2[0];
-var_28[1] = var_26;
-var_27 = fn_4(var_5, var_28);
-return var_27;
+var_27 = LVI_NIL();
+lval var_28;
+lval var_29[8];
+var_29[0] = var_2[0];
+var_29[1] = var_27;
+var_28 = fn_4(var_5, var_29);
+return var_28;
 }
 // end of function wile_list_remove_dups

@@ -1,0 +1,25 @@
+Welcome to the Lambda Bank!
+Your initial balance is 0
+Welcome to the Lambda Bank!
+Your initial balance is 1000
+Bal 1 -- A:0	B:1000
+deposit 100
+withdrawal -200 exceeds limit
+withdrawal -50
+Bal 2 -- A:100	B:950
+withdrawal -100 exceeds limit
+withdrawal -50
+deposit 1200
+Bal 3 -- A:50	B:2150
+deposit 200
+withdrawal -400 exceeds limit
+withdrawal -50
+Bal 3 -- A:250	B:2100
+deposit 400
+deposit 400
+deposit 400
+deposit 400
+deposit 400
+deposit 400
+withdrawal -1000
+Bal 4 -- A:250	B:3500

@@ -74,10 +74,6 @@ to detect and prevent these crazinesses.
 
 ### Stuff that's missing:
 
-* Closures are incomplete: closures which obey stack discipline are
-  ok, but closures which have indefinite lifetime beyond where they
-  were defined are not implmented yet.
-
 * Continuations are in progress: a number of tests seem to work, but
   I'm not at all sure it's all there (the subject makes my head
   hurt). Sometimes code with continuations crashes.
@@ -300,6 +296,11 @@ to detect and prevent these crazinesses.
 
 - `n-queens.scm` solves the N-queens problem, using the `monad` code
   in the library.
+
+- In the `wtest/` directory, not in `examples/`, `test_53.scm` is a
+  Runge-Kutta-based solver for the Volterra equations; in addition
+  to testing first-class closures, this might be a useful example
+  for an ODE solver.
 
 ## Configuration and installation details
 
