@@ -1532,9 +1532,7 @@
   (let* ((binfo (wile-basic-build-info))
 	 (info1 `((operating-system ,(wile-os-name))
 		  (machine-architecture ,(wile-architecture-name))
-		  (wile-version (,wile-version-major
-				 ,wile-version-minor
-				 ,wile-version-patch))
+		  (wile-version ,wile-version)
 		  (float-type ,(case (bits-shift (bits-and binfo #b0011000) -3)
 				 ((0) 'double)
 				 ((1) 'long-double)
@@ -1713,6 +1711,89 @@
 	  ((zero? fb) (exact b0))
 	  ((= (sign fa) (sign fb)) (bracket-error))
 	  (else (iter budget a0 fa b0 fb)))))
+
+;;; --8><----8><----8><--
+
+(define-primitive "wile_curry"
+  "expects a function and an argument and returns a partially-applied new function"
+  (curry func arg1)
+  (lambda args (apply func arg1 args)))
+
+;;; --8><----8><----8><--
+
+(define-primitive "wile_compose"
+  "expects any number of functions and returns a function which is the composition of all of them"
+  (compose f . fs)
+  (set! fs (list-reverse (cons f fs)))
+  (lambda args
+    (let loop ((arg (apply (car fs) args))
+	       (fns (cdr fs)))
+      (if (null? fns)
+	  arg
+	  (loop ((car fns) arg) (cdr fns))))))
+
+;;; --8><----8><----8><--
+
+(define (span pred lst)
+  (cond ((null? lst) (list () ()))
+	((pred (car lst))
+	 (let ((st (span pred (cdr lst))))
+	   (list (cons (car lst) (car st)) (cadr st))))
+	(else (list () lst))))
+
+(define-primitive "wile_list_group_by"
+  "expects a comparison function and a list and returns a list of lists of adjacent items which compare equal"
+  (list-group-by cmp lst)
+  (if (null? lst)
+      ()
+      (let ((st (span (curry cmp (car lst)) (cdr lst))))
+	(cons (cons (car lst) (car st)) (list-group-by cmp (cadr st))))))
+
+;;; --8><----8><----8><--
+
+;;; Miller-Rabin primality test
+
+(define-primitive "wile_mr_primality"
+  "expects an integer N and an optional second integer K, and returns whether N is prime or not, based on doing K rounds of probabilistic Miller-Rabin testing"
+  (is-prime? n . k)
+  (set! k (if (null? k) 100 (car k)))
+  (when (negative? n) (set! n (- n)))
+  (cond ((<= n 1) #f)
+	((<= n 3) #t)
+	((even? n) #f)
+	(else (letrec*
+	       ((nm (- n 1))
+		(factor-2 (lambda (d s)
+			    (if (even? d)
+				(factor-2 (/ d 2) (+ s 1))
+				(list d s))))
+		(sd (factor-2 nm 0))
+		(d (car sd))
+		(s (- (cadr sd) 1))
+		(wloop (lambda (kk)
+			 (if (zero? kk)
+			     #t
+			     (let* ((a (integer (random-uniform 2 (- n 2))))
+				    (x (expmod a d n)))
+			       (if (or (= x 1)
+				       (= x nm))
+				   (wloop (- kk 1))
+				   (sloop s x kk))))))
+		(sloop (lambda (ss x kk)
+			 (if (zero? ss)
+			     #f
+			     (let ((x2 (expmod x 2 n)))
+			       (cond ((= x2 1) #f)
+				     ((= x2 nm) (wloop (- kk 1)))
+				     (else (sloop (- ss 1) x2 kk))))))))
+	       (wloop k)))))
+
+(define-primitive "wile_next_prime"
+  "expects one integer N and returns the next prime that is greater than or equal to N, based on Miller-Rabin probabilistic primality test"
+  (next-prime n)
+  (if (is-prime? n)
+      n
+      (next-prime (+ n (if (even? n) 1 2)))))
 
 ;;; --8><----8><----8><--
 

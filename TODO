@@ -10,13 +10,6 @@ Stuff TODO
     >>> fixed I think - it works for one level of nesting; multi-level
         not tested yet
 
-  > found & fixed a problem (or a couple) in apply: in the C code in
-    wile-rtl1.c, I had a couple of instances of things like
-
-	val = *(CAR(ap));
-
-    >>> possibly still an analogous instance in continuations.c
-
 * start working on (eval) function -- see repl.scm
 
   > almost all special forms are there except 'delay' etc
@@ -60,11 +53,6 @@ Stuff TODO
 
 * make all the configurable stuff that's currently in environment variables
   come from a config file
-
-* closures - working?!? omg
-
-  > quite a few tests are under continuations, in selftest-cont.scm;
-    see below
 
 * more tail-call optimization: want to do tail self-recursion, ie routine
   calls itself directly in a tail call, regardless of the pragma; it's a

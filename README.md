@@ -1,11 +1,12 @@
-Last update: 2023-11-19 23:00 PST
+Last update: 2023-11-23 02:00 PST
 
 # `wile` -- the extremely stable scheming genius compiler
 
 `wile` is a small scheme-to-c compiler which I'm writing; it's by no
 means complete, but it's capable enough that writing small to medium
 programs with it is starting to be pretty pleasant. `wile` **is
-self-hosting**.
+self-hosting**, and it seems to have first-class closures as well as
+first-class continuations. I'm calling that "1.0.0"!
 
 My design philosophy for it is the unix way of small simple tools; I
 have tried to keep it simple and self-contained, with minimal
@@ -16,7 +17,7 @@ that, you'll be limited to small programs... that said, the bootstrap
 stage0 compiler is configured to build without GC, and it can recompile
 itself; that's not tiny.)
 
-This release of it is still very incomplete: batteries *not* included,
+This release of it is still incomplete: batteries *not* included,
 some assembly required! This is alpha software (mainly because not
 implemented yet, less because bugs). See below for a roadmap.
 
@@ -74,10 +75,6 @@ to detect and prevent these crazinesses.
 
 ### Stuff that's missing:
 
-* Continuations are in progress: a number of tests seem to work, but
-  I'm not at all sure it's all there (the subject makes my head
-  hurt). Sometimes code with continuations crashes.
-
 * There is no high-level macro system yet. `wile` does have some
   low-level macros built in, `def-macro` style.
 
@@ -116,9 +113,6 @@ to detect and prevent these crazinesses.
   expansion; this might not be an actual bug, but it's at best a
   significant infelicity.
 
-* Continuations may work, but there are a couple of cases where I see
-  segfaults.
-
 * I think I've got the majority of numerical functions able to deal
   with any style of number (int, rational, real, complex where
   relevant) as input, but there may be some cases I've missed.
@@ -156,119 +150,131 @@ to detect and prevent these crazinesses.
   `let*` `letrec` `letrec*` `or` `quasiquote` `unquote`
   `unquote-splicing` `quote` `set!`
 
-* A reasonably good number of functions in the standard library: `*`
-  `+` `-` `/` `/=` `<` `<=` `=` `>` `>=` `UTCtime` `_cmplx?`
-  `_int->cmplx_` `_int->rat_` `_int->real_` `_int?` `_rat->cmplx_`
-  `_rat->real_` `_rat?` `_real->cmplx_` `_real?` `abs` `accept` `acos`
-  `acosh` `agm` `all-true?` `angle` `any-true?` `append` `apply`
+* A reasonably good number of functions in the standard library:
+  `*` `+` `-` `/` `/=` `<` `<=` `=` `>` `>=` `UTCtime` `_cmplx?` `_int?`
+  `_rat?` `_real?` `abs` `accept` `acos` `acosh` `agm` `all-true?`
+  `angle` `any-true?` `append` `apply` `apply-interp` `apply-lambda`
   `arithmetic-geometric-mean` `asin` `asinh` `assp` `assv` `atan`
-  `atanh` `begin-breakable` `bessel-j` `bessel-y` `bits-and`
-  `bits-clear` `bits-flip` `bits-get` `bits-not` `bits-or` `bits-set`
-  `bits-set?` `bits-shift` `bits-xor` `boolean?` `bytevector`
+  `atanh` `begin-breakable` `begin-form?` `bessel-j` `bessel-y`
+  `bits-and` `bits-clear` `bits-flip` `bits-get` `bits-not` `bits-or`
+  `bits-set` `bits-set?` `bits-shift` `bits-xor` `boolean?` `bytevector`
   `bytevector->string` `bytevector-create` `bytevector-length`
   `bytevector-ref` `bytevector-set!` `bytevector-swap!` `bytevector?`
   `c*` `c+` `c-` `c/` `caaaar` `caaadr` `caaar` `caadar` `caaddr`
   `caadr` `caar` `cadaar` `cadadr` `cadar` `caddar` `cadddddddr`
-  `caddddddr` `cadddddr` `caddddr` `cadddr` `caddr` `cadr` `call/cc`
-  `car` `cbrt` `cconj` `cdaaar` `cdaadr` `cdaar` `cdadar` `cdaddr`
-  `cdadr` `cdar` `cddaar` `cddadr` `cddar` `cdddar` `cddddr` `cdddr`
-  `cddr` `cdr` `ceiling` `ceiling-quotient` `ceiling-remainder`
-  `ceiling/` `cfft-good-n?` `change-root-directory` `char->integer`
-  `char->string` `char-alphabetic?` `char-alphanumeric?` `char-ci/=?`
-  `char-ci<=?` `char-ci<?` `char-ci=?` `char-ci>=?` `char-ci>?`
-  `char-control?` `char-downcase` `char-hex-digit?` `char-lower-case?`
-  `char-lowercase?` `char-numeric?` `char-oct-digit?`
-  `char-printable?` `char-upcase` `char-upper-case?` `char-uppercase?`
-  `char-whitespace?` `char/=?` `char<=?` `char<?` `char=?` `char>=?`
-  `char>?` `char?` `cholesky-decompose` `cholesky-solve` `cimag`
-  `clear-file-error` `close-port` `cmplx` `complex-conjugate`
-  `complex?` `conj` `connect-to` `cons` `continuation?` `cos` `cosh`
-  `cosine-integral` `cputime` `creal` `create-directory` `create-link`
-  `create-symbolic-link` `cxr` `day-of-week` `day-of-year`
-  `delta-dates` `denominator` `describe-system-error` `digamma`
-  `directory-exists?` `display` `display-object-hook`
-  `display-stack-trace` `do-until` `do-while` `elliptic-E`
-  `elliptic-K` `emergency-exit` `epochtime` `eqv?` `erfc` `eval`
-  `even?` `exit` `exp` `expmod` `expt` `factorial` `file-executable?`
-  `file-exists?` `file-port?` `file-readable?` `file-writable?`
-  `filter` `finite?` `flatten` `float` `floor` `floor-quotient`
-  `floor-remainder` `floor/` `fluid-let` `flush-port` `fmod` `foldl`
-  `foldl1` `foldr` `for-each` `fork-process` `fprintf` `frexp`
-  `fromto` `gcd` `gensym` `get-current-directory` `get-domain-name`
-  `get-effective-group-id` `get-effective-user-id`
-  `get-environment-variable` `get-errno` `get-file-eof`
-  `get-file-error` `get-file-position` `get-file-status`
+  `caddddddr` `cadddddr` `caddddr` `cadddr` `caddr` `cadr`
+  `call-with-current-continuation` `call/cc` `car` `case-lambic` `cbrt`
+  `cconj` `cdaaar` `cdaadr` `cdaar` `cdadar` `cdaddr` `cdadr` `cdar`
+  `cddaar` `cddadr` `cddar` `cdddar` `cddddr` `cdddr` `cddr` `cdr`
+  `ceiling` `ceiling-quotient` `ceiling-remainder` `ceiling/`
+  `cfft-good-n?` `change-file-owner` `change-root-directory`
+  `change-symbolic-link-owner` `char->integer` `char->string`
+  `char-alphabetic?` `char-alphanumeric?` `char-ci/=?` `char-ci<=?`
+  `char-ci<?` `char-ci=?` `char-ci>=?` `char-ci>?` `char-control?`
+  `char-downcase` `char-hex-digit?` `char-lower-case?` `char-lowercase?`
+  `char-numeric?` `char-oct-digit?` `char-printable?` `char-upcase`
+  `char-upper-case?` `char-uppercase?` `char-whitespace?` `char/=?`
+  `char<=?` `char<?` `char=?` `char>=?` `char>?` `char?`
+  `cholesky-decompose` `cholesky-solve` `cimag` `clear-file-error`
+  `close-port` `cmplx` `compiled-procedure?` `complex-conjugate`
+  `complex?` `compose` `conj` `connect-to` `cons` `continuation?` `cos`
+  `cosh` `cosine-integral` `cputime` `creal` `create-directory`
+  `create-link` `create-symbolic-link` `curry` `cxr` `day-of-week`
+  `day-of-year` `def-struct` `define-form?` `delta-dates` `denominator`
+  `describe-system-error` `digamma` `directory-exists?` `display`
+  `display-object-hook` `display-stack-trace` `do-until` `do-while`
+  `elliptic-E` `elliptic-K` `emergency-exit` `emit-code` `epochtime`
+  `eqv?` `erfc` `eval` `eval-begin` `eval-define` `even?` `exit` `exp`
+  `expmod` `expt` `factorial` `file-executable?` `file-exists?`
+  `file-port?` `file-readable?` `file-writable?` `filter` `finite?`
+  `flatten` `float` `floor` `floor-quotient` `floor-remainder` `floor/`
+  `fluid-let` `flush-port` `fmod` `foldl` `foldl1` `foldr` `for-each`
+  `fork-process` `fprintf` `frexp` `fromto` `gc-version` `gcd` `gensym`
+  `get-current-directory` `get-domain-name` `get-effective-group-id`
+  `get-effective-user-id` `get-environment-variable` `get-errno`
+  `get-file-eof` `get-file-error` `get-file-position` `get-file-status`
   `get-group-id` `get-group-information` `get-host-name`
+  `get-interpreted-procedure-arguments`
+  `get-interpreted-procedure-arity` `get-interpreted-procedure-body`
+  `get-interpreted-procedure-environment`
+  `get-interpreted-procedure-macro` `get-iproc-args` `get-iproc-arity`
+  `get-iproc-body` `get-iproc-env` `get-iproc-macro`
   `get-parent-process-id` `get-process-id` `get-session-id`
   `get-symbolic-link-status` `get-user-id` `get-user-information`
   `gregorian-date` `hypot` `i*` `i+` `i++` `i-` `i--` `i/` `ilog`
   `imag-part` `infinite?` `integer` `integer->char` `integer?`
-  `is-block-device?` `is-char-device?` `is-directory?` `is-leap-year?`
-  `is-named-pipe?` `is-regular-file?` `is-socket?` `is-symbolic-link?`
-  `julian-day` `julian-day-of-easter` `lambert-W` `lambert-W+`
-  `lambert-W-` `last` `lcm` `ldexp` `length` `list` `list->bytevector`
-  `list->string` `list->vector` `list-append` `list-drop-while`
-  `list-filter` `list-flatten` `list-head` `list-last` `list-length`
-  `list-partition` `list-ref` `list-remove-dups` `list-reverse`
-  `list-sort` `list-tail` `list-take-while` `list-unhead`
-  `list-untail` `list?` `listen-on` `load-library` `localtime` `log`
-  `log-gamma` `magnitude` `make-bytevector` `make-polar`
-  `make-rational` `make-rectangular` `make-string` `make-vector` `map`
-  `max` `max/i` `max/q` `max/r` `memp` `memv` `min` `min/i` `min/q`
-  `min/r` `modulo` `namespace` `nan?` `negative` `negative?` `newline`
-  `not` `null?` `number->string` `number/type` `number?` `numerator`
-  `odd?` `offset-date` `open-file` `open-temporary-file` `pair?`
-  `parse-file` `parse-string` `partition` `phase` `pipe-port?`
-  `poly-chebyshev1` `poly-chebyshev2` `poly-hermite1` `poly-hermite2`
-  `poly-laguerre` `poly-legendre` `port?` `positive?` `printf`
-  `procedure?` `promise?` `promote/cmplx` `promote/rat` `promote/real`
-  `q*` `q+` `q-` `q/` `quot-rem` `quotient` `r*` `r+` `r-` `r/`
-  `raise` `random-exponential` `random-normal-pair`
-  `random-permutation` `random-poisson` `random-seed!`
-  `random-uniform` `rational?` `read-all` `read-bytes` `read-char`
-  `read-directory` `read-line` `real-part` `real?` `reciprocal`
-  `regex-match` `remainder` `remove-directory` `remove-file`
-  `rename-directory` `rename-file` `replicate` `reverse` `round`
-  `run-command` `run-read-command` `run-write-command` `send-signal`
-  `set-car!` `set-cdr!` `set-current-directory`
+  `interpreted-procedure?` `is-block-device?` `is-char-device?`
+  `is-directory?` `is-leap-year?` `is-named-pipe?` `is-prime?`
+  `is-regular-file?` `is-socket?` `is-symbolic-link?` `julian-day`
+  `julian-day-of-easter` `lambert-W` `lambert-W+` `lambert-W-` `last`
+  `lcm` `ldexp` `length` `list` `list->bytevector` `list->string`
+  `list->vector` `list-append` `list-drop-while` `list-filter`
+  `list-flatten` `list-group-by` `list-head` `list-last` `list-length`
+  `list-length<=?` `list-length<?` `list-length=?` `list-length>=?`
+  `list-length>?` `list-partition` `list-ref` `list-remove-dups`
+  `list-reverse` `list-sort` `list-tail` `list-take-while` `list-unhead`
+  `list-untail` `list?` `listen-on` `load-file-path` `load-form?`
+  `load-library` `localtime` `log` `log-gamma` `magnitude`
+  `make-bytevector` `make-interpreted-procedure` `make-iproc`
+  `make-polar` `make-rational` `make-rectangular` `make-string`
+  `make-vector` `map` `max` `max/i` `max/q` `max/r` `memp` `memv` `min`
+  `min/i` `min/q` `min/r` `modulo` `namespace` `nan?` `negative`
+  `negative?` `newline` `next-prime` `not` `null?` `number->string`
+  `number/type` `number?` `numerator` `odd?` `offset-date` `open-file`
+  `open-temporary-file` `pair?` `parse-file` `parse-string` `partition`
+  `phase` `pipe-port?` `poly-chebyshev1` `poly-chebyshev2`
+  `poly-hermite1` `poly-hermite2` `poly-laguerre` `poly-legendre`
+  `port?` `positive?` `printf` `procedure?` `promise?` `promote/cmplx`
+  `promote/rat` `promote/real` `q*` `q+` `q-` `q/` `quot-rem` `quotient`
+  `r*` `r+` `r-` `r/` `raise` `random-exponential` `random-normal-pair`
+  `random-permutation` `random-poisson` `random-seed!` `random-uniform`
+  `rational?` `read-all` `read-bytes` `read-char` `read-directory`
+  `read-line` `real-part` `real?` `reciprocal` `regex-match` `remainder`
+  `remove-directory` `remove-file` `rename-directory` `rename-file`
+  `replicate` `reverse` `root-bisect` `root-bracket` `root-ridders`
+  `round` `run-command` `run-read-command` `run-write-command`
+  `send-signal` `set-car!` `set-cdr!` `set-current-directory`
   `set-effective-group-id` `set-effective-user-id`
   `set-environment-variable` `set-errno!` `set-file-position`
-  `set-group-id` `set-line-buffering!` `set-no-buffering!`
-  `set-session-id` `set-user-id` `sign` `sin` `sine-integral` `sinh`
-  `sleep` `socket-port?` `sprintf` `sqlite-close` `sqlite-dump-table`
-  `sqlite-meta-schema` `sqlite-meta-tables` `sqlite-open`
-  `sqlite-port?` `sqlite-run` `sqlite-statement-bind`
-  `sqlite-statement-cleanup` `sqlite-statement-info`
-  `sqlite-statement-prepare` `sqlite-statement-run`
-  `sqlite-statement?` `sqlite-version` `sqrt` `stack-trace`
-  `stack-trace-minimal` `string->char` `string->list` `string->number`
-  `string->symbol` `string-append` `string-ci-hash-32`
+  `set-group-id` `set-interpreted-procedure-environment!`
+  `set-interpreted-procedure-macro!` `set-iproc-env!` `set-iproc-macro!`
+  `set-line-buffering!` `set-no-buffering!` `set-session-id`
+  `set-user-id` `sign` `sin` `sine-integral` `sinh` `sleep`
+  `socket-port?` `sprintf` `sqlite-close` `sqlite-dump-table`
+  `sqlite-meta-schema` `sqlite-meta-tables` `sqlite-open` `sqlite-port?`
+  `sqlite-run` `sqlite-statement-bind` `sqlite-statement-cleanup`
+  `sqlite-statement-info` `sqlite-statement-prepare`
+  `sqlite-statement-run` `sqlite-statement?` `sqlite-version` `sqrt`
+  `stack-trace` `stack-trace-minimal` `string->char` `string->list`
+  `string->number` `string->symbol` `string-append` `string-ci-hash-32`
   `string-ci-hash-64` `string-ci/=?` `string-ci<=?` `string-ci<?`
   `string-ci=?` `string-ci>=?` `string-ci>?` `string-copy`
   `string-create` `string-downcase` `string-find-first-char`
   `string-find-last-char` `string-hash-32` `string-hash-64`
-  `string-join-by` `string-length` `string-pad-center`
-  `string-pad-left` `string-pad-right` `string-port?` `string-ref`
-  `string-reverse` `string-set!` `string-split-by`
-  `string-split-by-whitespace` `string-trim` `string-trim-left`
-  `string-trim-right` `string-upcase` `string/=?` `string<=?`
-  `string<?` `string=?` `string>=?` `string>?` `string?` `substring`
-  `symbol->string` `symbol=?` `symbol?` `tan` `tanh`
-  `token-source-line` `truncate` `truncate-file` `truncate-quotient`
-  `truncate-remainder` `truncate/` `type-of` `unless`
-  `unset-environment-variable` `until` `upfrom` `vector`
+  `string-join-by` `string-length` `string-pad-center` `string-pad-left`
+  `string-pad-right` `string-port?` `string-ref` `string-reverse`
+  `string-set!` `string-split-by` `string-split-by-whitespace`
+  `string-trim` `string-trim-left` `string-trim-right` `string-upcase`
+  `string/=?` `string<=?` `string<?` `string=?` `string>=?` `string>?`
+  `string?` `substring` `symbol->string` `symbol=?` `symbol?` `tan`
+  `tanh` `token-source-line` `truncate` `truncate-file`
+  `truncate-quotient` `truncate-remainder` `truncate/` `type-of`
+  `unless` `unset-environment-variable` `until` `upfrom` `vector`
   `vector->list` `vector-capacity` `vector-cfft!` `vector-create`
   `vector-fill!` `vector-for-each` `vector-length` `vector-map`
   `vector-map!` `vector-number/type` `vector-promote/cmplx!`
   `vector-promote/rat!` `vector-promote/real!` `vector-ref`
   `vector-set!` `vector-sort!` `vector-swap!` `vector?` `when` `while`
-  `wile-basic-build-info` `wile-build-info` `write-1str` `write-char`
+  `wile-architecture-name` `wile-basic-build-info` `wile-build-info`
+  `wile-environment-with-macros` `wile-os-name`
+  `wile-standard-environment` `write-1str` `write-bytes` `write-char`
   `write-string` `zero?`
 
 * A number of other libraries, in the `library/` subdirectory:
 
 - `arg-parse.scm`
 - `deque.scm`
+- `gthread.scm`
 - `hash.scm`
 - `monad.scm` and `monad-list.scm`
 - `stack.scm`
@@ -301,6 +307,9 @@ to detect and prevent these crazinesses.
   Runge-Kutta-based solver for the Volterra equations; in addition
   to testing first-class closures, this might be a useful example
   for an ODE solver.
+
+- `gthread-test.scm` is a test of the very simple cooperative threads
+  library, but already throws around a fair number of continuations.
 
 ## Configuration and installation details
 
@@ -467,6 +476,7 @@ control never will. But if it isn't linked in... it can't get reached.
 
 If you have questions, comments, bug reports, patches, please send
 email to me at <uhollerbach@gmail.com>. Please put "WILE" in the
-subject line.
+subject line. You can also reach me on Mastodon, where I am
+@UweHalfHand@norcal.social.
 
 Enjoy! - Uwe Hollerbach

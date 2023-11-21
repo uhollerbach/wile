@@ -48,10 +48,14 @@ int main(int argc, char** argv)
     // unfortunately, because we need to examine the variables of main(),
     // we can't delegate this to some routine.
 
-    pl = &val;
+    pl = &ret;
     if (wile_cont_stack_grow_dir > 0) {
+	pl = LISP_PMAX(pl, &val);
+	pl = LISP_PMAX(pl, &lims);
 	pl = LISP_PMAX(pl, &tcatch);
     } else if (wile_cont_stack_grow_dir < 0) {
+	pl = LISP_PMIN(pl, &val);
+	pl = LISP_PMIN(pl, &lims);
 	pl = LISP_PMIN(pl, &tcatch);
     } else {
 	// need to mess with stack_check() in continuations.c if this is hit

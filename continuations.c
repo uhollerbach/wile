@@ -13,6 +13,10 @@
 #include "alloc.h"
 #include "lib-macros.h"
 
+// let's see what this does
+
+#pragma GCC optimize ("O0")
+
 // these two variables are instantiated elsewhere, next to main() in
 // wile-rtl1.c, in order to minimize dependencies in linking if the
 // scheme program does not use continuations
@@ -128,10 +132,16 @@ int stack_check(int verbose)
 
 // save a context & wrap it up into a package; caller needs to setjmp etc
 
-static lval save_context(void* stcp)
+static lval save_context(int safety)
 {
-    intptr_t pd;
-    unsigned char* st_cur = (unsigned char*) stcp;
+    uint64_t padding[32];
+    uintptr_t pd;
+
+    if (safety) {
+	return save_context(0);
+    }
+
+    unsigned char* st_cur = (unsigned char*) padding;
 
     if (wile_cont_stack_base == NULL) {
 	FATAL("save-context", "base pointer was not initialized!");
@@ -153,17 +163,21 @@ static lval save_context(void* stcp)
     ret.vt = LV_CONT;
     ret.v.cont = LISP_ALLOC(lisp_cont_t, 1);
     ret.v.cont->st_size = pd;
-    ret.v.cont->stack = LISP_ALLOC(unsigned char, ret.v.cont->st_size);
-    memcpy(ret.v.cont->stack, st_cur, ret.v.cont->st_size);
+    ret.v.cont->st_save = LISP_ALLOC(unsigned char, ret.v.cont->st_size);
+    ret.v.cont->st_wk = st_cur;
+    ret.v.cont->ret = new_lv(LV_NIL);
+    memcpy(ret.v.cont->st_save, ret.v.cont->st_wk, ret.v.cont->st_size);
     return ret;
 }
+
+static lisp_cont_t* cont_in_flight;
 
 static void do_restore(lisp_cont_t* cont, int safety)
     WILE_ATTR((noreturn));
 
 static void do_restore(lisp_cont_t* cont, int safety)
 {
-    uint64_t padding[128];
+    uint64_t padding[32];
     uintptr_t pd;
 
     unsigned char* st_cur = (unsigned char*) padding;
@@ -184,26 +198,24 @@ static void do_restore(lisp_cont_t* cont, int safety)
 	do_restore(cont, 0);
     }
 
-    if (wile_cont_stack_grow_dir < 0) {
-	// st_cur is below wile_cont_stack_base, copy from st_cur(ish)
-	memcpy(1 + wile_cont_stack_base - cont->st_size,
-	       cont->stack, cont->st_size);
-    } else {
-	// st_cur is above wile_cont_stack_base, copy from wile_cont_stack_base
-	memcpy(wile_cont_stack_base, cont->stack, cont->st_size);
-    }
+    memcpy(cont->st_wk, cont->st_save, cont->st_size);
+
+    cont_in_flight = cont;
     longjmp(cont->registers, 1);
 }
-
-static lval cc_ret_in_flight = LVI_NIL();
 
 void wile_invoke_continuation(lptr cc, lptr args)
 {
     if (wile_cont_stack_grow_dir == 0) {
 	FATAL("<continuation>", "stack-grow direction was not set!");
     }
-    cc_ret_in_flight =
-	(IS_PAIR(args) && CDR(args) == NULL) ? *(CAR(args)) : *args;
+    LISP_ASSERT(cc != NULL && cc->vt == LV_CONT && cc->v.cont->ret != NULL);
+
+    *(cc->v.cont->ret) = 
+	(IS_PAIR(args) && CDR(args) == NULL)
+	? (CAR(args) ? *(CAR(args)) : LVI_NIL())
+	: (args ? *args : LVI_NIL());
+
     do_restore(cc->v.cont, 1);
 }
 
@@ -223,19 +235,18 @@ lval wile_call_cc(lptr*, lptr args)
 		       "procedure expects other than exactly one argument");
     }
 
-    cc = save_context(&cc);
+    cc = save_context(1);
+    cont_in_flight = cc.v.cont;
     if (setjmp(cc.v.cont->registers) == 0) {
 	// initial capture of the continuation
 
-	lval fargs[16];
-
-////    int i;
-////	i = 2;
-////	if (i < wile_tc_min_args) {
-////	    i = wile_tc_min_args;
-////	}
-////	lptr fargs = LISP_ALLOC(lval, i);
-////	LISP_ASSERT(fargs != NULL);
+	int i;
+	i = 2;
+	if (i < wile_tc_min_args) {
+	    i = wile_tc_min_args;
+	}
+	lptr fargs = LISP_ALLOC(lval, i);
+	LISP_ASSERT(fargs != NULL);
 
 	fargs[0] = cc;
 	switch (args->vt) {
@@ -254,12 +265,12 @@ lval wile_call_cc(lptr*, lptr args)
 
 	case LV_CONT:
 	    wile_invoke_continuation(args, fargs);
+	    break;
 
 	default:
 	    FATAL("call/cc", "impossible input type!");
 	}
-    } else {
-	// continuation got used somewhere, return value
- 	return cc_ret_in_flight;
     }
+
+    return *(cont_in_flight->ret);
 }

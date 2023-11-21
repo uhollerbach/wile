@@ -1,6 +1,17 @@
-Last update: 2023-11-19 23:00 PST
+Last update: 2023-11-23 02:00 PST
 
 # Changelog for `wile`
+
+## Current version `wile` "1.0.0"
+
+- add a few functions which rely on first-class closures
+  curry, compose, list-group-by; add Miller-Rabin probabilistic
+  primality test
+
+- make continuations work?!? it seems so...
+
+- change format of version to "N1.N2.N3" from (N1 N2 N3), the former
+  is more-standard
 
 ## Current version `wile` (0 11 0) 2023-11-19 23:00 PST
 

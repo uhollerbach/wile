@@ -428,7 +428,9 @@ typedef struct {
 typedef struct {
     jmp_buf registers;
     size_t st_size;
-    unsigned char* stack;
+    unsigned char* st_save;
+    unsigned char* st_wk;
+    lptr ret;
 } lisp_cont_t;
 
 typedef uint32_t lisp_loc_t;

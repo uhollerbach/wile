@@ -13,7 +13,7 @@ ln -s bootstrap/wilec ./wile
 ln -s bootstrap/build-rtl ./
 
 make realclean libwrtl.a
-bootstrap/wilec -c -v wile-main.scm wilec1.c
+bootstrap/wilec -c -v -rm-uv wile-main.scm wilec1.c
 ln -fs wilec1.c wilecxx.c
 bootstrap/wilec -x -v wilecxx.c wilecxx
 rm -f wilecxx.c
