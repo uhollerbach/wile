@@ -17,19 +17,19 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval fn_5(lptr*, lptr);
+static lval fn_5(lptr*, lptr, const char*);
 
 // definitions
 
 // @@@ lambda (x) @@@ bld-rtl-dir/wile-rtl2-000034.scm:14 @@@ fn_5 @@@
-static lval fn_5(lptr* var_6, lptr var_7)
+static lval fn_5(lptr* var_6, lptr var_7, const char* cloc)
 {
 return var_7[0];
 }
 // end of lambda fn_5
 
 // @@@ promote/rat @@@ bld-rtl-dir/wile-rtl2-000034.scm:14 @@@ fn_9 @@@
-static lval fn_9(lptr* var_10, lptr var_11)
+static lval fn_9(lptr* var_10, lptr var_11, const char* cloc)
 {
 lval var_13;
 if (var_11[0].vt == LV_INT) {
@@ -42,7 +42,7 @@ return var_13;
 // end of prim fn_9
 
 // @@@ promote/real @@@ bld-rtl-dir/wile-rtl2-000034.scm:14 @@@ fn_14 @@@
-static lval fn_14(lptr* var_15, lptr var_16)
+static lval fn_14(lptr* var_15, lptr var_16, const char* cloc)
 {
 lval var_18;
 if (var_16[0].vt == LV_INT) {
@@ -57,7 +57,7 @@ return var_18;
 // end of prim fn_14
 
 // @@@ min/i @@@ bld-rtl-dir/wile-rtl2-000034.scm:15 @@@ fn_22 @@@
-static lval fn_22(lptr* var_23, lptr var_24)
+static lval fn_22(lptr* var_23, lptr var_24, const char* cloc)
 {
 lval var_26;
 var_26 = LVI_INT((var_24[0].v.iv < var_24[1].v.iv) ? var_24[0].v.iv : var_24[1].v.iv);
@@ -66,7 +66,7 @@ return var_26;
 // end of prim fn_22
 
 // @@@ min/q @@@ bld-rtl-dir/wile-rtl2-000034.scm:15 @@@ fn_27 @@@
-static lval fn_27(lptr* var_28, lptr var_29)
+static lval fn_27(lptr* var_28, lptr var_29, const char* cloc)
 {
 lval var_31;
 if (var_29[0].v.irv.num * var_29[1].v.irv.den < var_29[1].v.irv.num * var_29[0].v.irv.den) {
@@ -79,7 +79,7 @@ return var_31;
 // end of prim fn_27
 
 // @@@ min/r @@@ bld-rtl-dir/wile-rtl2-000034.scm:15 @@@ fn_32 @@@
-static lval fn_32(lptr* var_33, lptr var_34)
+static lval fn_32(lptr* var_33, lptr var_34, const char* cloc)
 {
 lval var_36;
 var_36 = LVI_REAL((var_34[0].v.rv < var_34[1].v.rv) ? var_34[0].v.rv : var_34[1].v.rv);
@@ -88,7 +88,7 @@ return var_36;
 // end of prim fn_32
 
 // @@@ max/i @@@ bld-rtl-dir/wile-rtl2-000034.scm:22 @@@ fn_56 @@@
-static lval fn_56(lptr* var_57, lptr var_58)
+static lval fn_56(lptr* var_57, lptr var_58, const char* cloc)
 {
 lval var_60;
 var_60 = LVI_INT((var_58[0].v.iv > var_58[1].v.iv) ? var_58[0].v.iv : var_58[1].v.iv);
@@ -97,7 +97,7 @@ return var_60;
 // end of prim fn_56
 
 // @@@ number/type @@@ bld-rtl-dir/wile-rtl2-000034.scm:22 @@@ fn_62 @@@
-static lval fn_62(lptr* var_63, lptr var_64)
+static lval fn_62(lptr* var_63, lptr var_64, const char* cloc)
 {
 lval var_66;
 switch (var_64[0].vt) {
@@ -122,7 +122,7 @@ return var_66;
 // end of prim fn_62
 
 // @@@ (min . vs) @@@ bld-rtl-dir/wile-rtl2-000034.scm:13 @@@ wile_min @@@
-lval wile_min(lptr* var_1, lptr var_2)
+lval wile_min(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 MK_CLOS(var_6,0);
@@ -265,7 +265,8 @@ lval var_68[8];
 var_68[0] = LVI_PROC(fn_62,NULL,1);
 var_68[1] = var_2[0];
 var_68[2] = var_67;
-var_67 = wile_map(NULL, var_68);
+// bld-rtl-dir/wile-rtl2-000034.scm:22
+var_67 = wile_map(NULL, var_68, "bld-rtl-dir/wile-rtl2-000034.scm:22");
 }
 lval var_69;
 {
@@ -273,7 +274,8 @@ lval var_70[8];
 var_70[0] = LVI_PROC(fn_56,NULL,2);
 var_70[1] = var_61;
 var_70[2] = var_67;
-var_69 = wile_foldl(NULL, var_70);
+// bld-rtl-dir/wile-rtl2-000034.scm:22
+var_69 = wile_foldl(NULL, var_70, "bld-rtl-dir/wile-rtl2-000034.scm:22");
 }
 var_55 = var_69;
 lval var_71;
@@ -336,14 +338,16 @@ lval var_77;
 lval var_78[8];
 var_78[0] = var_21;
 var_78[1] = var_55;
-var_77 = wile_list_ref(NULL, var_78);
+// bld-rtl-dir/wile-rtl2-000034.scm:24
+var_77 = wile_list_ref(NULL, var_78, "bld-rtl-dir/wile-rtl2-000034.scm:24");
 }
 lval var_79;
 {
 lval var_80[8];
 var_80[0] = var_4;
 var_80[1] = var_55;
-var_79 = wile_list_ref(NULL, var_80);
+// bld-rtl-dir/wile-rtl2-000034.scm:24
+var_79 = wile_list_ref(NULL, var_80, "bld-rtl-dir/wile-rtl2-000034.scm:24");
 }
 lval var_81;
 var_81 = LVI_NIL();
@@ -352,14 +356,16 @@ lval var_82[8];
 var_82[0] = var_79;
 var_82[1] = var_2[0];
 var_82[2] = var_81;
-var_81 = wile_map(NULL, var_82);
+// bld-rtl-dir/wile-rtl2-000034.scm:24
+var_81 = wile_map(NULL, var_82, "bld-rtl-dir/wile-rtl2-000034.scm:24");
 }
 lval var_83;
 {
 lval var_84[8];
 var_84[0] = var_77;
 var_84[1] = var_81;
-var_83 = wile_foldl1(NULL, var_84);
+// bld-rtl-dir/wile-rtl2-000034.scm:24
+var_83 = wile_foldl1(NULL, var_84, "bld-rtl-dir/wile-rtl2-000034.scm:24");
 }
 var_71 = var_83;
 }

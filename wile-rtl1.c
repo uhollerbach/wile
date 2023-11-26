@@ -84,19 +84,21 @@ int main(int argc, char** argv)
 	if (cachalot->errval) {
 	    fputs("\n    ", stderr);
 	    if (IS_PAIR(cachalot->errval) &&
+		CAR(cachalot->errval) != NULL &&
 		IS_SYMBOL(CAR(cachalot->errval)) &&
 		strcmp(CAR(cachalot->errval)->v.str, "wile") == 0) {
 		if (IS_STRING(CDR(cachalot->errval))) {
 		    fputs((CDR(cachalot->errval))->v.str, stderr);
 		} else if (CDR(cachalot->errval)) {
-		    wile_print_lisp_val(CDR(cachalot->errval), stderr);
+		    wile_print_lisp_val(CDR(cachalot->errval),
+					stderr, "<main>");
 		} else {
 		    fputs("()!", stderr);
 		}
 	    } else if (IS_STRING(cachalot->errval)) {
 		fputs(cachalot->errval->v.str, stderr);
 	    } else {
-		wile_print_lisp_val(cachalot->errval, stderr);
+		wile_print_lisp_val(cachalot->errval, stderr, "<main>");
 	    }
 	} else {
 	    fputc('!', stderr);
@@ -130,7 +132,7 @@ int main(int argc, char** argv)
 
 // trivial function to get gc code version
 
-lval wile_gc_version(lptr*, lptr)
+lval wile_gc_version(lptr*, lptr, const char*)
 {
 #ifdef WILE_USES_GC
     char buf[64];
@@ -144,8 +146,7 @@ lval wile_gc_version(lptr*, lptr)
 
 lptr display_hooks = NULL;
 
-lval wile_register_display_proc(const char* sym, lval proc,
-				const char* fname, int lno)
+lval wile_register_display_proc(const char* sym, lval proc, const char* loc)
 {
     if (sym) {
 	lptr p1, p2;
@@ -156,29 +157,28 @@ lval wile_register_display_proc(const char* sym, lval proc,
 	display_hooks = new_pair(new_pair(p1, p2), display_hooks);
 	return LVI_BOOL(true);
     } else {
-	wile_exception2("display-object-hook", fname, lno, "no symbol!");
+	wile_exception("display-object-hook", loc, "no symbol!");
     }
 }
 
-lval wile_num2string(lval num, int base, int prec, const char* fname, int lno)
+lval wile_num2string(lval num, int base, int prec, const char* loc)
 {
     char buf[1280];
 
     if (num.vt == LV_INT || num.vt == LV_RAT ||
 	num.vt == LV_REAL || num.vt == LV_CMPLX) {
 	if (base < 2 || base > 36) {
-	    wile_exception2("number->string", fname, lno,
-			    "base %d is illegal", base);
+	    wile_exception("number->string", loc,
+			   "base %d is illegal", base);
 	}
 	if (prec != INT_MIN && (prec < -999 || prec > 999)) {
-	    wile_exception2("number->string", fname, lno,
-			    "precision %d is illegal", prec);
+	    wile_exception("number->string", loc,
+			   "precision %d is illegal", prec);
 	}
 	wile_sprint_lisp_num(buf, sizeof(buf), &num, base, prec, false);
 	return LVI_STRING(buf);
     } else {
-	wile_exception2("number->string", fname, lno,
-			"first input is not numeric");
+	wile_exception("number->string", loc, "first input is not numeric");
     }
 }
 
@@ -331,31 +331,8 @@ void wile_stack_trace_minimal(int fd)
 
 // --8><----8><----8><--
 
-void wile_exception(const char* fname, const char* fmt, ...)
-{
-    char buf1[1024], buf2[1280];
-    va_list ap;
-
-    wile_stack_trace_minimal(fileno(stderr));
-    va_start(ap, fmt);
-    vsnprintf(buf1, sizeof(buf1), fmt, ap);
-    va_end(ap);
-    snprintf(buf2, sizeof(buf2), "'%s' %s", fname, buf1);
-
-    cachalot->errval = new_string(buf2);
-    cachalot->l_whence = 0;
-    cachalot->c_whence = LISP_WHENCE;
-    longjmp(cachalot->cenv, 1);
-}
-
-// --8><----8><----8><--
-
-// updated version which includes file/line# info;
-// don't want to convert everything all at once.
-// TODO: eventually use this everywhere and remove the above
-
-void wile_exception2(const char* func_name, const char* file_name,
-		     int line_no, const char* fmt, ...)
+void wile_exception(const char* func_name, const char* loc,
+		    const char* fmt, ...)
 {
     char buf1[1024], buf2[1280];
     va_list ap;
@@ -368,8 +345,7 @@ void wile_exception2(const char* func_name, const char* file_name,
 
     cachalot->errval = new_string(buf2);
     cachalot->l_whence = 0;
-    snprintf(buf1, sizeof(buf1), "<%s:%d>", file_name, line_no);
-    cachalot->c_whence = LISP_STRDUP(buf1);
+    cachalot->c_whence = LISP_STRDUP(loc);
     longjmp(cachalot->cenv, 1);
 }
 
@@ -389,10 +365,10 @@ lval wile_get_gensym(void)
 
 // --8><----8><----8><--
 
-lval wile_run_system_command(lval cmd, const char* fname, int lno)
+lval wile_run_system_command(lval cmd, const char* loc)
 {
     if (cmd.vt != LV_STRING) {
-	wile_exception2("run-command", fname, lno, "got bad input type!");
+	wile_exception("run-command", loc, "got bad input type!");
     }
     int status = system(cmd.v.str);
     if (status < 0) {
@@ -411,17 +387,16 @@ lval wile_run_system_command(lval cmd, const char* fname, int lno)
 
 // --8><----8><----8><--
 
-lval wile_run_pipe_command(lval cmd, const char* rw,
-			   const char* fname, int lno)
+lval wile_run_pipe_command(lval cmd, const char* rw, const char* loc)
 {
     if (cmd.vt != LV_STRING ||
 	(strcmp(rw, "r") != 0 && strcmp(rw, "w") != 0)) {
-	wile_exception2("run-read/write-command", fname, lno,
-			"got bad input type!");
+	wile_exception("run-read/write-command", loc,
+		       "got bad input type!");
     }
     if (strcmp(rw, "r") != 0 && strcmp(rw, "w") != 0) {
-	wile_exception2("run-read/write-command", fname, lno,
-			"got bad read/write mode %s", rw);
+	wile_exception("run-read/write-command", loc,
+		       "got bad read/write mode %s", rw);
     }
     FILE* fp = popen(cmd.v.str, rw);
     if (fp) {
@@ -433,7 +408,7 @@ lval wile_run_pipe_command(lval cmd, const char* rw,
 
 // --8><----8><----8><--
 
-lval wile_temp_file(lptr*, lptr args)
+lval wile_temp_file(lptr*, lptr args, const char* loc)
 {
     char *template, *tp;
     size_t tlen;
@@ -441,7 +416,8 @@ lval wile_temp_file(lptr*, lptr args)
     FILE* fp;
 
     if (args->vt != LV_STRING) {
-	wile_exception("open-temporary-file", "expects one string argument");
+	wile_exception("open-temporary-file", loc,
+		       "expects one string argument");
     }
     tlen = strlen(args->v.str);
     template = LISP_ALLOC(char, tlen + 8);
@@ -462,14 +438,16 @@ lval wile_temp_file(lptr*, lptr args)
     nt = mkstemp(template);
     if (nt < 0) {
 	LISP_FREE_STR(template);
-	wile_exception("open-temporary-file", "could not create temporary file");
+	wile_exception("open-temporary-file", loc,
+		       "could not create temporary file");
     }
     lval vs[2];
     vs[1] = LVI_STRING(template);
     LISP_FREE_STR(template);
     fp = fdopen(nt, "w+");
     if (fp == NULL) {
-	wile_exception("open-temporary-file", "could not create temporary file");
+	wile_exception("open-temporary-file", loc,
+		       "could not create temporary file");
     }
     vs[0] = LVI_FPORT(fp);
     return wile_gen_list(2, vs, NULL);
@@ -489,7 +467,7 @@ lval wile_temp_file(lptr*, lptr args)
 void set_start_state(struct ulex_context* context);
 #endif // WILE_NEEDS_ULEX
 
-lval wile_string2num(lval str, const char* fname, int lno)
+lval wile_string2num(lval str, const char* loc)
 {
     lval val1, val2;
     unsigned char* text;
@@ -497,8 +475,7 @@ lval wile_string2num(lval str, const char* fname, int lno)
     wile_set_lisp_loc_file(NULL);
     struct ulex_context* context = ulex_init(ulex_TEXT, str.v.str);
     if (context == NULL) {
-	wile_exception2("string->number", fname, lno,
-			"was unable to set up lexer");
+	wile_exception("string->number", loc, "was unable to set up lexer");
     }
     set_start_state(context);
     (void) wile_lex(context, &val1, NULL, &text);
@@ -509,14 +486,14 @@ lval wile_string2num(lval str, const char* fname, int lno)
 	    val1.vt == LV_REAL || val1.vt == LV_CMPLX) {
 	    return val1;
 	} else {
-	    wile_exception2("string->number", fname, lno,
-			    "got bad type %d!", val1.vt);
+	    wile_exception("string->number", loc,
+			   "got bad type %d!", val1.vt);
 	}
 	ulex_cleanup(context);
     } else {
 	ulex_cleanup(context);
-	wile_exception2("string->number", fname, lno,
-			"got bad input string '%s'", str.v.str);
+	wile_exception("string->number", loc,
+		       "got bad input string '%s'", str.v.str);
     }
 }
 
@@ -684,7 +661,7 @@ lisp_real_t phermite2(int n, lisp_real_t x)
 void floor_qr(lisp_int_t n1, lisp_int_t n2, lisp_int_t* nq, lisp_int_t* nr)
 {
     if (n2 == 0) {
-	wile_exception("floor_qr", "division by zero!");
+	wile_exception("floor_qr", LISP_WHENCE, "division by zero!");
     }
     *nq = n1/n2;
     *nr = n1 - *nq*n2;
@@ -699,7 +676,7 @@ void floor_qr(lisp_int_t n1, lisp_int_t n2, lisp_int_t* nq, lisp_int_t* nr)
 void trunc_qr(lisp_int_t n1, lisp_int_t n2, lisp_int_t* nq, lisp_int_t* nr)
 {
     if (n2 == 0) {
-	wile_exception("trunc_qr", "division by zero!");
+	wile_exception("trunc_qr", LISP_WHENCE, "division by zero!");
     }
     *nq = n1/n2;
     *nr = n1 - *nq*n2;
@@ -710,7 +687,7 @@ void trunc_qr(lisp_int_t n1, lisp_int_t n2, lisp_int_t* nq, lisp_int_t* nr)
 void ceil_qr(lisp_int_t n1, lisp_int_t n2, lisp_int_t* nq, lisp_int_t* nr)
 {
     if (n2 == 0) {
-	wile_exception("ceiling_qr", "division by zero!");
+	wile_exception("ceiling_qr", LISP_WHENCE, "division by zero!");
     }
     *nq = n1/n2;
     *nr = n1 - *nq*n2;
@@ -841,7 +818,7 @@ bool wile_do_eqv(lptr arg1, lptr arg2)
 
 #include "array_builder.h"
 
-lval wile_read_line(lptr*, lptr args)
+lval wile_read_line(lptr*, lptr args, const char* loc)
 {
     FILE* fp;
 
@@ -850,7 +827,7 @@ lval wile_read_line(lptr*, lptr args)
 	args[0].vt == LV_SOCK_PORT) {
 	fp = args[0].v.fp;
     } else {
-	wile_exception("read-line", "expects one port argument");
+	wile_exception("read-line", loc, "expects one port argument");
     }
 
     ab_char mya_str = ab_char_setup(64);
@@ -893,12 +870,12 @@ lval wile_read_line(lptr*, lptr args)
 void set_start_state(struct ulex_context* context);
 #endif // WILE_NEEDS_ULEX
 
-lval wile_parse_string(lptr*, lptr args)
+lval wile_parse_string(lptr*, lptr args, const char* loc)
 {
     lval res;
 
     if (!IS_STRING(args)) {
-	wile_exception("parse-string", "expects one string argument");
+	wile_exception("parse-string", loc, "expects one string argument");
     }
 
     lptr lp = NULL;
@@ -906,7 +883,7 @@ lval wile_parse_string(lptr*, lptr args)
     struct ulex_context* context = ulex_init(ulex_TEXT, args[0].v.str);
 
     if (context == NULL) {
-	wile_exception("parse-string", "unable to set up lexer");
+	wile_exception("parse-string", loc, "unable to set up lexer");
     } else {
 	set_start_state(context);
 	if (wile_parse(context, &lp, 1)) {
@@ -933,13 +910,13 @@ lval wile_parse_string(lptr*, lptr args)
 void set_start_state(struct ulex_context* context);
 #endif // WILE_NEEDS_ULEX
 
-lval wile_parse_file(lptr*, lptr args)
+lval wile_parse_file(lptr*, lptr args, const char* loc)
 {
     lval res;
 
     if (!IS_STRING(args) && !IS_FPORT(args) &&
 	!IS_PPORT(args) && !IS_SOCKPORT(args)) {
-	wile_exception("read-all",
+	wile_exception("read-all", loc,
 		       "expects one string or file/pipe/socket port argument");
     }
 
@@ -951,7 +928,7 @@ lval wile_parse_file(lptr*, lptr args)
 	: ulex_init(ulex_STREAM, args->v.fp);
 
     if (context == NULL) {
-	wile_exception("read-all", "unable to set up lexer");
+	wile_exception("read-all", loc, "unable to set up lexer");
     } else {
 	set_start_state(context);
 	if (wile_parse(context, &lp, 1)) {
@@ -968,7 +945,7 @@ lval wile_parse_file(lptr*, lptr args)
 
 // (regex-match pattern string) => #f || (pre-match match post-match)
 
-lval wile_regex_match(lptr*, lptr args)
+lval wile_regex_match(lptr*, lptr args, const char* loc)
 {
     struct nfa_state* nstate;
     struct nfa_work* nwork;
@@ -977,12 +954,12 @@ lval wile_regex_match(lptr*, lptr args)
     lval res;
 
     if (args[0].vt != LV_STRING || args[1].vt != LV_STRING) {
-	wile_exception("regex-match", "expects two string arguments");
+	wile_exception("regex-match", loc, "expects two string arguments");
     }
 
     nstate = regex_parse(args[0].v.str, NULL, REGEX_OPTION_8BIT, 0);
     if (nstate == NULL) {
-	wile_exception("regex-match", "regular expression parse failed");
+	wile_exception("regex-match", loc, "regular expression parse failed");
     }
     nwork = regex_wrap(nstate, REGEX_OPTION_8BIT);
     if (regex_match((unsigned char*) args[1].v.str, nwork,
@@ -1016,7 +993,7 @@ extern const int wile_tc_min_args;
 // The apply procedure calls proc with the elements of the list
 // (append (list arg1 . . . ) args) as the actual arguments.
 
-lval wile_apply_function(lptr args, const char* file_name, int line_no)
+lval wile_apply_function(lptr args, const char* loc)
 {
     lval proc, lv;
     lptr ap, app;
@@ -1024,8 +1001,7 @@ lval wile_apply_function(lptr args, const char* file_name, int line_no)
     bool caboose;
 
     if (args == NULL || args->vt != LV_PAIR) {
-	wile_exception2("apply", file_name, line_no,
-			"failed while fetching proc");
+	wile_exception("apply", loc, "failed while fetching proc");
     } else {
 	proc = CAR(args) ? *(CAR(args)) : LVI_NIL();
 	args = CDR(args);
@@ -1039,8 +1015,7 @@ lval wile_apply_function(lptr args, const char* file_name, int line_no)
     }
     ap = CAR(ap);
     if (!(ap == NULL || ap->vt == LV_NIL || IS_PAIR(ap))) {
-	wile_exception2("apply", file_name, line_no,
-			"last argument is not a list!");
+	wile_exception("apply", loc, "last argument is not a list!");
     }
     if (app) {
 // TODO: we are modifying the list structure of the input here, is that kosher?
@@ -1048,10 +1023,9 @@ lval wile_apply_function(lptr args, const char* file_name, int line_no)
     } else {
 	args = ap;
     }
-    lv = wile_list_length(NULL, args);
+    lv = wile_list_length(NULL, args, loc);
     if (lv.vt != LV_INT || lv.v.iv < 0) {
-	wile_exception2("apply", file_name, line_no,
-			"got a bad list length!?!");
+	wile_exception("apply", loc, "got a bad list length!?!");
     }
     len = lv.v.iv;
 
@@ -1061,17 +1035,17 @@ lval wile_apply_function(lptr args, const char* file_name, int line_no)
 	    proc.v.ilambda->arity;
 	if (arity >= 0) {
 	    if (arity != len) {
-		wile_exception2("apply", file_name, line_no,
-				"proc expects %s %d arguments, got %d arguments",
-				"exactly", arity, len);
+		wile_exception("apply", loc,
+			       "proc expects %s %d arguments, got %d arguments",
+			       "exactly", arity, len);
 	    }
 	    caboose = false;
 	} else {
 	    arity = (-arity) - 1;
 	    if (len < arity) {
-		wile_exception2("apply", file_name, line_no,
-				"proc expects %s %d arguments, got %d arguments",
-				"at least", arity, len);
+		wile_exception("apply", loc,
+			       "proc expects %s %d arguments, got %d arguments",
+			       "at least", arity, len);
 	    }
 	    caboose = true;
 	}
@@ -1093,9 +1067,9 @@ lval wile_apply_function(lptr args, const char* file_name, int line_no)
 
 	    if (wile_tc_min_args > 0) {
 		// Oddly, clang does not like this as a TAIL_CALL
-		return proc.v.clambda.fn(proc.v.clambda.closure, ap);
+		return proc.v.clambda.fn(proc.v.clambda.closure, ap, loc);
 	    } else {
-		lv = proc.v.clambda.fn(proc.v.clambda.closure, ap);
+		lv = proc.v.clambda.fn(proc.v.clambda.closure, ap, loc);
 		LISP_FREE(ap);
 		return lv;
 	    }
@@ -1108,19 +1082,19 @@ lval wile_apply_function(lptr args, const char* file_name, int line_no)
 	    LISP_ASSERT(app != NULL);
 	    app[0] = proc;
 	    app[1] = args ? *args : LVI_NIL();
-	    return wile_eval_apply_lambda(NULL, app);
+	    return wile_eval_apply_lambda(NULL, app, loc);
 	}
     } else if (proc.vt == LV_CONT) {
 	wile_invoke_continuation(&proc, args);
     } else {
-	wile_exception2("apply", file_name, line_no,
-			"failed while fetching proc - bad type %d", proc.vt);
+	wile_exception("apply", loc,
+		       "failed while fetching proc - bad type %d", proc.vt);
     }
 }
 
 // --8><----8><----8><--
 
-lval wile_read_directory(lptr*, lptr args)
+lval wile_read_directory(lptr*, lptr args, const char* loc)
 {
     DIR* dp;
     struct dirent* de;
@@ -1131,7 +1105,7 @@ lval wile_read_directory(lptr*, lptr args)
     } else if (args->vt == LV_STRING) {
 	dp = opendir(args->v.str);
     } else {
-	wile_exception("read-directory", "expects one string argument");
+	wile_exception("read-directory", loc, "expects one string argument");
     }
     if (dp == NULL) {
 	return LVI_BOOL(false);
@@ -1150,7 +1124,7 @@ lval wile_read_directory(lptr*, lptr args)
 
 // --8><----8><----8><--
 
-lval wile_char2string(lptr*, lptr args)
+lval wile_char2string(lptr*, lptr args, const char* loc)
 {
     lval lv, ac;
     lisp_int_t i, len;
@@ -1158,9 +1132,9 @@ lval wile_char2string(lptr*, lptr args)
     if (args == NULL || args->vt == LV_NIL) {
 	return LVI_STRING("");
     }
-    lv = wile_list_length(NULL, args);
+    lv = wile_list_length(NULL, args, loc);
     if (lv.vt != LV_INT || lv.v.iv < 0) {
-	wile_exception("char->string", "got a bad list length!?!");
+	wile_exception("char->string", loc, "got a bad list length!?!");
     }
     len = lv.v.iv;
 
@@ -1171,9 +1145,10 @@ lval wile_char2string(lptr*, lptr args)
 	    if (args == NULL) {
 		len = 0;
 	    } else {
-		lv = wile_list_length(NULL, args);
+		lv = wile_list_length(NULL, args, loc);
 		if (lv.vt != LV_INT || lv.v.iv < 0) {
-		    wile_exception("char->string", "got a bad list length!?!");
+		    wile_exception("char->string", loc,
+				   "got a bad list length!?!");
 		}
 		len = lv.v.iv;
 	    }
@@ -1190,7 +1165,8 @@ lval wile_char2string(lptr*, lptr args)
 	LISP_ASSERT(args != NULL && args->vt == LV_PAIR);
 	ac = CAR(args) ? *(CAR(args)) : LVI_NIL();
 	if (ac.vt != LV_CHAR) {
-	    wile_exception("char->string", "got a non-character argument");
+	    wile_exception("char->string", loc,
+			   "got a non-character argument");
 	}
 	lv.v.str[i] = ac.v.chr;
 	args = CDR(args);
@@ -1210,7 +1186,7 @@ static int tcp_proto = 0;
 	    struct protoent* pro = getprotobyname("tcp");		\
 	    if (pro == NULL) {						\
 		endprotoent();						\
-		wile_exception((fname),					\
+		wile_exception((fname), loc,				\
 			       "can't find tcp protocol number! no networking?"); \
 	    }								\
 	    tcp_proto = pro->p_proto;					\
@@ -1218,17 +1194,17 @@ static int tcp_proto = 0;
 	}								\
     } while (0)
 
-lval wile_listen_port(lptr*, lptr args)
+lval wile_listen_port(lptr*, lptr args, const char* loc)
 {
     int sd;
     FILE* fp;
 
     if (args[0].vt != LV_INT) {
-	wile_exception("listen-on", "got a non-integer argument");
+	wile_exception("listen-on", loc, "got a non-integer argument");
     }
     if (args[0].v.iv < 0 || args[0].v.iv > 65535) {
-	wile_exception("listen-on", "got bad port number %lld",
-		     (long long) args[0].v.iv);
+	wile_exception("listen-on", loc, "got bad port number %lld",
+		       (long long) args[0].v.iv);
     }
     GET_PROTO("listen-on");
 
@@ -1262,7 +1238,7 @@ lval wile_listen_port(lptr*, lptr args)
     }
 }
 
-lval wile_accept_connection(lptr*, lptr args)
+lval wile_accept_connection(lptr*, lptr args, const char* loc)
 {
     int fd;
     unsigned int psize;
@@ -1270,7 +1246,7 @@ lval wile_accept_connection(lptr*, lptr args)
     struct sockaddr_in peer;
 
     if (args[0].vt != LV_SOCK_PORT) {
-	wile_exception("accept", "expects one socket-port argument");
+	wile_exception("accept", loc, "expects one socket-port argument");
     } else {
 	memset(&peer, 0, sizeof(peer));
 	psize = sizeof(peer);
@@ -1297,7 +1273,7 @@ lval wile_accept_connection(lptr*, lptr args)
     }
 }
 
-lval wile_connect_to(lptr*, lptr args)
+lval wile_connect_to(lptr*, lptr args, const char* loc)
 {
     char pstr[8];
     struct addrinfo hints, *server, *sp;
@@ -1305,11 +1281,11 @@ lval wile_connect_to(lptr*, lptr args)
     int sd;
 
     if (args[0].vt != LV_STRING || args[1].vt != LV_INT) {
-	wile_exception("connect-to",
+	wile_exception("connect-to", loc,
 		       "expects one string and one int argument");
     }
     if (args[1].v.iv < 0 || args[1].v.iv > 65535) {
-	wile_exception("connect-to", "got bad port number %lld",
+	wile_exception("connect-to", loc, "got bad port number %lld",
 		       (long long) args[1].v.iv);
     }
     GET_PROTO("connect-to");
@@ -1321,7 +1297,7 @@ lval wile_connect_to(lptr*, lptr args)
     hints.ai_socktype = SOCK_STREAM;
 
     if (getaddrinfo(args[0].v.str, pstr, &hints, &server) != 0) {
-	wile_exception("connect-to", "getaddrinfo failed");
+	wile_exception("connect-to", loc, "getaddrinfo failed");
     }
 
     sp = server;
@@ -1373,7 +1349,7 @@ lval wile_rand_normal_pair(lisp_real_t m, lisp_real_t s)
 
 // --8><----8><----8><--
 
-lval wile_gethostname(lptr*, lptr)
+lval wile_gethostname(lptr*, lptr, const char*)
 {
     char buf[HOST_NAME_MAX+1];
     if (gethostname(buf, sizeof(buf)) < 0) {
@@ -1385,7 +1361,7 @@ lval wile_gethostname(lptr*, lptr)
 
 // --8><----8><----8><--
 
-lval wile_getdomainname(lptr*, lptr)
+lval wile_getdomainname(lptr*, lptr, const char*)
 {
     char buf[HOST_NAME_MAX+1];
     if (getdomainname(buf, sizeof(buf)) < 0) {
@@ -1397,7 +1373,7 @@ lval wile_getdomainname(lptr*, lptr)
 
 // --8><----8><----8><--
 
-lval wile_getcwd(lptr*, lptr)
+lval wile_getcwd(lptr*, lptr, const char*)
 {
     char str[1+PATH_MAX], *sp;
     sp = getcwd(str, sizeof(str));
@@ -1410,7 +1386,7 @@ lval wile_getcwd(lptr*, lptr)
 
 // --8><----8><----8><--
 
-lval wile_cputime(lptr*, lptr)
+lval wile_cputime(lptr*, lptr, const char*)
 {
     struct rusage usage;
     if (getrusage(RUSAGE_SELF, &usage) == 0) {
@@ -1425,11 +1401,11 @@ lval wile_cputime(lptr*, lptr)
 
 // --8><----8><----8><--
 
-lval wile_filestat(lptr*, lptr args)
+lval wile_filestat(lptr*, lptr args, const char* loc)
 {
     struct stat sbuf;
     if (args[0].vt != LV_STRING) {
-	wile_exception("get-file-status", "expects one string argument");
+	wile_exception("get-file-status", loc, "expects one string argument");
     }
     if (stat(args[0].v.str, &sbuf) == 0) {
 	lval vs[13];
@@ -1454,11 +1430,11 @@ lval wile_filestat(lptr*, lptr args)
 
 // --8><----8><----8><--
 
-lval wile_symlinkstat(lptr*, lptr args)
+lval wile_symlinkstat(lptr*, lptr args, const char* loc)
 {
     struct stat sbuf;
     if (args[0].vt != LV_STRING) {
-	wile_exception("get-symbolic-link-status",
+	wile_exception("get-symbolic-link-status", loc,
 		       "expects one string argument");
     }
     if (lstat(args[0].v.str, &sbuf) == 0) {
@@ -1484,7 +1460,7 @@ lval wile_symlinkstat(lptr*, lptr args)
 
 // --8><----8><----8><--
 
-lval wile_getuserinfo(lptr*, lptr args)
+lval wile_getuserinfo(lptr*, lptr args, const char* loc)
 {
     struct passwd* pwp;
     if (args[0].vt == LV_STRING) {
@@ -1492,7 +1468,8 @@ lval wile_getuserinfo(lptr*, lptr args)
     } else if (args[0].vt == LV_INT) {
 	pwp = getpwuid(args[0].v.iv);
     } else {
-	wile_exception("get-user-information", "expects a user name or uid");
+	wile_exception("get-user-information", loc,
+		       "expects a user name or uid");
     }
     if (pwp) {
 	lval vs[7];
@@ -1511,7 +1488,7 @@ lval wile_getuserinfo(lptr*, lptr args)
 
 // --8><----8><----8><--
 
-lval wile_getalluserinfo(lptr*, lptr args)
+lval wile_getalluserinfo(lptr*, lptr args, const char* loc)
 {
     struct passwd* pwp;
     lptr p1, res = NULL;
@@ -1540,7 +1517,7 @@ lval wile_getalluserinfo(lptr*, lptr args)
 
 // --8><----8><----8><--
 
-lval wile_getgroupinfo(lptr*, lptr args)
+lval wile_getgroupinfo(lptr*, lptr args, const char* loc)
 {
     struct group* grp;
     if (args[0].vt == LV_STRING) {
@@ -1548,7 +1525,8 @@ lval wile_getgroupinfo(lptr*, lptr args)
     } else if (args[0].vt == LV_INT) {
 	grp = getgrgid(args[0].v.iv);
     } else {
-	wile_exception("get-group-information", "expects a group name or uid");
+	wile_exception("get-group-information", loc,
+		       "expects a group name or uid");
     }
     if (grp) {
 	lptr res = NULL;
@@ -1569,7 +1547,7 @@ lval wile_getgroupinfo(lptr*, lptr args)
 
 // --8><----8><----8><--
 
-lval wile_getallgroupinfo(lptr*, lptr args)
+lval wile_getallgroupinfo(lptr*, lptr args, const char* loc)
 {
     struct group* grp;
     lptr res = NULL;
@@ -1598,13 +1576,13 @@ lval wile_getallgroupinfo(lptr*, lptr args)
 
 // --8><----8><----8><--
 
-lval wile_localtime(lptr*, lptr args)
+lval wile_localtime(lptr*, lptr args, const char* loc)
 {
     time_t now;
     if (args == NULL) {
 	now = time(NULL);
     } else if (args[0].vt != LV_INT) {
-	wile_exception("localtime",
+	wile_exception("localtime", loc,
 		       "expects no argument or one integer argument");
     } else {
 	now = (time_t) args[0].v.iv;
@@ -1629,13 +1607,13 @@ lval wile_localtime(lptr*, lptr args)
 
 // --8><----8><----8><--
 
-lval wile_gmtime(lptr*, lptr args)
+lval wile_gmtime(lptr*, lptr args, const char* loc)
 {
     time_t now;
     if (args == NULL) {
 	now = time(NULL);
     } else if (args[0].vt != LV_INT) {
-	wile_exception("UTCtime",
+	wile_exception("UTCtime", loc,
 		       "expects no argument or one integer argument");
     } else {
 	now = (time_t) args[0].v.iv;
@@ -1660,7 +1638,7 @@ lval wile_gmtime(lptr*, lptr args)
 
 // --8><----8><----8><--
 
-lval wile_closeport(lptr*, lptr args)
+lval wile_closeport(lptr*, lptr args, const char* loc)
 {
     if (args[0].vt == LV_FILE_PORT ||
 	args[0].vt == LV_SOCK_PORT) {
@@ -1674,13 +1652,13 @@ lval wile_closeport(lptr*, lptr args)
 	return LVI_BOOL(sqlite3_close_v2(args[0].v.sqlite_conn) == SQLITE_OK);
 #endif // WILE_USES_SQLITE
     } else {
-	wile_exception("close-port", "expects one port argument");
+	wile_exception("close-port", loc, "expects one port argument");
     }
 }
 	   
 // --8><----8><----8><--
 
-lval wile_flushport(lptr*, lptr args)
+lval wile_flushport(lptr*, lptr args, const char* loc)
 {
     if (args[0].vt == LV_FILE_PORT ||
 	args[0].vt == LV_PIPE_PORT ||
@@ -1694,13 +1672,13 @@ lval wile_flushport(lptr*, lptr args)
 	return LVI_BOOL(false);
 #endif // WILE_USES_SQLITE
     } else {
-	wile_exception("flush-port", "expects one port argument");
+	wile_exception("flush-port", loc, "expects one port argument");
     }
 }
 
 // --8><----8><----8><--
 
-lval wile_setlinebuffering(lptr*, lptr args)
+lval wile_setlinebuffering(lptr*, lptr args, const char* loc)
 {
     if (args[0].vt == LV_FILE_PORT ||
 	args[0].vt == LV_PIPE_PORT ||
@@ -1713,13 +1691,14 @@ lval wile_setlinebuffering(lptr*, lptr args)
 	return LVI_BOOL(false);
 #endif // WILE_USES_SQLITE
     } else {
-	wile_exception("set-line-buffering!", "expects one port argument");
+	wile_exception("set-line-buffering!", loc,
+		       "expects one port argument");
     }
 }
 
 // --8><----8><----8><--
 
-lval wile_setnobuffering(lptr*, lptr args)
+lval wile_setnobuffering(lptr*, lptr args, const char* loc)
 {
     if (args[0].vt == LV_FILE_PORT ||
 	args[0].vt == LV_PIPE_PORT ||
@@ -1732,17 +1711,17 @@ lval wile_setnobuffering(lptr*, lptr args)
 	return LVI_BOOL(false);
 #endif // WILE_USES_SQLITE
     } else {
-	wile_exception("set-no-buffering!", "expects one port argument");
+	wile_exception("set-no-buffering!", loc, "expects one port argument");
     }
 }
 
 // --8><----8><----8><--
 
-lval wile_setfilepos2(lptr*, lptr args)
+lval wile_setfilepos2(lptr*, lptr args, const char* loc)
 {
     if (args[0].vt != LV_FILE_PORT ||
 	args[1].vt != LV_INT) {
-	wile_exception("set-file-position",
+	wile_exception("set-file-position", loc,
 		       "expects a file port and an offset");
     }
     return LVI_BOOL(fseek(args[0].v.fp, args[1].v.iv, SEEK_SET) == 0);
@@ -1750,12 +1729,12 @@ lval wile_setfilepos2(lptr*, lptr args)
 
 // --8><----8><----8><--
 
-lval wile_setfilepos3(lptr*, lptr args)
+lval wile_setfilepos3(lptr*, lptr args, const char* loc)
 {
     if (args[0].vt != LV_FILE_PORT ||
 	args[1].vt != LV_INT ||
 	args[2].vt != LV_SYMBOL) {
-	wile_exception("set-file-position",
+	wile_exception("set-file-position", loc,
 		       "expects a file port, an offset, and a location symbol");
     }
     int whence;
@@ -1766,19 +1745,20 @@ lval wile_setfilepos3(lptr*, lptr args)
     } else if (strcmp(args[2].v.str, "end") == 0) {
 	whence = SEEK_END;
     } else {
-	wile_exception("set-file-position", "got an unknown location symbol");
+	wile_exception("set-file-position", loc,
+		       "got an unknown location symbol");
     }
     return LVI_BOOL(fseek(args[0].v.fp, args[1].v.iv, whence) == 0);
 }
 
 // --8><----8><----8><--
 
-lval wile_string_reverse(lptr*, lptr args)
+lval wile_string_reverse(lptr*, lptr args, const char* loc)
 {
     size_t i, j;
     char c;
     if (args[0].vt != LV_STRING) {
-	wile_exception("string-reverse", "expects a string argument");
+	wile_exception("string-reverse", loc, "expects a string argument");
     }
     lval ret = LVI_STRING(args[0].v.str);
     i = 0;
@@ -1793,13 +1773,13 @@ lval wile_string_reverse(lptr*, lptr args)
 
 // --8><----8><----8><--
 
-lval wile_string_hash_32(lptr*, lptr args)
+lval wile_string_hash_32(lptr*, lptr args, const char* loc)
 {
     uint32_t hash;
     size_t i, n_os;
 
     if (args[0].vt != LV_STRING) {
-	wile_exception("string-hash-32", "expects a string argument");
+	wile_exception("string-hash-32", loc, "expects a string argument");
     }
     n_os = strlen(args[0].v.str);
     hash = 2166136261U;
@@ -1812,13 +1792,13 @@ lval wile_string_hash_32(lptr*, lptr args)
 
 // --8><----8><----8><--
 
-lval wile_string_hash_64(lptr*, lptr args)
+lval wile_string_hash_64(lptr*, lptr args, const char* loc)
 {
     uint64_t hash;
     size_t i, n_os;
 
     if (args[0].vt != LV_STRING) {
-	wile_exception("string-hash-64", "expects a string argument");
+	wile_exception("string-hash-64", loc, "expects a string argument");
     }
     n_os = strlen(args[0].v.str);
     hash = 14695981039346656037UL;
@@ -1831,13 +1811,13 @@ lval wile_string_hash_64(lptr*, lptr args)
 
 // --8><----8><----8><--
 
-lval wile_string_ci_hash_32(lptr*, lptr args)
+lval wile_string_ci_hash_32(lptr*, lptr args, const char* loc)
 {
     uint32_t hash;
     size_t i, n_os;
 
     if (args[0].vt != LV_STRING) {
-	wile_exception("string-ci-hash-32", "expects a string argument");
+	wile_exception("string-ci-hash-32", loc, "expects a string argument");
     }
     n_os = strlen(args[0].v.str);
     hash = 2166136261U;
@@ -1850,13 +1830,13 @@ lval wile_string_ci_hash_32(lptr*, lptr args)
 
 // --8><----8><----8><--
 
-lval wile_string_ci_hash_64(lptr*, lptr args)
+lval wile_string_ci_hash_64(lptr*, lptr args, const char* loc)
 {
     uint64_t hash;
     size_t i, n_os;
 
     if (args[0].vt != LV_STRING) {
-	wile_exception("string-ci-hash-64", "expects a string argument");
+	wile_exception("string-ci-hash-64", loc, "expects a string argument");
     }
     n_os = strlen(args[0].v.str);
     hash = 14695981039346656037UL;
@@ -1869,18 +1849,19 @@ lval wile_string_ci_hash_64(lptr*, lptr args)
 
 // --8><----8><----8><--
 
-lval wile_cfft_good_n(lptr*, lptr args)
+lval wile_cfft_good_n(lptr*, lptr args, const char* loc)
 {
     if (args[0].vt != LV_INT) {
-	wile_exception("cfft-good-n?", "expects an integer argument");
+	wile_exception("cfft-good-n?", loc, "expects an integer argument");
     }
     return LVI_BOOL(wilec_cfft_good_n(args[0].v.iv));
 }
 
-lval wile_cfft(lptr*, lptr args)
+lval wile_cfft(lptr*, lptr args, const char* loc)
 {
     if (args[0].vt != LV_INT || args[1].vt != LV_VECTOR) {
-	wile_exception("vector-cfft!", "expects an integer transform direction and a vector of complex values");
+	wile_exception("vector-cfft!", loc,
+		       "expects an integer transform direction and a vector of complex values");
     }
 
     lptr *arr;
@@ -1895,13 +1876,13 @@ lval wile_cfft(lptr*, lptr args)
     } else if (args[0].v.iv < 0) {
 	si = -1;
     } else {
-	wile_exception("vector-cfft!",
+	wile_exception("vector-cfft!", loc,
 		       "transform direction was not specified");
     }
 
     n = args[1].v.vec.capa;
     if (!wilec_cfft_good_n(n)) {
-	wile_exception("vector-cfft!",
+	wile_exception("vector-cfft!", loc,
 		       "%zu is not a multiple of (2,3,5,7,11)", n);
     }
     arr = args[1].v.vec.arr;
@@ -1922,7 +1903,7 @@ lval wile_cfft(lptr*, lptr args)
 	    break;
 	default:
 	    LISP_FREE(a1);
-	    wile_exception("vector-cfft!",
+	    wile_exception("vector-cfft!", loc,
 			   "input contains non-numeric value at index %zu", i);
 	    break;
 	}

@@ -9,21 +9,20 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_string_reverse(lptr*, lptr args)
+lval wile_string_hash_32(lptr*, lptr args, const char* loc)
 {
-    size_t i, j;
-    char c;
+    uint32_t hash;
+    size_t i, n_os;
+
     if (args[0].vt != LV_STRING) {
-	wile_exception("string-reverse", "expects a string argument");
+	wile_exception("string-hash-32", loc, "expects a string argument");
     }
-    lval ret = LVI_STRING(args[0].v.str);
-    i = 0;
-    j = strlen(ret.v.str);
-    while (i < j) {
-	c = ret.v.str[--j];
-	ret.v.str[j] = ret.v.str[i];
-	ret.v.str[i++] = c;
+    n_os = strlen(args[0].v.str);
+    hash = 2166136261U;
+    for (i = 0; i < n_os; ++i) {
+	hash ^= (unsigned char) (args[0].v.str[i]);
+	hash *= 16777619U;
     }
-    return ret;
+    return LVI_INT(hash);
 }
 

@@ -65,7 +65,7 @@ void err_print(const char* fname, lisp_loc_t l_whence,
 
 extern lptr display_hooks;
 
-void wile_print_lisp_val(lptr vp, FILE* fp)
+void wile_print_lisp_val(lptr vp, FILE* fp, const char* loc)
 {
     char buf[BSIZE];
     size_t i;
@@ -101,7 +101,7 @@ void wile_print_lisp_val(lptr vp, FILE* fp)
 		    lval vs[2];
 		    vs[0] = *vp;
 		    vs[1] = LVI_FPORT(fp);
-		    (void) rsym->v.clambda.fn(rsym->v.clambda.closure, vs);
+		    (void) rsym->v.clambda.fn(rsym->v.clambda.closure, vs, loc);
 		    return;
 		}
 		hooks = CDR(hooks);
@@ -168,7 +168,7 @@ void wile_print_lisp_val(lptr vp, FILE* fp)
 	case LV_PAIR:
 	    PUTC('(');
 	recurse:
-	    wile_print_lisp_val(CAR(vp), fp);
+	    wile_print_lisp_val(CAR(vp), fp, loc);
 	    if (CDR(vp)) {
 		PUTC(' ');
 		if (IS_PAIR(CDR(vp))) {
@@ -177,7 +177,7 @@ void wile_print_lisp_val(lptr vp, FILE* fp)
 		} else {
 		    PUTC('.');
 		    PUTC(' ');
-		    wile_print_lisp_val(CDR(vp), fp);
+		    wile_print_lisp_val(CDR(vp), fp, loc);
 		}
 	    }
 	    PUTC(')');
@@ -188,7 +188,7 @@ void wile_print_lisp_val(lptr vp, FILE* fp)
 	    sep = '(';
 	    for (i = 0; i < vp->v.vec.capa; ++i) {
 		PUTC(sep);
-		wile_print_lisp_val(vp->v.vec.arr[i], fp);
+		wile_print_lisp_val(vp->v.vec.arr[i], fp, loc);
 		sep = ' ';
 	    }
 	    if (sep == '(') {
@@ -227,7 +227,7 @@ void wile_print_lisp_val(lptr vp, FILE* fp)
 	case LV_PROMISE:	PUTS("<promise>");		break;
 
 	default:
-	    FATAL("<print>", "bad type %d", vp->vt);
+	    wile_exception("<print>", loc, "bad type %d", vp->vt);
 	}
     } else {
 	PUTS("()");
@@ -508,7 +508,8 @@ static void print_real_bin(char* buf, /*size_t bsize,*/ lisp_real_t n,
     case 2:	bl = 1;		break;
     case 8:	bl = 3;		break;
     case 16:	bl = 4;		break;
-    default:	FATAL("number->string", "bad base %d!", base);
+    default:	wile_exception("number->string", LISP_WHENCE,
+			       "bad base %d!", base);
     }
 
  retry:		// if %f-style notation runs out of steam, we can overflow
@@ -649,7 +650,10 @@ const char* typename(enum val_type vt)
     case LV_ILAMBDA:		return "interpreted-procedure";
     case LV_CONT:		return "continuation";
 
-    case VT_UNINIT:		FATAL("typename", "uninitialized lisp-val!");
-    default:			FATAL("typename", "unknown type!?!");
+    case VT_UNINIT:
+	wile_exception("typename", LISP_WHENCE, "uninitialized lisp-val!");
+
+    default:
+	wile_exception("typename", LISP_WHENCE, "unknown type!?!");
     }
 }

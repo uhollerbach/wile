@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (foldl1 proc lst) @@@ bld-rtl-dir/wile-rtl2-000027.scm:13 @@@ wile_foldl1 @@@
-lval wile_foldl1(lptr* var_1, lptr var_2)
+lval wile_foldl1(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 if (var_2[1].vt != LV_PAIR) {
@@ -39,7 +39,8 @@ lval var_7[8];
 var_7[0] = var_2[0];
 var_7[1] = var_4;
 var_7[2] = var_5;
-var_6 = wile_foldl(NULL, var_7);
+// bld-rtl-dir/wile-rtl2-000027.scm:14
+var_6 = wile_foldl(NULL, var_7, "bld-rtl-dir/wile-rtl2-000027.scm:14");
 }
 return var_6;
 }

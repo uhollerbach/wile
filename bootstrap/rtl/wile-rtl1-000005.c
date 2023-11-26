@@ -9,15 +9,23 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_get_gensym(void)
+lval wile_run_system_command(lval cmd, const char* loc)
 {
-    static unsigned long count = 0;
-    char buf[64];
-    lval res;
-
-    snprintf(buf, sizeof(buf), " symbol.%lu", ++count);
-    res.vt = LV_SYMBOL;
-    res.v.str = LISP_STRDUP(buf);
-    return res;
+    if (cmd.vt != LV_STRING) {
+	wile_exception("run-command", loc, "got bad input type!");
+    }
+    int status = system(cmd.v.str);
+    if (status < 0) {
+	return LVI_BOOL(false);
+    } else {
+	if (WIFEXITED(status)) {
+	    status = WEXITSTATUS(status);
+	} else if (WIFSIGNALED(status)) {
+	    status = -WTERMSIG(status);
+	} else {
+	    status = INT_MIN;
+	}
+	return LVI_INT(status);
+    }
 }
 

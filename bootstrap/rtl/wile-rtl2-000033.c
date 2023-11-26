@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (/ . vs) @@@ bld-rtl-dir/wile-rtl2-000033.scm:13 @@@ wile_divide @@@
-lval wile_divide(lptr* var_1, lptr var_2)
+lval wile_divide(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
@@ -98,7 +98,7 @@ var_13 = var_14;
 var_11 = var_2[0];
 lval var_24;
 if (var_9.vt != LV_INT) {
-wile_exception2("case", __FILE__, __LINE__, "case-value type does not match case type");
+wile_exception("case", LISP_WHENCE, "case-value type does not match case type");
 }
 switch (var_9.v.iv) {
 case 0:

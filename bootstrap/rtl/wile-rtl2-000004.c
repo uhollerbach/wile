@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (list-length>? n lst) @@@ bld-rtl-dir/wile-rtl2-000004.scm:13 @@@ wile_list_length_gt @@@
-lval wile_list_length_gt(lptr* var_1, lptr var_2)
+lval wile_list_length_gt(lptr* var_1, lptr var_2, const char* cloc)
 {
 lbl_3:;
 lval var_4;
@@ -71,7 +71,8 @@ var_11 = wile_gen_list(2, var_13, NULL);
 {
 lval var_12[8];
 var_12[0] = var_11;
-var_11 = wile_subtract(NULL, var_12);
+// bld-rtl-dir/wile-rtl2-000004.scm:16
+var_11 = wile_subtract(NULL, var_12, "bld-rtl-dir/wile-rtl2-000004.scm:16");
 }
 lval var_14;
 if (var_2[1].vt != LV_PAIR) {
@@ -83,6 +84,7 @@ var_17[0] = var_11;
 var_17[1] = var_14;
 var_2[0] = var_17[0];
 var_2[1] = var_17[1];
+// bld-rtl-dir/wile-rtl2-000004.scm:16
 goto lbl_3;	// selfie
 } while (0);
 return var_4;

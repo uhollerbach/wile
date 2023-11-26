@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (string-pad-center str pch lmin) @@@ bld-rtl-dir/wile-rtl2-000045.scm:13 @@@ wile_string_pad_center @@@
-lval wile_string_pad_center(lptr* var_1, lptr var_2)
+lval wile_string_pad_center(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
@@ -120,7 +120,8 @@ var_18 = wile_gen_list(3, var_20, NULL);
 lval var_19[8];
 var_19[0] = var_15;
 var_19[1] = var_18;
-var_18 = wile_string_join_by(NULL, var_19);
+// bld-rtl-dir/wile-rtl2-000045.scm:19
+var_18 = wile_string_join_by(NULL, var_19, "bld-rtl-dir/wile-rtl2-000045.scm:19");
 }
 var_6 = var_18;
 }

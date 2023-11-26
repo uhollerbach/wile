@@ -412,7 +412,7 @@ typedef struct {
 } lisp_pair_t;
 
 // wile compiled functions
-typedef struct lisp_val (wile_cfunc_t)(lptr* clos, lptr args);
+typedef struct lisp_val (wile_cfunc_t)(lptr* clos, lptr args, const char* cloc);
 
 typedef struct {
     lptr* arr;
@@ -515,7 +515,7 @@ lptr clear_display_hook(const char* sym);
 lptr get_display_hook(const char* sym);
 lptr set_display_hook(const char* sym, lptr hook);
 
-void wile_print_lisp_val(lptr vp, FILE* fp);
+void wile_print_lisp_val(lptr vp, FILE* fp, const char* loc);
 void wile_sprint_lisp_num(char* buf, size_t bsize, lptr num,
 			  int base, int prec, bool psign);
 
@@ -533,8 +533,6 @@ const char* typename(enum val_type vt);
 void bv_putc(unsigned char c, lisp_bytevector_t* bvp);
 void bv_puts(const unsigned char* s, lisp_bytevector_t* bvp);
 void bv_putbytes(size_t sl, const unsigned char* s, lisp_bytevector_t* bvp);
-
-bool wile_do_eqv(lptr arg1, lptr arg2);
 
 // continuation stuff
 

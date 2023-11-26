@@ -21,14 +21,15 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (list->bytevector lst) @@@ bld-rtl-dir/wile-rtl2-000018.scm:13 @@@ wile_list2bytevector @@@
-lval wile_list2bytevector(lptr* var_1, lptr var_2)
+lval wile_list2bytevector(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
 {
 lval var_6[8];
 var_6[0] = var_2[0];
-var_5 = wile_list_length(NULL, var_6);
+// bld-rtl-dir/wile-rtl2-000018.scm:14
+var_5 = wile_list_length(NULL, var_6, "bld-rtl-dir/wile-rtl2-000018.scm:14");
 }
 var_4 = var_5;
 lval var_7;
@@ -223,7 +224,7 @@ WILE_EX("bytevector-set!", "got bad index value");
 if (!(var_18.vt == LV_CHAR || (var_18.vt == LV_INT && var_18.v.iv >= 0 && var_18.v.iv < 256))) {
 WILE_EX("bytevector-set!", "got bad input value");
 }
-var_7.v.bvec.arr[var_10.v.iv] = (var_18.vt == LV_CHAR) ? var_18.v.chr : var_18.v.iv;
+var_7.v.bvec.arr[var_10.v.iv] = (var_18.vt == LV_CHAR) ? var_18.v.chr : (unsigned char) var_18.v.iv;
 }
 }
 lval var_33;

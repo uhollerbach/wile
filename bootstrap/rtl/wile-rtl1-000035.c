@@ -9,13 +9,14 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_filestat(lptr*, lptr args)
+lval wile_symlinkstat(lptr*, lptr args, const char* loc)
 {
     struct stat sbuf;
     if (args[0].vt != LV_STRING) {
-	wile_exception("get-file-status", "expects one string argument");
+	wile_exception("get-symbolic-link-status", loc,
+		       "expects one string argument");
     }
-    if (stat(args[0].v.str, &sbuf) == 0) {
+    if (lstat(args[0].v.str, &sbuf) == 0) {
 	lval vs[13];
 	vs[0] = LVI_INT(sbuf.st_dev);
 	vs[1] = LVI_INT(sbuf.st_ino);

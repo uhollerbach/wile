@@ -91,6 +91,7 @@ Stuff TODO
 * more primitives
 
   eq?
+  bytevector-pack
   bytevector-unpack
 
   matrix-lu-decompose
@@ -152,8 +153,17 @@ Stuff TODO
   many many tests available from delimited continuations but need
   closures to work... and update: a significant number of those tests
   do indeed work; a number do not, most with "bad type" exception from
-  apply - or a segfault.
+  apply. segfaults appear to be gone now.
 
   one test where skeem and wile agree, but generates an infinite loop,
   whereas mit-scheme just gives two outputs - but! my cargo-cult
   understanding of continuations seems to agree with skeem+wile! wut???
+
+  > many thanks to Andrew Tropin for a very helpful comment that
+    cleared this up. mit-scheme and racket have implicitly delimited
+    continuations, and the limit can be varied depending on how it's
+    compiled or interpreted. with the case where mit-scheme was giving
+    just two outputs vs wile's infinite outputs, if I shift the limit
+    by wrapping everything inside a (begin ...), then mit-scheme also
+    generates the infinite loop that I expect - *whew!* my cargo-cult
+    understanding isn't so cargo-cult after all

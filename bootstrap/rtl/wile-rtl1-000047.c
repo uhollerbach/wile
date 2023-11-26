@@ -9,13 +9,25 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_setfilepos2(lptr*, lptr args)
+lval wile_setfilepos3(lptr*, lptr args, const char* loc)
 {
     if (args[0].vt != LV_FILE_PORT ||
-	args[1].vt != LV_INT) {
-	wile_exception("set-file-position",
-		       "expects a file port and an offset");
+	args[1].vt != LV_INT ||
+	args[2].vt != LV_SYMBOL) {
+	wile_exception("set-file-position", loc,
+		       "expects a file port, an offset, and a location symbol");
     }
-    return LVI_BOOL(fseek(args[0].v.fp, args[1].v.iv, SEEK_SET) == 0);
+    int whence;
+    if (strcmp(args[2].v.str, "start") == 0) {
+	whence = SEEK_SET;
+    } else if (strcmp(args[2].v.str, "cur") == 0) {
+	whence = SEEK_CUR;
+    } else if (strcmp(args[2].v.str, "end") == 0) {
+	whence = SEEK_END;
+    } else {
+	wile_exception("set-file-position", loc,
+		       "got an unknown location symbol");
+    }
+    return LVI_BOOL(fseek(args[0].v.fp, args[1].v.iv, whence) == 0);
 }
 

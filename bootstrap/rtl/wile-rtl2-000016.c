@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (list-partition pred lst) @@@ bld-rtl-dir/wile-rtl2-000016.scm:15 @@@ wile_list_partition @@@
-lval wile_list_partition(lptr* var_1, lptr var_2)
+lval wile_list_partition(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
@@ -66,7 +66,7 @@ var_21[0] = var_2[0];
 var_21[1] = var_18;
 var_20 = wile_gen_list(2, var_21, NULL);
 }
-var_20 = wile_apply_function(&(var_20), __FILE__, __LINE__);
+var_20 = wile_apply_function(&(var_20), LISP_WHENCE);
 if (LV_IS_FALSE(var_20)) {
 lval var_22;
 {
@@ -116,13 +116,15 @@ lval var_27;
 {
 lval var_28[8];
 var_28[0] = var_4;
-var_27 = wile_list_reverse(NULL, var_28);
+// bld-rtl-dir/wile-rtl2-000016.scm:25
+var_27 = wile_list_reverse(NULL, var_28, "bld-rtl-dir/wile-rtl2-000016.scm:25");
 }
 lval var_29;
 {
 lval var_30[8];
 var_30[0] = var_6;
-var_29 = wile_list_reverse(NULL, var_30);
+// bld-rtl-dir/wile-rtl2-000016.scm:25
+var_29 = wile_list_reverse(NULL, var_30, "bld-rtl-dir/wile-rtl2-000016.scm:25");
 }
 lval var_31;
 {

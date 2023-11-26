@@ -21,20 +21,25 @@ extern lisp_escape_t cachalot;
 void set_start_state(struct ulex_context* context);
 #endif // WILE_NEEDS_ULEX
 
-lval wile_parse_string(lptr*, lptr args)
+lval wile_parse_file(lptr*, lptr args, const char* loc)
 {
     lval res;
 
-    if (!IS_STRING(args)) {
-	wile_exception("parse-string", "expects one string argument");
+    if (!IS_STRING(args) && !IS_FPORT(args) &&
+	!IS_PPORT(args) && !IS_SOCKPORT(args)) {
+	wile_exception("read-all", loc,
+		       "expects one string or file/pipe/socket port argument");
     }
 
     lptr lp = NULL;
-    wile_set_lisp_loc_file(NULL);
-    struct ulex_context* context = ulex_init(ulex_TEXT, args[0].v.str);
+    wile_set_lisp_loc_file(IS_STRING(args) ? args->v.str : NULL);
+    struct ulex_context* context =
+	IS_STRING(args)
+	? ulex_init(ulex_FILE, args->v.str)
+	: ulex_init(ulex_STREAM, args->v.fp);
 
     if (context == NULL) {
-	wile_exception("parse-string", "unable to set up lexer");
+	wile_exception("read-all", loc, "unable to set up lexer");
     } else {
 	set_start_state(context);
 	if (wile_parse(context, &lp, 1)) {

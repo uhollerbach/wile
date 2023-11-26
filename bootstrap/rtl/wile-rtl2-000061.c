@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (day-of-week v . vs) @@@ bld-rtl-dir/wile-rtl2-000061.scm:13 @@@ wile_day_of_week @@@
-lval wile_day_of_week(lptr* var_1, lptr var_2)
+lval wile_day_of_week(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
@@ -59,7 +59,8 @@ lval var_11[8];
 var_11[0] = var_2[0];
 var_11[1] = var_7;
 var_11[2] = var_9;
-var_10 = wile_julian_day(NULL, var_11);
+// bld-rtl-dir/wile-rtl2-000061.scm:16
+var_10 = wile_julian_day(NULL, var_11, "bld-rtl-dir/wile-rtl2-000061.scm:16");
 }
 lval var_12;
 var_12 = LVI_INT(var_6.v.iv + var_10.v.iv);

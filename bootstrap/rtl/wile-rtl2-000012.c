@@ -21,13 +21,14 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (list-unhead lst n) @@@ bld-rtl-dir/wile-rtl2-000012.scm:13 @@@ wile_list_unhead @@@
-lval wile_list_unhead(lptr* var_1, lptr var_2)
+lval wile_list_unhead(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 {
 lval var_5[8];
 var_5[0] = var_2[0];
-var_4 = wile_list_length(NULL, var_5);
+// bld-rtl-dir/wile-rtl2-000012.scm:14
+var_4 = wile_list_length(NULL, var_5, "bld-rtl-dir/wile-rtl2-000012.scm:14");
 }
 lval var_6;
 var_6 = LVI_INT(var_4.v.iv - var_2[1].v.iv);
@@ -36,7 +37,8 @@ lval var_7;
 lval var_8[8];
 var_8[0] = var_2[0];
 var_8[1] = var_6;
-var_7 = wile_list_tail(NULL, var_8);
+// bld-rtl-dir/wile-rtl2-000012.scm:14
+var_7 = wile_list_tail(NULL, var_8, "bld-rtl-dir/wile-rtl2-000012.scm:14");
 }
 return var_7;
 }

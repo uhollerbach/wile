@@ -9,12 +9,11 @@
 extern lisp_escape_t cachalot;
 
 
-lisp_real_t pcheby2(int n, lisp_real_t x)
+lisp_real_t plegendre(int n, lisp_real_t x)
 {
     int k;
-    lisp_real_t pm, pc, pp;
+    lisp_real_t a, pm, pc, pp;
 
-    x *= 2.0;
     if (n == 0) {
 	return 1.0;
     } else if (n == 1) {
@@ -23,7 +22,8 @@ lisp_real_t pcheby2(int n, lisp_real_t x)
 	pm = 1.0;
 	pc = x;
 	for (k = 1; k < n; ++k) {
-	    pp = x*pc - pm;
+	    a = ((lisp_real_t) k)/((lisp_real_t) (k + 1));
+	    pp = (1.0 + a)*x*pc - a*pm;
 	    pm = pc;
 	    pc = pp;
 	}

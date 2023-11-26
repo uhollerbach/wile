@@ -17,12 +17,12 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval fn_4(lptr*, lptr);
+static lval fn_4(lptr*, lptr, const char*);
 
 // definitions
 
 // @@@ lambda (l1 l2 nl) @@@ bld-rtl-dir/wile-rtl2-000010.scm:14 @@@ fn_4 @@@
-static lval fn_4(lptr* var_5, lptr var_6)
+static lval fn_4(lptr* var_5, lptr var_6, const char* cloc)
 {
 lbl_7:;
 lval var_8;
@@ -106,13 +106,15 @@ var_20[2] = var_17;
 var_6[0] = var_20[0];
 var_6[1] = var_20[1];
 var_6[2] = var_20[2];
+// bld-rtl-dir/wile-rtl2-000010.scm:19
 goto lbl_7;	// selfie
 } else {
 lval var_21;
 {
 lval var_22[8];
 var_22[0] = var_6[1];
-var_21 = wile_list_reverse(NULL, var_22);
+// bld-rtl-dir/wile-rtl2-000010.scm:18
+var_21 = wile_list_reverse(NULL, var_22, "bld-rtl-dir/wile-rtl2-000010.scm:18");
 }
 var_8 = var_21;
 }
@@ -121,7 +123,7 @@ return var_8;
 // end of lambda fn_4
 
 // @@@ (list-head lst n) @@@ bld-rtl-dir/wile-rtl2-000010.scm:13 @@@ wile_list_head @@@
-lval wile_list_head(lptr* var_1, lptr var_2)
+lval wile_list_head(lptr* var_1, lptr var_2, const char* cloc)
 {
 MK_CLOS(var_5,0);
 lval var_23;
@@ -131,7 +133,8 @@ lval var_25[8];
 var_25[0] = var_2[0];
 var_25[1] = var_23;
 var_25[2] = var_2[1];
-var_24 = fn_4(var_5, var_25);
+// bld-rtl-dir/wile-rtl2-000010.scm:14
+var_24 = fn_4(var_5, var_25, "bld-rtl-dir/wile-rtl2-000010.scm:14");
 return var_24;
 }
 // end of function wile_list_head

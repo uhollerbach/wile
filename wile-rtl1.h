@@ -113,36 +113,27 @@
 			   ? P_CLOS(n,i)->v.pair.car : P_CLOS(n,i)))
 
 uint16_t wile_binfo(void);
-lval wile_sql_version(lptr* clos, lptr args);
-lval wile_gc_version(lptr*, lptr);
+lval wile_sql_version(lptr* clos, lptr args, const char* loc);
+lval wile_gc_version(lptr*, lptr, const char*);
 lval wile_os_name(void);
 lval wile_arch_name(void);
 
 void wile_stack_trace_minimal(int fd);
 
-void wile_exception(const char* fname, const char* fmt, ...)
-    WILE_ATTR((noreturn,format(printf,2,3)));
-
-// updated version which includes file/line# info;
-// don't want to convert everything all at once.
-// TODO: eventually use this everywhere and remove the above
-
-void wile_exception2(const char* func_name, const char* file_name,
-		     int line_no, const char* fmt, ...)
-    WILE_ATTR((noreturn,format(printf,4,5)));
+void wile_exception(const char* func_name, const char* loc,
+		    const char* fmt, ...)
+    WILE_ATTR((noreturn,format(printf,3,4)));
 
 #define WILE_EX(fname, ...) \
-    wile_exception2(fname, __FILE__, __LINE__, __VA_ARGS__)
+    wile_exception(fname, LISP_WHENCE, __VA_ARGS__)
 
-lval wile_register_display_proc(const char* sym, lval proc,
-				const char* fname, int lno);
+lval wile_register_display_proc(const char* sym, lval proc, const char* loc);
 lval wile_get_gensym(void);
-lval wile_run_system_command(lval cmd, const char* fname, int lno);
-lval wile_run_pipe_command(lval cmd, const char* rw,
-			   const char* fname, int lno);
-lval wile_temp_file(lptr* clos, lptr args);
-lval wile_string2num(lval str, const char* fname, int lno);
-lval wile_num2string(lval num, int base, int prec, const char* fname, int lno);
+lval wile_run_system_command(lval cmd, const char* loc);
+lval wile_run_pipe_command(lval cmd, const char* rw, const char* loc);
+lval wile_temp_file(lptr* clos, lptr args, const char* loc);
+lval wile_string2num(lval str, const char* loc);
+lval wile_num2string(lval num, int base, int prec, const char* loc);
 
 lisp_int_t powi(lisp_int_t a, lisp_int_t b);
 
@@ -167,41 +158,41 @@ lval wile_gen_list(size_t nitems, lval* items, lval* tail);
 
 bool wile_do_eqv(lptr arg1, lptr arg2);
 
-lval wile_read_line(lptr* clos, lptr args);
+lval wile_read_line(lptr* clos, lptr args, const char* loc);
 
-lval wile_parse_string(lptr* clos, lptr args);
-lval wile_parse_file(lptr* clos, lptr args);
+lval wile_parse_string(lptr* clos, lptr args, const char* loc);
+lval wile_parse_file(lptr* clos, lptr args, const char* loc);
 
-lval wile_regex_match(lptr* clos, lptr args);
-lval wile_apply_function(lptr args, const char* file_name, int line_no);
-lval wile_read_directory(lptr* clos, lptr args);
-lval wile_char2string(lptr* clos, lptr args);
-lval wile_listen_port(lptr* clos, lptr args);
-lval wile_accept_connection(lptr* clos, lptr args);
-lval wile_connect_to(lptr* clos, lptr args);
-lval wile_gethostname(lptr* clos, lptr args);
-lval wile_getdomainname(lptr* clos, lptr args);
-lval wile_getcwd(lptr* clos, lptr args);
-lval wile_cputime(lptr* clos, lptr args);
-lval wile_filestat(lptr* clos, lptr args);
-lval wile_symlinkstat(lptr* clos, lptr args);
-lval wile_getuserinfo(lptr* clos, lptr args);
-lval wile_getalluserinfo(lptr*, lptr args);
-lval wile_getgroupinfo(lptr* clos, lptr args);
-lval wile_getallgroupinfo(lptr*, lptr args);
-lval wile_localtime(lptr* clos, lptr args);
-lval wile_gmtime(lptr* clos, lptr args);
-lval wile_closeport(lptr* clos, lptr args);
-lval wile_flushport(lptr* clos, lptr args);
-lval wile_setlinebuffering(lptr* clos, lptr args);
-lval wile_setnobuffering(lptr* clos, lptr args);
-lval wile_setfilepos2(lptr* clos, lptr args);
-lval wile_setfilepos3(lptr* clos, lptr args);
-lval wile_string_reverse(lptr* clos, lptr args);
-lval wile_string_hash_32(lptr*, lptr);
-lval wile_string_hash_64(lptr*, lptr);
-lval wile_string_ci_hash_32(lptr*, lptr);
-lval wile_string_ci_hash_64(lptr*, lptr);
+lval wile_regex_match(lptr* clos, lptr args, const char* loc);
+lval wile_apply_function(lptr args, const char* loc);
+lval wile_read_directory(lptr* clos, lptr args, const char* loc);
+lval wile_char2string(lptr* clos, lptr args, const char* loc);
+lval wile_listen_port(lptr* clos, lptr args, const char* loc);
+lval wile_accept_connection(lptr* clos, lptr args, const char* loc);
+lval wile_connect_to(lptr* clos, lptr args, const char* loc);
+lval wile_gethostname(lptr* clos, lptr args, const char* loc);
+lval wile_getdomainname(lptr* clos, lptr args, const char* loc);
+lval wile_getcwd(lptr* clos, lptr args, const char* loc);
+lval wile_cputime(lptr* clos, lptr args, const char* loc);
+lval wile_filestat(lptr* clos, lptr args, const char* loc);
+lval wile_symlinkstat(lptr* clos, lptr args, const char* loc);
+lval wile_getuserinfo(lptr* clos, lptr args, const char* loc);
+lval wile_getalluserinfo(lptr*, lptr args, const char* loc);
+lval wile_getgroupinfo(lptr* clos, lptr args, const char* loc);
+lval wile_getallgroupinfo(lptr*, lptr args, const char* loc);
+lval wile_localtime(lptr* clos, lptr args, const char* loc);
+lval wile_gmtime(lptr* clos, lptr args, const char* loc);
+lval wile_closeport(lptr* clos, lptr args, const char* loc);
+lval wile_flushport(lptr* clos, lptr args, const char* loc);
+lval wile_setlinebuffering(lptr* clos, lptr args, const char* loc);
+lval wile_setnobuffering(lptr* clos, lptr args, const char* loc);
+lval wile_setfilepos2(lptr* clos, lptr args, const char* loc);
+lval wile_setfilepos3(lptr* clos, lptr args, const char* loc);
+lval wile_string_reverse(lptr* clos, lptr args, const char* loc);
+lval wile_string_hash_32(lptr*, lptr, const char* loc);
+lval wile_string_hash_64(lptr*, lptr, const char* loc);
+lval wile_string_ci_hash_32(lptr*, lptr, const char* loc);
+lval wile_string_ci_hash_64(lptr*, lptr, const char* loc);
 
 // Log of Gamma function
 
@@ -252,28 +243,26 @@ lval wile_expt(lval* a, lval* b);
 
 lval wile_rand_normal_pair(lisp_real_t m, lisp_real_t s);
 
-lval wile_cfft_good_n(lptr* clos, lptr args);
-lval wile_cfft(lptr* clos, lptr args);
+lval wile_cfft_good_n(lptr* clos, lptr args, const char* loc);
+lval wile_cfft(lptr* clos, lptr args, const char* loc);
 
 // sqlite interface
 
-lval wile_sql_open(const char* fname, int mode,
-		   const char* file_name, int line_no);
+lval wile_sql_open(const char* fname, int mode, const char* loc);
 #ifdef WILE_USES_SQLITE
 // have to hide this one because of the first argument:
 // sqlite3* is unknown if we're not using sqlite
-lval wile_sql_run(sqlite3* sqlite_conn, const char* cmd,
-		  const char* file_name, int line_no);
+lval wile_sql_run(sqlite3* sqlite_conn, const char* cmd, const char* loc);
 #endif // WILE_USES_SQLITE
-lval wile_sql_stmt_prep(lptr* clos, lptr args);
-lval wile_sql_stmt_clean(lptr* clos, lptr args);
-lval wile_sql_stmt_info(lptr* clos, lptr args);
-lval wile_sql_stmt_bind(lptr* clos, lptr args);
-lval wile_sql_stmt_run(lptr* clos, lptr args);
+lval wile_sql_stmt_prep(lptr* clos, lptr args, const char* loc);
+lval wile_sql_stmt_clean(lptr* clos, lptr args, const char* loc);
+lval wile_sql_stmt_info(lptr* clos, lptr args, const char* loc);
+lval wile_sql_stmt_bind(lptr* clos, lptr args, const char* loc);
+lval wile_sql_stmt_run(lptr* clos, lptr args, const char* loc);
 
 // the infamous call-with-current-continuation
 
-lval wile_call_cc(lptr* clos, lptr args);
+lval wile_call_cc(lptr* clos, lptr args, const char* loc);
 
 lval wile_main(int argc, char** argv);
 

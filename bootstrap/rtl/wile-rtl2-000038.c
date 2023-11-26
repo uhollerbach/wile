@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (memp test? lst) @@@ bld-rtl-dir/wile-rtl2-000038.scm:13 @@@ wile_memp @@@
-lval wile_memp(lptr* var_1, lptr var_2)
+lval wile_memp(lptr* var_1, lptr var_2, const char* cloc)
 {
 lbl_3:;
 lval var_4;
@@ -52,7 +52,7 @@ var_11[0] = var_2[0];
 var_11[1] = var_8;
 var_10 = wile_gen_list(2, var_11, NULL);
 }
-var_10 = wile_apply_function(&(var_10), __FILE__, __LINE__);
+var_10 = wile_apply_function(&(var_10), LISP_WHENCE);
 if (!LV_IS_FALSE(var_10)) {
 var_4 = var_2[1];
 break;
@@ -67,6 +67,7 @@ var_15[0] = var_2[0];
 var_15[1] = var_12;
 var_2[0] = var_15[0];
 var_2[1] = var_15[1];
+// bld-rtl-dir/wile-rtl2-000038.scm:16
 goto lbl_3;	// selfie
 } while (0);
 return var_4;
@@ -74,7 +75,7 @@ return var_4;
 // end of function wile_memp
 
 // @@@ (memv obj lst) @@@ bld-rtl-dir/wile-rtl2-000038.scm:20 @@@ wile_memv @@@
-lval wile_memv(lptr* var_16, lptr var_17)
+lval wile_memv(lptr* var_16, lptr var_17, const char* cloc)
 {
 lbl_18:;
 lval var_19;
@@ -108,6 +109,7 @@ var_27[0] = var_17[0];
 var_27[1] = var_24;
 var_17[0] = var_27[0];
 var_17[1] = var_27[1];
+// bld-rtl-dir/wile-rtl2-000038.scm:23
 goto lbl_18;	// selfie
 } while (0);
 return var_19;

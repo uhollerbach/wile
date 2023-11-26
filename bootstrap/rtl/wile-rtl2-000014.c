@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (list-ref lst n) @@@ bld-rtl-dir/wile-rtl2-000014.scm:13 @@@ wile_list_ref @@@
-lval wile_list_ref(lptr* var_1, lptr var_2)
+lval wile_list_ref(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 var_4 = var_2[0];
@@ -49,7 +49,8 @@ lval var_9;
 {
 lval var_10[8];
 var_10[0] = var_4;
-var_9 = wile_list_length(NULL, var_10);
+// bld-rtl-dir/wile-rtl2-000014.scm:17
+var_9 = wile_list_length(NULL, var_10, "bld-rtl-dir/wile-rtl2-000014.scm:17");
 }
 lval var_11;
 var_11 = LVI_INT(var_9.v.iv + var_5.v.iv);

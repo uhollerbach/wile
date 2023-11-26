@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (replicate c n) @@@ bld-rtl-dir/wile-rtl2-000037.scm:13 @@@ wile_replicate @@@
-lval wile_replicate(lptr* var_1, lptr var_2)
+lval wile_replicate(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_5;
 lval var_7;

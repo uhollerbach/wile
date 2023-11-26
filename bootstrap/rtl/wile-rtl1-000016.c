@@ -9,24 +9,16 @@
 extern lisp_escape_t cachalot;
 
 
-lisp_real_t phermite2(int n, lisp_real_t x)
+void floor_qr(lisp_int_t n1, lisp_int_t n2, lisp_int_t* nq, lisp_int_t* nr)
 {
-    int k;
-    lisp_real_t pm, pc, pp;
-
-    if (n == 0) {
-	return 1.0;
-    } else if (n == 1) {
-	return x;
-    } else {
-	pm = 1.0;
-	pc = x;
-	for (k = 1; k < n; ++k) {
-	    pp = x*pc - k*pm;
-	    pm = pc;
-	    pc = pp;
-	}
-	return pc;
+    if (n2 == 0) {
+	wile_exception("floor_qr", LISP_WHENCE, "division by zero!");
+    }
+    *nq = n1/n2;
+    *nr = n1 - *nq*n2;
+    if (*nr != 0 && (n1 < 0) != (n2 < 0)) {
+	*nq -= 1;
+	*nr = n1 - *nq*n2;
     }
 }
 

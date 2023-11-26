@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (list-tail lst n) @@@ bld-rtl-dir/wile-rtl2-000011.scm:13 @@@ wile_list_tail @@@
-lval wile_list_tail(lptr* var_1, lptr var_2)
+lval wile_list_tail(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 var_4 = var_2[1];

@@ -29,6 +29,84 @@
 (load-library "hash.scm")
 (load-library "wile-comp.scm")
 
+;;; the old version; the new version needs a bytevector size. getting
+;;; that is doable, but the usage here will likely be less efficient
+;;; than using this old version
+
+(define (rem-unused-old lines)
+  (let ((decl (hash-table-create string-hash string=?))
+	(set (hash-table-create string-hash string=?))
+	(used (hash-table-create string-hash string=?))
+	(re-dec "^((__attribute__[(][(]unused[)][)]|static)[ \t]+)?(lval|lptr|lptr[*]) var_[0-9]+(\[[0-9]+\])?(;| = LVI_(NIL|BOOL|INT|CHAR|REAL|RAT))")
+	(re-set "^var_[0-9]+ =")
+	(re-use "var_[0-9]+")
+	(re-num "[0-9]+")
+	(re-copy "^var_[0-9]+ = var_[0-9]+;")
+	(multi-dec "warning! var_%s is being declared more than once!\n")
+	(output ()))
+    (for-each (lambda (l)
+		(let ((r l))
+		  (cond ((regex-match re-dec l)
+			 (let ((var (cadr (regex-match re-num l))))
+			   (if (hash-table-contains? decl var)
+			       (fprintf stderr multi-dec var)
+			       (hash-table-set! decl var 1))
+			   (set! r #f)))
+			((regex-match re-set l)
+			 (let ((chop (regex-match re-num l)))
+			   (hash-table-set! set (cadr chop) 1)
+			   (set! r (caddr chop)))))
+		  (while r
+			 (set! r
+			       (let ((chop1 (regex-match re-use r)))
+				 (if chop1
+				     (let ((chop2 (regex-match re-num (cadr chop1))))
+				       (hash-table-set! used (cadr chop2) 1)
+				       (caddr chop1))
+				     #f))))
+))
+	      lines)
+    (let ((count 0))
+      (for-each (lambda (v)
+		  (unless (hash-table-contains? decl v)
+		    (add-output (string-append "// var_" v " undeclared"))
+		    (set! count (+ count 1))))
+		(hash-table-keys set))
+      (when (positive? count)
+	(fprintf stderr
+		 "wile error: %d set but undeclared variables!\n" count)))
+    (let ((count 0))
+      (for-each (lambda (v)
+		  (unless (hash-table-contains? used v)
+		    (set! count (+ count 1))))
+		(hash-table-keys set))
+      (for-each (lambda (v)
+		  (unless (hash-table-contains? used v)
+		    (set! count (+ count 1))))
+		(hash-table-keys decl))
+      (if (zero? count)
+	  lines
+	  (begin
+	    (when (> global-verbose 0)
+	      (fprintf stderr "set but unused variables: %d\n" count))
+	    (for-each (lambda (l)
+			(let* ((var1 (regex-match re-num l))
+			       (var (if var1 (cadr var1) #f)))
+			  (cond ((regex-match re-dec l)
+				 (when (hash-table-contains? used var)
+				   (add-output l)))
+				((regex-match re-set l)
+				 (if (hash-table-contains? used var)
+				     (add-output l)
+				     (let ((ix (string-find-first-char l #\=)))
+				       (unless (regex-match re-copy l)
+					 (add-output "(void)")
+					 (add-output
+					  (string-copy l (+ ix 1)))))))
+				(else (add-output l)))))
+		      lines)
+	    (rem-unused-old (list-reverse output)))))))
+
 (load-library "test.scm")
 (test-title "wile compiler tests: expressions")
 (test-mode 'report-failed)	;;; 'off 'summary 'report-failed 'report
@@ -72,7 +150,7 @@
       (display global-out out-port)
       (set-string-bag-bag! global-out ())
       (let* ((lines1 (read-all-lines out-port))
-	     (lines2 (remove-unused-vars lines1)))
+	     (lines2 (rem-unused-old lines1)))
 	(set-file-position out-port 0 'start)
 	(for-each (lambda (l) (write-string out-port l #\newline)) lines2)
 	(flush-port out-port)
@@ -1726,13 +1804,13 @@
 (test "(c b)" (doco '(set-car! (cons 'a (cons 'b ())) 'c)))
 (test "(a . c)" (doco '(set-cdr! (cons 'a (cons 'b ())) 'c)))
 
-(test "caught exception from <wile-out.c:53>\n    'car' input is not a pair!"
+(test "caught exception from wile-out.c:53\n    'car' input is not a pair!"
       (doco '(car 14)))
-(test "caught exception from <wile-out.c:53>\n    'cdr' input is not a pair!"
+(test "caught exception from wile-out.c:53\n    'cdr' input is not a pair!"
       (doco '(cdr 14)))
-(test "caught exception from <wile-out.c:56>\n    'set-car!' input is not a pair!"
+(test "caught exception from wile-out.c:56\n    'set-car!' input is not a pair!"
       (doco '(set-car! 14 15)))
-(test "caught exception from <wile-out.c:56>\n    'set-cdr!' input is not a pair!"
+(test "caught exception from wile-out.c:56\n    'set-cdr!' input is not a pair!"
       (doco '(set-cdr! 14 15)))
 
 (test "#f" (doco '(port? 17)))
@@ -1819,7 +1897,7 @@
 ;;; TODO: after compiling the code, the error message gets generated elsewhere
 ;;; fix, but it's low priority
 ;;; (test "caught exception\n    'list-length' input is not a proper list"
-(test "caught exception from <bld-rtl-dir/wile-rtl2-000001.c:52>\n    'cdr' input is not a pair!"
+(test "caught exception from bld-rtl-dir/wile-rtl2-000001.c:52\n    'cdr' input is not a pair!"
       (doco '(list-length (cons 'a (cons 'b (cons 'c (cons 'd 'e)))))))
 (test "4" (doco '(length (cons 'a (cons 'b (cons 'c (cons 'd ())))))))
 
@@ -2200,7 +2278,7 @@
 		    (vector-fill! vec 13)
 		    (vector-ref vec 0))))
 
-(test "caught exception from <wile-out.c:89>\n    'vector-ref' got bad index value"
+(test "caught exception from wile-out.c:89\n    'vector-ref' got bad index value"
       (doco '(let ((vec (vector-create 5)))
 	       (vector-fill! vec 13)
 	       (vector-ref vec 'foo))))
@@ -2395,7 +2473,7 @@
 (test "()" (doco '(list-last ())))
 ;;; TODO: after compiling the code, the error message gets generated elsewhere
 ;;; fix, but it's low priority
-(test "caught exception from <bld-rtl-dir/wile-rtl2-000007.c:47>\n    'car' input is not a pair!"
+(test "caught exception from bld-rtl-dir/wile-rtl2-000007.c:47\n    'car' input is not a pair!"
       (doco '(list-last (cons 1 (cons 2 (cons 3 4))))))
 
 (test "14" (doco '(integer 14)))
@@ -2404,7 +2482,7 @@
 (test "-14" (doco '(integer -143/10)))
 (test "14" (doco '(integer 14.37)))
 (test "-14" (doco '(integer -14.37)))
-(test "caught exception from <wile-out.c:59>\n    'integer' expects one real-valued argument"
+(test "caught exception from wile-out.c:59\n    'integer' expects one real-valued argument"
       (doco '(integer 'chezbro)))
 
 (test "1.400000000000000e+01" (doco '(float 14)))
@@ -2413,7 +2491,7 @@
 (test "-1.430000000000000e+01" (doco '(float -143/10)))
 (test "1.437000000000000e+01" (doco '(float 14.37)))
 (test "-1.437000000000000e+01" (doco '(float -14.37)))
-(test "caught exception from <wile-out.c:59>\n    'float' expects a real-valued input"
+(test "caught exception from wile-out.c:59\n    'float' expects a real-valued input"
       (doco '(float 'chezbro)))
 
 (test "65536" (doco '(expt 2 16)))
@@ -2431,11 +2509,11 @@
 
 (test "\"meh\"" (doco '(string-copy "meh")))
 (test "\"ooh\"" (doco '(string-copy "fooh" 1)))
-(test "caught exception from <wile-out.c:60>\n    'string-copy' start index is out of range"
+(test "caught exception from wile-out.c:60\n    'string-copy' start index is out of range"
       (doco '(string-copy "fooh" 13)))
 
 (test "\"oobi\"" (doco '(string-copy "fooboobish's son's sea" 4 8)))
-(test "caught exception from <wile-out.c:65>\n    'string-copy' end index is out of range"
+(test "caught exception from wile-out.c:65\n    'string-copy' end index is out of range"
       (doco '(string-copy "fooboobish's son's sea" 8 4)))
 
 (test "(1 2 3 4 5) (5 4 3 2 1)\n#t"
@@ -2472,7 +2550,7 @@
 ;;; TODO: after compiling the code, the error message gets generated elsewhere
 ;;; fix, but it's low priority
 ;;; (test "caught exception\n    'list-reverse' expects one list argument"
-(test "caught exception from <bld-rtl-dir/wile-rtl2-000000.c:47>\n    'car' input is not a pair!"
+(test "caught exception from bld-rtl-dir/wile-rtl2-000000.c:47\n    'car' input is not a pair!"
       (doco '(let* ((lst (cons 1 (cons 2 (cons 3 4))))
 		    (tsl (list-reverse lst)))
 	       (display lst)
@@ -2707,16 +2785,16 @@
 			     (bytevector-set! bv 6 #\y)
 			     (bytevector->string bv))))
 
-(test "(7 #\\k)" (doco '(let ((bv (bytevector-create 7)))
-			  (bytevector-set! bv 0 #\s)
-			  (bytevector-set! bv 1 #\q)
-			  (bytevector-set! bv 2 #\u)
-			  (bytevector-set! bv 3 #\i)
-			  (bytevector-set! bv 4 #\c)
-			  (bytevector-set! bv 5 #\k)
-			  (bytevector-set! bv 6 #\y)
-			  (list (bytevector-length bv)
-				(bytevector-ref bv 5)))))
+(test "(7 107)" (doco '(let ((bv (bytevector-create 7)))
+			 (bytevector-set! bv 0 #\s)
+			 (bytevector-set! bv 1 #\q)
+			 (bytevector-set! bv 2 #\u)
+			 (bytevector-set! bv 3 #\i)
+			 (bytevector-set! bv 4 #\c)
+			 (bytevector-set! bv 5 #\k)
+			 (bytevector-set! bv 6 #\y)
+			 (list (bytevector-length bv)
+			       (bytevector-ref bv 5)))))
 
 (test "\"kquicsy\"" (doco '(let ((bv (bytevector-create 7)))
 			     (bytevector-set! bv 0 #\s)
@@ -2731,7 +2809,7 @@
 
 (test "#u8(#x61 #x62 #x63 #x64 #x65)" (doco '(bytevector #\a #\b #\c #\d #\e)))
 (test "#u8()" (doco '(bytevector)))
-(test "caught exception from bld-rtl-dir/wile-rtl2-000018.c:213\n    list->bytevector got a bad value"
+(test "caught exception from bld-rtl-dir/wile-rtl2-000018.c:214\n    list->bytevector got a bad value"
       (doco '(bytevector 311)))
 
 (test "2" (doco '(string-find-first-char "breep" #\e)))

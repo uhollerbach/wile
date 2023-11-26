@@ -47,7 +47,7 @@
 
 (define (compile-runtime-apply r . as)
   (apply build-basic-list r as)
-  (emit-fstr "%s = wile_apply_function(&(%s), __FILE__, __LINE__);\n" r r)
+  (emit-fstr "%s = wile_apply_function(&(%s), LISP_WHENCE);\n" r r)
   r)
 
 ;;; Promote a number to be at least real type; checking for complex
@@ -359,8 +359,11 @@
 		     (find (lambda (ps)
 			     (if (null? ps)
 				 #f
-				 (let ((fp (string-join-by
-					    "/" (car ps) fname)))
+				 (let* ((dir (car ps))
+					(fp (if (string=? dir ".")
+						fname
+						(string-join-by
+						 "/" dir fname))))
 				   (if (file-exists? fp)
 				       fp
 				       (find (cdr ps)))))))
@@ -937,19 +940,19 @@
 	 "expects one string argument, runs that as a separate process, and returns the exit status of that run or #f if the underlying system() call failed"
 	 'prim 1
 	 (lambda (r a1)
-	   (emit-code "@@ = wile_run_system_command(@1, __FILE__, __LINE__);")))
+	   (emit-code "@@ = wile_run_system_command(@1, LISP_WHENCE);")))
 
    (list 'run-read-command
 	 "expects one string argument, launches that as a separate process while opening a readable pipe to its stdout, and returns that pipe-handle, or #f if the underlying popen() call failed"
 	 'prim 1
 	 (lambda (r a1)
-	   (emit-code "@@ = wile_run_pipe_command(@1, \"r\", __FILE__, __LINE__);")))
+	   (emit-code "@@ = wile_run_pipe_command(@1, \"r\", LISP_WHENCE);")))
 
    (list 'run-write-command
 	 "expects one string argument, launches that as a separate process while opening a writable pipe to its stdin, and returns that pipe-handle, or #f if the underlying popen() call failed"
 	 'prim 1
 	 (lambda (r a1)
-	   (emit-code "@@ = wile_run_pipe_command(@1, \"w\", __FILE__, __LINE__);")))
+	   (emit-code "@@ = wile_run_pipe_command(@1, \"w\", LISP_WHENCE);")))
 
    (list 'fork-process
 	 "expects no arguments and forks the process into parent and child processes; returns 0 in the child process and the child's process id in the parent process, or #f if the underlying fork() call failed"
@@ -1083,12 +1086,12 @@
 	 'prim
 	 1 (lambda (r a1)
 	     (emit-code
-	      "wile_print_lisp_val(&(@1), stdout);"
+	      "wile_print_lisp_val(&(@1), stdout, LISP_WHENCE);"
 	      "@@ = @1;"))
 	 2 (lambda (r a1 a2)
 	     (emit-code
 	      "if (@2.vt == LV_FILE_PORT || @2.vt == LV_PIPE_PORT || @2.vt == LV_SOCK_PORT) {"
-	      "wile_print_lisp_val(&(@1), @2.v.fp);"
+	      "wile_print_lisp_val(&(@1), @2.v.fp, LISP_WHENCE);"
 	      "@@ = @1;"
 	      "} else {"
 	      "WILE_EX(\"display\", \"expects a scheme value and a port\");"
@@ -1097,7 +1100,7 @@
    (list 'string->number "expects one string, parses it as a number, and returns the number"
 	 'prim 1
 	 (lambda (r a1)
-	   (emit-code "@@ = wile_string2num(@1, __FILE__, __LINE__);")))
+	   (emit-code "@@ = wile_string2num(@1, LISP_WHENCE);")))
 
    (list 'number->string
 	 "expects a number, an optional base, and an optional precision, and returns a textual representation of the number. for integers, any base from 2 to 36 is allowed; if a precision is specified, the number is formatted as a floating-point number, and only bases 2, 8, 10, and 16 are allowed. if the precision is negative, scientific notation is used, otherwise regular notation is used"
@@ -1105,12 +1108,12 @@
 	 ;;; number
 	 1 (lambda (r a1)
 	     (emit-code
-	      "@@ = wile_num2string(@1, 10, INT_MIN, __FILE__, __LINE__);"))
+	      "@@ = wile_num2string(@1, 10, INT_MIN, LISP_WHENCE);"))
 	 ;;; number base
 	 2 (lambda (r a1 a2)
 	     (emit-code
 	      "if (@2.vt == LV_INT) {"
-	      "@@ = wile_num2string(@1, @2.v.iv, INT_MIN, __FILE__, __LINE__);"
+	      "@@ = wile_num2string(@1, @2.v.iv, INT_MIN, LISP_WHENCE);"
 	      "} else {"
 	      "WILE_EX(\"number->string\", \"base is not numeric\");"
 	      "}"))
@@ -1118,7 +1121,7 @@
 	 3 (lambda (r a1 a2 a3)
 	     (emit-code
 	      "if (@2.vt == LV_INT && @3.vt == LV_INT) {"
-	      "@@ = wile_num2string(@1, @2.v.iv, @3.v.iv, __FILE__, __LINE__);"
+	      "@@ = wile_num2string(@1, @2.v.iv, @3.v.iv, LISP_WHENCE);"
 	      "} else {"
 	      "WILE_EX(\"number->string\", \"base or precision is not numeric\");"
 	      "}")))
@@ -3450,7 +3453,7 @@
 	    "if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.bvec.capa) {"
 	    "WILE_EX(\"bytevector-ref\", \"got bad index value\");"
 	    "}"
-	    "@@ = LVI_CHAR(@1.v.bvec.arr[@2.v.iv]);"
+	    "@@ = LVI_INT(@1.v.bvec.arr[@2.v.iv]);"
 	    "}")))
 
    (list 'bytevector-set!
@@ -3468,7 +3471,7 @@
 	    "if (!(@3.vt == LV_CHAR || (@3.vt == LV_INT && @3.v.iv >= 0 && @3.v.iv < 256))) {"
 	    "WILE_EX(\"bytevector-set!\", \"got bad input value\");"
 	    "}"
-	    "@1.v.bvec.arr[@2.v.iv] = (@3.vt == LV_CHAR) ? @3.v.chr : @3.v.iv;"
+	    "@1.v.bvec.arr[@2.v.iv] = (@3.vt == LV_CHAR) ? @3.v.chr : (unsigned char) @3.v.iv;"
 	    "@@ = @1;"
 	    "}")))
 
@@ -3643,11 +3646,11 @@
 	 "expects an optional file name and an optional mode: if no arguments are specified, an in-memory database is opened read-write; if only a file name is specified, that is taken to be the name of an existing database which is opened read-only; if the mode is also specified, it must be one of 'read-only 'read-write or 'create. if 'read-only or 'read-write, the database must already exist; if 'create, it is created if it does not already exist, and it is opened read-write"
 	 'prim
 	 0 (lambda (r)
-	     (emit-code "@@ = wile_sql_open(NULL, 1, __FILE__, __LINE__);"))
+	     (emit-code "@@ = wile_sql_open(NULL, 1, LISP_WHENCE);"))
 	 1 (lambda (r a1)
 	     (emit-code
 	      "if (@1.vt == LV_STRING) {"
-	      "@@ = wile_sql_open(@1.v.str, 0, __FILE__, __LINE__);"
+	      "@@ = wile_sql_open(@1.v.str, 0, LISP_WHENCE);"
 	      "} else {"
 	      "WILE_EX(\"sqlite-open\", \"expects a filename\");"
 	      "}"))
@@ -3664,7 +3667,7 @@
 	      "} else {"
 	      "WILE_EX(\"sqlite-open\", \"unknown mode %%s\", @2.v.str);"
 	      "}"
-	      "@@ = wile_sql_open(@1.v.str, mode, __FILE__, __LINE__);"
+	      "@@ = wile_sql_open(@1.v.str, mode, LISP_WHENCE);"
 	      "} else {"
 	      "WILE_EX(\"sqlite-open\", \"expects a filename\");"
 	      "}")))
@@ -3676,7 +3679,7 @@
 	   (emit-code
 	    "#ifdef WILE_USES_SQLITE"
 	    "if (@1.vt == LV_SQLITE_PORT && @2.vt == LV_STRING) {"
-	    "@@ = wile_sql_run(@1.v.sqlite_conn, @2.v.str, __FILE__, __LINE__);"
+	    "@@ = wile_sql_run(@1.v.sqlite_conn, @2.v.str, LISP_WHENCE);"
 	    "} else {"
 	    "WILE_EX(\"sqlite-run\", \"expects one sqlite-port and one string\");"
 	    "}"
@@ -3754,7 +3757,7 @@
 	    "if (@1.vt == LV_SYMBOL &&"
 	    "((@2.vt == LV_CLAMBDA && @2.v.clambda.arity == 2) ||"
 	    "(@2.vt == LV_ILAMBDA && @2.v.ilambda->arity == 2))) {"
-	    "@@ = wile_register_display_proc(@1.v.str, @2, __FILE__, __LINE__);"
+	    "@@ = wile_register_display_proc(@1.v.str, @2, LISP_WHENCE);"
 	    "} else {"
 	    "WILE_EX(\"display-object-hook\", \"expects one symbol and one procedure of two arguments\");"
 	    "}")))

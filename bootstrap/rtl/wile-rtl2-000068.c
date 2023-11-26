@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (vector-sort! is-le? vec) @@@ bld-rtl-dir/wile-rtl2-000068.scm:15 @@@ wile_vector_sort_inplace @@@
-lval wile_vector_sort_inplace(lptr* var_1, lptr var_2)
+lval wile_vector_sort_inplace(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
@@ -136,7 +136,8 @@ var_26 = wile_gen_list(2, var_28, NULL);
 {
 lval var_27[8];
 var_27[0] = var_26;
-var_26 = wile_max(NULL, var_27);
+// bld-rtl-dir/wile-rtl2-000068.scm:20
+var_26 = wile_max(NULL, var_27, "bld-rtl-dir/wile-rtl2-000068.scm:20");
 }
 var_6 = var_26;
 lval var_30;
@@ -246,7 +247,7 @@ var_47[0] = var_2[0];
 var_47[1] = var_44;
 var_46 = wile_gen_list(2, var_47, NULL);
 }
-var_46 = wile_apply_function(&(var_46), __FILE__, __LINE__);
+var_46 = wile_apply_function(&(var_46), LISP_WHENCE);
 var_41 = var_46;
 if (!LV_IS_FALSE(var_41)) { break; }
 } while (0);

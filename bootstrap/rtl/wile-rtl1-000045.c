@@ -9,12 +9,12 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_setlinebuffering(lptr*, lptr args)
+lval wile_setnobuffering(lptr*, lptr args, const char* loc)
 {
     if (args[0].vt == LV_FILE_PORT ||
 	args[0].vt == LV_PIPE_PORT ||
 	args[0].vt == LV_SOCK_PORT) {
-	return LVI_BOOL(setvbuf(args[0].v.fp, NULL, _IOLBF, 0) == 0);
+	return LVI_BOOL(setvbuf(args[0].v.fp, NULL, _IONBF, 0) == 0);
     } else if (args[0].vt == LV_STR_PORT) {
 	return LVI_BOOL(true);
 #ifdef WILE_USES_SQLITE
@@ -22,7 +22,7 @@ lval wile_setlinebuffering(lptr*, lptr args)
 	return LVI_BOOL(false);
 #endif // WILE_USES_SQLITE
     } else {
-	wile_exception("set-line-buffering!", "expects one port argument");
+	wile_exception("set-no-buffering!", loc, "expects one port argument");
     }
 }
 

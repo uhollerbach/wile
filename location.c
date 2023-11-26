@@ -9,6 +9,7 @@
 #include <math.h>
 
 #include "wile.h"
+#include "wile-rtl1.h"
 #include "alloc.h"
 #include "lib-macros.h"
 
@@ -142,10 +143,12 @@ lisp_loc_t wile_get_lisp_loc(lptr vp)
 	    return o;
 
 	case LV_PROMISE:
-	    FATAL("<wile_get_lisp_loc>", "promises are not implemented yet!");
+	    wile_exception("<wile_get_lisp_loc>", LISP_WHENCE,
+			   "promises are not implemented yet!");
 
 	default:
-	    FATAL("<wile_get_lisp_loc>", "bad type %d", vp->vt);
+	    wile_exception("<wile_get_lisp_loc>", LISP_WHENCE,
+			   "bad type %d", vp->vt);
 	}
     } else {
 	return 0;

@@ -21,26 +21,29 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (string-trim-right drop? str) @@@ bld-rtl-dir/wile-rtl2-000047.scm:13 @@@ wile_string_trim_right @@@
-lval wile_string_trim_right(lptr* var_1, lptr var_2)
+lval wile_string_trim_right(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 {
 lval var_5[8];
 var_5[0] = var_2[1];
-var_4 = wile_string_reverse(NULL, var_5);
+// bld-rtl-dir/wile-rtl2-000047.scm:14
+var_4 = wile_string_reverse(NULL, var_5, "bld-rtl-dir/wile-rtl2-000047.scm:14");
 }
 lval var_6;
 {
 lval var_7[8];
 var_7[0] = var_2[0];
 var_7[1] = var_4;
-var_6 = wile_string_trim_left(NULL, var_7);
+// bld-rtl-dir/wile-rtl2-000047.scm:14
+var_6 = wile_string_trim_left(NULL, var_7, "bld-rtl-dir/wile-rtl2-000047.scm:14");
 }
 lval var_8;
 {
 lval var_9[8];
 var_9[0] = var_6;
-var_8 = wile_string_reverse(NULL, var_9);
+// bld-rtl-dir/wile-rtl2-000047.scm:14
+var_8 = wile_string_reverse(NULL, var_9, "bld-rtl-dir/wile-rtl2-000047.scm:14");
 }
 return var_8;
 }

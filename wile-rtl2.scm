@@ -1448,6 +1448,20 @@
 
 ;;; --8><----8><----8><--
 
+(define-primitive "wile_bytevector_foreach"
+  "expects a procedure of N arguments and N bytevectors all of the same length, where N is at least 1, and applies the procedure to each tuple consisting of taking the jth entry from each of the bytevectors; but does not build any bytevector of results"
+  (bytevector-for-each proc vec . vecs)
+  (let* ((vs (cons vec vecs))
+	 (ls (map bytevector-length vs)))
+    (unless (= (apply min ls) (apply max ls))
+      (raise "bytevector-for-each: unequal vector lengths"))
+    (let ((len (car ls)))
+      (do ((i 0 (+ i 1)))
+	  ((= i len) #t)
+	(apply proc (map (lambda (v) (bytevector-ref v i)) vs))))))
+
+;;; --8><----8><----8><--
+
 ;;; The cholesky-decompose routine takes an upper (or lower)
 ;;; half-matrix and does an almost-Cholesky decomposition U^T*D*U
 ;;; (or L*D*L^T). It returns a tuple containing the D matrix, stored

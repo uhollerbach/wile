@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (list-length lst) @@@ bld-rtl-dir/wile-rtl2-000001.scm:15 @@@ wile_list_length @@@
-lval wile_list_length(lptr* var_1, lptr var_2)
+lval wile_list_length(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;

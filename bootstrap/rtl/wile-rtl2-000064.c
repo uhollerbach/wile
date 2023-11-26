@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (julian-day-of-easter year) @@@ bld-rtl-dir/wile-rtl2-000064.scm:16 @@@ wile_julian_day_of_easter @@@
-lval wile_julian_day_of_easter(lptr* var_1, lptr var_2)
+lval wile_julian_day_of_easter(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
@@ -248,7 +248,8 @@ lval var_79[8];
 var_79[0] = var_2[0];
 var_79[1] = var_71;
 var_79[2] = var_73;
-var_78 = wile_julian_day(NULL, var_79);
+// bld-rtl-dir/wile-rtl2-000064.scm:32
+var_78 = wile_julian_day(NULL, var_79, "bld-rtl-dir/wile-rtl2-000064.scm:32");
 }
 return var_78;
 }

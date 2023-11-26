@@ -20,6 +20,7 @@
 #include <math.h>
 
 #include "wile.h"
+#include "wile-rtl1.h"
 #include "alloc.h"
 #include "lib-macros.h"
 #include "wile-parse.h"
@@ -621,7 +622,8 @@ static void read_int(int base, const unsigned char* str, lisp_int_t* res)
 #define IPART(b,d)							\
     do {								\
 	if (base < b) {							\
-	    FATAL("<read_real>", "got bad base-%d digit %c", base, *sp); \
+	    wile_exception("<read_real>", LISP_WHENCE,			\
+			   "got bad base-%d digit %c", base, *sp);	\
 	}								\
 	ipart = base*ipart + d;						\
     } while (0)
@@ -629,7 +631,8 @@ static void read_int(int base, const unsigned char* str, lisp_int_t* res)
 #define FPART(b,d)							\
     do {								\
 	if (base < b) {							\
-	    FATAL("<read_real>", "got bad base-%d digit %c", base, *sp); \
+	    wile_exception("<read_real>", LISP_WHENCE,			\
+			   "got bad base-%d digit %c", base, *sp);	\
 	}								\
 	fpart += scale*d;						\
 	scale /= base;							\
@@ -638,7 +641,8 @@ static void read_int(int base, const unsigned char* str, lisp_int_t* res)
 #define EPART(b,d)							\
     do {								\
 	if (base < b) {							\
-	    FATAL("<read_real>", "got bad base-%d digit %c", base, *sp); \
+	    wile_exception("<read_real>", LISP_WHENCE,			\
+			   "got bad base-%d digit %c", base, *sp);	\
 	}								\
 	epart = base*epart + d;						\
     } while (0)
@@ -669,7 +673,8 @@ static void read_int(int base, const unsigned char* str, lisp_int_t* res)
 	case 'f':							\
 	case 'F':	mac(16, 15);	break;				\
 	default:							\
-	    FATAL("<read_real>", "got bad base-%d digit %c", 16, *sp);	\
+	    wile_exception("<read_real>", LISP_WHENCE,			\
+			   "got bad base-%d digit %c", 16, *sp);	\
 	}								\
 	++sp;								\
     } while (0)
@@ -695,7 +700,8 @@ static void read_real(char* sp, lisp_real_t* res)
 	case 'x':
 	case 'X':	base = 16;	break;
 	default:
-	    FATAL("<read_real>", "saw an unrecognized base specifier");
+	    wile_exception("<read_real>", LISP_WHENCE,
+			   "saw an unrecognized base specifier");
 	}
 	++sp;
     }

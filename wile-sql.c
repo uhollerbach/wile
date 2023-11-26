@@ -23,7 +23,7 @@
 
 // trivial function to get sqlite code version
 
-lval wile_sql_version(lptr*, lptr)
+lval wile_sql_version(lptr*, lptr, const char*)
 {
 #ifdef WILE_USES_SQLITE
     return LVI_STRING(sqlite3_libversion());
@@ -40,8 +40,7 @@ lval wile_sql_version(lptr*, lptr)
 // fname = NULL -> in-memory rw
 // mode = 0 -> ro, 1 -> rw, 2 -> rw/create
 
-lval wile_sql_open(const char* fname, int mode,
-		   const char* file_name, int line_no)
+lval wile_sql_open(const char* fname, int mode, const char* loc)
 {
 #ifdef WILE_USES_SQLITE
     int flags;
@@ -58,8 +57,7 @@ lval wile_sql_open(const char* fname, int mode,
 	    flags = SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE;
 	    break;
 	default:
-	    wile_exception2("sqlite-open", file_name, line_no,
-			    "bad mode %d", mode);
+	    wile_exception("sqlite-open", loc, "bad mode %d", mode);
 	}
     } else {
 	fname = "memory";
@@ -73,7 +71,7 @@ lval wile_sql_open(const char* fname, int mode,
 	// harmless if the handle is NULL
 	// TODO: use close or close_v2?
 	(void) sqlite3_close_v2(ret.v.sqlite_conn);
-	wile_exception2("sqlite-open", file_name, line_no, "failed");
+	wile_exception("sqlite-open", loc, "failed");
     }
     return ret;
 #else
@@ -100,16 +98,14 @@ static int sql_collect(void* arg, int nres, char** vals, char** /*hdrs*/)
 
 // (sqlite-run db cmd)
 
-lval wile_sql_run(sqlite3* sqlite_conn, const char* cmd,
-		  const char* file_name, int line_no)
+lval wile_sql_run(sqlite3* sqlite_conn, const char* cmd, const char* loc)
 {
     lptr res;
     char *err;
 
     res = NULL;
     if (sqlite3_exec(sqlite_conn, cmd, sql_collect, &res, &err) != SQLITE_OK) {
-	wile_exception2("sqlite-run", file_name, line_no,
-			"error occurred: %s", err);
+	wile_exception("sqlite-run", loc, "error occurred: %s", err);
     }
     REVERSE_LIST_INPLACE(res);
     return res ? *res : LVI_NIL();
@@ -118,24 +114,24 @@ lval wile_sql_run(sqlite3* sqlite_conn, const char* cmd,
 
 // (sqlite-statement-prepare db statement)
 
-lval wile_sql_stmt_prep(lptr*, lptr args)
+lval wile_sql_stmt_prep(lptr*, lptr args, const char* loc)
 {
 #ifdef WILE_USES_SQLITE
     lval res;
     const char* stail;
 
     if (args[0].vt != LV_SQLITE_PORT || args[1].vt != LV_STRING) {
-	wile_exception("sqlite-statement-prepare",
+	wile_exception("sqlite-statement-prepare", loc,
 		       "expects one sqlite-port and one string argument");
     }
     res.vt = LV_SQLITE_STMT;
     res.v.sqlite_stmt = NULL;
     if (sqlite3_prepare_v2(args[0].v.sqlite_conn, args[1].v.str, -1,
 			   &(res.v.sqlite_stmt), &stail) != SQLITE_OK) {
-	wile_exception("sqlite-statement-prepare", "failed");
+	wile_exception("sqlite-statement-prepare", loc, "failed");
     }
     if (stail != NULL && strcmp(stail, "") != 0) {
-	wile_exception("sqlite-statement-prepare",
+	wile_exception("sqlite-statement-prepare", loc,
 		       "cannot compile multiple statements: found %s", stail);
     }
     return res;
@@ -146,15 +142,15 @@ lval wile_sql_stmt_prep(lptr*, lptr args)
 
 // (sqlite-statement-cleanup statement)
 
-lval wile_sql_stmt_clean(lptr*, lptr args)
+lval wile_sql_stmt_clean(lptr*, lptr args, const char* loc)
 {
 #ifdef WILE_USES_SQLITE
     if (args[0].vt != LV_SQLITE_STMT) {
-	wile_exception("sqlite-statement-cleanup",
+	wile_exception("sqlite-statement-cleanup", loc,
 		       "expects one sqlite-stmt argument");
     }
     if (sqlite3_finalize(args[0].v.sqlite_stmt) != SQLITE_OK) {
-	wile_exception("sqlite-statement-cleanup", "failed");
+	wile_exception("sqlite-statement-cleanup", loc, "failed");
     }
     // TODO: close out the input?
     // args->v.bv = false;
@@ -167,14 +163,14 @@ lval wile_sql_stmt_clean(lptr*, lptr args)
 
 // (sqlite-statement-info statement)
 
-lval wile_sql_stmt_info(lptr*, lptr args)
+lval wile_sql_stmt_info(lptr*, lptr args, const char* loc)
 {
 #ifdef WILE_USES_SQLITE
     int i, n;
     lptr res;
 
     if (args[0].vt != LV_SQLITE_STMT) {
-	wile_exception("sqlite-statement-info",
+	wile_exception("sqlite-statement-info", loc,
 		       "expects one sqlite-stmt argument");
     }
     n = sqlite3_bind_parameter_count(args[0].v.sqlite_stmt);
@@ -191,7 +187,7 @@ lval wile_sql_stmt_info(lptr*, lptr args)
 
 // (sqlite-statement-bind statement val1 ...)
 
-lval wile_sql_stmt_bind(lptr*, lptr args)
+lval wile_sql_stmt_bind(lptr*, lptr args, const char* loc)
 {
 #ifdef WILE_USES_SQLITE
     int i, n, ec;
@@ -201,7 +197,7 @@ lval wile_sql_stmt_bind(lptr*, lptr args)
     lisp_int_t num, den;
 
     if (args[0].vt != LV_SQLITE_STMT) {
-	wile_exception("sqlite-statement-bind",
+	wile_exception("sqlite-statement-bind", loc,
 		       "expects sqlite-stmt as first argument");
     }
     ss = args[0].v.sqlite_stmt;
@@ -247,13 +243,13 @@ lval wile_sql_stmt_bind(lptr*, lptr args)
 			     SQLITE_TRANSIENT);
 		    break;
 		default:
-		    wile_exception("sqlite-statement-bind",
+		    wile_exception("sqlite-statement-bind", loc,
 				   "cannot bind %s to SQL",
 				   typename(CAR(args)->vt));
 		}
 	    }
 	    if (ec != SQLITE_OK) {
-		wile_exception("sqlite-statement-bind",
+		wile_exception("sqlite-statement-bind", loc,
 			       "failed to bind %s", name);
 	    }
 	    args = CDR(args);
@@ -267,7 +263,7 @@ lval wile_sql_stmt_bind(lptr*, lptr args)
 
 // (sqlite-statement-run statement)
 
-lval wile_sql_stmt_run(lptr*, lptr args)
+lval wile_sql_stmt_run(lptr*, lptr args, const char* loc)
 {
 #ifdef WILE_USES_SQLITE
     int i, n, ec;
@@ -275,7 +271,7 @@ lval wile_sql_stmt_run(lptr*, lptr args)
     lptr row, res;
 
     if (args->vt != LV_SQLITE_STMT) {
-	wile_exception("sqlite-statement-run",
+	wile_exception("sqlite-statement-run", loc,
 		       "expects one sqlite-stmt argument");
     }
 
@@ -320,7 +316,7 @@ lval wile_sql_stmt_run(lptr*, lptr args)
 		return res ? *res : LVI_NIL();
 	    } else {
 		// error finish
-		wile_exception("sqlite-statement-run",
+		wile_exception("sqlite-statement-run", loc,
 			       "coughed up a hairball");
 	    }
 	}

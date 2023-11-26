@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (vector-map! proc vec) @@@ bld-rtl-dir/wile-rtl2-000070.scm:13 @@@ wile_vector_map_inplace @@@
-lval wile_vector_map_inplace(lptr* var_1, lptr var_2)
+lval wile_vector_map_inplace(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
@@ -101,7 +101,7 @@ var_16[0] = var_2[0];
 var_16[1] = var_13;
 var_15 = wile_gen_list(2, var_16, NULL);
 }
-var_15 = wile_apply_function(&(var_15), __FILE__, __LINE__);
+var_15 = wile_apply_function(&(var_15), LISP_WHENCE);
 {
 if (var_2[1].vt != LV_VECTOR) {
 WILE_EX("vector-set!", "input is not a vector");
@@ -126,7 +126,8 @@ var_19 = wile_gen_list(2, var_21, NULL);
 {
 lval var_20[8];
 var_20[0] = var_19;
-var_19 = wile_add(NULL, var_20);
+// bld-rtl-dir/wile-rtl2-000070.scm:15
+var_19 = wile_add(NULL, var_20, "bld-rtl-dir/wile-rtl2-000070.scm:15");
 }
 var_8 = var_19;
 var_7 = var_8;

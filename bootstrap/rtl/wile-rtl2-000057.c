@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (julian-day year month day) @@@ bld-rtl-dir/wile-rtl2-000057.scm:22 @@@ wile_julian_day @@@
-lval wile_julian_day(lptr* var_1, lptr var_2)
+lval wile_julian_day(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;

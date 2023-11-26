@@ -234,7 +234,7 @@
   ;;; emit a trailing ';' after the label because clang expects
   ;;; an expression after a label; gcc doesn't care
   (emit-fstr
-   "\n// @@@ %v @@@ %s @@@ %s @@@\n%slval %s(lptr* %s, lptr %s)\n{\n%s:;\n"
+   "\n// @@@ %v @@@ %s @@@ %s @@@\n%slval %s(lptr* %s, lptr %s, const char* cloc)\n{\n%s:;\n"
    info1 info2 fn-name (if visible? "" "static ")
    fn-name clos-name args-name top-label)
   (when global-profile
@@ -243,14 +243,18 @@
 	  (cons (sprintf "%v\\t%v" info2 info1)
 		global-profile))))
 
-(define (emit-function-call res fn closure args tcall frame)
+(define (emit-function-call res fn closure args tcall frame call-loc)
   (when (and closure (not (null? global-closures)))
     (let* ((cl1 (car global-closures))
 	   (clist (get-closure-table-clist cl1))
 	   (cl-entry (assv closure clist)))
       (when cl-entry
 	(set! closure (sprintf "(lptr*) %s" (cdr cl-entry))))))
-  (let ((call (sprintf "%s(%s, %s)" fn (if closure closure "NULL") args)))
+  (when (string=? (string-copy call-loc 0 2) "./")
+    (set! call-loc (string-copy call-loc 2)))
+  (emit-fstr "// %s\n" call-loc)
+  (let ((call (sprintf "%s(%s, %s, \"%s\")"
+		       fn (if closure closure "NULL") args call-loc)))
     (if tcall
 	(if (and frame (string=? fn (car frame)))
 	    (emit-fstr "goto %s;\t// selfie\n" (cadr frame))
@@ -931,7 +935,7 @@
 		   (upfrom 0 (list-length sas)))))
     (with-output
      global-decl
-     (emit-fstr "static lval %s(lptr*, lptr);\n" tmp-fn))
+     (emit-fstr "static lval %s(lptr*, lptr, const char*);\n" tmp-fn))
     (fluid-let ((global-closures
 		 (cons (make-closure-table c-name 0 () ()) global-closures)))
       (with-output
@@ -985,7 +989,7 @@
   (let ((val (maybe-compile-expr cur-env #f (car clauses)))
 	(res (new-svar)))
     (emit-decl res)
-    (emit-fstr "if (%s.vt != %s) {\nwile_exception2(\"case\", __FILE__, __LINE__, \"case-value type does not match case type\");\n}\nswitch (%s%s) {\n" val type val member)
+    (emit-fstr "if (%s.vt != %s) {\nwile_exception(\"case\", LISP_WHENCE, \"case-value type does not match case type\");\n}\nswitch (%s%s) {\n" val type val member)
     (for-each (lambda (c) (do-one-case1 res to-int cur-env tcall val c))
 	      (cdr clauses))
     (unless def?
@@ -1013,7 +1017,7 @@
 	 (vm (string-append val member))
 	 (res (new-svar)))
     (emit-decl res)
-    (emit-fstr "if (%s.vt != %s) {\nwile_exception2(\"case\", __FILE__, __LINE__, \"case-value type does not match case type\");\n}\ndo {\n" val type)
+    (emit-fstr "if (%s.vt != %s) {\nwile_exception(\"case\", LISP_WHENCE, \"case-value type does not match case type\");\n}\ndo {\n" val type)
     (for-each (lambda (c) (do-one-case2 res to-str cur-env tcall val vm c))
 	      (cdr clauses))
     (unless def?
@@ -1132,7 +1136,8 @@
 	 (merge-fn (cdr (lookup-symbol cur-env (if splice? 'append 'cons)))))
     (unless (symbol=? 'prim (car merge-fn))
       (ERR "'quasiquote' merge lookup failed!!"))
-    (apply-prim "quasiquote merge" (cdr merge-fn) (list lh lt))))
+    (apply-prim "quasiquote merge" (cdr merge-fn)
+		(list lh lt) (token-source-line expr))))
 
 (define (compile-qq level cur-env expr)
   (cond ((or (symbol? expr)
@@ -1160,7 +1165,8 @@
 	       (conv-fn (cdr (lookup-symbol cur-env 'list->vector))))
 	   (unless (symbol=? 'prim (car conv-fn))
 	     (ERR "'quasiquote' conversion lookup failed!"))
-	   (apply-prim "quasiquote convert" (cdr conv-fn) (list tmp))))
+	   (apply-prim "quasiquote convert" (cdr conv-fn) (list tmp)
+		       (token-source-line expr))))
 
 ;;; bytevectors are a little problematic, because they assume the contents
 ;;; are always bytes, and thus only have space for bytes. so storing some
@@ -1175,7 +1181,7 @@
 ;;;	       (conv-fn (cdr (lookup-symbol cur-env 'list->bytevector))))
 ;;;	   (unless (symbol=? 'prim (car conv-fn))
 ;;;	     (ERR "'quasiquote' conversion lookup failed!!"))
-;;;	   (apply-prim "quasiquote convert" (cdr conv-fn) (list tmp))))
+;;;	   (apply-prim "quasiquote convert" (cdr conv-fn) (list tmp) (token-source-line expr))))
 ;;;	 (compile-immediate cur-env 'BYTEVECTOR))
 	(else				;;; unimplemented or impossible cases
 	 (ERR "malformed 'quasiquote' expression '%v'" expr))))
@@ -1261,7 +1267,7 @@
 
 	   )))
 
-(define (build-regular-prim res nargs arity c-fn args)
+(define (build-regular-prim res nargs arity c-fn args call-loc)
   (cond ((negative? arity)
 	 (let* ((narity (- arity))
 		(req (- narity 1))
@@ -1273,11 +1279,11 @@
 	     (for-each (lambda (ix v) (emit-fstr "%s[%d] = %s;\n" tmp ix v))
 		       (upfrom 0 req) (list-head args req)))
 	   (emit-fstr "%s[%d] = %s;\n" tmp req res)
-	   (emit-function-call res c-fn #f tmp #f #f)
+	   (emit-function-call res c-fn #f tmp #f #f call-loc)
 	   (emit-fstr "}\n")))
 	((zero? nargs)
 	 (emit-decl res)
-	 (emit-function-call res c-fn #f "NULL" #f #f))
+	 (emit-function-call res c-fn #f "NULL" #f #f call-loc))
 	(else
 	 (let ((tmp (new-svar)))
 	   (emit-decl res)
@@ -1285,10 +1291,10 @@
 	   (emit-decl tmp nargs)
 	   (for-each (lambda (ix v) (emit-fstr "%s[%d] = %s;\n" tmp ix v))
 		     (upfrom 0 nargs) args)
-	   (emit-function-call res c-fn #f tmp #f #f)
+	   (emit-function-call res c-fn #f tmp #f #f call-loc)
 	   (emit-fstr "}\n")))))
 
-(define (apply-prim s-name ops args)
+(define (apply-prim s-name ops args call-loc)
   (let* ((res (new-svar))
 	 (nargs (list-length args))
 	 (aop (let loop ((os ops))
@@ -1306,40 +1312,48 @@
 	 (arity (car aop))
 	 (op (cadr aop)))
     (if (string? op)
-	(build-regular-prim res nargs arity op args)
+	(build-regular-prim res nargs arity op args call-loc)
 	(apply op (cons res args)))
     res))
 
-(define (wrap-prim s-name codelets)
-  (let ((f-name (new-svar 'fn))
-	(c-name (new-svar))
-	(a-name (new-svar))
-	(top-label (new-svar 'lbl))
-	(res (new-svar))
-	(ncs (/ (list-length codelets) 2))
-	(arity (car codelets)))
-    (with-output
-     global-func
-     (emit-function-head f-name top-label #f c-name a-name s-name
-			 (token-source-line s-name))
-     (if (> ncs 1)
-	 (ERR "ambiguous primitive '%s': %d choices cannot be wrapped yet"
-	      s-name ncs)
-	 (let ((cas (map (lambda (i) (args-ref a-name i))
-			 (upfrom 0 (abs arity)))))
+(define global-prims-memoized #f)
+
+(define (wrap-prim s-name codelets call-loc)
+  (let ((lookup (assv s-name global-prims-memoized)))
+    (if lookup
+	(cdr lookup)
+	(let ((f-name (new-svar 'fn))
+	      (c-name (new-svar))
+	      (a-name (new-svar))
+	      (top-label (new-svar 'lbl))
+	      (res (new-svar))
+	      (ncs (/ (list-length codelets) 2))
+	      (arity (car codelets)))
+	  (with-output
+	   global-func
+	   (emit-function-head f-name top-label #f c-name a-name s-name
+			       (token-source-line s-name))
+	   (if (> ncs 1)
+	       (ERR "ambiguous primitive '%s': %d choices cannot be wrapped yet"
+		    s-name ncs)
+	       (let ((cas (map (lambda (i) (args-ref a-name i))
+			       (upfrom 0 (abs arity)))))
 	    ;;; the build-variadic-bypass is only for variadic functions,
 	    ;;; it doesn't do anything for fixed-arity functions; so we
 	    ;;; can set it for either case
-	   (fluid-let ((build-variadic-bypass
-			(args-ref a-name (- (abs arity) 1))))
-	     (let ((op (cadr codelets)))
-	       (if (string? op)
-		   (build-regular-prim res arity arity op cas)
-		   (apply op (cons res cas)))))))
-     (emit-function-tail res)
-     (emit-fstr "// end of prim %s\n" f-name))
-    (string-append "LVI_PROC(" f-name "," "NULL" ","
-		   (number->string arity) ")")))
+		 (fluid-let ((build-variadic-bypass
+			      (args-ref a-name (- (abs arity) 1))))
+		   (let ((op (cadr codelets)))
+		     (if (string? op)
+			 (build-regular-prim res arity arity op cas call-loc)
+			 (apply op (cons res cas)))))))
+	   (emit-function-tail res)
+	   (emit-fstr "// end of prim %s\n" f-name))
+	  (let ((res (string-append "LVI_PROC(" f-name "," "NULL" ","
+				    (number->string arity) ")")))
+	    (set! global-prims-memoized
+		  (cons (cons s-name res) global-prims-memoized))
+	    res)))))
 
 (define (tcall-off s-name nargs variadic?)
   (unless (negative? global-tc-min-args)
@@ -1352,7 +1366,7 @@
 	     (if variadic? (+ nargs 1) nargs)))
   #f)
 
-(define (apply-proc s-name c-fn-name c-cl-name arity args tcall frame)
+(define (apply-proc s-name c-fn-name c-cl-name arity args tcall frame call-loc)
   (let* ((res (new-svar))
 	 (sars (map sym2str args))
 	 (parr (new-svar))
@@ -1421,7 +1435,7 @@
 	       (for-each (lambda (i)
 			   (emit-fstr "%s[%d] = %s[%d];\n" parr i star i))
 			 (upfrom 0 pix))))))
-    (emit-function-call res c-fn-name c-cl-name parr tcall frame)
+    (emit-function-call res c-fn-name c-cl-name parr tcall frame call-loc)
     res))
 
 (define (apply-macro s-name mac-op exprs)
@@ -1472,16 +1486,17 @@
       (if (symbol=? (car op) 'macro)
 	  (compile-expr cur-env tcall (apply-macro s-name (cdr op) (cdr expr)))
 	  (let ((args (map (lambda (ex) (maybe-compile-expr cur-env #f ex))
-			   (cdr expr))))
+			   (cdr expr)))
+		(call-loc (token-source-line expr)))
 	    (cond ((symbol=? (car op) 'c-var)
 		   (let ((tmp (new-svar)))
 		     (apply build-basic-list tmp args)
 		     (compile-runtime-apply (new-svar) (cadr op) tmp)))
 		  ((symbol=? (car op) 'prim)
-		   (apply-prim s-name (cdr op) args))
+		   (apply-prim s-name (cdr op) args call-loc))
 		  ((symbol=? (car op) 'proc)
-		   (apply-proc s-name (caddr op) (cadddr op)
-			       (cadr op) args tcall (lookup-frame cur-env)))
+		   (apply-proc s-name (caddr op) (cadddr op) (cadr op)
+			       args tcall (lookup-frame cur-env) call-loc))
 		  (else
 		   (ERR "unknown symbol '%s'" s-name)))))))
    (else
@@ -1500,7 +1515,7 @@
 	(cond ((symbol=? (car si) 'c-var)
 	       (cadr si))
 	      ((symbol=? (car si) 'prim)
-	       (wrap-prim expr (cdr si)))
+	       (wrap-prim expr (cdr si) (token-source-line expr)))
 	      ((symbol=? (car si) 'proc)
 	       (let ((r (new-svar))
 		     (a1 (caddr si))
@@ -1580,7 +1595,7 @@
 	    (let ((c-bag (make-string-bag ())))
 	      (with-output
 	       c-bag
-	       (emit-fstr "lval %s(lptr*, lptr);\t// %v\n" tmp-fn (car def)))
+	       (emit-fstr "lval %s(lptr*, lptr, const char*);\t// %v\n" tmp-fn (car def)))
 	      (display c-bag c-port)))
 	  (when s-port
 	    (if (string=? doc-string "")
@@ -1590,7 +1605,7 @@
 			 (caar def) doc-string arity c-fn-name))))
 	(with-output
 	 global-decl
-	 (emit-fstr "static lval %s(lptr*, lptr);\t// %v\n"
+	 (emit-fstr "static lval %s(lptr*, lptr, const char*);\t// %v\n"
 		    tmp-fn (car def))))
     (make-fn-def (caar def) tmp-fn "NULL" arity)))
 
@@ -1838,10 +1853,26 @@
 
 (defmacro (add-output val) `(set! output (cons ,val output)))
 
-(define (remove-unused-vars lines)
-  (let ((decl (hash-table-create string-hash string=?))
-	(set (hash-table-create string-hash string=?))
-	(used (hash-table-create string-hash string=?))
+(define (strvec-ref bv ix)
+  (bytevector-ref bv (string->number ix)))
+
+(define (strvec-set! bv ix)
+  (bytevector-set! bv (string->number ix) #xff))
+
+(define (truthy v)
+  (> v #x7f))
+
+(define (strvec-foreach proc vec1 vec2)
+  (let ((len (bytevector-length vec1)))
+    (do ((i 0 (+ i 1)))
+	((= i len) #t)
+      (proc (bytevector-ref vec1 i)
+	    (bytevector-ref vec2 i)))))
+
+(define (remove-unused-vars nvars lines)
+  (let ((decl (bytevector-create nvars 0))
+	(set (bytevector-create nvars 0))
+	(used (bytevector-create nvars 0))
 	(re-dec "^((__attribute__[(][(]unused[)][)]|static)[ \t]+)?(lval|lptr|lptr[*]) var_[0-9]+(\[[0-9]+\])?(;| = LVI_(NIL|BOOL|INT|CHAR|REAL|RAT))")
 	(re-set "^var_[0-9]+ =")
 	(re-use "var_[0-9]+")
@@ -1853,41 +1884,43 @@
 		(let ((r l))
 		  (cond ((regex-match re-dec l)
 			 (let ((var (cadr (regex-match re-num l))))
-			   (if (hash-table-contains? decl var)
-			       (fprintf stderr multi-dec var)
-			       (hash-table-set! decl var 1))
+			   (if (zero? (strvec-ref decl var))
+			       (strvec-set! decl var)
+			       (fprintf stderr multi-dec var))
 			   (set! r #f)))
 			((regex-match re-set l)
 			 (let ((chop (regex-match re-num l)))
-			   (hash-table-set! set (cadr chop) 1)
+			   (strvec-set! set (cadr chop))
 			   (set! r (caddr chop)))))
 		  (while r
 			 (set! r
 			       (let ((chop1 (regex-match re-use r)))
 				 (if chop1
 				     (let ((chop2 (regex-match re-num (cadr chop1))))
-				       (hash-table-set! used (cadr chop2) 1)
+				       (strvec-set! used (cadr chop2))
 				       (caddr chop1))
 				     #f))))))
 	      lines)
     (let ((count 0))
-      (for-each (lambda (v)
-		  (unless (hash-table-contains? decl v)
-		    (add-output (string-append "// var_" v " undeclared"))
-		    (set! count (+ count 1))))
-		(hash-table-keys set))
+      (strvec-foreach
+       (lambda (d s)
+	 (when (and (truthy s) (not (truthy d)))
+	   (set! count (+ count 1))))
+       decl set)
       (when (positive? count)
 	(fprintf stderr
 		 "wile error: %d set but undeclared variables!\n" count)))
     (let ((count 0))
-      (for-each (lambda (v)
-		  (unless (hash-table-contains? used v)
-		    (set! count (+ count 1))))
-		(hash-table-keys set))
-      (for-each (lambda (v)
-		  (unless (hash-table-contains? used v)
-		    (set! count (+ count 1))))
-		(hash-table-keys decl))
+      (strvec-foreach
+       (lambda (s u)
+	 (when (and (truthy s) (not (truthy u)))
+	   (set! count (+ count 1))))
+       set used)
+      (strvec-foreach
+       (lambda (d u)
+	 (when (and (truthy d) (not (truthy u)))
+	   (set! count (+ count 1))))
+       decl used)
       (if (zero? count)
 	  lines
 	  (begin
@@ -1896,11 +1929,12 @@
 	    (for-each (lambda (l)
 			(let* ((var1 (regex-match re-num l))
 			       (var (if var1 (cadr var1) #f)))
-			  (cond ((regex-match re-dec l)
-				 (when (hash-table-contains? used var)
+			  (cond ((not var) (add-output l))
+				((regex-match re-dec l)
+				 (when (truthy (strvec-ref used var))
 				   (add-output l)))
 				((regex-match re-set l)
-				 (if (hash-table-contains? used var)
+				 (if (truthy (strvec-ref used var))
 				     (add-output l)
 				     (let ((ix (string-find-first-char l #\=)))
 				       (unless (regex-match re-copy l)
@@ -1909,12 +1943,13 @@
 					  (string-copy l (+ ix 1)))))))
 				(else (add-output l)))))
 		      lines)
-	    (remove-unused-vars (list-reverse output)))))))
+	    (remove-unused-vars nvars (list-reverse output)))))))
 
 (define (compile-file do-debug opt-level in-file out-path out-port fvals)
   (let ((decl-port (make-string-bag ()))
 	(code-port (make-string-bag ()))
 	(func-port (make-string-bag ())))
+    (set! global-prims-memoized ())
     (fluid-let ((global-out decl-port)
 		(global-decl decl-port)
 		(global-code code-port)
@@ -2020,7 +2055,8 @@
 		 (transfer-all-lines global-code global-out))
 	       (display global-out out-port)
 	       (when (and (positive? opt-level) (zero? global-errors))
-		 (let ((lines (read-all-lines out-port)))
+		 (let ((lines (read-all-lines out-port))
+		       (nvars (+ new-svar-index 5)))
 		   (when rm-dc
 		     (when (> global-verbose 0)
 		       (fprintf stderr "removing dead code\n"))
@@ -2032,8 +2068,7 @@
 		   (when rm-uv
 		     (when (> global-verbose 0)
 		       (fprintf stderr "removing unused variables\n"))
-		     (set! lines (remove-unused-vars lines)))
-
+		     (set! lines (remove-unused-vars nvars lines)))
 		   (set-file-position out-port 0 'start)
 		   (for-each (lambda (l)
 			       (write-string out-port l #\newline))

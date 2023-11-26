@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (gregorian-date jday) @@@ bld-rtl-dir/wile-rtl2-000058.scm:18 @@@ wile_gregorian_date @@@
-lval wile_gregorian_date(lptr* var_1, lptr var_2)
+lval wile_gregorian_date(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;

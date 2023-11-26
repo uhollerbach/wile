@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (list-flatten lst) @@@ bld-rtl-dir/wile-rtl2-000009.scm:15 @@@ wile_list_flatten @@@
-lval wile_list_flatten(lptr* var_1, lptr var_2)
+lval wile_list_flatten(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 do {
@@ -55,7 +55,8 @@ var_9 = (var_2[0].v.pair.car ? *(var_2[0].v.pair.car) : LVI_NIL());
 lval var_10;
 lval var_11[8];
 var_11[0] = var_9;
-var_10 = wile_list_flatten(NULL, var_11);
+// bld-rtl-dir/wile-rtl2-000009.scm:18
+var_10 = wile_list_flatten(NULL, var_11, "bld-rtl-dir/wile-rtl2-000009.scm:18");
 lval var_13;
 if (var_2[0].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
@@ -64,7 +65,8 @@ var_13 = (var_2[0].v.pair.cdr ? *(var_2[0].v.pair.cdr) : LVI_NIL());
 lval var_14;
 lval var_15[8];
 var_15[0] = var_13;
-var_14 = wile_list_flatten(NULL, var_15);
+// bld-rtl-dir/wile-rtl2-000009.scm:18
+var_14 = wile_list_flatten(NULL, var_15, "bld-rtl-dir/wile-rtl2-000009.scm:18");
 lval var_17;
 {
 lval var_19[2];
@@ -75,7 +77,8 @@ var_17 = wile_gen_list(2, var_19, NULL);
 {
 lval var_18[8];
 var_18[0] = var_17;
-var_17 = wile_list_append(NULL, var_18);
+// bld-rtl-dir/wile-rtl2-000009.scm:18
+var_17 = wile_list_append(NULL, var_18, "bld-rtl-dir/wile-rtl2-000009.scm:18");
 }
 var_4 = var_17;
 break;
@@ -93,7 +96,8 @@ var_21 = (var_2[0].v.pair.cdr ? *(var_2[0].v.pair.cdr) : LVI_NIL());
 lval var_22;
 lval var_23[8];
 var_23[0] = var_21;
-var_22 = wile_list_flatten(NULL, var_23);
+// bld-rtl-dir/wile-rtl2-000009.scm:20
+var_22 = wile_list_flatten(NULL, var_23, "bld-rtl-dir/wile-rtl2-000009.scm:20");
 lval var_25;
 {
 lptr p1 = NULL, p2 = NULL;

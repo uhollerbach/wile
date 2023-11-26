@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (list-drop-while drop? lst) @@@ bld-rtl-dir/wile-rtl2-000040.scm:13 @@@ wile_list_drop_while @@@
-lval wile_list_drop_while(lptr* var_1, lptr var_2)
+lval wile_list_drop_while(lptr* var_1, lptr var_2, const char* cloc)
 {
 lbl_3:;
 lval var_4;
@@ -52,7 +52,7 @@ var_12[0] = var_2[0];
 var_12[1] = var_9;
 var_11 = wile_gen_list(2, var_12, NULL);
 }
-var_11 = wile_apply_function(&(var_11), __FILE__, __LINE__);
+var_11 = wile_apply_function(&(var_11), LISP_WHENCE);
 var_5 = var_11;
 if (LV_IS_FALSE(var_5)) { break; }
 } while (0);
@@ -69,6 +69,7 @@ var_16[0] = var_2[0];
 var_16[1] = var_13;
 var_2[0] = var_16[0];
 var_2[1] = var_16[1];
+// bld-rtl-dir/wile-rtl2-000040.scm:15
 goto lbl_3;	// selfie
 }
 return var_4;

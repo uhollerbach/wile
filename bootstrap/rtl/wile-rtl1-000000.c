@@ -83,19 +83,21 @@ int main(int argc, char** argv)
 	if (cachalot->errval) {
 	    fputs("\n    ", stderr);
 	    if (IS_PAIR(cachalot->errval) &&
+		CAR(cachalot->errval) != NULL &&
 		IS_SYMBOL(CAR(cachalot->errval)) &&
 		strcmp(CAR(cachalot->errval)->v.str, "wile") == 0) {
 		if (IS_STRING(CDR(cachalot->errval))) {
 		    fputs((CDR(cachalot->errval))->v.str, stderr);
 		} else if (CDR(cachalot->errval)) {
-		    wile_print_lisp_val(CDR(cachalot->errval), stderr);
+		    wile_print_lisp_val(CDR(cachalot->errval),
+					stderr, "<main>");
 		} else {
 		    fputs("()!", stderr);
 		}
 	    } else if (IS_STRING(cachalot->errval)) {
 		fputs(cachalot->errval->v.str, stderr);
 	    } else {
-		wile_print_lisp_val(cachalot->errval, stderr);
+		wile_print_lisp_val(cachalot->errval, stderr, "<main>");
 	    }
 	} else {
 	    fputc('!', stderr);
@@ -129,7 +131,7 @@ int main(int argc, char** argv)
 
 // trivial function to get gc code version
 
-lval wile_gc_version(lptr*, lptr)
+lval wile_gc_version(lptr*, lptr, const char*)
 {
 #ifdef WILE_USES_GC
     char buf[64];
@@ -143,8 +145,7 @@ lval wile_gc_version(lptr*, lptr)
 
 lptr display_hooks = NULL;
 
-lval wile_register_display_proc(const char* sym, lval proc,
-				const char* fname, int lno)
+lval wile_register_display_proc(const char* sym, lval proc, const char* loc)
 {
     if (sym) {
 	lptr p1, p2;
@@ -155,29 +156,28 @@ lval wile_register_display_proc(const char* sym, lval proc,
 	display_hooks = new_pair(new_pair(p1, p2), display_hooks);
 	return LVI_BOOL(true);
     } else {
-	wile_exception2("display-object-hook", fname, lno, "no symbol!");
+	wile_exception("display-object-hook", loc, "no symbol!");
     }
 }
 
-lval wile_num2string(lval num, int base, int prec, const char* fname, int lno)
+lval wile_num2string(lval num, int base, int prec, const char* loc)
 {
     char buf[1280];
 
     if (num.vt == LV_INT || num.vt == LV_RAT ||
 	num.vt == LV_REAL || num.vt == LV_CMPLX) {
 	if (base < 2 || base > 36) {
-	    wile_exception2("number->string", fname, lno,
-			    "base %d is illegal", base);
+	    wile_exception("number->string", loc,
+			   "base %d is illegal", base);
 	}
 	if (prec != INT_MIN && (prec < -999 || prec > 999)) {
-	    wile_exception2("number->string", fname, lno,
-			    "precision %d is illegal", prec);
+	    wile_exception("number->string", loc,
+			   "precision %d is illegal", prec);
 	}
 	wile_sprint_lisp_num(buf, sizeof(buf), &num, base, prec, false);
 	return LVI_STRING(buf);
     } else {
-	wile_exception2("number->string", fname, lno,
-			"first input is not numeric");
+	wile_exception("number->string", loc, "first input is not numeric");
     }
 }
 

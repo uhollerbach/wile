@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (assp test? lst) @@@ bld-rtl-dir/wile-rtl2-000039.scm:13 @@@ wile_assp @@@
-lval wile_assp(lptr* var_1, lptr var_2)
+lval wile_assp(lptr* var_1, lptr var_2, const char* cloc)
 {
 lbl_3:;
 lval var_4;
@@ -66,7 +66,7 @@ var_12[0] = var_2[0];
 var_12[1] = var_9;
 var_11 = wile_gen_list(2, var_12, NULL);
 }
-var_11 = wile_apply_function(&(var_11), __FILE__, __LINE__);
+var_11 = wile_apply_function(&(var_11), LISP_WHENCE);
 if (!LV_IS_FALSE(var_11)) {
 lval var_13;
 if (var_2[1].vt != LV_PAIR) {
@@ -86,6 +86,7 @@ var_17[0] = var_2[0];
 var_17[1] = var_14;
 var_2[0] = var_17[0];
 var_2[1] = var_17[1];
+// bld-rtl-dir/wile-rtl2-000039.scm:16
 goto lbl_3;	// selfie
 } while (0);
 return var_4;
@@ -93,7 +94,7 @@ return var_4;
 // end of function wile_assp
 
 // @@@ (assv obj lst) @@@ bld-rtl-dir/wile-rtl2-000039.scm:20 @@@ wile_assv @@@
-lval wile_assv(lptr* var_18, lptr var_19)
+lval wile_assv(lptr* var_18, lptr var_19, const char* cloc)
 {
 lbl_20:;
 lval var_21;
@@ -146,6 +147,7 @@ var_31[0] = var_19[0];
 var_31[1] = var_28;
 var_19[0] = var_31[0];
 var_19[1] = var_31[1];
+// bld-rtl-dir/wile-rtl2-000039.scm:23
 goto lbl_20;	// selfie
 } while (0);
 return var_21;

@@ -21,35 +21,22 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ string-append @@@ bld-rtl-dir/wile-rtl2-000025.scm:20 @@@ fn_19 @@@
-static lval fn_19(lptr* var_20, lptr var_21)
+static lval fn_19(lptr* var_20, lptr var_21, const char* cloc)
 {
 lval var_23;
 var_23 = var_21[0];
 {
 lval var_24[8];
 var_24[0] = var_23;
-var_23 = wile_string_append(NULL, var_24);
+// bld-rtl-dir/wile-rtl2-000025.scm:20
+var_23 = wile_string_append(NULL, var_24, "bld-rtl-dir/wile-rtl2-000025.scm:20");
 }
 return var_23;
 }
 // end of prim fn_19
 
-// @@@ string-append @@@ bld-rtl-dir/wile-rtl2-000025.scm:27 @@@ fn_47 @@@
-static lval fn_47(lptr* var_48, lptr var_49)
-{
-lval var_51;
-var_51 = var_49[0];
-{
-lval var_52[8];
-var_52[0] = var_51;
-var_51 = wile_string_append(NULL, var_52);
-}
-return var_51;
-}
-// end of prim fn_47
-
 // @@@ (string-join-by join . strs) @@@ bld-rtl-dir/wile-rtl2-000025.scm:13 @@@ wile_string_join_by @@@
-lval wile_string_join_by(lptr* var_1, lptr var_2)
+lval wile_string_join_by(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
@@ -62,7 +49,8 @@ lval var_8;
 {
 lval var_9[8];
 var_9[0] = var_2[1];
-var_8 = wile_list_length(NULL, var_9);
+// bld-rtl-dir/wile-rtl2-000025.scm:14
+var_8 = wile_list_length(NULL, var_9, "bld-rtl-dir/wile-rtl2-000025.scm:14");
 }
 lval var_10;
 switch (TYPE_COMBO(var_7.vt,var_8.vt)) {
@@ -148,7 +136,7 @@ var_26[0] = LVI_PROC(fn_19,NULL,-1);
 var_26[1] = var_4;
 var_25 = wile_gen_list(2, var_26, NULL);
 }
-var_25 = wile_apply_function(&(var_25), __FILE__, __LINE__);
+var_25 = wile_apply_function(&(var_25), LISP_WHENCE);
 var_14 = var_25;
 break;
 }
@@ -157,7 +145,8 @@ lval var_28;
 {
 lval var_29[8];
 var_29[0] = var_4;
-var_28 = wile_list_reverse(NULL, var_29);
+// bld-rtl-dir/wile-rtl2-000025.scm:21
+var_28 = wile_list_reverse(NULL, var_29, "bld-rtl-dir/wile-rtl2-000025.scm:21");
 }
 var_27 = var_28;
 lval var_30;
@@ -247,15 +236,15 @@ var_37 = var_46;
 var_36 = var_37;
 } while (1);
 *var_39 = var_36;
-lval var_53;
+lval var_47;
 {
-lval var_54[2];
-var_54[0] = LVI_PROC(fn_47,NULL,-1);
-var_54[1] = var_30;
-var_53 = wile_gen_list(2, var_54, NULL);
+lval var_48[2];
+var_48[0] = LVI_PROC(fn_19,NULL,-1);
+var_48[1] = var_30;
+var_47 = wile_gen_list(2, var_48, NULL);
 }
-var_53 = wile_apply_function(&(var_53), __FILE__, __LINE__);
-var_14 = var_53;
+var_47 = wile_apply_function(&(var_47), LISP_WHENCE);
+var_14 = var_47;
 } while (0);
 return var_14;
 }

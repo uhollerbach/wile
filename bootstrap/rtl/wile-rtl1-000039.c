@@ -9,30 +9,30 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_getgroupinfo(lptr*, lptr args)
+lval wile_getallgroupinfo(lptr*, lptr args, const char* loc)
 {
     struct group* grp;
-    if (args[0].vt == LV_STRING) {
-	grp = getgrnam(args[0].v.str);
-    } else if (args[0].vt == LV_INT) {
-	grp = getgrgid(args[0].v.iv);
-    } else {
-	wile_exception("get-group-information", "expects a group name or uid");
-    }
-    if (grp) {
-	lptr res = NULL;
-	char** mem = grp->gr_mem;
-	while (*mem) {
-	    res = new_pair(new_string(*mem), res);
-	    ++mem;
+    lptr res = NULL;
+
+    setgrent();
+    while (1) {
+	grp = getgrent();
+	if (grp) {
+	    lptr p1 = NULL;
+	    char** mem = grp->gr_mem;
+	    while (*mem) {
+		p1 = new_pair(new_string(*mem), p1);
+		++mem;
+	    }
+	    p1 = new_pair(p1, NULL);
+	    p1 = new_pair(new_int(grp->gr_gid), p1);
+	    p1 = new_pair(new_string(grp->gr_passwd), p1);
+	    p1 = new_pair(new_string(grp->gr_name), p1);
+	    res = new_pair(p1, res);
+	} else {
+	    endgrent();
+	    return (res ? *res : LVI_NIL());
 	}
-	res = new_pair(res, NULL);
-	res = new_pair(new_int(grp->gr_gid), res);
-	res = new_pair(new_string(grp->gr_passwd), res);
-	res = new_pair(new_string(grp->gr_name), res);
-	return *res;
-    } else {
-	return LVI_BOOL(false);
     }
 }
 

@@ -9,30 +9,32 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_getallgroupinfo(lptr*, lptr args)
+lval wile_localtime(lptr*, lptr args, const char* loc)
 {
-    struct group* grp;
-    lptr res = NULL;
-
-    setgrent();
-    while (1) {
-	grp = getgrent();
-	if (grp) {
-	    lptr p1 = NULL;
-	    char** mem = grp->gr_mem;
-	    while (*mem) {
-		p1 = new_pair(new_string(*mem), p1);
-		++mem;
-	    }
-	    p1 = new_pair(p1, NULL);
-	    p1 = new_pair(new_int(grp->gr_gid), p1);
-	    p1 = new_pair(new_string(grp->gr_passwd), p1);
-	    p1 = new_pair(new_string(grp->gr_name), p1);
-	    res = new_pair(p1, res);
-	} else {
-	    endgrent();
-	    return (res ? *res : LVI_NIL());
-	}
+    time_t now;
+    if (args == NULL) {
+	now = time(NULL);
+    } else if (args[0].vt != LV_INT) {
+	wile_exception("localtime", loc,
+		       "expects no argument or one integer argument");
+    } else {
+	now = (time_t) args[0].v.iv;
+    }
+    struct tm tval;
+    if (localtime_r(&now, &tval)) {
+	lval vs[9];
+	vs[0] = LVI_INT(tval.tm_year + 1900);
+	vs[1] = LVI_INT(tval.tm_mon + 1);
+	vs[2] = LVI_INT(tval.tm_mday);
+	vs[3] = LVI_INT(tval.tm_hour);
+	vs[4] = LVI_INT(tval.tm_min);
+	vs[5] = LVI_INT(tval.tm_sec);
+	vs[6] = LVI_INT(tval.tm_wday);
+	vs[7] = LVI_INT(tval.tm_yday);
+	vs[8] = LVI_INT(tval.tm_isdst);
+	return wile_gen_list(9, vs, NULL);
+    } else {
+	return LVI_BOOL(false);
     }
 }
 

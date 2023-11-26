@@ -17,12 +17,12 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval fn_4(lptr*, lptr);
+static lval fn_4(lptr*, lptr, const char*);
 
 // definitions
 
 // @@@ lambda (s n acc) @@@ bld-rtl-dir/wile-rtl2-000050.scm:14 @@@ fn_4 @@@
-static lval fn_4(lptr* var_5, lptr var_6)
+static lval fn_4(lptr* var_5, lptr var_6, const char* cloc)
 {
 lbl_7:;
 lval var_8;
@@ -84,6 +84,7 @@ var_15[2] = var_12;
 var_6[0] = var_15[0];
 var_6[1] = var_15[1];
 var_6[2] = var_15[2];
+// bld-rtl-dir/wile-rtl2-000050.scm:19
 goto lbl_7;	// selfie
 } else {
 var_8 = var_6[2];
@@ -93,7 +94,7 @@ return var_8;
 // end of lambda fn_4
 
 // @@@ (upfrom s n0) @@@ bld-rtl-dir/wile-rtl2-000050.scm:13 @@@ wile_upfrom @@@
-lval wile_upfrom(lptr* var_1, lptr var_2)
+lval wile_upfrom(lptr* var_1, lptr var_2, const char* cloc)
 {
 MK_CLOS(var_5,0);
 lval var_16;
@@ -109,7 +110,8 @@ lval var_21[8];
 var_21[0] = var_2[0];
 var_21[1] = var_18;
 var_21[2] = var_19;
-var_20 = fn_4(var_5, var_21);
+// bld-rtl-dir/wile-rtl2-000050.scm:14
+var_20 = fn_4(var_5, var_21, "bld-rtl-dir/wile-rtl2-000050.scm:14");
 return var_20;
 }
 // end of function wile_upfrom

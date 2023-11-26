@@ -9,19 +9,19 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_localtime(lptr*, lptr args)
+lval wile_gmtime(lptr*, lptr args, const char* loc)
 {
     time_t now;
     if (args == NULL) {
 	now = time(NULL);
     } else if (args[0].vt != LV_INT) {
-	wile_exception("localtime",
+	wile_exception("UTCtime", loc,
 		       "expects no argument or one integer argument");
     } else {
 	now = (time_t) args[0].v.iv;
     }
     struct tm tval;
-    if (localtime_r(&now, &tval)) {
+    if (gmtime_r(&now, &tval)) {
 	lval vs[9];
 	vs[0] = LVI_INT(tval.tm_year + 1900);
 	vs[1] = LVI_INT(tval.tm_mon + 1);

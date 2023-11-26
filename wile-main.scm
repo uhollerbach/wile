@@ -22,7 +22,10 @@
 ;;; 	    (find (lambda (ps)
 ;;; 		    (if (null? ps)
 ;;; 			#f
-;;; 			(let ((fp (string-join-by "/" (car ps) fname)))
+;;; 			(let* ((dir (car ps))
+;;; 			       (fp (if (string=? dir ".")
+;;; 				       fname
+;;; 				       (string-join-by "/" dir fname))))
 ;;; 			  (if (file-exists? fp)
 ;;; 			      fp
 ;;; 			      (find (cdr ps)))))))

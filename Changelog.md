@@ -2,7 +2,20 @@ Last update: 2023-11-23 02:00 PST
 
 # Changelog for `wile`
 
-## Current version `wile` "1.0.0"
+## Current version `wile` "1.0.1" 2023-11-29 23:45 PST
+
+- make remove-unused-vars routine use bytevectors instead of hashes:
+  this makes it run slightly faster and consuming slightly less memory,
+  enough so that the non-GC stage0 bootstrap compiler can still use
+  it to clean up its output (in 8 GB of memory)
+
+- memoize wrappers around primitives, so that there are not multiple copies
+
+- add a slot to the "standard" function call to pass caller location around
+  and start tracking call location - big change that touches everything,
+  hopefully no effect (except better error messages)
+
+## Current version `wile` "1.0.0" 2023-11-23 02:00 PST
 
 - add a few functions which rely on first-class closures
   curry, compose, list-group-by; add Miller-Rabin probabilistic

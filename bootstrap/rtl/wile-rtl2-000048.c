@@ -21,21 +21,23 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (string-trim drop? str) @@@ bld-rtl-dir/wile-rtl2-000048.scm:13 @@@ wile_string_trim @@@
-lval wile_string_trim(lptr* var_1, lptr var_2)
+lval wile_string_trim(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 {
 lval var_5[8];
 var_5[0] = var_2[0];
 var_5[1] = var_2[1];
-var_4 = wile_string_trim_right(NULL, var_5);
+// bld-rtl-dir/wile-rtl2-000048.scm:14
+var_4 = wile_string_trim_right(NULL, var_5, "bld-rtl-dir/wile-rtl2-000048.scm:14");
 }
 lval var_6;
 {
 lval var_7[8];
 var_7[0] = var_2[0];
 var_7[1] = var_4;
-var_6 = wile_string_trim_left(NULL, var_7);
+// bld-rtl-dir/wile-rtl2-000048.scm:14
+var_6 = wile_string_trim_left(NULL, var_7, "bld-rtl-dir/wile-rtl2-000048.scm:14");
 }
 return var_6;
 }

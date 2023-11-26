@@ -1,1 +1,1 @@
-(define wile-version "1.0.0")
+(define wile-version "1.0.1")

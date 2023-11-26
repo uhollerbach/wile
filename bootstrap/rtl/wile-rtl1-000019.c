@@ -9,16 +9,24 @@
 extern lisp_escape_t cachalot;
 
 
-void ceil_qr(lisp_int_t n1, lisp_int_t n2, lisp_int_t* nq, lisp_int_t* nr)
+// Yes, an lval* is an lptr. Remember that this is an array of lvals,
+// not a single lptr. This routine is not intended for zero-length lists;
+// if 0 items are passed in, a NULL pointer dereference will result
+// and the program will crash.
+
+lval wile_gen_list(size_t nitems, lval* items, lval* tail)
 {
-    if (n2 == 0) {
-	wile_exception("ceiling_qr", "division by zero!");
+    lptr p1, list = NULL;
+
+    if (tail) {
+	list = new_lv(LV_NIL);
+	*list = *tail;
     }
-    *nq = n1/n2;
-    *nr = n1 - *nq*n2;
-    if (*nr != 0 && (n1 < 0) == (n2 < 0)) {
-	*nq += 1;
-	*nr = n1 - *nq*n2;
+    while (nitems > 0) {
+	p1 = new_lv(LV_NIL);
+	*p1 = items[--nitems];
+	list = new_pair(p1, list);
     }
+    return *list;
 }
 

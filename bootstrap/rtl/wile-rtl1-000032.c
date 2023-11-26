@@ -9,13 +9,14 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_getdomainname(lptr*, lptr)
+lval wile_getcwd(lptr*, lptr, const char*)
 {
-    char buf[HOST_NAME_MAX+1];
-    if (getdomainname(buf, sizeof(buf)) < 0) {
-	return LVI_BOOL(false);
+    char str[1+PATH_MAX], *sp;
+    sp = getcwd(str, sizeof(str));
+    if (sp) {
+	return LVI_STRING(sp);
     } else {
-	return LVI_STRING(buf);
+	return LVI_BOOL(false);
     }
 }
 

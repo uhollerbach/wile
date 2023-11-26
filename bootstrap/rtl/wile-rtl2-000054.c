@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ car @@@ bld-rtl-dir/wile-rtl2-000054.scm:14 @@@ fn_4 @@@
-static lval fn_4(lptr* var_5, lptr var_6)
+static lval fn_4(lptr* var_5, lptr var_6, const char* cloc)
 {
 lval var_8;
 if (var_6[0].vt != LV_PAIR) {
@@ -33,14 +33,14 @@ return var_8;
 // end of prim fn_4
 
 // @@@ (sqlite-meta-tables port) @@@ bld-rtl-dir/wile-rtl2-000054.scm:13 @@@ wile_sql_meta_tables @@@
-lval wile_sql_meta_tables(lptr* var_1, lptr var_2)
+lval wile_sql_meta_tables(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_9;
 var_9 = LVI_STRING("select name from sqlite_schema");
 lval var_10;
 #ifdef WILE_USES_SQLITE
 if (var_2[0].vt == LV_SQLITE_PORT && var_9.vt == LV_STRING) {
-var_10 = wile_sql_run(var_2[0].v.sqlite_conn, var_9.v.str, __FILE__, __LINE__);
+var_10 = wile_sql_run(var_2[0].v.sqlite_conn, var_9.v.str, LISP_WHENCE);
 } else {
 WILE_EX("sqlite-run", "expects one sqlite-port and one string");
 }
@@ -54,7 +54,8 @@ lval var_12[8];
 var_12[0] = LVI_PROC(fn_4,NULL,1);
 var_12[1] = var_10;
 var_12[2] = var_11;
-var_11 = wile_map(NULL, var_12);
+// bld-rtl-dir/wile-rtl2-000054.scm:14
+var_11 = wile_map(NULL, var_12, "bld-rtl-dir/wile-rtl2-000054.scm:14");
 }
 return var_11;
 }

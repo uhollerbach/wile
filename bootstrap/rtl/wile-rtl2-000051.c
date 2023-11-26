@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (any-true? vals) @@@ bld-rtl-dir/wile-rtl2-000051.scm:13 @@@ wile_any_true @@@
-lval wile_any_true(lptr* var_1, lptr var_2)
+lval wile_any_true(lptr* var_1, lptr var_2, const char* cloc)
 {
 lbl_3:;
 lval var_4;
@@ -53,6 +53,7 @@ var_9 = (var_2[0].v.pair.cdr ? *(var_2[0].v.pair.cdr) : LVI_NIL());
 lval var_12[8];
 var_12[0] = var_9;
 var_2[0] = var_12[0];
+// bld-rtl-dir/wile-rtl2-000051.scm:16
 goto lbl_3;	// selfie
 } while (0);
 return var_4;

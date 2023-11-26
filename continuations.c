@@ -221,17 +221,18 @@ void wile_invoke_continuation(lptr cc, lptr args)
 
 extern const int wile_tc_min_args;
 
-lval wile_call_cc(lptr*, lptr args)
+lval wile_call_cc(lptr*, lptr args, const char* loc)
 {
     lval cc;
 
     // TODO: handle primitives, special forms, macros...?
     if (!(IS_CLAMBDA(args) || IS_ILAMBDA(args) || IS_CONT(args))) {
-	wile_exception("call/cc", "expects one procedure or continuation");
+	wile_exception("call/cc", loc,
+		       "expects one procedure or continuation");
     }
     if ((IS_CLAMBDA(args) && args->v.clambda.arity != 1) ||
 	(IS_ILAMBDA(args) && args->v.ilambda->arity != 1)) {
-	wile_exception("call/cc",
+	wile_exception("call/cc", loc,
 		       "procedure expects other than exactly one argument");
     }
 
@@ -253,7 +254,7 @@ lval wile_call_cc(lptr*, lptr args)
 	case LV_CLAMBDA:
 	    // if we return from ths call, the continuation
 	    // was not invoked; so just return the results
-	    return args->v.clambda.fn(args->v.clambda.closure, fargs);
+	    return args->v.clambda.fn(args->v.clambda.closure, fargs, loc);
 
 	case LV_ILAMBDA:
 	    // if we return from ths call, the continuation
@@ -261,14 +262,15 @@ lval wile_call_cc(lptr*, lptr args)
 
 	    fargs[0] = args[0];
 	    fargs[1] = cc;
-	    return wile_eval_apply_lambda(NULL, fargs);
+	    return wile_eval_apply_lambda(NULL, fargs, loc);
 
 	case LV_CONT:
 	    wile_invoke_continuation(args, fargs);
 	    break;
 
 	default:
-	    FATAL("call/cc", "impossible input type!");
+	    wile_exception("call/cc", loc,
+			   "impossible input type %d!", args->vt);
 	}
     }
 

@@ -17,12 +17,12 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval fn_4(lptr*, lptr);
+static lval fn_4(lptr*, lptr, const char*);
 
 // definitions
 
 // @@@ lambda (keep? lst acc) @@@ bld-rtl-dir/wile-rtl2-000041.scm:14 @@@ fn_4 @@@
-static lval fn_4(lptr* var_5, lptr var_6)
+static lval fn_4(lptr* var_5, lptr var_6, const char* cloc)
 {
 lbl_7:;
 lval var_8;
@@ -53,7 +53,7 @@ var_16[0] = var_6[0];
 var_16[1] = var_13;
 var_15 = wile_gen_list(2, var_16, NULL);
 }
-var_15 = wile_apply_function(&(var_15), __FILE__, __LINE__);
+var_15 = wile_apply_function(&(var_15), LISP_WHENCE);
 var_9 = var_15;
 if (LV_IS_FALSE(var_9)) { break; }
 } while (0);
@@ -62,7 +62,8 @@ lval var_17;
 {
 lval var_18[8];
 var_18[0] = var_6[2];
-var_17 = wile_list_reverse(NULL, var_18);
+// bld-rtl-dir/wile-rtl2-000041.scm:19
+var_17 = wile_list_reverse(NULL, var_18, "bld-rtl-dir/wile-rtl2-000041.scm:19");
 }
 lval var_19;
 {
@@ -103,6 +104,7 @@ var_26[2] = var_23;
 var_6[0] = var_26[0];
 var_6[1] = var_26[1];
 var_6[2] = var_26[2];
+// bld-rtl-dir/wile-rtl2-000041.scm:18
 goto lbl_7;	// selfie
 }
 return var_8;
@@ -110,7 +112,7 @@ return var_8;
 // end of lambda fn_4
 
 // @@@ (list-take-while keep? lst) @@@ bld-rtl-dir/wile-rtl2-000041.scm:13 @@@ wile_list_take_while @@@
-lval wile_list_take_while(lptr* var_1, lptr var_2)
+lval wile_list_take_while(lptr* var_1, lptr var_2, const char* cloc)
 {
 MK_CLOS(var_5,0);
 lval var_27;
@@ -120,7 +122,8 @@ lval var_29[8];
 var_29[0] = var_2[0];
 var_29[1] = var_2[1];
 var_29[2] = var_27;
-var_28 = fn_4(var_5, var_29);
+// bld-rtl-dir/wile-rtl2-000041.scm:14
+var_28 = fn_4(var_5, var_29, "bld-rtl-dir/wile-rtl2-000041.scm:14");
 return var_28;
 }
 // end of function wile_list_take_while

@@ -17,13 +17,13 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval fn_4(lptr*, lptr);
-static lval fn_10(lptr*, lptr);
+static lval fn_4(lptr*, lptr, const char*);
+static lval fn_10(lptr*, lptr, const char*);
 
 // definitions
 
 // @@@ lambda (x) @@@ bld-rtl-dir/wile-rtl2-000042.scm:18 @@@ fn_10 @@@
-static lval fn_10(lptr* var_11, lptr var_12)
+static lval fn_10(lptr* var_11, lptr var_12, const char* cloc)
 {
 lval var_14;
 if (V_CLOS(var_11,0).vt != LV_PAIR) {
@@ -37,7 +37,7 @@ return var_15;
 // end of lambda fn_10
 
 // @@@ lambda (lst acc) @@@ bld-rtl-dir/wile-rtl2-000042.scm:14 @@@ fn_4 @@@
-static lval fn_4(lptr* var_5, lptr var_6)
+static lval fn_4(lptr* var_5, lptr var_6, const char* cloc)
 {
 lbl_7:;
 lval var_8;
@@ -58,7 +58,8 @@ lval var_18;
 lval var_19[8];
 var_19[0] = LVI_PROC(fn_10,var_11,1);
 var_19[1] = var_17;
-var_18 = wile_list_drop_while(NULL, var_19);
+// bld-rtl-dir/wile-rtl2-000042.scm:18
+var_18 = wile_list_drop_while(NULL, var_19, "bld-rtl-dir/wile-rtl2-000042.scm:18");
 }
 lval var_20;
 if (var_6[0].vt != LV_PAIR) {
@@ -84,13 +85,15 @@ var_24[1] = var_21;
 *var_16 = var_6[0];
 var_6[0] = var_24[0];
 var_6[1] = var_24[1];
+// bld-rtl-dir/wile-rtl2-000042.scm:18
 goto lbl_7;	// selfie
 } else {
 lval var_25;
 {
 lval var_26[8];
 var_26[0] = var_6[1];
-var_25 = wile_list_reverse(NULL, var_26);
+// bld-rtl-dir/wile-rtl2-000042.scm:17
+var_25 = wile_list_reverse(NULL, var_26, "bld-rtl-dir/wile-rtl2-000042.scm:17");
 }
 var_8 = var_25;
 }
@@ -99,7 +102,7 @@ return var_8;
 // end of lambda fn_4
 
 // @@@ (list-remove-dups lst) @@@ bld-rtl-dir/wile-rtl2-000042.scm:13 @@@ wile_list_remove_dups @@@
-lval wile_list_remove_dups(lptr* var_1, lptr var_2)
+lval wile_list_remove_dups(lptr* var_1, lptr var_2, const char* cloc)
 {
 MK_CLOS(var_5,0);
 lval var_27;
@@ -108,7 +111,8 @@ lval var_28;
 lval var_29[8];
 var_29[0] = var_2[0];
 var_29[1] = var_27;
-var_28 = fn_4(var_5, var_29);
+// bld-rtl-dir/wile-rtl2-000042.scm:14
+var_28 = fn_4(var_5, var_29, "bld-rtl-dir/wile-rtl2-000042.scm:14");
 return var_28;
 }
 // end of function wile_list_remove_dups

@@ -22,7 +22,7 @@ static lval var_1 = LVI_BOOL(false);		// day-vec
 // definitions
 
 // @@@ (day-of-year y m d) @@@ bld-rtl-dir/wile-rtl2-000063.scm:18 @@@ wile_day_of_year @@@
-lval wile_day_of_year(lptr* var_2, lptr var_3)
+lval wile_day_of_year(lptr* var_2, lptr var_3, const char* cloc)
 {
 if (LV_IS_FALSE(var_1)) {
 lval var_6;
@@ -69,7 +69,8 @@ var_18 = wile_gen_list(12, var_20, NULL);
 {
 lval var_19[8];
 var_19[0] = var_18;
-var_18 = wile_list2vector(NULL, var_19);
+// bld-rtl-dir/wile-rtl2-000063.scm:20
+var_18 = wile_list2vector(NULL, var_19, "bld-rtl-dir/wile-rtl2-000063.scm:20");
 }
 var_1 = var_18;
 } else {
@@ -135,7 +136,8 @@ lval var_29;
 {
 lval var_30[8];
 var_30[0] = var_3[0];
-var_29 = wile_is_leap_year(NULL, var_30);
+// bld-rtl-dir/wile-rtl2-000063.scm:22
+var_29 = wile_is_leap_year(NULL, var_30, "bld-rtl-dir/wile-rtl2-000063.scm:22");
 }
 var_26 = var_29;
 if (LV_IS_FALSE(var_26)) { break; }

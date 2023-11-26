@@ -21,7 +21,7 @@ extern lval var_flt_precision;
 // definitions
 
 // @@@ (string-append . strs) @@@ bld-rtl-dir/wile-rtl2-000021.scm:13 @@@ wile_string_append @@@
-lval wile_string_append(lptr* var_1, lptr var_2)
+lval wile_string_append(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
