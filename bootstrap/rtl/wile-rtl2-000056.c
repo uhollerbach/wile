@@ -17,427 +17,72 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval fn_22(lptr*, lptr, const char*);
-static lval fn_31(lptr*, lptr, const char*);
-static lval fn_51(lptr*, lptr, const char*);
-static lval fn_69(lptr*, lptr, const char*);
-static lval fn_87(lptr*, lptr, const char*);
 
 // definitions
 
-// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000056.scm:21 @@@ fn_22 @@@
-static lval fn_22(lptr* var_23, lptr var_24, const char* cloc)
-{
-lval var_26;
-var_26 = LVI_STRING("cadr");
-lval var_27;
-{
-char* cp = strchr(var_26.v.str, 'r');
-var_27 = var_24[0];
-while (*(--cp) != 'c') {
-if (var_27.vt != LV_PAIR) {
-WILE_EX("cxr", "input does not have the right structure!");
-}
-if (*cp == 'a') {
-var_27 = (var_27.v.pair.car ? *(var_27.v.pair.car) : LVI_NIL());
-} else if (*cp == 'd') {
-var_27 = (var_27.v.pair.cdr ? *(var_27.v.pair.cdr) : LVI_NIL());
-} else {
-WILE_EX("cxr", "got malformed control string '%s'", var_26.v.str);
-}
-}
-}
-return var_27;
-}
-// end of lambda fn_22
-
-// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000056.scm:22 @@@ fn_31 @@@
-static lval fn_31(lptr* var_32, lptr var_33, const char* cloc)
-{
-lval var_35;
-var_35 = LVI_STRING("caddr");
-lval var_36;
-{
-char* cp = strchr(var_35.v.str, 'r');
-var_36 = var_33[0];
-while (*(--cp) != 'c') {
-if (var_36.vt != LV_PAIR) {
-WILE_EX("cxr", "input does not have the right structure!");
-}
-if (*cp == 'a') {
-var_36 = (var_36.v.pair.car ? *(var_36.v.pair.car) : LVI_NIL());
-} else if (*cp == 'd') {
-var_36 = (var_36.v.pair.cdr ? *(var_36.v.pair.cdr) : LVI_NIL());
-} else {
-WILE_EX("cxr", "got malformed control string '%s'", var_35.v.str);
-}
-}
-}
-return var_36;
-}
-// end of lambda fn_31
-
-// @@@ lambda (s) @@@ bld-rtl-dir/wile-rtl2-000056.scm:26 @@@ fn_51 @@@
-static lval fn_51(lptr* var_52, lptr var_53, const char* cloc)
-{
-lval var_55;
-lval var_56;
-var_56 = LVI_STRING("^[-+]?[0-9]+$");
-lval var_57;
-{
-lval var_58[8];
-var_58[0] = var_56;
-var_58[1] = var_53[0];
-// bld-rtl-dir/wile-rtl2-000056.scm:27
-var_57 = wile_regex_match(NULL, var_58, "bld-rtl-dir/wile-rtl2-000056.scm:27");
-}
-if (LV_IS_FALSE(var_57)) {
-lval var_59;
-var_59 = LVI_STRING("");
-lval var_60;
-var_60 = LVI_STRING("\'");
-lval var_61;
-var_61 = LVI_STRING("\'");
-lval var_62;
-{
-lval var_64[3];
-var_64[0] = var_60;
-var_64[1] = var_53[0];
-var_64[2] = var_61;
-var_62 = wile_gen_list(3, var_64, NULL);
-}
-{
-lval var_63[8];
-var_63[0] = var_59;
-var_63[1] = var_62;
-// bld-rtl-dir/wile-rtl2-000056.scm:29
-var_62 = wile_string_join_by(NULL, var_63, "bld-rtl-dir/wile-rtl2-000056.scm:29");
-}
-var_55 = var_62;
-} else {
-var_55 = var_53[0];
-}
-return var_55;
-}
-// end of lambda fn_51
-
-// @@@ lambda (n t) @@@ bld-rtl-dir/wile-rtl2-000056.scm:33 @@@ fn_69 @@@
-static lval fn_69(lptr* var_70, lptr var_71, const char* cloc)
-{
-lval var_73;
-var_73 = LVI_STRING(" ");
-lval var_74;
-{
-lval var_76[2];
-var_76[0] = var_71[0];
-var_76[1] = var_71[1];
-var_74 = wile_gen_list(2, var_76, NULL);
-}
-{
-lval var_75[8];
-var_75[0] = var_73;
-var_75[1] = var_74;
-// bld-rtl-dir/wile-rtl2-000056.scm:34
-var_74 = wile_string_join_by(NULL, var_75, "bld-rtl-dir/wile-rtl2-000056.scm:34");
-}
-return var_74;
-}
-// end of lambda fn_69
-
-// @@@ lambda (v) @@@ bld-rtl-dir/wile-rtl2-000056.scm:37 @@@ fn_87 @@@
-static lval fn_87(lptr* var_88, lptr var_89, const char* cloc)
-{
-lval var_91;
-var_91 = LVI_STRING("INSERT INTO ");
-lval var_92;
-var_92 = LVI_STRING(" VALUES (");
-lval var_93;
-var_93 = LVI_STRING(",");
-lval var_94;
-var_94 = LVI_NIL();
-{
-lval var_95[8];
-var_95[0] = V_CLOS(var_88,2);
-var_95[1] = var_89[0];
-var_95[2] = var_94;
-// bld-rtl-dir/wile-rtl2-000056.scm:40
-var_94 = wile_map(NULL, var_95, "bld-rtl-dir/wile-rtl2-000056.scm:40");
-}
-lval var_96;
-{
-lval var_98[1];
-var_98[0] = var_94;
-var_96 = wile_gen_list(1, var_98, NULL);
-}
-{
-lval var_97[8];
-var_97[0] = var_93;
-var_97[1] = var_96;
-// bld-rtl-dir/wile-rtl2-000056.scm:40
-var_96 = wile_string_join_by(NULL, var_97, "bld-rtl-dir/wile-rtl2-000056.scm:40");
-}
-lval var_99;
-var_99 = LVI_STRING(");\n");
-lval var_100;
-{
-lval var_102[6];
-var_102[0] = V_CLOS(var_88,0);
-var_102[1] = var_91;
-var_102[2] = V_CLOS(var_88,1);
-var_102[3] = var_92;
-var_102[4] = var_96;
-var_102[5] = var_99;
-var_100 = wile_gen_list(6, var_102, NULL);
-}
-{
-lval var_101[8];
-var_101[0] = var_100;
-// bld-rtl-dir/wile-rtl2-000056.scm:38
-var_100 = wile_write_string(NULL, var_101, "bld-rtl-dir/wile-rtl2-000056.scm:38");
-}
-return var_100;
-}
-// end of lambda fn_87
-
-// @@@ (sqlite-dump-table sport tbl oport) @@@ bld-rtl-dir/wile-rtl2-000056.scm:17 @@@ wile_sql_dump_table @@@
-lval wile_sql_dump_table(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ (sqlite-meta-schema port tbl) @@@ bld-rtl-dir/wile-rtl2-000056.scm:13 @@@ wile_sql_meta_schema @@@
+lval wile_sql_meta_schema(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
+var_5 = LVI_STRING("select sql from sqlite_schema where (name = ?1)");
+lval var_6;
 {
-lval var_6[8];
-var_6[0] = var_2[0];
-// bld-rtl-dir/wile-rtl2-000056.scm:18
-var_5 = wile_sql_meta_tables(NULL, var_6, "bld-rtl-dir/wile-rtl2-000056.scm:18");
+lval var_7[8];
+var_7[0] = var_2[0];
+var_7[1] = var_5;
+// bld-rtl-dir/wile-rtl2-000056.scm:14
+var_6 = wile_sql_stmt_prep(NULL, var_7, "bld-rtl-dir/wile-rtl2-000056.scm:14");
 }
-lval var_7;
-{
-lval var_8[8];
-var_8[0] = var_2[1];
-var_8[1] = var_5;
-// bld-rtl-dir/wile-rtl2-000056.scm:18
-var_7 = wile_memv(NULL, var_8, "bld-rtl-dir/wile-rtl2-000056.scm:18");
-}
-if (LV_IS_FALSE(var_7)) {
+var_4 = var_6;
 lval var_9;
-var_9 = LVI_STRING("-- No such table \'");
-lval var_10;
-var_10 = LVI_STRING("\'\n");
-lval var_11;
 {
-lval var_13[4];
-var_13[0] = var_2[2];
-var_13[1] = var_9;
-var_13[2] = var_2[1];
-var_13[3] = var_10;
-var_11 = wile_gen_list(4, var_13, NULL);
+lval var_11[1];
+var_11[0] = var_2[1];
+var_9 = wile_gen_list(1, var_11, NULL);
 }
 {
-lval var_12[8];
-var_12[0] = var_11;
-// bld-rtl-dir/wile-rtl2-000056.scm:43
-var_11 = wile_write_string(NULL, var_12, "bld-rtl-dir/wile-rtl2-000056.scm:43");
+lval var_10[8];
+var_10[0] = var_4;
+var_10[1] = var_9;
+// bld-rtl-dir/wile-rtl2-000056.scm:16
+var_9 = wile_sql_stmt_bind(NULL, var_10, "bld-rtl-dir/wile-rtl2-000056.scm:16");
 }
-var_4 = var_11;
-} else {
-lval var_14;
-lval var_15;
-var_15 = LVI_STRING("pragma table_info(\'");
-lval var_16;
-var_16 = LVI_STRING("\')");
+lval var_12;
+lval var_13;
+{
+lval var_14[8];
+var_14[0] = var_4;
+// bld-rtl-dir/wile-rtl2-000056.scm:17
+var_13 = wile_sql_stmt_run(NULL, var_14, "bld-rtl-dir/wile-rtl2-000056.scm:17");
+}
+var_12 = var_13;
+{
+lval var_16[8];
+var_16[0] = var_4;
+// bld-rtl-dir/wile-rtl2-000056.scm:18
+(void)
+ wile_sql_stmt_clean(NULL, var_16, "bld-rtl-dir/wile-rtl2-000056.scm:18");
+}
 lval var_17;
+var_17 = LVI_STRING("caadr");
+lval var_18;
 {
-lval var_19[3];
-var_19[0] = var_15;
-var_19[1] = var_2[1];
-var_19[2] = var_16;
-var_17 = wile_gen_list(3, var_19, NULL);
+char* cp = strchr(var_17.v.str, 'r');
+var_18 = var_12;
+while (*(--cp) != 'c') {
+if (var_18.vt != LV_PAIR) {
+WILE_EX("cxr", "input does not have the right structure!");
 }
-{
-lval var_18[8];
-var_18[0] = var_17;
-// bld-rtl-dir/wile-rtl2-000056.scm:20
-var_17 = wile_string_append(NULL, var_18, "bld-rtl-dir/wile-rtl2-000056.scm:20");
-}
-lval var_20;
-#ifdef WILE_USES_SQLITE
-if (var_2[0].vt == LV_SQLITE_PORT && var_17.vt == LV_STRING) {
-var_20 = wile_sql_run(var_2[0].v.sqlite_conn, var_17.v.str, LISP_WHENCE);
+if (*cp == 'a') {
+var_18 = (var_18.v.pair.car ? *(var_18.v.pair.car) : LVI_NIL());
+} else if (*cp == 'd') {
+var_18 = (var_18.v.pair.cdr ? *(var_18.v.pair.cdr) : LVI_NIL());
 } else {
-WILE_EX("sqlite-run", "expects one sqlite-port and one string");
+WILE_EX("cxr", "got malformed control string '%s'", var_17.v.str);
 }
-#else
-var_20 = LVI_BOOL(false);
-#endif // WILE_USES_SQLITE
-var_14 = var_20;
-lval var_21;
-MK_CLOS(var_23,0);
-lval var_28;
-var_28 = LVI_NIL();
-{
-lval var_29[8];
-var_29[0] = LVI_PROC(fn_22,var_23,1);
-var_29[1] = var_14;
-var_29[2] = var_28;
-// bld-rtl-dir/wile-rtl2-000056.scm:21
-var_28 = wile_map(NULL, var_29, "bld-rtl-dir/wile-rtl2-000056.scm:21");
 }
-var_21 = var_28;
-lval var_30;
-MK_CLOS(var_32,0);
-lval var_37;
-var_37 = LVI_NIL();
-{
-lval var_38[8];
-var_38[0] = LVI_PROC(fn_31,var_32,1);
-var_38[1] = var_14;
-var_38[2] = var_37;
-// bld-rtl-dir/wile-rtl2-000056.scm:22
-var_37 = wile_map(NULL, var_38, "bld-rtl-dir/wile-rtl2-000056.scm:22");
 }
-var_30 = var_37;
-lval var_39;
-lval var_40;
-var_40 = LVI_STRING("select * from ");
-lval var_41;
-{
-lval var_43[2];
-var_43[0] = var_40;
-var_43[1] = var_2[1];
-var_41 = wile_gen_list(2, var_43, NULL);
+return var_18;
 }
-{
-lval var_42[8];
-var_42[0] = var_41;
-// bld-rtl-dir/wile-rtl2-000056.scm:23
-var_41 = wile_string_append(NULL, var_42, "bld-rtl-dir/wile-rtl2-000056.scm:23");
-}
-lval var_44;
-#ifdef WILE_USES_SQLITE
-if (var_2[0].vt == LV_SQLITE_PORT && var_41.vt == LV_STRING) {
-var_44 = wile_sql_run(var_2[0].v.sqlite_conn, var_41.v.str, LISP_WHENCE);
-} else {
-WILE_EX("sqlite-run", "expects one sqlite-port and one string");
-}
-#else
-var_44 = LVI_BOOL(false);
-#endif // WILE_USES_SQLITE
-var_39 = var_44;
-lval var_46;
-var_46 = LVI_STRING(",");
-lval var_47;
-{
-lval var_49[1];
-var_49[0] = var_21;
-var_47 = wile_gen_list(1, var_49, NULL);
-}
-{
-lval var_48[8];
-var_48[0] = var_46;
-var_48[1] = var_47;
-// bld-rtl-dir/wile-rtl2-000056.scm:24
-var_47 = wile_string_join_by(NULL, var_48, "bld-rtl-dir/wile-rtl2-000056.scm:24");
-}
-lval var_50;
-MK_CLOS(var_52,0);
-var_50 = LVI_PROC(fn_51,var_52,1);
-lval var_65;
-var_65 = LVI_STRING("DROP TABLE IF EXISTS ");
-lval var_66;
-var_66 = LVI_STRING(";\n\nCREATE TABLE ");
-lval var_67;
-var_67 = LVI_STRING(" (");
-lval var_68;
-var_68 = LVI_STRING(", ");
-MK_CLOS(var_70,0);
-lval var_77;
-{
-lval var_79[1];
-var_79[0] = var_30;
-var_77 = wile_gen_list(1, var_79, NULL);
-}
-{
-lval var_78[8];
-var_78[0] = LVI_PROC(fn_69,var_70,2);
-var_78[1] = var_21;
-var_78[2] = var_77;
-// bld-rtl-dir/wile-rtl2-000056.scm:33
-var_77 = wile_map(NULL, var_78, "bld-rtl-dir/wile-rtl2-000056.scm:33");
-}
-lval var_80;
-{
-lval var_82[1];
-var_82[0] = var_77;
-var_80 = wile_gen_list(1, var_82, NULL);
-}
-{
-lval var_81[8];
-var_81[0] = var_68;
-var_81[1] = var_80;
-// bld-rtl-dir/wile-rtl2-000056.scm:32
-var_80 = wile_string_join_by(NULL, var_81, "bld-rtl-dir/wile-rtl2-000056.scm:32");
-}
-lval var_83;
-var_83 = LVI_STRING(");\n\nBEGIN TRANSACTION;\n\n");
-lval var_84;
-{
-lval var_86[8];
-var_86[0] = var_2[2];
-var_86[1] = var_65;
-var_86[2] = var_2[1];
-var_86[3] = var_66;
-var_86[4] = var_2[1];
-var_86[5] = var_67;
-var_86[6] = var_80;
-var_86[7] = var_83;
-var_84 = wile_gen_list(8, var_86, NULL);
-}
-{
-lval var_85[8];
-var_85[0] = var_84;
-// bld-rtl-dir/wile-rtl2-000056.scm:30
-var_84 = wile_write_string(NULL, var_85, "bld-rtl-dir/wile-rtl2-000056.scm:30");
-}
-MK_CLOS(var_88,3);
-lptr var_103 = new_lv(VT_UNINIT);
-var_103->v.pair.car = &(var_50);
-P_CLOS(var_88,2) = var_103;
-lptr var_104 = new_lv(VT_UNINIT);
-var_104->v.pair.car = &(var_2[1]);
-P_CLOS(var_88,1) = var_104;
-lptr var_105 = new_lv(VT_UNINIT);
-var_105->v.pair.car = &(var_2[2]);
-P_CLOS(var_88,0) = var_105;
-lval var_106;
-var_106 = LVI_NIL();
-{
-lval var_107[8];
-var_107[0] = LVI_PROC(fn_87,var_88,1);
-var_107[1] = var_39;
-var_107[2] = var_106;
-// bld-rtl-dir/wile-rtl2-000056.scm:37
-var_106 = wile_map(NULL, var_107, "bld-rtl-dir/wile-rtl2-000056.scm:37");
-}
-lval var_108;
-var_108 = LVI_STRING("\nCOMMIT;\n");
-lval var_109;
-{
-lval var_111[2];
-var_111[0] = var_2[2];
-var_111[1] = var_108;
-var_109 = wile_gen_list(2, var_111, NULL);
-}
-{
-lval var_110[8];
-var_110[0] = var_109;
-// bld-rtl-dir/wile-rtl2-000056.scm:42
-var_109 = wile_write_string(NULL, var_110, "bld-rtl-dir/wile-rtl2-000056.scm:42");
-}
-*var_103 = var_50;
-*var_104 = var_2[1];
-*var_105 = var_2[2];
-var_4 = var_109;
-}
-return var_4;
-}
-// end of function wile_sql_dump_table
+// end of function wile_sql_meta_schema

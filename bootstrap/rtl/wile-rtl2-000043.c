@@ -17,85 +17,102 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
+static lval fn_4(lptr*, lptr, const char*);
+static lval fn_10(lptr*, lptr, const char*);
 
 // definitions
 
-// @@@ (string-pad-left str pch lmin) @@@ bld-rtl-dir/wile-rtl2-000043.scm:13 @@@ wile_string_pad_left @@@
-lval wile_string_pad_left(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ lambda (x) @@@ bld-rtl-dir/wile-rtl2-000043.scm:18 @@@ fn_10 @@@
+static lval fn_10(lptr* var_11, lptr var_12, const char* cloc)
 {
-lval var_4;
-lval var_5;
-var_5 = LVI_INT(strlen(var_2[0].v.str));
-var_4 = var_5;
-lval var_6;
-lval var_7;
-switch (TYPE_COMBO(var_4.vt,var_2[2].vt)) {
-case TYPE_COMBO(LV_INT,LV_INT):
-var_7 = LVI_BOOL(var_4.v.iv < var_2[2].v.iv);
-break;
-case TYPE_COMBO(LV_INT,LV_RAT):
-var_7 = LVI_BOOL(var_4.v.iv * var_2[2].v.irv.den < var_2[2].v.irv.num);
-break;
-case TYPE_COMBO(LV_INT,LV_REAL):
-var_7 = LVI_BOOL(var_4.v.iv < var_2[2].v.rv);
-break;
-case TYPE_COMBO(LV_RAT,LV_INT):
-var_7 = LVI_BOOL(var_4.v.irv.num < var_2[2].v.iv * var_4.v.irv.den);
-break;
-case TYPE_COMBO(LV_RAT,LV_RAT):
-var_7 = LVI_BOOL(var_4.v.irv.num * var_2[2].v.irv.den < var_2[2].v.irv.num * var_4.v.irv.den);
-break;
-case TYPE_COMBO(LV_RAT,LV_REAL):
-var_7 = LVI_BOOL(var_4.v.irv.num < var_2[2].v.rv * var_4.v.irv.den);
-break;
-case TYPE_COMBO(LV_REAL,LV_INT):
-var_7 = LVI_BOOL(var_4.v.rv < var_2[2].v.iv);
-break;
-case TYPE_COMBO(LV_REAL,LV_RAT):
-var_7 = LVI_BOOL(var_4.v.rv * var_2[2].v.irv.den < var_2[2].v.irv.num);
-break;
-case TYPE_COMBO(LV_REAL,LV_REAL):
-var_7 = LVI_BOOL(var_4.v.rv < var_2[2].v.rv);
-break;
-default:
-WILE_EX("<", "inputs are not real-valued numbers");
-break;
+lval var_14;
+if (V_CLOS(var_11,0).vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
 }
-if (LV_IS_FALSE(var_7)) {
-var_6 = var_2[0];
-} else {
+var_14 = (V_CLOS(var_11,0).v.pair.car ? *(V_CLOS(var_11,0).v.pair.car) : LVI_NIL());
+lval var_15;
+var_15 = LVI_BOOL(wile_do_eqv(&(var_12[0]), &(var_14)));
+return var_15;
+}
+// end of lambda fn_10
+
+// @@@ lambda (lst acc) @@@ bld-rtl-dir/wile-rtl2-000043.scm:14 @@@ fn_4 @@@
+static lval fn_4(lptr* var_5, lptr var_6, const char* cloc)
+{
+lbl_7:;
 lval var_8;
-var_8 = LVI_STRING("");
 lval var_9;
-var_9 = LVI_INT(var_2[2].v.iv - var_4.v.iv);
-lval var_10;
-if (var_9.vt != LV_INT || var_9.v.iv < 0) {
-WILE_EX("string-create", "first input is not a non-negative integer");
+var_9 = LVI_BOOL(var_6[0].vt == LV_NIL);
+if (LV_IS_FALSE(var_9)) {
+MK_CLOS(var_11,1);
+lptr var_16 = new_lv(VT_UNINIT);
+var_16->v.pair.car = &(var_6[0]);
+P_CLOS(var_11,0) = var_16;
+lval var_17;
+if (var_6[0].vt != LV_PAIR) {
+WILE_EX("cdr", "input is not a pair!");
 }
-if (var_2[1].vt != LV_CHAR || var_2[1].v.chr == '\0') {
-WILE_EX("string-create", "second input is not a valid character");
-}
-var_10.vt = LV_STRING;
-var_10.v.str = LISP_ALLOC(char, 1 + var_9.v.iv);
-LISP_ASSERT(var_10.v.str != NULL);
-memset(var_10.v.str, var_2[1].v.chr, var_9.v.iv);
-var_10.v.str[var_9.v.iv] = '\0';
-lval var_11;
+var_17 = (var_6[0].v.pair.cdr ? *(var_6[0].v.pair.cdr) : LVI_NIL());
+lval var_18;
 {
-lval var_13[2];
-var_13[0] = var_10;
-var_13[1] = var_2[0];
-var_11 = wile_gen_list(2, var_13, NULL);
+lval var_19[8];
+var_19[0] = LVI_PROC(fn_10,var_11,1);
+var_19[1] = var_17;
+// bld-rtl-dir/wile-rtl2-000043.scm:18
+var_18 = wile_list_drop_while(NULL, var_19, "bld-rtl-dir/wile-rtl2-000043.scm:18");
 }
+lval var_20;
+if (var_6[0].vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
+}
+var_20 = (var_6[0].v.pair.car ? *(var_6[0].v.pair.car) : LVI_NIL());
+lval var_21;
 {
-lval var_12[8];
-var_12[0] = var_8;
-var_12[1] = var_11;
-// bld-rtl-dir/wile-rtl2-000043.scm:16
-var_11 = wile_string_join_by(NULL, var_12, "bld-rtl-dir/wile-rtl2-000043.scm:16");
+lptr p1 = NULL, p2 = NULL;
+if (var_20.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_20;
 }
-var_6 = var_11;
+if (var_6[1].vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_6[1];
 }
-return var_6;
+var_21 = LVI_PAIR(p1, p2);
 }
-// end of function wile_string_pad_left
+lval var_24[8];
+var_24[0] = var_18;
+var_24[1] = var_21;
+*var_16 = var_6[0];
+var_6[0] = var_24[0];
+var_6[1] = var_24[1];
+// bld-rtl-dir/wile-rtl2-000043.scm:18
+goto lbl_7;	// selfie
+} else {
+lval var_25;
+{
+lval var_26[8];
+var_26[0] = var_6[1];
+// bld-rtl-dir/wile-rtl2-000043.scm:17
+var_25 = wile_list_reverse(NULL, var_26, "bld-rtl-dir/wile-rtl2-000043.scm:17");
+}
+var_8 = var_25;
+}
+return var_8;
+}
+// end of lambda fn_4
+
+// @@@ (list-remove-dups lst) @@@ bld-rtl-dir/wile-rtl2-000043.scm:13 @@@ wile_list_remove_dups @@@
+lval wile_list_remove_dups(lptr* var_1, lptr var_2, const char* cloc)
+{
+MK_CLOS(var_5,0);
+lval var_27;
+var_27 = LVI_NIL();
+lval var_28;
+lval var_29[8];
+var_29[0] = var_2[0];
+var_29[1] = var_27;
+// bld-rtl-dir/wile-rtl2-000043.scm:14
+var_28 = fn_4(var_5, var_29, "bld-rtl-dir/wile-rtl2-000043.scm:14");
+return var_28;
+}
+// end of function wile_list_remove_dups

@@ -1,6 +1,6 @@
-Last update: 2023-11-23 02:00 PST
+Last update: 2023-12-5 12:00 PST
 
-# `wile` -- the extremely stable scheming genius compiler
+# `wile` - the extremely stable scheming genius compiler - version 1.0.2
 
 `wile` is a small scheme-to-c compiler which I'm writing; it's by no
 means complete, but it's capable enough that writing small to medium
@@ -151,14 +151,14 @@ to detect and prevent these crazinesses.
   `unquote-splicing` `quote` `set!`
 
 * A reasonably good number of functions in the standard library:
-  `*` `+` `-` `/` `/=` `<` `<=` `=` `>` `>=` `UTCtime` `_cmplx?` `_int?`
-  `_rat?` `_real?` `abs` `accept` `acos` `acosh` `agm` `all-true?`
-  `angle` `any-true?` `append` `apply` `apply-interp` `apply-lambda`
-  `arithmetic-geometric-mean` `asin` `asinh` `assp` `assv` `atan`
-  `atanh` `begin-breakable` `begin-form?` `bessel-j` `bessel-y`
-  `bits-and` `bits-clear` `bits-flip` `bits-get` `bits-not` `bits-or`
-  `bits-set` `bits-set?` `bits-shift` `bits-xor` `boolean?` `bytevector`
-  `bytevector->string` `bytevector-create` `bytevector-length`
+  `*` `+` `-` `/` `/=` `<` `<=` `=` `>` `>=` `UTCtime` `abs` `accept`
+  `acos` `acosh` `agm` `all-true?` `angle` `any-true?` `append` `apply`
+  `apply-interp` `apply-lambda` `arithmetic-geometric-mean` `asin`
+  `asinh` `assp` `assv` `atan` `atanh` `begin-breakable` `begin-form?`
+  `bessel-j` `bessel-y` `bits-and` `bits-clear` `bits-flip` `bits-get`
+  `bits-not` `bits-or` `bits-set` `bits-set?` `bits-shift` `bits-xor`
+  `boolean?` `bytevector` `bytevector->list` `bytevector->string`
+  `bytevector-create` `bytevector-for-each` `bytevector-length`
   `bytevector-ref` `bytevector-set!` `bytevector-swap!` `bytevector?`
   `c*` `c+` `c-` `c/` `caaaar` `caaadr` `caaar` `caadar` `caaddr`
   `caadr` `caar` `cadaar` `cadadr` `cadar` `caddar` `cadddddddr`
@@ -194,10 +194,9 @@ to detect and prevent these crazinesses.
   `get-effective-user-id` `get-environment-variable` `get-errno`
   `get-file-eof` `get-file-error` `get-file-position` `get-file-status`
   `get-group-id` `get-group-information` `get-host-name`
-  `get-interpreted-procedure-arguments`
-  `get-interpreted-procedure-arity` `get-interpreted-procedure-body`
-  `get-interpreted-procedure-environment`
-  `get-interpreted-procedure-macro` `get-iproc-args` `get-iproc-arity`
+  `get-interpreted-procedure-argu` `get-interpreted-procedure-arit`
+  `get-interpreted-procedure-body` `get-interpreted-procedure-envi`
+  `get-interpreted-procedure-macr` `get-iproc-args` `get-iproc-arity`
   `get-iproc-body` `get-iproc-env` `get-iproc-macro`
   `get-parent-process-id` `get-process-id` `get-session-id`
   `get-symbolic-link-status` `get-user-id` `get-user-information`
@@ -236,10 +235,10 @@ to detect and prevent these crazinesses.
   `send-signal` `set-car!` `set-cdr!` `set-current-directory`
   `set-effective-group-id` `set-effective-user-id`
   `set-environment-variable` `set-errno!` `set-file-position`
-  `set-group-id` `set-interpreted-procedure-environment!`
-  `set-interpreted-procedure-macro!` `set-iproc-env!` `set-iproc-macro!`
+  `set-group-id` `set-interpreted-procedure-envi`
+  `set-interpreted-procedure-macr` `set-iproc-env!` `set-iproc-macro!`
   `set-line-buffering!` `set-no-buffering!` `set-session-id`
-  `set-user-id` `sign` `sin` `sine-integral` `sinh` `sleep`
+  `set-user-id` `sha-256` `sign` `sin` `sine-integral` `sinh` `sleep`
   `socket-port?` `sprintf` `sqlite-close` `sqlite-dump-table`
   `sqlite-meta-schema` `sqlite-meta-tables` `sqlite-open` `sqlite-port?`
   `sqlite-run` `sqlite-statement-bind` `sqlite-statement-cleanup`
@@ -264,9 +263,9 @@ to detect and prevent these crazinesses.
   `vector-fill!` `vector-for-each` `vector-length` `vector-map`
   `vector-map!` `vector-number/type` `vector-promote/cmplx!`
   `vector-promote/rat!` `vector-promote/real!` `vector-ref`
-  `vector-set!` `vector-sort!` `vector-swap!` `vector?` `when` `while`
-  `wile-architecture-name` `wile-basic-build-info` `wile-build-info`
-  `wile-environment-with-macros` `wile-os-name`
+  `vector-set!` `vector-sort!` `vector-swap!` `vector?` `wait-process`
+  `when` `while` `wile-architecture-name` `wile-basic-build-info`
+  `wile-build-info` `wile-environment-with-macros` `wile-os-name`
   `wile-standard-environment` `write-1str` `write-bytes` `write-char`
   `write-string` `zero?`
 

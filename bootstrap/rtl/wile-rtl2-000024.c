@@ -20,107 +20,51 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (expmod a n m) @@@ bld-rtl-dir/wile-rtl2-000024.scm:13 @@@ wile_expmod @@@
-lval wile_expmod(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ (foldl func accum lst) @@@ bld-rtl-dir/wile-rtl2-000024.scm:13 @@@ wile_foldl @@@
+lval wile_foldl(lptr* var_1, lptr var_2, const char* cloc)
 {
 lbl_3:;
 lval var_4;
-do {
 lval var_5;
-switch (var_2[1].vt) {
-case LV_REAL:
-var_5 = LVI_BOOL(var_2[1].v.rv < 0.0);
-break;
-case LV_RAT:
-var_5 = LVI_BOOL((var_2[1].v.irv.num < 0 && var_2[1].v.irv.den >= 0) || (var_2[1].v.irv.num > 0 && var_2[1].v.irv.den < 0));
-break;
-case LV_INT:
-var_5 = LVI_BOOL(var_2[1].v.iv < 0);
-break;
-default:
-WILE_EX("negative?", "expects a real-valued number");
-}
-if (!LV_IS_FALSE(var_5)) {
+var_5 = LVI_BOOL(var_2[2].vt == LV_NIL);
+if (LV_IS_FALSE(var_5)) {
 lval var_6;
-var_6 = LVI_BOOL(false);
-var_4 = var_6;
-break;
+if (var_2[2].vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
 }
+var_6 = (var_2[2].v.pair.car ? *(var_2[2].v.pair.car) : LVI_NIL());
 lval var_7;
-switch (var_2[1].vt) {
-case LV_REAL:
-var_7 = LVI_BOOL(var_2[1].v.rv == 0.0);
-break;
-case LV_RAT:
-var_7 = LVI_BOOL((var_2[1].v.irv.num == 0 && var_2[1].v.irv.den != 0));
-break;
-case LV_INT:
-var_7 = LVI_BOOL(var_2[1].v.iv == 0);
-break;
-case LV_CMPLX:
-var_7 = LVI_BOOL(CREAL(var_2[1].v.cv) == 0.0 && CIMAG(var_2[1].v.cv) == 0.0);
-break;
-default:
-WILE_EX("zero?", "expects a real-valued number");
+{
+lval var_8[2];
+var_8[0] = var_2[1];
+var_8[1] = var_6;
+var_7 = wile_gen_list(2, var_8, NULL);
 }
-if (!LV_IS_FALSE(var_7)) {
-lval var_8;
-var_8 = LVI_INT(1);
 lval var_9;
 {
-lisp_int_t nq, nr;
-floor_qr(var_8.v.iv, var_2[2].v.iv, &nq, &nr);
-var_9 = LVI_INT(nr);
+lval var_10[2];
+var_10[0] = var_2[0];
+var_10[1] = var_7;
+var_9 = wile_gen_list(2, var_10, NULL);
 }
-var_4 = var_9;
-break;
-}
-lval var_10;
-var_10 = LVI_BOOL((var_2[1].v.iv)%2 == 0);
-if (!LV_IS_FALSE(var_10)) {
+var_9 = wile_apply_function(&(var_9), LISP_WHENCE);
 lval var_11;
-var_11 = LVI_INT(var_2[0].v.iv * var_2[0].v.iv);
-lval var_12;
-{
-lisp_int_t nq, nr;
-floor_qr(var_11.v.iv, var_2[2].v.iv, &nq, &nr);
-var_12 = LVI_INT(nr);
+if (var_2[2].vt != LV_PAIR) {
+WILE_EX("cdr", "input is not a pair!");
 }
-lval var_13;
-var_13 = LVI_INT(-1);
-lval var_14;
-var_14 = LVI_INT((var_13.v.iv >= 0) ? (var_2[1].v.iv << var_13.v.iv) : (var_2[1].v.iv >> -var_13.v.iv));
-lval var_17[8];
-var_17[0] = var_12;
-var_17[1] = var_14;
-var_17[2] = var_2[2];
-var_2[0] = var_17[0];
-var_2[1] = var_17[1];
-var_2[2] = var_17[2];
+var_11 = (var_2[2].v.pair.cdr ? *(var_2[2].v.pair.cdr) : LVI_NIL());
+lval var_14[8];
+var_14[0] = var_2[0];
+var_14[1] = var_9;
+var_14[2] = var_11;
+var_2[0] = var_14[0];
+var_2[1] = var_14[1];
+var_2[2] = var_14[2];
 // bld-rtl-dir/wile-rtl2-000024.scm:16
 goto lbl_3;	// selfie
+} else {
+var_4 = var_2[1];
 }
-lval var_18;
-var_18 = LVI_INT(1);
-lval var_19;
-var_19 = LVI_INT(var_2[1].v.iv - var_18.v.iv);
-lval var_20;
-lval var_21[8];
-var_21[0] = var_2[0];
-var_21[1] = var_19;
-var_21[2] = var_2[2];
-// bld-rtl-dir/wile-rtl2-000024.scm:17
-var_20 = wile_expmod(NULL, var_21, "bld-rtl-dir/wile-rtl2-000024.scm:17");
-lval var_23;
-var_23 = LVI_INT(var_2[0].v.iv * var_20.v.iv);
-lval var_24;
-{
-lisp_int_t nq, nr;
-floor_qr(var_23.v.iv, var_2[2].v.iv, &nq, &nr);
-var_24 = LVI_INT(nr);
-}
-var_4 = var_24;
-} while (0);
 return var_4;
 }
-// end of function wile_expmod
+// end of function wile_foldl

@@ -20,182 +20,87 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (string-append . strs) @@@ bld-rtl-dir/wile-rtl2-000021.scm:13 @@@ wile_string_append @@@
-lval wile_string_append(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ (bytevector->list vec) @@@ bld-rtl-dir/wile-rtl2-000021.scm:13 @@@ wile_bytevector2list @@@
+lval wile_bytevector2list(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
-var_5 = LVI_INT(0);
+{
+if (var_2[0].vt != LV_BVECTOR) {
+WILE_EX("bytevector-length", "input is not a bytevector");
+}
+var_5 = LVI_INT(var_2[0].v.bvec.capa);
+}
 var_4 = var_5;
 lval var_6;
-var_6 = var_2[0];
 lval var_7;
-lval var_8;
-var_8 = LVI_BOOL(false);
-var_7 = var_8;
+var_7 = LVI_NIL();
+var_6 = var_7;
+lval var_9;
 lval var_10;
 lval var_11;
-lval var_12;
-var_12 = LVI_INT(0);
-var_10 = var_12;
-lptr var_13 = new_lv(VT_UNINIT);
-var_13->v.pair.car = &(var_10); //  symbol.3
+var_11 = LVI_INT(0);
+var_9 = var_11;
+lptr var_12 = new_lv(VT_UNINIT);
+var_12->v.pair.car = &(var_9); //  symbol.3
 do {
-lval var_14;
-var_14 = LVI_BOOL(var_6.vt == LV_NIL);
-if (!LV_IS_FALSE(var_14)) {
+lval var_13;
+switch (var_4.vt) {
+case LV_REAL:
+var_13 = LVI_BOOL(var_4.v.rv == 0.0);
 break;
-}
-lval var_15;
-if (var_6.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_15 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
-lval var_16;
-var_16 = LVI_INT(strlen(var_15.v.str));
-lval var_17;
-var_17 = LVI_INT(var_4.v.iv + var_16.v.iv);
-var_4 = var_17;
-lval var_18;
-if (var_6.vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
-}
-var_18 = (var_6.v.pair.cdr ? *(var_6.v.pair.cdr) : LVI_NIL());
-var_6 = var_18;
-lval var_19;
-var_19 = LVI_INT(1);
-lval var_20;
-var_20 = LVI_INT(var_10.v.iv + var_19.v.iv);
-var_11 = var_20;
-var_10 = var_11;
-} while (1);
-*var_13 = var_10;
-lval var_21;
-if (var_4.vt != LV_INT || var_4.v.iv < 0) {
-WILE_EX("string-create", "input is not a non-negative integer");
-}
-var_21.vt = LV_STRING;
-var_21.v.str = LISP_ALLOC(char, 1 + var_4.v.iv);
-LISP_ASSERT(var_21.v.str != NULL);
-memset(var_21.v.str, 'X', var_4.v.iv);
-var_21.v.str[var_4.v.iv] = '\0';
-var_7 = var_21;
-var_6 = var_2[0];
-lval var_22;
-var_22 = LVI_INT(0);
-var_4 = var_22;
-lval var_24;
-lval var_25;
-lval var_26;
-var_26 = LVI_INT(0);
-var_24 = var_26;
-lptr var_27 = new_lv(VT_UNINIT);
-var_27->v.pair.car = &(var_24); //  symbol.4
-do {
-lval var_28;
-var_28 = LVI_BOOL(var_6.vt == LV_NIL);
-if (!LV_IS_FALSE(var_28)) {
+case LV_RAT:
+var_13 = LVI_BOOL((var_4.v.irv.num == 0 && var_4.v.irv.den != 0));
 break;
-}
-lval var_29;
-lval var_30;
-if (var_6.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_30 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
-var_29 = var_30;
-lval var_31;
-lval var_32;
-var_32 = LVI_INT(strlen(var_29.v.str));
-var_31 = var_32;
-lval var_34;
-lval var_35;
-lval var_36;
-var_36 = LVI_INT(0);
-var_34 = var_36;
-lptr var_37 = new_lv(VT_UNINIT);
-var_37->v.pair.car = &(var_34); // i
-do {
-lval var_38;
-switch (TYPE_COMBO(var_34.vt,var_31.vt)) {
-case TYPE_COMBO(LV_INT,LV_INT):
-var_38 = LVI_BOOL(var_34.v.iv == var_31.v.iv);
+case LV_INT:
+var_13 = LVI_BOOL(var_4.v.iv == 0);
 break;
-case TYPE_COMBO(LV_INT,LV_RAT):
-var_38 = LVI_BOOL(var_34.v.iv * var_31.v.irv.den == var_31.v.irv.num);
-break;
-case TYPE_COMBO(LV_INT,LV_REAL):
-var_38 = LVI_BOOL(var_34.v.iv == var_31.v.rv);
-break;
-case TYPE_COMBO(LV_RAT,LV_INT):
-var_38 = LVI_BOOL(var_34.v.irv.num == var_31.v.iv * var_34.v.irv.den);
-break;
-case TYPE_COMBO(LV_RAT,LV_RAT):
-var_38 = LVI_BOOL(var_34.v.irv.num * var_31.v.irv.den == var_31.v.irv.num * var_34.v.irv.den);
-break;
-case TYPE_COMBO(LV_RAT,LV_REAL):
-var_38 = LVI_BOOL(var_34.v.irv.num == var_31.v.rv * var_34.v.irv.den);
-break;
-case TYPE_COMBO(LV_REAL,LV_INT):
-var_38 = LVI_BOOL(var_34.v.rv == var_31.v.iv);
-break;
-case TYPE_COMBO(LV_REAL,LV_RAT):
-var_38 = LVI_BOOL(var_34.v.rv * var_31.v.irv.den == var_31.v.irv.num);
-break;
-case TYPE_COMBO(LV_REAL,LV_REAL):
-var_38 = LVI_BOOL(var_34.v.rv == var_31.v.rv);
+case LV_CMPLX:
+var_13 = LVI_BOOL(CREAL(var_4.v.cv) == 0.0 && CIMAG(var_4.v.cv) == 0.0);
 break;
 default:
-WILE_EX("==", "inputs are not real-valued numbers");
+WILE_EX("zero?", "expects a real-valued number");
+}
+if (!LV_IS_FALSE(var_13)) {
 break;
 }
-if (!LV_IS_FALSE(var_38)) {
-(void)
- LVI_BOOL(true);
-break;
+lval var_14;
+var_14 = LVI_INT(1);
+lval var_15;
+var_15 = LVI_INT(var_4.v.iv - var_14.v.iv);
+var_4 = var_15;
+lval var_16;
+{
+if (var_2[0].vt != LV_BVECTOR) {
+WILE_EX("bytevector-ref", "input is not a bytevector");
 }
-lval var_40;
-var_40 = LVI_INT(var_4.v.iv + var_34.v.iv);
-lval var_41;
-if (var_29.vt != LV_STRING) {
-WILE_EX("string-ref", "expects a string input");
+if (var_4.vt != LV_INT || var_4.v.iv < 0 || (size_t) var_4.v.iv >= var_2[0].v.bvec.capa) {
+WILE_EX("bytevector-ref", "got bad index value");
 }
-if (var_34.v.iv < 0 || (size_t) var_34.v.iv >= strlen(var_29.v.str)) {
-WILE_EX("string-ref", "index is out of range");
+var_16 = LVI_INT(var_2[0].v.bvec.arr[var_4.v.iv]);
 }
-var_41 = LVI_CHAR(var_29.v.str[var_34.v.iv]);
-if (var_7.vt != LV_STRING || var_40.vt != LV_INT || var_41.vt != LV_CHAR) {
-WILE_EX("string-set!", "expects a string, an integer, and a character");
+lval var_17;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_16.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_16;
 }
-if (var_40.v.iv < 0 || (size_t) var_40.v.iv >= strlen(var_7.v.str)) {
-WILE_EX("string-set!", "index is out of range");
+if (var_6.vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_6;
 }
-var_7.v.str[var_40.v.iv] = var_41.v.chr;
-lval var_43;
-var_43 = LVI_INT(1);
-lval var_44;
-var_44 = LVI_INT(var_34.v.iv + var_43.v.iv);
-var_35 = var_44;
-var_34 = var_35;
+var_17 = LVI_PAIR(p1, p2);
+}
+var_6 = var_17;
+lval var_18;
+var_18 = LVI_INT(1);
+lval var_19;
+var_19 = LVI_INT(var_9.v.iv + var_18.v.iv);
+var_10 = var_19;
+var_9 = var_10;
 } while (1);
-*var_37 = var_34;
-lval var_45;
-var_45 = LVI_INT(var_4.v.iv + var_31.v.iv);
-var_4 = var_45;
-lval var_46;
-if (var_6.vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
+*var_12 = var_9;
+return var_6;
 }
-var_46 = (var_6.v.pair.cdr ? *(var_6.v.pair.cdr) : LVI_NIL());
-var_6 = var_46;
-lval var_47;
-var_47 = LVI_INT(1);
-lval var_48;
-var_48 = LVI_INT(var_24.v.iv + var_47.v.iv);
-var_25 = var_48;
-var_24 = var_25;
-} while (1);
-*var_27 = var_24;
-return var_7;
-}
-// end of function wile_string_append
+// end of function wile_bytevector2list

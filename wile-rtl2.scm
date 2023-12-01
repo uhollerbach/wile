@@ -270,6 +270,18 @@
 
 ;;; --8><----8><----8><--
 
+(define-primitive "wile_bytevector2list"
+  "expects one bytevector and returns a list of the entries of the vector in order from the front"
+  (bytevector->list vec)
+  (let ((l (bytevector-length vec))
+	(t ()))
+    (until (zero? l)
+	   (set! l (i- l 1))
+	   (set! t (cons (bytevector-ref vec l) t)))
+    t))
+
+;;; --8><----8><----8><--
+
 (define-primitive "wile_string_append"
   "expects any number of strings and returns a new string which is the concatenation of the inputs"
   (string-append . strs)

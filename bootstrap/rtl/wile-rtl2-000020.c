@@ -26,10 +26,13 @@ lval wile_vector2list(lptr* var_1, lptr var_2, const char* cloc)
 lval var_4;
 lval var_5;
 {
-if (var_2[0].vt != LV_VECTOR) {
+if (var_2[0].vt == LV_VECTOR) {
+var_5 = LVI_INT(var_2[0].v.vec.capa);
+} else if (var_2[0].vt == LV_BVECTOR) {
+var_5 = LVI_INT(var_2[0].v.bvec.capa);
+} else {
 WILE_EX("vector-length", "input is not a vector");
 }
-var_5 = LVI_INT(var_2[0].v.vec.capa);
 }
 var_4 = var_5;
 lval var_6;

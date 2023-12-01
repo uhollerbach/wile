@@ -1,0 +1,15 @@
+""
+<string> -> pass
+<file> ->   pass
+"abc"
+<string> -> pass
+<file> ->   pass
+"abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"
+<string> -> pass
+<file> ->   pass
+"abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"
+<string> -> pass
+<file> ->   pass
+"[big]"
+<string> -> pass
+<file> ->   pass

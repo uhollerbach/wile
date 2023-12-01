@@ -1925,6 +1925,60 @@ lval wile_cfft(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
+// compute the SHA digest of a string or FILE* stream
+
+#include "sha256.h"
+
+#define BLOCK_SIZE	8192
+
+lval wile_sha256_wrap(lptr*, lptr args, const char* loc)
+{
+    int i;
+    uint8_t data[BLOCK_SIZE];
+    unsigned char digest[32];
+    char hdig[65];
+    SHA256_info sha_info;
+
+    sha256_init(&sha_info);
+    if (args[0].vt == LV_STRING) {
+	sha256_update(&sha_info, (uint8_t*) args[0].v.str,
+		      strlen(args[0].v.str));
+    } else if (args[0].vt == LV_FILE_PORT ||
+	       args[0].vt == LV_PIPE_PORT ||
+	       args[0].vt == LV_SOCK_PORT) {
+	while ((i = fread(data, 1, BLOCK_SIZE, args[0].v.fp)) > 0) {
+	    sha256_update(&sha_info, (uint8_t*) data, i);
+	}
+    } else {
+	wile_exception("sha-256", loc, "expects a string or port argument");
+    }
+    sha256_final(digest, &sha_info);
+    for (i = 0; i < 32; ++i) {
+	snprintf(hdig + 2*i, 3, "%02x", digest[i]);
+    }
+
+    return LVI_STRING(hdig);
+}
+
+// --8><----8><----8><--
+
+lval wile_waitpid(int pid, int opts)
+{
+    int status;
+
+    pid = waitpid(pid, &status, opts);
+    if (pid < 0) {
+	return LVI_BOOL(false);
+    } else {
+	lval vs[2];
+	vs[0] = LVI_INT(pid);
+	vs[1] = LVI_INT(status);
+	return wile_gen_list(2, vs, NULL);
+    }
+}
+
+// --8><----8><----8><--
+
 void WILE_CONFIG_SYM4(void)
 {
 }

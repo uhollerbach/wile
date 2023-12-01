@@ -44,11 +44,11 @@
     (run-cmd-or-die #f "make realclean")
     (run-cmd-or-die #t "wile -c wile-rtl2.scm wile-rtl2.c")
     (run-cmd-or-die #f "rm -rf bld-rtl-dir")
-    (run-cmd-or-die #f "build-rtl libwrtl.a wile-sql.c alloc.c print.c location.c wile-parse.c wile-lex.c swll-cfft.c continuations.c fsi_set.c nfa.c regex.c ulexlib.c -s wile-rtl1.c wile-rtl2.scm math-funcs.c")
+    (run-cmd-or-die #f "build-rtl libwrtl.a wile-sql.c alloc.c print.c location.c wile-parse.c wile-lex.c swll-cfft.c continuations.c fsi_set.c nfa.c regex.c ulexlib.c sha256.c -s wile-rtl1.c wile-rtl2.scm math-funcs.c")
     (run-cmd-or-die #f "nm -a libwrtl.a | grep wile_config")
 
     (run-cmd-or-die #f "rm -rf bld-rtl-dir")
-    (run-cmd-or-die #f "build-rtl -g libwrtl-dbg.a wile-sql.c alloc.c print.c location.c wile-parse.c wile-lex.c swll-cfft.c continuations.c fsi_set.c nfa.c regex.c ulexlib.c -s wile-rtl1.c wile-rtl2.scm math-funcs.c")
+    (run-cmd-or-die #f "build-rtl -g libwrtl-dbg.a wile-sql.c alloc.c print.c location.c wile-parse.c wile-lex.c swll-cfft.c continuations.c fsi_set.c nfa.c regex.c ulexlib.c sha256.c -s wile-rtl1.c wile-rtl2.scm math-funcs.c")
     (run-cmd-or-die #f "nm -a libwrtl-dbg.a | grep wile_config")
 
     (run-cmd-or-die #t "wile -c wile-main.scm wilec.c")

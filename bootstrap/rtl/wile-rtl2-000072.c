@@ -21,15 +21,18 @@ static lval fn_45(lptr*, lptr, const char*);
 
 // definitions
 
-// @@@ bytevector-length @@@ bld-rtl-dir/wile-rtl2-000072.scm:15 @@@ fn_7 @@@
+// @@@ vector-length @@@ bld-rtl-dir/wile-rtl2-000072.scm:15 @@@ fn_7 @@@
 static lval fn_7(lptr* var_8, lptr var_9, const char* cloc)
 {
 lval var_11;
 {
-if (var_9[0].vt != LV_BVECTOR) {
-WILE_EX("bytevector-length", "input is not a bytevector");
-}
+if (var_9[0].vt == LV_VECTOR) {
+var_11 = LVI_INT(var_9[0].v.vec.capa);
+} else if (var_9[0].vt == LV_BVECTOR) {
 var_11 = LVI_INT(var_9[0].v.bvec.capa);
+} else {
+WILE_EX("vector-length", "input is not a vector");
+}
 }
 return var_11;
 }
@@ -70,20 +73,20 @@ static lval fn_45(lptr* var_46, lptr var_47, const char* cloc)
 {
 lval var_49;
 {
-if (var_47[0].vt != LV_BVECTOR) {
-WILE_EX("bytevector-ref", "input is not a bytevector");
+if (var_47[0].vt != LV_VECTOR) {
+WILE_EX("vector-ref", "input is not a vector");
 }
-if (V_CLOS(var_46,0).vt != LV_INT || V_CLOS(var_46,0).v.iv < 0 || (size_t) V_CLOS(var_46,0).v.iv >= var_47[0].v.bvec.capa) {
-WILE_EX("bytevector-ref", "got bad index value");
+if (V_CLOS(var_46,0).vt != LV_INT || V_CLOS(var_46,0).v.iv < 0 || (size_t) V_CLOS(var_46,0).v.iv >= var_47[0].v.vec.capa) {
+WILE_EX("vector-ref", "got bad index value");
 }
-var_49 = LVI_INT(var_47[0].v.bvec.arr[V_CLOS(var_46,0).v.iv]);
+var_49 = var_47[0].v.vec.arr[V_CLOS(var_46,0).v.iv] ? *(var_47[0].v.vec.arr[V_CLOS(var_46,0).v.iv]) : LVI_NIL();
 }
 return var_49;
 }
 // end of lambda fn_45
 
-// @@@ (bytevector-for-each proc vec . vecs) @@@ bld-rtl-dir/wile-rtl2-000072.scm:13 @@@ wile_bytevector_foreach @@@
-lval wile_bytevector_foreach(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ (vector-for-each proc vec . vecs) @@@ bld-rtl-dir/wile-rtl2-000072.scm:13 @@@ wile_vector_foreach @@@
+lval wile_vector_foreach(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
@@ -163,7 +166,7 @@ break;
 }
 if (LV_IS_FALSE(var_31)) {
 lval var_32;
-var_32 = LVI_STRING("bytevector-for-each: unequal vector lengths");
+var_32 = LVI_STRING("vector-for-each: unequal vector lengths");
 lval var_33;
 {
 lval var_34[1];
@@ -278,4 +281,4 @@ var_39 = var_40;
 *var_42 = var_39;
 return var_38;
 }
-// end of function wile_bytevector_foreach
+// end of function wile_vector_foreach

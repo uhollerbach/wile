@@ -968,6 +968,26 @@
 	    "}"
 	    "}")))
 
+   (list 'wait-process
+	 "expects 0, 1, or 2 arguments: the first argument, if present, is an integer process id on which to wait, and the second argument, if present, is an integer representing an OR of possible options. if no arguments are given, waits for any child process. returns a list of two integers, the process id of the terminated child, and its exit status, or #f"
+	 'prim
+	 0 (lambda (r)
+	     (emit-code "@@ = wile_waitpid(-1, 0);"))
+	 1 (lambda (r a1)
+	     (emit-code
+	      "if (@1.vt == LV_INT) {"
+	      "@@ = wile_waitpid(@1.v.iv, 0);"
+	      "} else {"
+	      "WILE_EX(\"wait-process\", \"input is not an integer\");"
+	      "}"))
+	 2 (lambda (r a1 a2)
+	     (emit-code
+	      "if (@1.vt == LV_INT && @2.vt == LV_INT) {"
+	      "@@ = wile_waitpid(@1.v.iv, @2.v.iv);"
+	      "} else {"
+	      "WILE_EX(\"wait-process\", \"inputs are not both integers\");"
+	      "}")))
+
    (list 'get-current-directory
 	 "expects no arguments and returns a string which is the name of the current working directory" 'prim 0 "wile_getcwd")
 
@@ -3336,10 +3356,13 @@
 	 (lambda (r a1)
 	   (emit-code
 	    "{"
-	    "if (@1.vt != LV_VECTOR) {"
+	    "if (@1.vt == LV_VECTOR) {"
+	    "@@ = LVI_INT(@1.v.vec.capa);"
+	    "} else if (@1.vt == LV_BVECTOR) {"
+	    "@@ = LVI_INT(@1.v.bvec.capa);"
+	    "} else {"
 	    "WILE_EX(\"vector-length\", \"input is not a vector\");"
 	    "}"
-	    "@@ = LVI_INT(@1.v.vec.capa);"
 	    "}")))
 
    (list 'vector-ref
@@ -3939,6 +3962,10 @@
 	    "WILE_EX(\"write-bytes\", \"expects a file port and a bytevector to write\");"
 	    "}"
 	    "@@ = LVI_INT(fwrite(@2.v.bvec.arr, 1, @2.v.bvec.capa, @1.v.fp));")))
+
+   (list 'sha-256
+	 "expects one string or port and returns the SHA-256 hash of that string or the contents of that port as a 64-character string"
+	 'prim 1 "wile_sha256_wrap")
 
    ))
 

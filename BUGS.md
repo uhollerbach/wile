@@ -12,12 +12,6 @@ Last update: 2023-11-23 18:00 PST
 * Need to work on macro expansion, interaction with (load) is not
   quite the way it should be
 
-* One test of continuations shows different behavior between wile and
-  mit-scheme: wile does an infinite loop, whereas mit-scheme does one
-  trip. I don't understand this, my cargo-cult understanding of
-  continuations says wile is correct... but I'm really not willing to
-  say mit-scheme is wrong?!?
-
 * Link issue on openbsd: library is supposed to be split so that at
   link time only required functions are pulled in -> keep things small
   and more secure too. On openbsd, this is not working somehow,

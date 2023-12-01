@@ -20,8 +20,8 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (* . vs) @@@ bld-rtl-dir/wile-rtl2-000031.scm:13 @@@ wile_multiply @@@
-lval wile_multiply(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ (+ . vs) @@@ bld-rtl-dir/wile-rtl2-000031.scm:15 @@@ wile_add @@@
+lval wile_add(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
@@ -96,7 +96,7 @@ case 0:
 {
 lval var_22;
 lval var_23;
-var_23 = LVI_INT(1);
+var_23 = LVI_INT(0);
 var_22 = var_23;
 lval var_25;
 lval var_26;
@@ -117,7 +117,7 @@ WILE_EX("car", "input is not a pair!");
 }
 var_30 = (var_8.v.pair.car ? *(var_8.v.pair.car) : LVI_NIL());
 lval var_31;
-var_31 = LVI_INT(var_22.v.iv * var_30.v.iv);
+var_31 = LVI_INT(var_22.v.iv + var_30.v.iv);
 var_22 = var_31;
 lval var_32;
 if (var_8.vt != LV_PAIR) {
@@ -140,7 +140,7 @@ case 1:
 {
 lval var_35;
 lval var_36;
-var_36 = LVI_INT(1);
+var_36 = LVI_INT(0);
 lval var_37;
 if (var_36.vt == LV_INT) {
 var_37 = LVI_RAT(var_36.v.iv, 1);
@@ -175,7 +175,7 @@ var_45 = var_44;
 lval var_46;
 {
 lisp_int_t n, d, g;
-n = var_35.v.irv.num * var_45.v.irv.num;
+n = var_35.v.irv.num * var_45.v.irv.den + var_45.v.irv.num * var_35.v.irv.den;
 d = var_35.v.irv.den * var_45.v.irv.den;
 g = lgcd(n, d);
 n /= g;
@@ -249,7 +249,7 @@ case 2:
 {
 lval var_55;
 lval var_56;
-var_56 = LVI_REAL(1.00000000000000000000000000000000000e+00Q);
+var_56 = LVI_REAL(0.00000000000000000000000000000000000e+00Q);
 var_55 = var_56;
 lval var_58;
 lval var_59;
@@ -278,7 +278,7 @@ var_64 = LVI_REAL(LV_RAT2REAL(var_63));
 var_64 = var_63;
 }
 lval var_65;
-var_65 = LVI_REAL(var_55.v.rv * var_64.v.rv);
+var_65 = LVI_REAL(var_55.v.rv + var_64.v.rv);
 var_55 = var_65;
 lval var_66;
 if (var_8.vt != LV_PAIR) {
@@ -301,7 +301,7 @@ case 3:
 {
 lval var_69;
 lval var_70;
-var_70 = LVI_REAL(1.00000000000000000000000000000000000e+00Q);
+var_70 = LVI_REAL(0.00000000000000000000000000000000000e+00Q);
 lval var_71;
 var_71 = LVI_REAL(0.00000000000000000000000000000000000e+00Q);
 lval var_73;
@@ -361,7 +361,7 @@ var_82 = var_81;
 break;
 }
 lval var_83;
-var_83 = LVI_CMPLX1(var_69.v.cv * var_82.v.cv);
+var_83 = LVI_CMPLX1(var_69.v.cv + var_82.v.cv);
 var_69 = var_83;
 lval var_84;
 if (var_8.vt != LV_PAIR) {
@@ -383,7 +383,7 @@ break;
 default:
 {
 lval var_87;
-var_87 = LVI_STRING("\'*\' got a non-numeric argument");
+var_87 = LVI_STRING("\'+\' got a non-numeric argument");
 lval var_88;
 {
 lval var_89[1];
@@ -405,9 +405,9 @@ break;
 var_4 = var_21;
 } else {
 lval var_90;
-var_90 = LVI_INT(1);
+var_90 = LVI_INT(0);
 var_4 = var_90;
 }
 return var_4;
 }
-// end of function wile_multiply
+// end of function wile_add

@@ -26,6 +26,7 @@
 (string->char alias string->list)
 (string->list "expects one string and returns a list of the individual characters of the string in order from the front" prim 1 "wile_string2list")
 (vector->list "expects one vector and returns a list of the entries of the vector in order from the front" prim 1 "wile_vector2list")
+(bytevector->list "expects one bytevector and returns a list of the entries of the vector in order from the front" prim 1 "wile_bytevector2list")
 (string-append "expects any number of strings and returns a new string which is the concatenation of the inputs" prim -1 "wile_string_append")
 (foldr "expects a values-combining function, a right-end value, and a list, and returns the right fold of that function over that list" prim 3 "wile_foldr")
 (foldl "expects a values-combining function, a left-end value, and a list, and returns the left fold of that function over that list" prim 3 "wile_foldl")

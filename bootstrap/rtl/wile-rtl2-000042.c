@@ -18,91 +18,101 @@ extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
 static lval fn_4(lptr*, lptr, const char*);
-static lval fn_10(lptr*, lptr, const char*);
 
 // definitions
 
-// @@@ lambda (x) @@@ bld-rtl-dir/wile-rtl2-000042.scm:18 @@@ fn_10 @@@
-static lval fn_10(lptr* var_11, lptr var_12, const char* cloc)
-{
-lval var_14;
-if (V_CLOS(var_11,0).vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_14 = (V_CLOS(var_11,0).v.pair.car ? *(V_CLOS(var_11,0).v.pair.car) : LVI_NIL());
-lval var_15;
-var_15 = LVI_BOOL(wile_do_eqv(&(var_12[0]), &(var_14)));
-return var_15;
-}
-// end of lambda fn_10
-
-// @@@ lambda (lst acc) @@@ bld-rtl-dir/wile-rtl2-000042.scm:14 @@@ fn_4 @@@
+// @@@ lambda (keep? lst acc) @@@ bld-rtl-dir/wile-rtl2-000042.scm:14 @@@ fn_4 @@@
 static lval fn_4(lptr* var_5, lptr var_6, const char* cloc)
 {
 lbl_7:;
 lval var_8;
 lval var_9;
-var_9 = LVI_BOOL(var_6[0].vt == LV_NIL);
-if (LV_IS_FALSE(var_9)) {
-MK_CLOS(var_11,1);
-lptr var_16 = new_lv(VT_UNINIT);
-var_16->v.pair.car = &(var_6[0]);
-P_CLOS(var_11,0) = var_16;
-lval var_17;
-if (var_6[0].vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
-}
-var_17 = (var_6[0].v.pair.cdr ? *(var_6[0].v.pair.cdr) : LVI_NIL());
-lval var_18;
-{
-lval var_19[8];
-var_19[0] = LVI_PROC(fn_10,var_11,1);
-var_19[1] = var_17;
-// bld-rtl-dir/wile-rtl2-000042.scm:18
-var_18 = wile_list_drop_while(NULL, var_19, "bld-rtl-dir/wile-rtl2-000042.scm:18");
-}
-lval var_20;
-if (var_6[0].vt != LV_PAIR) {
+var_9 = LVI_BOOL(true);
+do {
+lval var_10;
+var_10 = LVI_BOOL(var_6[1].vt == LV_NIL);
+lval var_11;
+var_11 = LVI_BOOL(LV_IS_FALSE(var_10));
+var_9 = var_11;
+if (LV_IS_FALSE(var_9)) { break; }
+lval var_12;
+if (var_6[1].vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_20 = (var_6[0].v.pair.car ? *(var_6[0].v.pair.car) : LVI_NIL());
+var_12 = (var_6[1].v.pair.car ? *(var_6[1].v.pair.car) : LVI_NIL());
+lval var_13;
+{
+lval var_14[1];
+var_14[0] = var_12;
+var_13 = wile_gen_list(1, var_14, NULL);
+}
+lval var_15;
+{
+lval var_16[2];
+var_16[0] = var_6[0];
+var_16[1] = var_13;
+var_15 = wile_gen_list(2, var_16, NULL);
+}
+var_15 = wile_apply_function(&(var_15), LISP_WHENCE);
+var_9 = var_15;
+if (LV_IS_FALSE(var_9)) { break; }
+} while (0);
+if (LV_IS_FALSE(var_9)) {
+lval var_17;
+{
+lval var_18[8];
+var_18[0] = var_6[2];
+// bld-rtl-dir/wile-rtl2-000042.scm:19
+var_17 = wile_list_reverse(NULL, var_18, "bld-rtl-dir/wile-rtl2-000042.scm:19");
+}
+lval var_19;
+{
+lval var_20[2];
+var_20[0] = var_17;
+var_20[1] = var_6[1];
+var_19 = wile_gen_list(2, var_20, NULL);
+}
+var_8 = var_19;
+} else {
 lval var_21;
+if (var_6[1].vt != LV_PAIR) {
+WILE_EX("cdr", "input is not a pair!");
+}
+var_21 = (var_6[1].v.pair.cdr ? *(var_6[1].v.pair.cdr) : LVI_NIL());
+lval var_22;
+if (var_6[1].vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
+}
+var_22 = (var_6[1].v.pair.car ? *(var_6[1].v.pair.car) : LVI_NIL());
+lval var_23;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_20.vt != LV_NIL) {
+if (var_22.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_20;
+*p1 = var_22;
 }
-if (var_6[1].vt != LV_NIL) {
+if (var_6[2].vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_6[1];
+*p2 = var_6[2];
 }
-var_21 = LVI_PAIR(p1, p2);
+var_23 = LVI_PAIR(p1, p2);
 }
-lval var_24[8];
-var_24[0] = var_18;
-var_24[1] = var_21;
-*var_16 = var_6[0];
-var_6[0] = var_24[0];
-var_6[1] = var_24[1];
+lval var_26[8];
+var_26[0] = var_6[0];
+var_26[1] = var_21;
+var_26[2] = var_23;
+var_6[0] = var_26[0];
+var_6[1] = var_26[1];
+var_6[2] = var_26[2];
 // bld-rtl-dir/wile-rtl2-000042.scm:18
 goto lbl_7;	// selfie
-} else {
-lval var_25;
-{
-lval var_26[8];
-var_26[0] = var_6[1];
-// bld-rtl-dir/wile-rtl2-000042.scm:17
-var_25 = wile_list_reverse(NULL, var_26, "bld-rtl-dir/wile-rtl2-000042.scm:17");
-}
-var_8 = var_25;
 }
 return var_8;
 }
 // end of lambda fn_4
 
-// @@@ (list-remove-dups lst) @@@ bld-rtl-dir/wile-rtl2-000042.scm:13 @@@ wile_list_remove_dups @@@
-lval wile_list_remove_dups(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ (list-take-while keep? lst) @@@ bld-rtl-dir/wile-rtl2-000042.scm:13 @@@ wile_list_take_while @@@
+lval wile_list_take_while(lptr* var_1, lptr var_2, const char* cloc)
 {
 MK_CLOS(var_5,0);
 lval var_27;
@@ -110,9 +120,10 @@ var_27 = LVI_NIL();
 lval var_28;
 lval var_29[8];
 var_29[0] = var_2[0];
-var_29[1] = var_27;
+var_29[1] = var_2[1];
+var_29[2] = var_27;
 // bld-rtl-dir/wile-rtl2-000042.scm:14
 var_28 = fn_4(var_5, var_29, "bld-rtl-dir/wile-rtl2-000042.scm:14");
 return var_28;
 }
-// end of function wile_list_remove_dups
+// end of function wile_list_take_while

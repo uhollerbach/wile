@@ -2,6 +2,16 @@ Last update: 2023-11-23 02:00 PST
 
 # Changelog for `wile`
 
+## Current version `wile` "1.0.2" 2023-12-5 12:00 PST
+
+- add new primitive bytevector->list and use it to fix a small bug
+  in `wile`: it could not compile immediate bytevectors
+
+- add new primitive sha-256 to compute SHA-256 hash of a string or
+  the contents of a file/pipe/socket
+
+- add new primitive wait-process, equivalent of waitpid
+
 ## Current version `wile` "1.0.1" 2023-11-29 23:45 PST
 
 - make remove-unused-vars routine use bytevectors instead of hashes:

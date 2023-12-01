@@ -52,7 +52,8 @@ Stuff TODO
   Needs More Thought!
 
 * make all the configurable stuff that's currently in environment variables
-  come from a config file
+  come from a config file, want to be able to change configurations very
+  easily
 
 * more tail-call optimization: want to do tail self-recursion, ie routine
   calls itself directly in a tail call, regardless of the pragma; it's a
@@ -97,6 +98,8 @@ Stuff TODO
   matrix-lu-decompose
   matrix-lu-solve
   sat2-solve
+
+  add sha-256-{init,update,finish}
 
   special cases in the compiler:
 

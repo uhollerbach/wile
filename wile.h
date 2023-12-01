@@ -421,7 +421,6 @@ typedef struct {
 
 typedef struct {
     unsigned char* arr;
-    size_t size;
     size_t capa;
 } lisp_bytevector_t;
 

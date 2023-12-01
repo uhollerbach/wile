@@ -20,10 +20,9 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (foldl func accum lst) @@@ bld-rtl-dir/wile-rtl2-000023.scm:13 @@@ wile_foldl @@@
-lval wile_foldl(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ (foldr func end lst) @@@ bld-rtl-dir/wile-rtl2-000023.scm:13 @@@ wile_foldr @@@
+lval wile_foldr(lptr* var_1, lptr var_2, const char* cloc)
 {
-lbl_3:;
 lval var_4;
 lval var_5;
 var_5 = LVI_BOOL(var_2[2].vt == LV_NIL);
@@ -34,37 +33,36 @@ WILE_EX("car", "input is not a pair!");
 }
 var_6 = (var_2[2].v.pair.car ? *(var_2[2].v.pair.car) : LVI_NIL());
 lval var_7;
-{
-lval var_8[2];
-var_8[0] = var_2[1];
-var_8[1] = var_6;
-var_7 = wile_gen_list(2, var_8, NULL);
-}
-lval var_9;
-{
-lval var_10[2];
-var_10[0] = var_2[0];
-var_10[1] = var_7;
-var_9 = wile_gen_list(2, var_10, NULL);
-}
-var_9 = wile_apply_function(&(var_9), LISP_WHENCE);
-lval var_11;
 if (var_2[2].vt != LV_PAIR) {
 WILE_EX("cdr", "input is not a pair!");
 }
-var_11 = (var_2[2].v.pair.cdr ? *(var_2[2].v.pair.cdr) : LVI_NIL());
-lval var_14[8];
-var_14[0] = var_2[0];
-var_14[1] = var_9;
-var_14[2] = var_11;
-var_2[0] = var_14[0];
-var_2[1] = var_14[1];
-var_2[2] = var_14[2];
+var_7 = (var_2[2].v.pair.cdr ? *(var_2[2].v.pair.cdr) : LVI_NIL());
+lval var_8;
+lval var_9[8];
+var_9[0] = var_2[0];
+var_9[1] = var_2[1];
+var_9[2] = var_7;
 // bld-rtl-dir/wile-rtl2-000023.scm:16
-goto lbl_3;	// selfie
+var_8 = wile_foldr(NULL, var_9, "bld-rtl-dir/wile-rtl2-000023.scm:16");
+lval var_11;
+{
+lval var_12[2];
+var_12[0] = var_6;
+var_12[1] = var_8;
+var_11 = wile_gen_list(2, var_12, NULL);
+}
+lval var_13;
+{
+lval var_14[2];
+var_14[0] = var_2[0];
+var_14[1] = var_11;
+var_13 = wile_gen_list(2, var_14, NULL);
+}
+var_13 = wile_apply_function(&(var_13), LISP_WHENCE);
+var_4 = var_13;
 } else {
 var_4 = var_2[1];
 }
 return var_4;
 }
-// end of function wile_foldl
+// end of function wile_foldr

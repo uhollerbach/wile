@@ -576,7 +576,8 @@
 			 (emit-code "@1.v.bvec.arr[@2] = @3.v.iv;")
 			 (emit-code "@1.v.vec.arr[@2] = new_lv(LV_NIL);"
 				    "*(@1.v.vec.arr[@2]) = @3;"))))
-		 (upfrom 0 vlen) (vector->list expr))
+		 (upfrom 0 vlen)
+		 ((if is-bv? bytevector->list vector->list) expr))
        (when global-library
 	 (emit-fstr "do_init_%s = false;\n" vname))
        (emit-fstr "}\n")))

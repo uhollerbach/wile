@@ -20,98 +20,86 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (memp test? lst) @@@ bld-rtl-dir/wile-rtl2-000038.scm:13 @@@ wile_memp @@@
-lval wile_memp(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ (replicate c n) @@@ bld-rtl-dir/wile-rtl2-000038.scm:13 @@@ wile_replicate @@@
+lval wile_replicate(lptr* var_1, lptr var_2, const char* cloc)
 {
-lbl_3:;
-lval var_4;
-do {
 lval var_5;
-var_5 = LVI_BOOL(var_2[1].vt == LV_NIL);
-if (!LV_IS_FALSE(var_5)) {
+lval var_7;
+lval var_9;
+var_9 = LVI_INT(0);
+var_5 = var_9;
 lval var_6;
-var_6 = LVI_BOOL(false);
+lval var_8;
+lval var_10;
+var_10 = LVI_NIL();
+var_6 = var_10;
+lval var_4;
+lptr var_11 = new_lv(VT_UNINIT);
+var_11->v.pair.car = &(var_5); // i
+lptr var_12 = new_lv(VT_UNINIT);
+var_12->v.pair.car = &(var_6); // acc
+do {
+lval var_13;
+switch (TYPE_COMBO(var_5.vt,var_2[1].vt)) {
+case TYPE_COMBO(LV_INT,LV_INT):
+var_13 = LVI_BOOL(var_5.v.iv >= var_2[1].v.iv);
+break;
+case TYPE_COMBO(LV_INT,LV_RAT):
+var_13 = LVI_BOOL(var_5.v.iv * var_2[1].v.irv.den >= var_2[1].v.irv.num);
+break;
+case TYPE_COMBO(LV_INT,LV_REAL):
+var_13 = LVI_BOOL(var_5.v.iv >= var_2[1].v.rv);
+break;
+case TYPE_COMBO(LV_RAT,LV_INT):
+var_13 = LVI_BOOL(var_5.v.irv.num >= var_2[1].v.iv * var_5.v.irv.den);
+break;
+case TYPE_COMBO(LV_RAT,LV_RAT):
+var_13 = LVI_BOOL(var_5.v.irv.num * var_2[1].v.irv.den >= var_2[1].v.irv.num * var_5.v.irv.den);
+break;
+case TYPE_COMBO(LV_RAT,LV_REAL):
+var_13 = LVI_BOOL(var_5.v.irv.num >= var_2[1].v.rv * var_5.v.irv.den);
+break;
+case TYPE_COMBO(LV_REAL,LV_INT):
+var_13 = LVI_BOOL(var_5.v.rv >= var_2[1].v.iv);
+break;
+case TYPE_COMBO(LV_REAL,LV_RAT):
+var_13 = LVI_BOOL(var_5.v.rv * var_2[1].v.irv.den >= var_2[1].v.irv.num);
+break;
+case TYPE_COMBO(LV_REAL,LV_REAL):
+var_13 = LVI_BOOL(var_5.v.rv >= var_2[1].v.rv);
+break;
+default:
+WILE_EX(">=", "inputs are not real-valued numbers");
+break;
+}
+if (!LV_IS_FALSE(var_13)) {
 var_4 = var_6;
 break;
 }
-lval var_7;
-if (var_2[1].vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_7 = (var_2[1].v.pair.car ? *(var_2[1].v.pair.car) : LVI_NIL());
-lval var_8;
+lval var_14;
+var_14 = LVI_INT(1);
+lval var_15;
+var_15 = LVI_INT(var_5.v.iv + var_14.v.iv);
+var_7 = var_15;
+lval var_16;
 {
-lval var_9[1];
-var_9[0] = var_7;
-var_8 = wile_gen_list(1, var_9, NULL);
+lptr p1 = NULL, p2 = NULL;
+if (var_2[0].vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_2[0];
 }
-lval var_10;
-{
-lval var_11[2];
-var_11[0] = var_2[0];
-var_11[1] = var_8;
-var_10 = wile_gen_list(2, var_11, NULL);
+if (var_6.vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_6;
 }
-var_10 = wile_apply_function(&(var_10), LISP_WHENCE);
-if (!LV_IS_FALSE(var_10)) {
-var_4 = var_2[1];
-break;
+var_16 = LVI_PAIR(p1, p2);
 }
-lval var_12;
-if (var_2[1].vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
-}
-var_12 = (var_2[1].v.pair.cdr ? *(var_2[1].v.pair.cdr) : LVI_NIL());
-lval var_15[8];
-var_15[0] = var_2[0];
-var_15[1] = var_12;
-var_2[0] = var_15[0];
-var_2[1] = var_15[1];
-// bld-rtl-dir/wile-rtl2-000038.scm:16
-goto lbl_3;	// selfie
-} while (0);
+var_8 = var_16;
+var_5 = var_7;
+var_6 = var_8;
+} while (1);
+*var_12 = var_6;
+*var_11 = var_5;
 return var_4;
 }
-// end of function wile_memp
-
-// @@@ (memv obj lst) @@@ bld-rtl-dir/wile-rtl2-000038.scm:20 @@@ wile_memv @@@
-lval wile_memv(lptr* var_16, lptr var_17, const char* cloc)
-{
-lbl_18:;
-lval var_19;
-do {
-lval var_20;
-var_20 = LVI_BOOL(var_17[1].vt == LV_NIL);
-if (!LV_IS_FALSE(var_20)) {
-lval var_21;
-var_21 = LVI_BOOL(false);
-var_19 = var_21;
-break;
-}
-lval var_22;
-if (var_17[1].vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_22 = (var_17[1].v.pair.car ? *(var_17[1].v.pair.car) : LVI_NIL());
-lval var_23;
-var_23 = LVI_BOOL(wile_do_eqv(&(var_17[0]), &(var_22)));
-if (!LV_IS_FALSE(var_23)) {
-var_19 = var_17[1];
-break;
-}
-lval var_24;
-if (var_17[1].vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
-}
-var_24 = (var_17[1].v.pair.cdr ? *(var_17[1].v.pair.cdr) : LVI_NIL());
-lval var_27[8];
-var_27[0] = var_17[0];
-var_27[1] = var_24;
-var_17[0] = var_27[0];
-var_17[1] = var_27[1];
-// bld-rtl-dir/wile-rtl2-000038.scm:23
-goto lbl_18;	// selfie
-} while (0);
-return var_19;
-}
-// end of function wile_memv
+// end of function wile_replicate

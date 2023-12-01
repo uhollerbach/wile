@@ -20,8 +20,8 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (string-pad-right str pch lmin) @@@ bld-rtl-dir/wile-rtl2-000044.scm:13 @@@ wile_string_pad_right @@@
-lval wile_string_pad_right(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ (string-pad-left str pch lmin) @@@ bld-rtl-dir/wile-rtl2-000044.scm:13 @@@ wile_string_pad_left @@@
+lval wile_string_pad_left(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
@@ -83,8 +83,8 @@ var_10.v.str[var_9.v.iv] = '\0';
 lval var_11;
 {
 lval var_13[2];
-var_13[0] = var_2[0];
-var_13[1] = var_10;
+var_13[0] = var_10;
+var_13[1] = var_2[0];
 var_11 = wile_gen_list(2, var_13, NULL);
 }
 {
@@ -98,4 +98,4 @@ var_6 = var_11;
 }
 return var_6;
 }
-// end of function wile_string_pad_right
+// end of function wile_string_pad_left

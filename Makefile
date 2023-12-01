@@ -26,7 +26,8 @@ ASRC =	wile-lex.[ch] wile-parse.[ch] wile-parse.txt
 HDRS =	wile.h alloc.h wile-lex.h wile-parse.h lib-macros.h
 
 WRSRC1 = wile-sql.c alloc.c print.c location.c wile-parse.c wile-lex.c \
-	swll-cfft.c continuations.c fsi_set.c nfa.c regex.c ulexlib.c
+	swll-cfft.c continuations.c fsi_set.c nfa.c regex.c ulexlib.c \
+	sha256.c
 
 WRSRC2 = wile-rtl1.c wile-rtl2.scm math-funcs.c
 
@@ -45,6 +46,11 @@ libwrtl-dbg.a:	wrtl.sch $(WRSRC1) $(WRSRC2) wrtl.sch
 	rm -rf bld-rtl-dir
 	build-rtl -g libwrtl-dbg.a $(WRSRC1) -s $(WRSRC2)
 	nm -a libwrtl-dbg.a | grep wile_config
+
+rtl-dist-src:	wrtl.sch $(WRSRC1) $(WRSRC2) wrtl.sch
+	rm -rf bld-rtl-dir
+	build-rtl libfake.a $(WRSRC1) -s $(WRSRC2) -k
+	rm -f libfake.a bld-rtl-dir/*.o bld-rtl-dir/*.scm bld-rtl-dir/wrtl.sch
 
 wilec:	wile-main.scm wile-comp.scm wile-prims.scm libwrtl.a
 	wile -x -v wile-main.scm wilec

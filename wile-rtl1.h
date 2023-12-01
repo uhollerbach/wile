@@ -246,6 +246,10 @@ lval wile_rand_normal_pair(lisp_real_t m, lisp_real_t s);
 lval wile_cfft_good_n(lptr* clos, lptr args, const char* loc);
 lval wile_cfft(lptr* clos, lptr args, const char* loc);
 
+lval wile_sha256_wrap(lptr* clos, lptr args, const char* loc);
+
+lval wile_waitpid(int pid, int opts);
+
 // sqlite interface
 
 lval wile_sql_open(const char* fname, int mode, const char* loc);
