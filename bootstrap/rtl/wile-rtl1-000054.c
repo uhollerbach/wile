@@ -40,6 +40,7 @@ lval wile_sha256_wrap(lptr*, lptr args, const char* loc)
     for (i = 0; i < 32; ++i) {
 	snprintf(hdig + 2*i, 3, "%02x", digest[i]);
     }
+    hdig[64] = '\0';	// should be taken care of by snprintf, but make sure
 
     return LVI_STRING(hdig);
 }

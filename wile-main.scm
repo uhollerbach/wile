@@ -62,7 +62,7 @@
     (when (positive? global-verbose)
       (write-string "#### compiling " input " to " output #\newline))
     (compile-file do-debug opt-level input out-path out-port fvals)
-    (unless (zero? global-errors)
+    (when global-errors
       (write-string stderr "compilation failed!\n")
       (exit 1))))
 

@@ -49,8 +49,6 @@ var_8 = var_12;
 if (LV_IS_FALSE(var_8)) { break; }
 } while (0);
 if (LV_IS_FALSE(var_8)) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_14;
 if (var_6.vt != LV_PAIR) {

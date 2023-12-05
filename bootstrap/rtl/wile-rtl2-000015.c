@@ -64,8 +64,6 @@ var_18 = wile_gen_list(2, var_19, NULL);
 }
 var_18 = wile_apply_function(&(var_18), LISP_WHENCE);
 if (LV_IS_FALSE(var_18)) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_21;
 {

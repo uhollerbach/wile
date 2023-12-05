@@ -19,6 +19,7 @@ void wile_stack_trace_minimal(int fd)
     // instead we ignore the results of negating the write() results,
     // and thus suppress an unsuppressable warning... wtf fu gcc
 
+    fflush(NULL);
     (void) !write(fd, "wile stack trace begin\n", 23);
 #ifndef __OpenBSD__
     // for some reason, backtrace is not showing up on openbsd,

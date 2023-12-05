@@ -28,7 +28,7 @@ echo '################################'
 echo build library
 $CC $CCOMMON $CFOPT -c ../wile-sql.c ../alloc.c ../print.c ../location.c \
     ../wile-parse.c ../wile-lex.c ../swll-cfft.c ../continuations.c \
-    ../fsi_set.c ../nfa.c ../regex.c ../ulexlib.c rtl/*.c
+    ../fsi_set.c ../nfa.c ../regex.c ../ulexlib.c ../sha256.c rtl/*.c
 $AR libwrtl.a *.o
 echo '################################'
 echo compile main program to create wilec

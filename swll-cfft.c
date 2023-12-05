@@ -12,7 +12,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "wile.h"
+#include "wile-rtl1.h"
 #include "alloc.h"
 #include "lib-macros.h"
 

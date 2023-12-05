@@ -101,14 +101,6 @@
 (test-pred best-ex-eqv? (list 1.27646587 0.105364532)
 	   (best-fit-exponential ex))
 
-;;; TODO: this test doesn't work yet because expt assumes its inputs are
-;;; integers; need to generalize that
-;;;
-;;; (define po
-;;;   (map (lambda (x) (list x (* pi (expt x -1/3)))) (fromto 1 30)))
-;;;
-;;; (test-pred best-ex-eqv? (list pi (/ -1.0 3.0)) (best-fit-power po))
-
 (define (model pt)
   (let ((x (car pt))
 	(y (cadr pt)))

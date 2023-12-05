@@ -4,17 +4,17 @@
 ;;; Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
 ;;; License: GPLv3 or later, see file 'LICENSE' for details
 
+(define global-verbose 0)		;;; how chirpy are we?
+
+(define global-library #f)		;;; flag library mode or not
+
+(define global-errors #f)		;;; check if errors seen during compile
+
 (define (ERR fmt . args)
   (flush-port stderr)
   (raise (apply sprintf
 		(string-append fmt " at " (token-source-line args))
 		args)))
-
-(define global-verbose 0)		;;; how chirpy are we?
-
-(define global-library #f)		;;; flag library mode or not
-
-(define global-errors 0)		;;; count errors seen during compile
 
 ;;; several output ports for various bits of code wrangling
 ;;; these are no longer real file ports, but rather string-bag structs
@@ -280,8 +280,7 @@
 
 (def-struct closure-table name size vlist clist)
 
-;;; Symbol table entries: lists in the following formats,
-;;; or a bare symbol 'frame
+;;; Symbol table entries: lists in the following formats
 
 ;;; frame-sym fn-name top-label
 
@@ -473,6 +472,21 @@
       ()
       (list-reverse (cons tcall (replicate #f (list-length (cdr exprs)))))))
 
+;;; Turn a (defmacro ...) into an actual function that can be used
+
+(define (declare-macro def)
+  (debug-trace 'declare-macro () #f def)
+  (let* ((s-name (caar def))
+	 (args (cdar def))
+	 (body (cdr def))
+	 (argies (args-list args))
+	 (arity (car argies))
+	 (formals (cadr argies))
+	 (stdenv (wile-environment-with-macros #f)))
+    (unless (unique-symbols? formals)
+      (ERR "malformed 'defmacro' args list '%v'" args))
+    (make-macro-def s-name (make-iproc formals arity body stdenv #t) arity)))
+
 ;;; Define what is an immediate value
 
 (define (is-immediate? val)
@@ -630,21 +644,175 @@
 
 ;;; TODO: comment more from here down
 
+(define (check-dup-def def env)
+  (when (pair? def)
+    (set! def (car def)))
+  (let ((prior (lookup-symbol-nofail env def)))
+    (when prior
+      (if (zero? (car prior))
+	  (ERR "duplicate definition '%s'" def)
+	  (fprintf stderr
+		   "warning: definition '%s' at %v shadows prior definition\n"
+		   def (token-source-line def))))))
+
+(defmacro (transfer-namespace-sym pri pub)
+  (let ((pval (gensym)))
+    `(let ((,pval (lookup-symbol-nofail wk-env ,pri)))
+       (if (and ,pval (zero? (car ,pval)))
+	   (set! new-env (cons (cons ,pub (cdr ,pval)) new-env))
+	   (ERR "symbol '%s' is not defined in namespace" ,pri)))))
+
+;;; TODO: this needs to return the last value
+
+(define (compile-special-begin-new cur-env tcall exprs)
+  (debug-trace 'compile-special-begin-new cur-env tcall exprs)
+
+  (if (null? exprs)
+      (compile-immediate cur-env ())
+      (let loop ((exprs exprs)
+		 (cur-env cur-env))
+;;; (unless (null? exprs)
+;;;   (printf "begin expr %v\n" (car exprs))
+;;;   (flush-port))
+	(cond ((null? exprs)
+	       (write-string "\n;;; final environment\n")
+	       (for-each (lambda (ev) (display ev) (newline))
+			 (list-head cur-env 16))
+;;; TODO: include last value
+	       cur-env)
+	      ((not (pair? (car exprs)))
+	       ;;; something?
+	       )
+
+	      ((eqv? 'begin (caar exprs))
+	       (loop (list-append (cdar exprs) (cdr exprs)) cur-env))
+
+	      ((eqv? 'define (caar exprs))
+	       (let* ((ec (cdar exprs))
+		      (_ (check-dup-def (car ec) cur-env))
+		      (c-fn (new-svar 'fn))
+		      (fny? (pair? (car ec)))
+		      (new-ee (if fny?
+				  (list (caar ec)
+					'proc
+					(car (args-list (cdar ec)))
+					c-fn "NULL")
+				  (list (car ec) 'c-var (new-svar))))
+		      (new-env (cons new-ee cur-env)))
+		 ;;; TODO: actually compile! - with new-env
+		 (loop (cdr exprs) new-env)))
+
+	      ((eqv? 'define-primitive (caar exprs))
+	       (let* ((ec (cdar exprs))
+		      (_ (check-dup-def (caddr ec) cur-env))
+		      (c-fn (car ec))
+		      (fny? (pair? (caddr ec)))
+		      (new-ee (if fny?
+				  (list (caaddr ec)
+					'proc
+					(car (args-list (cdaddr ec)))
+					c-fn "NULL")
+				  (list (caddr ec) 'c-var c-fn)))
+		      (new-env (cons new-ee cur-env)))
+		 ;;; TODO: actually compile! - with new-env
+		 (loop (cdr exprs) new-env)))
+
+	      ((eqv? 'define-alias (caar exprs))
+	       (check-dup-def (cdar exprs) cur-env)
+	       (let* ((new-ee (list (cadar exprs) 'alias (caddar exprs)))
+		      (new-env (cons new-ee cur-env)))
+		 (loop (cdr exprs) new-env)))
+
+	      ((eqv? 'defmacro (caar exprs))
+	       (let ((ec (cdar exprs)))
+		 (check-dup-def (car ec) cur-env)
+		 (if (symbol? (car ec))
+		     (ERR "illegal macro symbol %s" (car ec))
+		     (loop (cdr exprs)
+			   (cons (declare-macro ec) cur-env)))))
+
+	      ((eqv? 'load (caar exprs))
+	       (loop (list-append (parse-file (cadar exprs)) (cdr exprs))
+		     cur-env))
+
+	      ((eqv? 'load-library (caar exprs))
+	       (let* ((env-var (get-environment-variable "WILE_LIBRARY_PATH"))
+		      (fname (cadar exprs))
+		      (paths (if env-var
+				 (string-split-by is-colon? env-var)
+				 '(".")))
+		      (filepath
+		       (let loop ((ps paths))
+			 (if (null? ps)
+			     #f
+			     (let* ((dir (car ps))
+				    (fp (if (string=? dir ".")
+					    fname
+					    (string-join-by "/" dir fname))))
+			       (if (file-exists? fp)
+				   fp
+				   (loop (cdr ps))))))))
+		 (if filepath
+		     (loop (list-append (parse-file filepath) (cdr exprs))
+			   cur-env)
+		     (ERR "cannot find file %s" fname))))
+
+	      ((eqv? 'namespace (caar exprs))
+	       (let* ((fsym (gensym))
+		      (frame (list fsym 'namespace))
+		      (wk-env (list-take-while
+			       (lambda (v)
+				 (not (eqv? (car v) fsym)))
+			       (loop (cddar exprs) (cons frame cur-env))))
+		      (new-env cur-env))
+		 (for-each (lambda (es)
+			     (cond ((symbol? es)
+				    (transfer-namespace-sym es es))
+				   ((and (list-length=? 2 es)
+					 (symbol? (car es))
+					 (symbol? (cadr es)))
+				    (transfer-namespace-sym
+				     (car es) (cadr es)))
+				   (else
+				    (ERR "bad namespace interface %v" es))))
+			   (cadar exprs))
+		 (loop (cdr exprs) new-env)))
+
+	      (else
+	       (let ((ator (lookup-symbol cur-env (caar exprs))))
+		 (if (eqv? 'macro (cadr ator))
+		     (let ((mex (apply-macro
+				 (caar exprs) (cddr ator) (cdar exprs))))
+		       (loop (cons mex (cdr exprs)) cur-env))
+		     (loop (cdr exprs) cur-env))))
+
+;;; (some-macro args ...) is a macro usage: the function corresponding
+;;; to some-macro gets looked up and applied, and there is a new
+;;; result: this gets added back to the front of the list of items
+;;; to be processed. no environment change, nothing gets compiled
+
+;;; codelets, (let ...) and (do ...) and all the other stuff, get
+;;; compiled in the current top-level compilation frame: scheme_main
+;;; for the true top-level, the body of whatever function we're in at
+;;; the moment. this is basically the "else" part of a big cond
+
+	      ))))
+
 (define (compile-special-begin cur-env tcall exprs)
   (debug-trace 'compile-special-begin cur-env tcall exprs)
-  (let* ((tmp1 (expand-toplevel cur-env exprs))
-	 (wk-env (car tmp1))
-	 (tmp2 (partition is-define? (cadr tmp1)))
-	 (defs (car tmp2))
-	 (exprs (cadr tmp2))
-	 (do-decl (lambda (def)
-		    (let ((decl (declare-deffish wk-env def #f #f)))
-		      (when (list? decl)
-			(set! wk-env (cons decl wk-env)))))))
-    (for-each do-decl defs)
-    (for-each (lambda (d) (compile-deffish wk-env d)) defs)
-    (if (null? exprs)
-	(compile-immediate wk-env ())
+  (if (null? exprs)
+      (compile-immediate cur-env ())
+      (let* ((tmp1 (expand-toplevel cur-env exprs))
+	     (wk-env (car tmp1))
+	     (tmp2 (partition is-define? (cadr tmp1)))
+	     (defs (car tmp2))
+	     (exprs (cadr tmp2))
+	     (do-decl (lambda (def)
+			(let ((decl (declare-deffish wk-env def #f #f)))
+			  (when (list? decl)
+			    (set! wk-env (cons decl wk-env)))))))
+	(for-each do-decl defs)
+	(for-each (lambda (d) (compile-deffish wk-env d)) defs)
 	(list-last (map (lambda (e t) (maybe-compile-expr wk-env t e))
 			exprs (make-tail-flags exprs tcall))))))
 
@@ -860,7 +1028,7 @@
 (define (compile-special-set! cur-env tcall clauses)
   (debug-trace 'compile-special-set! cur-env tcall clauses)
   (if (or (null? clauses) (null? (cdr clauses)) (not (symbol? (car clauses))))
-      (ERR "malformed 'set!' expressioin '%v'" clauses)
+      (ERR "malformed 'set!' expression '%v'" clauses)
 
       ;;; TODO: here, if we get a proc or prim, that means redefinition of
       ;;; said proc or prim. That would mean modifying the current environment
@@ -925,8 +1093,8 @@
 	 (argies (args-list (car def)))
 	 (arity (car argies))
 	 (sas (cadr argies))
-	 (ig (unless (unique-symbols? sas)
-	       (ERR "malformed 'lambda' args list '%v'" args)))
+	 (_ (unless (unique-symbols? sas)
+	      (ERR "malformed 'lambda' args list '%v'" args)))
 	 (tmp-fn (if c-fn-name c-fn-name (new-svar 'fn)))
 	 (c-name (if c-cl-name c-cl-name (new-svar)))
 	 (a-name (new-svar))
@@ -1201,6 +1369,8 @@
 	 (compile-special-andor 'false cur-env tcall (cdr expr)))
 	((symbol=? (car expr) 'begin)
 	 (compile-special-begin cur-env tcall (cdr expr)))
+((symbol=? (car expr) 'begin-new)
+ (compile-special-begin-new cur-env tcall (cdr expr)))
 	((symbol=? (car expr) 'if)
 	 (compile-special-if cur-env tcall (cdr expr)))
 	((symbol=? (car expr) 'cond)
@@ -1243,6 +1413,7 @@
   (and (symbol? val)
        (or (symbol=? val 'and)
 	   (symbol=? val 'begin)
+   (symbol=? val 'begin-new)
 	   (symbol=? val 'case)
 	   (symbol=? val 'cond)
 ;;; these get handled differently, they are special specials
@@ -1586,8 +1757,8 @@
   (debug-trace 'declare-function cur-env #f def)
   (let* ((args (cdar def))
 	 (argies (args-list args))
-	 (ig (unless (unique-symbols? (cadr argies))
-	       (ERR "malformed 'define' args list '%v'" args)))
+	 (_ (unless (unique-symbols? (cadr argies))
+	      (ERR "malformed 'define' args list '%v'" args)))
 	 (arity (car argies))
 	 (tmp-fn (if c-fn-name c-fn-name (new-svar 'fn))))
     (if c-fn-name
@@ -1596,7 +1767,8 @@
 	    (let ((c-bag (make-string-bag ())))
 	      (with-output
 	       c-bag
-	       (emit-fstr "lval %s(lptr*, lptr, const char*);\t// %v\n" tmp-fn (car def)))
+	       (emit-fstr "lval %s(lptr*, lptr, const char*);\t// %v\n"
+			  tmp-fn (car def)))
 	      (display c-bag c-port)))
 	  (when s-port
 	    (if (string=? doc-string "")
@@ -1614,8 +1786,8 @@
   (debug-trace 'compile-function cur-env #f def)
   (let* ((args (car def))
 	 (argies (args-list args))
-	 (ig (unless (unique-symbols? (cadr argies))
-	       (ERR "malformed 'define' args list '%v'" args)))
+	 (_ (unless (unique-symbols? (cadr argies))
+	      (ERR "malformed 'define' args list '%v'" args)))
 	 (sas (cdadr argies))
 	 (tmp (lookup-symbol cur-env (caar def)))
 	 (fc (car tmp))
@@ -1641,19 +1813,6 @@
 	  (reset-mirrors global-mirrors)
 	  (emit-function-tail res))
 	(emit-fstr "// end of function %s\n" tmp-fn))))))
-
-(define (declare-macro def)
-  (debug-trace 'declare-macro () #f def)
-  (let* ((s-name (caar def))
-	 (args (cdar def))
-	 (body (cdr def))
-	 (argies (args-list args))
-	 (arity (car argies))
-	 (formals (cadr argies))
-	 (stdenv (wile-environment-with-macros #f)))
-    (unless (unique-symbols? formals)
-      (ERR "malformed 'defmacro' args list '%v'" args))
-    (make-macro-def s-name (make-iproc formals arity body stdenv #t) arity)))
 
 (define (declare-deffish cur-env def c-port s-port)
   (debug-trace 'declare-deffish cur-env #f def)
@@ -1691,7 +1850,7 @@
 ;;;  (let ((loc (string-split-by is-colon? (token-source-line def))))
 ;;;    (emit-fstr "#line %s \"%s\"\n" (cadr loc) (car loc)))
   (guard (err (#t (fprintf stderr "caught exception\n    %v\n" err)
-		  (set! global-errors (+ global-errors 1))))
+		  (set! global-errors #t)))
 	 (cond
 	  ((symbol=? (car def) 'define)
 	   (unless (symbol? (cadr def))
@@ -1897,7 +2056,8 @@
 			 (set! r
 			       (let ((chop1 (regex-match re-use r)))
 				 (if chop1
-				     (let ((chop2 (regex-match re-num (cadr chop1))))
+				     (let ((chop2 (regex-match
+						   re-num (cadr chop1))))
 				       (strvec-set! used (cadr chop2))
 				       (caddr chop1))
 				     #f))))))
@@ -1937,11 +2097,16 @@
 				((regex-match re-set l)
 				 (if (truthy (strvec-ref used var))
 				     (add-output l)
-				     (let ((ix (string-find-first-char l #\=)))
-				       (unless (regex-match re-copy l)
-					 (add-output "(void)")
-					 (add-output
-					  (string-copy l (+ ix 1)))))))
+				     (unless (regex-match re-copy l)
+				       (let* ((ix (string-find-first-char
+						   l #\=))
+					      (l2 (string-copy l (+ ix 1))))
+;;; TODO omg this is fragile! the space needs to be in there;
+;;; however, at least if it fails it's still correct...
+					 (unless (string=?
+						  l2 " LVI_BOOL(false);")
+					   (add-output "(void)")
+					   (add-output l2))))))
 				(else (add-output l)))))
 		      lines)
 	    (remove-unused-vars nvars (list-reverse output)))))))
@@ -1965,9 +2130,9 @@
 	     ;;; ugh. find a way to remove the global and thread it through
 	     ;;; the code... that's not hard, but a bit messy.
 	     ;;; the local variable gets ignored, set! is what we want.
-	     (ig1 (set! global-library (find-pragma 'library prags)))
-	     (ig2 (when (find-pragma 'suppress-tail-call-generation prags)
-		    (set! global-tc-min-args -1)))
+	     (_1 (set! global-library (find-pragma 'library prags)))
+	     (_2 (when (find-pragma 'suppress-tail-call-generation prags)
+		   (set! global-tc-min-args -1)))
 	     (hname (if global-library (list-ref global-library 0) #f))
 	     (sname (if global-library (list-ref global-library 1) #f))
 	     (tmp1 (expand-toplevel
@@ -1995,7 +2160,7 @@
 			      #f))))
 
 	     ;;; the entries in the args hash table are toggles:
-	     ;;; if absent, use the default, if present, use  the not-default
+	     ;;; if absent, use the default, if present, use the not-default
 	     ;;; if the default is #t, then negate the lookup,
 	     ;;; otherwise use the lookup
 
@@ -2020,7 +2185,7 @@
 	  (write-string hport "\n#endif // " mname #\newline)
 	  (close-port hport))
 	(guard (err (#t (fprintf stderr "caught exception\n    %v\n" err)
-			(set! global-errors (+ global-errors 1))))
+			(set! global-errors #t)))
 	       (unless global-library
 		 (with-output
 		  global-code
@@ -2055,7 +2220,7 @@
 				  "wile_profile_size = 0;")))
 		 (transfer-all-lines global-code global-out))
 	       (display global-out out-port)
-	       (when (and (positive? opt-level) (zero? global-errors))
+	       (when (and (positive? opt-level) (not global-errors))
 		 (let ((lines (read-all-lines out-port))
 		       (nvars (+ new-svar-index 5)))
 		   (when rm-dc

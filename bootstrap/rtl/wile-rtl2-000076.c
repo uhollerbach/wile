@@ -17,7 +17,7 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval var_1 = LVI_STRING_NOCPY("1.0.2");		// wile-version
+static lval var_1 = LVI_STRING_NOCPY("1.0.3");		// wile-version
 
 // definitions
 
@@ -96,7 +96,7 @@ p2 = new_lv(LV_NIL);
 var_17 = LVI_PAIR(p1, p2);
 }
 lval var_18;
-var_18 = LVI_SYMBOL("garbage-collection-version");
+var_18 = LVI_SYMBOL("garbage-collector-version");
 lval var_19;
 {
 lptr p1 = NULL, p2 = NULL;

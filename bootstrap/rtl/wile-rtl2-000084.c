@@ -1349,8 +1349,6 @@ var_387 = var_388;
 lval var_390;
 var_390 = LVI_BOOL(var_383.vt == LV_ILAMBDA);
 if (LV_IS_FALSE(var_390)) {
-(void)
- LVI_BOOL(false);
 } else {
 if (var_383.vt == LV_ILAMBDA && var_350[0].vt == LV_BOOL) {
 var_383.v.ilambda->macro = var_350[0].v.bv;
@@ -1436,8 +1434,6 @@ var_416[2] = var_414;
 var_415 = wile_eval_define(NULL, var_416, "bld-rtl-dir/wile-rtl2-000084.scm:164");
 V_CLOS(var_400,0) = var_415;
 if (LV_IS_FALSE(V_CLOS(var_400,1))) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_421[8];
 var_421[0] = V_CLOS(var_400,1);
@@ -1865,8 +1861,6 @@ var_528[1] = wile_gen_list(2, var_530, NULL);
 (void)
  fn_7(NULL, var_528, "bld-rtl-dir/wile-rtl2-000084.scm:197");
 } else {
-(void)
- LVI_BOOL(false);
 }
 MK_CLOS(var_533,1);
 lptr var_544 = new_lv(VT_UNINIT);
@@ -1968,8 +1962,6 @@ var_643[1] = var_639[0];
 var_642 = fn_12(NULL, var_643, "bld-rtl-dir/wile-rtl2-000084.scm:224");
 var_641 = var_642;
 if (LV_IS_FALSE(V_CLOS(var_638,1))) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_647;
 {
@@ -2323,12 +2315,8 @@ var_656 = wile_list_append(NULL, var_657, "bld-rtl-dir/wile-rtl2-000084.scm:229"
 }
 var_635 = var_656;
 } else {
-(void)
- LVI_BOOL(false);
 }
 if (LV_IS_FALSE(var_566[0])) {
-(void)
- LVI_BOOL(false);
 } else {
 MK_CLOS(var_663,1);
 lptr var_674 = new_lv(VT_UNINIT);
@@ -3821,8 +3809,6 @@ var_1042[1] = wile_gen_list(1, var_1044, NULL);
 (void)
  fn_7(NULL, var_1042, "bld-rtl-dir/wile-rtl2-000084.scm:361");
 } else {
-(void)
- LVI_BOOL(false);
 }
 lval var_1046;
 if (var_1023[1].vt != LV_PAIR) {
@@ -4355,8 +4341,6 @@ var_1115[1] = wile_gen_list(1, var_1117, NULL);
 (void)
  fn_7(NULL, var_1115, "bld-rtl-dir/wile-rtl2-000084.scm:384");
 } else {
-(void)
- LVI_BOOL(false);
 }
 MK_CLOS(var_1120,4);
 lptr var_1171 = new_lv(VT_UNINIT);
@@ -4550,8 +4534,6 @@ var_1209[1] = wile_gen_list(2, var_1211, NULL);
 (void)
  fn_7(NULL, var_1209, "bld-rtl-dir/wile-rtl2-000084.scm:418");
 } else {
-(void)
- LVI_BOOL(false);
 }
 } else {
 lval var_1213;
@@ -4629,8 +4611,6 @@ var_1225[1] = wile_gen_list(2, var_1227, NULL);
 (void)
  fn_7(NULL, var_1225, "bld-rtl-dir/wile-rtl2-000084.scm:413");
 } else {
-(void)
- LVI_BOOL(false);
 }
 lval var_1229;
 {

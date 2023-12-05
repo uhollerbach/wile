@@ -15,15 +15,17 @@
 #include <limits.h>
 #include <float.h>
 
+#ifdef WILE_USES_SQLITE
+#include "sqlite3.h"
+#endif // WILE_USES_SQLITE
+
+#include "sha256.h"
+
 #ifdef __GNUC__
 #define WILE_ATTR(x)	__attribute__(x)
 #else
 #define WILE_ATTR(x)
 #endif
-
-#ifdef WILE_USES_SQLITE
-#include "sqlite3.h"
-#endif // WILE_USES_SQLITE
 
 enum val_type {
     VT_UNINIT,
@@ -48,11 +50,13 @@ enum val_type {
     LV_SOCK_PORT,
     LV_SQLITE_PORT,
     LV_SQLITE_STMT,
-    LV_PROMISE,
+    LV_SHA256_DATA,
 
     LV_CLAMBDA,
     LV_ILAMBDA,
     LV_CONT,
+
+    LV_PROMISE,
 
     LV_TYPES_COUNT		// must be last
 };
@@ -462,6 +466,7 @@ typedef struct lisp_val {
 	sqlite3* sqlite_conn;
 	sqlite3_stmt* sqlite_stmt;
 #endif // WILE_USES_SQLITE
+	SHA256_info* sha256_info;
     } v;
     lisp_loc_t origin;
     enum val_type vt;
@@ -505,47 +510,6 @@ struct lisp_escape_info {
 typedef struct lisp_escape_info* lisp_escape_t;
 
 extern lisp_escape_t cachalot;
-
-lisp_int_t lgcd(lisp_int_t p, lisp_int_t q);
-
-void show_kv_pair(const void* vp, FILE* fp, lisp_bytevector_t* bvp);
-
-lptr clear_display_hook(const char* sym);
-lptr get_display_hook(const char* sym);
-lptr set_display_hook(const char* sym, lptr hook);
-
-void wile_print_lisp_val(lptr vp, FILE* fp, const char* loc);
-void wile_sprint_lisp_num(char* buf, size_t bsize, lptr num,
-			  int base, int prec, bool psign);
-
-lisp_loc_t wile_encode_line_loc(size_t lineno);
-char* wile_decode_line_loc(lisp_loc_t lloc);
-void wile_set_lisp_loc_file(const char* fname);
-lisp_loc_t wile_get_lisp_loc(lptr vp);
-
-void err_print(const char* fname, lisp_loc_t l_whence,
-	       const char* c_whence, const char* fmt, ...)
-    WILE_ATTR((noreturn,format(printf,4,5)));
-
-const char* typename(enum val_type vt);
-
-void bv_putc(unsigned char c, lisp_bytevector_t* bvp);
-void bv_puts(const unsigned char* s, lisp_bytevector_t* bvp);
-void bv_putbytes(size_t sl, const unsigned char* s, lisp_bytevector_t* bvp);
-
-// continuation stuff
-
-int stack_check(int verbose);
-void stack_base(void* st_bptr);
-void wile_invoke_continuation(lptr cc, lptr args)
-    WILE_ATTR((noreturn));
-
-// wile low-level CFFT routines
-
-void wilec_cfft_init(void);
-bool wilec_cfft_good_n(lisp_int_t n);
-lisp_cmplx_t* wilec_cfft(int si, size_t n, size_t nc,
-			 lisp_cmplx_t* a1, lisp_cmplx_t* a2);
 
 #define LISP_ASSERT(expr)						\
     do {								\

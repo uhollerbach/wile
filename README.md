@@ -150,49 +150,51 @@ to detect and prevent these crazinesses.
   `let*` `letrec` `letrec*` `or` `quasiquote` `unquote`
   `unquote-splicing` `quote` `set!`
 
-* A reasonably good number of functions in the standard library:
-  `*` `+` `-` `/` `/=` `<` `<=` `=` `>` `>=` `UTCtime` `abs` `accept`
-  `acos` `acosh` `agm` `all-true?` `angle` `any-true?` `append` `apply`
-  `apply-interp` `apply-lambda` `arithmetic-geometric-mean` `asin`
-  `asinh` `assp` `assv` `atan` `atanh` `begin-breakable` `begin-form?`
-  `bessel-j` `bessel-y` `bits-and` `bits-clear` `bits-flip` `bits-get`
-  `bits-not` `bits-or` `bits-set` `bits-set?` `bits-shift` `bits-xor`
-  `boolean?` `bytevector` `bytevector->list` `bytevector->string`
-  `bytevector-create` `bytevector-for-each` `bytevector-length`
-  `bytevector-ref` `bytevector-set!` `bytevector-swap!` `bytevector?`
-  `c*` `c+` `c-` `c/` `caaaar` `caaadr` `caaar` `caadar` `caaddr`
-  `caadr` `caar` `cadaar` `cadadr` `cadar` `caddar` `cadddddddr`
-  `caddddddr` `cadddddr` `caddddr` `cadddr` `caddr` `cadr`
-  `call-with-current-continuation` `call/cc` `car` `case-lambic` `cbrt`
-  `cconj` `cdaaar` `cdaadr` `cdaar` `cdadar` `cdaddr` `cdadr` `cdar`
-  `cddaar` `cddadr` `cddar` `cdddar` `cddddr` `cdddr` `cddr` `cdr`
-  `ceiling` `ceiling-quotient` `ceiling-remainder` `ceiling/`
-  `cfft-good-n?` `change-file-owner` `change-root-directory`
-  `change-symbolic-link-owner` `char->integer` `char->string`
-  `char-alphabetic?` `char-alphanumeric?` `char-ci/=?` `char-ci<=?`
-  `char-ci<?` `char-ci=?` `char-ci>=?` `char-ci>?` `char-control?`
-  `char-downcase` `char-hex-digit?` `char-lower-case?` `char-lowercase?`
-  `char-numeric?` `char-oct-digit?` `char-printable?` `char-upcase`
-  `char-upper-case?` `char-uppercase?` `char-whitespace?` `char/=?`
-  `char<=?` `char<?` `char=?` `char>=?` `char>?` `char?`
-  `cholesky-decompose` `cholesky-solve` `cimag` `clear-file-error`
-  `close-port` `cmplx` `compiled-procedure?` `complex-conjugate`
-  `complex?` `compose` `conj` `connect-to` `cons` `continuation?` `cos`
-  `cosh` `cosine-integral` `cputime` `creal` `create-directory`
-  `create-link` `create-symbolic-link` `curry` `cxr` `day-of-week`
-  `day-of-year` `def-struct` `define-form?` `delta-dates` `denominator`
-  `describe-system-error` `digamma` `directory-exists?` `display`
-  `display-object-hook` `display-stack-trace` `do-until` `do-while`
-  `elliptic-E` `elliptic-K` `emergency-exit` `emit-code` `epochtime`
-  `eqv?` `erfc` `eval` `eval-begin` `eval-define` `even?` `exit` `exp`
-  `expmod` `expt` `factorial` `file-executable?` `file-exists?`
-  `file-port?` `file-readable?` `file-writable?` `filter` `finite?`
-  `flatten` `float` `floor` `floor-quotient` `floor-remainder` `floor/`
+* A reasonably good number of functions in the standard library: `*`
+  `+` `-` `/` `/=` `<` `<=` `=` `>` `>=` `UTCtime` `abs` `accept`
+  `acos` `acosh` `agm` `all-true?` `angle` `any-true?` `append`
+  `apply` `apply-interp` `apply-lambda` `arithmetic-geometric-mean`
+  `asin` `asinh` `assp` `assv` `atan` `atanh` `begin-breakable`
+  `begin-form?` `bessel-j` `bessel-y` `bits-and` `bits-clear`
+  `bits-flip` `bits-get` `bits-not` `bits-or` `bits-set` `bits-set?`
+  `bits-shift` `bits-xor` `boolean?` `bytevector` `bytevector->list`
+  `bytevector->string` `bytevector-create` `bytevector-for-each`
+  `bytevector-length` `bytevector-ref` `bytevector-set!`
+  `bytevector-swap!` `bytevector?` `c*` `c+` `c-` `c/` `caaaar`
+  `caaadr` `caaar` `caadar` `caaddr` `caadr` `caar` `cadaar` `cadadr`
+  `cadar` `caddar` `cadddddddr` `caddddddr` `cadddddr` `caddddr`
+  `cadddr` `caddr` `cadr` `call-with-current-continuation` `call/cc`
+  `car` `case-lambic` `cbrt` `cconj` `cdaaar` `cdaadr` `cdaar`
+  `cdadar` `cdaddr` `cdadr` `cdar` `cddaar` `cddadr` `cddar` `cdddar`
+  `cddddr` `cdddr` `cddr` `cdr` `ceiling` `ceiling-quotient`
+  `ceiling-remainder` `ceiling/` `cfft-good-n?` `change-file-owner`
+  `change-root-directory` `change-symbolic-link-owner` `char->integer`
+  `char->string` `char-alphabetic?` `char-alphanumeric?` `char-ci/=?`
+  `char-ci<=?` `char-ci<?` `char-ci=?` `char-ci>=?` `char-ci>?`
+  `char-control?` `char-downcase` `char-hex-digit?` `char-lower-case?`
+  `char-lowercase?` `char-numeric?` `char-oct-digit?`
+  `char-printable?` `char-upcase` `char-upper-case?` `char-uppercase?`
+  `char-whitespace?` `char/=?` `char<=?` `char<?` `char=?` `char>=?`
+  `char>?` `char?` `cholesky-decompose` `cholesky-solve` `cimag`
+  `clear-file-error` `close-port` `cmplx` `compiled-procedure?`
+  `complex-conjugate` `complex?` `compose` `conj` `connect-to` `cons`
+  `continuation?` `cos` `cosh` `cosine-integral` `cputime` `creal`
+  `create-directory` `create-link` `create-symbolic-link` `curry`
+  `cxr` `day-of-week` `day-of-year` `def-struct` `define-form?`
+  `delta-dates` `denominator` `describe-system-error` `digamma`
+  `directory-exists?` `display` `display-object-hook`
+  `display-stack-trace` `do-until` `do-while` `elliptic-E`
+  `elliptic-K` `emergency-exit` `emit-code` `epochtime` `eqv?` `erfc`
+  `eval` `eval-begin` `eval-define` `even?` `exit` `exp` `expmod`
+  `expt` `factorial` `file-executable?` `file-exists?` `file-port?`
+  `file-readable?` `file-writable?` `filter` `finite?` `flatten`
+  `float` `floor` `floor-quotient` `floor-remainder` `floor/`
   `fluid-let` `flush-port` `fmod` `foldl` `foldl1` `foldr` `for-each`
-  `fork-process` `fprintf` `frexp` `fromto` `gc-version` `gcd` `gensym`
-  `get-current-directory` `get-domain-name` `get-effective-group-id`
-  `get-effective-user-id` `get-environment-variable` `get-errno`
-  `get-file-eof` `get-file-error` `get-file-position` `get-file-status`
+  `fork-process` `fprintf` `frexp` `fromto` `gc-version` `gcd`
+  `gensym` `get-current-directory` `get-domain-name`
+  `get-effective-group-id` `get-effective-user-id`
+  `get-environment-variable` `get-errno` `get-file-eof`
+  `get-file-error` `get-file-position` `get-file-status`
   `get-group-id` `get-group-information` `get-host-name`
   `get-interpreted-procedure-argu` `get-interpreted-procedure-arit`
   `get-interpreted-procedure-body` `get-interpreted-procedure-envi`
@@ -211,24 +213,25 @@ to detect and prevent these crazinesses.
   `list-flatten` `list-group-by` `list-head` `list-last` `list-length`
   `list-length<=?` `list-length<?` `list-length=?` `list-length>=?`
   `list-length>?` `list-partition` `list-ref` `list-remove-dups`
-  `list-reverse` `list-sort` `list-tail` `list-take-while` `list-unhead`
-  `list-untail` `list?` `listen-on` `load-file-path` `load-form?`
-  `load-library` `localtime` `log` `log-gamma` `magnitude`
-  `make-bytevector` `make-interpreted-procedure` `make-iproc`
-  `make-polar` `make-rational` `make-rectangular` `make-string`
-  `make-vector` `map` `max` `max/i` `max/q` `max/r` `memp` `memv` `min`
-  `min/i` `min/q` `min/r` `modulo` `namespace` `nan?` `negative`
-  `negative?` `newline` `next-prime` `not` `null?` `number->string`
-  `number/type` `number?` `numerator` `odd?` `offset-date` `open-file`
-  `open-temporary-file` `pair?` `parse-file` `parse-string` `partition`
-  `phase` `pipe-port?` `poly-chebyshev1` `poly-chebyshev2`
-  `poly-hermite1` `poly-hermite2` `poly-laguerre` `poly-legendre`
-  `port?` `positive?` `printf` `procedure?` `promise?` `promote/cmplx`
-  `promote/rat` `promote/real` `q*` `q+` `q-` `q/` `quot-rem` `quotient`
-  `r*` `r+` `r-` `r/` `raise` `random-exponential` `random-normal-pair`
-  `random-permutation` `random-poisson` `random-seed!` `random-uniform`
-  `rational?` `read-all` `read-bytes` `read-char` `read-directory`
-  `read-line` `real-part` `real?` `reciprocal` `regex-match` `remainder`
+  `list-reverse` `list-sort` `list-tail` `list-take-while`
+  `list-unhead` `list-untail` `list?` `listen-on` `load-file-path`
+  `load-form?` `load-library` `localtime` `log` `log-gamma`
+  `magnitude` `make-bytevector` `make-interpreted-procedure`
+  `make-iproc` `make-polar` `make-rational` `make-rectangular`
+  `make-string` `make-vector` `map` `max` `max/i` `max/q` `max/r`
+  `memp` `memv` `min` `min/i` `min/q` `min/r` `modulo` `namespace`
+  `nan?` `negative` `negative?` `newline` `next-prime` `not` `null?`
+  `number->string` `number/type` `number?` `numerator` `odd?`
+  `offset-date` `open-file` `open-temporary-file` `pair?` `parse-file`
+  `parse-string` `partition` `phase` `pipe-port?` `poly-chebyshev1`
+  `poly-chebyshev2` `poly-hermite1` `poly-hermite2` `poly-laguerre`
+  `poly-legendre` `port?` `positive?` `printf` `procedure?` `promise?`
+  `promote/cmplx` `promote/rat` `promote/real` `q*` `q+` `q-` `q/`
+  `quot-rem` `quotient` `r*` `r+` `r-` `r/` `raise` `random-cauchy`
+  `random-exponential` `random-normal-pair` `random-permutation`
+  `random-poisson` `random-seed!` `random-uniform` `rational?`
+  `read-all` `read-bytes` `read-char` `read-directory` `read-line`
+  `real-part` `real?` `reciprocal` `regex-match` `remainder`
   `remove-directory` `remove-file` `rename-directory` `rename-file`
   `replicate` `reverse` `root-bisect` `root-bracket` `root-ridders`
   `round` `run-command` `run-read-command` `run-write-command`
@@ -238,27 +241,30 @@ to detect and prevent these crazinesses.
   `set-group-id` `set-interpreted-procedure-envi`
   `set-interpreted-procedure-macr` `set-iproc-env!` `set-iproc-macro!`
   `set-line-buffering!` `set-no-buffering!` `set-session-id`
-  `set-user-id` `sha-256` `sign` `sin` `sine-integral` `sinh` `sleep`
+  `set-user-id` `sha-256` `sha-256-init` `sha-256-update`
+  `sha-256-finish` `sign` `sin` `sine-integral` `sinh` `sleep`
   `socket-port?` `sprintf` `sqlite-close` `sqlite-dump-table`
-  `sqlite-meta-schema` `sqlite-meta-tables` `sqlite-open` `sqlite-port?`
-  `sqlite-run` `sqlite-statement-bind` `sqlite-statement-cleanup`
-  `sqlite-statement-info` `sqlite-statement-prepare`
-  `sqlite-statement-run` `sqlite-statement?` `sqlite-version` `sqrt`
-  `stack-trace` `stack-trace-minimal` `string->char` `string->list`
-  `string->number` `string->symbol` `string-append` `string-ci-hash-32`
+  `sqlite-meta-schema` `sqlite-meta-tables` `sqlite-open`
+  `sqlite-port?` `sqlite-run` `sqlite-statement-bind`
+  `sqlite-statement-cleanup` `sqlite-statement-info`
+  `sqlite-statement-prepare` `sqlite-statement-run`
+  `sqlite-statement?` `sqlite-version` `sqrt` `stack-trace`
+  `stack-trace-minimal` `string->char` `string->list` `string->number`
+  `string->symbol` `string-append` `string-ci-hash-32`
   `string-ci-hash-64` `string-ci/=?` `string-ci<=?` `string-ci<?`
   `string-ci=?` `string-ci>=?` `string-ci>?` `string-copy`
   `string-create` `string-downcase` `string-find-first-char`
   `string-find-last-char` `string-hash-32` `string-hash-64`
-  `string-join-by` `string-length` `string-pad-center` `string-pad-left`
-  `string-pad-right` `string-port?` `string-ref` `string-reverse`
-  `string-set!` `string-split-by` `string-split-by-whitespace`
-  `string-trim` `string-trim-left` `string-trim-right` `string-upcase`
-  `string/=?` `string<=?` `string<?` `string=?` `string>=?` `string>?`
-  `string?` `substring` `symbol->string` `symbol=?` `symbol?` `tan`
-  `tanh` `token-source-line` `truncate` `truncate-file`
-  `truncate-quotient` `truncate-remainder` `truncate/` `type-of`
-  `unless` `unset-environment-variable` `until` `upfrom` `vector`
+  `string-join-by` `string-length` `string-pad-center`
+  `string-pad-left` `string-pad-right` `string-port?` `string-ref`
+  `string-reverse` `string-set!` `string-split-by`
+  `string-split-by-whitespace` `string-trim` `string-trim-left`
+  `string-trim-right` `string-upcase` `string/=?` `string<=?`
+  `string<?` `string=?` `string>=?` `string>?` `string?` `substring`
+  `symbol->string` `symbol=?` `symbol?` `tan` `tanh`
+  `token-source-line` `truncate` `truncate-file` `truncate-quotient`
+  `truncate-remainder` `truncate/` `type-of` `unless`
+  `unset-environment-variable` `until` `upfrom` `vector`
   `vector->list` `vector-capacity` `vector-cfft!` `vector-create`
   `vector-fill!` `vector-for-each` `vector-length` `vector-map`
   `vector-map!` `vector-number/type` `vector-promote/cmplx!`

@@ -1,6 +1,15 @@
-Last update: 2023-11-23 02:00 PST
+Last update: 2023-12-5 12:00 PST
 
 # Changelog for `wile`
+
+## Current version `wile` "1.0.3"
+
+- add low-level sha-256-{init,update,finish} primitives
+
+- change definition of list-take-while, it should only return
+  the actual head that matches
+
+- add begin-new, in-progress for doing proper namespace expansion etc
 
 ## Current version `wile` "1.0.2" 2023-12-5 12:00 PST
 

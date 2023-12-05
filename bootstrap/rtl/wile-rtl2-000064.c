@@ -74,8 +74,6 @@ var_18 = wile_list2vector(NULL, var_19, "bld-rtl-dir/wile-rtl2-000064.scm:20");
 }
 var_1 = var_18;
 } else {
-(void)
- LVI_BOOL(false);
 }
 lval var_22;
 var_22 = LVI_INT(1);

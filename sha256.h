@@ -25,7 +25,4 @@ void sha256_init(SHA256_info*);
 void sha256_update(SHA256_info*, uint8_t*, uint64_t);
 void sha256_final(unsigned char[32], SHA256_info*);
 
-void sha256_stream(unsigned char[32], SHA256_info*, FILE*);
-void sha256_print(unsigned char[32]);
-
 #endif /* SHA256_H */

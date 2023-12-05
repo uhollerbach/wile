@@ -182,8 +182,6 @@ cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
 } else {
-(void)
- LVI_BOOL(false);
 }
 lval var_36;
 lval var_37;

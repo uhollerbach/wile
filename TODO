@@ -95,11 +95,11 @@ Stuff TODO
   bytevector-pack
   bytevector-unpack
 
+  vector-copy like string-copy with optional start & end
+
   matrix-lu-decompose
   matrix-lu-solve
   sat2-solve
-
-  add sha-256-{init,update,finish}
 
   special cases in the compiler:
 

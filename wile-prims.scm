@@ -2846,6 +2846,18 @@
 	       (emit-code
 		"@@ = wile_rand_normal_pair(@9.v.rv, @8.v.rv);"))))
 
+   (list 'random-cauchy
+	 "expects 0 or 2 real-valued arguments X0 and W and returns a Cauchy-distributed random variable; if no arguments are given, X0 and W are assumed to be 0 and 1 respectively"
+	 'prim
+	 0 (lambda (r)
+	     (emit-code "@@ = LVI_REAL(TAN(PI_L*(drand48() - 0.5)));"))
+	 2 (lambda (r a1 a2)
+	     (let ((a9 (new-svar))
+		   (a8 (new-svar)))
+	       (promote/real+check "random-uniform" a9 a1)
+	       (promote/real+check "random-uniform" a8 a2)
+	       (emit-code "@@ = LVI_REAL(@9.v.rv + @8.v.rv*TAN(PI_L*(drand48() - 0.5)));"))))
+
    (list 'factorial
 	 "expects one non-negative integer argument and returns the factorial of the input"
 	 'prim 1
@@ -3735,7 +3747,7 @@
 	 'prim 1 "wile_cfft_good_n")
 
    (list 'vector-cfft!
-	 "expects one vector of a \"good\" length (see cfft-good-n?)  containing only numeric values, and computes the Fourier transform of that sequence in-place"
+	 "expects an integer indicating the direction of the transform and a vector of a \"good\" length (see cfft-good-n?)  containing only numeric values, and computes the Fourier transform of that sequence in-place"
 	 'prim 2 "wile_cfft")
 
    (list 'call/cc
@@ -3963,9 +3975,27 @@
 	    "}"
 	    "@@ = LVI_INT(fwrite(@2.v.bvec.arr, 1, @2.v.bvec.capa, @1.v.fp));")))
 
+   (list 'sha-256-data?
+	 "expects one argument and returns #t if that value is a SHA-256 data structure, #f otherwise"
+	 'prim 1
+	 (lambda (r a1)
+	   (emit-code "@@ = LVI_BOOL(@1.vt == LV_SHA256_DATA);")))
+
    (list 'sha-256
 	 "expects one string or port and returns the SHA-256 hash of that string or the contents of that port as a 64-character string"
 	 'prim 1 "wile_sha256_wrap")
+
+   (list 'sha-256-init
+	 "expects no arguments and returns an initialized SHA-256 hash data structure ready to accept data"
+	 'prim 0 "wile_sha256_init")
+
+   (list 'sha-256-update
+	 "expects one SHA-256 hash data structure and one string or bytevector"
+	 'prim 2 "wile_sha256_update")
+
+   (list 'sha-256-finish
+	 "expects one SHA-256 hash data structure and returns a string containing the final SHA-256 hash in hexadecimal"
+	 'prim 1 "wile_sha256_finish")
 
    ))
 
@@ -3992,7 +4022,7 @@
 (define (show-prims-table)
   (for-each (lambda (pe)
 	      (write-string (string-pad-right (symbol->string (car pe))
-					      #\space 30))
+					      #\space 40))
 	      ;;; TODO: this is kind of a hack for dealing with doc-strings
 	      ;;; do this better somehow
 	      (when (string? (cadr pe))

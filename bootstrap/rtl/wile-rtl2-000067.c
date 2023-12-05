@@ -210,8 +210,6 @@ var_59 = var_68;
 if (!LV_IS_FALSE(var_59)) { break; }
 } while (0);
 if (LV_IS_FALSE(var_59)) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_70;
 if (var_31.vt != LV_PAIR) {
@@ -253,8 +251,6 @@ var_73 = var_79;
 if (!LV_IS_FALSE(var_73)) { break; }
 } while (0);
 if (LV_IS_FALSE(var_73)) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_81;
 if (var_31.vt != LV_PAIR) {
@@ -351,8 +347,6 @@ var_108 = LVI_CHAR(46);
 lval var_109;
 var_109 = LVI_BOOL(var_107.v.chr == var_108.v.chr);
 if (LV_IS_FALSE(var_109)) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_111;
 if (var_31.vt != LV_PAIR) {
@@ -574,8 +568,6 @@ cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
 } else {
-(void)
- LVI_BOOL(false);
 }
 lval var_173;
 var_173 = LVI_BOOL(true);
@@ -627,8 +619,6 @@ var_173 = var_176;
 if (LV_IS_FALSE(var_173)) { break; }
 } while (0);
 if (LV_IS_FALSE(var_173)) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_187;
 var_187 = LVI_STRING(" ");
@@ -1012,8 +1002,6 @@ var_292 = LVI_BOOL(false);
 }
 var_290 = var_292;
 if (LV_IS_FALSE(var_290)) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_295;
 var_295 = LVI_STRING("*printf error: unknown format directive ");
@@ -1076,8 +1064,6 @@ cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
 } else {
-(void)
- LVI_BOOL(false);
 }
 lval var_308;
 {
@@ -1254,8 +1240,6 @@ if (LV_IS_FALSE(var_343)) {
 lval var_345;
 var_345 = LVI_BOOL(var_284[2].vt == LV_NIL);
 if (LV_IS_FALSE(var_345)) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_347;
 var_347 = LVI_STRING("*printf error: not enough arguments");
@@ -1619,8 +1603,6 @@ cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
 } else {
-(void)
- LVI_BOOL(false);
 }
 lval var_439;
 lval var_440;
@@ -1779,8 +1761,6 @@ cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
 } else {
-(void)
- LVI_BOOL(false);
 }
 lval var_474;
 lval var_475;
@@ -1990,8 +1970,6 @@ var_278 = wile_string_join_by(NULL, var_279, "bld-rtl-dir/wile-rtl2-000067.scm:1
 }
 var_8 = var_278;
 } else {
-(void)
- LVI_BOOL(false);
 }
 MK_CLOS(var_283,0);
 lval var_523;

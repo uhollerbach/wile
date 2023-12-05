@@ -47,8 +47,6 @@ var_22 = wile_regex_match(NULL, var_23, "bld-rtl-dir/wile-rtl2-000077.scm:22");
 }
 var_20 = var_22;
 if (LV_IS_FALSE(var_20)) {
-(void)
- LVI_BOOL(false);
 } else {
 if (LV_IS_FALSE(V_CLOS(var_17,0))) {
 lval var_27;
@@ -60,8 +58,6 @@ V_CLOS(var_17,0) = var_27;
 (void)
  V_CLOS(var_17,0);
 } else {
-(void)
- LVI_BOOL(false);
 }
 lval var_29;
 var_29 = LVI_STRING("cadr");
@@ -408,14 +404,6 @@ lval var_99;
 lval var_100;
 var_100 = LVI_BOOL(false);
 var_99 = var_100;
-(void)
- LVI_BOOL(false);
-(void)
- LVI_BOOL(false);
-(void)
- LVI_BOOL(false);
-(void)
- LVI_BOOL(false);
 (void)
  LVI_BOOL(unlink(var_96.v.str) == 0);
 wile_stack_trace_minimal(fileno((var_94.vt == LV_FILE_PORT) ? var_94.v.fp : stderr));

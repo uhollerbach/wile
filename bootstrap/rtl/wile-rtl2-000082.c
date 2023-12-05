@@ -539,8 +539,6 @@ default:
 WILE_EX("negative?", "expects a real-valued number");
 }
 if (LV_IS_FALSE(var_9)) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_11;
 {

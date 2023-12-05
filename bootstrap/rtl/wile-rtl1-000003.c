@@ -15,6 +15,7 @@ void wile_exception(const char* func_name, const char* loc,
     char buf1[1024], buf2[1280];
     va_list ap;
 
+    fflush(NULL);
     wile_stack_trace_minimal(fileno(stderr));
     va_start(ap, fmt);
     vsnprintf(buf1, sizeof(buf1), fmt, ap);

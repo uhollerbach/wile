@@ -239,6 +239,43 @@ lisp_cmplx_t lambert_wc_fn(int k, lisp_cmplx_t zl);
 double sine_integral(double x);
 double cosine_integral(double x);
 
+lisp_int_t lgcd(lisp_int_t p, lisp_int_t q);
+
+void show_kv_pair(const void* vp, FILE* fp, lisp_bytevector_t* bvp);
+
+lptr clear_display_hook(const char* sym);
+lptr get_display_hook(const char* sym);
+lptr set_display_hook(const char* sym, lptr hook);
+
+void wile_print_lisp_val(lptr vp, FILE* fp, const char* loc);
+void wile_sprint_lisp_num(char* buf, size_t bsize, lptr num,
+			  int base, int prec, bool psign);
+
+lisp_loc_t wile_encode_line_loc(size_t lineno);
+char* wile_decode_line_loc(lisp_loc_t lloc);
+void wile_set_lisp_loc_file(const char* fname);
+lisp_loc_t wile_get_lisp_loc(lptr vp);
+
+void err_print(const char* fname, lisp_loc_t l_whence,
+	       const char* c_whence, const char* fmt, ...)
+    WILE_ATTR((noreturn,format(printf,4,5)));
+
+const char* typename(enum val_type vt);
+
+// continuation stuff
+
+int stack_check(int verbose);
+void stack_base(void* st_bptr);
+void wile_invoke_continuation(lptr cc, lptr args)
+    WILE_ATTR((noreturn));
+
+// wile low-level CFFT routines
+
+void wilec_cfft_init(void);
+bool wilec_cfft_good_n(lisp_int_t n);
+lisp_cmplx_t* wilec_cfft(int si, size_t n, size_t nc,
+			 lisp_cmplx_t* a1, lisp_cmplx_t* a2);
+
 lval wile_expt(lval* a, lval* b);
 
 lval wile_rand_normal_pair(lisp_real_t m, lisp_real_t s);
@@ -247,6 +284,10 @@ lval wile_cfft_good_n(lptr* clos, lptr args, const char* loc);
 lval wile_cfft(lptr* clos, lptr args, const char* loc);
 
 lval wile_sha256_wrap(lptr* clos, lptr args, const char* loc);
+
+lval wile_sha256_init(lptr*, lptr, const char*);
+lval wile_sha256_update(lptr*, lptr, const char*);
+lval wile_sha256_finish(lptr*, lptr args, const char* loc);
 
 lval wile_waitpid(int pid, int opts);
 
