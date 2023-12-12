@@ -1,8 +1,8 @@
-Last update: 2023-12-5 12:00 PST
+Last update: 2023-12-12 12:00 PST
 
 # Changelog for `wile`
 
-## Current version `wile` "1.0.3"
+## Current version `wile` "1.0.3" 2023-12-12 12:00 PST
 
 - add low-level sha-256-{init,update,finish} primitives
 

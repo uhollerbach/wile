@@ -1,6 +1,6 @@
-Last update: 2023-12-5 12:00 PST
+Last update: 2023-12-12 12:00 PST
 
-# `wile` - the extremely stable scheming genius compiler - version 1.0.2
+# `wile` - the extremely stable scheming genius compiler - version 1.0.3
 
 `wile` is a small scheme-to-c compiler which I'm writing; it's by no
 means complete, but it's capable enough that writing small to medium
