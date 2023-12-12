@@ -237,6 +237,7 @@ lval wile_call_cc(lptr*, lptr args, const char* loc)
     }
 
     cc = save_context(1);
+    cc.origin = args->origin;
     cont_in_flight = cc.v.cont;
     if (setjmp(cc.v.cont->registers) == 0) {
 	// initial capture of the continuation
@@ -247,7 +248,6 @@ lval wile_call_cc(lptr*, lptr args, const char* loc)
 	    i = wile_tc_min_args;
 	}
 	lptr fargs = LISP_ALLOC(lval, i);
-	LISP_ASSERT(fargs != NULL);
 
 	fargs[0] = cc;
 	switch (args->vt) {

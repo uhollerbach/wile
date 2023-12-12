@@ -1,5 +1,7 @@
 Stuff TODO
 
+* coverity flag: deal with uninitialized "origin" field in lots of places
+
 * self-compilation
 
   > a bug: in read-recursive, there are several named-let functions:

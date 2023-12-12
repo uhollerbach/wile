@@ -51,14 +51,16 @@ lval wile_listen_port(lptr*, lptr args, const char* loc)
 	my_addr.sin_port = htons(args[0].v.iv);
 
 	if (bind(sd, (struct sockaddr*) &my_addr, sizeof(my_addr)) < 0) {
+	    close(sd);
 	    return LVI_BOOL(false);
 	} else {
 	    if (listen(sd, 16) < 0) {
+		close(sd);
 		return LVI_BOOL(false);
 	    } else {
 		fp = fdopen(sd, "rb+");
 		if (fp == NULL) {
-		    // TODO: close sd? I think so
+		    close(sd);
 		    return LVI_BOOL(false);
 		} else {
 		    setvbuf(fp, NULL, _IONBF, 0);

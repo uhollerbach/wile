@@ -9,6 +9,9 @@
 extern lisp_escape_t cachalot;
 
 
+#include <sys/types.h>
+#include <sys/stat.h>
+
 lval wile_temp_file(lptr*, lptr args, const char* loc)
 {
     char *template, *tp;
@@ -22,7 +25,6 @@ lval wile_temp_file(lptr*, lptr args, const char* loc)
     }
     tlen = strlen(args->v.str);
     template = LISP_ALLOC(char, tlen + 8);
-    LISP_ASSERT(template != NULL);
     strcpy(template, args->v.str);
     tp = template + tlen;
     nt = (tlen < 6) ? tlen : 6;
@@ -36,15 +38,18 @@ lval wile_temp_file(lptr*, lptr args, const char* loc)
 	*tp++ = 'X';
     }
     *tp++ = '\0';
+    mode_t mask = umask(0);
+    umask(077);
     nt = mkstemp(template);
+    umask(mask);
     if (nt < 0) {
-	LISP_FREE_STR(template);
+	LISP_FREE(template);
 	wile_exception("open-temporary-file", loc,
 		       "could not create temporary file");
     }
     lval vs[2];
     vs[1] = LVI_STRING(template);
-    LISP_FREE_STR(template);
+    LISP_FREE(template);
     fp = fdopen(nt, "w+");
     if (fp == NULL) {
 	wile_exception("open-temporary-file", loc,

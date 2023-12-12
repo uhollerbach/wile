@@ -40,16 +40,64 @@ lisp_int_t lgcd(lisp_int_t p, lisp_int_t q)
 
 // allocation-related stuff begins here
 
+#ifdef WILE_USES_GC
+#include <gc.h>
+#endif // WILE_USES_GC
+
+void* lisp_alloc(size_t nb, const char* loc)
+{
+    void* ret;
+
+    if (nb == 0) {
+	nb = 1;
+    }
+#ifdef WILE_USES_GC
+    ret = GC_malloc(nb);
+#else
+    ret = malloc(nb);
+#endif // WILE_USES_GC
+    if (ret == NULL) {
+	wile_exception("<alloc>", loc, "failed to allocate %zu bytes", nb);
+    }
+    return ret;
+}
+
+void* lisp_realloc(void* op, size_t nb, const char* loc)
+{
+    void* ret;
+
+    if (nb == 0) {
+	nb = 1;
+    }
+#ifdef WILE_USES_GC
+    ret = GC_realloc(op, nb);
+#else
+    ret = realloc(op, nb);
+#endif // WILE_USES_GC
+    if (ret == NULL) {
+	wile_exception("<alloc>", loc, "failed to reallocate %zu bytes", nb);
+    }
+    return ret;
+}
+
 char* lisp_strdup(const char* str)
 {
     char* ret = NULL;
     if (str) {
 	size_t l = 1 + strlen(str);
 	ret = LISP_ALLOC(char, l);
-	LISP_ASSERT(ret != NULL);
 	memcpy(ret, str, l);
     }
     return ret;
+}
+
+void lisp_free(void* ip)
+{
+#ifdef WILE_USES_GC
+    GC_free(ip);
+#else
+    free(ip);
+#endif // WILE_USES_GC
 }
 
 lptr new_lv(enum val_type vt)
@@ -57,7 +105,6 @@ lptr new_lv(enum val_type vt)
     lptr ret;
 
     ret = LISP_ALLOC(lval, 1);
-    LISP_ASSERT(ret != NULL);
     memset(ret, 0, sizeof(lval));
     ret->vt = vt;
 
@@ -147,7 +194,6 @@ lptr new_string_empty(size_t len)
 {
     lptr ret = new_lv(LV_STRING);
     ret->v.str = LISP_ALLOC(char, 1 + len);
-    LISP_ASSERT(ret->v.str != NULL);
     ret->v.str[len] = '\0';
     return ret;
 }
@@ -172,7 +218,6 @@ lptr new_vec(size_t capa)
 	capa = 1;
     }
     ret->v.vec.arr = LISP_ALLOC(lptr, capa);
-    LISP_ASSERT(ret->v.vec.arr != NULL);
     for (i = 0; i < capa; ++i) {
 	ret->v.vec.arr[i] = NULL;
     }
@@ -187,7 +232,6 @@ lptr new_bvec(size_t capa)
 	capa = 1;
     }
     ret->v.bvec.arr = LISP_ALLOC(unsigned char, capa);
-    LISP_ASSERT(ret->v.bvec.arr != NULL);
     memset(ret->v.bvec.arr, '\0', capa);
     return ret;
 }
@@ -211,7 +255,7 @@ lptr lst2vec(lptr lst)
     while (lst) {
 	ret->v.vec.arr[len++] = CAR(lst);
 	lt = CDR(lst);
-	LISP_FREE_LV(lst);
+	LISP_FREE(lst);
 	lst = lt;
     }
     return ret;
@@ -235,7 +279,7 @@ lptr lst2bvec(lptr lst)
     while (lst) {
 	ret->v.bvec.arr[len++] = (unsigned char) CAR(lst)->v.iv;
 	lt = CDR(lst);
-	LISP_FREE_LV(lst);
+	LISP_FREE(lst);
 	lst = lt;
     }
     return ret;

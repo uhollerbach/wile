@@ -419,9 +419,7 @@ unsigned int wile_parse(struct ulex_context* yy_context,
 
     yy_tsmax = yy_vsmax = 16;
     yy_ts = LISP_ALLOC(unsigned int, yy_tsmax);
-    LISP_ASSERT(yy_ts != NULL);
     yy_vs = LISP_ALLOC(YYSTYPE, yy_vsmax);
-    LISP_ASSERT(yy_vs != NULL);
     yy_tss = yy_vss = 0;
     yy_ts[yy_tss++] = yy_end_id;
     yy_ts[yy_tss++] = yy_start_id;
@@ -449,7 +447,7 @@ case 3: {
  np = CDR(stk);
 				CDR(stk) = CDR(np);
 				tail = CAR(np);
-				LISP_FREE_LV(np); 
+				LISP_FREE(np); 
 } break;
 case 4: {
  CADR(stk) = lst2vec(CADR(stk)); 

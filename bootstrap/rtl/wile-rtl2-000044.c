@@ -77,7 +77,6 @@ WILE_EX("string-create", "second input is not a valid character");
 }
 var_10.vt = LV_STRING;
 var_10.v.str = LISP_ALLOC(char, 1 + var_9.v.iv);
-LISP_ASSERT(var_10.v.str != NULL);
 memset(var_10.v.str, var_2[1].v.chr, var_9.v.iv);
 var_10.v.str[var_9.v.iv] = '\0';
 lval var_11;

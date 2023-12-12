@@ -1,6 +1,6 @@
-Last update: 2023-12-12 12:00 PST
+Last update: 2023-12-15 14:15 PST
 
-# `wile` - the extremely stable scheming genius compiler - version 1.0.3
+# `wile` - the extremely stable scheming genius compiler - version 1.0.4
 
 `wile` is a small scheme-to-c compiler which I'm writing; it's by no
 means complete, but it's capable enough that writing small to medium
@@ -19,17 +19,18 @@ itself; that's not tiny.)
 
 This release of it is still incomplete: batteries *not* included,
 some assembly required! This is alpha software (mainly because not
-implemented yet, less because bugs). See below for a roadmap.
+implemented yet, less because bugs)... but it's increasingly stable
+and capable. See below for a roadmap.
+
+Since Coverity offers free scans of open-source projects, I am
+starting to scan `wile`, I intend to make it as clean as I can. I have
+cleaned up most issues, there is still a moderately large number of
+instances of uninitialized `origin` variable; however, that does not
+play a role in the output of compilation, it just localizes errors
+better in error messages. So overall it is quite clean already.
 
 The name `wile` is, of course, the name of that extremely stable
 super-genius schemer, Wile E. Coyote. 'nuff said
-
-**Important**: I did find one significant heisenbug: I had a couple of
-low-level routines that were still using system `malloc` even when the
-garbage collector was active. That caused occasional crashes. I can't
-prove that anything got mis-compiled in the absence of crashes, but it
-seems safe to assume undefined behavior. Thus, if you are by chance using
-a version before `(0 10 1)`, you should upgrade.
 
 ## Table of contents
 

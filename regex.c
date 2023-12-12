@@ -369,6 +369,7 @@ static struct nfa_state* p_qstring(struct p_state* pstate)
 	} else if (cur == '\\') {
 	    GEN_ESC_CHAR();
 	    if (pstate->status == REGEX_ERR) {
+		nfa_state_free(nfa);
 		return(NULL);
 	    }
 	}
@@ -519,6 +520,7 @@ static struct nfa_state* p_base(struct p_state* pstate)
 					? UCHAR_MAX : CHAR_MAX));
 	gen_cclass(pstate, nfa->tr_cc);
 	if (pstate->status == REGEX_ERR) {
+	    nfa_state_free(nfa);
 	    return(NULL);
 	}
     } else if (next == '"') {		/* quoted string */
@@ -539,6 +541,7 @@ static struct nfa_state* p_closure(struct p_state* pstate)
 
     nfa = p_base(pstate);
     if (nfa == NULL || pstate->status == REGEX_ERR) {
+	nfa_state_free(nfa);
 	pstate->status = REGEX_ERR;
 	return(NULL);
     }
@@ -648,6 +651,7 @@ static struct nfa_state* p_regex(struct p_state* pstate)
 	} else if (next == END || next == RPAREN) {
 	    break;
 	} else {
+	    nfa_state_free(nfa);
 	    fprintf(stderr, "regex parse error: unexpected '%c'\n", next);
 	    pstate->status = REGEX_ERR;
 	    return(NULL);
@@ -696,6 +700,7 @@ struct nfa_state* regex_parse(const char* regex, struct regex_defs* rdefs,
     }
     next = examine(&pstate);
     if (next != END) {
+	nfa_state_free(nfa);
 	fprintf(stderr, "regex parse error: failed to reach end of regex!\n");
 	return(NULL);
     }
@@ -728,11 +733,9 @@ struct nfa_work* regex_wrap(struct nfa_state* nfa, unsigned int options)
     }
 
     wrapper = LISP_ALLOC(struct nfa_work, 1);
-    LISP_ASSERT(wrapper != NULL);
     wrapper->nfa = nfa;
     wrapper->n_states = nfa_gen_epsilon_closure(nfa);
     wrapper->states = LISP_ALLOC(struct nfa_state*, wrapper->n_states);
-    LISP_ASSERT(wrapper->states != NULL);
     wrapper->n_chars =
 	1 + ((options & REGEX_OPTION_8BIT) ? UCHAR_MAX : CHAR_MAX);
 
@@ -865,7 +868,6 @@ struct regex_defs* regex_defs_alloc()
     struct regex_defs* ret;
 
     ret = LISP_ALLOC(struct regex_defs, 1);
-    LISP_ASSERT(ret != NULL);
     ret->name = ret->regex = NULL;
     ret->next = NULL;
     return(ret);

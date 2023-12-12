@@ -78,7 +78,6 @@ lval wile_apply_function(lptr args, const char* loc)
 		i = wile_tc_min_args;
 	    }
 	    ap = LISP_ALLOC(lval, i);
-	    LISP_ASSERT(ap != NULL);
 	    for (i = 0; i < arity; ++i) {
 		ap[i] = CAR(args) ? *(CAR(args)) : LVI_NIL();
 		args = CDR(args);
@@ -101,7 +100,6 @@ lval wile_apply_function(lptr args, const char* loc)
 		i = wile_tc_min_args;
 	    }
 	    app = LISP_ALLOC(lval, i);
-	    LISP_ASSERT(app != NULL);
 	    app[0] = proc;
 	    app[1] = args ? *args : LVI_NIL();
 	    return wile_eval_apply_lambda(NULL, app, loc);

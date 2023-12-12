@@ -25,11 +25,9 @@ struct fsi_set* fsi_set_alloc(unsigned int ni)
     struct fsi_set* set;
 
     set = LISP_ALLOC(struct fsi_set, 1);
-    LISP_ASSERT(set != NULL);
     nb = 1 + ni/CHAR_BIT;
     set->n_ints = CHAR_BIT*nb;
     set->bits = LISP_ALLOC(unsigned char, nb);
-    LISP_ASSERT(set->bits != NULL);
     memset(set->bits, 0, nb);
     return(set);
 }
@@ -42,10 +40,8 @@ struct fsi_set* fsi_set_copy(struct fsi_set* set)
 
     if (set) {
 	copy = LISP_ALLOC(struct fsi_set, 1);
-	LISP_ASSERT(copy != NULL);
 	copy->n_ints = set->n_ints;
 	copy->bits = LISP_ALLOC(unsigned char, copy->n_ints/CHAR_BIT);
-	LISP_ASSERT(copy->bits != NULL);
 	memcpy(copy->bits, set->bits, copy->n_ints/CHAR_BIT);
 	return(copy);
     } else {

@@ -2117,7 +2117,6 @@
 	      "}"
 	      "@@.vt = LV_STRING;"
 	      "@@.v.str = LISP_ALLOC(char, 1 + @1.v.iv);"
-	      "LISP_ASSERT(@@.v.str != NULL);"
 	      "memset(@@.v.str, 'X', @1.v.iv);"
 	      "@@.v.str[@1.v.iv] = '\\0';"))
 	 2 (lambda (r a1 a2)
@@ -2130,7 +2129,6 @@
 	      "}"
 	      "@@.vt = LV_STRING;"
 	      "@@.v.str = LISP_ALLOC(char, 1 + @1.v.iv);"
-	      "LISP_ASSERT(@@.v.str != NULL);"
 	      "memset(@@.v.str, @2.v.chr, @1.v.iv);"
 	      "@@.v.str[@1.v.iv] = '\\0';")))
 
@@ -2196,7 +2194,6 @@
 	      "}"
 	      "@@.vt = LV_STRING;"
 	      "@@.v.str = LISP_ALLOC(char, 1 + @3.v.iv - @2.v.iv);"
-	      "LISP_ASSERT(@@.v.str != NULL);"
 	      "memcpy(@@.v.str, @1.v.str + @2.v.iv, @3.v.iv - @2.v.iv);"
 	      "@@.v.str[@3.v.iv - @2.v.iv] = '\\0';"
 	      "}")))
@@ -3318,9 +3315,6 @@
 	      "capa = @1.v.iv;"
 	      "@@.v.vec.capa = capa;"
 	      "@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));"
-	      "if (@@.v.vec.arr == NULL) {"
-	      "WILE_EX(\"vector-create\", \"memory allocation failed!\");"
-	      "}"
 	      "for (i = 0; i < capa; ++i) {"
 	      "@@.v.vec.arr[i] = NULL;"
 	      "}"
@@ -3333,9 +3327,6 @@
 	      "capa = @1.v.iv;"
 	      "@@.v.vec.capa = capa;"
 	      "@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));"
-	      "if (@@.v.vec.arr == NULL) {"
-	      "WILE_EX(\"vector-create\", \"memory allocation failed!\");"
-	      "}"
 	      "@@.v.vec.arr[0] = new_lv(LV_NIL);"
 	      "*(@@.v.vec.arr[0]) = @2;"
 	      "for (i = 1; i < capa; ++i) {"
@@ -3438,7 +3429,6 @@
 	      "capa = @1.v.iv;"
 	      "@@.v.bvec.capa = capa;"
 	      "@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));"
-	      "LISP_ASSERT(@@.v.bvec.arr != NULL);"
 	      "for (i = 0; i < capa; ++i) {"
 	      "@@.v.bvec.arr[i] = 0;"
 	      "}"
@@ -3451,7 +3441,6 @@
 	      "capa = @1.v.iv;"
 	      "@@.v.bvec.capa = capa;"
 	      "@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));"
-	      "LISP_ASSERT(@@.v.bvec.arr != NULL);"
 	      "if (@2.vt == LV_CHAR) {"
 	      "@@.v.bvec.arr[0] = @2.v.chr;"
 	      "} else if (@2.vt == LV_INT && @2.v.iv >= 0 && @2.v.iv < 256) {"
@@ -3539,7 +3528,6 @@
 	    "}"
 	    "@@.vt = LV_STRING;"
 	    "@@.v.str = LISP_ALLOC(char, 1 + @1.v.bvec.capa);"
-	    "LISP_ASSERT(@@.v.str != NULL);"
 	    "memcpy(@@.v.str, @1.v.bvec.arr, @1.v.bvec.capa);"
 	    "@@.v.str[@1.v.bvec.capa] = 0;")))
 
@@ -3829,9 +3817,6 @@
 	    "if ((@1.vt == LV_PAIR || @1.vt == LV_NIL) && @2.vt == LV_INT &&(@3.vt == LV_PAIR || @3.vt == LV_NIL) &&(@4.vt == LV_PAIR || @4.vt == LV_NIL) && @5.vt == LV_BOOL) {"
 	    "@@.vt = LV_ILAMBDA;"
 	    "@@.v.ilambda = LISP_ALLOC(lisp_ifunc_t, 1);"
-	    "if (@@.v.ilambda == NULL) {"
-	    "WILE_EX(\"make-interpreted-procedure\", \"memory allocation failed!\");"
-	    "}"
 	    "@@.v.ilambda->args = @1;"
 	    "@@.v.ilambda->arity = @2.v.iv;"
 	    "@@.v.ilambda->body = @3;"
@@ -3962,7 +3947,6 @@
 	    "@@.vt = LV_BVECTOR;"
 	    "@@.v.bvec.capa = @2.v.iv;"
 	    "@@.v.bvec.arr = LISP_ALLOC(unsigned char, @2.v.iv);"
-	    "LISP_ASSERT(@@.v.bvec.arr != NULL);"
 	    "@@.v.bvec.capa = fread(@@.v.bvec.arr, 1, @2.v.iv, @1.v.fp);")))
 
    (list 'write-bytes

@@ -12,29 +12,15 @@
 #define LISP_STRING(x)		_STRINGIFY(x)
 #define LISP_WHENCE		(__FILE__ ":" LISP_STRING(__LINE__))
 
-#ifdef WILE_USES_GC
-
-#include <gc.h>
-
-#define LISP_ALLOC(t,c)		((t*) GC_malloc((c)*sizeof(t)))
-#define LISP_REALLOC(t,o,c)	((t*) GC_realloc(o, (c)*sizeof(t)))
-#define LISP_FREE(p)		GC_free(p)
-#define LISP_FREE_STR(s)	GC_free(s)
-#define LISP_FREE_LV(v)		/**/
+#define LISP_ALLOC(t,c)		((t*) lisp_alloc((c)*sizeof(t), LISP_WHENCE))
+#define LISP_REALLOC(t,o,c)	((t*) lisp_realloc(o, (c)*sizeof(t), LISP_WHENCE))
+#define LISP_FREE(p)		lisp_free(p)
 #define LISP_STRDUP(s)		lisp_strdup(s)
 
-#else
-
-#define LISP_ALLOC(t,c)		((t*) malloc((c)*sizeof(t)))
-#define LISP_REALLOC(t,o,c)	((t*) realloc(o, (c)*sizeof(t)))
-#define LISP_FREE(p)		free(p)
-#define LISP_FREE_STR(s)	free(s)
-#define LISP_FREE_LV(v)		/**/
-#define LISP_STRDUP(s)		lisp_strdup(s)
-
-#endif // WILE_USES_GC
-
+void* lisp_alloc(size_t nb, const char* loc)	WILE_ATTR((malloc));
+void* lisp_realloc(void* op, size_t nb, const char* loc);
 char* lisp_strdup(const char* str)		WILE_ATTR((malloc));
+void lisp_free(void* ip);
 
 lptr new_lv(enum val_type vt)			WILE_ATTR((malloc));
 lptr new_pair(lptr car, lptr cdr)		WILE_ATTR((malloc));

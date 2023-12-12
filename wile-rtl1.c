@@ -14,6 +14,10 @@ extern lisp_escape_t cachalot;
 #include <sys/time.h>
 #include <sys/resource.h>
 
+#ifdef WILE_USES_GC
+#include <gc.h>
+#endif // WILE_USES_GC
+
 lisp_escape_t cachalot;
 
 // these two variables are used to implement continuations; see
@@ -410,6 +414,9 @@ lval wile_run_pipe_command(lval cmd, const char* rw, const char* loc)
 
 // --8><----8><----8><--
 
+#include <sys/types.h>
+#include <sys/stat.h>
+
 lval wile_temp_file(lptr*, lptr args, const char* loc)
 {
     char *template, *tp;
@@ -423,7 +430,6 @@ lval wile_temp_file(lptr*, lptr args, const char* loc)
     }
     tlen = strlen(args->v.str);
     template = LISP_ALLOC(char, tlen + 8);
-    LISP_ASSERT(template != NULL);
     strcpy(template, args->v.str);
     tp = template + tlen;
     nt = (tlen < 6) ? tlen : 6;
@@ -437,15 +443,18 @@ lval wile_temp_file(lptr*, lptr args, const char* loc)
 	*tp++ = 'X';
     }
     *tp++ = '\0';
+    mode_t mask = umask(0);
+    umask(077);
     nt = mkstemp(template);
+    umask(mask);
     if (nt < 0) {
-	LISP_FREE_STR(template);
+	LISP_FREE(template);
 	wile_exception("open-temporary-file", loc,
 		       "could not create temporary file");
     }
     lval vs[2];
     vs[1] = LVI_STRING(template);
-    LISP_FREE_STR(template);
+    LISP_FREE(template);
     fp = fdopen(nt, "w+");
     if (fp == NULL) {
 	wile_exception("open-temporary-file", loc,
@@ -1058,7 +1067,6 @@ lval wile_apply_function(lptr args, const char* loc)
 		i = wile_tc_min_args;
 	    }
 	    ap = LISP_ALLOC(lval, i);
-	    LISP_ASSERT(ap != NULL);
 	    for (i = 0; i < arity; ++i) {
 		ap[i] = CAR(args) ? *(CAR(args)) : LVI_NIL();
 		args = CDR(args);
@@ -1081,7 +1089,6 @@ lval wile_apply_function(lptr args, const char* loc)
 		i = wile_tc_min_args;
 	    }
 	    app = LISP_ALLOC(lval, i);
-	    LISP_ASSERT(app != NULL);
 	    app[0] = proc;
 	    app[1] = args ? *args : LVI_NIL();
 	    return wile_eval_apply_lambda(NULL, app, loc);
@@ -1161,7 +1168,6 @@ lval wile_char2string(lptr*, lptr args, const char* loc)
 
     lv.vt = LV_STRING;
     lv.v.str = LISP_ALLOC(char, len + 1);
-    LISP_ASSERT(lv.v.str != NULL);
 
     for (i = 0; i < len; ++i) {
 	LISP_ASSERT(args != NULL && args->vt == LV_PAIR);
@@ -1222,14 +1228,16 @@ lval wile_listen_port(lptr*, lptr args, const char* loc)
 	my_addr.sin_port = htons(args[0].v.iv);
 
 	if (bind(sd, (struct sockaddr*) &my_addr, sizeof(my_addr)) < 0) {
+	    close(sd);
 	    return LVI_BOOL(false);
 	} else {
 	    if (listen(sd, 16) < 0) {
+		close(sd);
 		return LVI_BOOL(false);
 	    } else {
 		fp = fdopen(sd, "rb+");
 		if (fp == NULL) {
-		    // TODO: close sd? I think so
+		    close(sd);
 		    return LVI_BOOL(false);
 		} else {
 		    setvbuf(fp, NULL, _IONBF, 0);

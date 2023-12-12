@@ -61,7 +61,7 @@ datum	: atomic
 	  datum* ( '.' datum %{ np = CDR(stk);
 				CDR(stk) = CDR(np);
 				tail = CAR(np);
-				LISP_FREE_LV(np); %} )?
+				LISP_FREE(np); %} )?
 	  ')' e-list
 	| VECTOR b-list datum* ')' e-list %{ CADR(stk) = lst2vec(CADR(stk)); %}
 	| BVECTOR b-list datum* ')' e-list

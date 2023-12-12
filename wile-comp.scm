@@ -433,7 +433,6 @@
 		   "} else {"
 		   "int i;"
 		   "lval* sas = LISP_ALLOC(lval, argc-1);"
-		   "LISP_ASSERT(sas != NULL);"
 		   "for (i = 1; i < argc; ++i) {"
 		   "sas[i-1] = LVI_STRING(argv[i]);"
 		   "}"

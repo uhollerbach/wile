@@ -74,7 +74,6 @@ unsigned int ulex_generic(const struct ulex_scanner_spec* scan_spec,
 		if (2*scan_ctx->buf_data > scan_ctx->buf_size) {
 		    scan_ctx->buf_size *= 2;
 		    match_txt = LISP_ALLOC(unsigned char, scan_ctx->buf_size);
-		    LISP_ASSERT(match_txt != NULL);
 		    memmove(match_txt, scan_ctx->text, scan_ctx->buf_data);
 		    LISP_FREE(scan_ctx->buf);
 		    scan_ctx->buf = match_txt;
@@ -203,7 +202,6 @@ struct ulex_context* ulex_init(enum ulex_input_source stype, void* sptr)
     struct ulex_context* context;
 
     context = LISP_ALLOC(struct ulex_context, 1);
-    LISP_ASSERT(context != NULL);
 
     /* turn on "begin" context initially */
     context->is_begin = 1;
@@ -239,7 +237,6 @@ struct ulex_context* ulex_init(enum ulex_input_source stype, void* sptr)
 	    context->input_src = sptr ? (FILE*) sptr : stdin;
 	}
 	context->buf = LISP_ALLOC(unsigned char, BUFFER_SIZE);
-	LISP_ASSERT(context->buf != NULL);
 	context->buf_size = BUFFER_SIZE;
 	context->buf_data =
 	    fread(context->buf, 1, context->buf_size, context->input_src);

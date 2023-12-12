@@ -44,7 +44,6 @@ lval wile_char2string(lptr*, lptr args, const char* loc)
 
     lv.vt = LV_STRING;
     lv.v.str = LISP_ALLOC(char, len + 1);
-    LISP_ASSERT(lv.v.str != NULL);
 
     for (i = 0; i < len; ++i) {
 	LISP_ASSERT(args != NULL && args->vt == LV_PAIR);

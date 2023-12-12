@@ -40,7 +40,6 @@ var_8.vt = LV_BVECTOR;
 capa = var_4.v.iv;
 var_8.v.bvec.capa = capa;
 var_8.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));
-LISP_ASSERT(var_8.v.bvec.arr != NULL);
 for (i = 0; i < capa; ++i) {
 var_8.v.bvec.arr[i] = 0;
 }

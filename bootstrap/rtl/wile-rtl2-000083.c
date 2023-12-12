@@ -1338,9 +1338,6 @@ var_17.vt = LV_VECTOR;
 capa = var_16.v.iv;
 var_17.v.vec.capa = capa;
 var_17.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
-if (var_17.v.vec.arr == NULL) {
-WILE_EX("vector-create", "memory allocation failed!");
-}
 for (i = 0; i < capa; ++i) {
 var_17.v.vec.arr[i] = NULL;
 }
@@ -1764,7 +1761,6 @@ var_212.vt = LV_BVECTOR;
 capa = var_210[0].v.iv;
 var_212.v.bvec.capa = capa;
 var_212.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));
-LISP_ASSERT(var_212.v.bvec.arr != NULL);
 for (i = 0; i < capa; ++i) {
 var_212.v.bvec.arr[i] = 0;
 }
@@ -1783,7 +1779,6 @@ var_219.vt = LV_BVECTOR;
 capa = var_217[0].v.iv;
 var_219.v.bvec.capa = capa;
 var_219.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));
-LISP_ASSERT(var_219.v.bvec.arr != NULL);
 if (var_217[1].vt == LV_CHAR) {
 var_219.v.bvec.arr[0] = var_217[1].v.chr;
 } else if (var_217[1].vt == LV_INT && var_217[1].v.iv >= 0 && var_217[1].v.iv < 256) {
@@ -1906,7 +1901,6 @@ WILE_EX("string-create", "input is not a non-negative integer");
 }
 var_247.vt = LV_STRING;
 var_247.v.str = LISP_ALLOC(char, 1 + var_245[0].v.iv);
-LISP_ASSERT(var_247.v.str != NULL);
 memset(var_247.v.str, 'X', var_245[0].v.iv);
 var_247.v.str[var_245[0].v.iv] = '\0';
 return var_247;
@@ -1925,7 +1919,6 @@ WILE_EX("string-create", "second input is not a valid character");
 }
 var_254.vt = LV_STRING;
 var_254.v.str = LISP_ALLOC(char, 1 + var_252[0].v.iv);
-LISP_ASSERT(var_254.v.str != NULL);
 memset(var_254.v.str, var_252[1].v.chr, var_252[0].v.iv);
 var_254.v.str[var_252[0].v.iv] = '\0';
 return var_254;
@@ -2011,9 +2004,6 @@ var_273.vt = LV_VECTOR;
 capa = var_271[0].v.iv;
 var_273.v.vec.capa = capa;
 var_273.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
-if (var_273.v.vec.arr == NULL) {
-WILE_EX("vector-create", "memory allocation failed!");
-}
 for (i = 0; i < capa; ++i) {
 var_273.v.vec.arr[i] = NULL;
 }
@@ -2032,9 +2022,6 @@ var_280.vt = LV_VECTOR;
 capa = var_278[0].v.iv;
 var_280.v.vec.capa = capa;
 var_280.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
-if (var_280.v.vec.arr == NULL) {
-WILE_EX("vector-create", "memory allocation failed!");
-}
 var_280.v.vec.arr[0] = new_lv(LV_NIL);
 *(var_280.v.vec.arr[0]) = var_278[1];
 for (i = 1; i < capa; ++i) {
@@ -2542,7 +2529,6 @@ WILE_EX("string-copy", "end index is out of range");
 }
 var_464.vt = LV_STRING;
 var_464.v.str = LISP_ALLOC(char, 1 + var_462[2].v.iv - var_462[1].v.iv);
-LISP_ASSERT(var_464.v.str != NULL);
 memcpy(var_464.v.str, var_462[0].v.str + var_462[1].v.iv, var_462[2].v.iv - var_462[1].v.iv);
 var_464.v.str[var_462[2].v.iv - var_462[1].v.iv] = '\0';
 }
@@ -3773,7 +3759,6 @@ WILE_EX("bytevector->string", "expects one bytevector argument");
 }
 var_880.vt = LV_STRING;
 var_880.v.str = LISP_ALLOC(char, 1 + var_878[0].v.bvec.capa);
-LISP_ASSERT(var_880.v.str != NULL);
 memcpy(var_880.v.str, var_878[0].v.bvec.arr, var_878[0].v.bvec.capa);
 var_880.v.str[var_878[0].v.bvec.capa] = 0;
 return var_880;
@@ -3804,7 +3789,6 @@ var_902.vt = LV_BVECTOR;
 capa = var_900[0].v.iv;
 var_902.v.bvec.capa = capa;
 var_902.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));
-LISP_ASSERT(var_902.v.bvec.arr != NULL);
 for (i = 0; i < capa; ++i) {
 var_902.v.bvec.arr[i] = 0;
 }
@@ -3823,7 +3807,6 @@ var_909.vt = LV_BVECTOR;
 capa = var_907[0].v.iv;
 var_909.v.bvec.capa = capa;
 var_909.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));
-LISP_ASSERT(var_909.v.bvec.arr != NULL);
 if (var_907[1].vt == LV_CHAR) {
 var_909.v.bvec.arr[0] = var_907[1].v.chr;
 } else if (var_907[1].vt == LV_INT && var_907[1].v.iv >= 0 && var_907[1].v.iv < 256) {
@@ -9275,7 +9258,6 @@ WILE_EX("read-bytes", "expects a file port and number of bytes to read");
 var_3213.vt = LV_BVECTOR;
 var_3213.v.bvec.capa = var_3211[1].v.iv;
 var_3213.v.bvec.arr = LISP_ALLOC(unsigned char, var_3211[1].v.iv);
-LISP_ASSERT(var_3213.v.bvec.arr != NULL);
 var_3213.v.bvec.capa = fread(var_3213.v.bvec.arr, 1, var_3211[1].v.iv, var_3211[0].v.fp);
 return var_3213;
 }
@@ -10516,7 +10498,6 @@ WILE_EX("string-copy", "end index is out of range");
 }
 var_3793.vt = LV_STRING;
 var_3793.v.str = LISP_ALLOC(char, 1 + var_3791[2].v.iv - var_3791[1].v.iv);
-LISP_ASSERT(var_3793.v.str != NULL);
 memcpy(var_3793.v.str, var_3791[0].v.str + var_3791[1].v.iv, var_3791[2].v.iv - var_3791[1].v.iv);
 var_3793.v.str[var_3791[2].v.iv - var_3791[1].v.iv] = '\0';
 }
@@ -10616,7 +10597,6 @@ WILE_EX("string-create", "input is not a non-negative integer");
 }
 var_3812.vt = LV_STRING;
 var_3812.v.str = LISP_ALLOC(char, 1 + var_3810[0].v.iv);
-LISP_ASSERT(var_3812.v.str != NULL);
 memset(var_3812.v.str, 'X', var_3810[0].v.iv);
 var_3812.v.str[var_3810[0].v.iv] = '\0';
 return var_3812;
@@ -10635,7 +10615,6 @@ WILE_EX("string-create", "second input is not a valid character");
 }
 var_3819.vt = LV_STRING;
 var_3819.v.str = LISP_ALLOC(char, 1 + var_3817[0].v.iv);
-LISP_ASSERT(var_3819.v.str != NULL);
 memset(var_3819.v.str, var_3817[1].v.chr, var_3817[0].v.iv);
 var_3819.v.str[var_3817[0].v.iv] = '\0';
 return var_3819;
@@ -11400,9 +11379,6 @@ var_4167.vt = LV_VECTOR;
 capa = var_4165[0].v.iv;
 var_4167.v.vec.capa = capa;
 var_4167.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
-if (var_4167.v.vec.arr == NULL) {
-WILE_EX("vector-create", "memory allocation failed!");
-}
 for (i = 0; i < capa; ++i) {
 var_4167.v.vec.arr[i] = NULL;
 }
@@ -11421,9 +11397,6 @@ var_4174.vt = LV_VECTOR;
 capa = var_4172[0].v.iv;
 var_4174.v.vec.capa = capa;
 var_4174.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
-if (var_4174.v.vec.arr == NULL) {
-WILE_EX("vector-create", "memory allocation failed!");
-}
 var_4174.v.vec.arr[0] = new_lv(LV_NIL);
 *(var_4174.v.vec.arr[0]) = var_4172[1];
 for (i = 1; i < capa; ++i) {
@@ -20807,9 +20780,6 @@ lval var_4441;
 if ((var_4437.vt == LV_PAIR || var_4437.vt == LV_NIL) && var_4435.vt == LV_INT &&(var_4429[2].vt == LV_PAIR || var_4429[2].vt == LV_NIL) &&(var_4429[3].vt == LV_PAIR || var_4429[3].vt == LV_NIL) && var_4440.vt == LV_BOOL) {
 var_4441.vt = LV_ILAMBDA;
 var_4441.v.ilambda = LISP_ALLOC(lisp_ifunc_t, 1);
-if (var_4441.v.ilambda == NULL) {
-WILE_EX("make-interpreted-procedure", "memory allocation failed!");
-}
 var_4441.v.ilambda->args = var_4437;
 var_4441.v.ilambda->arity = var_4435.v.iv;
 var_4441.v.ilambda->body = var_4429[2];

@@ -29,7 +29,6 @@ static void wk_zero(struct nfa_state* ns)
 struct nfa_state* nfa_state_alloc(void)
 {
     struct nfa_state* ret = LISP_ALLOC(struct nfa_state, 1);
-    LISP_ASSERT(ret != NULL);
     wk_zero(ret);
     return(ret);
 }

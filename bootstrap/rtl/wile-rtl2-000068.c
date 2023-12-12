@@ -31,9 +31,6 @@ var_5.vt = LV_VECTOR;
 capa = var_2[0].v.iv;
 var_5.v.vec.capa = capa;
 var_5.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
-if (var_5.v.vec.arr == NULL) {
-WILE_EX("vector-create", "memory allocation failed!");
-}
 for (i = 0; i < capa; ++i) {
 var_5.v.vec.arr[i] = NULL;
 }

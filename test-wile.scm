@@ -1804,13 +1804,13 @@
 (test "(c b)" (doco '(set-car! (cons 'a (cons 'b ())) 'c)))
 (test "(a . c)" (doco '(set-cdr! (cons 'a (cons 'b ())) 'c)))
 
-(test "caught exception from wile-out.c:53\n    'car' input is not a pair!"
+(test "caught exception from wile-out.c:52\n    'car' input is not a pair!"
       (doco '(car 14)))
-(test "caught exception from wile-out.c:53\n    'cdr' input is not a pair!"
+(test "caught exception from wile-out.c:52\n    'cdr' input is not a pair!"
       (doco '(cdr 14)))
-(test "caught exception from wile-out.c:56\n    'set-car!' input is not a pair!"
+(test "caught exception from wile-out.c:55\n    'set-car!' input is not a pair!"
       (doco '(set-car! 14 15)))
-(test "caught exception from wile-out.c:56\n    'set-cdr!' input is not a pair!"
+(test "caught exception from wile-out.c:55\n    'set-cdr!' input is not a pair!"
       (doco '(set-cdr! 14 15)))
 
 (test "#f" (doco '(port? 17)))
@@ -2278,7 +2278,7 @@
 		    (vector-fill! vec 13)
 		    (vector-ref vec 0))))
 
-(test "caught exception from wile-out.c:89\n    'vector-ref' got bad index value"
+(test "caught exception from wile-out.c:85\n    'vector-ref' got bad index value"
       (doco '(let ((vec (vector-create 5)))
 	       (vector-fill! vec 13)
 	       (vector-ref vec 'foo))))
@@ -2482,7 +2482,7 @@
 (test "-14" (doco '(integer -143/10)))
 (test "14" (doco '(integer 14.37)))
 (test "-14" (doco '(integer -14.37)))
-(test "caught exception from wile-out.c:59\n    'integer' expects one real-valued argument"
+(test "caught exception from wile-out.c:58\n    'integer' expects one real-valued argument"
       (doco '(integer 'chezbro)))
 
 (test "1.400000000000000e+01" (doco '(float 14)))
@@ -2491,7 +2491,7 @@
 (test "-1.430000000000000e+01" (doco '(float -143/10)))
 (test "1.437000000000000e+01" (doco '(float 14.37)))
 (test "-1.437000000000000e+01" (doco '(float -14.37)))
-(test "caught exception from wile-out.c:59\n    'float' expects a real-valued input"
+(test "caught exception from wile-out.c:58\n    'float' expects a real-valued input"
       (doco '(float 'chezbro)))
 
 (test "65536" (doco '(expt 2 16)))
@@ -2509,11 +2509,11 @@
 
 (test "\"meh\"" (doco '(string-copy "meh")))
 (test "\"ooh\"" (doco '(string-copy "fooh" 1)))
-(test "caught exception from wile-out.c:60\n    'string-copy' start index is out of range"
+(test "caught exception from wile-out.c:59\n    'string-copy' start index is out of range"
       (doco '(string-copy "fooh" 13)))
 
 (test "\"oobi\"" (doco '(string-copy "fooboobish's son's sea" 4 8)))
-(test "caught exception from wile-out.c:65\n    'string-copy' end index is out of range"
+(test "caught exception from wile-out.c:64\n    'string-copy' end index is out of range"
       (doco '(string-copy "fooboobish's son's sea" 8 4)))
 
 (test "(1 2 3 4 5) (5 4 3 2 1)\n#t"
@@ -2809,7 +2809,7 @@
 
 (test "#u8(#x61 #x62 #x63 #x64 #x65)" (doco '(bytevector #\a #\b #\c #\d #\e)))
 (test "#u8()" (doco '(bytevector)))
-(test "caught exception from bld-rtl-dir/wile-rtl2-000018.c:214\n    list->bytevector got a bad value"
+(test "caught exception from bld-rtl-dir/wile-rtl2-000018.c:213\n    list->bytevector got a bad value"
       (doco '(bytevector 311)))
 
 (test "2" (doco '(string-find-first-char "breep" #\e)))

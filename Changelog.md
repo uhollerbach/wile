@@ -1,6 +1,11 @@
-Last update: 2023-12-12 12:00 PST
+Last update: 2023-12-15 14:15 PST
 
 # Changelog for `wile`
+
+## Current version `wile` "1.0.4" 2023-12-15 14:15 PST
+
+- scan wile build with coverity (thank you Coverity!),
+  clean up a bunch of flagged issues
 
 ## Current version `wile` "1.0.3" 2023-12-12 12:00 PST
 

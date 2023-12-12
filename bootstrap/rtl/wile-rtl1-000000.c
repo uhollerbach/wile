@@ -13,6 +13,10 @@ extern lisp_escape_t cachalot;
 #include <sys/time.h>
 #include <sys/resource.h>
 
+#ifdef WILE_USES_GC
+#include <gc.h>
+#endif // WILE_USES_GC
+
 lisp_escape_t cachalot;
 
 // these two variables are used to implement continuations; see
