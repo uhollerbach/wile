@@ -75,6 +75,7 @@ if (var_4.vt != LV_INT || var_4.v.iv < 0) {
 WILE_EX("string-create", "input is not a non-negative integer");
 }
 var_21.vt = LV_STRING;
+var_21.origin = var_4.origin;
 var_21.v.str = LISP_ALLOC(char, 1 + var_4.v.iv);
 memset(var_21.v.str, 'X', var_4.v.iv);
 var_21.v.str[var_4.v.iv] = '\0';

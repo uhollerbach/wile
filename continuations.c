@@ -161,6 +161,7 @@ static lval save_context(int safety)
 
     lval ret;
     ret.vt = LV_CONT;
+    ret.origin = 0;
     ret.v.cont = LISP_ALLOC(lisp_cont_t, 1);
     ret.v.cont->st_size = pd;
     ret.v.cont->st_save = LISP_ALLOC(unsigned char, ret.v.cont->st_size);
@@ -237,7 +238,7 @@ lval wile_call_cc(lptr*, lptr args, const char* loc)
     }
 
     cc = save_context(1);
-    cc.origin = args->origin;
+    cc.origin = args[0].origin;
     cont_in_flight = cc.v.cont;
     if (setjmp(cc.v.cont->registers) == 0) {
 	// initial capture of the continuation

@@ -66,6 +66,8 @@ lval wile_sql_open(const char* fname, int mode, const char* loc)
 
     lval ret;
     ret.vt = LV_SQLITE_PORT;
+    // TODO: decrypt loc and use that for the origin story
+    ret.origin = 0;
     if (sqlite3_open_v2(fname, &(ret.v.sqlite_conn),
 			flags, NULL) != SQLITE_OK) {
 	// harmless if the handle is NULL
@@ -125,6 +127,7 @@ lval wile_sql_stmt_prep(lptr*, lptr args, const char* loc)
 		       "expects one sqlite-port and one string argument");
     }
     res.vt = LV_SQLITE_STMT;
+    res.origin = args[0].origin;
     res.v.sqlite_stmt = NULL;
     if (sqlite3_prepare_v2(args[0].v.sqlite_conn, args[1].v.str, -1,
 			   &(res.v.sqlite_stmt), &stail) != SQLITE_OK) {

@@ -357,16 +357,17 @@ void wile_exception(const char* func_name, const char* loc,
 
 // --8><----8><----8><--
 
-lval wile_get_gensym(void)
+lval wile_get_gensym(lisp_loc_t origin)
 {
     static unsigned long count = 0;
     char buf[64];
-    lval res;
+    lval ret;
 
     snprintf(buf, sizeof(buf), " symbol.%lu", ++count);
-    res.vt = LV_SYMBOL;
-    res.v.str = LISP_STRDUP(buf);
-    return res;
+    ret.vt = LV_SYMBOL;
+    ret.origin = origin;
+    ret.v.str = LISP_STRDUP(buf);
+    return ret;
 }
 
 // --8><----8><----8><--
@@ -1941,32 +1942,33 @@ lval wile_cfft(lptr*, lptr args, const char* loc)
 
 #define BLOCK_SIZE	8192
 
-lval wile_sha256_wrap(lptr*, lptr args, const char* loc)
+lval wile_sha256_wrap(bool is_256, lval input)
 {
-    int i;
+    int i, lim;
     uint8_t data[BLOCK_SIZE];
     unsigned char digest[32];
     char hdig[65];
     SHA256_info sha_info;
 
-    sha256_init(&sha_info);
-    if (args[0].vt == LV_STRING) {
-	sha256_update(&sha_info, (uint8_t*) args[0].v.str,
-		      strlen(args[0].v.str));
-    } else if (args[0].vt == LV_FILE_PORT ||
-	       args[0].vt == LV_PIPE_PORT ||
-	       args[0].vt == LV_SOCK_PORT) {
-	while ((i = fread(data, 1, BLOCK_SIZE, args[0].v.fp)) > 0) {
+    sha256_init(&sha_info, is_256);
+    if (input.vt == LV_STRING) {
+	sha256_update(&sha_info, (uint8_t*) input.v.str, strlen(input.v.str));
+    } else if (input.vt == LV_FILE_PORT ||
+	       input.vt == LV_PIPE_PORT ||
+	       input.vt == LV_SOCK_PORT) {
+	while ((i = fread(data, 1, BLOCK_SIZE, input.v.fp)) > 0) {
 	    sha256_update(&sha_info, (uint8_t*) data, i);
 	}
     } else {
-	wile_exception("sha-256", loc, "expects a string or port argument");
+	wile_exception(is_256 ? "sha-256" : "sha-224",
+		       LISP_WHENCE, "expects a string or port argument");
     }
     sha256_final(digest, &sha_info);
-    for (i = 0; i < 32; ++i) {
+    lim = is_256 ? 32 : 28;
+    for (i = 0; i < lim; ++i) {
 	snprintf(hdig + 2*i, 3, "%02x", digest[i]);
     }
-    hdig[64] = '\0';	// should be taken care of by snprintf, but make sure
+    hdig[2*lim] = '\0';	// should be taken care of by snprintf, but make sure
 
     return LVI_STRING(hdig);
 }
@@ -1977,13 +1979,15 @@ lval wile_sha256_wrap(lptr*, lptr args, const char* loc)
 
 #include "sha256.h"
 
-lval wile_sha256_init(lptr*, lptr, const char*)
+lval wile_sha256_init(bool is_256)
 {
     lval ret;
 
     ret.vt = LV_SHA256_DATA;
+    // TODO: get a better origin than this - decode loc?
+    ret.origin = 0;
     ret.v.sha256_info = LISP_ALLOC(SHA256_info, 1);
-    sha256_init(ret.v.sha256_info);
+    sha256_init(ret.v.sha256_info, is_256);
 
     return ret;
 }
@@ -1992,7 +1996,7 @@ lval wile_sha256_update(lptr*, lptr args, const char* loc)
 {
     if (args[0].vt != LV_SHA256_DATA ||
 	(args[1].vt != LV_STRING && args[1].vt != LV_BVECTOR)) {
-	wile_exception("sha-256-update", loc,
+	wile_exception("sha-2XX-update", loc,
 		       "expects a SHA-256 data structure and a string or bytevector");
     }
     if (args[1].vt == LV_STRING) {
@@ -2008,20 +2012,20 @@ lval wile_sha256_update(lptr*, lptr args, const char* loc)
 
 lval wile_sha256_finish(lptr*, lptr args, const char* loc)
 {
-    int i;
+    int i, lim;
     unsigned char digest[32];
     char hdig[65];
 
     if (args[0].vt != LV_SHA256_DATA) {
-	wile_exception("sha-256-finish", loc,
+	wile_exception("sha-2XX-finish", loc,
 		       "expects a SHA-256 data structure");
     }
     sha256_final(digest, args[0].v.sha256_info);
-    for (i = 0; i < 32; ++i) {
+    lim = args[0].v.sha256_info->is_256 ? 32 : 28;
+    for (i = 0; i < lim; ++i) {
 	snprintf(hdig + 2*i, 3, "%02x", digest[i]);
     }
-    hdig[64] = '\0';	// should be taken care of by snprintf, but make sure
-
+    hdig[2*lim] = '\0';	// should be taken care of by snprintf, but make sure
     return LVI_STRING(hdig);
 }
 

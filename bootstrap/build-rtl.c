@@ -331,8 +331,8 @@ if (var_87.v.iv < var_92.v.iv || (size_t) var_87.v.iv >= len) {
 WILE_EX("string-copy", "end index is out of range");
 }
 var_93.vt = LV_STRING;
+var_93.origin = var_85[0].origin;
 var_93.v.str = LISP_ALLOC(char, 1 + var_87.v.iv - var_92.v.iv);
-LISP_ASSERT(var_93.v.str != NULL);
 memcpy(var_93.v.str, var_85[0].v.str + var_92.v.iv, var_87.v.iv - var_92.v.iv);
 var_93.v.str[var_87.v.iv - var_92.v.iv] = '\0';
 }
@@ -713,8 +713,6 @@ var_264 = LVI_STRING(".scm");
 lval var_265;
 var_265 = LVI_BOOL(strcmp(V_CLOS(var_203,2).v.str, var_264.v.str) == 0);
 if (LV_IS_FALSE(var_265)) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_267;
 var_267 = LVI_STRING("wile -c ");
@@ -914,8 +912,8 @@ if (var_153.v.iv < var_158.v.iv || (size_t) var_153.v.iv >= len) {
 WILE_EX("string-copy", "end index is out of range");
 }
 var_159.vt = LV_STRING;
+var_159.origin = var_144[0].origin;
 var_159.v.str = LISP_ALLOC(char, 1 + var_153.v.iv - var_158.v.iv);
-LISP_ASSERT(var_159.v.str != NULL);
 memcpy(var_159.v.str, var_144[0].v.str + var_158.v.iv, var_153.v.iv - var_158.v.iv);
 var_159.v.str[var_153.v.iv - var_158.v.iv] = '\0';
 }
@@ -995,8 +993,6 @@ var_178[0] = var_146;
 lval var_180;
 var_180 = LVI_BOOL(var_172.vt == LV_NIL);
 if (LV_IS_FALSE(var_180)) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_182;
 var_182 = LVI_STRING("there is no split directive!\n");
@@ -1055,8 +1051,6 @@ lval var_199;
 var_199 = LVI_INT(1);
 exit(var_199.v.iv);
 } else {
-(void)
- LVI_BOOL(false);
 }
 MK_CLOS(var_203,6);
 lptr var_308 = new_lv(VT_UNINIT);
@@ -1149,8 +1143,6 @@ var_378[0] = wile_gen_list(5, var_380, NULL);
 (void)
  fn_1(NULL, var_378, "build-rtl.scm:116");
 } else {
-(void)
- LVI_BOOL(false);
 }
 lval var_382;
 var_382 = LVI_BOOL(true);
@@ -1330,7 +1322,6 @@ var_argv = LVI_NIL();
 } else {
 int i;
 lval* sas = LISP_ALLOC(lval, argc-1);
-LISP_ASSERT(sas != NULL);
 for (i = 1; i < argc; ++i) {
 sas[i-1] = LVI_STRING(argv[i]);
 }
@@ -1392,8 +1383,6 @@ var_331 = var_336;
 if (LV_IS_FALSE(var_331)) { break; }
 } while (0);
 if (LV_IS_FALSE(var_331)) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_338;
 var_338 = LVI_BOOL(true);
@@ -1410,8 +1399,6 @@ var_argv = var_339;
 lval var_341;
 var_341 = LVI_BOOL(var_argv.vt == LV_NIL);
 if (LV_IS_FALSE(var_341)) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_343;
 var_343 = LVI_STRING("error: no output archive file specified!\n");
@@ -1438,8 +1425,6 @@ var_argv = var_349;
 lval var_351;
 var_351 = LVI_BOOL(access(var_324.v.str, F_OK) == 0);
 if (LV_IS_FALSE(var_351)) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_353;
 var_353 = LVI_STRING("error: build directory \'");
@@ -1499,8 +1484,6 @@ var_429 = wile_gen_list(5, var_430, NULL);
 var_429 = wile_apply_function(&(var_429), LISP_WHENCE);
 var_420 = var_429;
 if (LV_IS_FALSE(var_320)) {
-(void)
- LVI_BOOL(false);
 } else {
 lval var_433;
 var_433 = LVI_STRING(" ");

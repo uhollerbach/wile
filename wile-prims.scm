@@ -258,6 +258,9 @@
    '(get-iproc-body alias get-interpreted-procedure-body)
    '(get-iproc-macro alias get-interpreted-procedure-macro)
 
+   '(sha-224-update alias sha-256-update)
+   '(sha-224-finish alias sha-256-finish)
+
    (list 'when "expects a predicate and any number of actions; if the predicate is true, the actions are evaluated"
 	 'macro -2
 	 (lambda (pred . actions) `(if ,pred (begin ,@actions) #f)))
@@ -934,7 +937,8 @@
    (list 'gensym
 	 "expects no arguments, returns one newly-generated symbol which is supposed to be unique unless the user takes hostile measures to defeat the uniqueness"
 	 'prim 0 (lambda (r)
-		   (emit-code "@@ = wile_get_gensym();")))
+		   ;;; TODO: get a better origin than 0
+		   (emit-code "@@ = wile_get_gensym(0);")))
 
    (list 'run-command
 	 "expects one string argument, runs that as a separate process, and returns the exit status of that run or #f if the underlying system() call failed"
@@ -2116,6 +2120,7 @@
 	      "WILE_EX(\"string-create\", \"input is not a non-negative integer\");"
 	      "}"
 	      "@@.vt = LV_STRING;"
+	      "@@.origin = @1.origin;"
 	      "@@.v.str = LISP_ALLOC(char, 1 + @1.v.iv);"
 	      "memset(@@.v.str, 'X', @1.v.iv);"
 	      "@@.v.str[@1.v.iv] = '\\0';"))
@@ -2128,6 +2133,7 @@
 	      "WILE_EX(\"string-create\", \"second input is not a valid character\");"
 	      "}"
 	      "@@.vt = LV_STRING;"
+	      "@@.origin = @1.origin;"
 	      "@@.v.str = LISP_ALLOC(char, 1 + @1.v.iv);"
 	      "memset(@@.v.str, @2.v.chr, @1.v.iv);"
 	      "@@.v.str[@1.v.iv] = '\\0';")))
@@ -2193,6 +2199,7 @@
 	      "WILE_EX(\"string-copy\", \"end index is out of range\");"
 	      "}"
 	      "@@.vt = LV_STRING;"
+	      "@@.origin = @1.origin;"
 	      "@@.v.str = LISP_ALLOC(char, 1 + @3.v.iv - @2.v.iv);"
 	      "memcpy(@@.v.str, @1.v.str + @2.v.iv, @3.v.iv - @2.v.iv);"
 	      "@@.v.str[@3.v.iv - @2.v.iv] = '\\0';"
@@ -3312,6 +3319,7 @@
 	      "{"
 	      "size_t i, capa;"
 	      "@@.vt = LV_VECTOR;"
+	      "@@.origin = @1.origin;"
 	      "capa = @1.v.iv;"
 	      "@@.v.vec.capa = capa;"
 	      "@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));"
@@ -3324,6 +3332,7 @@
 	      "{"
 	      "size_t i, capa;"
 	      "@@.vt = LV_VECTOR;"
+	      "@@.origin = @1.origin;"
 	      "capa = @1.v.iv;"
 	      "@@.v.vec.capa = capa;"
 	      "@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));"
@@ -3426,6 +3435,7 @@
 	      "{"
 	      "size_t i, capa;"
 	      "@@.vt = LV_BVECTOR;"
+	      "@@.origin = @1.origin;"
 	      "capa = @1.v.iv;"
 	      "@@.v.bvec.capa = capa;"
 	      "@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));"
@@ -3438,6 +3448,7 @@
 	      "{"
 	      "size_t i, capa;"
 	      "@@.vt = LV_BVECTOR;"
+	      "@@.origin = @1.origin;"
 	      "capa = @1.v.iv;"
 	      "@@.v.bvec.capa = capa;"
 	      "@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));"
@@ -3527,6 +3538,7 @@
 	    "WILE_EX(\"bytevector->string\", \"expects one bytevector argument\");"
 	    "}"
 	    "@@.vt = LV_STRING;"
+	    "@@.origin = @1.origin;"
 	    "@@.v.str = LISP_ALLOC(char, 1 + @1.v.bvec.capa);"
 	    "memcpy(@@.v.str, @1.v.bvec.arr, @1.v.bvec.capa);"
 	    "@@.v.str[@1.v.bvec.capa] = 0;")))
@@ -3816,6 +3828,7 @@
 	   (emit-code
 	    "if ((@1.vt == LV_PAIR || @1.vt == LV_NIL) && @2.vt == LV_INT &&(@3.vt == LV_PAIR || @3.vt == LV_NIL) &&(@4.vt == LV_PAIR || @4.vt == LV_NIL) && @5.vt == LV_BOOL) {"
 	    "@@.vt = LV_ILAMBDA;"
+	    "@@.origin = @1.origin;"
 	    "@@.v.ilambda = LISP_ALLOC(lisp_ifunc_t, 1);"
 	    "@@.v.ilambda->args = @1;"
 	    "@@.v.ilambda->arity = @2.v.iv;"
@@ -3945,6 +3958,7 @@
 	    "WILE_EX(\"read-bytes\", \"expects a file port and number of bytes to read\");"
 	    "}"
 	    "@@.vt = LV_BVECTOR;"
+	    "@@.origin = @1.origin;"
 	    "@@.v.bvec.capa = @2.v.iv;"
 	    "@@.v.bvec.arr = LISP_ALLOC(unsigned char, @2.v.iv);"
 	    "@@.v.bvec.capa = fread(@@.v.bvec.arr, 1, @2.v.iv, @1.v.fp);")))
@@ -3963,15 +3977,24 @@
 	 "expects one argument and returns #t if that value is a SHA-256 data structure, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
-	   (emit-code "@@ = LVI_BOOL(@1.vt == LV_SHA256_DATA);")))
+	   (emit-code "@@ = LVI_BOOL(@1.vt == LV_SHA256_DATA && @1.v.sha256_info->is_256);")))
 
    (list 'sha-256
 	 "expects one string or port and returns the SHA-256 hash of that string or the contents of that port as a 64-character string"
-	 'prim 1 "wile_sha256_wrap")
+	 'prim 1
+	 (lambda (r a1)
+	   (emit-code
+	    "if (@1.vt != LV_STRING && @1.vt != LV_FILE_PORT && @1.vt != LV_PIPE_PORT && @1.vt != LV_SOCK_PORT) {"
+	    "WILE_EX(\"sha-256\", \"expects a string or file or pipe or socket port\");"
+	    "}"
+	    "@@ = wile_sha256_wrap(true, @1);")))
 
    (list 'sha-256-init
 	 "expects no arguments and returns an initialized SHA-256 hash data structure ready to accept data"
-	 'prim 0 "wile_sha256_init")
+	 'prim 0
+	 (lambda (r)
+	   (emit-code
+	    "@@ = wile_sha256_init(true);")))
 
    (list 'sha-256-update
 	 "expects one SHA-256 hash data structure and one string or bytevector"
@@ -3980,6 +4003,29 @@
    (list 'sha-256-finish
 	 "expects one SHA-256 hash data structure and returns a string containing the final SHA-256 hash in hexadecimal"
 	 'prim 1 "wile_sha256_finish")
+
+   (list 'sha-224-data?
+	 "expects one argument and returns #t if that value is a SHA-224 data structure, #f otherwise"
+	 'prim 1
+	 (lambda (r a1)
+	   (emit-code "@@ = LVI_BOOL(@1.vt == LV_SHA256_DATA && !@1.v.sha256_info->is_256);")))
+
+   (list 'sha-224
+	 "expects one string or port and returns the SHA-224 hash of that string or the contents of that port as a 64-character string"
+	 'prim 1
+	 (lambda (r a1)
+	   (emit-code
+	    "if (@1.vt != LV_STRING && @1.vt != LV_FILE_PORT && @1.vt != LV_PIPE_PORT && @1.vt != LV_SOCK_PORT) {"
+	    "WILE_EX(\"sha-224\", \"expects a string or file or pipe or socket port\");"
+	    "}"
+	    "@@ = wile_sha256_wrap(false, @1);")))
+
+   (list 'sha-224-init
+	 "expects no arguments and returns an initialized SHA-224 hash data structure ready to accept data"
+	 'prim 0
+	 (lambda (r)
+	   (emit-code
+	    "@@ = wile_sha256_init(false);")))
 
    ))
 

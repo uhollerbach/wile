@@ -81,6 +81,7 @@ lval var_33;
 {
 size_t i, capa;
 var_33.vt = LV_VECTOR;
+var_33.origin = var_32.origin;
 capa = var_32.v.iv;
 var_33.v.vec.capa = capa;
 var_33.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
@@ -2168,6 +2169,7 @@ var_610 = LVI_BOOL(false);
 lval var_611;
 if ((var_584.vt == LV_PAIR || var_584.vt == LV_NIL) && var_605.vt == LV_INT &&(var_608.vt == LV_PAIR || var_608.vt == LV_NIL) &&(var_609.vt == LV_PAIR || var_609.vt == LV_NIL) && var_610.vt == LV_BOOL) {
 var_611.vt = LV_ILAMBDA;
+var_611.origin = var_584.origin;
 var_611.v.ilambda = LISP_ALLOC(lisp_ifunc_t, 1);
 var_611.v.ilambda->args = var_584;
 var_611.v.ilambda->arity = var_605.v.iv;
@@ -3814,6 +3816,7 @@ var_1047 = LVI_BOOL(false);
 lval var_1048;
 if ((var_1033.vt == LV_PAIR || var_1033.vt == LV_NIL) && var_1031.vt == LV_INT &&(var_1046.vt == LV_PAIR || var_1046.vt == LV_NIL) &&(var_1023[0].vt == LV_PAIR || var_1023[0].vt == LV_NIL) && var_1047.vt == LV_BOOL) {
 var_1048.vt = LV_ILAMBDA;
+var_1048.origin = var_1033.origin;
 var_1048.v.ilambda = LISP_ALLOC(lisp_ifunc_t, 1);
 var_1048.v.ilambda->args = var_1033;
 var_1048.v.ilambda->arity = var_1031.v.iv;

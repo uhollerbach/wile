@@ -31,6 +31,7 @@ static lptr rev_lst(lptr list, lptr tail);
     do {					\
 	YYSTYPE v;				\
 	v.vt = LV_SYMBOL;			\
+	v.origin = 0;				\
 	v.v.str = LISP_STRDUP(q);		\
 	LISP_ASSERT(v.v.str != NULL);		\
 	PUSH(v);				\

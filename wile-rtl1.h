@@ -128,7 +128,7 @@ void wile_exception(const char* func_name, const char* loc,
     wile_exception(fname, LISP_WHENCE, __VA_ARGS__)
 
 lval wile_register_display_proc(const char* sym, lval proc, const char* loc);
-lval wile_get_gensym(void);
+lval wile_get_gensym(lisp_loc_t);
 lval wile_run_system_command(lval cmd, const char* loc);
 lval wile_run_pipe_command(lval cmd, const char* rw, const char* loc);
 lval wile_temp_file(lptr* clos, lptr args, const char* loc);
@@ -283,9 +283,8 @@ lval wile_rand_normal_pair(lisp_real_t m, lisp_real_t s);
 lval wile_cfft_good_n(lptr* clos, lptr args, const char* loc);
 lval wile_cfft(lptr* clos, lptr args, const char* loc);
 
-lval wile_sha256_wrap(lptr* clos, lptr args, const char* loc);
-
-lval wile_sha256_init(lptr*, lptr, const char*);
+lval wile_sha256_wrap(bool is_256, lval input);
+lval wile_sha256_init(bool is_256);
 lval wile_sha256_update(lptr*, lptr, const char*);
 lval wile_sha256_finish(lptr*, lptr args, const char* loc);
 

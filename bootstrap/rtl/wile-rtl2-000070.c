@@ -195,6 +195,7 @@ lval var_39;
 {
 size_t i, capa;
 var_39.vt = LV_VECTOR;
+var_39.origin = var_36.origin;
 capa = var_36.v.iv;
 var_39.v.vec.capa = capa;
 var_39.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));

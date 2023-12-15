@@ -1905,6 +1905,7 @@ if (var_517.vt != LV_CHAR || var_517.v.chr == '\0') {
 WILE_EX("string-create", "second input is not a valid character");
 }
 var_518.vt = LV_STRING;
+var_518.origin = var_514.origin;
 var_518.v.str = LISP_ALLOC(char, 1 + var_514.v.iv);
 memset(var_518.v.str, var_517.v.chr, var_514.v.iv);
 var_518.v.str[var_514.v.iv] = '\0';

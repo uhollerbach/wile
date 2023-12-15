@@ -15,7 +15,7 @@ CFDEF =	-O3 -ansi -std=c11 -Wall -Werror -Wstrict-prototypes \
 	-Wno-error=unused-parameter -Wno-error=unused-but-set-variable \
 	-D_DEFAULT_SOURCE -I.
 
-## CFDEF += -Wextra 
+## CFDEF += -Wextra
 
 ## CGCOV =	-fprofile-arcs -ftest-coverage
 CGCOV =
@@ -42,15 +42,18 @@ libwrtl.a:	wrtl.sch $(WRSRC1) $(WRSRC2)
 	build-rtl libwrtl.a $(WRSRC1) -s $(WRSRC2)
 	nm -a libwrtl.a | grep wile_config
 
-libwrtl-dbg.a:	wrtl.sch $(WRSRC1) $(WRSRC2) wrtl.sch
+libwrtl-dbg.a:	wrtl.sch $(WRSRC1) $(WRSRC2)
 	rm -rf bld-rtl-dir
 	build-rtl -g libwrtl-dbg.a $(WRSRC1) -s $(WRSRC2)
 	nm -a libwrtl-dbg.a | grep wile_config
 
-rtl-dist-src:	wrtl.sch $(WRSRC1) $(WRSRC2) wrtl.sch
+boot-files:	wrtl.sch $(WRSRC1) $(WRSRC2)
 	rm -rf bld-rtl-dir
 	build-rtl libfake.a $(WRSRC1) -s $(WRSRC2) -k
 	rm -f libfake.a bld-rtl-dir/*.o bld-rtl-dir/*.scm bld-rtl-dir/wrtl.sch
+	cp bld-rtl-dir/*.c bootstrap/rtl/
+	cp wrtl.sch wile-rtl2.h bootstrap/
+	rm -rf bld-rtl-dir
 
 wilec:	wile-main.scm wile-comp.scm wile-prims.scm libwrtl.a
 	wile -x -v wile-main.scm wilec

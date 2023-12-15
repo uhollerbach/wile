@@ -2,6 +2,13 @@ Last update: 2023-12-15 14:15 PST
 
 # Changelog for `wile`
 
+## Current version `wile` "1.0.5"
+
+- make wile_get_gensym() take an argument, so that we can deal with origin
+  at a higher level in the compiler, where it may be able to do more
+
+- add sha-224 primitives, analogous to sha-256; it's a small addition
+
 ## Current version `wile` "1.0.4" 2023-12-15 14:15 PST
 
 - scan wile build with coverity (thank you Coverity!),

@@ -20,3 +20,25 @@
 <bitsy> ->  pass
 a x 1000000 -> pass
 abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmno x 16777216 -> pass
+""
+<string> -> pass
+<file> ->   pass
+<bitsy> ->  pass
+"abc"
+<string> -> pass
+<file> ->   pass
+<bitsy> ->  pass
+"abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"
+<string> -> pass
+<file> ->   pass
+<bitsy> ->  pass
+"abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"
+<string> -> pass
+<file> ->   pass
+<bitsy> ->  pass
+"[big]"
+<string> -> pass
+<file> ->   pass
+<bitsy> ->  pass
+a x 1000000 -> pass
+abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmno x 16777216 -> pass

@@ -136,1192 +136,1192 @@ static lval fn_3230(lptr*, lptr, const char*);
 static lval fn_3242(lptr*, lptr, const char*);
 static lval fn_3249(lptr*, lptr, const char*);
 static lval fn_3256(lptr*, lptr, const char*);
-static lval fn_3660(lptr*, lptr, const char*);
-static lval fn_3667(lptr*, lptr, const char*);
-static lval fn_3674(lptr*, lptr, const char*);
-static lval fn_3768(lptr*, lptr, const char*);
-static lval fn_3775(lptr*, lptr, const char*);
-static lval fn_3782(lptr*, lptr, const char*);
-static lval fn_3789(lptr*, lptr, const char*);
-static lval fn_3801(lptr*, lptr, const char*);
-static lval fn_3808(lptr*, lptr, const char*);
-static lval fn_3815(lptr*, lptr, const char*);
-static lval fn_4077(lptr*, lptr, const char*);
-static lval fn_4084(lptr*, lptr, const char*);
-static lval fn_4091(lptr*, lptr, const char*);
-static lval fn_4156(lptr*, lptr, const char*);
-static lval fn_4163(lptr*, lptr, const char*);
-static lval fn_4170(lptr*, lptr, const char*);
-static lval fn_4280(lptr*, lptr, const char*);
-static lval fn_4287(lptr*, lptr, const char*);
-static lval fn_4294(lptr*, lptr, const char*);
-static lval fn_4301(lptr*, lptr, const char*);
-static lval fn_4351(lptr*, lptr, const char*);
-static lval fn_4358(lptr*, lptr, const char*);
-static lval fn_4365(lptr*, lptr, const char*);
-static lval fn_4390(lptr*, lptr, const char*);
-static bool do_init_var_4454 = true;
-static lval var_4454;		// const list(-2)
-static bool do_init_var_4458 = true;
-static lval var_4458;		// const list(1)
-static bool do_init_var_4460 = true;
-static lval var_4460;		// const list(3)
-static bool do_init_var_4463 = true;
-static lval var_4463;		// const list(1)
-static bool do_init_var_4465 = true;
-static lval var_4465;		// const list(2)
-static bool do_init_var_4468 = true;
-static lval var_4468;		// const list(1)
-static bool do_init_var_4471 = true;
-static lval var_4471;		// const list(2)
-static bool do_init_var_4474 = true;
-static lval var_4474;		// const list(3)
-static bool do_init_var_4477 = true;
-static lval var_4477;		// const list(2)
-static bool do_init_var_4479 = true;
-static lval var_4479;		// const list(2)
-static bool do_init_var_4483 = true;
-static lval var_4483;		// const list(1)
-static bool do_init_var_4485 = true;
-static lval var_4485;		// const list(3)
-static bool do_init_var_4488 = true;
-static lval var_4488;		// const list(2)
-static bool do_init_var_4492 = true;
-static lval var_4492;		// const list(2)
-static bool do_init_var_4496 = true;
-static lval var_4496;		// const list(2)
-static bool do_init_var_4504 = true;
-static lval var_4504;		// const list(-2)
+static lval fn_3703(lptr*, lptr, const char*);
+static lval fn_3710(lptr*, lptr, const char*);
+static lval fn_3717(lptr*, lptr, const char*);
+static lval fn_3811(lptr*, lptr, const char*);
+static lval fn_3818(lptr*, lptr, const char*);
+static lval fn_3825(lptr*, lptr, const char*);
+static lval fn_3832(lptr*, lptr, const char*);
+static lval fn_3844(lptr*, lptr, const char*);
+static lval fn_3851(lptr*, lptr, const char*);
+static lval fn_3858(lptr*, lptr, const char*);
+static lval fn_4120(lptr*, lptr, const char*);
+static lval fn_4127(lptr*, lptr, const char*);
+static lval fn_4134(lptr*, lptr, const char*);
+static lval fn_4199(lptr*, lptr, const char*);
+static lval fn_4206(lptr*, lptr, const char*);
+static lval fn_4213(lptr*, lptr, const char*);
+static lval fn_4323(lptr*, lptr, const char*);
+static lval fn_4330(lptr*, lptr, const char*);
+static lval fn_4337(lptr*, lptr, const char*);
+static lval fn_4344(lptr*, lptr, const char*);
+static lval fn_4394(lptr*, lptr, const char*);
+static lval fn_4401(lptr*, lptr, const char*);
+static lval fn_4408(lptr*, lptr, const char*);
+static lval fn_4433(lptr*, lptr, const char*);
+static bool do_init_var_4497 = true;
+static lval var_4497;		// const list(-2)
+static bool do_init_var_4501 = true;
+static lval var_4501;		// const list(1)
+static bool do_init_var_4503 = true;
+static lval var_4503;		// const list(3)
+static bool do_init_var_4506 = true;
+static lval var_4506;		// const list(1)
 static bool do_init_var_4508 = true;
-static lval var_4508;		// const list(1)
-static bool do_init_var_4510 = true;
-static lval var_4510;		// const list(3)
-static bool do_init_var_4513 = true;
-static lval var_4513;		// const list(4)
-static bool do_init_var_4515 = true;
-static lval var_4515;		// const list(2)
-static bool do_init_var_4518 = true;
-static lval var_4518;		// const list(3)
-static bool do_init_var_4521 = true;
-static lval var_4521;		// const list(3)
-static bool do_init_var_4524 = true;
-static lval var_4524;		// const list(1)
-static bool do_init_var_4527 = true;
-static lval var_4527;		// const list(1)
+static lval var_4508;		// const list(2)
+static bool do_init_var_4511 = true;
+static lval var_4511;		// const list(1)
+static bool do_init_var_4514 = true;
+static lval var_4514;		// const list(2)
+static bool do_init_var_4517 = true;
+static lval var_4517;		// const list(3)
+static bool do_init_var_4520 = true;
+static lval var_4520;		// const list(2)
+static bool do_init_var_4522 = true;
+static lval var_4522;		// const list(2)
+static bool do_init_var_4526 = true;
+static lval var_4526;		// const list(1)
+static bool do_init_var_4528 = true;
+static lval var_4528;		// const list(3)
 static bool do_init_var_4531 = true;
 static lval var_4531;		// const list(2)
-static bool do_init_var_4534 = true;
-static lval var_4534;		// const list(1)
-static bool do_init_var_4537 = true;
-static lval var_4537;		// const list(2)
-static bool do_init_var_4540 = true;
-static lval var_4540;		// const list(3)
-static bool do_init_var_4545 = true;
-static lval var_4545;		// const list(2)
-static bool do_init_var_4548 = true;
-static lval var_4548;		// const list(3)
+static bool do_init_var_4535 = true;
+static lval var_4535;		// const list(2)
+static bool do_init_var_4539 = true;
+static lval var_4539;		// const list(2)
+static bool do_init_var_4547 = true;
+static lval var_4547;		// const list(-2)
+static bool do_init_var_4551 = true;
+static lval var_4551;		// const list(1)
 static bool do_init_var_4553 = true;
-static lval var_4553;		// const list(2)
+static lval var_4553;		// const list(3)
 static bool do_init_var_4556 = true;
 static lval var_4556;		// const list(4)
-static bool do_init_var_4559 = true;
-static lval var_4559;		// const list(2)
-static bool do_init_var_4562 = true;
-static lval var_4562;		// const list(4)
-static bool do_init_var_4565 = true;
-static lval var_4565;		// const list(3)
-static bool do_init_var_4568 = true;
-static lval var_4568;		// const list(2)
-static bool do_init_var_4572 = true;
-static lval var_4572;		// const list(2)
-static bool do_init_var_4575 = true;
-static lval var_4575;		// const list(2)
+static bool do_init_var_4558 = true;
+static lval var_4558;		// const list(2)
+static bool do_init_var_4561 = true;
+static lval var_4561;		// const list(3)
+static bool do_init_var_4564 = true;
+static lval var_4564;		// const list(3)
+static bool do_init_var_4567 = true;
+static lval var_4567;		// const list(1)
+static bool do_init_var_4570 = true;
+static lval var_4570;		// const list(1)
+static bool do_init_var_4574 = true;
+static lval var_4574;		// const list(2)
 static bool do_init_var_4577 = true;
-static lval var_4577;		// const list(2)
-static bool do_init_var_4581 = true;
-static lval var_4581;		// const list(2)
-static bool do_init_var_4587 = true;
-static lval var_4587;		// const list(2)
-static bool do_init_var_4590 = true;
-static lval var_4590;		// const list(4)
-static bool do_init_var_4593 = true;
-static lval var_4593;		// const list(3)
+static lval var_4577;		// const list(1)
+static bool do_init_var_4580 = true;
+static lval var_4580;		// const list(2)
+static bool do_init_var_4583 = true;
+static lval var_4583;		// const list(3)
+static bool do_init_var_4588 = true;
+static lval var_4588;		// const list(2)
+static bool do_init_var_4591 = true;
+static lval var_4591;		// const list(3)
 static bool do_init_var_4596 = true;
 static lval var_4596;		// const list(2)
-static bool do_init_var_4600 = true;
-static lval var_4600;		// const list(2)
-static bool do_init_var_4603 = true;
-static lval var_4603;		// const list(3)
-static bool do_init_var_4606 = true;
-static lval var_4606;		// const list(2)
-static bool do_init_var_4610 = true;
-static lval var_4610;		// const list(2)
-static bool do_init_var_4616 = true;
-static lval var_4616;		// const list(4)
-static bool do_init_var_4619 = true;
-static lval var_4619;		// const list(1)
-static bool do_init_var_4621 = true;
-static lval var_4621;		// const list(2)
-static bool do_init_var_4623 = true;
-static lval var_4623;		// const list(2)
-static bool do_init_var_4627 = true;
-static lval var_4627;		// const list(2)
+static bool do_init_var_4599 = true;
+static lval var_4599;		// const list(4)
+static bool do_init_var_4602 = true;
+static lval var_4602;		// const list(2)
+static bool do_init_var_4605 = true;
+static lval var_4605;		// const list(4)
+static bool do_init_var_4608 = true;
+static lval var_4608;		// const list(3)
+static bool do_init_var_4611 = true;
+static lval var_4611;		// const list(2)
+static bool do_init_var_4615 = true;
+static lval var_4615;		// const list(2)
+static bool do_init_var_4618 = true;
+static lval var_4618;		// const list(2)
+static bool do_init_var_4620 = true;
+static lval var_4620;		// const list(2)
+static bool do_init_var_4624 = true;
+static lval var_4624;		// const list(2)
 static bool do_init_var_4630 = true;
 static lval var_4630;		// const list(2)
-static bool do_init_var_4634 = true;
-static lval var_4634;		// const list(2)
-static bool do_init_var_4637 = true;
-static lval var_4637;		// const list(4)
-static bool do_init_var_4640 = true;
-static lval var_4640;		// const list(3)
+static bool do_init_var_4633 = true;
+static lval var_4633;		// const list(4)
+static bool do_init_var_4636 = true;
+static lval var_4636;		// const list(3)
+static bool do_init_var_4639 = true;
+static lval var_4639;		// const list(2)
 static bool do_init_var_4643 = true;
 static lval var_4643;		// const list(2)
-static bool do_init_var_4647 = true;
-static lval var_4647;		// const list(2)
-static bool do_init_var_4650 = true;
-static lval var_4650;		// const list(3)
+static bool do_init_var_4646 = true;
+static lval var_4646;		// const list(3)
+static bool do_init_var_4649 = true;
+static lval var_4649;		// const list(2)
 static bool do_init_var_4653 = true;
 static lval var_4653;		// const list(2)
-static bool do_init_var_4657 = true;
-static lval var_4657;		// const list(2)
-static bool do_init_var_4663 = true;
-static lval var_4663;		// const list(2)
-static bool do_init_var_4671 = true;
-static lval var_4671;		// const list(-2)
-static bool do_init_var_4675 = true;
-static lval var_4675;		// const list(1)
+static bool do_init_var_4659 = true;
+static lval var_4659;		// const list(4)
+static bool do_init_var_4662 = true;
+static lval var_4662;		// const list(1)
+static bool do_init_var_4664 = true;
+static lval var_4664;		// const list(2)
+static bool do_init_var_4666 = true;
+static lval var_4666;		// const list(2)
+static bool do_init_var_4670 = true;
+static lval var_4670;		// const list(2)
+static bool do_init_var_4673 = true;
+static lval var_4673;		// const list(2)
 static bool do_init_var_4677 = true;
-static lval var_4677;		// const list(3)
+static lval var_4677;		// const list(2)
 static bool do_init_var_4680 = true;
-static lval var_4680;		// const list(6)
-static bool do_init_var_4682 = true;
-static lval var_4682;		// const list(2)
-static bool do_init_var_4685 = true;
-static lval var_4685;		// const list(1)
-static bool do_init_var_4688 = true;
-static lval var_4688;		// const list(2)
-static bool do_init_var_4691 = true;
-static lval var_4691;		// const list(1)
-static bool do_init_var_4694 = true;
-static lval var_4694;		// const list(2)
-static bool do_init_var_4697 = true;
-static lval var_4697;		// const list(3)
+static lval var_4680;		// const list(4)
+static bool do_init_var_4683 = true;
+static lval var_4683;		// const list(3)
+static bool do_init_var_4686 = true;
+static lval var_4686;		// const list(2)
+static bool do_init_var_4690 = true;
+static lval var_4690;		// const list(2)
+static bool do_init_var_4693 = true;
+static lval var_4693;		// const list(3)
+static bool do_init_var_4696 = true;
+static lval var_4696;		// const list(2)
 static bool do_init_var_4700 = true;
-static lval var_4700;		// const list(3)
-static bool do_init_var_4703 = true;
-static lval var_4703;		// const list(1)
+static lval var_4700;		// const list(2)
 static bool do_init_var_4706 = true;
-static lval var_4706;		// const list(4)
-static bool do_init_var_4709 = true;
-static lval var_4709;		// const list(2)
-static bool do_init_var_4713 = true;
-static lval var_4713;		// const list(3)
+static lval var_4706;		// const list(2)
+static bool do_init_var_4714 = true;
+static lval var_4714;		// const list(-2)
+static bool do_init_var_4718 = true;
+static lval var_4718;		// const list(1)
 static bool do_init_var_4720 = true;
-static lval var_4720;		// const list(2)
+static lval var_4720;		// const list(3)
 static bool do_init_var_4723 = true;
-static lval var_4723;		// const list(3)
-static bool do_init_var_4726 = true;
-static lval var_4726;		// const list(3)
-static bool do_init_var_4729 = true;
-static lval var_4729;		// const list(1)
-static bool do_init_var_4732 = true;
-static lval var_4732;		// const list(3)
-static bool do_init_var_4735 = true;
-static lval var_4735;		// const list(1)
+static lval var_4723;		// const list(6)
+static bool do_init_var_4725 = true;
+static lval var_4725;		// const list(2)
+static bool do_init_var_4728 = true;
+static lval var_4728;		// const list(1)
+static bool do_init_var_4731 = true;
+static lval var_4731;		// const list(2)
+static bool do_init_var_4734 = true;
+static lval var_4734;		// const list(1)
 static bool do_init_var_4737 = true;
 static lval var_4737;		// const list(2)
 static bool do_init_var_4740 = true;
-static lval var_4740;		// const list(2)
-static bool do_init_var_4744 = true;
-static lval var_4744;		// const list(2)
-static bool do_init_var_4747 = true;
-static lval var_4747;		// const list(3)
-static bool do_init_var_4750 = true;
-static lval var_4750;		// const list(2)
+static lval var_4740;		// const list(3)
+static bool do_init_var_4743 = true;
+static lval var_4743;		// const list(3)
+static bool do_init_var_4746 = true;
+static lval var_4746;		// const list(1)
+static bool do_init_var_4749 = true;
+static lval var_4749;		// const list(4)
+static bool do_init_var_4752 = true;
+static lval var_4752;		// const list(2)
 static bool do_init_var_4756 = true;
-static lval var_4756;		// const list(2)
-static bool do_init_var_4759 = true;
-static lval var_4759;		// const list(3)
-static bool do_init_var_4762 = true;
-static lval var_4762;		// const list(3)
-static bool do_init_var_4765 = true;
-static lval var_4765;		// const list(1)
-static bool do_init_var_4768 = true;
-static lval var_4768;		// const list(3)
-static bool do_init_var_4771 = true;
-static lval var_4771;		// const list(1)
-static bool do_init_var_4773 = true;
-static lval var_4773;		// const list(2)
-static bool do_init_var_4776 = true;
-static lval var_4776;		// const list(2)
+static lval var_4756;		// const list(3)
+static bool do_init_var_4763 = true;
+static lval var_4763;		// const list(2)
+static bool do_init_var_4766 = true;
+static lval var_4766;		// const list(3)
+static bool do_init_var_4769 = true;
+static lval var_4769;		// const list(3)
+static bool do_init_var_4772 = true;
+static lval var_4772;		// const list(1)
+static bool do_init_var_4775 = true;
+static lval var_4775;		// const list(3)
+static bool do_init_var_4778 = true;
+static lval var_4778;		// const list(1)
 static bool do_init_var_4780 = true;
 static lval var_4780;		// const list(2)
 static bool do_init_var_4783 = true;
 static lval var_4783;		// const list(2)
-static bool do_init_var_4785 = true;
-static lval var_4785;		// const list(3)
-static bool do_init_var_4788 = true;
-static lval var_4788;		// const list(2)
-static bool do_init_var_4792 = true;
-static lval var_4792;		// const list(2)
-static bool do_init_var_4796 = true;
-static lval var_4796;		// const list(2)
-static bool do_init_var_4801 = true;
-static lval var_4801;		// const list(2)
-static bool do_init_var_4804 = true;
-static lval var_4804;		// const list(3)
-static bool do_init_var_4807 = true;
-static lval var_4807;		// const list(3)
-static bool do_init_var_4810 = true;
-static lval var_4810;		// const list(1)
-static bool do_init_var_4813 = true;
-static lval var_4813;		// const list(3)
+static bool do_init_var_4787 = true;
+static lval var_4787;		// const list(2)
+static bool do_init_var_4790 = true;
+static lval var_4790;		// const list(3)
+static bool do_init_var_4793 = true;
+static lval var_4793;		// const list(2)
+static bool do_init_var_4799 = true;
+static lval var_4799;		// const list(2)
+static bool do_init_var_4802 = true;
+static lval var_4802;		// const list(3)
+static bool do_init_var_4805 = true;
+static lval var_4805;		// const list(3)
+static bool do_init_var_4808 = true;
+static lval var_4808;		// const list(1)
+static bool do_init_var_4811 = true;
+static lval var_4811;		// const list(3)
+static bool do_init_var_4814 = true;
+static lval var_4814;		// const list(1)
 static bool do_init_var_4816 = true;
 static lval var_4816;		// const list(2)
-static bool do_init_var_4818 = true;
-static lval var_4818;		// const list(2)
-static bool do_init_var_4821 = true;
-static lval var_4821;		// const list(2)
-static bool do_init_var_4825 = true;
-static lval var_4825;		// const list(2)
+static bool do_init_var_4819 = true;
+static lval var_4819;		// const list(2)
+static bool do_init_var_4823 = true;
+static lval var_4823;		// const list(2)
+static bool do_init_var_4826 = true;
+static lval var_4826;		// const list(2)
 static bool do_init_var_4828 = true;
-static lval var_4828;		// const list(2)
-static bool do_init_var_4832 = true;
-static lval var_4832;		// const list(2)
+static lval var_4828;		// const list(3)
+static bool do_init_var_4831 = true;
+static lval var_4831;		// const list(2)
 static bool do_init_var_4835 = true;
-static lval var_4835;		// const list(3)
-static bool do_init_var_4838 = true;
-static lval var_4838;		// const list(2)
-static bool do_init_var_4842 = true;
-static lval var_4842;		// const list(2)
+static lval var_4835;		// const list(2)
+static bool do_init_var_4839 = true;
+static lval var_4839;		// const list(2)
 static bool do_init_var_4844 = true;
 static lval var_4844;		// const list(2)
-static bool do_init_var_4848 = true;
-static lval var_4848;		// const list(2)
+static bool do_init_var_4847 = true;
+static lval var_4847;		// const list(3)
+static bool do_init_var_4850 = true;
+static lval var_4850;		// const list(3)
 static bool do_init_var_4853 = true;
-static lval var_4853;		// const list(2)
+static lval var_4853;		// const list(1)
 static bool do_init_var_4856 = true;
 static lval var_4856;		// const list(3)
 static bool do_init_var_4859 = true;
 static lval var_4859;		// const list(2)
-static bool do_init_var_4863 = true;
-static lval var_4863;		// const list(3)
-static bool do_init_var_4866 = true;
-static lval var_4866;		// const list(1)
+static bool do_init_var_4861 = true;
+static lval var_4861;		// const list(2)
+static bool do_init_var_4864 = true;
+static lval var_4864;		// const list(2)
 static bool do_init_var_4868 = true;
 static lval var_4868;		// const list(2)
-static bool do_init_var_4870 = true;
-static lval var_4870;		// const list(2)
-static bool do_init_var_4874 = true;
-static lval var_4874;		// const list(1)
-static bool do_init_var_4876 = true;
-static lval var_4876;		// const list(4)
-static bool do_init_var_4880 = true;
-static lval var_4880;		// const list(2)
-static bool do_init_var_4884 = true;
-static lval var_4884;		// const list(3)
+static bool do_init_var_4871 = true;
+static lval var_4871;		// const list(2)
+static bool do_init_var_4875 = true;
+static lval var_4875;		// const list(2)
+static bool do_init_var_4878 = true;
+static lval var_4878;		// const list(3)
+static bool do_init_var_4881 = true;
+static lval var_4881;		// const list(2)
+static bool do_init_var_4885 = true;
+static lval var_4885;		// const list(2)
 static bool do_init_var_4887 = true;
-static lval var_4887;		// const list(1)
-static bool do_init_var_4889 = true;
-static lval var_4889;		// const list(2)
-static bool do_init_var_4893 = true;
-static lval var_4893;		// const list(2)
+static lval var_4887;		// const list(2)
+static bool do_init_var_4891 = true;
+static lval var_4891;		// const list(2)
 static bool do_init_var_4896 = true;
 static lval var_4896;		// const list(2)
-static bool do_init_var_4900 = true;
-static lval var_4900;		// const list(2)
-static bool do_init_var_4908 = true;
-static lval var_4908;		// const list(-3)
+static bool do_init_var_4899 = true;
+static lval var_4899;		// const list(3)
+static bool do_init_var_4902 = true;
+static lval var_4902;		// const list(2)
+static bool do_init_var_4906 = true;
+static lval var_4906;		// const list(3)
+static bool do_init_var_4909 = true;
+static lval var_4909;		// const list(1)
+static bool do_init_var_4911 = true;
+static lval var_4911;		// const list(2)
 static bool do_init_var_4913 = true;
-static lval var_4913;		// const list(1)
-static bool do_init_var_4915 = true;
-static lval var_4915;		// const list(3)
-static bool do_init_var_4918 = true;
-static lval var_4918;		// const list(16)
-static bool do_init_var_4920 = true;
-static lval var_4920;		// const list(2)
+static lval var_4913;		// const list(2)
+static bool do_init_var_4917 = true;
+static lval var_4917;		// const list(1)
+static bool do_init_var_4919 = true;
+static lval var_4919;		// const list(4)
 static bool do_init_var_4923 = true;
-static lval var_4923;		// const list(3)
-static bool do_init_var_4928 = true;
-static lval var_4928;		// const list(2)
-static bool do_init_var_4931 = true;
-static lval var_4931;		// const list(2)
-static bool do_init_var_4935 = true;
-static lval var_4935;		// const list(2)
-static bool do_init_var_4938 = true;
-static lval var_4938;		// const list(3)
+static lval var_4923;		// const list(2)
+static bool do_init_var_4927 = true;
+static lval var_4927;		// const list(3)
+static bool do_init_var_4930 = true;
+static lval var_4930;		// const list(1)
+static bool do_init_var_4932 = true;
+static lval var_4932;		// const list(2)
+static bool do_init_var_4936 = true;
+static lval var_4936;		// const list(2)
+static bool do_init_var_4939 = true;
+static lval var_4939;		// const list(2)
 static bool do_init_var_4943 = true;
 static lval var_4943;		// const list(2)
-static bool do_init_var_4946 = true;
-static lval var_4946;		// const list(3)
-static bool do_init_var_4950 = true;
-static lval var_4950;		// const list(3)
-static bool do_init_var_4955 = true;
-static lval var_4955;		// const list(2)
+static bool do_init_var_4951 = true;
+static lval var_4951;		// const list(-3)
+static bool do_init_var_4956 = true;
+static lval var_4956;		// const list(1)
 static bool do_init_var_4958 = true;
 static lval var_4958;		// const list(3)
 static bool do_init_var_4961 = true;
-static lval var_4961;		// const list(2)
-static bool do_init_var_4965 = true;
-static lval var_4965;		// const list(2)
-static bool do_init_var_4968 = true;
-static lval var_4968;		// const list(3)
-static bool do_init_var_4973 = true;
-static lval var_4973;		// const list(2)
-static bool do_init_var_4976 = true;
-static lval var_4976;		// const list(3)
-static bool do_init_var_4979 = true;
-static lval var_4979;		// const list(3)
-static bool do_init_var_4984 = true;
-static lval var_4984;		// const list(2)
-static bool do_init_var_4987 = true;
-static lval var_4987;		// const list(4)
+static lval var_4961;		// const list(16)
+static bool do_init_var_4963 = true;
+static lval var_4963;		// const list(2)
+static bool do_init_var_4966 = true;
+static lval var_4966;		// const list(3)
+static bool do_init_var_4971 = true;
+static lval var_4971;		// const list(2)
+static bool do_init_var_4974 = true;
+static lval var_4974;		// const list(2)
+static bool do_init_var_4978 = true;
+static lval var_4978;		// const list(2)
+static bool do_init_var_4981 = true;
+static lval var_4981;		// const list(3)
+static bool do_init_var_4986 = true;
+static lval var_4986;		// const list(2)
+static bool do_init_var_4989 = true;
+static lval var_4989;		// const list(3)
 static bool do_init_var_4993 = true;
-static lval var_4993;		// const list(2)
-static bool do_init_var_4996 = true;
-static lval var_4996;		// const list(2)
-static bool do_init_var_5000 = true;
-static lval var_5000;		// const list(2)
-static bool do_init_var_5003 = true;
-static lval var_5003;		// const list(3)
+static lval var_4993;		// const list(3)
+static bool do_init_var_4998 = true;
+static lval var_4998;		// const list(2)
+static bool do_init_var_5001 = true;
+static lval var_5001;		// const list(3)
+static bool do_init_var_5004 = true;
+static lval var_5004;		// const list(2)
 static bool do_init_var_5008 = true;
 static lval var_5008;		// const list(2)
 static bool do_init_var_5011 = true;
-static lval var_5011;		// const list(1)
-static bool do_init_var_5014 = true;
-static lval var_5014;		// const list(2)
-static bool do_init_var_5017 = true;
-static lval var_5017;		// const list(4)
-static bool do_init_var_5023 = true;
-static lval var_5023;		// const list(2)
-static bool do_init_var_5026 = true;
-static lval var_5026;		// const list(4)
-static bool do_init_var_5032 = true;
-static lval var_5032;		// const list(2)
-static bool do_init_var_5035 = true;
-static lval var_5035;		// const list(4)
-static bool do_init_var_5041 = true;
-static lval var_5041;		// const list(2)
-static bool do_init_var_5044 = true;
-static lval var_5044;		// const list(4)
-static bool do_init_var_5047 = true;
-static lval var_5047;		// const list(3)
-static bool do_init_var_5050 = true;
-static lval var_5050;		// const list(2)
+static lval var_5011;		// const list(3)
+static bool do_init_var_5016 = true;
+static lval var_5016;		// const list(2)
+static bool do_init_var_5019 = true;
+static lval var_5019;		// const list(3)
+static bool do_init_var_5022 = true;
+static lval var_5022;		// const list(3)
+static bool do_init_var_5027 = true;
+static lval var_5027;		// const list(2)
+static bool do_init_var_5030 = true;
+static lval var_5030;		// const list(4)
+static bool do_init_var_5036 = true;
+static lval var_5036;		// const list(2)
+static bool do_init_var_5039 = true;
+static lval var_5039;		// const list(2)
+static bool do_init_var_5043 = true;
+static lval var_5043;		// const list(2)
+static bool do_init_var_5046 = true;
+static lval var_5046;		// const list(3)
+static bool do_init_var_5051 = true;
+static lval var_5051;		// const list(2)
 static bool do_init_var_5054 = true;
-static lval var_5054;		// const list(2)
+static lval var_5054;		// const list(1)
 static bool do_init_var_5057 = true;
-static lval var_5057;		// const list(4)
+static lval var_5057;		// const list(2)
 static bool do_init_var_5060 = true;
-static lval var_5060;		// const list(2)
-static bool do_init_var_5064 = true;
-static lval var_5064;		// const list(2)
-static bool do_init_var_5068 = true;
-static lval var_5068;		// const list(2)
-static bool do_init_var_5073 = true;
-static lval var_5073;		// const list(3)
+static lval var_5060;		// const list(4)
+static bool do_init_var_5066 = true;
+static lval var_5066;		// const list(2)
+static bool do_init_var_5069 = true;
+static lval var_5069;		// const list(4)
+static bool do_init_var_5075 = true;
+static lval var_5075;		// const list(2)
 static bool do_init_var_5078 = true;
-static lval var_5078;		// const list(2)
-static bool do_init_var_5081 = true;
-static lval var_5081;		// const list(4)
+static lval var_5078;		// const list(4)
 static bool do_init_var_5084 = true;
-static lval var_5084;		// const list(3)
+static lval var_5084;		// const list(2)
 static bool do_init_var_5087 = true;
-static lval var_5087;		// const list(2)
-static bool do_init_var_5091 = true;
-static lval var_5091;		// const list(3)
-static bool do_init_var_5094 = true;
-static lval var_5094;		// const list(1)
-static bool do_init_var_5096 = true;
-static lval var_5096;		// const list(2)
-static bool do_init_var_5099 = true;
-static lval var_5099;		// const list(3)
+static lval var_5087;		// const list(4)
+static bool do_init_var_5090 = true;
+static lval var_5090;		// const list(3)
+static bool do_init_var_5093 = true;
+static lval var_5093;		// const list(2)
+static bool do_init_var_5097 = true;
+static lval var_5097;		// const list(2)
+static bool do_init_var_5100 = true;
+static lval var_5100;		// const list(4)
 static bool do_init_var_5103 = true;
 static lval var_5103;		// const list(2)
 static bool do_init_var_5107 = true;
 static lval var_5107;		// const list(2)
-static bool do_init_var_5110 = true;
-static lval var_5110;		// const list(3)
-static bool do_init_var_5113 = true;
-static lval var_5113;		// const list(2)
-static bool do_init_var_5115 = true;
-static lval var_5115;		// const list(2)
-static bool do_init_var_5120 = true;
-static lval var_5120;		// const list(3)
+static bool do_init_var_5111 = true;
+static lval var_5111;		// const list(2)
+static bool do_init_var_5116 = true;
+static lval var_5116;		// const list(3)
+static bool do_init_var_5121 = true;
+static lval var_5121;		// const list(2)
 static bool do_init_var_5124 = true;
-static lval var_5124;		// const list(2)
-static bool do_init_var_5129 = true;
-static lval var_5129;		// const list(3)
+static lval var_5124;		// const list(4)
+static bool do_init_var_5127 = true;
+static lval var_5127;		// const list(3)
+static bool do_init_var_5130 = true;
+static lval var_5130;		// const list(2)
 static bool do_init_var_5134 = true;
-static lval var_5134;		// const list(2)
+static lval var_5134;		// const list(3)
 static bool do_init_var_5137 = true;
-static lval var_5137;		// const list(4)
-static bool do_init_var_5140 = true;
-static lval var_5140;		// const list(3)
-static bool do_init_var_5143 = true;
-static lval var_5143;		// const list(2)
-static bool do_init_var_5147 = true;
-static lval var_5147;		// const list(3)
+static lval var_5137;		// const list(1)
+static bool do_init_var_5139 = true;
+static lval var_5139;		// const list(2)
+static bool do_init_var_5142 = true;
+static lval var_5142;		// const list(3)
+static bool do_init_var_5146 = true;
+static lval var_5146;		// const list(2)
 static bool do_init_var_5150 = true;
-static lval var_5150;		// const list(1)
-static bool do_init_var_5152 = true;
-static lval var_5152;		// const list(2)
-static bool do_init_var_5155 = true;
-static lval var_5155;		// const list(4)
-static bool do_init_var_5159 = true;
-static lval var_5159;		// const list(2)
-static bool do_init_var_5164 = true;
-static lval var_5164;		// const list(2)
+static lval var_5150;		// const list(2)
+static bool do_init_var_5153 = true;
+static lval var_5153;		// const list(3)
+static bool do_init_var_5156 = true;
+static lval var_5156;		// const list(2)
+static bool do_init_var_5158 = true;
+static lval var_5158;		// const list(2)
+static bool do_init_var_5163 = true;
+static lval var_5163;		// const list(3)
 static bool do_init_var_5167 = true;
-static lval var_5167;		// const list(3)
-static bool do_init_var_5170 = true;
-static lval var_5170;		// const list(3)
+static lval var_5167;		// const list(2)
 static bool do_init_var_5172 = true;
-static lval var_5172;		// const list(2)
-static bool do_init_var_5178 = true;
-static lval var_5178;		// const list(4)
-static bool do_init_var_5182 = true;
-static lval var_5182;		// const list(2)
-static bool do_init_var_5188 = true;
-static lval var_5188;		// const list(3)
+static lval var_5172;		// const list(3)
+static bool do_init_var_5177 = true;
+static lval var_5177;		// const list(2)
+static bool do_init_var_5180 = true;
+static lval var_5180;		// const list(4)
+static bool do_init_var_5183 = true;
+static lval var_5183;		// const list(3)
+static bool do_init_var_5186 = true;
+static lval var_5186;		// const list(2)
+static bool do_init_var_5190 = true;
+static lval var_5190;		// const list(3)
 static bool do_init_var_5193 = true;
-static lval var_5193;		// const list(2)
-static bool do_init_var_5196 = true;
-static lval var_5196;		// const list(2)
-static bool do_init_var_5199 = true;
-static lval var_5199;		// const list(5)
+static lval var_5193;		// const list(1)
+static bool do_init_var_5195 = true;
+static lval var_5195;		// const list(2)
+static bool do_init_var_5198 = true;
+static lval var_5198;		// const list(4)
 static bool do_init_var_5202 = true;
-static lval var_5202;		// const list(3)
-static bool do_init_var_5205 = true;
-static lval var_5205;		// const list(2)
+static lval var_5202;		// const list(2)
 static bool do_init_var_5207 = true;
 static lval var_5207;		// const list(2)
-static bool do_init_var_5211 = true;
-static lval var_5211;		// const list(2)
+static bool do_init_var_5210 = true;
+static lval var_5210;		// const list(3)
+static bool do_init_var_5213 = true;
+static lval var_5213;		// const list(3)
 static bool do_init_var_5215 = true;
-static lval var_5215;		// const list(5)
-static bool do_init_var_5218 = true;
-static lval var_5218;		// const list(1)
-static bool do_init_var_5220 = true;
-static lval var_5220;		// const list(2)
-static bool do_init_var_5222 = true;
-static lval var_5222;		// const list(2)
-static bool do_init_var_5226 = true;
-static lval var_5226;		// const list(2)
-static bool do_init_var_5229 = true;
-static lval var_5229;		// const list(2)
-static bool do_init_var_5233 = true;
-static lval var_5233;		// const list(4)
+static lval var_5215;		// const list(2)
+static bool do_init_var_5221 = true;
+static lval var_5221;		// const list(4)
+static bool do_init_var_5225 = true;
+static lval var_5225;		// const list(2)
+static bool do_init_var_5231 = true;
+static lval var_5231;		// const list(3)
 static bool do_init_var_5236 = true;
 static lval var_5236;		// const list(2)
-static bool do_init_var_5241 = true;
-static lval var_5241;		// const list(2)
+static bool do_init_var_5239 = true;
+static lval var_5239;		// const list(2)
+static bool do_init_var_5242 = true;
+static lval var_5242;		// const list(5)
 static bool do_init_var_5245 = true;
-static lval var_5245;		// const list(2)
-static bool do_init_var_5249 = true;
-static lval var_5249;		// const list(2)
-static bool do_init_var_5253 = true;
-static lval var_5253;		// const list(3)
-static bool do_init_var_5256 = true;
-static lval var_5256;		// const list(2)
+static lval var_5245;		// const list(3)
+static bool do_init_var_5248 = true;
+static lval var_5248;		// const list(2)
+static bool do_init_var_5250 = true;
+static lval var_5250;		// const list(2)
+static bool do_init_var_5254 = true;
+static lval var_5254;		// const list(2)
 static bool do_init_var_5258 = true;
-static lval var_5258;		// const list(2)
+static lval var_5258;		// const list(5)
+static bool do_init_var_5261 = true;
+static lval var_5261;		// const list(1)
 static bool do_init_var_5263 = true;
-static lval var_5263;		// const list(3)
-static bool do_init_var_5266 = true;
-static lval var_5266;		// const list(2)
-static bool do_init_var_5270 = true;
-static lval var_5270;		// const list(3)
-static bool do_init_var_5273 = true;
-static lval var_5273;		// const list(3)
-static bool do_init_var_5278 = true;
-static lval var_5278;		// const list(2)
-static bool do_init_var_5282 = true;
-static lval var_5282;		// const list(2)
-static bool do_init_var_5286 = true;
-static lval var_5286;		// const list(2)
+static lval var_5263;		// const list(2)
+static bool do_init_var_5265 = true;
+static lval var_5265;		// const list(2)
+static bool do_init_var_5269 = true;
+static lval var_5269;		// const list(2)
+static bool do_init_var_5272 = true;
+static lval var_5272;		// const list(2)
+static bool do_init_var_5276 = true;
+static lval var_5276;		// const list(4)
+static bool do_init_var_5279 = true;
+static lval var_5279;		// const list(2)
+static bool do_init_var_5284 = true;
+static lval var_5284;		// const list(2)
+static bool do_init_var_5288 = true;
+static lval var_5288;		// const list(2)
+static bool do_init_var_5292 = true;
+static lval var_5292;		// const list(2)
+static bool do_init_var_5296 = true;
+static lval var_5296;		// const list(3)
+static bool do_init_var_5299 = true;
+static lval var_5299;		// const list(2)
+static bool do_init_var_5301 = true;
+static lval var_5301;		// const list(2)
+static bool do_init_var_5306 = true;
+static lval var_5306;		// const list(3)
+static bool do_init_var_5309 = true;
+static lval var_5309;		// const list(2)
+static bool do_init_var_5313 = true;
+static lval var_5313;		// const list(3)
 static bool do_init_var_5316 = true;
-static lval var_5316;		// const list(-2)
-static bool do_init_var_5320 = true;
-static lval var_5320;		// const list(1)
-static bool do_init_var_5322 = true;
-static lval var_5322;		// const list(2)
+static lval var_5316;		// const list(3)
+static bool do_init_var_5321 = true;
+static lval var_5321;		// const list(2)
 static bool do_init_var_5325 = true;
-static lval var_5325;		// const list(4)
-static bool do_init_var_5328 = true;
-static lval var_5328;		// const list(2)
-static bool do_init_var_5332 = true;
-static lval var_5332;		// const list(2)
-static bool do_init_var_5335 = true;
-static lval var_5335;		// const list(2)
-static bool do_init_var_5344 = true;
-static lval var_5344;		// const list(-2)
-static bool do_init_var_5348 = true;
-static lval var_5348;		// const list(1)
-static bool do_init_var_5350 = true;
-static lval var_5350;		// const list(2)
-static bool do_init_var_5353 = true;
-static lval var_5353;		// const list(4)
-static bool do_init_var_5356 = true;
-static lval var_5356;		// const list(2)
-static bool do_init_var_5361 = true;
-static lval var_5361;		// const list(2)
-static bool do_init_var_5364 = true;
-static lval var_5364;		// const list(2)
-static bool do_init_var_5372 = true;
-static lval var_5372;		// const list(-2)
-static bool do_init_var_5376 = true;
-static lval var_5376;		// const list(1)
+static lval var_5325;		// const list(2)
+static bool do_init_var_5329 = true;
+static lval var_5329;		// const list(2)
+static bool do_init_var_5359 = true;
+static lval var_5359;		// const list(-2)
+static bool do_init_var_5363 = true;
+static lval var_5363;		// const list(1)
+static bool do_init_var_5365 = true;
+static lval var_5365;		// const list(2)
+static bool do_init_var_5368 = true;
+static lval var_5368;		// const list(4)
+static bool do_init_var_5371 = true;
+static lval var_5371;		// const list(2)
+static bool do_init_var_5375 = true;
+static lval var_5375;		// const list(2)
 static bool do_init_var_5378 = true;
-static lval var_5378;		// const list(3)
-static bool do_init_var_5381 = true;
-static lval var_5381;		// const list(1)
-static bool do_init_var_5383 = true;
-static lval var_5383;		// const list(2)
-static bool do_init_var_5386 = true;
-static lval var_5386;		// const list(1)
-static bool do_init_var_5389 = true;
-static lval var_5389;		// const list(2)
-static bool do_init_var_5392 = true;
-static lval var_5392;		// const list(4)
-static bool do_init_var_5395 = true;
-static lval var_5395;		// const list(1)
-static bool do_init_var_5397 = true;
-static lval var_5397;		// const list(3)
+static lval var_5378;		// const list(2)
+static bool do_init_var_5387 = true;
+static lval var_5387;		// const list(-2)
+static bool do_init_var_5391 = true;
+static lval var_5391;		// const list(1)
+static bool do_init_var_5393 = true;
+static lval var_5393;		// const list(2)
+static bool do_init_var_5396 = true;
+static lval var_5396;		// const list(4)
 static bool do_init_var_5399 = true;
 static lval var_5399;		// const list(2)
 static bool do_init_var_5404 = true;
-static lval var_5404;		// const list(3)
+static lval var_5404;		// const list(2)
 static bool do_init_var_5407 = true;
 static lval var_5407;		// const list(2)
-static bool do_init_var_5412 = true;
-static lval var_5412;		// const list(2)
-static bool do_init_var_5414 = true;
-static lval var_5414;		// const list(2)
-static bool do_init_var_5417 = true;
-static lval var_5417;		// const list(2)
+static bool do_init_var_5415 = true;
+static lval var_5415;		// const list(-2)
+static bool do_init_var_5419 = true;
+static lval var_5419;		// const list(1)
 static bool do_init_var_5421 = true;
-static lval var_5421;		// const list(2)
-static bool do_init_var_5425 = true;
-static lval var_5425;		// const list(2)
-static bool do_init_var_5433 = true;
-static lval var_5433;		// const list(-2)
-static bool do_init_var_5437 = true;
-static lval var_5437;		// const list(1)
-static bool do_init_var_5439 = true;
-static lval var_5439;		// const list(3)
+static lval var_5421;		// const list(3)
+static bool do_init_var_5424 = true;
+static lval var_5424;		// const list(1)
+static bool do_init_var_5426 = true;
+static lval var_5426;		// const list(2)
+static bool do_init_var_5429 = true;
+static lval var_5429;		// const list(1)
+static bool do_init_var_5432 = true;
+static lval var_5432;		// const list(2)
+static bool do_init_var_5435 = true;
+static lval var_5435;		// const list(4)
+static bool do_init_var_5438 = true;
+static lval var_5438;		// const list(1)
+static bool do_init_var_5440 = true;
+static lval var_5440;		// const list(3)
 static bool do_init_var_5442 = true;
-static lval var_5442;		// const list(1)
-static bool do_init_var_5444 = true;
-static lval var_5444;		// const list(2)
+static lval var_5442;		// const list(2)
 static bool do_init_var_5447 = true;
-static lval var_5447;		// const list(1)
+static lval var_5447;		// const list(3)
 static bool do_init_var_5450 = true;
 static lval var_5450;		// const list(2)
-static bool do_init_var_5453 = true;
-static lval var_5453;		// const list(4)
-static bool do_init_var_5456 = true;
-static lval var_5456;		// const list(1)
-static bool do_init_var_5458 = true;
-static lval var_5458;		// const list(3)
+static bool do_init_var_5455 = true;
+static lval var_5455;		// const list(2)
+static bool do_init_var_5457 = true;
+static lval var_5457;		// const list(2)
 static bool do_init_var_5460 = true;
 static lval var_5460;		// const list(2)
-static bool do_init_var_5465 = true;
-static lval var_5465;		// const list(3)
+static bool do_init_var_5464 = true;
+static lval var_5464;		// const list(2)
 static bool do_init_var_5468 = true;
 static lval var_5468;		// const list(2)
-static bool do_init_var_5473 = true;
-static lval var_5473;		// const list(2)
-static bool do_init_var_5475 = true;
-static lval var_5475;		// const list(2)
-static bool do_init_var_5479 = true;
-static lval var_5479;		// const list(2)
-static bool do_init_var_5483 = true;
-static lval var_5483;		// const list(2)
-static bool do_init_var_5491 = true;
-static lval var_5491;		// const list(-2)
-static bool do_init_var_5495 = true;
-static lval var_5495;		// const list(1)
-static bool do_init_var_5497 = true;
-static lval var_5497;		// const list(3)
-static bool do_init_var_5500 = true;
-static lval var_5500;		// const list(1)
-static bool do_init_var_5502 = true;
-static lval var_5502;		// const list(2)
-static bool do_init_var_5505 = true;
-static lval var_5505;		// const list(1)
+static bool do_init_var_5476 = true;
+static lval var_5476;		// const list(-2)
+static bool do_init_var_5480 = true;
+static lval var_5480;		// const list(1)
+static bool do_init_var_5482 = true;
+static lval var_5482;		// const list(3)
+static bool do_init_var_5485 = true;
+static lval var_5485;		// const list(1)
+static bool do_init_var_5487 = true;
+static lval var_5487;		// const list(2)
+static bool do_init_var_5490 = true;
+static lval var_5490;		// const list(1)
+static bool do_init_var_5493 = true;
+static lval var_5493;		// const list(2)
+static bool do_init_var_5496 = true;
+static lval var_5496;		// const list(4)
+static bool do_init_var_5499 = true;
+static lval var_5499;		// const list(1)
+static bool do_init_var_5501 = true;
+static lval var_5501;		// const list(3)
+static bool do_init_var_5503 = true;
+static lval var_5503;		// const list(2)
 static bool do_init_var_5508 = true;
-static lval var_5508;		// const list(2)
+static lval var_5508;		// const list(3)
 static bool do_init_var_5511 = true;
-static lval var_5511;		// const list(4)
-static bool do_init_var_5514 = true;
-static lval var_5514;		// const list(1)
+static lval var_5511;		// const list(2)
 static bool do_init_var_5516 = true;
-static lval var_5516;		// const list(3)
+static lval var_5516;		// const list(2)
 static bool do_init_var_5518 = true;
 static lval var_5518;		// const list(2)
-static bool do_init_var_5523 = true;
-static lval var_5523;		// const list(3)
+static bool do_init_var_5522 = true;
+static lval var_5522;		// const list(2)
 static bool do_init_var_5526 = true;
 static lval var_5526;		// const list(2)
-static bool do_init_var_5531 = true;
-static lval var_5531;		// const list(2)
-static bool do_init_var_5533 = true;
-static lval var_5533;		// const list(3)
-static bool do_init_var_5536 = true;
-static lval var_5536;		// const list(2)
-static bool do_init_var_5539 = true;
-static lval var_5539;		// const list(2)
+static bool do_init_var_5534 = true;
+static lval var_5534;		// const list(-2)
+static bool do_init_var_5538 = true;
+static lval var_5538;		// const list(1)
+static bool do_init_var_5540 = true;
+static lval var_5540;		// const list(3)
 static bool do_init_var_5543 = true;
-static lval var_5543;		// const list(2)
-static bool do_init_var_5546 = true;
-static lval var_5546;		// const list(2)
-static bool do_init_var_5550 = true;
-static lval var_5550;		// const list(2)
+static lval var_5543;		// const list(1)
+static bool do_init_var_5545 = true;
+static lval var_5545;		// const list(2)
+static bool do_init_var_5548 = true;
+static lval var_5548;		// const list(1)
+static bool do_init_var_5551 = true;
+static lval var_5551;		// const list(2)
 static bool do_init_var_5554 = true;
-static lval var_5554;		// const list(2)
-static bool do_init_var_5562 = true;
-static lval var_5562;		// const list(-2)
+static lval var_5554;		// const list(4)
+static bool do_init_var_5557 = true;
+static lval var_5557;		// const list(1)
+static bool do_init_var_5559 = true;
+static lval var_5559;		// const list(3)
+static bool do_init_var_5561 = true;
+static lval var_5561;		// const list(2)
 static bool do_init_var_5566 = true;
-static lval var_5566;		// const list(1)
-static bool do_init_var_5568 = true;
-static lval var_5568;		// const list(3)
-static bool do_init_var_5571 = true;
-static lval var_5571;		// const list(1)
-static bool do_init_var_5573 = true;
-static lval var_5573;		// const list(2)
+static lval var_5566;		// const list(3)
+static bool do_init_var_5569 = true;
+static lval var_5569;		// const list(2)
+static bool do_init_var_5574 = true;
+static lval var_5574;		// const list(2)
 static bool do_init_var_5576 = true;
-static lval var_5576;		// const list(1)
+static lval var_5576;		// const list(3)
 static bool do_init_var_5579 = true;
 static lval var_5579;		// const list(2)
 static bool do_init_var_5582 = true;
-static lval var_5582;		// const list(4)
-static bool do_init_var_5585 = true;
-static lval var_5585;		// const list(1)
-static bool do_init_var_5587 = true;
-static lval var_5587;		// const list(3)
+static lval var_5582;		// const list(2)
+static bool do_init_var_5586 = true;
+static lval var_5586;		// const list(2)
 static bool do_init_var_5589 = true;
 static lval var_5589;		// const list(2)
-static bool do_init_var_5594 = true;
-static lval var_5594;		// const list(3)
+static bool do_init_var_5593 = true;
+static lval var_5593;		// const list(2)
 static bool do_init_var_5597 = true;
 static lval var_5597;		// const list(2)
-static bool do_init_var_5602 = true;
-static lval var_5602;		// const list(2)
-static bool do_init_var_5604 = true;
-static lval var_5604;		// const list(3)
-static bool do_init_var_5607 = true;
-static lval var_5607;		// const list(2)
-static bool do_init_var_5610 = true;
-static lval var_5610;		// const list(2)
+static bool do_init_var_5605 = true;
+static lval var_5605;		// const list(-2)
+static bool do_init_var_5609 = true;
+static lval var_5609;		// const list(1)
+static bool do_init_var_5611 = true;
+static lval var_5611;		// const list(3)
 static bool do_init_var_5614 = true;
-static lval var_5614;		// const list(2)
-static bool do_init_var_5618 = true;
-static lval var_5618;		// const list(2)
+static lval var_5614;		// const list(1)
+static bool do_init_var_5616 = true;
+static lval var_5616;		// const list(2)
+static bool do_init_var_5619 = true;
+static lval var_5619;		// const list(1)
 static bool do_init_var_5622 = true;
 static lval var_5622;		// const list(2)
+static bool do_init_var_5625 = true;
+static lval var_5625;		// const list(4)
+static bool do_init_var_5628 = true;
+static lval var_5628;		// const list(1)
 static bool do_init_var_5630 = true;
-static lval var_5630;		// const list(1)
-static bool do_init_var_5633 = true;
-static lval var_5633;		// const list(1)
-static bool do_init_var_5635 = true;
-static lval var_5635;		// const list(2)
-static bool do_init_var_5638 = true;
-static lval var_5638;		// const list(6)
-static bool do_init_var_5641 = true;
-static lval var_5641;		// const list(2)
-static bool do_init_var_5644 = true;
-static lval var_5644;		// const list(2)
-static bool do_init_var_5648 = true;
-static lval var_5648;		// const list(3)
+static lval var_5630;		// const list(3)
+static bool do_init_var_5632 = true;
+static lval var_5632;		// const list(2)
+static bool do_init_var_5637 = true;
+static lval var_5637;		// const list(3)
+static bool do_init_var_5640 = true;
+static lval var_5640;		// const list(2)
+static bool do_init_var_5645 = true;
+static lval var_5645;		// const list(2)
+static bool do_init_var_5647 = true;
+static lval var_5647;		// const list(3)
+static bool do_init_var_5650 = true;
+static lval var_5650;		// const list(2)
 static bool do_init_var_5653 = true;
-static lval var_5653;		// const list(3)
-static bool do_init_var_5656 = true;
-static lval var_5656;		// const list(2)
+static lval var_5653;		// const list(2)
+static bool do_init_var_5657 = true;
+static lval var_5657;		// const list(2)
 static bool do_init_var_5661 = true;
 static lval var_5661;		// const list(2)
 static bool do_init_var_5665 = true;
 static lval var_5665;		// const list(2)
 static bool do_init_var_5673 = true;
-static lval var_5673;		// const list(-2)
-static bool do_init_var_5677 = true;
-static lval var_5677;		// const list(1)
-static bool do_init_var_5679 = true;
-static lval var_5679;		// const list(3)
-static bool do_init_var_5682 = true;
-static lval var_5682;		// const list(1)
+static lval var_5673;		// const list(1)
+static bool do_init_var_5676 = true;
+static lval var_5676;		// const list(1)
+static bool do_init_var_5678 = true;
+static lval var_5678;		// const list(2)
+static bool do_init_var_5681 = true;
+static lval var_5681;		// const list(6)
 static bool do_init_var_5684 = true;
 static lval var_5684;		// const list(2)
 static bool do_init_var_5687 = true;
-static lval var_5687;		// const list(1)
-static bool do_init_var_5690 = true;
-static lval var_5690;		// const list(2)
-static bool do_init_var_5693 = true;
-static lval var_5693;		// const list(3)
+static lval var_5687;		// const list(2)
+static bool do_init_var_5691 = true;
+static lval var_5691;		// const list(3)
 static bool do_init_var_5696 = true;
-static lval var_5696;		// const list(2)
-static bool do_init_var_5698 = true;
-static lval var_5698;		// const list(2)
-static bool do_init_var_5702 = true;
-static lval var_5702;		// const list(1)
+static lval var_5696;		// const list(3)
+static bool do_init_var_5699 = true;
+static lval var_5699;		// const list(2)
 static bool do_init_var_5704 = true;
-static lval var_5704;		// const list(3)
-static bool do_init_var_5707 = true;
-static lval var_5707;		// const list(2)
-static bool do_init_var_5711 = true;
-static lval var_5711;		// const list(2)
-static bool do_init_var_5715 = true;
-static lval var_5715;		// const list(2)
-static bool do_init_var_5723 = true;
-static lval var_5723;		// const list(-2)
+static lval var_5704;		// const list(2)
+static bool do_init_var_5708 = true;
+static lval var_5708;		// const list(2)
+static bool do_init_var_5716 = true;
+static lval var_5716;		// const list(-2)
+static bool do_init_var_5720 = true;
+static lval var_5720;		// const list(1)
+static bool do_init_var_5722 = true;
+static lval var_5722;		// const list(3)
+static bool do_init_var_5725 = true;
+static lval var_5725;		// const list(1)
 static bool do_init_var_5727 = true;
-static lval var_5727;		// const list(1)
-static bool do_init_var_5729 = true;
-static lval var_5729;		// const list(3)
-static bool do_init_var_5732 = true;
-static lval var_5732;		// const list(4)
-static bool do_init_var_5734 = true;
-static lval var_5734;		// const list(2)
-static bool do_init_var_5737 = true;
-static lval var_5737;		// const list(3)
-static bool do_init_var_5740 = true;
-static lval var_5740;		// const list(3)
-static bool do_init_var_5743 = true;
-static lval var_5743;		// const list(1)
-static bool do_init_var_5746 = true;
-static lval var_5746;		// const list(1)
+static lval var_5727;		// const list(2)
+static bool do_init_var_5730 = true;
+static lval var_5730;		// const list(1)
+static bool do_init_var_5733 = true;
+static lval var_5733;		// const list(2)
+static bool do_init_var_5736 = true;
+static lval var_5736;		// const list(3)
+static bool do_init_var_5739 = true;
+static lval var_5739;		// const list(2)
+static bool do_init_var_5741 = true;
+static lval var_5741;		// const list(2)
+static bool do_init_var_5745 = true;
+static lval var_5745;		// const list(1)
+static bool do_init_var_5747 = true;
+static lval var_5747;		// const list(3)
 static bool do_init_var_5750 = true;
 static lval var_5750;		// const list(2)
-static bool do_init_var_5753 = true;
-static lval var_5753;		// const list(1)
-static bool do_init_var_5756 = true;
-static lval var_5756;		// const list(2)
-static bool do_init_var_5759 = true;
-static lval var_5759;		// const list(3)
-static bool do_init_var_5764 = true;
-static lval var_5764;		// const list(2)
-static bool do_init_var_5767 = true;
-static lval var_5767;		// const list(3)
+static bool do_init_var_5754 = true;
+static lval var_5754;		// const list(2)
+static bool do_init_var_5758 = true;
+static lval var_5758;		// const list(2)
+static bool do_init_var_5766 = true;
+static lval var_5766;		// const list(-2)
+static bool do_init_var_5770 = true;
+static lval var_5770;		// const list(1)
 static bool do_init_var_5772 = true;
-static lval var_5772;		// const list(2)
+static lval var_5772;		// const list(3)
 static bool do_init_var_5775 = true;
 static lval var_5775;		// const list(4)
-static bool do_init_var_5778 = true;
-static lval var_5778;		// const list(2)
-static bool do_init_var_5781 = true;
-static lval var_5781;		// const list(4)
-static bool do_init_var_5784 = true;
-static lval var_5784;		// const list(3)
-static bool do_init_var_5787 = true;
-static lval var_5787;		// const list(2)
-static bool do_init_var_5791 = true;
-static lval var_5791;		// const list(2)
-static bool do_init_var_5794 = true;
-static lval var_5794;		// const list(2)
+static bool do_init_var_5777 = true;
+static lval var_5777;		// const list(2)
+static bool do_init_var_5780 = true;
+static lval var_5780;		// const list(3)
+static bool do_init_var_5783 = true;
+static lval var_5783;		// const list(3)
+static bool do_init_var_5786 = true;
+static lval var_5786;		// const list(1)
+static bool do_init_var_5789 = true;
+static lval var_5789;		// const list(1)
+static bool do_init_var_5793 = true;
+static lval var_5793;		// const list(2)
 static bool do_init_var_5796 = true;
-static lval var_5796;		// const list(2)
-static bool do_init_var_5800 = true;
-static lval var_5800;		// const list(2)
-static bool do_init_var_5806 = true;
-static lval var_5806;		// const list(2)
-static bool do_init_var_5809 = true;
-static lval var_5809;		// const list(4)
-static bool do_init_var_5812 = true;
-static lval var_5812;		// const list(3)
+static lval var_5796;		// const list(1)
+static bool do_init_var_5799 = true;
+static lval var_5799;		// const list(2)
+static bool do_init_var_5802 = true;
+static lval var_5802;		// const list(3)
+static bool do_init_var_5807 = true;
+static lval var_5807;		// const list(2)
+static bool do_init_var_5810 = true;
+static lval var_5810;		// const list(3)
 static bool do_init_var_5815 = true;
 static lval var_5815;		// const list(2)
-static bool do_init_var_5819 = true;
-static lval var_5819;		// const list(2)
-static bool do_init_var_5822 = true;
-static lval var_5822;		// const list(3)
-static bool do_init_var_5825 = true;
-static lval var_5825;		// const list(2)
-static bool do_init_var_5829 = true;
-static lval var_5829;		// const list(2)
-static bool do_init_var_5835 = true;
-static lval var_5835;		// const list(4)
-static bool do_init_var_5838 = true;
-static lval var_5838;		// const list(1)
-static bool do_init_var_5840 = true;
-static lval var_5840;		// const list(2)
-static bool do_init_var_5842 = true;
-static lval var_5842;		// const list(2)
-static bool do_init_var_5846 = true;
-static lval var_5846;		// const list(2)
+static bool do_init_var_5818 = true;
+static lval var_5818;		// const list(4)
+static bool do_init_var_5821 = true;
+static lval var_5821;		// const list(2)
+static bool do_init_var_5824 = true;
+static lval var_5824;		// const list(4)
+static bool do_init_var_5827 = true;
+static lval var_5827;		// const list(3)
+static bool do_init_var_5830 = true;
+static lval var_5830;		// const list(2)
+static bool do_init_var_5834 = true;
+static lval var_5834;		// const list(2)
+static bool do_init_var_5837 = true;
+static lval var_5837;		// const list(2)
+static bool do_init_var_5839 = true;
+static lval var_5839;		// const list(2)
+static bool do_init_var_5843 = true;
+static lval var_5843;		// const list(2)
 static bool do_init_var_5849 = true;
 static lval var_5849;		// const list(2)
-static bool do_init_var_5853 = true;
-static lval var_5853;		// const list(2)
-static bool do_init_var_5856 = true;
-static lval var_5856;		// const list(4)
-static bool do_init_var_5859 = true;
-static lval var_5859;		// const list(3)
+static bool do_init_var_5852 = true;
+static lval var_5852;		// const list(4)
+static bool do_init_var_5855 = true;
+static lval var_5855;		// const list(3)
+static bool do_init_var_5858 = true;
+static lval var_5858;		// const list(2)
 static bool do_init_var_5862 = true;
 static lval var_5862;		// const list(2)
-static bool do_init_var_5866 = true;
-static lval var_5866;		// const list(2)
-static bool do_init_var_5869 = true;
-static lval var_5869;		// const list(3)
+static bool do_init_var_5865 = true;
+static lval var_5865;		// const list(3)
+static bool do_init_var_5868 = true;
+static lval var_5868;		// const list(2)
 static bool do_init_var_5872 = true;
 static lval var_5872;		// const list(2)
-static bool do_init_var_5876 = true;
-static lval var_5876;		// const list(2)
-static bool do_init_var_5882 = true;
-static lval var_5882;		// const list(2)
-static bool do_init_var_5890 = true;
-static lval var_5890;		// const list(-2)
-static bool do_init_var_5894 = true;
-static lval var_5894;		// const list(1)
+static bool do_init_var_5878 = true;
+static lval var_5878;		// const list(4)
+static bool do_init_var_5881 = true;
+static lval var_5881;		// const list(1)
+static bool do_init_var_5883 = true;
+static lval var_5883;		// const list(2)
+static bool do_init_var_5885 = true;
+static lval var_5885;		// const list(2)
+static bool do_init_var_5889 = true;
+static lval var_5889;		// const list(2)
+static bool do_init_var_5892 = true;
+static lval var_5892;		// const list(2)
 static bool do_init_var_5896 = true;
-static lval var_5896;		// const list(3)
+static lval var_5896;		// const list(2)
 static bool do_init_var_5899 = true;
-static lval var_5899;		// const list(6)
-static bool do_init_var_5901 = true;
-static lval var_5901;		// const list(2)
-static bool do_init_var_5904 = true;
-static lval var_5904;		// const list(1)
-static bool do_init_var_5907 = true;
-static lval var_5907;		// const list(2)
-static bool do_init_var_5910 = true;
-static lval var_5910;		// const list(1)
-static bool do_init_var_5913 = true;
-static lval var_5913;		// const list(2)
-static bool do_init_var_5916 = true;
-static lval var_5916;		// const list(3)
+static lval var_5899;		// const list(4)
+static bool do_init_var_5902 = true;
+static lval var_5902;		// const list(3)
+static bool do_init_var_5905 = true;
+static lval var_5905;		// const list(2)
+static bool do_init_var_5909 = true;
+static lval var_5909;		// const list(2)
+static bool do_init_var_5912 = true;
+static lval var_5912;		// const list(3)
+static bool do_init_var_5915 = true;
+static lval var_5915;		// const list(2)
 static bool do_init_var_5919 = true;
-static lval var_5919;		// const list(3)
-static bool do_init_var_5922 = true;
-static lval var_5922;		// const list(1)
+static lval var_5919;		// const list(2)
 static bool do_init_var_5925 = true;
-static lval var_5925;		// const list(4)
-static bool do_init_var_5928 = true;
-static lval var_5928;		// const list(2)
-static bool do_init_var_5932 = true;
-static lval var_5932;		// const list(3)
+static lval var_5925;		// const list(2)
+static bool do_init_var_5933 = true;
+static lval var_5933;		// const list(-2)
+static bool do_init_var_5937 = true;
+static lval var_5937;		// const list(1)
 static bool do_init_var_5939 = true;
-static lval var_5939;		// const list(2)
+static lval var_5939;		// const list(3)
 static bool do_init_var_5942 = true;
-static lval var_5942;		// const list(3)
-static bool do_init_var_5945 = true;
-static lval var_5945;		// const list(3)
-static bool do_init_var_5948 = true;
-static lval var_5948;		// const list(1)
-static bool do_init_var_5951 = true;
-static lval var_5951;		// const list(3)
-static bool do_init_var_5954 = true;
-static lval var_5954;		// const list(1)
+static lval var_5942;		// const list(6)
+static bool do_init_var_5944 = true;
+static lval var_5944;		// const list(2)
+static bool do_init_var_5947 = true;
+static lval var_5947;		// const list(1)
+static bool do_init_var_5950 = true;
+static lval var_5950;		// const list(2)
+static bool do_init_var_5953 = true;
+static lval var_5953;		// const list(1)
 static bool do_init_var_5956 = true;
 static lval var_5956;		// const list(2)
 static bool do_init_var_5959 = true;
-static lval var_5959;		// const list(2)
-static bool do_init_var_5963 = true;
-static lval var_5963;		// const list(2)
-static bool do_init_var_5966 = true;
-static lval var_5966;		// const list(3)
-static bool do_init_var_5969 = true;
-static lval var_5969;		// const list(2)
+static lval var_5959;		// const list(3)
+static bool do_init_var_5962 = true;
+static lval var_5962;		// const list(3)
+static bool do_init_var_5965 = true;
+static lval var_5965;		// const list(1)
+static bool do_init_var_5968 = true;
+static lval var_5968;		// const list(4)
+static bool do_init_var_5971 = true;
+static lval var_5971;		// const list(2)
 static bool do_init_var_5975 = true;
-static lval var_5975;		// const list(2)
-static bool do_init_var_5978 = true;
-static lval var_5978;		// const list(3)
-static bool do_init_var_5981 = true;
-static lval var_5981;		// const list(3)
-static bool do_init_var_5984 = true;
-static lval var_5984;		// const list(1)
-static bool do_init_var_5987 = true;
-static lval var_5987;		// const list(3)
-static bool do_init_var_5990 = true;
-static lval var_5990;		// const list(1)
-static bool do_init_var_5992 = true;
-static lval var_5992;		// const list(2)
-static bool do_init_var_5995 = true;
-static lval var_5995;		// const list(2)
+static lval var_5975;		// const list(3)
+static bool do_init_var_5982 = true;
+static lval var_5982;		// const list(2)
+static bool do_init_var_5985 = true;
+static lval var_5985;		// const list(3)
+static bool do_init_var_5988 = true;
+static lval var_5988;		// const list(3)
+static bool do_init_var_5991 = true;
+static lval var_5991;		// const list(1)
+static bool do_init_var_5994 = true;
+static lval var_5994;		// const list(3)
+static bool do_init_var_5997 = true;
+static lval var_5997;		// const list(1)
 static bool do_init_var_5999 = true;
 static lval var_5999;		// const list(2)
 static bool do_init_var_6002 = true;
 static lval var_6002;		// const list(2)
-static bool do_init_var_6004 = true;
-static lval var_6004;		// const list(3)
-static bool do_init_var_6007 = true;
-static lval var_6007;		// const list(2)
-static bool do_init_var_6011 = true;
-static lval var_6011;		// const list(2)
-static bool do_init_var_6015 = true;
-static lval var_6015;		// const list(2)
-static bool do_init_var_6020 = true;
-static lval var_6020;		// const list(2)
-static bool do_init_var_6023 = true;
-static lval var_6023;		// const list(3)
-static bool do_init_var_6026 = true;
-static lval var_6026;		// const list(3)
-static bool do_init_var_6029 = true;
-static lval var_6029;		// const list(1)
-static bool do_init_var_6032 = true;
-static lval var_6032;		// const list(3)
+static bool do_init_var_6006 = true;
+static lval var_6006;		// const list(2)
+static bool do_init_var_6009 = true;
+static lval var_6009;		// const list(3)
+static bool do_init_var_6012 = true;
+static lval var_6012;		// const list(2)
+static bool do_init_var_6018 = true;
+static lval var_6018;		// const list(2)
+static bool do_init_var_6021 = true;
+static lval var_6021;		// const list(3)
+static bool do_init_var_6024 = true;
+static lval var_6024;		// const list(3)
+static bool do_init_var_6027 = true;
+static lval var_6027;		// const list(1)
+static bool do_init_var_6030 = true;
+static lval var_6030;		// const list(3)
+static bool do_init_var_6033 = true;
+static lval var_6033;		// const list(1)
 static bool do_init_var_6035 = true;
 static lval var_6035;		// const list(2)
-static bool do_init_var_6037 = true;
-static lval var_6037;		// const list(2)
-static bool do_init_var_6040 = true;
-static lval var_6040;		// const list(2)
-static bool do_init_var_6044 = true;
-static lval var_6044;		// const list(2)
+static bool do_init_var_6038 = true;
+static lval var_6038;		// const list(2)
+static bool do_init_var_6042 = true;
+static lval var_6042;		// const list(2)
+static bool do_init_var_6045 = true;
+static lval var_6045;		// const list(2)
 static bool do_init_var_6047 = true;
-static lval var_6047;		// const list(2)
-static bool do_init_var_6051 = true;
-static lval var_6051;		// const list(2)
+static lval var_6047;		// const list(3)
+static bool do_init_var_6050 = true;
+static lval var_6050;		// const list(2)
 static bool do_init_var_6054 = true;
-static lval var_6054;		// const list(3)
-static bool do_init_var_6057 = true;
-static lval var_6057;		// const list(2)
-static bool do_init_var_6061 = true;
-static lval var_6061;		// const list(2)
+static lval var_6054;		// const list(2)
+static bool do_init_var_6058 = true;
+static lval var_6058;		// const list(2)
 static bool do_init_var_6063 = true;
 static lval var_6063;		// const list(2)
-static bool do_init_var_6067 = true;
-static lval var_6067;		// const list(2)
+static bool do_init_var_6066 = true;
+static lval var_6066;		// const list(3)
+static bool do_init_var_6069 = true;
+static lval var_6069;		// const list(3)
 static bool do_init_var_6072 = true;
-static lval var_6072;		// const list(2)
+static lval var_6072;		// const list(1)
 static bool do_init_var_6075 = true;
 static lval var_6075;		// const list(3)
 static bool do_init_var_6078 = true;
 static lval var_6078;		// const list(2)
-static bool do_init_var_6082 = true;
-static lval var_6082;		// const list(3)
-static bool do_init_var_6085 = true;
-static lval var_6085;		// const list(1)
+static bool do_init_var_6080 = true;
+static lval var_6080;		// const list(2)
+static bool do_init_var_6083 = true;
+static lval var_6083;		// const list(2)
 static bool do_init_var_6087 = true;
 static lval var_6087;		// const list(2)
-static bool do_init_var_6089 = true;
-static lval var_6089;		// const list(2)
-static bool do_init_var_6093 = true;
-static lval var_6093;		// const list(1)
-static bool do_init_var_6095 = true;
-static lval var_6095;		// const list(4)
-static bool do_init_var_6099 = true;
-static lval var_6099;		// const list(2)
-static bool do_init_var_6103 = true;
-static lval var_6103;		// const list(3)
+static bool do_init_var_6090 = true;
+static lval var_6090;		// const list(2)
+static bool do_init_var_6094 = true;
+static lval var_6094;		// const list(2)
+static bool do_init_var_6097 = true;
+static lval var_6097;		// const list(3)
+static bool do_init_var_6100 = true;
+static lval var_6100;		// const list(2)
+static bool do_init_var_6104 = true;
+static lval var_6104;		// const list(2)
 static bool do_init_var_6106 = true;
-static lval var_6106;		// const list(1)
-static bool do_init_var_6108 = true;
-static lval var_6108;		// const list(2)
-static bool do_init_var_6112 = true;
-static lval var_6112;		// const list(2)
+static lval var_6106;		// const list(2)
+static bool do_init_var_6110 = true;
+static lval var_6110;		// const list(2)
 static bool do_init_var_6115 = true;
 static lval var_6115;		// const list(2)
-static bool do_init_var_6119 = true;
-static lval var_6119;		// const list(2)
-static bool do_init_var_6127 = true;
-static lval var_6127;		// const list(-3)
+static bool do_init_var_6118 = true;
+static lval var_6118;		// const list(3)
+static bool do_init_var_6121 = true;
+static lval var_6121;		// const list(2)
+static bool do_init_var_6125 = true;
+static lval var_6125;		// const list(3)
+static bool do_init_var_6128 = true;
+static lval var_6128;		// const list(1)
+static bool do_init_var_6130 = true;
+static lval var_6130;		// const list(2)
 static bool do_init_var_6132 = true;
-static lval var_6132;		// const list(1)
-static bool do_init_var_6134 = true;
-static lval var_6134;		// const list(3)
-static bool do_init_var_6137 = true;
-static lval var_6137;		// const list(16)
-static bool do_init_var_6139 = true;
-static lval var_6139;		// const list(2)
+static lval var_6132;		// const list(2)
+static bool do_init_var_6136 = true;
+static lval var_6136;		// const list(1)
+static bool do_init_var_6138 = true;
+static lval var_6138;		// const list(4)
 static bool do_init_var_6142 = true;
-static lval var_6142;		// const list(3)
-static bool do_init_var_6147 = true;
-static lval var_6147;		// const list(2)
-static bool do_init_var_6150 = true;
-static lval var_6150;		// const list(2)
-static bool do_init_var_6154 = true;
-static lval var_6154;		// const list(2)
-static bool do_init_var_6157 = true;
-static lval var_6157;		// const list(3)
+static lval var_6142;		// const list(2)
+static bool do_init_var_6146 = true;
+static lval var_6146;		// const list(3)
+static bool do_init_var_6149 = true;
+static lval var_6149;		// const list(1)
+static bool do_init_var_6151 = true;
+static lval var_6151;		// const list(2)
+static bool do_init_var_6155 = true;
+static lval var_6155;		// const list(2)
+static bool do_init_var_6158 = true;
+static lval var_6158;		// const list(2)
 static bool do_init_var_6162 = true;
 static lval var_6162;		// const list(2)
-static bool do_init_var_6165 = true;
-static lval var_6165;		// const list(3)
-static bool do_init_var_6169 = true;
-static lval var_6169;		// const list(3)
-static bool do_init_var_6174 = true;
-static lval var_6174;		// const list(2)
+static bool do_init_var_6170 = true;
+static lval var_6170;		// const list(-3)
+static bool do_init_var_6175 = true;
+static lval var_6175;		// const list(1)
 static bool do_init_var_6177 = true;
 static lval var_6177;		// const list(3)
 static bool do_init_var_6180 = true;
-static lval var_6180;		// const list(2)
-static bool do_init_var_6184 = true;
-static lval var_6184;		// const list(2)
-static bool do_init_var_6187 = true;
-static lval var_6187;		// const list(3)
-static bool do_init_var_6192 = true;
-static lval var_6192;		// const list(2)
-static bool do_init_var_6195 = true;
-static lval var_6195;		// const list(3)
-static bool do_init_var_6198 = true;
-static lval var_6198;		// const list(3)
-static bool do_init_var_6203 = true;
-static lval var_6203;		// const list(2)
-static bool do_init_var_6206 = true;
-static lval var_6206;		// const list(4)
+static lval var_6180;		// const list(16)
+static bool do_init_var_6182 = true;
+static lval var_6182;		// const list(2)
+static bool do_init_var_6185 = true;
+static lval var_6185;		// const list(3)
+static bool do_init_var_6190 = true;
+static lval var_6190;		// const list(2)
+static bool do_init_var_6193 = true;
+static lval var_6193;		// const list(2)
+static bool do_init_var_6197 = true;
+static lval var_6197;		// const list(2)
+static bool do_init_var_6200 = true;
+static lval var_6200;		// const list(3)
+static bool do_init_var_6205 = true;
+static lval var_6205;		// const list(2)
+static bool do_init_var_6208 = true;
+static lval var_6208;		// const list(3)
 static bool do_init_var_6212 = true;
-static lval var_6212;		// const list(2)
-static bool do_init_var_6215 = true;
-static lval var_6215;		// const list(2)
-static bool do_init_var_6219 = true;
-static lval var_6219;		// const list(2)
-static bool do_init_var_6222 = true;
-static lval var_6222;		// const list(3)
+static lval var_6212;		// const list(3)
+static bool do_init_var_6217 = true;
+static lval var_6217;		// const list(2)
+static bool do_init_var_6220 = true;
+static lval var_6220;		// const list(3)
+static bool do_init_var_6223 = true;
+static lval var_6223;		// const list(2)
 static bool do_init_var_6227 = true;
 static lval var_6227;		// const list(2)
 static bool do_init_var_6230 = true;
-static lval var_6230;		// const list(1)
-static bool do_init_var_6233 = true;
-static lval var_6233;		// const list(2)
-static bool do_init_var_6236 = true;
-static lval var_6236;		// const list(4)
-static bool do_init_var_6242 = true;
-static lval var_6242;		// const list(2)
-static bool do_init_var_6245 = true;
-static lval var_6245;		// const list(4)
-static bool do_init_var_6251 = true;
-static lval var_6251;		// const list(2)
-static bool do_init_var_6254 = true;
-static lval var_6254;		// const list(4)
-static bool do_init_var_6260 = true;
-static lval var_6260;		// const list(2)
-static bool do_init_var_6263 = true;
-static lval var_6263;		// const list(4)
-static bool do_init_var_6266 = true;
-static lval var_6266;		// const list(3)
-static bool do_init_var_6269 = true;
-static lval var_6269;		// const list(2)
+static lval var_6230;		// const list(3)
+static bool do_init_var_6235 = true;
+static lval var_6235;		// const list(2)
+static bool do_init_var_6238 = true;
+static lval var_6238;		// const list(3)
+static bool do_init_var_6241 = true;
+static lval var_6241;		// const list(3)
+static bool do_init_var_6246 = true;
+static lval var_6246;		// const list(2)
+static bool do_init_var_6249 = true;
+static lval var_6249;		// const list(4)
+static bool do_init_var_6255 = true;
+static lval var_6255;		// const list(2)
+static bool do_init_var_6258 = true;
+static lval var_6258;		// const list(2)
+static bool do_init_var_6262 = true;
+static lval var_6262;		// const list(2)
+static bool do_init_var_6265 = true;
+static lval var_6265;		// const list(3)
+static bool do_init_var_6270 = true;
+static lval var_6270;		// const list(2)
 static bool do_init_var_6273 = true;
-static lval var_6273;		// const list(2)
+static lval var_6273;		// const list(1)
 static bool do_init_var_6276 = true;
-static lval var_6276;		// const list(4)
+static lval var_6276;		// const list(2)
 static bool do_init_var_6279 = true;
-static lval var_6279;		// const list(2)
-static bool do_init_var_6283 = true;
-static lval var_6283;		// const list(2)
-static bool do_init_var_6287 = true;
-static lval var_6287;		// const list(2)
-static bool do_init_var_6292 = true;
-static lval var_6292;		// const list(3)
+static lval var_6279;		// const list(4)
+static bool do_init_var_6285 = true;
+static lval var_6285;		// const list(2)
+static bool do_init_var_6288 = true;
+static lval var_6288;		// const list(4)
+static bool do_init_var_6294 = true;
+static lval var_6294;		// const list(2)
 static bool do_init_var_6297 = true;
-static lval var_6297;		// const list(2)
-static bool do_init_var_6300 = true;
-static lval var_6300;		// const list(4)
+static lval var_6297;		// const list(4)
 static bool do_init_var_6303 = true;
-static lval var_6303;		// const list(3)
+static lval var_6303;		// const list(2)
 static bool do_init_var_6306 = true;
-static lval var_6306;		// const list(2)
-static bool do_init_var_6310 = true;
-static lval var_6310;		// const list(3)
-static bool do_init_var_6313 = true;
-static lval var_6313;		// const list(1)
-static bool do_init_var_6315 = true;
-static lval var_6315;		// const list(2)
-static bool do_init_var_6318 = true;
-static lval var_6318;		// const list(3)
+static lval var_6306;		// const list(4)
+static bool do_init_var_6309 = true;
+static lval var_6309;		// const list(3)
+static bool do_init_var_6312 = true;
+static lval var_6312;		// const list(2)
+static bool do_init_var_6316 = true;
+static lval var_6316;		// const list(2)
+static bool do_init_var_6319 = true;
+static lval var_6319;		// const list(4)
 static bool do_init_var_6322 = true;
 static lval var_6322;		// const list(2)
 static bool do_init_var_6326 = true;
 static lval var_6326;		// const list(2)
-static bool do_init_var_6329 = true;
-static lval var_6329;		// const list(3)
-static bool do_init_var_6332 = true;
-static lval var_6332;		// const list(2)
-static bool do_init_var_6334 = true;
-static lval var_6334;		// const list(2)
-static bool do_init_var_6339 = true;
-static lval var_6339;		// const list(3)
+static bool do_init_var_6330 = true;
+static lval var_6330;		// const list(2)
+static bool do_init_var_6335 = true;
+static lval var_6335;		// const list(3)
+static bool do_init_var_6340 = true;
+static lval var_6340;		// const list(2)
 static bool do_init_var_6343 = true;
-static lval var_6343;		// const list(2)
-static bool do_init_var_6348 = true;
-static lval var_6348;		// const list(3)
+static lval var_6343;		// const list(4)
+static bool do_init_var_6346 = true;
+static lval var_6346;		// const list(3)
+static bool do_init_var_6349 = true;
+static lval var_6349;		// const list(2)
 static bool do_init_var_6353 = true;
-static lval var_6353;		// const list(2)
+static lval var_6353;		// const list(3)
 static bool do_init_var_6356 = true;
-static lval var_6356;		// const list(4)
-static bool do_init_var_6359 = true;
-static lval var_6359;		// const list(3)
-static bool do_init_var_6362 = true;
-static lval var_6362;		// const list(2)
-static bool do_init_var_6366 = true;
-static lval var_6366;		// const list(3)
+static lval var_6356;		// const list(1)
+static bool do_init_var_6358 = true;
+static lval var_6358;		// const list(2)
+static bool do_init_var_6361 = true;
+static lval var_6361;		// const list(3)
+static bool do_init_var_6365 = true;
+static lval var_6365;		// const list(2)
 static bool do_init_var_6369 = true;
-static lval var_6369;		// const list(1)
-static bool do_init_var_6371 = true;
-static lval var_6371;		// const list(2)
-static bool do_init_var_6374 = true;
-static lval var_6374;		// const list(4)
-static bool do_init_var_6378 = true;
-static lval var_6378;		// const list(2)
-static bool do_init_var_6383 = true;
-static lval var_6383;		// const list(2)
+static lval var_6369;		// const list(2)
+static bool do_init_var_6372 = true;
+static lval var_6372;		// const list(3)
+static bool do_init_var_6375 = true;
+static lval var_6375;		// const list(2)
+static bool do_init_var_6377 = true;
+static lval var_6377;		// const list(2)
+static bool do_init_var_6382 = true;
+static lval var_6382;		// const list(3)
 static bool do_init_var_6386 = true;
-static lval var_6386;		// const list(3)
-static bool do_init_var_6389 = true;
-static lval var_6389;		// const list(3)
+static lval var_6386;		// const list(2)
 static bool do_init_var_6391 = true;
-static lval var_6391;		// const list(2)
-static bool do_init_var_6397 = true;
-static lval var_6397;		// const list(4)
-static bool do_init_var_6401 = true;
-static lval var_6401;		// const list(2)
-static bool do_init_var_6407 = true;
-static lval var_6407;		// const list(3)
+static lval var_6391;		// const list(3)
+static bool do_init_var_6396 = true;
+static lval var_6396;		// const list(2)
+static bool do_init_var_6399 = true;
+static lval var_6399;		// const list(4)
+static bool do_init_var_6402 = true;
+static lval var_6402;		// const list(3)
+static bool do_init_var_6405 = true;
+static lval var_6405;		// const list(2)
+static bool do_init_var_6409 = true;
+static lval var_6409;		// const list(3)
 static bool do_init_var_6412 = true;
-static lval var_6412;		// const list(2)
-static bool do_init_var_6415 = true;
-static lval var_6415;		// const list(2)
-static bool do_init_var_6418 = true;
-static lval var_6418;		// const list(5)
+static lval var_6412;		// const list(1)
+static bool do_init_var_6414 = true;
+static lval var_6414;		// const list(2)
+static bool do_init_var_6417 = true;
+static lval var_6417;		// const list(4)
 static bool do_init_var_6421 = true;
-static lval var_6421;		// const list(3)
-static bool do_init_var_6424 = true;
-static lval var_6424;		// const list(2)
+static lval var_6421;		// const list(2)
 static bool do_init_var_6426 = true;
 static lval var_6426;		// const list(2)
-static bool do_init_var_6430 = true;
-static lval var_6430;		// const list(2)
+static bool do_init_var_6429 = true;
+static lval var_6429;		// const list(3)
+static bool do_init_var_6432 = true;
+static lval var_6432;		// const list(3)
 static bool do_init_var_6434 = true;
-static lval var_6434;		// const list(5)
-static bool do_init_var_6437 = true;
-static lval var_6437;		// const list(1)
-static bool do_init_var_6439 = true;
-static lval var_6439;		// const list(2)
-static bool do_init_var_6441 = true;
-static lval var_6441;		// const list(2)
-static bool do_init_var_6445 = true;
-static lval var_6445;		// const list(2)
-static bool do_init_var_6448 = true;
-static lval var_6448;		// const list(2)
-static bool do_init_var_6452 = true;
-static lval var_6452;		// const list(4)
+static lval var_6434;		// const list(2)
+static bool do_init_var_6440 = true;
+static lval var_6440;		// const list(4)
+static bool do_init_var_6444 = true;
+static lval var_6444;		// const list(2)
+static bool do_init_var_6450 = true;
+static lval var_6450;		// const list(3)
 static bool do_init_var_6455 = true;
 static lval var_6455;		// const list(2)
-static bool do_init_var_6460 = true;
-static lval var_6460;		// const list(2)
+static bool do_init_var_6458 = true;
+static lval var_6458;		// const list(2)
+static bool do_init_var_6461 = true;
+static lval var_6461;		// const list(5)
 static bool do_init_var_6464 = true;
-static lval var_6464;		// const list(2)
-static bool do_init_var_6468 = true;
-static lval var_6468;		// const list(2)
-static bool do_init_var_6472 = true;
-static lval var_6472;		// const list(3)
-static bool do_init_var_6475 = true;
-static lval var_6475;		// const list(2)
+static lval var_6464;		// const list(3)
+static bool do_init_var_6467 = true;
+static lval var_6467;		// const list(2)
+static bool do_init_var_6469 = true;
+static lval var_6469;		// const list(2)
+static bool do_init_var_6473 = true;
+static lval var_6473;		// const list(2)
 static bool do_init_var_6477 = true;
-static lval var_6477;		// const list(2)
+static lval var_6477;		// const list(5)
+static bool do_init_var_6480 = true;
+static lval var_6480;		// const list(1)
 static bool do_init_var_6482 = true;
-static lval var_6482;		// const list(3)
-static bool do_init_var_6485 = true;
-static lval var_6485;		// const list(2)
-static bool do_init_var_6489 = true;
-static lval var_6489;		// const list(3)
-static bool do_init_var_6492 = true;
-static lval var_6492;		// const list(3)
-static bool do_init_var_6497 = true;
-static lval var_6497;		// const list(2)
-static bool do_init_var_6501 = true;
-static lval var_6501;		// const list(2)
-static bool do_init_var_6505 = true;
-static lval var_6505;		// const list(2)
+static lval var_6482;		// const list(2)
+static bool do_init_var_6484 = true;
+static lval var_6484;		// const list(2)
+static bool do_init_var_6488 = true;
+static lval var_6488;		// const list(2)
+static bool do_init_var_6491 = true;
+static lval var_6491;		// const list(2)
+static bool do_init_var_6495 = true;
+static lval var_6495;		// const list(4)
+static bool do_init_var_6498 = true;
+static lval var_6498;		// const list(2)
+static bool do_init_var_6503 = true;
+static lval var_6503;		// const list(2)
+static bool do_init_var_6507 = true;
+static lval var_6507;		// const list(2)
+static bool do_init_var_6511 = true;
+static lval var_6511;		// const list(2)
+static bool do_init_var_6515 = true;
+static lval var_6515;		// const list(3)
+static bool do_init_var_6518 = true;
+static lval var_6518;		// const list(2)
+static bool do_init_var_6520 = true;
+static lval var_6520;		// const list(2)
+static bool do_init_var_6525 = true;
+static lval var_6525;		// const list(3)
+static bool do_init_var_6528 = true;
+static lval var_6528;		// const list(2)
+static bool do_init_var_6532 = true;
+static lval var_6532;		// const list(3)
+static bool do_init_var_6535 = true;
+static lval var_6535;		// const list(3)
+static bool do_init_var_6540 = true;
+static lval var_6540;		// const list(2)
+static bool do_init_var_6544 = true;
+static lval var_6544;		// const list(2)
+static bool do_init_var_6548 = true;
+static lval var_6548;		// const list(2)
 
 // definitions
 
@@ -1335,6 +1335,7 @@ lval var_17;
 {
 size_t i, capa;
 var_17.vt = LV_VECTOR;
+var_17.origin = var_16.origin;
 capa = var_16.v.iv;
 var_17.v.vec.capa = capa;
 var_17.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
@@ -1758,6 +1759,7 @@ lval var_212;
 {
 size_t i, capa;
 var_212.vt = LV_BVECTOR;
+var_212.origin = var_210[0].origin;
 capa = var_210[0].v.iv;
 var_212.v.bvec.capa = capa;
 var_212.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));
@@ -1776,6 +1778,7 @@ lval var_219;
 {
 size_t i, capa;
 var_219.vt = LV_BVECTOR;
+var_219.origin = var_217[0].origin;
 capa = var_217[0].v.iv;
 var_219.v.bvec.capa = capa;
 var_219.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));
@@ -1900,6 +1903,7 @@ if (var_245[0].vt != LV_INT || var_245[0].v.iv < 0) {
 WILE_EX("string-create", "input is not a non-negative integer");
 }
 var_247.vt = LV_STRING;
+var_247.origin = var_245[0].origin;
 var_247.v.str = LISP_ALLOC(char, 1 + var_245[0].v.iv);
 memset(var_247.v.str, 'X', var_245[0].v.iv);
 var_247.v.str[var_245[0].v.iv] = '\0';
@@ -1918,6 +1922,7 @@ if (var_252[1].vt != LV_CHAR || var_252[1].v.chr == '\0') {
 WILE_EX("string-create", "second input is not a valid character");
 }
 var_254.vt = LV_STRING;
+var_254.origin = var_252[0].origin;
 var_254.v.str = LISP_ALLOC(char, 1 + var_252[0].v.iv);
 memset(var_254.v.str, var_252[1].v.chr, var_252[0].v.iv);
 var_254.v.str[var_252[0].v.iv] = '\0';
@@ -2001,6 +2006,7 @@ lval var_273;
 {
 size_t i, capa;
 var_273.vt = LV_VECTOR;
+var_273.origin = var_271[0].origin;
 capa = var_271[0].v.iv;
 var_273.v.vec.capa = capa;
 var_273.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
@@ -2019,6 +2025,7 @@ lval var_280;
 {
 size_t i, capa;
 var_280.vt = LV_VECTOR;
+var_280.origin = var_278[0].origin;
 capa = var_278[0].v.iv;
 var_280.v.vec.capa = capa;
 var_280.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
@@ -2528,6 +2535,7 @@ if (var_462[2].v.iv < var_462[1].v.iv || (size_t) var_462[2].v.iv >= len) {
 WILE_EX("string-copy", "end index is out of range");
 }
 var_464.vt = LV_STRING;
+var_464.origin = var_462[0].origin;
 var_464.v.str = LISP_ALLOC(char, 1 + var_462[2].v.iv - var_462[1].v.iv);
 memcpy(var_464.v.str, var_462[0].v.str + var_462[1].v.iv, var_462[2].v.iv - var_462[1].v.iv);
 var_464.v.str[var_462[2].v.iv - var_462[1].v.iv] = '\0';
@@ -3758,6 +3766,7 @@ if (var_878[0].vt != LV_BVECTOR) {
 WILE_EX("bytevector->string", "expects one bytevector argument");
 }
 var_880.vt = LV_STRING;
+var_880.origin = var_878[0].origin;
 var_880.v.str = LISP_ALLOC(char, 1 + var_878[0].v.bvec.capa);
 memcpy(var_880.v.str, var_878[0].v.bvec.arr, var_878[0].v.bvec.capa);
 var_880.v.str[var_878[0].v.bvec.capa] = 0;
@@ -3786,6 +3795,7 @@ lval var_902;
 {
 size_t i, capa;
 var_902.vt = LV_BVECTOR;
+var_902.origin = var_900[0].origin;
 capa = var_900[0].v.iv;
 var_902.v.bvec.capa = capa;
 var_902.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));
@@ -3804,6 +3814,7 @@ lval var_909;
 {
 size_t i, capa;
 var_909.vt = LV_BVECTOR;
+var_909.origin = var_907[0].origin;
 capa = var_907[0].v.iv;
 var_909.v.bvec.capa = capa;
 var_909.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));
@@ -6460,7 +6471,7 @@ return var_1992;
 static lval fn_1995(lptr* var_1996, lptr var_1997, const char* cloc)
 {
 lval var_1999;
-var_1999 = wile_get_gensym();
+var_1999 = wile_get_gensym(0);
 return var_1999;
 }
 // end of prim fn_1995
@@ -9256,6 +9267,7 @@ if (var_3211[0].vt != LV_FILE_PORT || var_3211[1].vt != LV_INT || var_3211[1].v.
 WILE_EX("read-bytes", "expects a file port and number of bytes to read");
 }
 var_3213.vt = LV_BVECTOR;
+var_3213.origin = var_3211[0].origin;
 var_3213.v.bvec.capa = var_3211[1].v.iv;
 var_3213.v.bvec.arr = LISP_ALLOC(unsigned char, var_3211[1].v.iv);
 var_3213.v.bvec.capa = fread(var_3213.v.bvec.arr, 1, var_3211[1].v.iv, var_3211[0].v.fp);
@@ -9809,1756 +9821,1826 @@ return var_3467;
 }
 // end of prim fn_3463
 
-// @@@ sha-256 @@@ bld-rtl-dir/wile-rtl2-000083.scm:550 @@@ fn_3470 @@@
+// @@@ sha-256-data? @@@ bld-rtl-dir/wile-rtl2-000083.scm:550 @@@ fn_3470 @@@
 static lval fn_3470(lptr* var_3471, lptr var_3472, const char* cloc)
 {
 lval var_3474;
-{
-lval var_3475[8];
-var_3475[0] = var_3472[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:550
-var_3474 = wile_sha256_wrap(NULL, var_3475, "bld-rtl-dir/wile-rtl2-000083.scm:550");
-}
+var_3474 = LVI_BOOL(var_3472[0].vt == LV_SHA256_DATA && var_3472[0].v.sha256_info->is_256);
 return var_3474;
 }
 // end of prim fn_3470
 
-// @@@ sha-256-init @@@ bld-rtl-dir/wile-rtl2-000083.scm:551 @@@ fn_3478 @@@
-static lval fn_3478(lptr* var_3479, lptr var_3480, const char* cloc)
+// @@@ sha-256 @@@ bld-rtl-dir/wile-rtl2-000083.scm:551 @@@ fn_3477 @@@
+static lval fn_3477(lptr* var_3478, lptr var_3479, const char* cloc)
 {
-lval var_3482;
-// bld-rtl-dir/wile-rtl2-000083.scm:551
-var_3482 = wile_sha256_init(NULL, NULL, "bld-rtl-dir/wile-rtl2-000083.scm:551");
-return var_3482;
+lval var_3481;
+if (var_3479[0].vt != LV_STRING && var_3479[0].vt != LV_FILE_PORT && var_3479[0].vt != LV_PIPE_PORT && var_3479[0].vt != LV_SOCK_PORT) {
+WILE_EX("sha-256", "expects a string or file or pipe or socket port");
 }
-// end of prim fn_3478
+var_3481 = wile_sha256_wrap(true, var_3479[0]);
+return var_3481;
+}
+// end of prim fn_3477
 
-// @@@ sha-256-update @@@ bld-rtl-dir/wile-rtl2-000083.scm:552 @@@ fn_3485 @@@
-static lval fn_3485(lptr* var_3486, lptr var_3487, const char* cloc)
+// @@@ sha-256-init @@@ bld-rtl-dir/wile-rtl2-000083.scm:552 @@@ fn_3484 @@@
+static lval fn_3484(lptr* var_3485, lptr var_3486, const char* cloc)
 {
-lval var_3489;
-{
-lval var_3490[8];
-var_3490[0] = var_3487[0];
-var_3490[1] = var_3487[1];
-// bld-rtl-dir/wile-rtl2-000083.scm:552
-var_3489 = wile_sha256_update(NULL, var_3490, "bld-rtl-dir/wile-rtl2-000083.scm:552");
+lval var_3488;
+var_3488 = wile_sha256_init(true);
+return var_3488;
 }
-return var_3489;
-}
-// end of prim fn_3485
+// end of prim fn_3484
 
-// @@@ sha-256-finish @@@ bld-rtl-dir/wile-rtl2-000083.scm:553 @@@ fn_3493 @@@
-static lval fn_3493(lptr* var_3494, lptr var_3495, const char* cloc)
+// @@@ sha-256-update @@@ bld-rtl-dir/wile-rtl2-000083.scm:553 @@@ fn_3491 @@@
+static lval fn_3491(lptr* var_3492, lptr var_3493, const char* cloc)
 {
-lval var_3497;
+lval var_3495;
 {
-lval var_3498[8];
-var_3498[0] = var_3495[0];
+lval var_3496[8];
+var_3496[0] = var_3493[0];
+var_3496[1] = var_3493[1];
 // bld-rtl-dir/wile-rtl2-000083.scm:553
-var_3497 = wile_sha256_finish(NULL, var_3498, "bld-rtl-dir/wile-rtl2-000083.scm:553");
+var_3495 = wile_sha256_update(NULL, var_3496, "bld-rtl-dir/wile-rtl2-000083.scm:553");
 }
-return var_3497;
+return var_3495;
 }
-// end of prim fn_3493
+// end of prim fn_3491
 
-// @@@ sign @@@ bld-rtl-dir/wile-rtl2-000083.scm:554 @@@ fn_3501 @@@
-static lval fn_3501(lptr* var_3502, lptr var_3503, const char* cloc)
+// @@@ sha-256-finish @@@ bld-rtl-dir/wile-rtl2-000083.scm:554 @@@ fn_3499 @@@
+static lval fn_3499(lptr* var_3500, lptr var_3501, const char* cloc)
 {
-lval var_3505;
-switch (var_3503[0].vt) {
+lval var_3503;
+{
+lval var_3504[8];
+var_3504[0] = var_3501[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:554
+var_3503 = wile_sha256_finish(NULL, var_3504, "bld-rtl-dir/wile-rtl2-000083.scm:554");
+}
+return var_3503;
+}
+// end of prim fn_3499
+
+// @@@ sha-224-data? @@@ bld-rtl-dir/wile-rtl2-000083.scm:555 @@@ fn_3507 @@@
+static lval fn_3507(lptr* var_3508, lptr var_3509, const char* cloc)
+{
+lval var_3511;
+var_3511 = LVI_BOOL(var_3509[0].vt == LV_SHA256_DATA && !var_3509[0].v.sha256_info->is_256);
+return var_3511;
+}
+// end of prim fn_3507
+
+// @@@ sha-224 @@@ bld-rtl-dir/wile-rtl2-000083.scm:556 @@@ fn_3514 @@@
+static lval fn_3514(lptr* var_3515, lptr var_3516, const char* cloc)
+{
+lval var_3518;
+if (var_3516[0].vt != LV_STRING && var_3516[0].vt != LV_FILE_PORT && var_3516[0].vt != LV_PIPE_PORT && var_3516[0].vt != LV_SOCK_PORT) {
+WILE_EX("sha-224", "expects a string or file or pipe or socket port");
+}
+var_3518 = wile_sha256_wrap(false, var_3516[0]);
+return var_3518;
+}
+// end of prim fn_3514
+
+// @@@ sha-224-init @@@ bld-rtl-dir/wile-rtl2-000083.scm:557 @@@ fn_3521 @@@
+static lval fn_3521(lptr* var_3522, lptr var_3523, const char* cloc)
+{
+lval var_3525;
+var_3525 = wile_sha256_init(false);
+return var_3525;
+}
+// end of prim fn_3521
+
+// @@@ sha-224-update @@@ bld-rtl-dir/wile-rtl2-000083.scm:558 @@@ fn_3528 @@@
+static lval fn_3528(lptr* var_3529, lptr var_3530, const char* cloc)
+{
+lval var_3532;
+{
+lval var_3533[8];
+var_3533[0] = var_3530[0];
+var_3533[1] = var_3530[1];
+// bld-rtl-dir/wile-rtl2-000083.scm:558
+var_3532 = wile_sha256_update(NULL, var_3533, "bld-rtl-dir/wile-rtl2-000083.scm:558");
+}
+return var_3532;
+}
+// end of prim fn_3528
+
+// @@@ sha-224-finish @@@ bld-rtl-dir/wile-rtl2-000083.scm:559 @@@ fn_3536 @@@
+static lval fn_3536(lptr* var_3537, lptr var_3538, const char* cloc)
+{
+lval var_3540;
+{
+lval var_3541[8];
+var_3541[0] = var_3538[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:559
+var_3540 = wile_sha256_finish(NULL, var_3541, "bld-rtl-dir/wile-rtl2-000083.scm:559");
+}
+return var_3540;
+}
+// end of prim fn_3536
+
+// @@@ sign @@@ bld-rtl-dir/wile-rtl2-000083.scm:560 @@@ fn_3544 @@@
+static lval fn_3544(lptr* var_3545, lptr var_3546, const char* cloc)
+{
+lval var_3548;
+switch (var_3546[0].vt) {
 case LV_INT:
-var_3505 = LVI_INT(WILE_SIGN(var_3503[0].v.iv));
+var_3548 = LVI_INT(WILE_SIGN(var_3546[0].v.iv));
 break;
 case LV_RAT:
-var_3505 = LVI_INT(WILE_SIGN(var_3503[0].v.irv.num));
-if (var_3503[0].v.irv.den < 0) {
-var_3505.v.iv = -var_3505.v.iv;
+var_3548 = LVI_INT(WILE_SIGN(var_3546[0].v.irv.num));
+if (var_3546[0].v.irv.den < 0) {
+var_3548.v.iv = -var_3548.v.iv;
 }
 break;
 case LV_REAL:
-var_3505 = LVI_INT(WILE_SIGN(var_3503[0].v.rv));
+var_3548 = LVI_INT(WILE_SIGN(var_3546[0].v.rv));
 break;
 default:
 WILE_EX("sign", "got a non-real-valued argument");
 }
-return var_3505;
+return var_3548;
 }
-// end of prim fn_3501
+// end of prim fn_3544
 
-// @@@ sin @@@ bld-rtl-dir/wile-rtl2-000083.scm:555 @@@ fn_3508 @@@
-static lval fn_3508(lptr* var_3509, lptr var_3510, const char* cloc)
+// @@@ sin @@@ bld-rtl-dir/wile-rtl2-000083.scm:561 @@@ fn_3551 @@@
+static lval fn_3551(lptr* var_3552, lptr var_3553, const char* cloc)
 {
-lval var_3512;
+lval var_3555;
 {
 lisp_real_t r;
 lisp_cmplx_t z;
 bool isr;
-switch (var_3510[0].vt) {
+switch (var_3553[0].vt) {
 case LV_INT:
-r = var_3510[0].v.iv;
+r = var_3553[0].v.iv;
 isr = true;
 break;
 case LV_RAT:
-r = LV_RAT2REAL(var_3510[0]);
+r = LV_RAT2REAL(var_3553[0]);
 isr = true;
 break;
 case LV_REAL:
-r = var_3510[0].v.rv;
+r = var_3553[0].v.rv;
 isr = true;
 break;
 case LV_CMPLX:
-z = var_3510[0].v.cv;
+z = var_3553[0].v.cv;
 isr = false;
 break;
 default:
 WILE_EX("sin", "got a non-numeric argument");
 }
 if (isr) {
-var_3512 = LVI_REAL(SIN(r));
+var_3555 = LVI_REAL(SIN(r));
 } else {
 z = CSIN(z);
 if (CIMAG(z) == 0.0) {
-var_3512 = LVI_REAL(CREAL(z));
+var_3555 = LVI_REAL(CREAL(z));
 } else {
-var_3512 = LVI_CMPLX1(z);
+var_3555 = LVI_CMPLX1(z);
 }
 }
 }
-return var_3512;
+return var_3555;
 }
-// end of prim fn_3508
+// end of prim fn_3551
 
-// @@@ sine-integral @@@ bld-rtl-dir/wile-rtl2-000083.scm:556 @@@ fn_3515 @@@
-static lval fn_3515(lptr* var_3516, lptr var_3517, const char* cloc)
+// @@@ sine-integral @@@ bld-rtl-dir/wile-rtl2-000083.scm:562 @@@ fn_3558 @@@
+static lval fn_3558(lptr* var_3559, lptr var_3560, const char* cloc)
 {
-lval var_3519;
+lval var_3562;
 {
 lisp_real_t r;
-switch (var_3517[0].vt) {
+switch (var_3560[0].vt) {
 case LV_INT:
-r = var_3517[0].v.iv;
+r = var_3560[0].v.iv;
 break;
 case LV_RAT:
-r = LV_RAT2REAL(var_3517[0]);
+r = LV_RAT2REAL(var_3560[0]);
 break;
 case LV_REAL:
-r = var_3517[0].v.rv;
+r = var_3560[0].v.rv;
 break;
 case LV_CMPLX:
 WILE_EX("sine-integral", "is not implemented for complex values");
 default:
 WILE_EX("sine-integral", "got a non-numeric argument");
 }
-var_3519 = LVI_REAL(sine_integral(r));
+var_3562 = LVI_REAL(sine_integral(r));
 }
-return var_3519;
+return var_3562;
 }
-// end of prim fn_3515
+// end of prim fn_3558
 
-// @@@ sinh @@@ bld-rtl-dir/wile-rtl2-000083.scm:557 @@@ fn_3522 @@@
-static lval fn_3522(lptr* var_3523, lptr var_3524, const char* cloc)
+// @@@ sinh @@@ bld-rtl-dir/wile-rtl2-000083.scm:563 @@@ fn_3565 @@@
+static lval fn_3565(lptr* var_3566, lptr var_3567, const char* cloc)
 {
-lval var_3526;
+lval var_3569;
 {
 lisp_real_t r;
 lisp_cmplx_t z;
 bool isr;
-switch (var_3524[0].vt) {
+switch (var_3567[0].vt) {
 case LV_INT:
-r = var_3524[0].v.iv;
+r = var_3567[0].v.iv;
 isr = true;
 break;
 case LV_RAT:
-r = LV_RAT2REAL(var_3524[0]);
+r = LV_RAT2REAL(var_3567[0]);
 isr = true;
 break;
 case LV_REAL:
-r = var_3524[0].v.rv;
+r = var_3567[0].v.rv;
 isr = true;
 break;
 case LV_CMPLX:
-z = var_3524[0].v.cv;
+z = var_3567[0].v.cv;
 isr = false;
 break;
 default:
 WILE_EX("sinh", "got a non-numeric argument");
 }
 if (isr) {
-var_3526 = LVI_REAL(SINH(r));
+var_3569 = LVI_REAL(SINH(r));
 } else {
 z = CSINH(z);
 if (CIMAG(z) == 0.0) {
-var_3526 = LVI_REAL(CREAL(z));
+var_3569 = LVI_REAL(CREAL(z));
 } else {
-var_3526 = LVI_CMPLX1(z);
+var_3569 = LVI_CMPLX1(z);
 }
 }
 }
-return var_3526;
+return var_3569;
 }
-// end of prim fn_3522
+// end of prim fn_3565
 
-// @@@ sleep @@@ bld-rtl-dir/wile-rtl2-000083.scm:558 @@@ fn_3529 @@@
-static lval fn_3529(lptr* var_3530, lptr var_3531, const char* cloc)
+// @@@ sleep @@@ bld-rtl-dir/wile-rtl2-000083.scm:564 @@@ fn_3572 @@@
+static lval fn_3572(lptr* var_3573, lptr var_3574, const char* cloc)
 {
-lval var_3534;
-if (var_3531[0].vt == LV_INT) {
-var_3534 = LVI_REAL((lisp_real_t) var_3531[0].v.iv);
-} else if (var_3531[0].vt == LV_RAT) {
-var_3534 = LVI_REAL(LV_RAT2REAL(var_3531[0]));
-} else if (var_3531[0].vt == LV_REAL) {
-var_3534 = var_3531[0];
+lval var_3577;
+if (var_3574[0].vt == LV_INT) {
+var_3577 = LVI_REAL((lisp_real_t) var_3574[0].v.iv);
+} else if (var_3574[0].vt == LV_RAT) {
+var_3577 = LVI_REAL(LV_RAT2REAL(var_3574[0]));
+} else if (var_3574[0].vt == LV_REAL) {
+var_3577 = var_3574[0];
 } else {
 WILE_EX("sleep", "expects a real-valued input");
 }
-lval var_3533;
-var_3533 = LVI_BOOL(usleep(1000000*var_3534.v.rv) == 0);
-return var_3533;
+lval var_3576;
+var_3576 = LVI_BOOL(usleep(1000000*var_3577.v.rv) == 0);
+return var_3576;
 }
-// end of prim fn_3529
+// end of prim fn_3572
 
-// @@@ socket-port? @@@ bld-rtl-dir/wile-rtl2-000083.scm:559 @@@ fn_3537 @@@
-static lval fn_3537(lptr* var_3538, lptr var_3539, const char* cloc)
+// @@@ socket-port? @@@ bld-rtl-dir/wile-rtl2-000083.scm:565 @@@ fn_3580 @@@
+static lval fn_3580(lptr* var_3581, lptr var_3582, const char* cloc)
 {
-lval var_3541;
-var_3541 = LVI_BOOL(var_3539[0].vt == LV_SOCK_PORT);
-return var_3541;
+lval var_3584;
+var_3584 = LVI_BOOL(var_3582[0].vt == LV_SOCK_PORT);
+return var_3584;
 }
-// end of prim fn_3537
+// end of prim fn_3580
 
-// @@@ sprintf @@@ bld-rtl-dir/wile-rtl2-000083.scm:560 @@@ fn_3544 @@@
-static lval fn_3544(lptr* var_3545, lptr var_3546, const char* cloc)
+// @@@ sprintf @@@ bld-rtl-dir/wile-rtl2-000083.scm:566 @@@ fn_3587 @@@
+static lval fn_3587(lptr* var_3588, lptr var_3589, const char* cloc)
 {
-lval var_3548;
-var_3548 = var_3546[1];
+lval var_3591;
+var_3591 = var_3589[1];
 {
-lval var_3549[8];
-var_3549[0] = var_3546[0];
-var_3549[1] = var_3548;
-// bld-rtl-dir/wile-rtl2-000083.scm:560
-var_3548 = wile_sprintf(NULL, var_3549, "bld-rtl-dir/wile-rtl2-000083.scm:560");
+lval var_3592[8];
+var_3592[0] = var_3589[0];
+var_3592[1] = var_3591;
+// bld-rtl-dir/wile-rtl2-000083.scm:566
+var_3591 = wile_sprintf(NULL, var_3592, "bld-rtl-dir/wile-rtl2-000083.scm:566");
 }
-return var_3548;
+return var_3591;
 }
-// end of prim fn_3544
+// end of prim fn_3587
 
-// @@@ sqlite-dump-table @@@ bld-rtl-dir/wile-rtl2-000083.scm:561 @@@ fn_3552 @@@
-static lval fn_3552(lptr* var_3553, lptr var_3554, const char* cloc)
+// @@@ sqlite-dump-table @@@ bld-rtl-dir/wile-rtl2-000083.scm:567 @@@ fn_3595 @@@
+static lval fn_3595(lptr* var_3596, lptr var_3597, const char* cloc)
 {
-lval var_3556;
+lval var_3599;
 {
-lval var_3557[8];
-var_3557[0] = var_3554[0];
-var_3557[1] = var_3554[1];
-var_3557[2] = var_3554[2];
-// bld-rtl-dir/wile-rtl2-000083.scm:561
-var_3556 = wile_sql_dump_table(NULL, var_3557, "bld-rtl-dir/wile-rtl2-000083.scm:561");
+lval var_3600[8];
+var_3600[0] = var_3597[0];
+var_3600[1] = var_3597[1];
+var_3600[2] = var_3597[2];
+// bld-rtl-dir/wile-rtl2-000083.scm:567
+var_3599 = wile_sql_dump_table(NULL, var_3600, "bld-rtl-dir/wile-rtl2-000083.scm:567");
 }
-return var_3556;
+return var_3599;
 }
-// end of prim fn_3552
+// end of prim fn_3595
 
-// @@@ sqlite-meta-schema @@@ bld-rtl-dir/wile-rtl2-000083.scm:562 @@@ fn_3560 @@@
-static lval fn_3560(lptr* var_3561, lptr var_3562, const char* cloc)
+// @@@ sqlite-meta-schema @@@ bld-rtl-dir/wile-rtl2-000083.scm:568 @@@ fn_3603 @@@
+static lval fn_3603(lptr* var_3604, lptr var_3605, const char* cloc)
 {
-lval var_3564;
+lval var_3607;
 {
-lval var_3565[8];
-var_3565[0] = var_3562[0];
-var_3565[1] = var_3562[1];
-// bld-rtl-dir/wile-rtl2-000083.scm:562
-var_3564 = wile_sql_meta_schema(NULL, var_3565, "bld-rtl-dir/wile-rtl2-000083.scm:562");
+lval var_3608[8];
+var_3608[0] = var_3605[0];
+var_3608[1] = var_3605[1];
+// bld-rtl-dir/wile-rtl2-000083.scm:568
+var_3607 = wile_sql_meta_schema(NULL, var_3608, "bld-rtl-dir/wile-rtl2-000083.scm:568");
 }
-return var_3564;
+return var_3607;
 }
-// end of prim fn_3560
+// end of prim fn_3603
 
-// @@@ sqlite-meta-tables @@@ bld-rtl-dir/wile-rtl2-000083.scm:563 @@@ fn_3568 @@@
-static lval fn_3568(lptr* var_3569, lptr var_3570, const char* cloc)
+// @@@ sqlite-meta-tables @@@ bld-rtl-dir/wile-rtl2-000083.scm:569 @@@ fn_3611 @@@
+static lval fn_3611(lptr* var_3612, lptr var_3613, const char* cloc)
 {
-lval var_3572;
+lval var_3615;
 {
-lval var_3573[8];
-var_3573[0] = var_3570[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:563
-var_3572 = wile_sql_meta_tables(NULL, var_3573, "bld-rtl-dir/wile-rtl2-000083.scm:563");
+lval var_3616[8];
+var_3616[0] = var_3613[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:569
+var_3615 = wile_sql_meta_tables(NULL, var_3616, "bld-rtl-dir/wile-rtl2-000083.scm:569");
 }
-return var_3572;
+return var_3615;
 }
-// end of prim fn_3568
+// end of prim fn_3611
 
-// @@@ sqlite-port? @@@ bld-rtl-dir/wile-rtl2-000083.scm:564 @@@ fn_3576 @@@
-static lval fn_3576(lptr* var_3577, lptr var_3578, const char* cloc)
+// @@@ sqlite-port? @@@ bld-rtl-dir/wile-rtl2-000083.scm:570 @@@ fn_3619 @@@
+static lval fn_3619(lptr* var_3620, lptr var_3621, const char* cloc)
 {
-lval var_3580;
-var_3580 = LVI_BOOL(var_3578[0].vt == LV_SQLITE_PORT);
-return var_3580;
+lval var_3623;
+var_3623 = LVI_BOOL(var_3621[0].vt == LV_SQLITE_PORT);
+return var_3623;
 }
-// end of prim fn_3576
+// end of prim fn_3619
 
-// @@@ sqlite-run @@@ bld-rtl-dir/wile-rtl2-000083.scm:565 @@@ fn_3583 @@@
-static lval fn_3583(lptr* var_3584, lptr var_3585, const char* cloc)
+// @@@ sqlite-run @@@ bld-rtl-dir/wile-rtl2-000083.scm:571 @@@ fn_3626 @@@
+static lval fn_3626(lptr* var_3627, lptr var_3628, const char* cloc)
 {
-lval var_3587;
+lval var_3630;
 #ifdef WILE_USES_SQLITE
-if (var_3585[0].vt == LV_SQLITE_PORT && var_3585[1].vt == LV_STRING) {
-var_3587 = wile_sql_run(var_3585[0].v.sqlite_conn, var_3585[1].v.str, LISP_WHENCE);
+if (var_3628[0].vt == LV_SQLITE_PORT && var_3628[1].vt == LV_STRING) {
+var_3630 = wile_sql_run(var_3628[0].v.sqlite_conn, var_3628[1].v.str, LISP_WHENCE);
 } else {
 WILE_EX("sqlite-run", "expects one sqlite-port and one string");
 }
 #else
-var_3587 = LVI_BOOL(false);
+var_3630 = LVI_BOOL(false);
 #endif // WILE_USES_SQLITE
-return var_3587;
+return var_3630;
 }
-// end of prim fn_3583
+// end of prim fn_3626
 
-// @@@ sqlite-statement-bind @@@ bld-rtl-dir/wile-rtl2-000083.scm:566 @@@ fn_3590 @@@
-static lval fn_3590(lptr* var_3591, lptr var_3592, const char* cloc)
+// @@@ sqlite-statement-bind @@@ bld-rtl-dir/wile-rtl2-000083.scm:572 @@@ fn_3633 @@@
+static lval fn_3633(lptr* var_3634, lptr var_3635, const char* cloc)
 {
-lval var_3594;
-var_3594 = var_3592[1];
+lval var_3637;
+var_3637 = var_3635[1];
 {
-lval var_3595[8];
-var_3595[0] = var_3592[0];
-var_3595[1] = var_3594;
-// bld-rtl-dir/wile-rtl2-000083.scm:566
-var_3594 = wile_sql_stmt_bind(NULL, var_3595, "bld-rtl-dir/wile-rtl2-000083.scm:566");
-}
-return var_3594;
-}
-// end of prim fn_3590
-
-// @@@ sqlite-statement-cleanup @@@ bld-rtl-dir/wile-rtl2-000083.scm:567 @@@ fn_3598 @@@
-static lval fn_3598(lptr* var_3599, lptr var_3600, const char* cloc)
-{
-lval var_3602;
-{
-lval var_3603[8];
-var_3603[0] = var_3600[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:567
-var_3602 = wile_sql_stmt_clean(NULL, var_3603, "bld-rtl-dir/wile-rtl2-000083.scm:567");
-}
-return var_3602;
-}
-// end of prim fn_3598
-
-// @@@ sqlite-statement-info @@@ bld-rtl-dir/wile-rtl2-000083.scm:568 @@@ fn_3606 @@@
-static lval fn_3606(lptr* var_3607, lptr var_3608, const char* cloc)
-{
-lval var_3610;
-{
-lval var_3611[8];
-var_3611[0] = var_3608[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:568
-var_3610 = wile_sql_stmt_info(NULL, var_3611, "bld-rtl-dir/wile-rtl2-000083.scm:568");
-}
-return var_3610;
-}
-// end of prim fn_3606
-
-// @@@ sqlite-statement-prepare @@@ bld-rtl-dir/wile-rtl2-000083.scm:569 @@@ fn_3614 @@@
-static lval fn_3614(lptr* var_3615, lptr var_3616, const char* cloc)
-{
-lval var_3618;
-{
-lval var_3619[8];
-var_3619[0] = var_3616[0];
-var_3619[1] = var_3616[1];
-// bld-rtl-dir/wile-rtl2-000083.scm:569
-var_3618 = wile_sql_stmt_prep(NULL, var_3619, "bld-rtl-dir/wile-rtl2-000083.scm:569");
-}
-return var_3618;
-}
-// end of prim fn_3614
-
-// @@@ sqlite-statement-run @@@ bld-rtl-dir/wile-rtl2-000083.scm:570 @@@ fn_3622 @@@
-static lval fn_3622(lptr* var_3623, lptr var_3624, const char* cloc)
-{
-lval var_3626;
-{
-lval var_3627[8];
-var_3627[0] = var_3624[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:570
-var_3626 = wile_sql_stmt_run(NULL, var_3627, "bld-rtl-dir/wile-rtl2-000083.scm:570");
-}
-return var_3626;
-}
-// end of prim fn_3622
-
-// @@@ sqlite-statement? @@@ bld-rtl-dir/wile-rtl2-000083.scm:571 @@@ fn_3630 @@@
-static lval fn_3630(lptr* var_3631, lptr var_3632, const char* cloc)
-{
-lval var_3634;
-var_3634 = LVI_BOOL(var_3632[0].vt == LV_SQLITE_STMT);
-return var_3634;
-}
-// end of prim fn_3630
-
-// @@@ sqlite-version @@@ bld-rtl-dir/wile-rtl2-000083.scm:572 @@@ fn_3637 @@@
-static lval fn_3637(lptr* var_3638, lptr var_3639, const char* cloc)
-{
-lval var_3641;
+lval var_3638[8];
+var_3638[0] = var_3635[0];
+var_3638[1] = var_3637;
 // bld-rtl-dir/wile-rtl2-000083.scm:572
-var_3641 = wile_sql_version(NULL, NULL, "bld-rtl-dir/wile-rtl2-000083.scm:572");
-return var_3641;
+var_3637 = wile_sql_stmt_bind(NULL, var_3638, "bld-rtl-dir/wile-rtl2-000083.scm:572");
 }
-// end of prim fn_3637
+return var_3637;
+}
+// end of prim fn_3633
 
-// @@@ sqrt @@@ bld-rtl-dir/wile-rtl2-000083.scm:573 @@@ fn_3644 @@@
-static lval fn_3644(lptr* var_3645, lptr var_3646, const char* cloc)
+// @@@ sqlite-statement-cleanup @@@ bld-rtl-dir/wile-rtl2-000083.scm:573 @@@ fn_3641 @@@
+static lval fn_3641(lptr* var_3642, lptr var_3643, const char* cloc)
 {
-lval var_3649;
-if (var_3646[0].vt == LV_INT) {
-var_3649 = LVI_REAL((lisp_real_t) var_3646[0].v.iv);
-} else if (var_3646[0].vt == LV_RAT) {
-var_3649 = LVI_REAL(LV_RAT2REAL(var_3646[0]));
-} else {
-var_3649 = var_3646[0];
+lval var_3645;
+{
+lval var_3646[8];
+var_3646[0] = var_3643[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:573
+var_3645 = wile_sql_stmt_clean(NULL, var_3646, "bld-rtl-dir/wile-rtl2-000083.scm:573");
 }
-lval var_3648;
-if (var_3649.vt == LV_REAL) {
-if (var_3649.v.rv < 0.0) {
-var_3648 = LVI_CMPLX2(0.0, SQRT(-var_3649.v.rv));
-} else {
-var_3648 = LVI_REAL(SQRT(var_3649.v.rv));
+return var_3645;
 }
-} else if (var_3649.vt == LV_CMPLX) {
-var_3648 = LVI_CMPLX1(CSQRT(var_3649.v.cv));
+// end of prim fn_3641
+
+// @@@ sqlite-statement-info @@@ bld-rtl-dir/wile-rtl2-000083.scm:574 @@@ fn_3649 @@@
+static lval fn_3649(lptr* var_3650, lptr var_3651, const char* cloc)
+{
+lval var_3653;
+{
+lval var_3654[8];
+var_3654[0] = var_3651[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:574
+var_3653 = wile_sql_stmt_info(NULL, var_3654, "bld-rtl-dir/wile-rtl2-000083.scm:574");
+}
+return var_3653;
+}
+// end of prim fn_3649
+
+// @@@ sqlite-statement-prepare @@@ bld-rtl-dir/wile-rtl2-000083.scm:575 @@@ fn_3657 @@@
+static lval fn_3657(lptr* var_3658, lptr var_3659, const char* cloc)
+{
+lval var_3661;
+{
+lval var_3662[8];
+var_3662[0] = var_3659[0];
+var_3662[1] = var_3659[1];
+// bld-rtl-dir/wile-rtl2-000083.scm:575
+var_3661 = wile_sql_stmt_prep(NULL, var_3662, "bld-rtl-dir/wile-rtl2-000083.scm:575");
+}
+return var_3661;
+}
+// end of prim fn_3657
+
+// @@@ sqlite-statement-run @@@ bld-rtl-dir/wile-rtl2-000083.scm:576 @@@ fn_3665 @@@
+static lval fn_3665(lptr* var_3666, lptr var_3667, const char* cloc)
+{
+lval var_3669;
+{
+lval var_3670[8];
+var_3670[0] = var_3667[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:576
+var_3669 = wile_sql_stmt_run(NULL, var_3670, "bld-rtl-dir/wile-rtl2-000083.scm:576");
+}
+return var_3669;
+}
+// end of prim fn_3665
+
+// @@@ sqlite-statement? @@@ bld-rtl-dir/wile-rtl2-000083.scm:577 @@@ fn_3673 @@@
+static lval fn_3673(lptr* var_3674, lptr var_3675, const char* cloc)
+{
+lval var_3677;
+var_3677 = LVI_BOOL(var_3675[0].vt == LV_SQLITE_STMT);
+return var_3677;
+}
+// end of prim fn_3673
+
+// @@@ sqlite-version @@@ bld-rtl-dir/wile-rtl2-000083.scm:578 @@@ fn_3680 @@@
+static lval fn_3680(lptr* var_3681, lptr var_3682, const char* cloc)
+{
+lval var_3684;
+// bld-rtl-dir/wile-rtl2-000083.scm:578
+var_3684 = wile_sql_version(NULL, NULL, "bld-rtl-dir/wile-rtl2-000083.scm:578");
+return var_3684;
+}
+// end of prim fn_3680
+
+// @@@ sqrt @@@ bld-rtl-dir/wile-rtl2-000083.scm:579 @@@ fn_3687 @@@
+static lval fn_3687(lptr* var_3688, lptr var_3689, const char* cloc)
+{
+lval var_3692;
+if (var_3689[0].vt == LV_INT) {
+var_3692 = LVI_REAL((lisp_real_t) var_3689[0].v.iv);
+} else if (var_3689[0].vt == LV_RAT) {
+var_3692 = LVI_REAL(LV_RAT2REAL(var_3689[0]));
+} else {
+var_3692 = var_3689[0];
+}
+lval var_3691;
+if (var_3692.vt == LV_REAL) {
+if (var_3692.v.rv < 0.0) {
+var_3691 = LVI_CMPLX2(0.0, SQRT(-var_3692.v.rv));
+} else {
+var_3691 = LVI_REAL(SQRT(var_3692.v.rv));
+}
+} else if (var_3692.vt == LV_CMPLX) {
+var_3691 = LVI_CMPLX1(CSQRT(var_3692.v.cv));
 } else {
 WILE_EX("sqrt", "expects one numeric argument");
 }
-return var_3648;
+return var_3691;
 }
-// end of prim fn_3644
+// end of prim fn_3687
 
-// @@@ stack-trace @@@ bld-rtl-dir/wile-rtl2-000083.scm:574 @@@ fn_3652 @@@
-static lval fn_3652(lptr* var_3653, lptr var_3654, const char* cloc)
-{
-lval var_3656;
-{
-lval var_3657[8];
-var_3657[0] = var_3654[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:574
-var_3656 = wile_stack_trace(NULL, var_3657, "bld-rtl-dir/wile-rtl2-000083.scm:574");
-}
-return var_3656;
-}
-// end of prim fn_3652
-
-// @@@ lambda () @@@ bld-rtl-dir/wile-rtl2-000083.scm:577 @@@ fn_3667 @@@
-static lval fn_3667(lptr* var_3668, lptr var_3669, const char* cloc)
-{
-lval var_3671;
-wile_stack_trace_minimal(fileno(stderr));
-var_3671 = LVI_NIL();
-return var_3671;
-}
-// end of lambda fn_3667
-
-// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000083.scm:578 @@@ fn_3674 @@@
-static lval fn_3674(lptr* var_3675, lptr var_3676, const char* cloc)
-{
-lval var_3678;
-wile_stack_trace_minimal(fileno((var_3676[0].vt == LV_FILE_PORT) ? var_3676[0].v.fp : stderr));
-var_3678 = LVI_NIL();
-return var_3678;
-}
-// end of lambda fn_3674
-
-// @@@ lambda  symbol.28 @@@ bld-rtl-dir/wile-rtl2-000083.scm:576 @@@ fn_3660 @@@
-static lval fn_3660(lptr* var_3661, lptr var_3662, const char* cloc)
-{
-lval var_3664;
-{
-lval var_3665[8];
-var_3665[0] = var_3662[0];
-// wrtl.sch:0
-var_3664 = wile_list_length(NULL, var_3665, "wrtl.sch:0");
-}
-lval var_3666;
-if (var_3664.vt != LV_INT) {
-wile_exception("case", LISP_WHENCE, "case-value type does not match case type");
-}
-switch (var_3664.v.iv) {
-case 0:
-{
-MK_CLOS(var_3668,0);
-lval var_3672;
-{
-lval var_3673[2];
-var_3673[0] = LVI_PROC(fn_3667,var_3668,0);
-var_3673[1] = var_3662[0];
-var_3672 = wile_gen_list(2, var_3673, NULL);
-}
-var_3672 = wile_apply_function(&(var_3672), LISP_WHENCE);
-var_3666 = var_3672;
-break;
-}
-case 1:
-{
-MK_CLOS(var_3675,0);
-lval var_3679;
-{
-lval var_3680[2];
-var_3680[0] = LVI_PROC(fn_3674,var_3675,1);
-var_3680[1] = var_3662[0];
-var_3679 = wile_gen_list(2, var_3680, NULL);
-}
-var_3679 = wile_apply_function(&(var_3679), LISP_WHENCE);
-var_3666 = var_3679;
-break;
-}
-default:
-{
-lval var_3681;
-var_3681 = LVI_STRING("case-lambic exhausted all cases, no match found!");
-lval var_3682;
-{
-lval var_3683[1];
-var_3683[0] = var_3681;
-var_3682 = wile_gen_list(1, var_3683, NULL);
-}
-if (var_3682.vt == LV_PAIR && (var_3682.v.pair.cdr == NULL || var_3682.v.pair.cdr->vt == LV_NIL)) {
-var_3682 = (var_3682.v.pair.car ? *(var_3682.v.pair.car) : LVI_NIL());
-}
-cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_3682;
-cachalot->l_whence = 0;
-cachalot->c_whence = LISP_WHENCE;
-longjmp(cachalot->cenv, 1);
-var_3666 = var_3682;
-break;
-}
-}
-return var_3666;
-}
-// end of lambda fn_3660
-
-// @@@ string->number @@@ bld-rtl-dir/wile-rtl2-000083.scm:581 @@@ fn_3688 @@@
-static lval fn_3688(lptr* var_3689, lptr var_3690, const char* cloc)
-{
-lval var_3692;
-var_3692 = wile_string2num(var_3690[0], LISP_WHENCE);
-return var_3692;
-}
-// end of prim fn_3688
-
-// @@@ string->symbol @@@ bld-rtl-dir/wile-rtl2-000083.scm:582 @@@ fn_3695 @@@
+// @@@ stack-trace @@@ bld-rtl-dir/wile-rtl2-000083.scm:580 @@@ fn_3695 @@@
 static lval fn_3695(lptr* var_3696, lptr var_3697, const char* cloc)
 {
 lval var_3699;
-var_3699 = LVI_SYMBOL(var_3697[0].v.str);
+{
+lval var_3700[8];
+var_3700[0] = var_3697[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:580
+var_3699 = wile_stack_trace(NULL, var_3700, "bld-rtl-dir/wile-rtl2-000083.scm:580");
+}
 return var_3699;
 }
 // end of prim fn_3695
 
-// @@@ string-append @@@ bld-rtl-dir/wile-rtl2-000083.scm:583 @@@ fn_3702 @@@
-static lval fn_3702(lptr* var_3703, lptr var_3704, const char* cloc)
-{
-lval var_3706;
-var_3706 = var_3704[0];
-{
-lval var_3707[8];
-var_3707[0] = var_3706;
-// bld-rtl-dir/wile-rtl2-000083.scm:583
-var_3706 = wile_string_append(NULL, var_3707, "bld-rtl-dir/wile-rtl2-000083.scm:583");
-}
-return var_3706;
-}
-// end of prim fn_3702
-
-// @@@ string-ci-hash-32 @@@ bld-rtl-dir/wile-rtl2-000083.scm:584 @@@ fn_3710 @@@
+// @@@ lambda () @@@ bld-rtl-dir/wile-rtl2-000083.scm:583 @@@ fn_3710 @@@
 static lval fn_3710(lptr* var_3711, lptr var_3712, const char* cloc)
 {
 lval var_3714;
-{
-lval var_3715[8];
-var_3715[0] = var_3712[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:584
-var_3714 = wile_string_ci_hash_32(NULL, var_3715, "bld-rtl-dir/wile-rtl2-000083.scm:584");
-}
+wile_stack_trace_minimal(fileno(stderr));
+var_3714 = LVI_NIL();
 return var_3714;
 }
-// end of prim fn_3710
+// end of lambda fn_3710
 
-// @@@ string-ci-hash-64 @@@ bld-rtl-dir/wile-rtl2-000083.scm:585 @@@ fn_3718 @@@
-static lval fn_3718(lptr* var_3719, lptr var_3720, const char* cloc)
+// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000083.scm:584 @@@ fn_3717 @@@
+static lval fn_3717(lptr* var_3718, lptr var_3719, const char* cloc)
 {
+lval var_3721;
+wile_stack_trace_minimal(fileno((var_3719[0].vt == LV_FILE_PORT) ? var_3719[0].v.fp : stderr));
+var_3721 = LVI_NIL();
+return var_3721;
+}
+// end of lambda fn_3717
+
+// @@@ lambda  symbol.28 @@@ bld-rtl-dir/wile-rtl2-000083.scm:582 @@@ fn_3703 @@@
+static lval fn_3703(lptr* var_3704, lptr var_3705, const char* cloc)
+{
+lval var_3707;
+{
+lval var_3708[8];
+var_3708[0] = var_3705[0];
+// wrtl.sch:0
+var_3707 = wile_list_length(NULL, var_3708, "wrtl.sch:0");
+}
+lval var_3709;
+if (var_3707.vt != LV_INT) {
+wile_exception("case", LISP_WHENCE, "case-value type does not match case type");
+}
+switch (var_3707.v.iv) {
+case 0:
+{
+MK_CLOS(var_3711,0);
+lval var_3715;
+{
+lval var_3716[2];
+var_3716[0] = LVI_PROC(fn_3710,var_3711,0);
+var_3716[1] = var_3705[0];
+var_3715 = wile_gen_list(2, var_3716, NULL);
+}
+var_3715 = wile_apply_function(&(var_3715), LISP_WHENCE);
+var_3709 = var_3715;
+break;
+}
+case 1:
+{
+MK_CLOS(var_3718,0);
 lval var_3722;
 {
-lval var_3723[8];
-var_3723[0] = var_3720[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:585
-var_3722 = wile_string_ci_hash_64(NULL, var_3723, "bld-rtl-dir/wile-rtl2-000083.scm:585");
+lval var_3723[2];
+var_3723[0] = LVI_PROC(fn_3717,var_3718,1);
+var_3723[1] = var_3705[0];
+var_3722 = wile_gen_list(2, var_3723, NULL);
 }
-return var_3722;
+var_3722 = wile_apply_function(&(var_3722), LISP_WHENCE);
+var_3709 = var_3722;
+break;
 }
-// end of prim fn_3718
-
-// @@@ string-ci/=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:586 @@@ fn_3726 @@@
-static lval fn_3726(lptr* var_3727, lptr var_3728, const char* cloc)
+default:
 {
-lval var_3730;
-var_3730 = LVI_BOOL(strcasecmp(var_3728[0].v.str, var_3728[1].v.str) != 0);
-return var_3730;
-}
-// end of prim fn_3726
-
-// @@@ string-ci<=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:587 @@@ fn_3733 @@@
-static lval fn_3733(lptr* var_3734, lptr var_3735, const char* cloc)
+lval var_3724;
+var_3724 = LVI_STRING("case-lambic exhausted all cases, no match found!");
+lval var_3725;
 {
-lval var_3737;
-var_3737 = LVI_BOOL(strcasecmp(var_3735[0].v.str, var_3735[1].v.str) <= 0);
-return var_3737;
+lval var_3726[1];
+var_3726[0] = var_3724;
+var_3725 = wile_gen_list(1, var_3726, NULL);
 }
-// end of prim fn_3733
+if (var_3725.vt == LV_PAIR && (var_3725.v.pair.cdr == NULL || var_3725.v.pair.cdr->vt == LV_NIL)) {
+var_3725 = (var_3725.v.pair.car ? *(var_3725.v.pair.car) : LVI_NIL());
+}
+cachalot->errval = new_lv(LV_NIL);
+*(cachalot->errval) = var_3725;
+cachalot->l_whence = 0;
+cachalot->c_whence = LISP_WHENCE;
+longjmp(cachalot->cenv, 1);
+var_3709 = var_3725;
+break;
+}
+}
+return var_3709;
+}
+// end of lambda fn_3703
 
-// @@@ string-ci<? @@@ bld-rtl-dir/wile-rtl2-000083.scm:588 @@@ fn_3740 @@@
-static lval fn_3740(lptr* var_3741, lptr var_3742, const char* cloc)
+// @@@ string->number @@@ bld-rtl-dir/wile-rtl2-000083.scm:587 @@@ fn_3731 @@@
+static lval fn_3731(lptr* var_3732, lptr var_3733, const char* cloc)
 {
-lval var_3744;
-var_3744 = LVI_BOOL(strcasecmp(var_3742[0].v.str, var_3742[1].v.str) < 0);
-return var_3744;
+lval var_3735;
+var_3735 = wile_string2num(var_3733[0], LISP_WHENCE);
+return var_3735;
 }
-// end of prim fn_3740
+// end of prim fn_3731
 
-// @@@ string-ci=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:589 @@@ fn_3747 @@@
-static lval fn_3747(lptr* var_3748, lptr var_3749, const char* cloc)
+// @@@ string->symbol @@@ bld-rtl-dir/wile-rtl2-000083.scm:588 @@@ fn_3738 @@@
+static lval fn_3738(lptr* var_3739, lptr var_3740, const char* cloc)
 {
-lval var_3751;
-var_3751 = LVI_BOOL(strcasecmp(var_3749[0].v.str, var_3749[1].v.str) == 0);
-return var_3751;
+lval var_3742;
+var_3742 = LVI_SYMBOL(var_3740[0].v.str);
+return var_3742;
 }
-// end of prim fn_3747
+// end of prim fn_3738
 
-// @@@ string-ci>=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:590 @@@ fn_3754 @@@
-static lval fn_3754(lptr* var_3755, lptr var_3756, const char* cloc)
+// @@@ string-append @@@ bld-rtl-dir/wile-rtl2-000083.scm:589 @@@ fn_3745 @@@
+static lval fn_3745(lptr* var_3746, lptr var_3747, const char* cloc)
 {
-lval var_3758;
-var_3758 = LVI_BOOL(strcasecmp(var_3756[0].v.str, var_3756[1].v.str) >= 0);
-return var_3758;
+lval var_3749;
+var_3749 = var_3747[0];
+{
+lval var_3750[8];
+var_3750[0] = var_3749;
+// bld-rtl-dir/wile-rtl2-000083.scm:589
+var_3749 = wile_string_append(NULL, var_3750, "bld-rtl-dir/wile-rtl2-000083.scm:589");
 }
-// end of prim fn_3754
+return var_3749;
+}
+// end of prim fn_3745
 
-// @@@ string-ci>? @@@ bld-rtl-dir/wile-rtl2-000083.scm:591 @@@ fn_3761 @@@
+// @@@ string-ci-hash-32 @@@ bld-rtl-dir/wile-rtl2-000083.scm:590 @@@ fn_3753 @@@
+static lval fn_3753(lptr* var_3754, lptr var_3755, const char* cloc)
+{
+lval var_3757;
+{
+lval var_3758[8];
+var_3758[0] = var_3755[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:590
+var_3757 = wile_string_ci_hash_32(NULL, var_3758, "bld-rtl-dir/wile-rtl2-000083.scm:590");
+}
+return var_3757;
+}
+// end of prim fn_3753
+
+// @@@ string-ci-hash-64 @@@ bld-rtl-dir/wile-rtl2-000083.scm:591 @@@ fn_3761 @@@
 static lval fn_3761(lptr* var_3762, lptr var_3763, const char* cloc)
 {
 lval var_3765;
-var_3765 = LVI_BOOL(strcasecmp(var_3763[0].v.str, var_3763[1].v.str) > 0);
+{
+lval var_3766[8];
+var_3766[0] = var_3763[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:591
+var_3765 = wile_string_ci_hash_64(NULL, var_3766, "bld-rtl-dir/wile-rtl2-000083.scm:591");
+}
 return var_3765;
 }
 // end of prim fn_3761
 
-// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000083.scm:593 @@@ fn_3775 @@@
-static lval fn_3775(lptr* var_3776, lptr var_3777, const char* cloc)
+// @@@ string-ci/=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:592 @@@ fn_3769 @@@
+static lval fn_3769(lptr* var_3770, lptr var_3771, const char* cloc)
 {
-lval var_3779;
-if (var_3777[0].vt != LV_STRING) {
-WILE_EX("string-copy", "expects a string input");
+lval var_3773;
+var_3773 = LVI_BOOL(strcasecmp(var_3771[0].v.str, var_3771[1].v.str) != 0);
+return var_3773;
 }
-var_3779 = LVI_STRING(var_3777[0].v.str);
-return var_3779;
-}
-// end of lambda fn_3775
+// end of prim fn_3769
 
-// @@@ lambda (a1 a2) @@@ bld-rtl-dir/wile-rtl2-000083.scm:595 @@@ fn_3782 @@@
-static lval fn_3782(lptr* var_3783, lptr var_3784, const char* cloc)
+// @@@ string-ci<=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:593 @@@ fn_3776 @@@
+static lval fn_3776(lptr* var_3777, lptr var_3778, const char* cloc)
 {
-lval var_3786;
-if (var_3784[0].vt != LV_STRING) {
+lval var_3780;
+var_3780 = LVI_BOOL(strcasecmp(var_3778[0].v.str, var_3778[1].v.str) <= 0);
+return var_3780;
+}
+// end of prim fn_3776
+
+// @@@ string-ci<? @@@ bld-rtl-dir/wile-rtl2-000083.scm:594 @@@ fn_3783 @@@
+static lval fn_3783(lptr* var_3784, lptr var_3785, const char* cloc)
+{
+lval var_3787;
+var_3787 = LVI_BOOL(strcasecmp(var_3785[0].v.str, var_3785[1].v.str) < 0);
+return var_3787;
+}
+// end of prim fn_3783
+
+// @@@ string-ci=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:595 @@@ fn_3790 @@@
+static lval fn_3790(lptr* var_3791, lptr var_3792, const char* cloc)
+{
+lval var_3794;
+var_3794 = LVI_BOOL(strcasecmp(var_3792[0].v.str, var_3792[1].v.str) == 0);
+return var_3794;
+}
+// end of prim fn_3790
+
+// @@@ string-ci>=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:596 @@@ fn_3797 @@@
+static lval fn_3797(lptr* var_3798, lptr var_3799, const char* cloc)
+{
+lval var_3801;
+var_3801 = LVI_BOOL(strcasecmp(var_3799[0].v.str, var_3799[1].v.str) >= 0);
+return var_3801;
+}
+// end of prim fn_3797
+
+// @@@ string-ci>? @@@ bld-rtl-dir/wile-rtl2-000083.scm:597 @@@ fn_3804 @@@
+static lval fn_3804(lptr* var_3805, lptr var_3806, const char* cloc)
+{
+lval var_3808;
+var_3808 = LVI_BOOL(strcasecmp(var_3806[0].v.str, var_3806[1].v.str) > 0);
+return var_3808;
+}
+// end of prim fn_3804
+
+// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000083.scm:599 @@@ fn_3818 @@@
+static lval fn_3818(lptr* var_3819, lptr var_3820, const char* cloc)
+{
+lval var_3822;
+if (var_3820[0].vt != LV_STRING) {
+WILE_EX("string-copy", "expects a string input");
+}
+var_3822 = LVI_STRING(var_3820[0].v.str);
+return var_3822;
+}
+// end of lambda fn_3818
+
+// @@@ lambda (a1 a2) @@@ bld-rtl-dir/wile-rtl2-000083.scm:601 @@@ fn_3825 @@@
+static lval fn_3825(lptr* var_3826, lptr var_3827, const char* cloc)
+{
+lval var_3829;
+if (var_3827[0].vt != LV_STRING) {
 WILE_EX("string-copy", "expects a string input");
 }
 {
-size_t len = strlen(var_3784[0].v.str);
-if (var_3784[1].v.iv < 0 || (size_t) var_3784[1].v.iv >= len) {
+size_t len = strlen(var_3827[0].v.str);
+if (var_3827[1].v.iv < 0 || (size_t) var_3827[1].v.iv >= len) {
 WILE_EX("string-copy", "start index is out of range");
 }
-var_3786 = LVI_STRING(var_3784[0].v.str + var_3784[1].v.iv);
+var_3829 = LVI_STRING(var_3827[0].v.str + var_3827[1].v.iv);
 }
-return var_3786;
+return var_3829;
 }
-// end of lambda fn_3782
+// end of lambda fn_3825
 
-// @@@ lambda (a1 a2 a3) @@@ bld-rtl-dir/wile-rtl2-000083.scm:597 @@@ fn_3789 @@@
-static lval fn_3789(lptr* var_3790, lptr var_3791, const char* cloc)
+// @@@ lambda (a1 a2 a3) @@@ bld-rtl-dir/wile-rtl2-000083.scm:603 @@@ fn_3832 @@@
+static lval fn_3832(lptr* var_3833, lptr var_3834, const char* cloc)
 {
-lval var_3793;
-if (var_3791[0].vt != LV_STRING) {
+lval var_3836;
+if (var_3834[0].vt != LV_STRING) {
 WILE_EX("string-copy", "expects a string input");
 }
 {
-size_t len = strlen(var_3791[0].v.str);
-if (var_3791[1].v.iv < 0 || (size_t) var_3791[1].v.iv >= len) {
+size_t len = strlen(var_3834[0].v.str);
+if (var_3834[1].v.iv < 0 || (size_t) var_3834[1].v.iv >= len) {
 WILE_EX("string-copy", "start index is out of range");
 }
-if (var_3791[2].v.iv < var_3791[1].v.iv || (size_t) var_3791[2].v.iv >= len) {
+if (var_3834[2].v.iv < var_3834[1].v.iv || (size_t) var_3834[2].v.iv >= len) {
 WILE_EX("string-copy", "end index is out of range");
 }
-var_3793.vt = LV_STRING;
-var_3793.v.str = LISP_ALLOC(char, 1 + var_3791[2].v.iv - var_3791[1].v.iv);
-memcpy(var_3793.v.str, var_3791[0].v.str + var_3791[1].v.iv, var_3791[2].v.iv - var_3791[1].v.iv);
-var_3793.v.str[var_3791[2].v.iv - var_3791[1].v.iv] = '\0';
+var_3836.vt = LV_STRING;
+var_3836.origin = var_3834[0].origin;
+var_3836.v.str = LISP_ALLOC(char, 1 + var_3834[2].v.iv - var_3834[1].v.iv);
+memcpy(var_3836.v.str, var_3834[0].v.str + var_3834[1].v.iv, var_3834[2].v.iv - var_3834[1].v.iv);
+var_3836.v.str[var_3834[2].v.iv - var_3834[1].v.iv] = '\0';
 }
-return var_3793;
+return var_3836;
 }
-// end of lambda fn_3789
+// end of lambda fn_3832
 
-// @@@ lambda  symbol.29 @@@ bld-rtl-dir/wile-rtl2-000083.scm:593 @@@ fn_3768 @@@
-static lval fn_3768(lptr* var_3769, lptr var_3770, const char* cloc)
+// @@@ lambda  symbol.29 @@@ bld-rtl-dir/wile-rtl2-000083.scm:599 @@@ fn_3811 @@@
+static lval fn_3811(lptr* var_3812, lptr var_3813, const char* cloc)
 {
-lval var_3772;
+lval var_3815;
 {
-lval var_3773[8];
-var_3773[0] = var_3770[0];
+lval var_3816[8];
+var_3816[0] = var_3813[0];
 // wrtl.sch:0
-var_3772 = wile_list_length(NULL, var_3773, "wrtl.sch:0");
+var_3815 = wile_list_length(NULL, var_3816, "wrtl.sch:0");
 }
-lval var_3774;
-if (var_3772.vt != LV_INT) {
+lval var_3817;
+if (var_3815.vt != LV_INT) {
 wile_exception("case", LISP_WHENCE, "case-value type does not match case type");
 }
-switch (var_3772.v.iv) {
+switch (var_3815.v.iv) {
 case 1:
 {
-MK_CLOS(var_3776,0);
-lval var_3780;
+MK_CLOS(var_3819,0);
+lval var_3823;
 {
-lval var_3781[2];
-var_3781[0] = LVI_PROC(fn_3775,var_3776,1);
-var_3781[1] = var_3770[0];
-var_3780 = wile_gen_list(2, var_3781, NULL);
+lval var_3824[2];
+var_3824[0] = LVI_PROC(fn_3818,var_3819,1);
+var_3824[1] = var_3813[0];
+var_3823 = wile_gen_list(2, var_3824, NULL);
 }
-var_3780 = wile_apply_function(&(var_3780), LISP_WHENCE);
-var_3774 = var_3780;
+var_3823 = wile_apply_function(&(var_3823), LISP_WHENCE);
+var_3817 = var_3823;
 break;
 }
 case 2:
 {
-MK_CLOS(var_3783,0);
-lval var_3787;
+MK_CLOS(var_3826,0);
+lval var_3830;
 {
-lval var_3788[2];
-var_3788[0] = LVI_PROC(fn_3782,var_3783,2);
-var_3788[1] = var_3770[0];
-var_3787 = wile_gen_list(2, var_3788, NULL);
+lval var_3831[2];
+var_3831[0] = LVI_PROC(fn_3825,var_3826,2);
+var_3831[1] = var_3813[0];
+var_3830 = wile_gen_list(2, var_3831, NULL);
 }
-var_3787 = wile_apply_function(&(var_3787), LISP_WHENCE);
-var_3774 = var_3787;
+var_3830 = wile_apply_function(&(var_3830), LISP_WHENCE);
+var_3817 = var_3830;
 break;
 }
 case 3:
 {
-MK_CLOS(var_3790,0);
-lval var_3794;
+MK_CLOS(var_3833,0);
+lval var_3837;
 {
-lval var_3795[2];
-var_3795[0] = LVI_PROC(fn_3789,var_3790,3);
-var_3795[1] = var_3770[0];
-var_3794 = wile_gen_list(2, var_3795, NULL);
+lval var_3838[2];
+var_3838[0] = LVI_PROC(fn_3832,var_3833,3);
+var_3838[1] = var_3813[0];
+var_3837 = wile_gen_list(2, var_3838, NULL);
 }
-var_3794 = wile_apply_function(&(var_3794), LISP_WHENCE);
-var_3774 = var_3794;
+var_3837 = wile_apply_function(&(var_3837), LISP_WHENCE);
+var_3817 = var_3837;
 break;
 }
 default:
 {
-lval var_3796;
-var_3796 = LVI_STRING("case-lambic exhausted all cases, no match found!");
-lval var_3797;
+lval var_3839;
+var_3839 = LVI_STRING("case-lambic exhausted all cases, no match found!");
+lval var_3840;
 {
-lval var_3798[1];
-var_3798[0] = var_3796;
-var_3797 = wile_gen_list(1, var_3798, NULL);
+lval var_3841[1];
+var_3841[0] = var_3839;
+var_3840 = wile_gen_list(1, var_3841, NULL);
 }
-if (var_3797.vt == LV_PAIR && (var_3797.v.pair.cdr == NULL || var_3797.v.pair.cdr->vt == LV_NIL)) {
-var_3797 = (var_3797.v.pair.car ? *(var_3797.v.pair.car) : LVI_NIL());
+if (var_3840.vt == LV_PAIR && (var_3840.v.pair.cdr == NULL || var_3840.v.pair.cdr->vt == LV_NIL)) {
+var_3840 = (var_3840.v.pair.car ? *(var_3840.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_3797;
+*(cachalot->errval) = var_3840;
 cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
-var_3774 = var_3797;
+var_3817 = var_3840;
 break;
 }
 }
-return var_3774;
+return var_3817;
 }
-// end of lambda fn_3768
+// end of lambda fn_3811
 
-// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000083.scm:600 @@@ fn_3808 @@@
-static lval fn_3808(lptr* var_3809, lptr var_3810, const char* cloc)
+// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000083.scm:606 @@@ fn_3851 @@@
+static lval fn_3851(lptr* var_3852, lptr var_3853, const char* cloc)
 {
-lval var_3812;
-if (var_3810[0].vt != LV_INT || var_3810[0].v.iv < 0) {
+lval var_3855;
+if (var_3853[0].vt != LV_INT || var_3853[0].v.iv < 0) {
 WILE_EX("string-create", "input is not a non-negative integer");
 }
-var_3812.vt = LV_STRING;
-var_3812.v.str = LISP_ALLOC(char, 1 + var_3810[0].v.iv);
-memset(var_3812.v.str, 'X', var_3810[0].v.iv);
-var_3812.v.str[var_3810[0].v.iv] = '\0';
-return var_3812;
+var_3855.vt = LV_STRING;
+var_3855.origin = var_3853[0].origin;
+var_3855.v.str = LISP_ALLOC(char, 1 + var_3853[0].v.iv);
+memset(var_3855.v.str, 'X', var_3853[0].v.iv);
+var_3855.v.str[var_3853[0].v.iv] = '\0';
+return var_3855;
 }
-// end of lambda fn_3808
+// end of lambda fn_3851
 
-// @@@ lambda (a1 a2) @@@ bld-rtl-dir/wile-rtl2-000083.scm:602 @@@ fn_3815 @@@
-static lval fn_3815(lptr* var_3816, lptr var_3817, const char* cloc)
+// @@@ lambda (a1 a2) @@@ bld-rtl-dir/wile-rtl2-000083.scm:608 @@@ fn_3858 @@@
+static lval fn_3858(lptr* var_3859, lptr var_3860, const char* cloc)
 {
-lval var_3819;
-if (var_3817[0].vt != LV_INT || var_3817[0].v.iv < 0) {
+lval var_3862;
+if (var_3860[0].vt != LV_INT || var_3860[0].v.iv < 0) {
 WILE_EX("string-create", "first input is not a non-negative integer");
 }
-if (var_3817[1].vt != LV_CHAR || var_3817[1].v.chr == '\0') {
+if (var_3860[1].vt != LV_CHAR || var_3860[1].v.chr == '\0') {
 WILE_EX("string-create", "second input is not a valid character");
 }
-var_3819.vt = LV_STRING;
-var_3819.v.str = LISP_ALLOC(char, 1 + var_3817[0].v.iv);
-memset(var_3819.v.str, var_3817[1].v.chr, var_3817[0].v.iv);
-var_3819.v.str[var_3817[0].v.iv] = '\0';
-return var_3819;
+var_3862.vt = LV_STRING;
+var_3862.origin = var_3860[0].origin;
+var_3862.v.str = LISP_ALLOC(char, 1 + var_3860[0].v.iv);
+memset(var_3862.v.str, var_3860[1].v.chr, var_3860[0].v.iv);
+var_3862.v.str[var_3860[0].v.iv] = '\0';
+return var_3862;
 }
-// end of lambda fn_3815
+// end of lambda fn_3858
 
-// @@@ lambda  symbol.30 @@@ bld-rtl-dir/wile-rtl2-000083.scm:600 @@@ fn_3801 @@@
-static lval fn_3801(lptr* var_3802, lptr var_3803, const char* cloc)
+// @@@ lambda  symbol.30 @@@ bld-rtl-dir/wile-rtl2-000083.scm:606 @@@ fn_3844 @@@
+static lval fn_3844(lptr* var_3845, lptr var_3846, const char* cloc)
 {
-lval var_3805;
+lval var_3848;
 {
-lval var_3806[8];
-var_3806[0] = var_3803[0];
+lval var_3849[8];
+var_3849[0] = var_3846[0];
 // wrtl.sch:0
-var_3805 = wile_list_length(NULL, var_3806, "wrtl.sch:0");
+var_3848 = wile_list_length(NULL, var_3849, "wrtl.sch:0");
 }
-lval var_3807;
-if (var_3805.vt != LV_INT) {
+lval var_3850;
+if (var_3848.vt != LV_INT) {
 wile_exception("case", LISP_WHENCE, "case-value type does not match case type");
 }
-switch (var_3805.v.iv) {
+switch (var_3848.v.iv) {
 case 1:
 {
-MK_CLOS(var_3809,0);
-lval var_3813;
+MK_CLOS(var_3852,0);
+lval var_3856;
 {
-lval var_3814[2];
-var_3814[0] = LVI_PROC(fn_3808,var_3809,1);
-var_3814[1] = var_3803[0];
-var_3813 = wile_gen_list(2, var_3814, NULL);
+lval var_3857[2];
+var_3857[0] = LVI_PROC(fn_3851,var_3852,1);
+var_3857[1] = var_3846[0];
+var_3856 = wile_gen_list(2, var_3857, NULL);
 }
-var_3813 = wile_apply_function(&(var_3813), LISP_WHENCE);
-var_3807 = var_3813;
+var_3856 = wile_apply_function(&(var_3856), LISP_WHENCE);
+var_3850 = var_3856;
 break;
 }
 case 2:
 {
-MK_CLOS(var_3816,0);
-lval var_3820;
+MK_CLOS(var_3859,0);
+lval var_3863;
 {
-lval var_3821[2];
-var_3821[0] = LVI_PROC(fn_3815,var_3816,2);
-var_3821[1] = var_3803[0];
-var_3820 = wile_gen_list(2, var_3821, NULL);
+lval var_3864[2];
+var_3864[0] = LVI_PROC(fn_3858,var_3859,2);
+var_3864[1] = var_3846[0];
+var_3863 = wile_gen_list(2, var_3864, NULL);
 }
-var_3820 = wile_apply_function(&(var_3820), LISP_WHENCE);
-var_3807 = var_3820;
+var_3863 = wile_apply_function(&(var_3863), LISP_WHENCE);
+var_3850 = var_3863;
 break;
 }
 default:
 {
-lval var_3822;
-var_3822 = LVI_STRING("case-lambic exhausted all cases, no match found!");
-lval var_3823;
+lval var_3865;
+var_3865 = LVI_STRING("case-lambic exhausted all cases, no match found!");
+lval var_3866;
 {
-lval var_3824[1];
-var_3824[0] = var_3822;
-var_3823 = wile_gen_list(1, var_3824, NULL);
+lval var_3867[1];
+var_3867[0] = var_3865;
+var_3866 = wile_gen_list(1, var_3867, NULL);
 }
-if (var_3823.vt == LV_PAIR && (var_3823.v.pair.cdr == NULL || var_3823.v.pair.cdr->vt == LV_NIL)) {
-var_3823 = (var_3823.v.pair.car ? *(var_3823.v.pair.car) : LVI_NIL());
+if (var_3866.vt == LV_PAIR && (var_3866.v.pair.cdr == NULL || var_3866.v.pair.cdr->vt == LV_NIL)) {
+var_3866 = (var_3866.v.pair.car ? *(var_3866.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_3823;
+*(cachalot->errval) = var_3866;
 cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
-var_3807 = var_3823;
+var_3850 = var_3866;
 break;
 }
 }
-return var_3807;
+return var_3850;
 }
-// end of lambda fn_3801
+// end of lambda fn_3844
 
-// @@@ string-downcase @@@ bld-rtl-dir/wile-rtl2-000083.scm:604 @@@ fn_3827 @@@
-static lval fn_3827(lptr* var_3828, lptr var_3829, const char* cloc)
+// @@@ string-downcase @@@ bld-rtl-dir/wile-rtl2-000083.scm:610 @@@ fn_3870 @@@
+static lval fn_3870(lptr* var_3871, lptr var_3872, const char* cloc)
 {
-lval var_3831;
-var_3831 = LVI_STRING(var_3829[0].v.str);
+lval var_3874;
+var_3874 = LVI_STRING(var_3872[0].v.str);
 {
-char* sp = var_3831.v.str;
+char* sp = var_3874.v.str;
 while (*sp) {
 *sp = tolower(*sp);
 ++sp;
 }
 }
-return var_3831;
+return var_3874;
 }
-// end of prim fn_3827
+// end of prim fn_3870
 
-// @@@ string-find-first-char @@@ bld-rtl-dir/wile-rtl2-000083.scm:605 @@@ fn_3834 @@@
-static lval fn_3834(lptr* var_3835, lptr var_3836, const char* cloc)
+// @@@ string-find-first-char @@@ bld-rtl-dir/wile-rtl2-000083.scm:611 @@@ fn_3877 @@@
+static lval fn_3877(lptr* var_3878, lptr var_3879, const char* cloc)
 {
-lval var_3838;
-if (var_3836[0].vt != LV_STRING || var_3836[1].vt != LV_CHAR) {
+lval var_3881;
+if (var_3879[0].vt != LV_STRING || var_3879[1].vt != LV_CHAR) {
 WILE_EX("string-find-first-char", "expects a string and a character input");
 }
 {
-char* pos = strchr(var_3836[0].v.str, var_3836[1].v.chr);
+char* pos = strchr(var_3879[0].v.str, var_3879[1].v.chr);
 if (pos) {
-var_3838 = LVI_INT(pos - var_3836[0].v.str);
+var_3881 = LVI_INT(pos - var_3879[0].v.str);
 } else {
-var_3838 = LVI_BOOL(false);
+var_3881 = LVI_BOOL(false);
 }
 }
-return var_3838;
+return var_3881;
 }
-// end of prim fn_3834
+// end of prim fn_3877
 
-// @@@ string-find-last-char @@@ bld-rtl-dir/wile-rtl2-000083.scm:606 @@@ fn_3841 @@@
-static lval fn_3841(lptr* var_3842, lptr var_3843, const char* cloc)
+// @@@ string-find-last-char @@@ bld-rtl-dir/wile-rtl2-000083.scm:612 @@@ fn_3884 @@@
+static lval fn_3884(lptr* var_3885, lptr var_3886, const char* cloc)
 {
-lval var_3845;
-if (var_3843[0].vt != LV_STRING || var_3843[1].vt != LV_CHAR) {
+lval var_3888;
+if (var_3886[0].vt != LV_STRING || var_3886[1].vt != LV_CHAR) {
 WILE_EX("string-find-last-char", "expects a string and a character input");
 }
 {
-char* pos = strrchr(var_3843[0].v.str, var_3843[1].v.chr);
+char* pos = strrchr(var_3886[0].v.str, var_3886[1].v.chr);
 if (pos) {
-var_3845 = LVI_INT(pos - var_3843[0].v.str);
+var_3888 = LVI_INT(pos - var_3886[0].v.str);
 } else {
-var_3845 = LVI_BOOL(false);
+var_3888 = LVI_BOOL(false);
 }
 }
-return var_3845;
+return var_3888;
 }
-// end of prim fn_3841
+// end of prim fn_3884
 
-// @@@ string-hash-32 @@@ bld-rtl-dir/wile-rtl2-000083.scm:607 @@@ fn_3848 @@@
-static lval fn_3848(lptr* var_3849, lptr var_3850, const char* cloc)
+// @@@ string-hash-32 @@@ bld-rtl-dir/wile-rtl2-000083.scm:613 @@@ fn_3891 @@@
+static lval fn_3891(lptr* var_3892, lptr var_3893, const char* cloc)
 {
-lval var_3852;
+lval var_3895;
 {
-lval var_3853[8];
-var_3853[0] = var_3850[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:607
-var_3852 = wile_string_hash_32(NULL, var_3853, "bld-rtl-dir/wile-rtl2-000083.scm:607");
-}
-return var_3852;
-}
-// end of prim fn_3848
-
-// @@@ string-hash-64 @@@ bld-rtl-dir/wile-rtl2-000083.scm:608 @@@ fn_3856 @@@
-static lval fn_3856(lptr* var_3857, lptr var_3858, const char* cloc)
-{
-lval var_3860;
-{
-lval var_3861[8];
-var_3861[0] = var_3858[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:608
-var_3860 = wile_string_hash_64(NULL, var_3861, "bld-rtl-dir/wile-rtl2-000083.scm:608");
-}
-return var_3860;
-}
-// end of prim fn_3856
-
-// @@@ string-join-by @@@ bld-rtl-dir/wile-rtl2-000083.scm:609 @@@ fn_3864 @@@
-static lval fn_3864(lptr* var_3865, lptr var_3866, const char* cloc)
-{
-lval var_3868;
-var_3868 = var_3866[1];
-{
-lval var_3869[8];
-var_3869[0] = var_3866[0];
-var_3869[1] = var_3868;
-// bld-rtl-dir/wile-rtl2-000083.scm:609
-var_3868 = wile_string_join_by(NULL, var_3869, "bld-rtl-dir/wile-rtl2-000083.scm:609");
-}
-return var_3868;
-}
-// end of prim fn_3864
-
-// @@@ string-length @@@ bld-rtl-dir/wile-rtl2-000083.scm:610 @@@ fn_3872 @@@
-static lval fn_3872(lptr* var_3873, lptr var_3874, const char* cloc)
-{
-lval var_3876;
-var_3876 = LVI_INT(strlen(var_3874[0].v.str));
-return var_3876;
-}
-// end of prim fn_3872
-
-// @@@ string-pad-center @@@ bld-rtl-dir/wile-rtl2-000083.scm:611 @@@ fn_3879 @@@
-static lval fn_3879(lptr* var_3880, lptr var_3881, const char* cloc)
-{
-lval var_3883;
-{
-lval var_3884[8];
-var_3884[0] = var_3881[0];
-var_3884[1] = var_3881[1];
-var_3884[2] = var_3881[2];
-// bld-rtl-dir/wile-rtl2-000083.scm:611
-var_3883 = wile_string_pad_center(NULL, var_3884, "bld-rtl-dir/wile-rtl2-000083.scm:611");
-}
-return var_3883;
-}
-// end of prim fn_3879
-
-// @@@ string-pad-left @@@ bld-rtl-dir/wile-rtl2-000083.scm:612 @@@ fn_3887 @@@
-static lval fn_3887(lptr* var_3888, lptr var_3889, const char* cloc)
-{
-lval var_3891;
-{
-lval var_3892[8];
-var_3892[0] = var_3889[0];
-var_3892[1] = var_3889[1];
-var_3892[2] = var_3889[2];
-// bld-rtl-dir/wile-rtl2-000083.scm:612
-var_3891 = wile_string_pad_left(NULL, var_3892, "bld-rtl-dir/wile-rtl2-000083.scm:612");
-}
-return var_3891;
-}
-// end of prim fn_3887
-
-// @@@ string-pad-right @@@ bld-rtl-dir/wile-rtl2-000083.scm:613 @@@ fn_3895 @@@
-static lval fn_3895(lptr* var_3896, lptr var_3897, const char* cloc)
-{
-lval var_3899;
-{
-lval var_3900[8];
-var_3900[0] = var_3897[0];
-var_3900[1] = var_3897[1];
-var_3900[2] = var_3897[2];
+lval var_3896[8];
+var_3896[0] = var_3893[0];
 // bld-rtl-dir/wile-rtl2-000083.scm:613
-var_3899 = wile_string_pad_right(NULL, var_3900, "bld-rtl-dir/wile-rtl2-000083.scm:613");
+var_3895 = wile_string_hash_32(NULL, var_3896, "bld-rtl-dir/wile-rtl2-000083.scm:613");
 }
-return var_3899;
+return var_3895;
 }
-// end of prim fn_3895
+// end of prim fn_3891
 
-// @@@ string-port? @@@ bld-rtl-dir/wile-rtl2-000083.scm:614 @@@ fn_3903 @@@
-static lval fn_3903(lptr* var_3904, lptr var_3905, const char* cloc)
+// @@@ string-hash-64 @@@ bld-rtl-dir/wile-rtl2-000083.scm:614 @@@ fn_3899 @@@
+static lval fn_3899(lptr* var_3900, lptr var_3901, const char* cloc)
 {
-lval var_3907;
-var_3907 = LVI_BOOL(var_3905[0].vt == LV_STR_PORT);
-return var_3907;
+lval var_3903;
+{
+lval var_3904[8];
+var_3904[0] = var_3901[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:614
+var_3903 = wile_string_hash_64(NULL, var_3904, "bld-rtl-dir/wile-rtl2-000083.scm:614");
 }
-// end of prim fn_3903
+return var_3903;
+}
+// end of prim fn_3899
 
-// @@@ string-ref @@@ bld-rtl-dir/wile-rtl2-000083.scm:615 @@@ fn_3910 @@@
-static lval fn_3910(lptr* var_3911, lptr var_3912, const char* cloc)
+// @@@ string-join-by @@@ bld-rtl-dir/wile-rtl2-000083.scm:615 @@@ fn_3907 @@@
+static lval fn_3907(lptr* var_3908, lptr var_3909, const char* cloc)
 {
-lval var_3914;
-if (var_3912[0].vt != LV_STRING) {
+lval var_3911;
+var_3911 = var_3909[1];
+{
+lval var_3912[8];
+var_3912[0] = var_3909[0];
+var_3912[1] = var_3911;
+// bld-rtl-dir/wile-rtl2-000083.scm:615
+var_3911 = wile_string_join_by(NULL, var_3912, "bld-rtl-dir/wile-rtl2-000083.scm:615");
+}
+return var_3911;
+}
+// end of prim fn_3907
+
+// @@@ string-length @@@ bld-rtl-dir/wile-rtl2-000083.scm:616 @@@ fn_3915 @@@
+static lval fn_3915(lptr* var_3916, lptr var_3917, const char* cloc)
+{
+lval var_3919;
+var_3919 = LVI_INT(strlen(var_3917[0].v.str));
+return var_3919;
+}
+// end of prim fn_3915
+
+// @@@ string-pad-center @@@ bld-rtl-dir/wile-rtl2-000083.scm:617 @@@ fn_3922 @@@
+static lval fn_3922(lptr* var_3923, lptr var_3924, const char* cloc)
+{
+lval var_3926;
+{
+lval var_3927[8];
+var_3927[0] = var_3924[0];
+var_3927[1] = var_3924[1];
+var_3927[2] = var_3924[2];
+// bld-rtl-dir/wile-rtl2-000083.scm:617
+var_3926 = wile_string_pad_center(NULL, var_3927, "bld-rtl-dir/wile-rtl2-000083.scm:617");
+}
+return var_3926;
+}
+// end of prim fn_3922
+
+// @@@ string-pad-left @@@ bld-rtl-dir/wile-rtl2-000083.scm:618 @@@ fn_3930 @@@
+static lval fn_3930(lptr* var_3931, lptr var_3932, const char* cloc)
+{
+lval var_3934;
+{
+lval var_3935[8];
+var_3935[0] = var_3932[0];
+var_3935[1] = var_3932[1];
+var_3935[2] = var_3932[2];
+// bld-rtl-dir/wile-rtl2-000083.scm:618
+var_3934 = wile_string_pad_left(NULL, var_3935, "bld-rtl-dir/wile-rtl2-000083.scm:618");
+}
+return var_3934;
+}
+// end of prim fn_3930
+
+// @@@ string-pad-right @@@ bld-rtl-dir/wile-rtl2-000083.scm:619 @@@ fn_3938 @@@
+static lval fn_3938(lptr* var_3939, lptr var_3940, const char* cloc)
+{
+lval var_3942;
+{
+lval var_3943[8];
+var_3943[0] = var_3940[0];
+var_3943[1] = var_3940[1];
+var_3943[2] = var_3940[2];
+// bld-rtl-dir/wile-rtl2-000083.scm:619
+var_3942 = wile_string_pad_right(NULL, var_3943, "bld-rtl-dir/wile-rtl2-000083.scm:619");
+}
+return var_3942;
+}
+// end of prim fn_3938
+
+// @@@ string-port? @@@ bld-rtl-dir/wile-rtl2-000083.scm:620 @@@ fn_3946 @@@
+static lval fn_3946(lptr* var_3947, lptr var_3948, const char* cloc)
+{
+lval var_3950;
+var_3950 = LVI_BOOL(var_3948[0].vt == LV_STR_PORT);
+return var_3950;
+}
+// end of prim fn_3946
+
+// @@@ string-ref @@@ bld-rtl-dir/wile-rtl2-000083.scm:621 @@@ fn_3953 @@@
+static lval fn_3953(lptr* var_3954, lptr var_3955, const char* cloc)
+{
+lval var_3957;
+if (var_3955[0].vt != LV_STRING) {
 WILE_EX("string-ref", "expects a string input");
 }
-if (var_3912[1].v.iv < 0 || (size_t) var_3912[1].v.iv >= strlen(var_3912[0].v.str)) {
+if (var_3955[1].v.iv < 0 || (size_t) var_3955[1].v.iv >= strlen(var_3955[0].v.str)) {
 WILE_EX("string-ref", "index is out of range");
 }
-var_3914 = LVI_CHAR(var_3912[0].v.str[var_3912[1].v.iv]);
-return var_3914;
+var_3957 = LVI_CHAR(var_3955[0].v.str[var_3955[1].v.iv]);
+return var_3957;
 }
-// end of prim fn_3910
+// end of prim fn_3953
 
-// @@@ string-reverse @@@ bld-rtl-dir/wile-rtl2-000083.scm:616 @@@ fn_3917 @@@
-static lval fn_3917(lptr* var_3918, lptr var_3919, const char* cloc)
+// @@@ string-reverse @@@ bld-rtl-dir/wile-rtl2-000083.scm:622 @@@ fn_3960 @@@
+static lval fn_3960(lptr* var_3961, lptr var_3962, const char* cloc)
 {
-lval var_3921;
+lval var_3964;
 {
-lval var_3922[8];
-var_3922[0] = var_3919[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:616
-var_3921 = wile_string_reverse(NULL, var_3922, "bld-rtl-dir/wile-rtl2-000083.scm:616");
+lval var_3965[8];
+var_3965[0] = var_3962[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:622
+var_3964 = wile_string_reverse(NULL, var_3965, "bld-rtl-dir/wile-rtl2-000083.scm:622");
 }
-return var_3921;
+return var_3964;
 }
-// end of prim fn_3917
+// end of prim fn_3960
 
-// @@@ string-set! @@@ bld-rtl-dir/wile-rtl2-000083.scm:617 @@@ fn_3925 @@@
-static lval fn_3925(lptr* var_3926, lptr var_3927, const char* cloc)
+// @@@ string-set! @@@ bld-rtl-dir/wile-rtl2-000083.scm:623 @@@ fn_3968 @@@
+static lval fn_3968(lptr* var_3969, lptr var_3970, const char* cloc)
 {
-lval var_3929;
-if (var_3927[0].vt != LV_STRING || var_3927[1].vt != LV_INT || var_3927[2].vt != LV_CHAR) {
+lval var_3972;
+if (var_3970[0].vt != LV_STRING || var_3970[1].vt != LV_INT || var_3970[2].vt != LV_CHAR) {
 WILE_EX("string-set!", "expects a string, an integer, and a character");
 }
-if (var_3927[1].v.iv < 0 || (size_t) var_3927[1].v.iv >= strlen(var_3927[0].v.str)) {
+if (var_3970[1].v.iv < 0 || (size_t) var_3970[1].v.iv >= strlen(var_3970[0].v.str)) {
 WILE_EX("string-set!", "index is out of range");
 }
-var_3927[0].v.str[var_3927[1].v.iv] = var_3927[2].v.chr;
-var_3929 = var_3927[0];
-return var_3929;
+var_3970[0].v.str[var_3970[1].v.iv] = var_3970[2].v.chr;
+var_3972 = var_3970[0];
+return var_3972;
 }
-// end of prim fn_3925
+// end of prim fn_3968
 
-// @@@ string-split-by @@@ bld-rtl-dir/wile-rtl2-000083.scm:618 @@@ fn_3932 @@@
-static lval fn_3932(lptr* var_3933, lptr var_3934, const char* cloc)
+// @@@ string-split-by @@@ bld-rtl-dir/wile-rtl2-000083.scm:624 @@@ fn_3975 @@@
+static lval fn_3975(lptr* var_3976, lptr var_3977, const char* cloc)
 {
-lval var_3936;
+lval var_3979;
 {
-lval var_3937[8];
-var_3937[0] = var_3934[0];
-var_3937[1] = var_3934[1];
-// bld-rtl-dir/wile-rtl2-000083.scm:618
-var_3936 = wile_string_split_by(NULL, var_3937, "bld-rtl-dir/wile-rtl2-000083.scm:618");
+lval var_3980[8];
+var_3980[0] = var_3977[0];
+var_3980[1] = var_3977[1];
+// bld-rtl-dir/wile-rtl2-000083.scm:624
+var_3979 = wile_string_split_by(NULL, var_3980, "bld-rtl-dir/wile-rtl2-000083.scm:624");
 }
-return var_3936;
+return var_3979;
 }
-// end of prim fn_3932
+// end of prim fn_3975
 
-// @@@ string-split-by-whitespace @@@ bld-rtl-dir/wile-rtl2-000083.scm:619 @@@ fn_3940 @@@
-static lval fn_3940(lptr* var_3941, lptr var_3942, const char* cloc)
+// @@@ string-split-by-whitespace @@@ bld-rtl-dir/wile-rtl2-000083.scm:625 @@@ fn_3983 @@@
+static lval fn_3983(lptr* var_3984, lptr var_3985, const char* cloc)
 {
-lval var_3944;
+lval var_3987;
 {
-lval var_3945[8];
-var_3945[0] = var_3942[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:619
-var_3944 = wile_string_split_by_whitespace(NULL, var_3945, "bld-rtl-dir/wile-rtl2-000083.scm:619");
+lval var_3988[8];
+var_3988[0] = var_3985[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:625
+var_3987 = wile_string_split_by_whitespace(NULL, var_3988, "bld-rtl-dir/wile-rtl2-000083.scm:625");
 }
-return var_3944;
+return var_3987;
 }
-// end of prim fn_3940
+// end of prim fn_3983
 
-// @@@ string-trim @@@ bld-rtl-dir/wile-rtl2-000083.scm:620 @@@ fn_3948 @@@
-static lval fn_3948(lptr* var_3949, lptr var_3950, const char* cloc)
+// @@@ string-trim @@@ bld-rtl-dir/wile-rtl2-000083.scm:626 @@@ fn_3991 @@@
+static lval fn_3991(lptr* var_3992, lptr var_3993, const char* cloc)
 {
-lval var_3952;
+lval var_3995;
 {
-lval var_3953[8];
-var_3953[0] = var_3950[0];
-var_3953[1] = var_3950[1];
-// bld-rtl-dir/wile-rtl2-000083.scm:620
-var_3952 = wile_string_trim(NULL, var_3953, "bld-rtl-dir/wile-rtl2-000083.scm:620");
+lval var_3996[8];
+var_3996[0] = var_3993[0];
+var_3996[1] = var_3993[1];
+// bld-rtl-dir/wile-rtl2-000083.scm:626
+var_3995 = wile_string_trim(NULL, var_3996, "bld-rtl-dir/wile-rtl2-000083.scm:626");
 }
-return var_3952;
+return var_3995;
 }
-// end of prim fn_3948
+// end of prim fn_3991
 
-// @@@ string-trim-left @@@ bld-rtl-dir/wile-rtl2-000083.scm:621 @@@ fn_3956 @@@
-static lval fn_3956(lptr* var_3957, lptr var_3958, const char* cloc)
+// @@@ string-trim-left @@@ bld-rtl-dir/wile-rtl2-000083.scm:627 @@@ fn_3999 @@@
+static lval fn_3999(lptr* var_4000, lptr var_4001, const char* cloc)
 {
-lval var_3960;
+lval var_4003;
 {
-lval var_3961[8];
-var_3961[0] = var_3958[0];
-var_3961[1] = var_3958[1];
-// bld-rtl-dir/wile-rtl2-000083.scm:621
-var_3960 = wile_string_trim_left(NULL, var_3961, "bld-rtl-dir/wile-rtl2-000083.scm:621");
+lval var_4004[8];
+var_4004[0] = var_4001[0];
+var_4004[1] = var_4001[1];
+// bld-rtl-dir/wile-rtl2-000083.scm:627
+var_4003 = wile_string_trim_left(NULL, var_4004, "bld-rtl-dir/wile-rtl2-000083.scm:627");
 }
-return var_3960;
+return var_4003;
 }
-// end of prim fn_3956
+// end of prim fn_3999
 
-// @@@ string-trim-right @@@ bld-rtl-dir/wile-rtl2-000083.scm:622 @@@ fn_3964 @@@
-static lval fn_3964(lptr* var_3965, lptr var_3966, const char* cloc)
+// @@@ string-trim-right @@@ bld-rtl-dir/wile-rtl2-000083.scm:628 @@@ fn_4007 @@@
+static lval fn_4007(lptr* var_4008, lptr var_4009, const char* cloc)
 {
-lval var_3968;
+lval var_4011;
 {
-lval var_3969[8];
-var_3969[0] = var_3966[0];
-var_3969[1] = var_3966[1];
-// bld-rtl-dir/wile-rtl2-000083.scm:622
-var_3968 = wile_string_trim_right(NULL, var_3969, "bld-rtl-dir/wile-rtl2-000083.scm:622");
+lval var_4012[8];
+var_4012[0] = var_4009[0];
+var_4012[1] = var_4009[1];
+// bld-rtl-dir/wile-rtl2-000083.scm:628
+var_4011 = wile_string_trim_right(NULL, var_4012, "bld-rtl-dir/wile-rtl2-000083.scm:628");
 }
-return var_3968;
+return var_4011;
 }
-// end of prim fn_3964
+// end of prim fn_4007
 
-// @@@ string-upcase @@@ bld-rtl-dir/wile-rtl2-000083.scm:623 @@@ fn_3972 @@@
-static lval fn_3972(lptr* var_3973, lptr var_3974, const char* cloc)
+// @@@ string-upcase @@@ bld-rtl-dir/wile-rtl2-000083.scm:629 @@@ fn_4015 @@@
+static lval fn_4015(lptr* var_4016, lptr var_4017, const char* cloc)
 {
-lval var_3976;
-var_3976 = LVI_STRING(var_3974[0].v.str);
+lval var_4019;
+var_4019 = LVI_STRING(var_4017[0].v.str);
 {
-char* sp = var_3976.v.str;
+char* sp = var_4019.v.str;
 while (*sp) {
 *sp = toupper(*sp);
 ++sp;
 }
 }
-return var_3976;
+return var_4019;
 }
-// end of prim fn_3972
+// end of prim fn_4015
 
-// @@@ string/=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:624 @@@ fn_3979 @@@
-static lval fn_3979(lptr* var_3980, lptr var_3981, const char* cloc)
+// @@@ string/=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:630 @@@ fn_4022 @@@
+static lval fn_4022(lptr* var_4023, lptr var_4024, const char* cloc)
 {
-lval var_3983;
-var_3983 = LVI_BOOL(strcmp(var_3981[0].v.str, var_3981[1].v.str) != 0);
-return var_3983;
+lval var_4026;
+var_4026 = LVI_BOOL(strcmp(var_4024[0].v.str, var_4024[1].v.str) != 0);
+return var_4026;
 }
-// end of prim fn_3979
+// end of prim fn_4022
 
-// @@@ string<=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:625 @@@ fn_3986 @@@
-static lval fn_3986(lptr* var_3987, lptr var_3988, const char* cloc)
+// @@@ string<=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:631 @@@ fn_4029 @@@
+static lval fn_4029(lptr* var_4030, lptr var_4031, const char* cloc)
 {
-lval var_3990;
-var_3990 = LVI_BOOL(strcmp(var_3988[0].v.str, var_3988[1].v.str) <= 0);
-return var_3990;
+lval var_4033;
+var_4033 = LVI_BOOL(strcmp(var_4031[0].v.str, var_4031[1].v.str) <= 0);
+return var_4033;
 }
-// end of prim fn_3986
+// end of prim fn_4029
 
-// @@@ string<? @@@ bld-rtl-dir/wile-rtl2-000083.scm:626 @@@ fn_3993 @@@
-static lval fn_3993(lptr* var_3994, lptr var_3995, const char* cloc)
+// @@@ string<? @@@ bld-rtl-dir/wile-rtl2-000083.scm:632 @@@ fn_4036 @@@
+static lval fn_4036(lptr* var_4037, lptr var_4038, const char* cloc)
 {
-lval var_3997;
-var_3997 = LVI_BOOL(strcmp(var_3995[0].v.str, var_3995[1].v.str) < 0);
-return var_3997;
+lval var_4040;
+var_4040 = LVI_BOOL(strcmp(var_4038[0].v.str, var_4038[1].v.str) < 0);
+return var_4040;
 }
-// end of prim fn_3993
+// end of prim fn_4036
 
-// @@@ string=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:627 @@@ fn_4000 @@@
-static lval fn_4000(lptr* var_4001, lptr var_4002, const char* cloc)
+// @@@ string=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:633 @@@ fn_4043 @@@
+static lval fn_4043(lptr* var_4044, lptr var_4045, const char* cloc)
 {
-lval var_4004;
-var_4004 = LVI_BOOL(strcmp(var_4002[0].v.str, var_4002[1].v.str) == 0);
-return var_4004;
+lval var_4047;
+var_4047 = LVI_BOOL(strcmp(var_4045[0].v.str, var_4045[1].v.str) == 0);
+return var_4047;
 }
-// end of prim fn_4000
+// end of prim fn_4043
 
-// @@@ string>=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:628 @@@ fn_4007 @@@
-static lval fn_4007(lptr* var_4008, lptr var_4009, const char* cloc)
+// @@@ string>=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:634 @@@ fn_4050 @@@
+static lval fn_4050(lptr* var_4051, lptr var_4052, const char* cloc)
 {
-lval var_4011;
-var_4011 = LVI_BOOL(strcmp(var_4009[0].v.str, var_4009[1].v.str) >= 0);
-return var_4011;
+lval var_4054;
+var_4054 = LVI_BOOL(strcmp(var_4052[0].v.str, var_4052[1].v.str) >= 0);
+return var_4054;
 }
-// end of prim fn_4007
+// end of prim fn_4050
 
-// @@@ string>? @@@ bld-rtl-dir/wile-rtl2-000083.scm:629 @@@ fn_4014 @@@
-static lval fn_4014(lptr* var_4015, lptr var_4016, const char* cloc)
+// @@@ string>? @@@ bld-rtl-dir/wile-rtl2-000083.scm:635 @@@ fn_4057 @@@
+static lval fn_4057(lptr* var_4058, lptr var_4059, const char* cloc)
 {
-lval var_4018;
-var_4018 = LVI_BOOL(strcmp(var_4016[0].v.str, var_4016[1].v.str) > 0);
-return var_4018;
+lval var_4061;
+var_4061 = LVI_BOOL(strcmp(var_4059[0].v.str, var_4059[1].v.str) > 0);
+return var_4061;
 }
-// end of prim fn_4014
+// end of prim fn_4057
 
-// @@@ string? @@@ bld-rtl-dir/wile-rtl2-000083.scm:630 @@@ fn_4021 @@@
-static lval fn_4021(lptr* var_4022, lptr var_4023, const char* cloc)
+// @@@ string? @@@ bld-rtl-dir/wile-rtl2-000083.scm:636 @@@ fn_4064 @@@
+static lval fn_4064(lptr* var_4065, lptr var_4066, const char* cloc)
 {
-lval var_4025;
-var_4025 = LVI_BOOL(var_4023[0].vt == LV_STRING);
-return var_4025;
+lval var_4068;
+var_4068 = LVI_BOOL(var_4066[0].vt == LV_STRING);
+return var_4068;
 }
-// end of prim fn_4021
+// end of prim fn_4064
 
-// @@@ symbol->string @@@ bld-rtl-dir/wile-rtl2-000083.scm:631 @@@ fn_4028 @@@
-static lval fn_4028(lptr* var_4029, lptr var_4030, const char* cloc)
+// @@@ symbol->string @@@ bld-rtl-dir/wile-rtl2-000083.scm:637 @@@ fn_4071 @@@
+static lval fn_4071(lptr* var_4072, lptr var_4073, const char* cloc)
 {
-lval var_4032;
-var_4032 = LVI_STRING(var_4030[0].v.str);
-return var_4032;
+lval var_4075;
+var_4075 = LVI_STRING(var_4073[0].v.str);
+return var_4075;
 }
-// end of prim fn_4028
+// end of prim fn_4071
 
-// @@@ symbol=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:632 @@@ fn_4035 @@@
-static lval fn_4035(lptr* var_4036, lptr var_4037, const char* cloc)
+// @@@ symbol=? @@@ bld-rtl-dir/wile-rtl2-000083.scm:638 @@@ fn_4078 @@@
+static lval fn_4078(lptr* var_4079, lptr var_4080, const char* cloc)
 {
-lval var_4039;
-var_4039 = LVI_BOOL(strcmp(var_4037[0].v.str, var_4037[1].v.str) == 0);
-return var_4039;
+lval var_4082;
+var_4082 = LVI_BOOL(strcmp(var_4080[0].v.str, var_4080[1].v.str) == 0);
+return var_4082;
 }
-// end of prim fn_4035
+// end of prim fn_4078
 
-// @@@ symbol? @@@ bld-rtl-dir/wile-rtl2-000083.scm:633 @@@ fn_4042 @@@
-static lval fn_4042(lptr* var_4043, lptr var_4044, const char* cloc)
+// @@@ symbol? @@@ bld-rtl-dir/wile-rtl2-000083.scm:639 @@@ fn_4085 @@@
+static lval fn_4085(lptr* var_4086, lptr var_4087, const char* cloc)
 {
-lval var_4046;
-var_4046 = LVI_BOOL(var_4044[0].vt == LV_SYMBOL);
-return var_4046;
+lval var_4089;
+var_4089 = LVI_BOOL(var_4087[0].vt == LV_SYMBOL);
+return var_4089;
 }
-// end of prim fn_4042
+// end of prim fn_4085
 
-// @@@ tan @@@ bld-rtl-dir/wile-rtl2-000083.scm:634 @@@ fn_4049 @@@
-static lval fn_4049(lptr* var_4050, lptr var_4051, const char* cloc)
+// @@@ tan @@@ bld-rtl-dir/wile-rtl2-000083.scm:640 @@@ fn_4092 @@@
+static lval fn_4092(lptr* var_4093, lptr var_4094, const char* cloc)
 {
-lval var_4053;
+lval var_4096;
 {
 lisp_real_t r;
 lisp_cmplx_t z;
 bool isr;
-switch (var_4051[0].vt) {
+switch (var_4094[0].vt) {
 case LV_INT:
-r = var_4051[0].v.iv;
+r = var_4094[0].v.iv;
 isr = true;
 break;
 case LV_RAT:
-r = LV_RAT2REAL(var_4051[0]);
+r = LV_RAT2REAL(var_4094[0]);
 isr = true;
 break;
 case LV_REAL:
-r = var_4051[0].v.rv;
+r = var_4094[0].v.rv;
 isr = true;
 break;
 case LV_CMPLX:
-z = var_4051[0].v.cv;
+z = var_4094[0].v.cv;
 isr = false;
 break;
 default:
 WILE_EX("tan", "got a non-numeric argument");
 }
 if (isr) {
-var_4053 = LVI_REAL(TAN(r));
+var_4096 = LVI_REAL(TAN(r));
 } else {
 z = CTAN(z);
 if (CIMAG(z) == 0.0) {
-var_4053 = LVI_REAL(CREAL(z));
+var_4096 = LVI_REAL(CREAL(z));
 } else {
-var_4053 = LVI_CMPLX1(z);
+var_4096 = LVI_CMPLX1(z);
 }
 }
 }
-return var_4053;
+return var_4096;
 }
-// end of prim fn_4049
+// end of prim fn_4092
 
-// @@@ tanh @@@ bld-rtl-dir/wile-rtl2-000083.scm:635 @@@ fn_4056 @@@
-static lval fn_4056(lptr* var_4057, lptr var_4058, const char* cloc)
+// @@@ tanh @@@ bld-rtl-dir/wile-rtl2-000083.scm:641 @@@ fn_4099 @@@
+static lval fn_4099(lptr* var_4100, lptr var_4101, const char* cloc)
 {
-lval var_4060;
+lval var_4103;
 {
 lisp_real_t r;
 lisp_cmplx_t z;
 bool isr;
-switch (var_4058[0].vt) {
+switch (var_4101[0].vt) {
 case LV_INT:
-r = var_4058[0].v.iv;
+r = var_4101[0].v.iv;
 isr = true;
 break;
 case LV_RAT:
-r = LV_RAT2REAL(var_4058[0]);
+r = LV_RAT2REAL(var_4101[0]);
 isr = true;
 break;
 case LV_REAL:
-r = var_4058[0].v.rv;
+r = var_4101[0].v.rv;
 isr = true;
 break;
 case LV_CMPLX:
-z = var_4058[0].v.cv;
+z = var_4101[0].v.cv;
 isr = false;
 break;
 default:
 WILE_EX("tanh", "got a non-numeric argument");
 }
 if (isr) {
-var_4060 = LVI_REAL(TANH(r));
+var_4103 = LVI_REAL(TANH(r));
 } else {
 z = CTANH(z);
 if (CIMAG(z) == 0.0) {
-var_4060 = LVI_REAL(CREAL(z));
+var_4103 = LVI_REAL(CREAL(z));
 } else {
-var_4060 = LVI_CMPLX1(z);
+var_4103 = LVI_CMPLX1(z);
 }
 }
 }
-return var_4060;
+return var_4103;
 }
-// end of prim fn_4056
+// end of prim fn_4099
 
-// @@@ token-source-line @@@ bld-rtl-dir/wile-rtl2-000083.scm:636 @@@ fn_4063 @@@
-static lval fn_4063(lptr* var_4064, lptr var_4065, const char* cloc)
+// @@@ token-source-line @@@ bld-rtl-dir/wile-rtl2-000083.scm:642 @@@ fn_4106 @@@
+static lval fn_4106(lptr* var_4107, lptr var_4108, const char* cloc)
 {
-lval var_4067;
-var_4067 = LVI_STRING(wile_decode_line_loc(wile_get_lisp_loc(&var_4065[0])));
-return var_4067;
+lval var_4110;
+var_4110 = LVI_STRING(wile_decode_line_loc(wile_get_lisp_loc(&var_4108[0])));
+return var_4110;
 }
-// end of prim fn_4063
+// end of prim fn_4106
 
-// @@@ truncate @@@ bld-rtl-dir/wile-rtl2-000083.scm:637 @@@ fn_4070 @@@
-static lval fn_4070(lptr* var_4071, lptr var_4072, const char* cloc)
+// @@@ truncate @@@ bld-rtl-dir/wile-rtl2-000083.scm:643 @@@ fn_4113 @@@
+static lval fn_4113(lptr* var_4114, lptr var_4115, const char* cloc)
 {
-lval var_4074;
-var_4074 = LVI_INT(var_4072[0].v.rv >= 0.0 ? FLOOR(var_4072[0].v.rv) : CEIL(var_4072[0].v.rv));
-return var_4074;
+lval var_4117;
+var_4117 = LVI_INT(var_4115[0].v.rv >= 0.0 ? FLOOR(var_4115[0].v.rv) : CEIL(var_4115[0].v.rv));
+return var_4117;
 }
-// end of prim fn_4070
+// end of prim fn_4113
 
-// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000083.scm:639 @@@ fn_4084 @@@
-static lval fn_4084(lptr* var_4085, lptr var_4086, const char* cloc)
+// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000083.scm:645 @@@ fn_4127 @@@
+static lval fn_4127(lptr* var_4128, lptr var_4129, const char* cloc)
 {
-lval var_4088;
+lval var_4131;
 {
-if (var_4086[0].vt != LV_FILE_PORT) {
+if (var_4129[0].vt != LV_FILE_PORT) {
 WILE_EX("truncate-file", "expects a file port");
 }
-long int pos = ftell(var_4086[0].v.fp);
-int fd = fileno(var_4086[0].v.fp);
-var_4088 = LVI_BOOL(pos >= 0 && fd >= 0 && ftruncate(fd, pos) == 0);
+long int pos = ftell(var_4129[0].v.fp);
+int fd = fileno(var_4129[0].v.fp);
+var_4131 = LVI_BOOL(pos >= 0 && fd >= 0 && ftruncate(fd, pos) == 0);
 }
-return var_4088;
+return var_4131;
 }
-// end of lambda fn_4084
+// end of lambda fn_4127
 
-// @@@ lambda (a1 a2) @@@ bld-rtl-dir/wile-rtl2-000083.scm:641 @@@ fn_4091 @@@
-static lval fn_4091(lptr* var_4092, lptr var_4093, const char* cloc)
+// @@@ lambda (a1 a2) @@@ bld-rtl-dir/wile-rtl2-000083.scm:647 @@@ fn_4134 @@@
+static lval fn_4134(lptr* var_4135, lptr var_4136, const char* cloc)
 {
-lval var_4095;
+lval var_4138;
 {
-if ((var_4093[0].vt != LV_FILE_PORT && var_4093[0].vt != LV_STRING) || var_4093[1].vt != LV_INT) {
+if ((var_4136[0].vt != LV_FILE_PORT && var_4136[0].vt != LV_STRING) || var_4136[1].vt != LV_INT) {
 WILE_EX("truncate-file", "expects a file name or port and an integer");
 }
-if (var_4093[0].vt == LV_FILE_PORT) {
-int fd = fileno(var_4093[0].v.fp);
-var_4095 = LVI_BOOL(var_4093[1].v.iv >= 0 && fd >= 0 && ftruncate(fd, var_4093[1].v.iv) == 0);
+if (var_4136[0].vt == LV_FILE_PORT) {
+int fd = fileno(var_4136[0].v.fp);
+var_4138 = LVI_BOOL(var_4136[1].v.iv >= 0 && fd >= 0 && ftruncate(fd, var_4136[1].v.iv) == 0);
 } else {
-var_4095 = LVI_BOOL(var_4093[1].v.iv >= 0 && truncate(var_4093[0].v.str, var_4093[1].v.iv) == 0);
+var_4138 = LVI_BOOL(var_4136[1].v.iv >= 0 && truncate(var_4136[0].v.str, var_4136[1].v.iv) == 0);
 }
 }
-return var_4095;
+return var_4138;
 }
-// end of lambda fn_4091
+// end of lambda fn_4134
 
-// @@@ lambda  symbol.31 @@@ bld-rtl-dir/wile-rtl2-000083.scm:639 @@@ fn_4077 @@@
-static lval fn_4077(lptr* var_4078, lptr var_4079, const char* cloc)
+// @@@ lambda  symbol.31 @@@ bld-rtl-dir/wile-rtl2-000083.scm:645 @@@ fn_4120 @@@
+static lval fn_4120(lptr* var_4121, lptr var_4122, const char* cloc)
 {
-lval var_4081;
+lval var_4124;
 {
-lval var_4082[8];
-var_4082[0] = var_4079[0];
+lval var_4125[8];
+var_4125[0] = var_4122[0];
 // wrtl.sch:0
-var_4081 = wile_list_length(NULL, var_4082, "wrtl.sch:0");
+var_4124 = wile_list_length(NULL, var_4125, "wrtl.sch:0");
 }
-lval var_4083;
-if (var_4081.vt != LV_INT) {
+lval var_4126;
+if (var_4124.vt != LV_INT) {
 wile_exception("case", LISP_WHENCE, "case-value type does not match case type");
 }
-switch (var_4081.v.iv) {
+switch (var_4124.v.iv) {
 case 1:
 {
-MK_CLOS(var_4085,0);
-lval var_4089;
+MK_CLOS(var_4128,0);
+lval var_4132;
 {
-lval var_4090[2];
-var_4090[0] = LVI_PROC(fn_4084,var_4085,1);
-var_4090[1] = var_4079[0];
-var_4089 = wile_gen_list(2, var_4090, NULL);
+lval var_4133[2];
+var_4133[0] = LVI_PROC(fn_4127,var_4128,1);
+var_4133[1] = var_4122[0];
+var_4132 = wile_gen_list(2, var_4133, NULL);
 }
-var_4089 = wile_apply_function(&(var_4089), LISP_WHENCE);
-var_4083 = var_4089;
+var_4132 = wile_apply_function(&(var_4132), LISP_WHENCE);
+var_4126 = var_4132;
 break;
 }
 case 2:
 {
-MK_CLOS(var_4092,0);
-lval var_4096;
+MK_CLOS(var_4135,0);
+lval var_4139;
 {
-lval var_4097[2];
-var_4097[0] = LVI_PROC(fn_4091,var_4092,2);
-var_4097[1] = var_4079[0];
-var_4096 = wile_gen_list(2, var_4097, NULL);
+lval var_4140[2];
+var_4140[0] = LVI_PROC(fn_4134,var_4135,2);
+var_4140[1] = var_4122[0];
+var_4139 = wile_gen_list(2, var_4140, NULL);
 }
-var_4096 = wile_apply_function(&(var_4096), LISP_WHENCE);
-var_4083 = var_4096;
+var_4139 = wile_apply_function(&(var_4139), LISP_WHENCE);
+var_4126 = var_4139;
 break;
 }
 default:
 {
-lval var_4098;
-var_4098 = LVI_STRING("case-lambic exhausted all cases, no match found!");
-lval var_4099;
+lval var_4141;
+var_4141 = LVI_STRING("case-lambic exhausted all cases, no match found!");
+lval var_4142;
 {
-lval var_4100[1];
-var_4100[0] = var_4098;
-var_4099 = wile_gen_list(1, var_4100, NULL);
+lval var_4143[1];
+var_4143[0] = var_4141;
+var_4142 = wile_gen_list(1, var_4143, NULL);
 }
-if (var_4099.vt == LV_PAIR && (var_4099.v.pair.cdr == NULL || var_4099.v.pair.cdr->vt == LV_NIL)) {
-var_4099 = (var_4099.v.pair.car ? *(var_4099.v.pair.car) : LVI_NIL());
+if (var_4142.vt == LV_PAIR && (var_4142.v.pair.cdr == NULL || var_4142.v.pair.cdr->vt == LV_NIL)) {
+var_4142 = (var_4142.v.pair.car ? *(var_4142.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_4099;
+*(cachalot->errval) = var_4142;
 cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
-var_4083 = var_4099;
+var_4126 = var_4142;
 break;
 }
 }
-return var_4083;
+return var_4126;
 }
-// end of lambda fn_4077
+// end of lambda fn_4120
 
-// @@@ type-of @@@ bld-rtl-dir/wile-rtl2-000083.scm:646 @@@ fn_4109 @@@
-static lval fn_4109(lptr* var_4110, lptr var_4111, const char* cloc)
+// @@@ type-of @@@ bld-rtl-dir/wile-rtl2-000083.scm:652 @@@ fn_4152 @@@
+static lval fn_4152(lptr* var_4153, lptr var_4154, const char* cloc)
 {
-lval var_4113;
+lval var_4156;
 {
-lval var_4114[8];
-var_4114[0] = var_4111[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:646
-var_4113 = wile_typeof(NULL, var_4114, "bld-rtl-dir/wile-rtl2-000083.scm:646");
+lval var_4157[8];
+var_4157[0] = var_4154[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:652
+var_4156 = wile_typeof(NULL, var_4157, "bld-rtl-dir/wile-rtl2-000083.scm:652");
 }
-return var_4113;
+return var_4156;
 }
-// end of prim fn_4109
+// end of prim fn_4152
 
-// @@@ unset-environment-variable @@@ bld-rtl-dir/wile-rtl2-000083.scm:647 @@@ fn_4117 @@@
-static lval fn_4117(lptr* var_4118, lptr var_4119, const char* cloc)
+// @@@ unset-environment-variable @@@ bld-rtl-dir/wile-rtl2-000083.scm:653 @@@ fn_4160 @@@
+static lval fn_4160(lptr* var_4161, lptr var_4162, const char* cloc)
 {
-lval var_4121;
-var_4121 = LVI_BOOL(unsetenv(var_4119[0].v.str) == 0);
-return var_4121;
+lval var_4164;
+var_4164 = LVI_BOOL(unsetenv(var_4162[0].v.str) == 0);
+return var_4164;
 }
-// end of prim fn_4117
+// end of prim fn_4160
 
-// @@@ upfrom @@@ bld-rtl-dir/wile-rtl2-000083.scm:648 @@@ fn_4124 @@@
-static lval fn_4124(lptr* var_4125, lptr var_4126, const char* cloc)
+// @@@ upfrom @@@ bld-rtl-dir/wile-rtl2-000083.scm:654 @@@ fn_4167 @@@
+static lval fn_4167(lptr* var_4168, lptr var_4169, const char* cloc)
 {
-lval var_4128;
+lval var_4171;
 {
-lval var_4129[8];
-var_4129[0] = var_4126[0];
-var_4129[1] = var_4126[1];
-// bld-rtl-dir/wile-rtl2-000083.scm:648
-var_4128 = wile_upfrom(NULL, var_4129, "bld-rtl-dir/wile-rtl2-000083.scm:648");
+lval var_4172[8];
+var_4172[0] = var_4169[0];
+var_4172[1] = var_4169[1];
+// bld-rtl-dir/wile-rtl2-000083.scm:654
+var_4171 = wile_upfrom(NULL, var_4172, "bld-rtl-dir/wile-rtl2-000083.scm:654");
 }
-return var_4128;
+return var_4171;
 }
-// end of prim fn_4124
+// end of prim fn_4167
 
-// @@@ vector @@@ bld-rtl-dir/wile-rtl2-000083.scm:649 @@@ fn_4132 @@@
-static lval fn_4132(lptr* var_4133, lptr var_4134, const char* cloc)
+// @@@ vector @@@ bld-rtl-dir/wile-rtl2-000083.scm:655 @@@ fn_4175 @@@
+static lval fn_4175(lptr* var_4176, lptr var_4177, const char* cloc)
 {
-lval var_4136;
-var_4136 = var_4134[0];
+lval var_4179;
+var_4179 = var_4177[0];
 {
-lval var_4137[8];
-var_4137[0] = var_4136;
-// bld-rtl-dir/wile-rtl2-000083.scm:649
-var_4136 = wile_list2vector(NULL, var_4137, "bld-rtl-dir/wile-rtl2-000083.scm:649");
+lval var_4180[8];
+var_4180[0] = var_4179;
+// bld-rtl-dir/wile-rtl2-000083.scm:655
+var_4179 = wile_list2vector(NULL, var_4180, "bld-rtl-dir/wile-rtl2-000083.scm:655");
 }
-return var_4136;
+return var_4179;
 }
-// end of prim fn_4132
+// end of prim fn_4175
 
-// @@@ vector->list @@@ bld-rtl-dir/wile-rtl2-000083.scm:650 @@@ fn_4140 @@@
-static lval fn_4140(lptr* var_4141, lptr var_4142, const char* cloc)
+// @@@ vector->list @@@ bld-rtl-dir/wile-rtl2-000083.scm:656 @@@ fn_4183 @@@
+static lval fn_4183(lptr* var_4184, lptr var_4185, const char* cloc)
 {
-lval var_4144;
+lval var_4187;
 {
-lval var_4145[8];
-var_4145[0] = var_4142[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:650
-var_4144 = wile_vector2list(NULL, var_4145, "bld-rtl-dir/wile-rtl2-000083.scm:650");
+lval var_4188[8];
+var_4188[0] = var_4185[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:656
+var_4187 = wile_vector2list(NULL, var_4188, "bld-rtl-dir/wile-rtl2-000083.scm:656");
 }
-return var_4144;
+return var_4187;
 }
-// end of prim fn_4140
+// end of prim fn_4183
 
-// @@@ vector-cfft! @@@ bld-rtl-dir/wile-rtl2-000083.scm:651 @@@ fn_4148 @@@
-static lval fn_4148(lptr* var_4149, lptr var_4150, const char* cloc)
+// @@@ vector-cfft! @@@ bld-rtl-dir/wile-rtl2-000083.scm:657 @@@ fn_4191 @@@
+static lval fn_4191(lptr* var_4192, lptr var_4193, const char* cloc)
 {
-lval var_4152;
+lval var_4195;
 {
-lval var_4153[8];
-var_4153[0] = var_4150[0];
-var_4153[1] = var_4150[1];
-// bld-rtl-dir/wile-rtl2-000083.scm:651
-var_4152 = wile_cfft(NULL, var_4153, "bld-rtl-dir/wile-rtl2-000083.scm:651");
+lval var_4196[8];
+var_4196[0] = var_4193[0];
+var_4196[1] = var_4193[1];
+// bld-rtl-dir/wile-rtl2-000083.scm:657
+var_4195 = wile_cfft(NULL, var_4196, "bld-rtl-dir/wile-rtl2-000083.scm:657");
 }
-return var_4152;
+return var_4195;
 }
-// end of prim fn_4148
+// end of prim fn_4191
 
-// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000083.scm:653 @@@ fn_4163 @@@
-static lval fn_4163(lptr* var_4164, lptr var_4165, const char* cloc)
+// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000083.scm:659 @@@ fn_4206 @@@
+static lval fn_4206(lptr* var_4207, lptr var_4208, const char* cloc)
 {
-lval var_4167;
+lval var_4210;
 {
 size_t i, capa;
-var_4167.vt = LV_VECTOR;
-capa = var_4165[0].v.iv;
-var_4167.v.vec.capa = capa;
-var_4167.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
+var_4210.vt = LV_VECTOR;
+var_4210.origin = var_4208[0].origin;
+capa = var_4208[0].v.iv;
+var_4210.v.vec.capa = capa;
+var_4210.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
 for (i = 0; i < capa; ++i) {
-var_4167.v.vec.arr[i] = NULL;
+var_4210.v.vec.arr[i] = NULL;
 }
 }
-return var_4167;
+return var_4210;
 }
-// end of lambda fn_4163
+// end of lambda fn_4206
 
-// @@@ lambda (a1 a2) @@@ bld-rtl-dir/wile-rtl2-000083.scm:655 @@@ fn_4170 @@@
-static lval fn_4170(lptr* var_4171, lptr var_4172, const char* cloc)
+// @@@ lambda (a1 a2) @@@ bld-rtl-dir/wile-rtl2-000083.scm:661 @@@ fn_4213 @@@
+static lval fn_4213(lptr* var_4214, lptr var_4215, const char* cloc)
 {
-lval var_4174;
+lval var_4217;
 {
 size_t i, capa;
-var_4174.vt = LV_VECTOR;
-capa = var_4172[0].v.iv;
-var_4174.v.vec.capa = capa;
-var_4174.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
-var_4174.v.vec.arr[0] = new_lv(LV_NIL);
-*(var_4174.v.vec.arr[0]) = var_4172[1];
+var_4217.vt = LV_VECTOR;
+var_4217.origin = var_4215[0].origin;
+capa = var_4215[0].v.iv;
+var_4217.v.vec.capa = capa;
+var_4217.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
+var_4217.v.vec.arr[0] = new_lv(LV_NIL);
+*(var_4217.v.vec.arr[0]) = var_4215[1];
 for (i = 1; i < capa; ++i) {
-var_4174.v.vec.arr[i] = var_4174.v.vec.arr[0];
+var_4217.v.vec.arr[i] = var_4217.v.vec.arr[0];
 }
 }
-return var_4174;
+return var_4217;
 }
-// end of lambda fn_4170
+// end of lambda fn_4213
 
-// @@@ lambda  symbol.32 @@@ bld-rtl-dir/wile-rtl2-000083.scm:653 @@@ fn_4156 @@@
-static lval fn_4156(lptr* var_4157, lptr var_4158, const char* cloc)
-{
-lval var_4160;
-{
-lval var_4161[8];
-var_4161[0] = var_4158[0];
-// wrtl.sch:0
-var_4160 = wile_list_length(NULL, var_4161, "wrtl.sch:0");
-}
-lval var_4162;
-if (var_4160.vt != LV_INT) {
-wile_exception("case", LISP_WHENCE, "case-value type does not match case type");
-}
-switch (var_4160.v.iv) {
-case 1:
-{
-MK_CLOS(var_4164,0);
-lval var_4168;
-{
-lval var_4169[2];
-var_4169[0] = LVI_PROC(fn_4163,var_4164,1);
-var_4169[1] = var_4158[0];
-var_4168 = wile_gen_list(2, var_4169, NULL);
-}
-var_4168 = wile_apply_function(&(var_4168), LISP_WHENCE);
-var_4162 = var_4168;
-break;
-}
-case 2:
-{
-MK_CLOS(var_4171,0);
-lval var_4175;
-{
-lval var_4176[2];
-var_4176[0] = LVI_PROC(fn_4170,var_4171,2);
-var_4176[1] = var_4158[0];
-var_4175 = wile_gen_list(2, var_4176, NULL);
-}
-var_4175 = wile_apply_function(&(var_4175), LISP_WHENCE);
-var_4162 = var_4175;
-break;
-}
-default:
-{
-lval var_4177;
-var_4177 = LVI_STRING("case-lambic exhausted all cases, no match found!");
-lval var_4178;
-{
-lval var_4179[1];
-var_4179[0] = var_4177;
-var_4178 = wile_gen_list(1, var_4179, NULL);
-}
-if (var_4178.vt == LV_PAIR && (var_4178.v.pair.cdr == NULL || var_4178.v.pair.cdr->vt == LV_NIL)) {
-var_4178 = (var_4178.v.pair.car ? *(var_4178.v.pair.car) : LVI_NIL());
-}
-cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_4178;
-cachalot->l_whence = 0;
-cachalot->c_whence = LISP_WHENCE;
-longjmp(cachalot->cenv, 1);
-var_4162 = var_4178;
-break;
-}
-}
-return var_4162;
-}
-// end of lambda fn_4156
-
-// @@@ vector-fill! @@@ bld-rtl-dir/wile-rtl2-000083.scm:657 @@@ fn_4182 @@@
-static lval fn_4182(lptr* var_4183, lptr var_4184, const char* cloc)
-{
-lval var_4186;
-{
-size_t i, capa;
-if (var_4184[0].vt != LV_VECTOR) {
-WILE_EX("vector-fill!", "first input is not a vector");
-}
-capa = var_4184[0].v.vec.capa;
-lptr pv = new_lv(LV_NIL);
-*pv = var_4184[1];
-for (i = 0; i < capa; ++i) {
-var_4184[0].v.vec.arr[i] = pv;
-}
-var_4186 = var_4184[0];
-}
-return var_4186;
-}
-// end of prim fn_4182
-
-// @@@ vector-for-each @@@ bld-rtl-dir/wile-rtl2-000083.scm:658 @@@ fn_4189 @@@
-static lval fn_4189(lptr* var_4190, lptr var_4191, const char* cloc)
-{
-lval var_4193;
-var_4193 = var_4191[2];
-{
-lval var_4194[8];
-var_4194[0] = var_4191[0];
-var_4194[1] = var_4191[1];
-var_4194[2] = var_4193;
-// bld-rtl-dir/wile-rtl2-000083.scm:658
-var_4193 = wile_vector_foreach(NULL, var_4194, "bld-rtl-dir/wile-rtl2-000083.scm:658");
-}
-return var_4193;
-}
-// end of prim fn_4189
-
-// @@@ vector-map @@@ bld-rtl-dir/wile-rtl2-000083.scm:660 @@@ fn_4199 @@@
+// @@@ lambda  symbol.32 @@@ bld-rtl-dir/wile-rtl2-000083.scm:659 @@@ fn_4199 @@@
 static lval fn_4199(lptr* var_4200, lptr var_4201, const char* cloc)
 {
 lval var_4203;
-var_4203 = var_4201[2];
 {
 lval var_4204[8];
 var_4204[0] = var_4201[0];
-var_4204[1] = var_4201[1];
-var_4204[2] = var_4203;
-// bld-rtl-dir/wile-rtl2-000083.scm:660
-var_4203 = wile_vector_map(NULL, var_4204, "bld-rtl-dir/wile-rtl2-000083.scm:660");
+// wrtl.sch:0
+var_4203 = wile_list_length(NULL, var_4204, "wrtl.sch:0");
 }
-return var_4203;
+lval var_4205;
+if (var_4203.vt != LV_INT) {
+wile_exception("case", LISP_WHENCE, "case-value type does not match case type");
 }
-// end of prim fn_4199
-
-// @@@ vector-map! @@@ bld-rtl-dir/wile-rtl2-000083.scm:661 @@@ fn_4207 @@@
-static lval fn_4207(lptr* var_4208, lptr var_4209, const char* cloc)
+switch (var_4203.v.iv) {
+case 1:
 {
+MK_CLOS(var_4207,0);
 lval var_4211;
 {
-lval var_4212[8];
-var_4212[0] = var_4209[0];
-var_4212[1] = var_4209[1];
-// bld-rtl-dir/wile-rtl2-000083.scm:661
-var_4211 = wile_vector_map_inplace(NULL, var_4212, "bld-rtl-dir/wile-rtl2-000083.scm:661");
+lval var_4212[2];
+var_4212[0] = LVI_PROC(fn_4206,var_4207,1);
+var_4212[1] = var_4201[0];
+var_4211 = wile_gen_list(2, var_4212, NULL);
 }
-return var_4211;
+var_4211 = wile_apply_function(&(var_4211), LISP_WHENCE);
+var_4205 = var_4211;
+break;
 }
-// end of prim fn_4207
+case 2:
+{
+MK_CLOS(var_4214,0);
+lval var_4218;
+{
+lval var_4219[2];
+var_4219[0] = LVI_PROC(fn_4213,var_4214,2);
+var_4219[1] = var_4201[0];
+var_4218 = wile_gen_list(2, var_4219, NULL);
+}
+var_4218 = wile_apply_function(&(var_4218), LISP_WHENCE);
+var_4205 = var_4218;
+break;
+}
+default:
+{
+lval var_4220;
+var_4220 = LVI_STRING("case-lambic exhausted all cases, no match found!");
+lval var_4221;
+{
+lval var_4222[1];
+var_4222[0] = var_4220;
+var_4221 = wile_gen_list(1, var_4222, NULL);
+}
+if (var_4221.vt == LV_PAIR && (var_4221.v.pair.cdr == NULL || var_4221.v.pair.cdr->vt == LV_NIL)) {
+var_4221 = (var_4221.v.pair.car ? *(var_4221.v.pair.car) : LVI_NIL());
+}
+cachalot->errval = new_lv(LV_NIL);
+*(cachalot->errval) = var_4221;
+cachalot->l_whence = 0;
+cachalot->c_whence = LISP_WHENCE;
+longjmp(cachalot->cenv, 1);
+var_4205 = var_4221;
+break;
+}
+}
+return var_4205;
+}
+// end of lambda fn_4199
 
-// @@@ vector-number/type @@@ bld-rtl-dir/wile-rtl2-000083.scm:662 @@@ fn_4215 @@@
-static lval fn_4215(lptr* var_4216, lptr var_4217, const char* cloc)
+// @@@ vector-fill! @@@ bld-rtl-dir/wile-rtl2-000083.scm:663 @@@ fn_4225 @@@
+static lval fn_4225(lptr* var_4226, lptr var_4227, const char* cloc)
 {
-lval var_4219;
+lval var_4229;
 {
-if (var_4217[0].vt != LV_VECTOR) {
+size_t i, capa;
+if (var_4227[0].vt != LV_VECTOR) {
+WILE_EX("vector-fill!", "first input is not a vector");
+}
+capa = var_4227[0].v.vec.capa;
+lptr pv = new_lv(LV_NIL);
+*pv = var_4227[1];
+for (i = 0; i < capa; ++i) {
+var_4227[0].v.vec.arr[i] = pv;
+}
+var_4229 = var_4227[0];
+}
+return var_4229;
+}
+// end of prim fn_4225
+
+// @@@ vector-for-each @@@ bld-rtl-dir/wile-rtl2-000083.scm:664 @@@ fn_4232 @@@
+static lval fn_4232(lptr* var_4233, lptr var_4234, const char* cloc)
+{
+lval var_4236;
+var_4236 = var_4234[2];
+{
+lval var_4237[8];
+var_4237[0] = var_4234[0];
+var_4237[1] = var_4234[1];
+var_4237[2] = var_4236;
+// bld-rtl-dir/wile-rtl2-000083.scm:664
+var_4236 = wile_vector_foreach(NULL, var_4237, "bld-rtl-dir/wile-rtl2-000083.scm:664");
+}
+return var_4236;
+}
+// end of prim fn_4232
+
+// @@@ vector-map @@@ bld-rtl-dir/wile-rtl2-000083.scm:666 @@@ fn_4242 @@@
+static lval fn_4242(lptr* var_4243, lptr var_4244, const char* cloc)
+{
+lval var_4246;
+var_4246 = var_4244[2];
+{
+lval var_4247[8];
+var_4247[0] = var_4244[0];
+var_4247[1] = var_4244[1];
+var_4247[2] = var_4246;
+// bld-rtl-dir/wile-rtl2-000083.scm:666
+var_4246 = wile_vector_map(NULL, var_4247, "bld-rtl-dir/wile-rtl2-000083.scm:666");
+}
+return var_4246;
+}
+// end of prim fn_4242
+
+// @@@ vector-map! @@@ bld-rtl-dir/wile-rtl2-000083.scm:667 @@@ fn_4250 @@@
+static lval fn_4250(lptr* var_4251, lptr var_4252, const char* cloc)
+{
+lval var_4254;
+{
+lval var_4255[8];
+var_4255[0] = var_4252[0];
+var_4255[1] = var_4252[1];
+// bld-rtl-dir/wile-rtl2-000083.scm:667
+var_4254 = wile_vector_map_inplace(NULL, var_4255, "bld-rtl-dir/wile-rtl2-000083.scm:667");
+}
+return var_4254;
+}
+// end of prim fn_4250
+
+// @@@ vector-number/type @@@ bld-rtl-dir/wile-rtl2-000083.scm:668 @@@ fn_4258 @@@
+static lval fn_4258(lptr* var_4259, lptr var_4260, const char* cloc)
+{
+lval var_4262;
+{
+if (var_4260[0].vt != LV_VECTOR) {
 WILE_EX("vector-number/type", "input is not a vector");
 }
 int ty = 0;
 size_t i;
-for (i = 0; i < var_4217[0].v.vec.capa; ++i) {
-if (var_4217[0].v.vec.arr[i]) {
-switch (var_4217[0].v.vec.arr[i]->vt) {
+for (i = 0; i < var_4260[0].v.vec.capa; ++i) {
+if (var_4260[0].v.vec.arr[i]) {
+switch (var_4260[0].v.vec.arr[i]->vt) {
 case LV_INT:
 break;
 case LV_RAT:
@@ -11578,473 +11660,473 @@ ty = 3;
 break;
 default:
 ty = 4;
-goto lbl_4220;
+goto lbl_4263;
 }
 } else {
 ty = 4;
-goto lbl_4220;
+goto lbl_4263;
 }
 }
-lbl_4220:
-var_4219 = LVI_INT(ty);
-}
-return var_4219;
-}
-// end of prim fn_4215
-
-// @@@ vector-promote/cmplx! @@@ bld-rtl-dir/wile-rtl2-000083.scm:663 @@@ fn_4223 @@@
-static lval fn_4223(lptr* var_4224, lptr var_4225, const char* cloc)
-{
-lval var_4227;
-{
-if (var_4225[0].vt != LV_VECTOR) {
-WILE_EX("vector-promote/cmplx!", "input is not a vector");
-}
-size_t i;
-for (i = 0; i < var_4225[0].v.vec.capa; ++i) {
-if (var_4225[0].v.vec.arr[i]) {
-if (var_4225[0].v.vec.arr[i]->vt == LV_INT) {
-*(var_4225[0].v.vec.arr[i]) = LVI_CMPLX2((lisp_real_t) (var_4225[0].v.vec.arr[i]->v.iv), 0.0);
-} else if (var_4225[0].v.vec.arr[i]->vt == LV_RAT) {
-*(var_4225[0].v.vec.arr[i]) = LVI_CMPLX2(LV_RAT2REAL(*(var_4225[0].v.vec.arr[i])), 0.0);
-} else if (var_4225[0].v.vec.arr[i]->vt == LV_REAL) {
-*(var_4225[0].v.vec.arr[i]) = LVI_CMPLX2(var_4225[0].v.vec.arr[i]->v.rv, 0.0);
-}
-}
-var_4227 = var_4225[0];
-}
-}
-return var_4227;
-}
-// end of prim fn_4223
-
-// @@@ vector-promote/rat! @@@ bld-rtl-dir/wile-rtl2-000083.scm:664 @@@ fn_4230 @@@
-static lval fn_4230(lptr* var_4231, lptr var_4232, const char* cloc)
-{
-lval var_4234;
-{
-if (var_4232[0].vt != LV_VECTOR) {
-WILE_EX("vector-promote/rat!", "input is not a vector");
-}
-size_t i;
-for (i = 0; i < var_4232[0].v.vec.capa; ++i) {
-if (var_4232[0].v.vec.arr[i] && var_4232[0].v.vec.arr[i]->vt == LV_INT) {
-*(var_4232[0].v.vec.arr[i]) = LVI_RAT(var_4232[0].v.vec.arr[i]->v.iv, 1);
-}
-}
-var_4234 = var_4232[0];
-}
-return var_4234;
-}
-// end of prim fn_4230
-
-// @@@ vector-promote/real! @@@ bld-rtl-dir/wile-rtl2-000083.scm:665 @@@ fn_4237 @@@
-static lval fn_4237(lptr* var_4238, lptr var_4239, const char* cloc)
-{
-lval var_4241;
-{
-if (var_4239[0].vt != LV_VECTOR) {
-WILE_EX("vector-promote/real!", "input is not a vector");
-}
-size_t i;
-for (i = 0; i < var_4239[0].v.vec.capa; ++i) {
-if (var_4239[0].v.vec.arr[i]) {
-if (var_4239[0].v.vec.arr[i]->vt == LV_INT) {
-*(var_4239[0].v.vec.arr[i]) = LVI_REAL((lisp_real_t) (var_4239[0].v.vec.arr[i]->v.iv));
-} else if (var_4239[0].v.vec.arr[i]->vt == LV_RAT) {
-*(var_4239[0].v.vec.arr[i]) = LVI_REAL(LV_RAT2REAL(*(var_4239[0].v.vec.arr[i])));
-}
-}
-var_4241 = var_4239[0];
-}
-}
-return var_4241;
-}
-// end of prim fn_4237
-
-// @@@ vector-ref @@@ bld-rtl-dir/wile-rtl2-000083.scm:666 @@@ fn_4244 @@@
-static lval fn_4244(lptr* var_4245, lptr var_4246, const char* cloc)
-{
-lval var_4248;
-{
-if (var_4246[0].vt != LV_VECTOR) {
-WILE_EX("vector-ref", "input is not a vector");
-}
-if (var_4246[1].vt != LV_INT || var_4246[1].v.iv < 0 || (size_t) var_4246[1].v.iv >= var_4246[0].v.vec.capa) {
-WILE_EX("vector-ref", "got bad index value");
-}
-var_4248 = var_4246[0].v.vec.arr[var_4246[1].v.iv] ? *(var_4246[0].v.vec.arr[var_4246[1].v.iv]) : LVI_NIL();
-}
-return var_4248;
-}
-// end of prim fn_4244
-
-// @@@ vector-set! @@@ bld-rtl-dir/wile-rtl2-000083.scm:667 @@@ fn_4251 @@@
-static lval fn_4251(lptr* var_4252, lptr var_4253, const char* cloc)
-{
-lval var_4255;
-{
-if (var_4253[0].vt != LV_VECTOR) {
-WILE_EX("vector-set!", "input is not a vector");
-}
-if (var_4253[1].vt != LV_INT || var_4253[1].v.iv < 0 || (size_t) var_4253[1].v.iv >= var_4253[0].v.vec.capa) {
-WILE_EX("vector-set!", "got bad index value");
-}
-var_4253[0].v.vec.arr[var_4253[1].v.iv] = new_lv(LV_NIL);
-*(var_4253[0].v.vec.arr[var_4253[1].v.iv]) = var_4253[2];
-var_4255 = var_4253[0];
-}
-return var_4255;
-}
-// end of prim fn_4251
-
-// @@@ vector-sort! @@@ bld-rtl-dir/wile-rtl2-000083.scm:668 @@@ fn_4258 @@@
-static lval fn_4258(lptr* var_4259, lptr var_4260, const char* cloc)
-{
-lval var_4262;
-{
-lval var_4263[8];
-var_4263[0] = var_4260[0];
-var_4263[1] = var_4260[1];
-// bld-rtl-dir/wile-rtl2-000083.scm:668
-var_4262 = wile_vector_sort_inplace(NULL, var_4263, "bld-rtl-dir/wile-rtl2-000083.scm:668");
+lbl_4263:
+var_4262 = LVI_INT(ty);
 }
 return var_4262;
 }
 // end of prim fn_4258
 
-// @@@ vector-swap! @@@ bld-rtl-dir/wile-rtl2-000083.scm:669 @@@ fn_4266 @@@
+// @@@ vector-promote/cmplx! @@@ bld-rtl-dir/wile-rtl2-000083.scm:669 @@@ fn_4266 @@@
 static lval fn_4266(lptr* var_4267, lptr var_4268, const char* cloc)
 {
 lval var_4270;
 {
 if (var_4268[0].vt != LV_VECTOR) {
-WILE_EX("vector-swap!", "input is not a vector");
+WILE_EX("vector-promote/cmplx!", "input is not a vector");
 }
-if (var_4268[1].vt != LV_INT || var_4268[1].v.iv < 0 || (size_t) var_4268[1].v.iv >= var_4268[0].v.vec.capa || var_4268[2].vt != LV_INT || var_4268[2].v.iv < 0 || (size_t) var_4268[2].v.iv >= var_4268[0].v.vec.capa) {
-WILE_EX("vector-swap!", "got bad index value");
+size_t i;
+for (i = 0; i < var_4268[0].v.vec.capa; ++i) {
+if (var_4268[0].v.vec.arr[i]) {
+if (var_4268[0].v.vec.arr[i]->vt == LV_INT) {
+*(var_4268[0].v.vec.arr[i]) = LVI_CMPLX2((lisp_real_t) (var_4268[0].v.vec.arr[i]->v.iv), 0.0);
+} else if (var_4268[0].v.vec.arr[i]->vt == LV_RAT) {
+*(var_4268[0].v.vec.arr[i]) = LVI_CMPLX2(LV_RAT2REAL(*(var_4268[0].v.vec.arr[i])), 0.0);
+} else if (var_4268[0].v.vec.arr[i]->vt == LV_REAL) {
+*(var_4268[0].v.vec.arr[i]) = LVI_CMPLX2(var_4268[0].v.vec.arr[i]->v.rv, 0.0);
 }
-lptr tmp = var_4268[0].v.vec.arr[var_4268[1].v.iv];
-var_4268[0].v.vec.arr[var_4268[1].v.iv] = var_4268[0].v.vec.arr[var_4268[2].v.iv];
-var_4268[0].v.vec.arr[var_4268[2].v.iv] = tmp;
+}
 var_4270 = var_4268[0];
+}
 }
 return var_4270;
 }
 // end of prim fn_4266
 
-// @@@ vector? @@@ bld-rtl-dir/wile-rtl2-000083.scm:670 @@@ fn_4273 @@@
+// @@@ vector-promote/rat! @@@ bld-rtl-dir/wile-rtl2-000083.scm:670 @@@ fn_4273 @@@
 static lval fn_4273(lptr* var_4274, lptr var_4275, const char* cloc)
 {
 lval var_4277;
-var_4277 = LVI_BOOL(var_4275[0].vt == LV_VECTOR);
+{
+if (var_4275[0].vt != LV_VECTOR) {
+WILE_EX("vector-promote/rat!", "input is not a vector");
+}
+size_t i;
+for (i = 0; i < var_4275[0].v.vec.capa; ++i) {
+if (var_4275[0].v.vec.arr[i] && var_4275[0].v.vec.arr[i]->vt == LV_INT) {
+*(var_4275[0].v.vec.arr[i]) = LVI_RAT(var_4275[0].v.vec.arr[i]->v.iv, 1);
+}
+}
+var_4277 = var_4275[0];
+}
 return var_4277;
 }
 // end of prim fn_4273
 
-// @@@ lambda () @@@ bld-rtl-dir/wile-rtl2-000083.scm:673 @@@ fn_4287 @@@
-static lval fn_4287(lptr* var_4288, lptr var_4289, const char* cloc)
-{
-lval var_4291;
-var_4291 = wile_waitpid(-1, 0);
-return var_4291;
-}
-// end of lambda fn_4287
-
-// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000083.scm:674 @@@ fn_4294 @@@
-static lval fn_4294(lptr* var_4295, lptr var_4296, const char* cloc)
-{
-lval var_4298;
-if (var_4296[0].vt == LV_INT) {
-var_4298 = wile_waitpid(var_4296[0].v.iv, 0);
-} else {
-WILE_EX("wait-process", "input is not an integer");
-}
-return var_4298;
-}
-// end of lambda fn_4294
-
-// @@@ lambda (a1 a2) @@@ bld-rtl-dir/wile-rtl2-000083.scm:676 @@@ fn_4301 @@@
-static lval fn_4301(lptr* var_4302, lptr var_4303, const char* cloc)
-{
-lval var_4305;
-if (var_4303[0].vt == LV_INT && var_4303[1].vt == LV_INT) {
-var_4305 = wile_waitpid(var_4303[0].v.iv, var_4303[1].v.iv);
-} else {
-WILE_EX("wait-process", "inputs are not both integers");
-}
-return var_4305;
-}
-// end of lambda fn_4301
-
-// @@@ lambda  symbol.33 @@@ bld-rtl-dir/wile-rtl2-000083.scm:672 @@@ fn_4280 @@@
+// @@@ vector-promote/real! @@@ bld-rtl-dir/wile-rtl2-000083.scm:671 @@@ fn_4280 @@@
 static lval fn_4280(lptr* var_4281, lptr var_4282, const char* cloc)
 {
 lval var_4284;
 {
-lval var_4285[8];
-var_4285[0] = var_4282[0];
-// wrtl.sch:0
-var_4284 = wile_list_length(NULL, var_4285, "wrtl.sch:0");
+if (var_4282[0].vt != LV_VECTOR) {
+WILE_EX("vector-promote/real!", "input is not a vector");
 }
-lval var_4286;
-if (var_4284.vt != LV_INT) {
+size_t i;
+for (i = 0; i < var_4282[0].v.vec.capa; ++i) {
+if (var_4282[0].v.vec.arr[i]) {
+if (var_4282[0].v.vec.arr[i]->vt == LV_INT) {
+*(var_4282[0].v.vec.arr[i]) = LVI_REAL((lisp_real_t) (var_4282[0].v.vec.arr[i]->v.iv));
+} else if (var_4282[0].v.vec.arr[i]->vt == LV_RAT) {
+*(var_4282[0].v.vec.arr[i]) = LVI_REAL(LV_RAT2REAL(*(var_4282[0].v.vec.arr[i])));
+}
+}
+var_4284 = var_4282[0];
+}
+}
+return var_4284;
+}
+// end of prim fn_4280
+
+// @@@ vector-ref @@@ bld-rtl-dir/wile-rtl2-000083.scm:672 @@@ fn_4287 @@@
+static lval fn_4287(lptr* var_4288, lptr var_4289, const char* cloc)
+{
+lval var_4291;
+{
+if (var_4289[0].vt != LV_VECTOR) {
+WILE_EX("vector-ref", "input is not a vector");
+}
+if (var_4289[1].vt != LV_INT || var_4289[1].v.iv < 0 || (size_t) var_4289[1].v.iv >= var_4289[0].v.vec.capa) {
+WILE_EX("vector-ref", "got bad index value");
+}
+var_4291 = var_4289[0].v.vec.arr[var_4289[1].v.iv] ? *(var_4289[0].v.vec.arr[var_4289[1].v.iv]) : LVI_NIL();
+}
+return var_4291;
+}
+// end of prim fn_4287
+
+// @@@ vector-set! @@@ bld-rtl-dir/wile-rtl2-000083.scm:673 @@@ fn_4294 @@@
+static lval fn_4294(lptr* var_4295, lptr var_4296, const char* cloc)
+{
+lval var_4298;
+{
+if (var_4296[0].vt != LV_VECTOR) {
+WILE_EX("vector-set!", "input is not a vector");
+}
+if (var_4296[1].vt != LV_INT || var_4296[1].v.iv < 0 || (size_t) var_4296[1].v.iv >= var_4296[0].v.vec.capa) {
+WILE_EX("vector-set!", "got bad index value");
+}
+var_4296[0].v.vec.arr[var_4296[1].v.iv] = new_lv(LV_NIL);
+*(var_4296[0].v.vec.arr[var_4296[1].v.iv]) = var_4296[2];
+var_4298 = var_4296[0];
+}
+return var_4298;
+}
+// end of prim fn_4294
+
+// @@@ vector-sort! @@@ bld-rtl-dir/wile-rtl2-000083.scm:674 @@@ fn_4301 @@@
+static lval fn_4301(lptr* var_4302, lptr var_4303, const char* cloc)
+{
+lval var_4305;
+{
+lval var_4306[8];
+var_4306[0] = var_4303[0];
+var_4306[1] = var_4303[1];
+// bld-rtl-dir/wile-rtl2-000083.scm:674
+var_4305 = wile_vector_sort_inplace(NULL, var_4306, "bld-rtl-dir/wile-rtl2-000083.scm:674");
+}
+return var_4305;
+}
+// end of prim fn_4301
+
+// @@@ vector-swap! @@@ bld-rtl-dir/wile-rtl2-000083.scm:675 @@@ fn_4309 @@@
+static lval fn_4309(lptr* var_4310, lptr var_4311, const char* cloc)
+{
+lval var_4313;
+{
+if (var_4311[0].vt != LV_VECTOR) {
+WILE_EX("vector-swap!", "input is not a vector");
+}
+if (var_4311[1].vt != LV_INT || var_4311[1].v.iv < 0 || (size_t) var_4311[1].v.iv >= var_4311[0].v.vec.capa || var_4311[2].vt != LV_INT || var_4311[2].v.iv < 0 || (size_t) var_4311[2].v.iv >= var_4311[0].v.vec.capa) {
+WILE_EX("vector-swap!", "got bad index value");
+}
+lptr tmp = var_4311[0].v.vec.arr[var_4311[1].v.iv];
+var_4311[0].v.vec.arr[var_4311[1].v.iv] = var_4311[0].v.vec.arr[var_4311[2].v.iv];
+var_4311[0].v.vec.arr[var_4311[2].v.iv] = tmp;
+var_4313 = var_4311[0];
+}
+return var_4313;
+}
+// end of prim fn_4309
+
+// @@@ vector? @@@ bld-rtl-dir/wile-rtl2-000083.scm:676 @@@ fn_4316 @@@
+static lval fn_4316(lptr* var_4317, lptr var_4318, const char* cloc)
+{
+lval var_4320;
+var_4320 = LVI_BOOL(var_4318[0].vt == LV_VECTOR);
+return var_4320;
+}
+// end of prim fn_4316
+
+// @@@ lambda () @@@ bld-rtl-dir/wile-rtl2-000083.scm:679 @@@ fn_4330 @@@
+static lval fn_4330(lptr* var_4331, lptr var_4332, const char* cloc)
+{
+lval var_4334;
+var_4334 = wile_waitpid(-1, 0);
+return var_4334;
+}
+// end of lambda fn_4330
+
+// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000083.scm:680 @@@ fn_4337 @@@
+static lval fn_4337(lptr* var_4338, lptr var_4339, const char* cloc)
+{
+lval var_4341;
+if (var_4339[0].vt == LV_INT) {
+var_4341 = wile_waitpid(var_4339[0].v.iv, 0);
+} else {
+WILE_EX("wait-process", "input is not an integer");
+}
+return var_4341;
+}
+// end of lambda fn_4337
+
+// @@@ lambda (a1 a2) @@@ bld-rtl-dir/wile-rtl2-000083.scm:682 @@@ fn_4344 @@@
+static lval fn_4344(lptr* var_4345, lptr var_4346, const char* cloc)
+{
+lval var_4348;
+if (var_4346[0].vt == LV_INT && var_4346[1].vt == LV_INT) {
+var_4348 = wile_waitpid(var_4346[0].v.iv, var_4346[1].v.iv);
+} else {
+WILE_EX("wait-process", "inputs are not both integers");
+}
+return var_4348;
+}
+// end of lambda fn_4344
+
+// @@@ lambda  symbol.33 @@@ bld-rtl-dir/wile-rtl2-000083.scm:678 @@@ fn_4323 @@@
+static lval fn_4323(lptr* var_4324, lptr var_4325, const char* cloc)
+{
+lval var_4327;
+{
+lval var_4328[8];
+var_4328[0] = var_4325[0];
+// wrtl.sch:0
+var_4327 = wile_list_length(NULL, var_4328, "wrtl.sch:0");
+}
+lval var_4329;
+if (var_4327.vt != LV_INT) {
 wile_exception("case", LISP_WHENCE, "case-value type does not match case type");
 }
-switch (var_4284.v.iv) {
+switch (var_4327.v.iv) {
 case 0:
 {
-MK_CLOS(var_4288,0);
-lval var_4292;
+MK_CLOS(var_4331,0);
+lval var_4335;
 {
-lval var_4293[2];
-var_4293[0] = LVI_PROC(fn_4287,var_4288,0);
-var_4293[1] = var_4282[0];
-var_4292 = wile_gen_list(2, var_4293, NULL);
+lval var_4336[2];
+var_4336[0] = LVI_PROC(fn_4330,var_4331,0);
+var_4336[1] = var_4325[0];
+var_4335 = wile_gen_list(2, var_4336, NULL);
 }
-var_4292 = wile_apply_function(&(var_4292), LISP_WHENCE);
-var_4286 = var_4292;
+var_4335 = wile_apply_function(&(var_4335), LISP_WHENCE);
+var_4329 = var_4335;
 break;
 }
 case 1:
 {
-MK_CLOS(var_4295,0);
-lval var_4299;
+MK_CLOS(var_4338,0);
+lval var_4342;
 {
-lval var_4300[2];
-var_4300[0] = LVI_PROC(fn_4294,var_4295,1);
-var_4300[1] = var_4282[0];
-var_4299 = wile_gen_list(2, var_4300, NULL);
+lval var_4343[2];
+var_4343[0] = LVI_PROC(fn_4337,var_4338,1);
+var_4343[1] = var_4325[0];
+var_4342 = wile_gen_list(2, var_4343, NULL);
 }
-var_4299 = wile_apply_function(&(var_4299), LISP_WHENCE);
-var_4286 = var_4299;
+var_4342 = wile_apply_function(&(var_4342), LISP_WHENCE);
+var_4329 = var_4342;
 break;
 }
 case 2:
 {
-MK_CLOS(var_4302,0);
-lval var_4306;
+MK_CLOS(var_4345,0);
+lval var_4349;
 {
-lval var_4307[2];
-var_4307[0] = LVI_PROC(fn_4301,var_4302,2);
-var_4307[1] = var_4282[0];
-var_4306 = wile_gen_list(2, var_4307, NULL);
+lval var_4350[2];
+var_4350[0] = LVI_PROC(fn_4344,var_4345,2);
+var_4350[1] = var_4325[0];
+var_4349 = wile_gen_list(2, var_4350, NULL);
 }
-var_4306 = wile_apply_function(&(var_4306), LISP_WHENCE);
-var_4286 = var_4306;
+var_4349 = wile_apply_function(&(var_4349), LISP_WHENCE);
+var_4329 = var_4349;
 break;
 }
 default:
 {
-lval var_4308;
-var_4308 = LVI_STRING("case-lambic exhausted all cases, no match found!");
-lval var_4309;
+lval var_4351;
+var_4351 = LVI_STRING("case-lambic exhausted all cases, no match found!");
+lval var_4352;
 {
-lval var_4310[1];
-var_4310[0] = var_4308;
-var_4309 = wile_gen_list(1, var_4310, NULL);
+lval var_4353[1];
+var_4353[0] = var_4351;
+var_4352 = wile_gen_list(1, var_4353, NULL);
 }
-if (var_4309.vt == LV_PAIR && (var_4309.v.pair.cdr == NULL || var_4309.v.pair.cdr->vt == LV_NIL)) {
-var_4309 = (var_4309.v.pair.car ? *(var_4309.v.pair.car) : LVI_NIL());
+if (var_4352.vt == LV_PAIR && (var_4352.v.pair.cdr == NULL || var_4352.v.pair.cdr->vt == LV_NIL)) {
+var_4352 = (var_4352.v.pair.car ? *(var_4352.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_4309;
+*(cachalot->errval) = var_4352;
 cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
-var_4286 = var_4309;
+var_4329 = var_4352;
 break;
 }
 }
-return var_4286;
+return var_4329;
 }
-// end of lambda fn_4280
+// end of lambda fn_4323
 
-// @@@ wile-basic-build-info @@@ bld-rtl-dir/wile-rtl2-000083.scm:678 @@@ fn_4313 @@@
-static lval fn_4313(lptr* var_4314, lptr var_4315, const char* cloc)
+// @@@ wile-basic-build-info @@@ bld-rtl-dir/wile-rtl2-000083.scm:684 @@@ fn_4356 @@@
+static lval fn_4356(lptr* var_4357, lptr var_4358, const char* cloc)
 {
-lval var_4317;
-var_4317 = LVI_INT(wile_binfo());
-return var_4317;
+lval var_4360;
+var_4360 = LVI_INT(wile_binfo());
+return var_4360;
 }
-// end of prim fn_4313
+// end of prim fn_4356
 
-// @@@ wile-build-info @@@ bld-rtl-dir/wile-rtl2-000083.scm:679 @@@ fn_4320 @@@
-static lval fn_4320(lptr* var_4321, lptr var_4322, const char* cloc)
+// @@@ wile-build-info @@@ bld-rtl-dir/wile-rtl2-000083.scm:685 @@@ fn_4363 @@@
+static lval fn_4363(lptr* var_4364, lptr var_4365, const char* cloc)
 {
-lval var_4324;
+lval var_4367;
 {
-lval var_4325[8];
-var_4325[0] = var_4322[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:679
-var_4324 = wile_build_info(NULL, var_4325, "bld-rtl-dir/wile-rtl2-000083.scm:679");
+lval var_4368[8];
+var_4368[0] = var_4365[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:685
+var_4367 = wile_build_info(NULL, var_4368, "bld-rtl-dir/wile-rtl2-000083.scm:685");
 }
-return var_4324;
+return var_4367;
 }
-// end of prim fn_4320
+// end of prim fn_4363
 
-// @@@ wile-architecture-name @@@ bld-rtl-dir/wile-rtl2-000083.scm:680 @@@ fn_4328 @@@
-static lval fn_4328(lptr* var_4329, lptr var_4330, const char* cloc)
+// @@@ wile-architecture-name @@@ bld-rtl-dir/wile-rtl2-000083.scm:686 @@@ fn_4371 @@@
+static lval fn_4371(lptr* var_4372, lptr var_4373, const char* cloc)
 {
-lval var_4332;
-var_4332 = wile_arch_name();
-return var_4332;
+lval var_4375;
+var_4375 = wile_arch_name();
+return var_4375;
 }
-// end of prim fn_4328
+// end of prim fn_4371
 
-// @@@ wile-os-name @@@ bld-rtl-dir/wile-rtl2-000083.scm:681 @@@ fn_4335 @@@
-static lval fn_4335(lptr* var_4336, lptr var_4337, const char* cloc)
+// @@@ wile-os-name @@@ bld-rtl-dir/wile-rtl2-000083.scm:687 @@@ fn_4378 @@@
+static lval fn_4378(lptr* var_4379, lptr var_4380, const char* cloc)
 {
-lval var_4339;
-var_4339 = wile_os_name();
-return var_4339;
+lval var_4382;
+var_4382 = wile_os_name();
+return var_4382;
 }
-// end of prim fn_4335
+// end of prim fn_4378
 
-// @@@ write-bytes @@@ bld-rtl-dir/wile-rtl2-000083.scm:682 @@@ fn_4342 @@@
-static lval fn_4342(lptr* var_4343, lptr var_4344, const char* cloc)
+// @@@ write-bytes @@@ bld-rtl-dir/wile-rtl2-000083.scm:688 @@@ fn_4385 @@@
+static lval fn_4385(lptr* var_4386, lptr var_4387, const char* cloc)
 {
-lval var_4346;
-if (var_4344[0].vt != LV_FILE_PORT || var_4344[1].vt != LV_BVECTOR) {
+lval var_4389;
+if (var_4387[0].vt != LV_FILE_PORT || var_4387[1].vt != LV_BVECTOR) {
 WILE_EX("write-bytes", "expects a file port and a bytevector to write");
 }
-var_4346 = LVI_INT(fwrite(var_4344[1].v.bvec.arr, 1, var_4344[1].v.bvec.capa, var_4344[0].v.fp));
-return var_4346;
+var_4389 = LVI_INT(fwrite(var_4387[1].v.bvec.arr, 1, var_4387[1].v.bvec.capa, var_4387[0].v.fp));
+return var_4389;
 }
-// end of prim fn_4342
+// end of prim fn_4385
 
-// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000083.scm:684 @@@ fn_4358 @@@
-static lval fn_4358(lptr* var_4359, lptr var_4360, const char* cloc)
+// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000083.scm:690 @@@ fn_4401 @@@
+static lval fn_4401(lptr* var_4402, lptr var_4403, const char* cloc)
 {
-lval var_4362;
-if (var_4360[0].vt == LV_CHAR) {
-fputc(var_4360[0].v.chr, stdout);
-} else if (var_4360[0].vt == LV_STRING) {
-fputs(var_4360[0].v.str, stdout);
+lval var_4405;
+if (var_4403[0].vt == LV_CHAR) {
+fputc(var_4403[0].v.chr, stdout);
+} else if (var_4403[0].vt == LV_STRING) {
+fputs(var_4403[0].v.str, stdout);
 } else {
 WILE_EX("write-string", "input is not a string or char!");
 }
-var_4362 = LVI_BOOL(true);
-return var_4362;
+var_4405 = LVI_BOOL(true);
+return var_4405;
 }
-// end of lambda fn_4358
+// end of lambda fn_4401
 
-// @@@ lambda (a1 a2) @@@ bld-rtl-dir/wile-rtl2-000083.scm:686 @@@ fn_4365 @@@
-static lval fn_4365(lptr* var_4366, lptr var_4367, const char* cloc)
+// @@@ lambda (a1 a2) @@@ bld-rtl-dir/wile-rtl2-000083.scm:692 @@@ fn_4408 @@@
+static lval fn_4408(lptr* var_4409, lptr var_4410, const char* cloc)
 {
-lval var_4369;
+lval var_4412;
 {
 FILE* fp;
-if (var_4367[0].vt == LV_FILE_PORT || var_4367[0].vt == LV_PIPE_PORT || var_4367[0].vt == LV_SOCK_PORT) {
-fp = var_4367[0].v.fp;
+if (var_4410[0].vt == LV_FILE_PORT || var_4410[0].vt == LV_PIPE_PORT || var_4410[0].vt == LV_SOCK_PORT) {
+fp = var_4410[0].v.fp;
 } else {
 WILE_EX("write-string", "first input is not a port!");
 }
-if (var_4367[1].vt == LV_CHAR) {
-fputc(var_4367[1].v.chr, fp);
-} else if (var_4367[1].vt == LV_STRING) {
-fputs(var_4367[1].v.str, fp);
+if (var_4410[1].vt == LV_CHAR) {
+fputc(var_4410[1].v.chr, fp);
+} else if (var_4410[1].vt == LV_STRING) {
+fputs(var_4410[1].v.str, fp);
 } else {
 WILE_EX("write-string", "second input is not a string or char!");
 }
-var_4369 = LVI_BOOL(true);
+var_4412 = LVI_BOOL(true);
 }
-return var_4369;
+return var_4412;
 }
-// end of lambda fn_4365
+// end of lambda fn_4408
 
-// @@@ lambda  symbol.34 @@@ bld-rtl-dir/wile-rtl2-000083.scm:684 @@@ fn_4351 @@@
-static lval fn_4351(lptr* var_4352, lptr var_4353, const char* cloc)
+// @@@ lambda  symbol.34 @@@ bld-rtl-dir/wile-rtl2-000083.scm:690 @@@ fn_4394 @@@
+static lval fn_4394(lptr* var_4395, lptr var_4396, const char* cloc)
 {
-lval var_4355;
+lval var_4398;
 {
-lval var_4356[8];
-var_4356[0] = var_4353[0];
+lval var_4399[8];
+var_4399[0] = var_4396[0];
 // wrtl.sch:0
-var_4355 = wile_list_length(NULL, var_4356, "wrtl.sch:0");
+var_4398 = wile_list_length(NULL, var_4399, "wrtl.sch:0");
 }
-lval var_4357;
-if (var_4355.vt != LV_INT) {
+lval var_4400;
+if (var_4398.vt != LV_INT) {
 wile_exception("case", LISP_WHENCE, "case-value type does not match case type");
 }
-switch (var_4355.v.iv) {
+switch (var_4398.v.iv) {
 case 1:
 {
-MK_CLOS(var_4359,0);
-lval var_4363;
+MK_CLOS(var_4402,0);
+lval var_4406;
 {
-lval var_4364[2];
-var_4364[0] = LVI_PROC(fn_4358,var_4359,1);
-var_4364[1] = var_4353[0];
-var_4363 = wile_gen_list(2, var_4364, NULL);
+lval var_4407[2];
+var_4407[0] = LVI_PROC(fn_4401,var_4402,1);
+var_4407[1] = var_4396[0];
+var_4406 = wile_gen_list(2, var_4407, NULL);
 }
-var_4363 = wile_apply_function(&(var_4363), LISP_WHENCE);
-var_4357 = var_4363;
+var_4406 = wile_apply_function(&(var_4406), LISP_WHENCE);
+var_4400 = var_4406;
 break;
 }
 case 2:
 {
-MK_CLOS(var_4366,0);
-lval var_4370;
+MK_CLOS(var_4409,0);
+lval var_4413;
 {
-lval var_4371[2];
-var_4371[0] = LVI_PROC(fn_4365,var_4366,2);
-var_4371[1] = var_4353[0];
-var_4370 = wile_gen_list(2, var_4371, NULL);
+lval var_4414[2];
+var_4414[0] = LVI_PROC(fn_4408,var_4409,2);
+var_4414[1] = var_4396[0];
+var_4413 = wile_gen_list(2, var_4414, NULL);
 }
-var_4370 = wile_apply_function(&(var_4370), LISP_WHENCE);
-var_4357 = var_4370;
+var_4413 = wile_apply_function(&(var_4413), LISP_WHENCE);
+var_4400 = var_4413;
 break;
 }
 default:
 {
-lval var_4372;
-var_4372 = LVI_STRING("case-lambic exhausted all cases, no match found!");
-lval var_4373;
+lval var_4415;
+var_4415 = LVI_STRING("case-lambic exhausted all cases, no match found!");
+lval var_4416;
 {
-lval var_4374[1];
-var_4374[0] = var_4372;
-var_4373 = wile_gen_list(1, var_4374, NULL);
+lval var_4417[1];
+var_4417[0] = var_4415;
+var_4416 = wile_gen_list(1, var_4417, NULL);
 }
-if (var_4373.vt == LV_PAIR && (var_4373.v.pair.cdr == NULL || var_4373.v.pair.cdr->vt == LV_NIL)) {
-var_4373 = (var_4373.v.pair.car ? *(var_4373.v.pair.car) : LVI_NIL());
+if (var_4416.vt == LV_PAIR && (var_4416.v.pair.cdr == NULL || var_4416.v.pair.cdr->vt == LV_NIL)) {
+var_4416 = (var_4416.v.pair.car ? *(var_4416.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_4373;
+*(cachalot->errval) = var_4416;
 cachalot->l_whence = 0;
 cachalot->c_whence = LISP_WHENCE;
 longjmp(cachalot->cenv, 1);
-var_4357 = var_4373;
+var_4400 = var_4416;
 break;
 }
 }
-return var_4357;
+return var_4400;
 }
-// end of lambda fn_4351
+// end of lambda fn_4394
 
-// @@@ zero? @@@ bld-rtl-dir/wile-rtl2-000083.scm:688 @@@ fn_4377 @@@
-static lval fn_4377(lptr* var_4378, lptr var_4379, const char* cloc)
+// @@@ zero? @@@ bld-rtl-dir/wile-rtl2-000083.scm:694 @@@ fn_4420 @@@
+static lval fn_4420(lptr* var_4421, lptr var_4422, const char* cloc)
 {
-lval var_4381;
-switch (var_4379[0].vt) {
+lval var_4424;
+switch (var_4422[0].vt) {
 case LV_REAL:
-var_4381 = LVI_BOOL(var_4379[0].v.rv == 0.0);
+var_4424 = LVI_BOOL(var_4422[0].v.rv == 0.0);
 break;
 case LV_RAT:
-var_4381 = LVI_BOOL((var_4379[0].v.irv.num == 0 && var_4379[0].v.irv.den != 0));
+var_4424 = LVI_BOOL((var_4422[0].v.irv.num == 0 && var_4422[0].v.irv.den != 0));
 break;
 case LV_INT:
-var_4381 = LVI_BOOL(var_4379[0].v.iv == 0);
+var_4424 = LVI_BOOL(var_4422[0].v.iv == 0);
 break;
 case LV_CMPLX:
-var_4381 = LVI_BOOL(CREAL(var_4379[0].v.cv) == 0.0 && CIMAG(var_4379[0].v.cv) == 0.0);
+var_4424 = LVI_BOOL(CREAL(var_4422[0].v.cv) == 0.0 && CIMAG(var_4422[0].v.cv) == 0.0);
 break;
 default:
 WILE_EX("zero?", "expects a real-valued number");
 }
-return var_4381;
+return var_4424;
 }
-// end of prim fn_4377
+// end of prim fn_4420
 
 // @@@ (make-stdenv-no-macros) @@@ bld-rtl-dir/wile-rtl2-000083.scm:25 @@@ fn_8 @@@
 static lval fn_8(lptr* var_54, lptr var_55, const char* cloc)
@@ -18407,8 +18489,8 @@ p2 = new_lv(LV_NIL);
 var_3468 = LVI_PAIR(p1, p2);
 }
 lval var_3469;
-var_3469 = LVI_SYMBOL("sha-256");
-lval var_3476;
+var_3469 = LVI_SYMBOL("sha-256-data?");
+lval var_3475;
 {
 lptr p1 = NULL, p2 = NULL;
 if (var_3469.vt != LV_NIL) {
@@ -18419,417 +18501,446 @@ if (LVI_PROC(fn_3470,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
 *p2 = LVI_PROC(fn_3470,NULL,1);
 }
-var_3476 = LVI_PAIR(p1, p2);
+var_3475 = LVI_PAIR(p1, p2);
 }
-lval var_3477;
-var_3477 = LVI_SYMBOL("sha-256-init");
+lval var_3476;
+var_3476 = LVI_SYMBOL("sha-256");
+lval var_3482;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_3476.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_3476;
+}
+if (LVI_PROC(fn_3477,NULL,1).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_3477,NULL,1);
+}
+var_3482 = LVI_PAIR(p1, p2);
+}
 lval var_3483;
+var_3483 = LVI_SYMBOL("sha-256-init");
+lval var_3489;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3477.vt != LV_NIL) {
+if (var_3483.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3477;
+*p1 = var_3483;
 }
-if (LVI_PROC(fn_3478,NULL,0).vt != LV_NIL) {
+if (LVI_PROC(fn_3484,NULL,0).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3478,NULL,0);
+*p2 = LVI_PROC(fn_3484,NULL,0);
 }
-var_3483 = LVI_PAIR(p1, p2);
+var_3489 = LVI_PAIR(p1, p2);
 }
-lval var_3484;
-var_3484 = LVI_SYMBOL("sha-256-update");
-lval var_3491;
+lval var_3490;
+var_3490 = LVI_SYMBOL("sha-256-update");
+lval var_3497;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3484.vt != LV_NIL) {
+if (var_3490.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3484;
+*p1 = var_3490;
 }
-if (LVI_PROC(fn_3485,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3491,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3485,NULL,2);
+*p2 = LVI_PROC(fn_3491,NULL,2);
 }
-var_3491 = LVI_PAIR(p1, p2);
+var_3497 = LVI_PAIR(p1, p2);
 }
-lval var_3492;
-var_3492 = LVI_SYMBOL("sha-256-finish");
-lval var_3499;
+lval var_3498;
+var_3498 = LVI_SYMBOL("sha-256-finish");
+lval var_3505;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3492.vt != LV_NIL) {
+if (var_3498.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3492;
+*p1 = var_3498;
 }
-if (LVI_PROC(fn_3493,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3499,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3493,NULL,1);
+*p2 = LVI_PROC(fn_3499,NULL,1);
 }
-var_3499 = LVI_PAIR(p1, p2);
+var_3505 = LVI_PAIR(p1, p2);
 }
-lval var_3500;
-var_3500 = LVI_SYMBOL("sign");
 lval var_3506;
+var_3506 = LVI_SYMBOL("sha-224-data?");
+lval var_3512;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3500.vt != LV_NIL) {
+if (var_3506.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3500;
+*p1 = var_3506;
 }
-if (LVI_PROC(fn_3501,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3507,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3501,NULL,1);
+*p2 = LVI_PROC(fn_3507,NULL,1);
 }
-var_3506 = LVI_PAIR(p1, p2);
+var_3512 = LVI_PAIR(p1, p2);
 }
-lval var_3507;
-var_3507 = LVI_SYMBOL("sin");
 lval var_3513;
+var_3513 = LVI_SYMBOL("sha-224");
+lval var_3519;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3507.vt != LV_NIL) {
+if (var_3513.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3507;
+*p1 = var_3513;
 }
-if (LVI_PROC(fn_3508,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3514,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3508,NULL,1);
+*p2 = LVI_PROC(fn_3514,NULL,1);
 }
-var_3513 = LVI_PAIR(p1, p2);
+var_3519 = LVI_PAIR(p1, p2);
 }
-lval var_3514;
-var_3514 = LVI_SYMBOL("sine-integral");
 lval var_3520;
+var_3520 = LVI_SYMBOL("sha-224-init");
+lval var_3526;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3514.vt != LV_NIL) {
+if (var_3520.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3514;
+*p1 = var_3520;
 }
-if (LVI_PROC(fn_3515,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3521,NULL,0).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3515,NULL,1);
+*p2 = LVI_PROC(fn_3521,NULL,0);
 }
-var_3520 = LVI_PAIR(p1, p2);
+var_3526 = LVI_PAIR(p1, p2);
 }
-lval var_3521;
-var_3521 = LVI_SYMBOL("sinh");
 lval var_3527;
+var_3527 = LVI_SYMBOL("sha-224-update");
+lval var_3534;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3521.vt != LV_NIL) {
+if (var_3527.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3521;
+*p1 = var_3527;
 }
-if (LVI_PROC(fn_3522,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3528,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3522,NULL,1);
+*p2 = LVI_PROC(fn_3528,NULL,2);
 }
-var_3527 = LVI_PAIR(p1, p2);
+var_3534 = LVI_PAIR(p1, p2);
 }
-lval var_3528;
-var_3528 = LVI_SYMBOL("sleep");
 lval var_3535;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_3528.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_3528;
-}
-if (LVI_PROC(fn_3529,NULL,1).vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3529,NULL,1);
-}
-var_3535 = LVI_PAIR(p1, p2);
-}
-lval var_3536;
-var_3536 = LVI_SYMBOL("socket-port?");
+var_3535 = LVI_SYMBOL("sha-224-finish");
 lval var_3542;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3536.vt != LV_NIL) {
+if (var_3535.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3536;
+*p1 = var_3535;
 }
-if (LVI_PROC(fn_3537,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3536,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3537,NULL,1);
+*p2 = LVI_PROC(fn_3536,NULL,1);
 }
 var_3542 = LVI_PAIR(p1, p2);
 }
 lval var_3543;
-var_3543 = LVI_SYMBOL("sprintf");
-lval var_3550;
+var_3543 = LVI_SYMBOL("sign");
+lval var_3549;
 {
 lptr p1 = NULL, p2 = NULL;
 if (var_3543.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
 *p1 = var_3543;
 }
-if (LVI_PROC(fn_3544,NULL,-2).vt != LV_NIL) {
+if (LVI_PROC(fn_3544,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3544,NULL,-2);
+*p2 = LVI_PROC(fn_3544,NULL,1);
 }
-var_3550 = LVI_PAIR(p1, p2);
+var_3549 = LVI_PAIR(p1, p2);
 }
-lval var_3551;
-var_3551 = LVI_SYMBOL("sqlite-dump-table");
-lval var_3558;
+lval var_3550;
+var_3550 = LVI_SYMBOL("sin");
+lval var_3556;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3551.vt != LV_NIL) {
+if (var_3550.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3551;
+*p1 = var_3550;
 }
-if (LVI_PROC(fn_3552,NULL,3).vt != LV_NIL) {
+if (LVI_PROC(fn_3551,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3552,NULL,3);
+*p2 = LVI_PROC(fn_3551,NULL,1);
 }
-var_3558 = LVI_PAIR(p1, p2);
+var_3556 = LVI_PAIR(p1, p2);
 }
-lval var_3559;
-var_3559 = LVI_SYMBOL("sqlite-meta-schema");
-lval var_3566;
+lval var_3557;
+var_3557 = LVI_SYMBOL("sine-integral");
+lval var_3563;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3559.vt != LV_NIL) {
+if (var_3557.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3559;
+*p1 = var_3557;
 }
-if (LVI_PROC(fn_3560,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3558,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3560,NULL,2);
+*p2 = LVI_PROC(fn_3558,NULL,1);
 }
-var_3566 = LVI_PAIR(p1, p2);
+var_3563 = LVI_PAIR(p1, p2);
 }
-lval var_3567;
-var_3567 = LVI_SYMBOL("sqlite-meta-tables");
-lval var_3574;
+lval var_3564;
+var_3564 = LVI_SYMBOL("sinh");
+lval var_3570;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3567.vt != LV_NIL) {
+if (var_3564.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3567;
+*p1 = var_3564;
 }
-if (LVI_PROC(fn_3568,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3565,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3568,NULL,1);
+*p2 = LVI_PROC(fn_3565,NULL,1);
 }
-var_3574 = LVI_PAIR(p1, p2);
+var_3570 = LVI_PAIR(p1, p2);
 }
-lval var_3575;
-var_3575 = LVI_SYMBOL("sqlite-port?");
-lval var_3581;
+lval var_3571;
+var_3571 = LVI_SYMBOL("sleep");
+lval var_3578;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3575.vt != LV_NIL) {
+if (var_3571.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3575;
+*p1 = var_3571;
 }
-if (LVI_PROC(fn_3576,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3572,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3576,NULL,1);
+*p2 = LVI_PROC(fn_3572,NULL,1);
 }
-var_3581 = LVI_PAIR(p1, p2);
+var_3578 = LVI_PAIR(p1, p2);
 }
-lval var_3582;
-var_3582 = LVI_SYMBOL("sqlite-run");
-lval var_3588;
+lval var_3579;
+var_3579 = LVI_SYMBOL("socket-port?");
+lval var_3585;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3582.vt != LV_NIL) {
+if (var_3579.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3582;
+*p1 = var_3579;
 }
-if (LVI_PROC(fn_3583,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3580,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3583,NULL,2);
+*p2 = LVI_PROC(fn_3580,NULL,1);
 }
-var_3588 = LVI_PAIR(p1, p2);
+var_3585 = LVI_PAIR(p1, p2);
 }
-lval var_3589;
-var_3589 = LVI_SYMBOL("sqlite-statement-bind");
-lval var_3596;
+lval var_3586;
+var_3586 = LVI_SYMBOL("sprintf");
+lval var_3593;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3589.vt != LV_NIL) {
+if (var_3586.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3589;
+*p1 = var_3586;
 }
-if (LVI_PROC(fn_3590,NULL,-2).vt != LV_NIL) {
+if (LVI_PROC(fn_3587,NULL,-2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3590,NULL,-2);
+*p2 = LVI_PROC(fn_3587,NULL,-2);
 }
-var_3596 = LVI_PAIR(p1, p2);
+var_3593 = LVI_PAIR(p1, p2);
 }
-lval var_3597;
-var_3597 = LVI_SYMBOL("sqlite-statement-cleanup");
-lval var_3604;
+lval var_3594;
+var_3594 = LVI_SYMBOL("sqlite-dump-table");
+lval var_3601;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3597.vt != LV_NIL) {
+if (var_3594.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3597;
+*p1 = var_3594;
 }
-if (LVI_PROC(fn_3598,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3595,NULL,3).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3598,NULL,1);
+*p2 = LVI_PROC(fn_3595,NULL,3);
 }
-var_3604 = LVI_PAIR(p1, p2);
+var_3601 = LVI_PAIR(p1, p2);
 }
-lval var_3605;
-var_3605 = LVI_SYMBOL("sqlite-statement-info");
-lval var_3612;
+lval var_3602;
+var_3602 = LVI_SYMBOL("sqlite-meta-schema");
+lval var_3609;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3605.vt != LV_NIL) {
+if (var_3602.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3605;
+*p1 = var_3602;
 }
-if (LVI_PROC(fn_3606,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3603,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3606,NULL,1);
+*p2 = LVI_PROC(fn_3603,NULL,2);
 }
-var_3612 = LVI_PAIR(p1, p2);
+var_3609 = LVI_PAIR(p1, p2);
 }
-lval var_3613;
-var_3613 = LVI_SYMBOL("sqlite-statement-prepare");
-lval var_3620;
+lval var_3610;
+var_3610 = LVI_SYMBOL("sqlite-meta-tables");
+lval var_3617;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3613.vt != LV_NIL) {
+if (var_3610.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3613;
+*p1 = var_3610;
 }
-if (LVI_PROC(fn_3614,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3611,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3614,NULL,2);
+*p2 = LVI_PROC(fn_3611,NULL,1);
 }
-var_3620 = LVI_PAIR(p1, p2);
+var_3617 = LVI_PAIR(p1, p2);
 }
-lval var_3621;
-var_3621 = LVI_SYMBOL("sqlite-statement-run");
-lval var_3628;
+lval var_3618;
+var_3618 = LVI_SYMBOL("sqlite-port?");
+lval var_3624;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3621.vt != LV_NIL) {
+if (var_3618.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3621;
+*p1 = var_3618;
 }
-if (LVI_PROC(fn_3622,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3619,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3622,NULL,1);
+*p2 = LVI_PROC(fn_3619,NULL,1);
 }
-var_3628 = LVI_PAIR(p1, p2);
+var_3624 = LVI_PAIR(p1, p2);
 }
-lval var_3629;
-var_3629 = LVI_SYMBOL("sqlite-statement?");
-lval var_3635;
+lval var_3625;
+var_3625 = LVI_SYMBOL("sqlite-run");
+lval var_3631;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3629.vt != LV_NIL) {
+if (var_3625.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3629;
+*p1 = var_3625;
 }
-if (LVI_PROC(fn_3630,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3626,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3630,NULL,1);
+*p2 = LVI_PROC(fn_3626,NULL,2);
 }
-var_3635 = LVI_PAIR(p1, p2);
+var_3631 = LVI_PAIR(p1, p2);
 }
-lval var_3636;
-var_3636 = LVI_SYMBOL("sqlite-version");
-lval var_3642;
+lval var_3632;
+var_3632 = LVI_SYMBOL("sqlite-statement-bind");
+lval var_3639;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3636.vt != LV_NIL) {
+if (var_3632.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3636;
+*p1 = var_3632;
 }
-if (LVI_PROC(fn_3637,NULL,0).vt != LV_NIL) {
+if (LVI_PROC(fn_3633,NULL,-2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3637,NULL,0);
+*p2 = LVI_PROC(fn_3633,NULL,-2);
 }
-var_3642 = LVI_PAIR(p1, p2);
+var_3639 = LVI_PAIR(p1, p2);
 }
-lval var_3643;
-var_3643 = LVI_SYMBOL("sqrt");
-lval var_3650;
+lval var_3640;
+var_3640 = LVI_SYMBOL("sqlite-statement-cleanup");
+lval var_3647;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3643.vt != LV_NIL) {
+if (var_3640.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3643;
+*p1 = var_3640;
 }
-if (LVI_PROC(fn_3644,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3641,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3644,NULL,1);
+*p2 = LVI_PROC(fn_3641,NULL,1);
 }
-var_3650 = LVI_PAIR(p1, p2);
+var_3647 = LVI_PAIR(p1, p2);
 }
-lval var_3651;
-var_3651 = LVI_SYMBOL("stack-trace");
-lval var_3658;
+lval var_3648;
+var_3648 = LVI_SYMBOL("sqlite-statement-info");
+lval var_3655;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3651.vt != LV_NIL) {
+if (var_3648.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3651;
+*p1 = var_3648;
 }
-if (LVI_PROC(fn_3652,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3649,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3652,NULL,1);
+*p2 = LVI_PROC(fn_3649,NULL,1);
 }
-var_3658 = LVI_PAIR(p1, p2);
+var_3655 = LVI_PAIR(p1, p2);
 }
-lval var_3659;
-var_3659 = LVI_SYMBOL("stack-trace-minimal");
-MK_CLOS(var_3661,0);
-lval var_3684;
+lval var_3656;
+var_3656 = LVI_SYMBOL("sqlite-statement-prepare");
+lval var_3663;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3659.vt != LV_NIL) {
+if (var_3656.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3659;
+*p1 = var_3656;
 }
-if (LVI_PROC(fn_3660,var_3661,-1).vt != LV_NIL) {
+if (LVI_PROC(fn_3657,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3660,var_3661,-1);
+*p2 = LVI_PROC(fn_3657,NULL,2);
 }
-var_3684 = LVI_PAIR(p1, p2);
+var_3663 = LVI_PAIR(p1, p2);
 }
+lval var_3664;
+var_3664 = LVI_SYMBOL("sqlite-statement-run");
+lval var_3671;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_3664.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_3664;
+}
+if (LVI_PROC(fn_3665,NULL,1).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_3665,NULL,1);
+}
+var_3671 = LVI_PAIR(p1, p2);
+}
+lval var_3672;
+var_3672 = LVI_SYMBOL("sqlite-statement?");
+lval var_3678;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_3672.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_3672;
+}
+if (LVI_PROC(fn_3673,NULL,1).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_3673,NULL,1);
+}
+var_3678 = LVI_PAIR(p1, p2);
+}
+lval var_3679;
+var_3679 = LVI_SYMBOL("sqlite-version");
 lval var_3685;
-var_3685 = LVI_SYMBOL("string->list");
-lval var_3686;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3685.vt != LV_NIL) {
+if (var_3679.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3685;
+*p1 = var_3679;
 }
-if (LVI_PROC(fn_398,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3680,NULL,0).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_398,NULL,1);
+*p2 = LVI_PROC(fn_3680,NULL,0);
 }
-var_3686 = LVI_PAIR(p1, p2);
+var_3685 = LVI_PAIR(p1, p2);
 }
-lval var_3687;
-var_3687 = LVI_SYMBOL("string->number");
+lval var_3686;
+var_3686 = LVI_SYMBOL("sqrt");
 lval var_3693;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3687.vt != LV_NIL) {
+if (var_3686.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3687;
+*p1 = var_3686;
 }
-if (LVI_PROC(fn_3688,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3687,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3688,NULL,1);
+*p2 = LVI_PROC(fn_3687,NULL,1);
 }
 var_3693 = LVI_PAIR(p1, p2);
 }
 lval var_3694;
-var_3694 = LVI_SYMBOL("string->symbol");
-lval var_3700;
+var_3694 = LVI_SYMBOL("stack-trace");
+lval var_3701;
 {
 lptr p1 = NULL, p2 = NULL;
 if (var_3694.vt != LV_NIL) {
@@ -18840,538 +18951,509 @@ if (LVI_PROC(fn_3695,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
 *p2 = LVI_PROC(fn_3695,NULL,1);
 }
-var_3700 = LVI_PAIR(p1, p2);
+var_3701 = LVI_PAIR(p1, p2);
 }
-lval var_3701;
-var_3701 = LVI_SYMBOL("string-append");
-lval var_3708;
+lval var_3702;
+var_3702 = LVI_SYMBOL("stack-trace-minimal");
+MK_CLOS(var_3704,0);
+lval var_3727;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3701.vt != LV_NIL) {
+if (var_3702.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3701;
+*p1 = var_3702;
 }
-if (LVI_PROC(fn_3702,NULL,-1).vt != LV_NIL) {
+if (LVI_PROC(fn_3703,var_3704,-1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3702,NULL,-1);
+*p2 = LVI_PROC(fn_3703,var_3704,-1);
 }
-var_3708 = LVI_PAIR(p1, p2);
+var_3727 = LVI_PAIR(p1, p2);
 }
-lval var_3709;
-var_3709 = LVI_SYMBOL("string-ci-hash-32");
-lval var_3716;
+lval var_3728;
+var_3728 = LVI_SYMBOL("string->list");
+lval var_3729;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3709.vt != LV_NIL) {
+if (var_3728.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3709;
+*p1 = var_3728;
 }
-if (LVI_PROC(fn_3710,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_398,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3710,NULL,1);
+*p2 = LVI_PROC(fn_398,NULL,1);
 }
-var_3716 = LVI_PAIR(p1, p2);
+var_3729 = LVI_PAIR(p1, p2);
 }
-lval var_3717;
-var_3717 = LVI_SYMBOL("string-ci-hash-64");
-lval var_3724;
+lval var_3730;
+var_3730 = LVI_SYMBOL("string->number");
+lval var_3736;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3717.vt != LV_NIL) {
+if (var_3730.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3717;
+*p1 = var_3730;
 }
-if (LVI_PROC(fn_3718,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3731,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3718,NULL,1);
+*p2 = LVI_PROC(fn_3731,NULL,1);
 }
-var_3724 = LVI_PAIR(p1, p2);
+var_3736 = LVI_PAIR(p1, p2);
 }
-lval var_3725;
-var_3725 = LVI_SYMBOL("string-ci/=?");
-lval var_3731;
+lval var_3737;
+var_3737 = LVI_SYMBOL("string->symbol");
+lval var_3743;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3725.vt != LV_NIL) {
+if (var_3737.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3725;
+*p1 = var_3737;
 }
-if (LVI_PROC(fn_3726,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3738,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3726,NULL,2);
+*p2 = LVI_PROC(fn_3738,NULL,1);
 }
-var_3731 = LVI_PAIR(p1, p2);
+var_3743 = LVI_PAIR(p1, p2);
 }
-lval var_3732;
-var_3732 = LVI_SYMBOL("string-ci<=?");
-lval var_3738;
+lval var_3744;
+var_3744 = LVI_SYMBOL("string-append");
+lval var_3751;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3732.vt != LV_NIL) {
+if (var_3744.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3732;
+*p1 = var_3744;
 }
-if (LVI_PROC(fn_3733,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3745,NULL,-1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3733,NULL,2);
+*p2 = LVI_PROC(fn_3745,NULL,-1);
 }
-var_3738 = LVI_PAIR(p1, p2);
+var_3751 = LVI_PAIR(p1, p2);
 }
-lval var_3739;
-var_3739 = LVI_SYMBOL("string-ci<?");
-lval var_3745;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_3739.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_3739;
-}
-if (LVI_PROC(fn_3740,NULL,2).vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3740,NULL,2);
-}
-var_3745 = LVI_PAIR(p1, p2);
-}
-lval var_3746;
-var_3746 = LVI_SYMBOL("string-ci=?");
 lval var_3752;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_3746.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_3746;
-}
-if (LVI_PROC(fn_3747,NULL,2).vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3747,NULL,2);
-}
-var_3752 = LVI_PAIR(p1, p2);
-}
-lval var_3753;
-var_3753 = LVI_SYMBOL("string-ci>=?");
+var_3752 = LVI_SYMBOL("string-ci-hash-32");
 lval var_3759;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3753.vt != LV_NIL) {
+if (var_3752.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3753;
+*p1 = var_3752;
 }
-if (LVI_PROC(fn_3754,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3753,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3754,NULL,2);
+*p2 = LVI_PROC(fn_3753,NULL,1);
 }
 var_3759 = LVI_PAIR(p1, p2);
 }
 lval var_3760;
-var_3760 = LVI_SYMBOL("string-ci>?");
-lval var_3766;
+var_3760 = LVI_SYMBOL("string-ci-hash-64");
+lval var_3767;
 {
 lptr p1 = NULL, p2 = NULL;
 if (var_3760.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
 *p1 = var_3760;
 }
-if (LVI_PROC(fn_3761,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3761,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3761,NULL,2);
+*p2 = LVI_PROC(fn_3761,NULL,1);
 }
-var_3766 = LVI_PAIR(p1, p2);
+var_3767 = LVI_PAIR(p1, p2);
 }
-lval var_3767;
-var_3767 = LVI_SYMBOL("string-copy");
-MK_CLOS(var_3769,0);
-lval var_3799;
+lval var_3768;
+var_3768 = LVI_SYMBOL("string-ci/=?");
+lval var_3774;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3767.vt != LV_NIL) {
+if (var_3768.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3767;
+*p1 = var_3768;
 }
-if (LVI_PROC(fn_3768,var_3769,-1).vt != LV_NIL) {
+if (LVI_PROC(fn_3769,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3768,var_3769,-1);
+*p2 = LVI_PROC(fn_3769,NULL,2);
 }
-var_3799 = LVI_PAIR(p1, p2);
+var_3774 = LVI_PAIR(p1, p2);
 }
-lval var_3800;
-var_3800 = LVI_SYMBOL("string-create");
-MK_CLOS(var_3802,0);
-lval var_3825;
+lval var_3775;
+var_3775 = LVI_SYMBOL("string-ci<=?");
+lval var_3781;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3800.vt != LV_NIL) {
+if (var_3775.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3800;
+*p1 = var_3775;
 }
-if (LVI_PROC(fn_3801,var_3802,-1).vt != LV_NIL) {
+if (LVI_PROC(fn_3776,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3801,var_3802,-1);
+*p2 = LVI_PROC(fn_3776,NULL,2);
 }
-var_3825 = LVI_PAIR(p1, p2);
+var_3781 = LVI_PAIR(p1, p2);
 }
-lval var_3826;
-var_3826 = LVI_SYMBOL("string-downcase");
-lval var_3832;
+lval var_3782;
+var_3782 = LVI_SYMBOL("string-ci<?");
+lval var_3788;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3826.vt != LV_NIL) {
+if (var_3782.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3826;
+*p1 = var_3782;
 }
-if (LVI_PROC(fn_3827,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3783,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3827,NULL,1);
+*p2 = LVI_PROC(fn_3783,NULL,2);
 }
-var_3832 = LVI_PAIR(p1, p2);
+var_3788 = LVI_PAIR(p1, p2);
 }
-lval var_3833;
-var_3833 = LVI_SYMBOL("string-find-first-char");
-lval var_3839;
+lval var_3789;
+var_3789 = LVI_SYMBOL("string-ci=?");
+lval var_3795;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3833.vt != LV_NIL) {
+if (var_3789.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3833;
+*p1 = var_3789;
 }
-if (LVI_PROC(fn_3834,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3790,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3834,NULL,2);
+*p2 = LVI_PROC(fn_3790,NULL,2);
 }
-var_3839 = LVI_PAIR(p1, p2);
+var_3795 = LVI_PAIR(p1, p2);
 }
-lval var_3840;
-var_3840 = LVI_SYMBOL("string-find-last-char");
-lval var_3846;
+lval var_3796;
+var_3796 = LVI_SYMBOL("string-ci>=?");
+lval var_3802;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3840.vt != LV_NIL) {
+if (var_3796.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3840;
+*p1 = var_3796;
 }
-if (LVI_PROC(fn_3841,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3797,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3841,NULL,2);
+*p2 = LVI_PROC(fn_3797,NULL,2);
 }
-var_3846 = LVI_PAIR(p1, p2);
+var_3802 = LVI_PAIR(p1, p2);
 }
-lval var_3847;
-var_3847 = LVI_SYMBOL("string-hash-32");
-lval var_3854;
+lval var_3803;
+var_3803 = LVI_SYMBOL("string-ci>?");
+lval var_3809;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3847.vt != LV_NIL) {
+if (var_3803.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3847;
+*p1 = var_3803;
 }
-if (LVI_PROC(fn_3848,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3804,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3848,NULL,1);
+*p2 = LVI_PROC(fn_3804,NULL,2);
 }
-var_3854 = LVI_PAIR(p1, p2);
+var_3809 = LVI_PAIR(p1, p2);
 }
-lval var_3855;
-var_3855 = LVI_SYMBOL("string-hash-64");
-lval var_3862;
+lval var_3810;
+var_3810 = LVI_SYMBOL("string-copy");
+MK_CLOS(var_3812,0);
+lval var_3842;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3855.vt != LV_NIL) {
+if (var_3810.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3855;
+*p1 = var_3810;
 }
-if (LVI_PROC(fn_3856,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3811,var_3812,-1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3856,NULL,1);
+*p2 = LVI_PROC(fn_3811,var_3812,-1);
 }
-var_3862 = LVI_PAIR(p1, p2);
+var_3842 = LVI_PAIR(p1, p2);
 }
-lval var_3863;
-var_3863 = LVI_SYMBOL("string-join-by");
-lval var_3870;
+lval var_3843;
+var_3843 = LVI_SYMBOL("string-create");
+MK_CLOS(var_3845,0);
+lval var_3868;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3863.vt != LV_NIL) {
+if (var_3843.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3863;
+*p1 = var_3843;
 }
-if (LVI_PROC(fn_3864,NULL,-2).vt != LV_NIL) {
+if (LVI_PROC(fn_3844,var_3845,-1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3864,NULL,-2);
+*p2 = LVI_PROC(fn_3844,var_3845,-1);
 }
-var_3870 = LVI_PAIR(p1, p2);
+var_3868 = LVI_PAIR(p1, p2);
 }
-lval var_3871;
-var_3871 = LVI_SYMBOL("string-length");
-lval var_3877;
+lval var_3869;
+var_3869 = LVI_SYMBOL("string-downcase");
+lval var_3875;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3871.vt != LV_NIL) {
+if (var_3869.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3871;
+*p1 = var_3869;
 }
-if (LVI_PROC(fn_3872,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3870,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3872,NULL,1);
+*p2 = LVI_PROC(fn_3870,NULL,1);
 }
-var_3877 = LVI_PAIR(p1, p2);
+var_3875 = LVI_PAIR(p1, p2);
 }
-lval var_3878;
-var_3878 = LVI_SYMBOL("string-pad-center");
-lval var_3885;
+lval var_3876;
+var_3876 = LVI_SYMBOL("string-find-first-char");
+lval var_3882;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3878.vt != LV_NIL) {
+if (var_3876.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3878;
+*p1 = var_3876;
 }
-if (LVI_PROC(fn_3879,NULL,3).vt != LV_NIL) {
+if (LVI_PROC(fn_3877,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3879,NULL,3);
+*p2 = LVI_PROC(fn_3877,NULL,2);
 }
-var_3885 = LVI_PAIR(p1, p2);
+var_3882 = LVI_PAIR(p1, p2);
 }
-lval var_3886;
-var_3886 = LVI_SYMBOL("string-pad-left");
-lval var_3893;
+lval var_3883;
+var_3883 = LVI_SYMBOL("string-find-last-char");
+lval var_3889;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3886.vt != LV_NIL) {
+if (var_3883.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3886;
+*p1 = var_3883;
 }
-if (LVI_PROC(fn_3887,NULL,3).vt != LV_NIL) {
+if (LVI_PROC(fn_3884,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3887,NULL,3);
+*p2 = LVI_PROC(fn_3884,NULL,2);
 }
-var_3893 = LVI_PAIR(p1, p2);
+var_3889 = LVI_PAIR(p1, p2);
 }
-lval var_3894;
-var_3894 = LVI_SYMBOL("string-pad-right");
-lval var_3901;
+lval var_3890;
+var_3890 = LVI_SYMBOL("string-hash-32");
+lval var_3897;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3894.vt != LV_NIL) {
+if (var_3890.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3894;
+*p1 = var_3890;
 }
-if (LVI_PROC(fn_3895,NULL,3).vt != LV_NIL) {
+if (LVI_PROC(fn_3891,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3895,NULL,3);
+*p2 = LVI_PROC(fn_3891,NULL,1);
 }
-var_3901 = LVI_PAIR(p1, p2);
+var_3897 = LVI_PAIR(p1, p2);
 }
-lval var_3902;
-var_3902 = LVI_SYMBOL("string-port?");
-lval var_3908;
+lval var_3898;
+var_3898 = LVI_SYMBOL("string-hash-64");
+lval var_3905;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3902.vt != LV_NIL) {
+if (var_3898.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3902;
+*p1 = var_3898;
 }
-if (LVI_PROC(fn_3903,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3899,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3903,NULL,1);
+*p2 = LVI_PROC(fn_3899,NULL,1);
 }
-var_3908 = LVI_PAIR(p1, p2);
+var_3905 = LVI_PAIR(p1, p2);
 }
-lval var_3909;
-var_3909 = LVI_SYMBOL("string-ref");
-lval var_3915;
+lval var_3906;
+var_3906 = LVI_SYMBOL("string-join-by");
+lval var_3913;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3909.vt != LV_NIL) {
+if (var_3906.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3909;
+*p1 = var_3906;
 }
-if (LVI_PROC(fn_3910,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3907,NULL,-2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3910,NULL,2);
+*p2 = LVI_PROC(fn_3907,NULL,-2);
 }
-var_3915 = LVI_PAIR(p1, p2);
+var_3913 = LVI_PAIR(p1, p2);
 }
-lval var_3916;
-var_3916 = LVI_SYMBOL("string-reverse");
-lval var_3923;
+lval var_3914;
+var_3914 = LVI_SYMBOL("string-length");
+lval var_3920;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3916.vt != LV_NIL) {
+if (var_3914.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3916;
+*p1 = var_3914;
 }
-if (LVI_PROC(fn_3917,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3915,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3917,NULL,1);
+*p2 = LVI_PROC(fn_3915,NULL,1);
 }
-var_3923 = LVI_PAIR(p1, p2);
+var_3920 = LVI_PAIR(p1, p2);
 }
-lval var_3924;
-var_3924 = LVI_SYMBOL("string-set!");
-lval var_3930;
+lval var_3921;
+var_3921 = LVI_SYMBOL("string-pad-center");
+lval var_3928;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3924.vt != LV_NIL) {
+if (var_3921.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3924;
+*p1 = var_3921;
 }
-if (LVI_PROC(fn_3925,NULL,3).vt != LV_NIL) {
+if (LVI_PROC(fn_3922,NULL,3).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3925,NULL,3);
+*p2 = LVI_PROC(fn_3922,NULL,3);
 }
-var_3930 = LVI_PAIR(p1, p2);
+var_3928 = LVI_PAIR(p1, p2);
 }
-lval var_3931;
-var_3931 = LVI_SYMBOL("string-split-by");
-lval var_3938;
+lval var_3929;
+var_3929 = LVI_SYMBOL("string-pad-left");
+lval var_3936;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3931.vt != LV_NIL) {
+if (var_3929.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3931;
+*p1 = var_3929;
 }
-if (LVI_PROC(fn_3932,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3930,NULL,3).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3932,NULL,2);
+*p2 = LVI_PROC(fn_3930,NULL,3);
 }
-var_3938 = LVI_PAIR(p1, p2);
+var_3936 = LVI_PAIR(p1, p2);
 }
-lval var_3939;
-var_3939 = LVI_SYMBOL("string-split-by-whitespace");
-lval var_3946;
+lval var_3937;
+var_3937 = LVI_SYMBOL("string-pad-right");
+lval var_3944;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3939.vt != LV_NIL) {
+if (var_3937.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3939;
+*p1 = var_3937;
 }
-if (LVI_PROC(fn_3940,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3938,NULL,3).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3940,NULL,1);
+*p2 = LVI_PROC(fn_3938,NULL,3);
 }
-var_3946 = LVI_PAIR(p1, p2);
+var_3944 = LVI_PAIR(p1, p2);
 }
-lval var_3947;
-var_3947 = LVI_SYMBOL("string-trim");
-lval var_3954;
+lval var_3945;
+var_3945 = LVI_SYMBOL("string-port?");
+lval var_3951;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3947.vt != LV_NIL) {
+if (var_3945.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3947;
+*p1 = var_3945;
 }
-if (LVI_PROC(fn_3948,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3946,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3948,NULL,2);
+*p2 = LVI_PROC(fn_3946,NULL,1);
 }
-var_3954 = LVI_PAIR(p1, p2);
+var_3951 = LVI_PAIR(p1, p2);
 }
-lval var_3955;
-var_3955 = LVI_SYMBOL("string-trim-left");
-lval var_3962;
+lval var_3952;
+var_3952 = LVI_SYMBOL("string-ref");
+lval var_3958;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3955.vt != LV_NIL) {
+if (var_3952.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3955;
+*p1 = var_3952;
 }
-if (LVI_PROC(fn_3956,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3953,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3956,NULL,2);
+*p2 = LVI_PROC(fn_3953,NULL,2);
 }
-var_3962 = LVI_PAIR(p1, p2);
+var_3958 = LVI_PAIR(p1, p2);
 }
-lval var_3963;
-var_3963 = LVI_SYMBOL("string-trim-right");
-lval var_3970;
+lval var_3959;
+var_3959 = LVI_SYMBOL("string-reverse");
+lval var_3966;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3963.vt != LV_NIL) {
+if (var_3959.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3963;
+*p1 = var_3959;
 }
-if (LVI_PROC(fn_3964,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3960,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3964,NULL,2);
+*p2 = LVI_PROC(fn_3960,NULL,1);
 }
-var_3970 = LVI_PAIR(p1, p2);
+var_3966 = LVI_PAIR(p1, p2);
 }
-lval var_3971;
-var_3971 = LVI_SYMBOL("string-upcase");
-lval var_3977;
+lval var_3967;
+var_3967 = LVI_SYMBOL("string-set!");
+lval var_3973;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3971.vt != LV_NIL) {
+if (var_3967.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3971;
+*p1 = var_3967;
 }
-if (LVI_PROC(fn_3972,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_3968,NULL,3).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3972,NULL,1);
+*p2 = LVI_PROC(fn_3968,NULL,3);
 }
-var_3977 = LVI_PAIR(p1, p2);
+var_3973 = LVI_PAIR(p1, p2);
 }
-lval var_3978;
-var_3978 = LVI_SYMBOL("string/=?");
-lval var_3984;
+lval var_3974;
+var_3974 = LVI_SYMBOL("string-split-by");
+lval var_3981;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3978.vt != LV_NIL) {
+if (var_3974.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3978;
+*p1 = var_3974;
 }
-if (LVI_PROC(fn_3979,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3975,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3979,NULL,2);
+*p2 = LVI_PROC(fn_3975,NULL,2);
 }
-var_3984 = LVI_PAIR(p1, p2);
+var_3981 = LVI_PAIR(p1, p2);
 }
-lval var_3985;
-var_3985 = LVI_SYMBOL("string<=?");
-lval var_3991;
+lval var_3982;
+var_3982 = LVI_SYMBOL("string-split-by-whitespace");
+lval var_3989;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3985.vt != LV_NIL) {
+if (var_3982.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3985;
+*p1 = var_3982;
 }
-if (LVI_PROC(fn_3986,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3983,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3986,NULL,2);
+*p2 = LVI_PROC(fn_3983,NULL,1);
 }
-var_3991 = LVI_PAIR(p1, p2);
+var_3989 = LVI_PAIR(p1, p2);
 }
-lval var_3992;
-var_3992 = LVI_SYMBOL("string<?");
+lval var_3990;
+var_3990 = LVI_SYMBOL("string-trim");
+lval var_3997;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_3990.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_3990;
+}
+if (LVI_PROC(fn_3991,NULL,2).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_3991,NULL,2);
+}
+var_3997 = LVI_PAIR(p1, p2);
+}
 lval var_3998;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_3992.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_3992;
-}
-if (LVI_PROC(fn_3993,NULL,2).vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_3993,NULL,2);
-}
-var_3998 = LVI_PAIR(p1, p2);
-}
-lval var_3999;
-var_3999 = LVI_SYMBOL("string=?");
+var_3998 = LVI_SYMBOL("string-trim-left");
 lval var_4005;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_3999.vt != LV_NIL) {
+if (var_3998.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_3999;
+*p1 = var_3998;
 }
-if (LVI_PROC(fn_4000,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_3999,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4000,NULL,2);
+*p2 = LVI_PROC(fn_3999,NULL,2);
 }
 var_4005 = LVI_PAIR(p1, p2);
 }
 lval var_4006;
-var_4006 = LVI_SYMBOL("string>=?");
-lval var_4012;
+var_4006 = LVI_SYMBOL("string-trim-right");
+lval var_4013;
 {
 lptr p1 = NULL, p2 = NULL;
 if (var_4006.vt != LV_NIL) {
@@ -19382,477 +19464,477 @@ if (LVI_PROC(fn_4007,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
 *p2 = LVI_PROC(fn_4007,NULL,2);
 }
-var_4012 = LVI_PAIR(p1, p2);
+var_4013 = LVI_PAIR(p1, p2);
 }
-lval var_4013;
-var_4013 = LVI_SYMBOL("string>?");
-lval var_4019;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_4013.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_4013;
-}
-if (LVI_PROC(fn_4014,NULL,2).vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4014,NULL,2);
-}
-var_4019 = LVI_PAIR(p1, p2);
-}
+lval var_4014;
+var_4014 = LVI_SYMBOL("string-upcase");
 lval var_4020;
-var_4020 = LVI_SYMBOL("string?");
-lval var_4026;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4020.vt != LV_NIL) {
+if (var_4014.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4020;
+*p1 = var_4014;
 }
-if (LVI_PROC(fn_4021,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_4015,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4021,NULL,1);
+*p2 = LVI_PROC(fn_4015,NULL,1);
 }
-var_4026 = LVI_PAIR(p1, p2);
+var_4020 = LVI_PAIR(p1, p2);
 }
+lval var_4021;
+var_4021 = LVI_SYMBOL("string/=?");
 lval var_4027;
-var_4027 = LVI_SYMBOL("symbol->string");
-lval var_4033;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4027.vt != LV_NIL) {
+if (var_4021.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4027;
+*p1 = var_4021;
 }
-if (LVI_PROC(fn_4028,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_4022,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4028,NULL,1);
+*p2 = LVI_PROC(fn_4022,NULL,2);
 }
-var_4033 = LVI_PAIR(p1, p2);
+var_4027 = LVI_PAIR(p1, p2);
 }
+lval var_4028;
+var_4028 = LVI_SYMBOL("string<=?");
 lval var_4034;
-var_4034 = LVI_SYMBOL("symbol=?");
-lval var_4040;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4034.vt != LV_NIL) {
+if (var_4028.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4034;
+*p1 = var_4028;
 }
-if (LVI_PROC(fn_4035,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_4029,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4035,NULL,2);
+*p2 = LVI_PROC(fn_4029,NULL,2);
 }
-var_4040 = LVI_PAIR(p1, p2);
+var_4034 = LVI_PAIR(p1, p2);
 }
+lval var_4035;
+var_4035 = LVI_SYMBOL("string<?");
 lval var_4041;
-var_4041 = LVI_SYMBOL("symbol?");
-lval var_4047;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4041.vt != LV_NIL) {
+if (var_4035.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4041;
+*p1 = var_4035;
 }
-if (LVI_PROC(fn_4042,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_4036,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4042,NULL,1);
+*p2 = LVI_PROC(fn_4036,NULL,2);
 }
-var_4047 = LVI_PAIR(p1, p2);
+var_4041 = LVI_PAIR(p1, p2);
 }
+lval var_4042;
+var_4042 = LVI_SYMBOL("string=?");
 lval var_4048;
-var_4048 = LVI_SYMBOL("tan");
-lval var_4054;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4048.vt != LV_NIL) {
+if (var_4042.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4048;
+*p1 = var_4042;
 }
-if (LVI_PROC(fn_4049,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_4043,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4049,NULL,1);
+*p2 = LVI_PROC(fn_4043,NULL,2);
 }
-var_4054 = LVI_PAIR(p1, p2);
+var_4048 = LVI_PAIR(p1, p2);
 }
+lval var_4049;
+var_4049 = LVI_SYMBOL("string>=?");
 lval var_4055;
-var_4055 = LVI_SYMBOL("tanh");
-lval var_4061;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4055.vt != LV_NIL) {
+if (var_4049.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4055;
+*p1 = var_4049;
 }
-if (LVI_PROC(fn_4056,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_4050,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4056,NULL,1);
+*p2 = LVI_PROC(fn_4050,NULL,2);
 }
-var_4061 = LVI_PAIR(p1, p2);
+var_4055 = LVI_PAIR(p1, p2);
 }
+lval var_4056;
+var_4056 = LVI_SYMBOL("string>?");
 lval var_4062;
-var_4062 = LVI_SYMBOL("token-source-line");
-lval var_4068;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4062.vt != LV_NIL) {
+if (var_4056.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4062;
+*p1 = var_4056;
 }
-if (LVI_PROC(fn_4063,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_4057,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4063,NULL,1);
+*p2 = LVI_PROC(fn_4057,NULL,2);
 }
-var_4068 = LVI_PAIR(p1, p2);
+var_4062 = LVI_PAIR(p1, p2);
 }
+lval var_4063;
+var_4063 = LVI_SYMBOL("string?");
 lval var_4069;
-var_4069 = LVI_SYMBOL("truncate");
-lval var_4075;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4069.vt != LV_NIL) {
+if (var_4063.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4069;
+*p1 = var_4063;
 }
-if (LVI_PROC(fn_4070,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_4064,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4070,NULL,1);
+*p2 = LVI_PROC(fn_4064,NULL,1);
 }
-var_4075 = LVI_PAIR(p1, p2);
+var_4069 = LVI_PAIR(p1, p2);
 }
+lval var_4070;
+var_4070 = LVI_SYMBOL("symbol->string");
 lval var_4076;
-var_4076 = LVI_SYMBOL("truncate-file");
-MK_CLOS(var_4078,0);
-lval var_4101;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4076.vt != LV_NIL) {
+if (var_4070.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4076;
+*p1 = var_4070;
 }
-if (LVI_PROC(fn_4077,var_4078,-1).vt != LV_NIL) {
+if (LVI_PROC(fn_4071,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4077,var_4078,-1);
+*p2 = LVI_PROC(fn_4071,NULL,1);
 }
-var_4101 = LVI_PAIR(p1, p2);
+var_4076 = LVI_PAIR(p1, p2);
 }
-lval var_4102;
-var_4102 = LVI_SYMBOL("truncate-quotient");
-lval var_4103;
+lval var_4077;
+var_4077 = LVI_SYMBOL("symbol=?");
+lval var_4083;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4102.vt != LV_NIL) {
+if (var_4077.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4102;
+*p1 = var_4077;
+}
+if (LVI_PROC(fn_4078,NULL,2).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4078,NULL,2);
+}
+var_4083 = LVI_PAIR(p1, p2);
+}
+lval var_4084;
+var_4084 = LVI_SYMBOL("symbol?");
+lval var_4090;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4084.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4084;
+}
+if (LVI_PROC(fn_4085,NULL,1).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4085,NULL,1);
+}
+var_4090 = LVI_PAIR(p1, p2);
+}
+lval var_4091;
+var_4091 = LVI_SYMBOL("tan");
+lval var_4097;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4091.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4091;
+}
+if (LVI_PROC(fn_4092,NULL,1).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4092,NULL,1);
+}
+var_4097 = LVI_PAIR(p1, p2);
+}
+lval var_4098;
+var_4098 = LVI_SYMBOL("tanh");
+lval var_4104;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4098.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4098;
+}
+if (LVI_PROC(fn_4099,NULL,1).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4099,NULL,1);
+}
+var_4104 = LVI_PAIR(p1, p2);
+}
+lval var_4105;
+var_4105 = LVI_SYMBOL("token-source-line");
+lval var_4111;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4105.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4105;
+}
+if (LVI_PROC(fn_4106,NULL,1).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4106,NULL,1);
+}
+var_4111 = LVI_PAIR(p1, p2);
+}
+lval var_4112;
+var_4112 = LVI_SYMBOL("truncate");
+lval var_4118;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4112.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4112;
+}
+if (LVI_PROC(fn_4113,NULL,1).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4113,NULL,1);
+}
+var_4118 = LVI_PAIR(p1, p2);
+}
+lval var_4119;
+var_4119 = LVI_SYMBOL("truncate-file");
+MK_CLOS(var_4121,0);
+lval var_4144;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4119.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4119;
+}
+if (LVI_PROC(fn_4120,var_4121,-1).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4120,var_4121,-1);
+}
+var_4144 = LVI_PAIR(p1, p2);
+}
+lval var_4145;
+var_4145 = LVI_SYMBOL("truncate-quotient");
+lval var_4146;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4145.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4145;
 }
 if (LVI_PROC(fn_325,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
 *p2 = LVI_PROC(fn_325,NULL,2);
 }
-var_4103 = LVI_PAIR(p1, p2);
-}
-lval var_4104;
-var_4104 = LVI_SYMBOL("truncate-remainder");
-lval var_4105;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_4104.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_4104;
-}
-if (LVI_PROC(fn_340,NULL,2).vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_340,NULL,2);
-}
-var_4105 = LVI_PAIR(p1, p2);
-}
-lval var_4106;
-var_4106 = LVI_SYMBOL("truncate/");
-lval var_4107;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_4106.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_4106;
-}
-if (LVI_PROC(fn_317,NULL,2).vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_317,NULL,2);
-}
-var_4107 = LVI_PAIR(p1, p2);
-}
-lval var_4108;
-var_4108 = LVI_SYMBOL("type-of");
-lval var_4115;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_4108.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_4108;
-}
-if (LVI_PROC(fn_4109,NULL,1).vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4109,NULL,1);
-}
-var_4115 = LVI_PAIR(p1, p2);
-}
-lval var_4116;
-var_4116 = LVI_SYMBOL("unset-environment-variable");
-lval var_4122;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_4116.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_4116;
-}
-if (LVI_PROC(fn_4117,NULL,1).vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4117,NULL,1);
-}
-var_4122 = LVI_PAIR(p1, p2);
-}
-lval var_4123;
-var_4123 = LVI_SYMBOL("upfrom");
-lval var_4130;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_4123.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_4123;
-}
-if (LVI_PROC(fn_4124,NULL,2).vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4124,NULL,2);
-}
-var_4130 = LVI_PAIR(p1, p2);
-}
-lval var_4131;
-var_4131 = LVI_SYMBOL("vector");
-lval var_4138;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_4131.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_4131;
-}
-if (LVI_PROC(fn_4132,NULL,-1).vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4132,NULL,-1);
-}
-var_4138 = LVI_PAIR(p1, p2);
-}
-lval var_4139;
-var_4139 = LVI_SYMBOL("vector->list");
-lval var_4146;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_4139.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_4139;
-}
-if (LVI_PROC(fn_4140,NULL,1).vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4140,NULL,1);
-}
 var_4146 = LVI_PAIR(p1, p2);
 }
 lval var_4147;
-var_4147 = LVI_SYMBOL("vector-cfft!");
-lval var_4154;
+var_4147 = LVI_SYMBOL("truncate-remainder");
+lval var_4148;
 {
 lptr p1 = NULL, p2 = NULL;
 if (var_4147.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
 *p1 = var_4147;
 }
-if (LVI_PROC(fn_4148,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_340,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4148,NULL,2);
+*p2 = LVI_PROC(fn_340,NULL,2);
 }
-var_4154 = LVI_PAIR(p1, p2);
+var_4148 = LVI_PAIR(p1, p2);
 }
-lval var_4155;
-var_4155 = LVI_SYMBOL("vector-create");
-MK_CLOS(var_4157,0);
-lval var_4180;
+lval var_4149;
+var_4149 = LVI_SYMBOL("truncate/");
+lval var_4150;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4155.vt != LV_NIL) {
+if (var_4149.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4155;
+*p1 = var_4149;
 }
-if (LVI_PROC(fn_4156,var_4157,-1).vt != LV_NIL) {
+if (LVI_PROC(fn_317,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4156,var_4157,-1);
+*p2 = LVI_PROC(fn_317,NULL,2);
 }
-var_4180 = LVI_PAIR(p1, p2);
+var_4150 = LVI_PAIR(p1, p2);
 }
+lval var_4151;
+var_4151 = LVI_SYMBOL("type-of");
+lval var_4158;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4151.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4151;
+}
+if (LVI_PROC(fn_4152,NULL,1).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4152,NULL,1);
+}
+var_4158 = LVI_PAIR(p1, p2);
+}
+lval var_4159;
+var_4159 = LVI_SYMBOL("unset-environment-variable");
+lval var_4165;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4159.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4159;
+}
+if (LVI_PROC(fn_4160,NULL,1).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4160,NULL,1);
+}
+var_4165 = LVI_PAIR(p1, p2);
+}
+lval var_4166;
+var_4166 = LVI_SYMBOL("upfrom");
+lval var_4173;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4166.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4166;
+}
+if (LVI_PROC(fn_4167,NULL,2).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4167,NULL,2);
+}
+var_4173 = LVI_PAIR(p1, p2);
+}
+lval var_4174;
+var_4174 = LVI_SYMBOL("vector");
 lval var_4181;
-var_4181 = LVI_SYMBOL("vector-fill!");
-lval var_4187;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4181.vt != LV_NIL) {
+if (var_4174.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4181;
+*p1 = var_4174;
 }
-if (LVI_PROC(fn_4182,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_4175,NULL,-1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4182,NULL,2);
+*p2 = LVI_PROC(fn_4175,NULL,-1);
 }
-var_4187 = LVI_PAIR(p1, p2);
+var_4181 = LVI_PAIR(p1, p2);
 }
-lval var_4188;
-var_4188 = LVI_SYMBOL("vector-for-each");
-lval var_4195;
+lval var_4182;
+var_4182 = LVI_SYMBOL("vector->list");
+lval var_4189;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4188.vt != LV_NIL) {
+if (var_4182.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4188;
+*p1 = var_4182;
 }
-if (LVI_PROC(fn_4189,NULL,-3).vt != LV_NIL) {
+if (LVI_PROC(fn_4183,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4189,NULL,-3);
+*p2 = LVI_PROC(fn_4183,NULL,1);
 }
-var_4195 = LVI_PAIR(p1, p2);
+var_4189 = LVI_PAIR(p1, p2);
 }
-lval var_4196;
-var_4196 = LVI_SYMBOL("vector-length");
+lval var_4190;
+var_4190 = LVI_SYMBOL("vector-cfft!");
 lval var_4197;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4196.vt != LV_NIL) {
+if (var_4190.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4196;
+*p1 = var_4190;
 }
-if (LVI_PROC(fn_472,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_4191,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_472,NULL,1);
+*p2 = LVI_PROC(fn_4191,NULL,2);
 }
 var_4197 = LVI_PAIR(p1, p2);
 }
 lval var_4198;
-var_4198 = LVI_SYMBOL("vector-map");
-lval var_4205;
+var_4198 = LVI_SYMBOL("vector-create");
+MK_CLOS(var_4200,0);
+lval var_4223;
 {
 lptr p1 = NULL, p2 = NULL;
 if (var_4198.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
 *p1 = var_4198;
 }
-if (LVI_PROC(fn_4199,NULL,-3).vt != LV_NIL) {
+if (LVI_PROC(fn_4199,var_4200,-1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4199,NULL,-3);
+*p2 = LVI_PROC(fn_4199,var_4200,-1);
 }
-var_4205 = LVI_PAIR(p1, p2);
+var_4223 = LVI_PAIR(p1, p2);
 }
-lval var_4206;
-var_4206 = LVI_SYMBOL("vector-map!");
-lval var_4213;
+lval var_4224;
+var_4224 = LVI_SYMBOL("vector-fill!");
+lval var_4230;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4206.vt != LV_NIL) {
+if (var_4224.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4206;
+*p1 = var_4224;
 }
-if (LVI_PROC(fn_4207,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_4225,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4207,NULL,2);
+*p2 = LVI_PROC(fn_4225,NULL,2);
 }
-var_4213 = LVI_PAIR(p1, p2);
+var_4230 = LVI_PAIR(p1, p2);
 }
-lval var_4214;
-var_4214 = LVI_SYMBOL("vector-number/type");
-lval var_4221;
+lval var_4231;
+var_4231 = LVI_SYMBOL("vector-for-each");
+lval var_4238;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4214.vt != LV_NIL) {
+if (var_4231.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4214;
+*p1 = var_4231;
 }
-if (LVI_PROC(fn_4215,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_4232,NULL,-3).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4215,NULL,1);
+*p2 = LVI_PROC(fn_4232,NULL,-3);
 }
-var_4221 = LVI_PAIR(p1, p2);
+var_4238 = LVI_PAIR(p1, p2);
 }
-lval var_4222;
-var_4222 = LVI_SYMBOL("vector-promote/cmplx!");
-lval var_4228;
+lval var_4239;
+var_4239 = LVI_SYMBOL("vector-length");
+lval var_4240;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4222.vt != LV_NIL) {
+if (var_4239.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4222;
+*p1 = var_4239;
 }
-if (LVI_PROC(fn_4223,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_472,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4223,NULL,1);
+*p2 = LVI_PROC(fn_472,NULL,1);
 }
-var_4228 = LVI_PAIR(p1, p2);
+var_4240 = LVI_PAIR(p1, p2);
 }
-lval var_4229;
-var_4229 = LVI_SYMBOL("vector-promote/rat!");
-lval var_4235;
+lval var_4241;
+var_4241 = LVI_SYMBOL("vector-map");
+lval var_4248;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4229.vt != LV_NIL) {
+if (var_4241.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4229;
+*p1 = var_4241;
 }
-if (LVI_PROC(fn_4230,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_4242,NULL,-3).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4230,NULL,1);
+*p2 = LVI_PROC(fn_4242,NULL,-3);
 }
-var_4235 = LVI_PAIR(p1, p2);
+var_4248 = LVI_PAIR(p1, p2);
 }
-lval var_4236;
-var_4236 = LVI_SYMBOL("vector-promote/real!");
-lval var_4242;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_4236.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_4236;
-}
-if (LVI_PROC(fn_4237,NULL,1).vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4237,NULL,1);
-}
-var_4242 = LVI_PAIR(p1, p2);
-}
-lval var_4243;
-var_4243 = LVI_SYMBOL("vector-ref");
 lval var_4249;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_4243.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_4243;
-}
-if (LVI_PROC(fn_4244,NULL,2).vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4244,NULL,2);
-}
-var_4249 = LVI_PAIR(p1, p2);
-}
-lval var_4250;
-var_4250 = LVI_SYMBOL("vector-set!");
+var_4249 = LVI_SYMBOL("vector-map!");
 lval var_4256;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4250.vt != LV_NIL) {
+if (var_4249.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4250;
+*p1 = var_4249;
 }
-if (LVI_PROC(fn_4251,NULL,3).vt != LV_NIL) {
+if (LVI_PROC(fn_4250,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4251,NULL,3);
+*p2 = LVI_PROC(fn_4250,NULL,2);
 }
 var_4256 = LVI_PAIR(p1, p2);
 }
 lval var_4257;
-var_4257 = LVI_SYMBOL("vector-sort!");
+var_4257 = LVI_SYMBOL("vector-number/type");
 lval var_4264;
 {
 lptr p1 = NULL, p2 = NULL;
@@ -19860,14 +19942,14 @@ if (var_4257.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
 *p1 = var_4257;
 }
-if (LVI_PROC(fn_4258,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_4258,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4258,NULL,2);
+*p2 = LVI_PROC(fn_4258,NULL,1);
 }
 var_4264 = LVI_PAIR(p1, p2);
 }
 lval var_4265;
-var_4265 = LVI_SYMBOL("vector-swap!");
+var_4265 = LVI_SYMBOL("vector-promote/cmplx!");
 lval var_4271;
 {
 lptr p1 = NULL, p2 = NULL;
@@ -19875,14 +19957,14 @@ if (var_4265.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
 *p1 = var_4265;
 }
-if (LVI_PROC(fn_4266,NULL,3).vt != LV_NIL) {
+if (LVI_PROC(fn_4266,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4266,NULL,3);
+*p2 = LVI_PROC(fn_4266,NULL,1);
 }
 var_4271 = LVI_PAIR(p1, p2);
 }
 lval var_4272;
-var_4272 = LVI_SYMBOL("vector?");
+var_4272 = LVI_SYMBOL("vector-promote/rat!");
 lval var_4278;
 {
 lptr p1 = NULL, p2 = NULL;
@@ -19897,1912 +19979,1837 @@ p2 = new_lv(LV_NIL);
 var_4278 = LVI_PAIR(p1, p2);
 }
 lval var_4279;
-var_4279 = LVI_SYMBOL("wait-process");
-MK_CLOS(var_4281,0);
-lval var_4311;
+var_4279 = LVI_SYMBOL("vector-promote/real!");
+lval var_4285;
 {
 lptr p1 = NULL, p2 = NULL;
 if (var_4279.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
 *p1 = var_4279;
 }
-if (LVI_PROC(fn_4280,var_4281,-1).vt != LV_NIL) {
+if (LVI_PROC(fn_4280,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4280,var_4281,-1);
+*p2 = LVI_PROC(fn_4280,NULL,1);
 }
-var_4311 = LVI_PAIR(p1, p2);
+var_4285 = LVI_PAIR(p1, p2);
 }
-lval var_4312;
-var_4312 = LVI_SYMBOL("wile-basic-build-info");
-lval var_4318;
+lval var_4286;
+var_4286 = LVI_SYMBOL("vector-ref");
+lval var_4292;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4312.vt != LV_NIL) {
+if (var_4286.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4312;
+*p1 = var_4286;
 }
-if (LVI_PROC(fn_4313,NULL,0).vt != LV_NIL) {
+if (LVI_PROC(fn_4287,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4313,NULL,0);
+*p2 = LVI_PROC(fn_4287,NULL,2);
 }
-var_4318 = LVI_PAIR(p1, p2);
+var_4292 = LVI_PAIR(p1, p2);
 }
-lval var_4319;
-var_4319 = LVI_SYMBOL("wile-build-info");
-lval var_4326;
+lval var_4293;
+var_4293 = LVI_SYMBOL("vector-set!");
+lval var_4299;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4319.vt != LV_NIL) {
+if (var_4293.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4319;
+*p1 = var_4293;
 }
-if (LVI_PROC(fn_4320,NULL,1).vt != LV_NIL) {
+if (LVI_PROC(fn_4294,NULL,3).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4320,NULL,1);
+*p2 = LVI_PROC(fn_4294,NULL,3);
 }
-var_4326 = LVI_PAIR(p1, p2);
+var_4299 = LVI_PAIR(p1, p2);
 }
-lval var_4327;
-var_4327 = LVI_SYMBOL("wile-architecture-name");
-lval var_4333;
+lval var_4300;
+var_4300 = LVI_SYMBOL("vector-sort!");
+lval var_4307;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4327.vt != LV_NIL) {
+if (var_4300.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4327;
+*p1 = var_4300;
 }
-if (LVI_PROC(fn_4328,NULL,0).vt != LV_NIL) {
+if (LVI_PROC(fn_4301,NULL,2).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4328,NULL,0);
+*p2 = LVI_PROC(fn_4301,NULL,2);
 }
-var_4333 = LVI_PAIR(p1, p2);
+var_4307 = LVI_PAIR(p1, p2);
 }
-lval var_4334;
-var_4334 = LVI_SYMBOL("wile-os-name");
-lval var_4340;
+lval var_4308;
+var_4308 = LVI_SYMBOL("vector-swap!");
+lval var_4314;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4334.vt != LV_NIL) {
+if (var_4308.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4334;
+*p1 = var_4308;
 }
-if (LVI_PROC(fn_4335,NULL,0).vt != LV_NIL) {
+if (LVI_PROC(fn_4309,NULL,3).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4335,NULL,0);
+*p2 = LVI_PROC(fn_4309,NULL,3);
 }
-var_4340 = LVI_PAIR(p1, p2);
+var_4314 = LVI_PAIR(p1, p2);
 }
-lval var_4341;
-var_4341 = LVI_SYMBOL("write-bytes");
-lval var_4347;
+lval var_4315;
+var_4315 = LVI_SYMBOL("vector?");
+lval var_4321;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4341.vt != LV_NIL) {
+if (var_4315.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4341;
+*p1 = var_4315;
 }
-if (LVI_PROC(fn_4342,NULL,2).vt != LV_NIL) {
+if (LVI_PROC(fn_4316,NULL,1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4342,NULL,2);
+*p2 = LVI_PROC(fn_4316,NULL,1);
 }
-var_4347 = LVI_PAIR(p1, p2);
+var_4321 = LVI_PAIR(p1, p2);
 }
-lval var_4348;
-var_4348 = LVI_SYMBOL("write-string");
-lval var_4349;
+lval var_4322;
+var_4322 = LVI_SYMBOL("wait-process");
+MK_CLOS(var_4324,0);
+lval var_4354;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4348.vt != LV_NIL) {
+if (var_4322.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4348;
+*p1 = var_4322;
+}
+if (LVI_PROC(fn_4323,var_4324,-1).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4323,var_4324,-1);
+}
+var_4354 = LVI_PAIR(p1, p2);
+}
+lval var_4355;
+var_4355 = LVI_SYMBOL("wile-basic-build-info");
+lval var_4361;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4355.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4355;
+}
+if (LVI_PROC(fn_4356,NULL,0).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4356,NULL,0);
+}
+var_4361 = LVI_PAIR(p1, p2);
+}
+lval var_4362;
+var_4362 = LVI_SYMBOL("wile-build-info");
+lval var_4369;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4362.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4362;
+}
+if (LVI_PROC(fn_4363,NULL,1).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4363,NULL,1);
+}
+var_4369 = LVI_PAIR(p1, p2);
+}
+lval var_4370;
+var_4370 = LVI_SYMBOL("wile-architecture-name");
+lval var_4376;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4370.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4370;
+}
+if (LVI_PROC(fn_4371,NULL,0).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4371,NULL,0);
+}
+var_4376 = LVI_PAIR(p1, p2);
+}
+lval var_4377;
+var_4377 = LVI_SYMBOL("wile-os-name");
+lval var_4383;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4377.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4377;
+}
+if (LVI_PROC(fn_4378,NULL,0).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4378,NULL,0);
+}
+var_4383 = LVI_PAIR(p1, p2);
+}
+lval var_4384;
+var_4384 = LVI_SYMBOL("write-bytes");
+lval var_4390;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4384.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4384;
+}
+if (LVI_PROC(fn_4385,NULL,2).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4385,NULL,2);
+}
+var_4390 = LVI_PAIR(p1, p2);
+}
+lval var_4391;
+var_4391 = LVI_SYMBOL("write-string");
+lval var_4392;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4391.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4391;
 }
 if (LVI_PROC(fn_479,NULL,-1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
 *p2 = LVI_PROC(fn_479,NULL,-1);
 }
-var_4349 = LVI_PAIR(p1, p2);
+var_4392 = LVI_PAIR(p1, p2);
 }
-lval var_4350;
-var_4350 = LVI_SYMBOL("write-1str");
-MK_CLOS(var_4352,0);
-lval var_4375;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_4350.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_4350;
-}
-if (LVI_PROC(fn_4351,var_4352,-1).vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4351,var_4352,-1);
-}
-var_4375 = LVI_PAIR(p1, p2);
-}
-lval var_4376;
-var_4376 = LVI_SYMBOL("zero?");
-lval var_4382;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_4376.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_4376;
-}
-if (LVI_PROC(fn_4377,NULL,1).vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = LVI_PROC(fn_4377,NULL,1);
-}
-var_4382 = LVI_PAIR(p1, p2);
-}
-lval var_4383;
-{
-lval var_4384[528];
-var_4384[0] = var_67;
-var_4384[1] = var_69;
-var_4384[2] = var_71;
-var_4384[3] = var_73;
-var_4384[4] = var_75;
-var_4384[5] = var_77;
-var_4384[6] = var_79;
-var_4384[7] = var_81;
-var_4384[8] = var_83;
-var_4384[9] = var_92;
-var_4384[10] = var_100;
-var_4384[11] = var_108;
-var_4384[12] = var_115;
-var_4384[13] = var_122;
-var_4384[14] = var_129;
-var_4384[15] = var_136;
-var_4384[16] = var_138;
-var_4384[17] = var_145;
-var_4384[18] = var_152;
-var_4384[19] = var_160;
-var_4384[20] = var_168;
-var_4384[21] = var_176;
-var_4384[22] = var_184;
-var_4384[23] = var_192;
-var_4384[24] = var_199;
-var_4384[25] = var_225;
-var_4384[26] = var_234;
-var_4384[27] = var_260;
-var_4384[28] = var_286;
-var_4384[29] = var_293;
-var_4384[30] = var_300;
-var_4384[31] = var_308;
-var_4384[32] = var_315;
-var_4384[33] = var_323;
-var_4384[34] = var_330;
-var_4384[35] = var_338;
-var_4384[36] = var_345;
-var_4384[37] = var_352;
-var_4384[38] = var_360;
-var_4384[39] = var_388;
-var_4384[40] = var_396;
-var_4384[41] = var_404;
-var_4384[42] = var_437;
-var_4384[43] = var_470;
-var_4384[44] = var_477;
-var_4384[45] = var_485;
-var_4384[46] = var_493;
-var_4384[47] = var_501;
-var_4384[48] = var_509;
-var_4384[49] = var_517;
-var_4384[50] = var_524;
-var_4384[51] = var_531;
-var_4384[52] = var_538;
-var_4384[53] = var_545;
-var_4384[54] = var_552;
-var_4384[55] = var_559;
-var_4384[56] = var_566;
-var_4384[57] = var_573;
-var_4384[58] = var_580;
-var_4384[59] = var_587;
-var_4384[60] = var_594;
-var_4384[61] = var_601;
-var_4384[62] = var_608;
-var_4384[63] = var_615;
-var_4384[64] = var_622;
-var_4384[65] = var_629;
-var_4384[66] = var_656;
-var_4384[67] = var_658;
-var_4384[68] = var_666;
-var_4384[69] = var_673;
-var_4384[70] = var_680;
-var_4384[71] = var_688;
-var_4384[72] = var_690;
-var_4384[73] = var_698;
-var_4384[74] = var_706;
-var_4384[75] = var_708;
-var_4384[76] = var_715;
-var_4384[77] = var_722;
-var_4384[78] = var_730;
-var_4384[79] = var_738;
-var_4384[80] = var_766;
-var_4384[81] = var_773;
-var_4384[82] = var_781;
-var_4384[83] = var_789;
-var_4384[84] = var_796;
-var_4384[85] = var_803;
-var_4384[86] = var_810;
-var_4384[87] = var_817;
-var_4384[88] = var_824;
-var_4384[89] = var_831;
-var_4384[90] = var_838;
-var_4384[91] = var_845;
-var_4384[92] = var_852;
-var_4384[93] = var_859;
-var_4384[94] = var_866;
-var_4384[95] = var_874;
-var_4384[96] = var_881;
-var_4384[97] = var_889;
-var_4384[98] = var_915;
-var_4384[99] = var_922;
-var_4384[100] = var_929;
-var_4384[101] = var_936;
-var_4384[102] = var_943;
-var_4384[103] = var_950;
-var_4384[104] = var_958;
-var_4384[105] = var_965;
-var_4384[106] = var_972;
-var_4384[107] = var_979;
-var_4384[108] = var_986;
-var_4384[109] = var_994;
-var_4384[110] = var_1002;
-var_4384[111] = var_1010;
-var_4384[112] = var_1018;
-var_4384[113] = var_1026;
-var_4384[114] = var_1034;
-var_4384[115] = var_1042;
-var_4384[116] = var_1050;
-var_4384[117] = var_1058;
-var_4384[118] = var_1066;
-var_4384[119] = var_1074;
-var_4384[120] = var_1082;
-var_4384[121] = var_1090;
-var_4384[122] = var_1098;
-var_4384[123] = var_1106;
-var_4384[124] = var_1114;
-var_4384[125] = var_1122;
-var_4384[126] = var_1130;
-var_4384[127] = var_1132;
-var_4384[128] = var_1139;
-var_4384[129] = var_1147;
-var_4384[130] = var_1149;
-var_4384[131] = var_1157;
-var_4384[132] = var_1165;
-var_4384[133] = var_1173;
-var_4384[134] = var_1181;
-var_4384[135] = var_1189;
-var_4384[136] = var_1197;
-var_4384[137] = var_1205;
-var_4384[138] = var_1213;
-var_4384[139] = var_1221;
-var_4384[140] = var_1229;
-var_4384[141] = var_1237;
-var_4384[142] = var_1245;
-var_4384[143] = var_1253;
-var_4384[144] = var_1261;
-var_4384[145] = var_1268;
-var_4384[146] = var_1275;
-var_4384[147] = var_1282;
-var_4384[148] = var_1289;
-var_4384[149] = var_1297;
-var_4384[150] = var_1305;
-var_4384[151] = var_1312;
-var_4384[152] = var_1319;
-var_4384[153] = var_1326;
-var_4384[154] = var_1333;
-var_4384[155] = var_1335;
-var_4384[156] = var_1342;
-var_4384[157] = var_1349;
-var_4384[158] = var_1356;
-var_4384[159] = var_1363;
-var_4384[160] = var_1370;
-var_4384[161] = var_1377;
-var_4384[162] = var_1384;
-var_4384[163] = var_1391;
-var_4384[164] = var_1398;
-var_4384[165] = var_1405;
-var_4384[166] = var_1412;
-var_4384[167] = var_1414;
-var_4384[168] = var_1421;
-var_4384[169] = var_1428;
-var_4384[170] = var_1435;
-var_4384[171] = var_1442;
-var_4384[172] = var_1444;
-var_4384[173] = var_1451;
-var_4384[174] = var_1458;
-var_4384[175] = var_1465;
-var_4384[176] = var_1472;
-var_4384[177] = var_1479;
-var_4384[178] = var_1486;
-var_4384[179] = var_1493;
-var_4384[180] = var_1500;
-var_4384[181] = var_1508;
-var_4384[182] = var_1516;
-var_4384[183] = var_1523;
-var_4384[184] = var_1525;
-var_4384[185] = var_1527;
-var_4384[186] = var_1535;
-var_4384[187] = var_1537;
-var_4384[188] = var_1545;
-var_4384[189] = var_1552;
-var_4384[190] = var_1559;
-var_4384[191] = var_1566;
-var_4384[192] = var_1573;
-var_4384[193] = var_1580;
-var_4384[194] = var_1587;
-var_4384[195] = var_1613;
-var_4384[196] = var_1620;
-var_4384[197] = var_1627;
-var_4384[198] = var_1635;
-var_4384[199] = var_1642;
-var_4384[200] = var_1650;
-var_4384[201] = var_1658;
-var_4384[202] = var_1666;
-var_4384[203] = var_1673;
-var_4384[204] = var_1680;
-var_4384[205] = var_1687;
-var_4384[206] = var_1713;
-var_4384[207] = var_1720;
-var_4384[208] = var_1728;
-var_4384[209] = var_1735;
-var_4384[210] = var_1742;
-var_4384[211] = var_1749;
-var_4384[212] = var_1756;
-var_4384[213] = var_1763;
-var_4384[214] = var_1771;
-var_4384[215] = var_1778;
-var_4384[216] = var_1785;
-var_4384[217] = var_1792;
-var_4384[218] = var_1800;
-var_4384[219] = var_1807;
-var_4384[220] = var_1814;
-var_4384[221] = var_1821;
-var_4384[222] = var_1823;
-var_4384[223] = var_1830;
-var_4384[224] = var_1837;
-var_4384[225] = var_1844;
-var_4384[226] = var_1851;
-var_4384[227] = var_1858;
-var_4384[228] = var_1865;
-var_4384[229] = var_1872;
-var_4384[230] = var_1874;
-var_4384[231] = var_1882;
-var_4384[232] = var_1909;
-var_4384[233] = var_1916;
-var_4384[234] = var_1924;
-var_4384[235] = var_1932;
-var_4384[236] = var_1940;
-var_4384[237] = var_1948;
-var_4384[238] = var_1955;
-var_4384[239] = var_1963;
-var_4384[240] = var_1971;
-var_4384[241] = var_1979;
-var_4384[242] = var_1986;
-var_4384[243] = var_1993;
-var_4384[244] = var_2000;
-var_4384[245] = var_2007;
-var_4384[246] = var_2014;
-var_4384[247] = var_2021;
-var_4384[248] = var_2028;
-var_4384[249] = var_2035;
-var_4384[250] = var_2042;
-var_4384[251] = var_2049;
-var_4384[252] = var_2056;
-var_4384[253] = var_2063;
-var_4384[254] = var_2071;
-var_4384[255] = var_2078;
-var_4384[256] = var_2105;
-var_4384[257] = var_2112;
-var_4384[258] = var_2119;
-var_4384[259] = var_2126;
-var_4384[260] = var_2133;
-var_4384[261] = var_2141;
-var_4384[262] = var_2148;
-var_4384[263] = var_2175;
-var_4384[264] = var_2183;
-var_4384[265] = var_2192;
-var_4384[266] = var_2199;
-var_4384[267] = var_2206;
-var_4384[268] = var_2213;
-var_4384[269] = var_2220;
-var_4384[270] = var_2227;
-var_4384[271] = var_2234;
-var_4384[272] = var_2241;
-var_4384[273] = var_2243;
-var_4384[274] = var_2250;
-var_4384[275] = var_2257;
-var_4384[276] = var_2264;
-var_4384[277] = var_2271;
-var_4384[278] = var_2278;
-var_4384[279] = var_2285;
-var_4384[280] = var_2292;
-var_4384[281] = var_2300;
-var_4384[282] = var_2307;
-var_4384[283] = var_2315;
-var_4384[284] = var_2322;
-var_4384[285] = var_2329;
-var_4384[286] = var_2336;
-var_4384[287] = var_2344;
-var_4384[288] = var_2352;
-var_4384[289] = var_2360;
-var_4384[290] = var_2367;
-var_4384[291] = var_2374;
-var_4384[292] = var_2381;
-var_4384[293] = var_2388;
-var_4384[294] = var_2395;
-var_4384[295] = var_2403;
-var_4384[296] = var_2411;
-var_4384[297] = var_2413;
-var_4384[298] = var_2421;
-var_4384[299] = var_2423;
-var_4384[300] = var_2425;
-var_4384[301] = var_2433;
-var_4384[302] = var_2441;
-var_4384[303] = var_2443;
-var_4384[304] = var_2445;
-var_4384[305] = var_2453;
-var_4384[306] = var_2461;
-var_4384[307] = var_2469;
-var_4384[308] = var_2477;
-var_4384[309] = var_2485;
-var_4384[310] = var_2487;
-var_4384[311] = var_2495;
-var_4384[312] = var_2503;
-var_4384[313] = var_2505;
-var_4384[314] = var_2513;
-var_4384[315] = var_2521;
-var_4384[316] = var_2529;
-var_4384[317] = var_2537;
-var_4384[318] = var_2545;
-var_4384[319] = var_2552;
-var_4384[320] = var_2560;
-var_4384[321] = var_2587;
-var_4384[322] = var_2595;
-var_4384[323] = var_2602;
-var_4384[324] = var_2611;
-var_4384[325] = var_2618;
-var_4384[326] = var_2626;
-var_4384[327] = var_2628;
-var_4384[328] = var_2636;
-var_4384[329] = var_2643;
-var_4384[330] = var_2650;
-var_4384[331] = var_2657;
-var_4384[332] = var_2665;
-var_4384[333] = var_2673;
-var_4384[334] = var_2681;
-var_4384[335] = var_2688;
-var_4384[336] = var_2695;
-var_4384[337] = var_2702;
-var_4384[338] = var_2709;
-var_4384[339] = var_2716;
-var_4384[340] = var_2723;
-var_4384[341] = var_2731;
-var_4384[342] = var_2757;
-var_4384[343] = var_2764;
-var_4384[344] = var_2771;
-var_4384[345] = var_2804;
-var_4384[346] = var_2811;
-var_4384[347] = var_2818;
-var_4384[348] = var_2825;
-var_4384[349] = var_2833;
-var_4384[350] = var_2840;
-var_4384[351] = var_2848;
-var_4384[352] = var_2855;
-var_4384[353] = var_2857;
-var_4384[354] = var_2865;
-var_4384[355] = var_2872;
-var_4384[356] = var_2880;
-var_4384[357] = var_2888;
-var_4384[358] = var_2896;
-var_4384[359] = var_2904;
-var_4384[360] = var_2912;
-var_4384[361] = var_2920;
-var_4384[362] = var_2927;
-var_4384[363] = var_2934;
-var_4384[364] = var_2942;
-var_4384[365] = var_2949;
-var_4384[366] = var_2956;
-var_4384[367] = var_2963;
-var_4384[368] = var_2970;
-var_4384[369] = var_2977;
-var_4384[370] = var_2984;
-var_4384[371] = var_2991;
-var_4384[372] = var_2998;
-var_4384[373] = var_3005;
-var_4384[374] = var_3012;
-var_4384[375] = var_3019;
-var_4384[376] = var_3026;
-var_4384[377] = var_3033;
-var_4384[378] = var_3040;
-var_4384[379] = var_3047;
-var_4384[380] = var_3075;
-var_4384[381] = var_3102;
-var_4384[382] = var_3130;
-var_4384[383] = var_3138;
-var_4384[384] = var_3146;
-var_4384[385] = var_3172;
-var_4384[386] = var_3200;
-var_4384[387] = var_3207;
-var_4384[388] = var_3214;
-var_4384[389] = var_3240;
-var_4384[390] = var_3267;
-var_4384[391] = var_3275;
-var_4384[392] = var_3277;
-var_4384[393] = var_3284;
-var_4384[394] = var_3291;
-var_4384[395] = var_3299;
-var_4384[396] = var_3307;
-var_4384[397] = var_3315;
-var_4384[398] = var_3323;
-var_4384[399] = var_3330;
-var_4384[400] = var_3337;
-var_4384[401] = var_3339;
-var_4384[402] = var_3347;
-var_4384[403] = var_3354;
-var_4384[404] = var_3361;
-var_4384[405] = var_3368;
-var_4384[406] = var_3375;
-var_4384[407] = var_3382;
-var_4384[408] = var_3389;
-var_4384[409] = var_3396;
-var_4384[410] = var_3403;
-var_4384[411] = var_3410;
-var_4384[412] = var_3417;
-var_4384[413] = var_3424;
-var_4384[414] = var_3431;
-var_4384[415] = var_3438;
-var_4384[416] = var_3446;
-var_4384[417] = var_3454;
-var_4384[418] = var_3461;
-var_4384[419] = var_3468;
-var_4384[420] = var_3476;
-var_4384[421] = var_3483;
-var_4384[422] = var_3491;
-var_4384[423] = var_3499;
-var_4384[424] = var_3506;
-var_4384[425] = var_3513;
-var_4384[426] = var_3520;
-var_4384[427] = var_3527;
-var_4384[428] = var_3535;
-var_4384[429] = var_3542;
-var_4384[430] = var_3550;
-var_4384[431] = var_3558;
-var_4384[432] = var_3566;
-var_4384[433] = var_3574;
-var_4384[434] = var_3581;
-var_4384[435] = var_3588;
-var_4384[436] = var_3596;
-var_4384[437] = var_3604;
-var_4384[438] = var_3612;
-var_4384[439] = var_3620;
-var_4384[440] = var_3628;
-var_4384[441] = var_3635;
-var_4384[442] = var_3642;
-var_4384[443] = var_3650;
-var_4384[444] = var_3658;
-var_4384[445] = var_3684;
-var_4384[446] = var_3686;
-var_4384[447] = var_3693;
-var_4384[448] = var_3700;
-var_4384[449] = var_3708;
-var_4384[450] = var_3716;
-var_4384[451] = var_3724;
-var_4384[452] = var_3731;
-var_4384[453] = var_3738;
-var_4384[454] = var_3745;
-var_4384[455] = var_3752;
-var_4384[456] = var_3759;
-var_4384[457] = var_3766;
-var_4384[458] = var_3799;
-var_4384[459] = var_3825;
-var_4384[460] = var_3832;
-var_4384[461] = var_3839;
-var_4384[462] = var_3846;
-var_4384[463] = var_3854;
-var_4384[464] = var_3862;
-var_4384[465] = var_3870;
-var_4384[466] = var_3877;
-var_4384[467] = var_3885;
-var_4384[468] = var_3893;
-var_4384[469] = var_3901;
-var_4384[470] = var_3908;
-var_4384[471] = var_3915;
-var_4384[472] = var_3923;
-var_4384[473] = var_3930;
-var_4384[474] = var_3938;
-var_4384[475] = var_3946;
-var_4384[476] = var_3954;
-var_4384[477] = var_3962;
-var_4384[478] = var_3970;
-var_4384[479] = var_3977;
-var_4384[480] = var_3984;
-var_4384[481] = var_3991;
-var_4384[482] = var_3998;
-var_4384[483] = var_4005;
-var_4384[484] = var_4012;
-var_4384[485] = var_4019;
-var_4384[486] = var_4026;
-var_4384[487] = var_4033;
-var_4384[488] = var_4040;
-var_4384[489] = var_4047;
-var_4384[490] = var_4054;
-var_4384[491] = var_4061;
-var_4384[492] = var_4068;
-var_4384[493] = var_4075;
-var_4384[494] = var_4101;
-var_4384[495] = var_4103;
-var_4384[496] = var_4105;
-var_4384[497] = var_4107;
-var_4384[498] = var_4115;
-var_4384[499] = var_4122;
-var_4384[500] = var_4130;
-var_4384[501] = var_4138;
-var_4384[502] = var_4146;
-var_4384[503] = var_4154;
-var_4384[504] = var_4180;
-var_4384[505] = var_4187;
-var_4384[506] = var_4195;
-var_4384[507] = var_4197;
-var_4384[508] = var_4205;
-var_4384[509] = var_4213;
-var_4384[510] = var_4221;
-var_4384[511] = var_4228;
-var_4384[512] = var_4235;
-var_4384[513] = var_4242;
-var_4384[514] = var_4249;
-var_4384[515] = var_4256;
-var_4384[516] = var_4264;
-var_4384[517] = var_4271;
-var_4384[518] = var_4278;
-var_4384[519] = var_4311;
-var_4384[520] = var_4318;
-var_4384[521] = var_4326;
-var_4384[522] = var_4333;
-var_4384[523] = var_4340;
-var_4384[524] = var_4347;
-var_4384[525] = var_4349;
-var_4384[526] = var_4375;
-var_4384[527] = var_4382;
-var_4383 = wile_gen_list(528, var_4384, NULL);
-}
-lval var_4385;
-var_4385 = LVI_NIL();
-{
-lval var_4386[8];
-var_4386[0] = LVI_PROC(fn_57,var_58,1);
-var_4386[1] = var_4383;
-var_4386[2] = var_4385;
-// bld-rtl-dir/wile-rtl2-000083.scm:26
-var_4385 = wile_map(NULL, var_4386, "bld-rtl-dir/wile-rtl2-000083.scm:26");
-}
-return var_4385;
-}
-// end of function fn_8
-
-// @@@ lambda (as pl na) @@@ bld-rtl-dir/wile-rtl2-000083.scm:701 @@@ fn_4390 @@@
-static lval fn_4390(lptr* var_4391, lptr var_4392, const char* cloc)
-{
-lbl_4393:;
-lval var_4394;
-do {
-lval var_4395;
-var_4395 = LVI_BOOL(var_4392[0].vt == LV_NIL);
-if (!LV_IS_FALSE(var_4395)) {
-lval var_4396;
-{
-lval var_4397[8];
-var_4397[0] = var_4392[1];
-// bld-rtl-dir/wile-rtl2-000083.scm:704
-var_4396 = wile_list_reverse(NULL, var_4397, "bld-rtl-dir/wile-rtl2-000083.scm:704");
-}
-lval var_4398;
-{
-lval var_4399[2];
-var_4399[0] = var_4392[2];
-var_4399[1] = var_4396;
-var_4398 = wile_gen_list(2, var_4399, NULL);
-}
-var_4394 = var_4398;
-break;
-}
-lval var_4400;
-var_4400 = LVI_BOOL(var_4392[0].vt == LV_PAIR);
-if (!LV_IS_FALSE(var_4400)) {
-lval var_4401;
-if (var_4392[0].vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
-}
-var_4401 = (var_4392[0].v.pair.cdr ? *(var_4392[0].v.pair.cdr) : LVI_NIL());
-lval var_4402;
-if (var_4392[0].vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
-}
-var_4402 = (var_4392[0].v.pair.car ? *(var_4392[0].v.pair.car) : LVI_NIL());
-lval var_4403;
-{
-lptr p1 = NULL, p2 = NULL;
-if (var_4402.vt != LV_NIL) {
-p1 = new_lv(LV_NIL);
-*p1 = var_4402;
-}
-if (var_4392[1].vt != LV_NIL) {
-p2 = new_lv(LV_NIL);
-*p2 = var_4392[1];
-}
-var_4403 = LVI_PAIR(p1, p2);
-}
-lval var_4404;
-var_4404 = LVI_INT(1);
-lval var_4405;
-{
-lval var_4407[2];
-var_4407[0] = var_4392[2];
-var_4407[1] = var_4404;
-var_4405 = wile_gen_list(2, var_4407, NULL);
-}
-{
-lval var_4406[8];
-var_4406[0] = var_4405;
-// bld-rtl-dir/wile-rtl2-000083.scm:705
-var_4405 = wile_add(NULL, var_4406, "bld-rtl-dir/wile-rtl2-000083.scm:705");
-}
-lval var_4410[8];
-var_4410[0] = var_4401;
-var_4410[1] = var_4403;
-var_4410[2] = var_4405;
-var_4392[0] = var_4410[0];
-var_4392[1] = var_4410[1];
-var_4392[2] = var_4410[2];
-// bld-rtl-dir/wile-rtl2-000083.scm:705
-goto lbl_4393;	// selfie
-}
-lval var_4411;
-{
-lval var_4413[1];
-var_4413[0] = var_4392[2];
-var_4411 = wile_gen_list(1, var_4413, NULL);
-}
-{
-lval var_4412[8];
-var_4412[0] = var_4411;
-// bld-rtl-dir/wile-rtl2-000083.scm:706
-var_4411 = wile_subtract(NULL, var_4412, "bld-rtl-dir/wile-rtl2-000083.scm:706");
-}
-lval var_4414;
-var_4414 = LVI_INT(1);
-lval var_4415;
-{
-lval var_4417[2];
-var_4417[0] = var_4411;
-var_4417[1] = var_4414;
-var_4415 = wile_gen_list(2, var_4417, NULL);
-}
-{
-lval var_4416[8];
-var_4416[0] = var_4415;
-// bld-rtl-dir/wile-rtl2-000083.scm:706
-var_4415 = wile_subtract(NULL, var_4416, "bld-rtl-dir/wile-rtl2-000083.scm:706");
-}
+lval var_4393;
+var_4393 = LVI_SYMBOL("write-1str");
+MK_CLOS(var_4395,0);
 lval var_4418;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_4392[0].vt != LV_NIL) {
+if (var_4393.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_4392[0];
+*p1 = var_4393;
 }
-if (var_4392[1].vt != LV_NIL) {
+if (LVI_PROC(fn_4394,var_4395,-1).vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
-*p2 = var_4392[1];
+*p2 = LVI_PROC(fn_4394,var_4395,-1);
 }
 var_4418 = LVI_PAIR(p1, p2);
 }
 lval var_4419;
-{
-lval var_4420[8];
-var_4420[0] = var_4418;
-// bld-rtl-dir/wile-rtl2-000083.scm:706
-var_4419 = wile_list_reverse(NULL, var_4420, "bld-rtl-dir/wile-rtl2-000083.scm:706");
-}
-lval var_4421;
-{
-lval var_4422[2];
-var_4422[0] = var_4415;
-var_4422[1] = var_4419;
-var_4421 = wile_gen_list(2, var_4422, NULL);
-}
-var_4394 = var_4421;
-} while (0);
-return var_4394;
-}
-// end of lambda fn_4390
-
-// @@@ (args-list dotted-list) @@@ bld-rtl-dir/wile-rtl2-000083.scm:700 @@@ fn_9 @@@
-static lval fn_9(lptr* var_4387, lptr var_4388, const char* cloc)
-{
-MK_CLOS(var_4391,0);
-lval var_4423;
-var_4423 = LVI_NIL();
-lval var_4424;
-var_4424 = LVI_INT(0);
+var_4419 = LVI_SYMBOL("zero?");
 lval var_4425;
-lval var_4426[8];
-var_4426[0] = var_4388[0];
-var_4426[1] = var_4423;
-var_4426[2] = var_4424;
-// bld-rtl-dir/wile-rtl2-000083.scm:701
-var_4425 = fn_4390(var_4391, var_4426, "bld-rtl-dir/wile-rtl2-000083.scm:701");
-return var_4425;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4419.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4419;
+}
+if (LVI_PROC(fn_4420,NULL,1).vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = LVI_PROC(fn_4420,NULL,1);
+}
+var_4425 = LVI_PAIR(p1, p2);
+}
+lval var_4426;
+{
+lval var_4427[534];
+var_4427[0] = var_67;
+var_4427[1] = var_69;
+var_4427[2] = var_71;
+var_4427[3] = var_73;
+var_4427[4] = var_75;
+var_4427[5] = var_77;
+var_4427[6] = var_79;
+var_4427[7] = var_81;
+var_4427[8] = var_83;
+var_4427[9] = var_92;
+var_4427[10] = var_100;
+var_4427[11] = var_108;
+var_4427[12] = var_115;
+var_4427[13] = var_122;
+var_4427[14] = var_129;
+var_4427[15] = var_136;
+var_4427[16] = var_138;
+var_4427[17] = var_145;
+var_4427[18] = var_152;
+var_4427[19] = var_160;
+var_4427[20] = var_168;
+var_4427[21] = var_176;
+var_4427[22] = var_184;
+var_4427[23] = var_192;
+var_4427[24] = var_199;
+var_4427[25] = var_225;
+var_4427[26] = var_234;
+var_4427[27] = var_260;
+var_4427[28] = var_286;
+var_4427[29] = var_293;
+var_4427[30] = var_300;
+var_4427[31] = var_308;
+var_4427[32] = var_315;
+var_4427[33] = var_323;
+var_4427[34] = var_330;
+var_4427[35] = var_338;
+var_4427[36] = var_345;
+var_4427[37] = var_352;
+var_4427[38] = var_360;
+var_4427[39] = var_388;
+var_4427[40] = var_396;
+var_4427[41] = var_404;
+var_4427[42] = var_437;
+var_4427[43] = var_470;
+var_4427[44] = var_477;
+var_4427[45] = var_485;
+var_4427[46] = var_493;
+var_4427[47] = var_501;
+var_4427[48] = var_509;
+var_4427[49] = var_517;
+var_4427[50] = var_524;
+var_4427[51] = var_531;
+var_4427[52] = var_538;
+var_4427[53] = var_545;
+var_4427[54] = var_552;
+var_4427[55] = var_559;
+var_4427[56] = var_566;
+var_4427[57] = var_573;
+var_4427[58] = var_580;
+var_4427[59] = var_587;
+var_4427[60] = var_594;
+var_4427[61] = var_601;
+var_4427[62] = var_608;
+var_4427[63] = var_615;
+var_4427[64] = var_622;
+var_4427[65] = var_629;
+var_4427[66] = var_656;
+var_4427[67] = var_658;
+var_4427[68] = var_666;
+var_4427[69] = var_673;
+var_4427[70] = var_680;
+var_4427[71] = var_688;
+var_4427[72] = var_690;
+var_4427[73] = var_698;
+var_4427[74] = var_706;
+var_4427[75] = var_708;
+var_4427[76] = var_715;
+var_4427[77] = var_722;
+var_4427[78] = var_730;
+var_4427[79] = var_738;
+var_4427[80] = var_766;
+var_4427[81] = var_773;
+var_4427[82] = var_781;
+var_4427[83] = var_789;
+var_4427[84] = var_796;
+var_4427[85] = var_803;
+var_4427[86] = var_810;
+var_4427[87] = var_817;
+var_4427[88] = var_824;
+var_4427[89] = var_831;
+var_4427[90] = var_838;
+var_4427[91] = var_845;
+var_4427[92] = var_852;
+var_4427[93] = var_859;
+var_4427[94] = var_866;
+var_4427[95] = var_874;
+var_4427[96] = var_881;
+var_4427[97] = var_889;
+var_4427[98] = var_915;
+var_4427[99] = var_922;
+var_4427[100] = var_929;
+var_4427[101] = var_936;
+var_4427[102] = var_943;
+var_4427[103] = var_950;
+var_4427[104] = var_958;
+var_4427[105] = var_965;
+var_4427[106] = var_972;
+var_4427[107] = var_979;
+var_4427[108] = var_986;
+var_4427[109] = var_994;
+var_4427[110] = var_1002;
+var_4427[111] = var_1010;
+var_4427[112] = var_1018;
+var_4427[113] = var_1026;
+var_4427[114] = var_1034;
+var_4427[115] = var_1042;
+var_4427[116] = var_1050;
+var_4427[117] = var_1058;
+var_4427[118] = var_1066;
+var_4427[119] = var_1074;
+var_4427[120] = var_1082;
+var_4427[121] = var_1090;
+var_4427[122] = var_1098;
+var_4427[123] = var_1106;
+var_4427[124] = var_1114;
+var_4427[125] = var_1122;
+var_4427[126] = var_1130;
+var_4427[127] = var_1132;
+var_4427[128] = var_1139;
+var_4427[129] = var_1147;
+var_4427[130] = var_1149;
+var_4427[131] = var_1157;
+var_4427[132] = var_1165;
+var_4427[133] = var_1173;
+var_4427[134] = var_1181;
+var_4427[135] = var_1189;
+var_4427[136] = var_1197;
+var_4427[137] = var_1205;
+var_4427[138] = var_1213;
+var_4427[139] = var_1221;
+var_4427[140] = var_1229;
+var_4427[141] = var_1237;
+var_4427[142] = var_1245;
+var_4427[143] = var_1253;
+var_4427[144] = var_1261;
+var_4427[145] = var_1268;
+var_4427[146] = var_1275;
+var_4427[147] = var_1282;
+var_4427[148] = var_1289;
+var_4427[149] = var_1297;
+var_4427[150] = var_1305;
+var_4427[151] = var_1312;
+var_4427[152] = var_1319;
+var_4427[153] = var_1326;
+var_4427[154] = var_1333;
+var_4427[155] = var_1335;
+var_4427[156] = var_1342;
+var_4427[157] = var_1349;
+var_4427[158] = var_1356;
+var_4427[159] = var_1363;
+var_4427[160] = var_1370;
+var_4427[161] = var_1377;
+var_4427[162] = var_1384;
+var_4427[163] = var_1391;
+var_4427[164] = var_1398;
+var_4427[165] = var_1405;
+var_4427[166] = var_1412;
+var_4427[167] = var_1414;
+var_4427[168] = var_1421;
+var_4427[169] = var_1428;
+var_4427[170] = var_1435;
+var_4427[171] = var_1442;
+var_4427[172] = var_1444;
+var_4427[173] = var_1451;
+var_4427[174] = var_1458;
+var_4427[175] = var_1465;
+var_4427[176] = var_1472;
+var_4427[177] = var_1479;
+var_4427[178] = var_1486;
+var_4427[179] = var_1493;
+var_4427[180] = var_1500;
+var_4427[181] = var_1508;
+var_4427[182] = var_1516;
+var_4427[183] = var_1523;
+var_4427[184] = var_1525;
+var_4427[185] = var_1527;
+var_4427[186] = var_1535;
+var_4427[187] = var_1537;
+var_4427[188] = var_1545;
+var_4427[189] = var_1552;
+var_4427[190] = var_1559;
+var_4427[191] = var_1566;
+var_4427[192] = var_1573;
+var_4427[193] = var_1580;
+var_4427[194] = var_1587;
+var_4427[195] = var_1613;
+var_4427[196] = var_1620;
+var_4427[197] = var_1627;
+var_4427[198] = var_1635;
+var_4427[199] = var_1642;
+var_4427[200] = var_1650;
+var_4427[201] = var_1658;
+var_4427[202] = var_1666;
+var_4427[203] = var_1673;
+var_4427[204] = var_1680;
+var_4427[205] = var_1687;
+var_4427[206] = var_1713;
+var_4427[207] = var_1720;
+var_4427[208] = var_1728;
+var_4427[209] = var_1735;
+var_4427[210] = var_1742;
+var_4427[211] = var_1749;
+var_4427[212] = var_1756;
+var_4427[213] = var_1763;
+var_4427[214] = var_1771;
+var_4427[215] = var_1778;
+var_4427[216] = var_1785;
+var_4427[217] = var_1792;
+var_4427[218] = var_1800;
+var_4427[219] = var_1807;
+var_4427[220] = var_1814;
+var_4427[221] = var_1821;
+var_4427[222] = var_1823;
+var_4427[223] = var_1830;
+var_4427[224] = var_1837;
+var_4427[225] = var_1844;
+var_4427[226] = var_1851;
+var_4427[227] = var_1858;
+var_4427[228] = var_1865;
+var_4427[229] = var_1872;
+var_4427[230] = var_1874;
+var_4427[231] = var_1882;
+var_4427[232] = var_1909;
+var_4427[233] = var_1916;
+var_4427[234] = var_1924;
+var_4427[235] = var_1932;
+var_4427[236] = var_1940;
+var_4427[237] = var_1948;
+var_4427[238] = var_1955;
+var_4427[239] = var_1963;
+var_4427[240] = var_1971;
+var_4427[241] = var_1979;
+var_4427[242] = var_1986;
+var_4427[243] = var_1993;
+var_4427[244] = var_2000;
+var_4427[245] = var_2007;
+var_4427[246] = var_2014;
+var_4427[247] = var_2021;
+var_4427[248] = var_2028;
+var_4427[249] = var_2035;
+var_4427[250] = var_2042;
+var_4427[251] = var_2049;
+var_4427[252] = var_2056;
+var_4427[253] = var_2063;
+var_4427[254] = var_2071;
+var_4427[255] = var_2078;
+var_4427[256] = var_2105;
+var_4427[257] = var_2112;
+var_4427[258] = var_2119;
+var_4427[259] = var_2126;
+var_4427[260] = var_2133;
+var_4427[261] = var_2141;
+var_4427[262] = var_2148;
+var_4427[263] = var_2175;
+var_4427[264] = var_2183;
+var_4427[265] = var_2192;
+var_4427[266] = var_2199;
+var_4427[267] = var_2206;
+var_4427[268] = var_2213;
+var_4427[269] = var_2220;
+var_4427[270] = var_2227;
+var_4427[271] = var_2234;
+var_4427[272] = var_2241;
+var_4427[273] = var_2243;
+var_4427[274] = var_2250;
+var_4427[275] = var_2257;
+var_4427[276] = var_2264;
+var_4427[277] = var_2271;
+var_4427[278] = var_2278;
+var_4427[279] = var_2285;
+var_4427[280] = var_2292;
+var_4427[281] = var_2300;
+var_4427[282] = var_2307;
+var_4427[283] = var_2315;
+var_4427[284] = var_2322;
+var_4427[285] = var_2329;
+var_4427[286] = var_2336;
+var_4427[287] = var_2344;
+var_4427[288] = var_2352;
+var_4427[289] = var_2360;
+var_4427[290] = var_2367;
+var_4427[291] = var_2374;
+var_4427[292] = var_2381;
+var_4427[293] = var_2388;
+var_4427[294] = var_2395;
+var_4427[295] = var_2403;
+var_4427[296] = var_2411;
+var_4427[297] = var_2413;
+var_4427[298] = var_2421;
+var_4427[299] = var_2423;
+var_4427[300] = var_2425;
+var_4427[301] = var_2433;
+var_4427[302] = var_2441;
+var_4427[303] = var_2443;
+var_4427[304] = var_2445;
+var_4427[305] = var_2453;
+var_4427[306] = var_2461;
+var_4427[307] = var_2469;
+var_4427[308] = var_2477;
+var_4427[309] = var_2485;
+var_4427[310] = var_2487;
+var_4427[311] = var_2495;
+var_4427[312] = var_2503;
+var_4427[313] = var_2505;
+var_4427[314] = var_2513;
+var_4427[315] = var_2521;
+var_4427[316] = var_2529;
+var_4427[317] = var_2537;
+var_4427[318] = var_2545;
+var_4427[319] = var_2552;
+var_4427[320] = var_2560;
+var_4427[321] = var_2587;
+var_4427[322] = var_2595;
+var_4427[323] = var_2602;
+var_4427[324] = var_2611;
+var_4427[325] = var_2618;
+var_4427[326] = var_2626;
+var_4427[327] = var_2628;
+var_4427[328] = var_2636;
+var_4427[329] = var_2643;
+var_4427[330] = var_2650;
+var_4427[331] = var_2657;
+var_4427[332] = var_2665;
+var_4427[333] = var_2673;
+var_4427[334] = var_2681;
+var_4427[335] = var_2688;
+var_4427[336] = var_2695;
+var_4427[337] = var_2702;
+var_4427[338] = var_2709;
+var_4427[339] = var_2716;
+var_4427[340] = var_2723;
+var_4427[341] = var_2731;
+var_4427[342] = var_2757;
+var_4427[343] = var_2764;
+var_4427[344] = var_2771;
+var_4427[345] = var_2804;
+var_4427[346] = var_2811;
+var_4427[347] = var_2818;
+var_4427[348] = var_2825;
+var_4427[349] = var_2833;
+var_4427[350] = var_2840;
+var_4427[351] = var_2848;
+var_4427[352] = var_2855;
+var_4427[353] = var_2857;
+var_4427[354] = var_2865;
+var_4427[355] = var_2872;
+var_4427[356] = var_2880;
+var_4427[357] = var_2888;
+var_4427[358] = var_2896;
+var_4427[359] = var_2904;
+var_4427[360] = var_2912;
+var_4427[361] = var_2920;
+var_4427[362] = var_2927;
+var_4427[363] = var_2934;
+var_4427[364] = var_2942;
+var_4427[365] = var_2949;
+var_4427[366] = var_2956;
+var_4427[367] = var_2963;
+var_4427[368] = var_2970;
+var_4427[369] = var_2977;
+var_4427[370] = var_2984;
+var_4427[371] = var_2991;
+var_4427[372] = var_2998;
+var_4427[373] = var_3005;
+var_4427[374] = var_3012;
+var_4427[375] = var_3019;
+var_4427[376] = var_3026;
+var_4427[377] = var_3033;
+var_4427[378] = var_3040;
+var_4427[379] = var_3047;
+var_4427[380] = var_3075;
+var_4427[381] = var_3102;
+var_4427[382] = var_3130;
+var_4427[383] = var_3138;
+var_4427[384] = var_3146;
+var_4427[385] = var_3172;
+var_4427[386] = var_3200;
+var_4427[387] = var_3207;
+var_4427[388] = var_3214;
+var_4427[389] = var_3240;
+var_4427[390] = var_3267;
+var_4427[391] = var_3275;
+var_4427[392] = var_3277;
+var_4427[393] = var_3284;
+var_4427[394] = var_3291;
+var_4427[395] = var_3299;
+var_4427[396] = var_3307;
+var_4427[397] = var_3315;
+var_4427[398] = var_3323;
+var_4427[399] = var_3330;
+var_4427[400] = var_3337;
+var_4427[401] = var_3339;
+var_4427[402] = var_3347;
+var_4427[403] = var_3354;
+var_4427[404] = var_3361;
+var_4427[405] = var_3368;
+var_4427[406] = var_3375;
+var_4427[407] = var_3382;
+var_4427[408] = var_3389;
+var_4427[409] = var_3396;
+var_4427[410] = var_3403;
+var_4427[411] = var_3410;
+var_4427[412] = var_3417;
+var_4427[413] = var_3424;
+var_4427[414] = var_3431;
+var_4427[415] = var_3438;
+var_4427[416] = var_3446;
+var_4427[417] = var_3454;
+var_4427[418] = var_3461;
+var_4427[419] = var_3468;
+var_4427[420] = var_3475;
+var_4427[421] = var_3482;
+var_4427[422] = var_3489;
+var_4427[423] = var_3497;
+var_4427[424] = var_3505;
+var_4427[425] = var_3512;
+var_4427[426] = var_3519;
+var_4427[427] = var_3526;
+var_4427[428] = var_3534;
+var_4427[429] = var_3542;
+var_4427[430] = var_3549;
+var_4427[431] = var_3556;
+var_4427[432] = var_3563;
+var_4427[433] = var_3570;
+var_4427[434] = var_3578;
+var_4427[435] = var_3585;
+var_4427[436] = var_3593;
+var_4427[437] = var_3601;
+var_4427[438] = var_3609;
+var_4427[439] = var_3617;
+var_4427[440] = var_3624;
+var_4427[441] = var_3631;
+var_4427[442] = var_3639;
+var_4427[443] = var_3647;
+var_4427[444] = var_3655;
+var_4427[445] = var_3663;
+var_4427[446] = var_3671;
+var_4427[447] = var_3678;
+var_4427[448] = var_3685;
+var_4427[449] = var_3693;
+var_4427[450] = var_3701;
+var_4427[451] = var_3727;
+var_4427[452] = var_3729;
+var_4427[453] = var_3736;
+var_4427[454] = var_3743;
+var_4427[455] = var_3751;
+var_4427[456] = var_3759;
+var_4427[457] = var_3767;
+var_4427[458] = var_3774;
+var_4427[459] = var_3781;
+var_4427[460] = var_3788;
+var_4427[461] = var_3795;
+var_4427[462] = var_3802;
+var_4427[463] = var_3809;
+var_4427[464] = var_3842;
+var_4427[465] = var_3868;
+var_4427[466] = var_3875;
+var_4427[467] = var_3882;
+var_4427[468] = var_3889;
+var_4427[469] = var_3897;
+var_4427[470] = var_3905;
+var_4427[471] = var_3913;
+var_4427[472] = var_3920;
+var_4427[473] = var_3928;
+var_4427[474] = var_3936;
+var_4427[475] = var_3944;
+var_4427[476] = var_3951;
+var_4427[477] = var_3958;
+var_4427[478] = var_3966;
+var_4427[479] = var_3973;
+var_4427[480] = var_3981;
+var_4427[481] = var_3989;
+var_4427[482] = var_3997;
+var_4427[483] = var_4005;
+var_4427[484] = var_4013;
+var_4427[485] = var_4020;
+var_4427[486] = var_4027;
+var_4427[487] = var_4034;
+var_4427[488] = var_4041;
+var_4427[489] = var_4048;
+var_4427[490] = var_4055;
+var_4427[491] = var_4062;
+var_4427[492] = var_4069;
+var_4427[493] = var_4076;
+var_4427[494] = var_4083;
+var_4427[495] = var_4090;
+var_4427[496] = var_4097;
+var_4427[497] = var_4104;
+var_4427[498] = var_4111;
+var_4427[499] = var_4118;
+var_4427[500] = var_4144;
+var_4427[501] = var_4146;
+var_4427[502] = var_4148;
+var_4427[503] = var_4150;
+var_4427[504] = var_4158;
+var_4427[505] = var_4165;
+var_4427[506] = var_4173;
+var_4427[507] = var_4181;
+var_4427[508] = var_4189;
+var_4427[509] = var_4197;
+var_4427[510] = var_4223;
+var_4427[511] = var_4230;
+var_4427[512] = var_4238;
+var_4427[513] = var_4240;
+var_4427[514] = var_4248;
+var_4427[515] = var_4256;
+var_4427[516] = var_4264;
+var_4427[517] = var_4271;
+var_4427[518] = var_4278;
+var_4427[519] = var_4285;
+var_4427[520] = var_4292;
+var_4427[521] = var_4299;
+var_4427[522] = var_4307;
+var_4427[523] = var_4314;
+var_4427[524] = var_4321;
+var_4427[525] = var_4354;
+var_4427[526] = var_4361;
+var_4427[527] = var_4369;
+var_4427[528] = var_4376;
+var_4427[529] = var_4383;
+var_4427[530] = var_4390;
+var_4427[531] = var_4392;
+var_4427[532] = var_4418;
+var_4427[533] = var_4425;
+var_4426 = wile_gen_list(534, var_4427, NULL);
+}
+lval var_4428;
+var_4428 = LVI_NIL();
+{
+lval var_4429[8];
+var_4429[0] = LVI_PROC(fn_57,var_58,1);
+var_4429[1] = var_4426;
+var_4429[2] = var_4428;
+// bld-rtl-dir/wile-rtl2-000083.scm:26
+var_4428 = wile_map(NULL, var_4429, "bld-rtl-dir/wile-rtl2-000083.scm:26");
+}
+return var_4428;
+}
+// end of function fn_8
+
+// @@@ lambda (as pl na) @@@ bld-rtl-dir/wile-rtl2-000083.scm:707 @@@ fn_4433 @@@
+static lval fn_4433(lptr* var_4434, lptr var_4435, const char* cloc)
+{
+lbl_4436:;
+lval var_4437;
+do {
+lval var_4438;
+var_4438 = LVI_BOOL(var_4435[0].vt == LV_NIL);
+if (!LV_IS_FALSE(var_4438)) {
+lval var_4439;
+{
+lval var_4440[8];
+var_4440[0] = var_4435[1];
+// bld-rtl-dir/wile-rtl2-000083.scm:710
+var_4439 = wile_list_reverse(NULL, var_4440, "bld-rtl-dir/wile-rtl2-000083.scm:710");
+}
+lval var_4441;
+{
+lval var_4442[2];
+var_4442[0] = var_4435[2];
+var_4442[1] = var_4439;
+var_4441 = wile_gen_list(2, var_4442, NULL);
+}
+var_4437 = var_4441;
+break;
+}
+lval var_4443;
+var_4443 = LVI_BOOL(var_4435[0].vt == LV_PAIR);
+if (!LV_IS_FALSE(var_4443)) {
+lval var_4444;
+if (var_4435[0].vt != LV_PAIR) {
+WILE_EX("cdr", "input is not a pair!");
+}
+var_4444 = (var_4435[0].v.pair.cdr ? *(var_4435[0].v.pair.cdr) : LVI_NIL());
+lval var_4445;
+if (var_4435[0].vt != LV_PAIR) {
+WILE_EX("car", "input is not a pair!");
+}
+var_4445 = (var_4435[0].v.pair.car ? *(var_4435[0].v.pair.car) : LVI_NIL());
+lval var_4446;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4445.vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4445;
+}
+if (var_4435[1].vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_4435[1];
+}
+var_4446 = LVI_PAIR(p1, p2);
+}
+lval var_4447;
+var_4447 = LVI_INT(1);
+lval var_4448;
+{
+lval var_4450[2];
+var_4450[0] = var_4435[2];
+var_4450[1] = var_4447;
+var_4448 = wile_gen_list(2, var_4450, NULL);
+}
+{
+lval var_4449[8];
+var_4449[0] = var_4448;
+// bld-rtl-dir/wile-rtl2-000083.scm:711
+var_4448 = wile_add(NULL, var_4449, "bld-rtl-dir/wile-rtl2-000083.scm:711");
+}
+lval var_4453[8];
+var_4453[0] = var_4444;
+var_4453[1] = var_4446;
+var_4453[2] = var_4448;
+var_4435[0] = var_4453[0];
+var_4435[1] = var_4453[1];
+var_4435[2] = var_4453[2];
+// bld-rtl-dir/wile-rtl2-000083.scm:711
+goto lbl_4436;	// selfie
+}
+lval var_4454;
+{
+lval var_4456[1];
+var_4456[0] = var_4435[2];
+var_4454 = wile_gen_list(1, var_4456, NULL);
+}
+{
+lval var_4455[8];
+var_4455[0] = var_4454;
+// bld-rtl-dir/wile-rtl2-000083.scm:712
+var_4454 = wile_subtract(NULL, var_4455, "bld-rtl-dir/wile-rtl2-000083.scm:712");
+}
+lval var_4457;
+var_4457 = LVI_INT(1);
+lval var_4458;
+{
+lval var_4460[2];
+var_4460[0] = var_4454;
+var_4460[1] = var_4457;
+var_4458 = wile_gen_list(2, var_4460, NULL);
+}
+{
+lval var_4459[8];
+var_4459[0] = var_4458;
+// bld-rtl-dir/wile-rtl2-000083.scm:712
+var_4458 = wile_subtract(NULL, var_4459, "bld-rtl-dir/wile-rtl2-000083.scm:712");
+}
+lval var_4461;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_4435[0].vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_4435[0];
+}
+if (var_4435[1].vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_4435[1];
+}
+var_4461 = LVI_PAIR(p1, p2);
+}
+lval var_4462;
+{
+lval var_4463[8];
+var_4463[0] = var_4461;
+// bld-rtl-dir/wile-rtl2-000083.scm:712
+var_4462 = wile_list_reverse(NULL, var_4463, "bld-rtl-dir/wile-rtl2-000083.scm:712");
+}
+lval var_4464;
+{
+lval var_4465[2];
+var_4465[0] = var_4458;
+var_4465[1] = var_4462;
+var_4464 = wile_gen_list(2, var_4465, NULL);
+}
+var_4437 = var_4464;
+} while (0);
+return var_4437;
+}
+// end of lambda fn_4433
+
+// @@@ (args-list dotted-list) @@@ bld-rtl-dir/wile-rtl2-000083.scm:706 @@@ fn_9 @@@
+static lval fn_9(lptr* var_4430, lptr var_4431, const char* cloc)
+{
+MK_CLOS(var_4434,0);
+lval var_4466;
+var_4466 = LVI_NIL();
+lval var_4467;
+var_4467 = LVI_INT(0);
+lval var_4468;
+lval var_4469[8];
+var_4469[0] = var_4431[0];
+var_4469[1] = var_4466;
+var_4469[2] = var_4467;
+// bld-rtl-dir/wile-rtl2-000083.scm:707
+var_4468 = fn_4433(var_4434, var_4469, "bld-rtl-dir/wile-rtl2-000083.scm:707");
+return var_4468;
 }
 // end of function fn_9
 
-// @@@ (make-macro name args body env) @@@ bld-rtl-dir/wile-rtl2-000083.scm:724 @@@ fn_10 @@@
-static lval fn_10(lptr* var_4428, lptr var_4429, const char* cloc)
+// @@@ (make-macro name args body env) @@@ bld-rtl-dir/wile-rtl2-000083.scm:730 @@@ fn_10 @@@
+static lval fn_10(lptr* var_4471, lptr var_4472, const char* cloc)
 {
-lval var_4431;
-lval var_4432;
-lval var_4433[8];
-var_4433[0] = var_4429[1];
-// bld-rtl-dir/wile-rtl2-000083.scm:725
-var_4432 = fn_9(NULL, var_4433, "bld-rtl-dir/wile-rtl2-000083.scm:725");
-var_4431 = var_4432;
-lval var_4435;
-lval var_4436;
-if (var_4431.vt != LV_PAIR) {
+lval var_4474;
+lval var_4475;
+lval var_4476[8];
+var_4476[0] = var_4472[1];
+// bld-rtl-dir/wile-rtl2-000083.scm:731
+var_4475 = fn_9(NULL, var_4476, "bld-rtl-dir/wile-rtl2-000083.scm:731");
+var_4474 = var_4475;
+lval var_4478;
+lval var_4479;
+if (var_4474.vt != LV_PAIR) {
 WILE_EX("car", "input is not a pair!");
 }
-var_4436 = (var_4431.v.pair.car ? *(var_4431.v.pair.car) : LVI_NIL());
-var_4435 = var_4436;
-lval var_4437;
-lval var_4438;
-var_4438 = LVI_STRING("cadr");
-lval var_4439;
+var_4479 = (var_4474.v.pair.car ? *(var_4474.v.pair.car) : LVI_NIL());
+var_4478 = var_4479;
+lval var_4480;
+lval var_4481;
+var_4481 = LVI_STRING("cadr");
+lval var_4482;
 {
-char* cp = strchr(var_4438.v.str, 'r');
-var_4439 = var_4431;
+char* cp = strchr(var_4481.v.str, 'r');
+var_4482 = var_4474;
 while (*(--cp) != 'c') {
-if (var_4439.vt != LV_PAIR) {
+if (var_4482.vt != LV_PAIR) {
 WILE_EX("cxr", "input does not have the right structure!");
 }
 if (*cp == 'a') {
-var_4439 = (var_4439.v.pair.car ? *(var_4439.v.pair.car) : LVI_NIL());
+var_4482 = (var_4482.v.pair.car ? *(var_4482.v.pair.car) : LVI_NIL());
 } else if (*cp == 'd') {
-var_4439 = (var_4439.v.pair.cdr ? *(var_4439.v.pair.cdr) : LVI_NIL());
+var_4482 = (var_4482.v.pair.cdr ? *(var_4482.v.pair.cdr) : LVI_NIL());
 } else {
-WILE_EX("cxr", "got malformed control string '%s'", var_4438.v.str);
+WILE_EX("cxr", "got malformed control string '%s'", var_4481.v.str);
 }
 }
 }
-var_4437 = var_4439;
-lval var_4440;
-var_4440 = LVI_BOOL(true);
-lval var_4441;
-if ((var_4437.vt == LV_PAIR || var_4437.vt == LV_NIL) && var_4435.vt == LV_INT &&(var_4429[2].vt == LV_PAIR || var_4429[2].vt == LV_NIL) &&(var_4429[3].vt == LV_PAIR || var_4429[3].vt == LV_NIL) && var_4440.vt == LV_BOOL) {
-var_4441.vt = LV_ILAMBDA;
-var_4441.v.ilambda = LISP_ALLOC(lisp_ifunc_t, 1);
-var_4441.v.ilambda->args = var_4437;
-var_4441.v.ilambda->arity = var_4435.v.iv;
-var_4441.v.ilambda->body = var_4429[2];
-var_4441.v.ilambda->env = var_4429[3];
-var_4441.v.ilambda->macro = var_4440.v.bv;
+var_4480 = var_4482;
+lval var_4483;
+var_4483 = LVI_BOOL(true);
+lval var_4484;
+if ((var_4480.vt == LV_PAIR || var_4480.vt == LV_NIL) && var_4478.vt == LV_INT &&(var_4472[2].vt == LV_PAIR || var_4472[2].vt == LV_NIL) &&(var_4472[3].vt == LV_PAIR || var_4472[3].vt == LV_NIL) && var_4483.vt == LV_BOOL) {
+var_4484.vt = LV_ILAMBDA;
+var_4484.origin = var_4480.origin;
+var_4484.v.ilambda = LISP_ALLOC(lisp_ifunc_t, 1);
+var_4484.v.ilambda->args = var_4480;
+var_4484.v.ilambda->arity = var_4478.v.iv;
+var_4484.v.ilambda->body = var_4472[2];
+var_4484.v.ilambda->env = var_4472[3];
+var_4484.v.ilambda->macro = var_4483.v.bv;
 } else {
 WILE_EX("make-interpreted-procedure", "expects a list of arguments, an integer arity, a list of body expressions, an environment list, and a macro boolean");
 }
-lval var_4444[8];
-var_4444[0] = var_4429[0];
-var_4444[1] = var_4441;
-var_4429[0] = var_4444[0];
-var_4429[1] = var_4444[1];
-// bld-rtl-dir/wile-rtl2-000083.scm:730
-TAIL_CALL fn_1(NULL, var_4429, "bld-rtl-dir/wile-rtl2-000083.scm:730");
+lval var_4487[8];
+var_4487[0] = var_4472[0];
+var_4487[1] = var_4484;
+var_4472[0] = var_4487[0];
+var_4472[1] = var_4487[1];
+// bld-rtl-dir/wile-rtl2-000083.scm:736
+TAIL_CALL fn_1(NULL, var_4472, "bld-rtl-dir/wile-rtl2-000083.scm:736");
 }
 // end of function fn_10
 
-// @@@ (make-standard-env) @@@ bld-rtl-dir/wile-rtl2-000083.scm:732 @@@ fn_11 @@@
-static lval fn_11(lptr* var_4445, lptr var_4446, const char* cloc)
+// @@@ (make-standard-env) @@@ bld-rtl-dir/wile-rtl2-000083.scm:738 @@@ fn_11 @@@
+static lval fn_11(lptr* var_4488, lptr var_4489, const char* cloc)
 {
-lval var_4448;
-lval var_4449;
-lval var_4450[8];
-// bld-rtl-dir/wile-rtl2-000083.scm:733
-var_4449 = fn_8(NULL, var_4450, "bld-rtl-dir/wile-rtl2-000083.scm:733");
-var_4448 = var_4449;
-lval var_4452;
-lval var_4453;
-var_4453 = LVI_SYMBOL("begin-breakable");
-if (do_init_var_4454) {
-lval var_4455[8];
-lval var_4456;
-var_4456 = LVI_SYMBOL("tag");
-var_4455[0] = var_4456;
-lval var_4457;
-var_4457 = LVI_SYMBOL("actions");
-var_4455[1] = var_4457;
-var_4454 = wile_gen_list(1, var_4455, var_4455 + 1);
-do_init_var_4454 = false;
-}
-if (do_init_var_4458) {
-lval var_4459[8];
-if (do_init_var_4460) {
-lval var_4461[8];
-lval var_4462;
-var_4462 = LVI_SYMBOL("let");
-var_4461[0] = var_4462;
-if (do_init_var_4463) {
-lval var_4464[8];
-if (do_init_var_4465) {
-lval var_4466[8];
-lval var_4467;
-var_4467 = LVI_SYMBOL("cname");
-var_4466[0] = var_4467;
-if (do_init_var_4468) {
-lval var_4469[8];
-lval var_4470;
-var_4470 = LVI_SYMBOL("gensym");
-var_4469[0] = var_4470;
-var_4468 = wile_gen_list(1, var_4469, NULL);
-do_init_var_4468 = false;
-}
-var_4466[1] = var_4468;
-var_4465 = wile_gen_list(2, var_4466, NULL);
-do_init_var_4465 = false;
-}
-var_4464[0] = var_4465;
-var_4463 = wile_gen_list(1, var_4464, NULL);
-do_init_var_4463 = false;
-}
-var_4461[1] = var_4463;
-if (do_init_var_4471) {
-lval var_4472[8];
-lval var_4473;
-var_4473 = LVI_SYMBOL("quasiquote");
-var_4472[0] = var_4473;
-if (do_init_var_4474) {
-lval var_4475[8];
-lval var_4476;
-var_4476 = LVI_SYMBOL("guard");
-var_4475[0] = var_4476;
-if (do_init_var_4477) {
-lval var_4478[8];
-if (do_init_var_4479) {
-lval var_4480[8];
-lval var_4481;
-var_4481 = LVI_SYMBOL("unquote");
-var_4480[0] = var_4481;
-lval var_4482;
-var_4482 = LVI_SYMBOL("cname");
-var_4480[1] = var_4482;
-var_4479 = wile_gen_list(2, var_4480, NULL);
-do_init_var_4479 = false;
-}
-var_4478[0] = var_4479;
-if (do_init_var_4483) {
-lval var_4484[8];
-if (do_init_var_4485) {
-lval var_4486[8];
-lval var_4487;
-var_4487 = LVI_SYMBOL("symbol=?");
-var_4486[0] = var_4487;
-if (do_init_var_4488) {
-lval var_4489[8];
-lval var_4490;
-var_4490 = LVI_SYMBOL("unquote");
-var_4489[0] = var_4490;
 lval var_4491;
-var_4491 = LVI_SYMBOL("cname");
-var_4489[1] = var_4491;
-var_4488 = wile_gen_list(2, var_4489, NULL);
-do_init_var_4488 = false;
-}
-var_4486[1] = var_4488;
-if (do_init_var_4492) {
+lval var_4492;
 lval var_4493[8];
-lval var_4494;
-var_4494 = LVI_SYMBOL("unquote");
-var_4493[0] = var_4494;
+// bld-rtl-dir/wile-rtl2-000083.scm:739
+var_4492 = fn_8(NULL, var_4493, "bld-rtl-dir/wile-rtl2-000083.scm:739");
+var_4491 = var_4492;
 lval var_4495;
-var_4495 = LVI_SYMBOL("tag");
-var_4493[1] = var_4495;
-var_4492 = wile_gen_list(2, var_4493, NULL);
-do_init_var_4492 = false;
-}
-var_4486[2] = var_4492;
-var_4485 = wile_gen_list(3, var_4486, NULL);
-do_init_var_4485 = false;
-}
-var_4484[0] = var_4485;
-var_4483 = wile_gen_list(1, var_4484, NULL);
-do_init_var_4483 = false;
-}
-var_4478[1] = var_4483;
-var_4477 = wile_gen_list(2, var_4478, NULL);
-do_init_var_4477 = false;
-}
-var_4475[1] = var_4477;
-if (do_init_var_4496) {
-lval var_4497[8];
-lval var_4498;
-var_4498 = LVI_SYMBOL("unquote-splicing");
-var_4497[0] = var_4498;
+lval var_4496;
+var_4496 = LVI_SYMBOL("begin-breakable");
+if (do_init_var_4497) {
+lval var_4498[8];
 lval var_4499;
-var_4499 = LVI_SYMBOL("actions");
-var_4497[1] = var_4499;
-var_4496 = wile_gen_list(2, var_4497, NULL);
-do_init_var_4496 = false;
-}
-var_4475[2] = var_4496;
-var_4474 = wile_gen_list(3, var_4475, NULL);
-do_init_var_4474 = false;
-}
-var_4472[1] = var_4474;
-var_4471 = wile_gen_list(2, var_4472, NULL);
-do_init_var_4471 = false;
-}
-var_4461[2] = var_4471;
-var_4460 = wile_gen_list(3, var_4461, NULL);
-do_init_var_4460 = false;
-}
-var_4459[0] = var_4460;
-var_4458 = wile_gen_list(1, var_4459, NULL);
-do_init_var_4458 = false;
-}
+var_4499 = LVI_SYMBOL("tag");
+var_4498[0] = var_4499;
 lval var_4500;
-lval var_4501[8];
-var_4501[0] = var_4453;
-var_4501[1] = var_4454;
-var_4501[2] = var_4458;
-var_4501[3] = var_4448;
-// bld-rtl-dir/wile-rtl2-000083.scm:736
-var_4500 = fn_10(NULL, var_4501, "bld-rtl-dir/wile-rtl2-000083.scm:736");
-lval var_4503;
-var_4503 = LVI_SYMBOL("fluid-let");
-if (do_init_var_4504) {
-lval var_4505[8];
-lval var_4506;
-var_4506 = LVI_SYMBOL("vals");
-var_4505[0] = var_4506;
-lval var_4507;
-var_4507 = LVI_SYMBOL("body");
-var_4505[1] = var_4507;
-var_4504 = wile_gen_list(1, var_4505, var_4505 + 1);
-do_init_var_4504 = false;
+var_4500 = LVI_SYMBOL("actions");
+var_4498[1] = var_4500;
+var_4497 = wile_gen_list(1, var_4498, var_4498 + 1);
+do_init_var_4497 = false;
 }
+if (do_init_var_4501) {
+lval var_4502[8];
+if (do_init_var_4503) {
+lval var_4504[8];
+lval var_4505;
+var_4505 = LVI_SYMBOL("let");
+var_4504[0] = var_4505;
+if (do_init_var_4506) {
+lval var_4507[8];
 if (do_init_var_4508) {
 lval var_4509[8];
-if (do_init_var_4510) {
-lval var_4511[8];
-lval var_4512;
-var_4512 = LVI_SYMBOL("let");
-var_4511[0] = var_4512;
-if (do_init_var_4513) {
-lval var_4514[8];
-if (do_init_var_4515) {
-lval var_4516[8];
-lval var_4517;
-var_4517 = LVI_SYMBOL("svals");
-var_4516[0] = var_4517;
-if (do_init_var_4518) {
-lval var_4519[8];
-lval var_4520;
-var_4520 = LVI_SYMBOL("map");
-var_4519[0] = var_4520;
-if (do_init_var_4521) {
-lval var_4522[8];
-lval var_4523;
-var_4523 = LVI_SYMBOL("lambda");
-var_4522[0] = var_4523;
-if (do_init_var_4524) {
-lval var_4525[8];
-lval var_4526;
-var_4526 = LVI_SYMBOL("ig");
-var_4525[0] = var_4526;
-var_4524 = wile_gen_list(1, var_4525, NULL);
-do_init_var_4524 = false;
+lval var_4510;
+var_4510 = LVI_SYMBOL("cname");
+var_4509[0] = var_4510;
+if (do_init_var_4511) {
+lval var_4512[8];
+lval var_4513;
+var_4513 = LVI_SYMBOL("gensym");
+var_4512[0] = var_4513;
+var_4511 = wile_gen_list(1, var_4512, NULL);
+do_init_var_4511 = false;
 }
-var_4522[1] = var_4524;
-if (do_init_var_4527) {
-lval var_4528[8];
-lval var_4529;
-var_4529 = LVI_SYMBOL("gensym");
-var_4528[0] = var_4529;
-var_4527 = wile_gen_list(1, var_4528, NULL);
-do_init_var_4527 = false;
+var_4509[1] = var_4511;
+var_4508 = wile_gen_list(2, var_4509, NULL);
+do_init_var_4508 = false;
 }
-var_4522[2] = var_4527;
-var_4521 = wile_gen_list(3, var_4522, NULL);
-do_init_var_4521 = false;
+var_4507[0] = var_4508;
+var_4506 = wile_gen_list(1, var_4507, NULL);
+do_init_var_4506 = false;
 }
-var_4519[1] = var_4521;
+var_4504[1] = var_4506;
+if (do_init_var_4514) {
+lval var_4515[8];
+lval var_4516;
+var_4516 = LVI_SYMBOL("quasiquote");
+var_4515[0] = var_4516;
+if (do_init_var_4517) {
+lval var_4518[8];
+lval var_4519;
+var_4519 = LVI_SYMBOL("guard");
+var_4518[0] = var_4519;
+if (do_init_var_4520) {
+lval var_4521[8];
+if (do_init_var_4522) {
+lval var_4523[8];
+lval var_4524;
+var_4524 = LVI_SYMBOL("unquote");
+var_4523[0] = var_4524;
+lval var_4525;
+var_4525 = LVI_SYMBOL("cname");
+var_4523[1] = var_4525;
+var_4522 = wile_gen_list(2, var_4523, NULL);
+do_init_var_4522 = false;
+}
+var_4521[0] = var_4522;
+if (do_init_var_4526) {
+lval var_4527[8];
+if (do_init_var_4528) {
+lval var_4529[8];
 lval var_4530;
-var_4530 = LVI_SYMBOL("vals");
-var_4519[2] = var_4530;
-var_4518 = wile_gen_list(3, var_4519, NULL);
-do_init_var_4518 = false;
-}
-var_4516[1] = var_4518;
-var_4515 = wile_gen_list(2, var_4516, NULL);
-do_init_var_4515 = false;
-}
-var_4514[0] = var_4515;
+var_4530 = LVI_SYMBOL("symbol=?");
+var_4529[0] = var_4530;
 if (do_init_var_4531) {
 lval var_4532[8];
 lval var_4533;
-var_4533 = LVI_SYMBOL("result");
+var_4533 = LVI_SYMBOL("unquote");
 var_4532[0] = var_4533;
-if (do_init_var_4534) {
-lval var_4535[8];
-lval var_4536;
-var_4536 = LVI_SYMBOL("gensym");
-var_4535[0] = var_4536;
-var_4534 = wile_gen_list(1, var_4535, NULL);
-do_init_var_4534 = false;
-}
+lval var_4534;
+var_4534 = LVI_SYMBOL("cname");
 var_4532[1] = var_4534;
 var_4531 = wile_gen_list(2, var_4532, NULL);
 do_init_var_4531 = false;
 }
-var_4514[1] = var_4531;
-if (do_init_var_4537) {
-lval var_4538[8];
-lval var_4539;
-var_4539 = LVI_SYMBOL("vars");
-var_4538[0] = var_4539;
-if (do_init_var_4540) {
-lval var_4541[8];
+var_4529[1] = var_4531;
+if (do_init_var_4535) {
+lval var_4536[8];
+lval var_4537;
+var_4537 = LVI_SYMBOL("unquote");
+var_4536[0] = var_4537;
+lval var_4538;
+var_4538 = LVI_SYMBOL("tag");
+var_4536[1] = var_4538;
+var_4535 = wile_gen_list(2, var_4536, NULL);
+do_init_var_4535 = false;
+}
+var_4529[2] = var_4535;
+var_4528 = wile_gen_list(3, var_4529, NULL);
+do_init_var_4528 = false;
+}
+var_4527[0] = var_4528;
+var_4526 = wile_gen_list(1, var_4527, NULL);
+do_init_var_4526 = false;
+}
+var_4521[1] = var_4526;
+var_4520 = wile_gen_list(2, var_4521, NULL);
+do_init_var_4520 = false;
+}
+var_4518[1] = var_4520;
+if (do_init_var_4539) {
+lval var_4540[8];
+lval var_4541;
+var_4541 = LVI_SYMBOL("unquote-splicing");
+var_4540[0] = var_4541;
 lval var_4542;
-var_4542 = LVI_SYMBOL("map");
-var_4541[0] = var_4542;
+var_4542 = LVI_SYMBOL("actions");
+var_4540[1] = var_4542;
+var_4539 = wile_gen_list(2, var_4540, NULL);
+do_init_var_4539 = false;
+}
+var_4518[2] = var_4539;
+var_4517 = wile_gen_list(3, var_4518, NULL);
+do_init_var_4517 = false;
+}
+var_4515[1] = var_4517;
+var_4514 = wile_gen_list(2, var_4515, NULL);
+do_init_var_4514 = false;
+}
+var_4504[2] = var_4514;
+var_4503 = wile_gen_list(3, var_4504, NULL);
+do_init_var_4503 = false;
+}
+var_4502[0] = var_4503;
+var_4501 = wile_gen_list(1, var_4502, NULL);
+do_init_var_4501 = false;
+}
 lval var_4543;
-var_4543 = LVI_SYMBOL("car");
-var_4541[1] = var_4543;
-lval var_4544;
-var_4544 = LVI_SYMBOL("vals");
-var_4541[2] = var_4544;
-var_4540 = wile_gen_list(3, var_4541, NULL);
-do_init_var_4540 = false;
-}
-var_4538[1] = var_4540;
-var_4537 = wile_gen_list(2, var_4538, NULL);
-do_init_var_4537 = false;
-}
-var_4514[2] = var_4537;
-if (do_init_var_4545) {
-lval var_4546[8];
-lval var_4547;
-var_4547 = LVI_SYMBOL("tvals");
-var_4546[0] = var_4547;
-if (do_init_var_4548) {
-lval var_4549[8];
+lval var_4544[8];
+var_4544[0] = var_4496;
+var_4544[1] = var_4497;
+var_4544[2] = var_4501;
+var_4544[3] = var_4491;
+// bld-rtl-dir/wile-rtl2-000083.scm:742
+var_4543 = fn_10(NULL, var_4544, "bld-rtl-dir/wile-rtl2-000083.scm:742");
+lval var_4546;
+var_4546 = LVI_SYMBOL("fluid-let");
+if (do_init_var_4547) {
+lval var_4548[8];
+lval var_4549;
+var_4549 = LVI_SYMBOL("vals");
+var_4548[0] = var_4549;
 lval var_4550;
-var_4550 = LVI_SYMBOL("map");
-var_4549[0] = var_4550;
-lval var_4551;
-var_4551 = LVI_SYMBOL("cadr");
-var_4549[1] = var_4551;
-lval var_4552;
-var_4552 = LVI_SYMBOL("vals");
-var_4549[2] = var_4552;
-var_4548 = wile_gen_list(3, var_4549, NULL);
-do_init_var_4548 = false;
+var_4550 = LVI_SYMBOL("body");
+var_4548[1] = var_4550;
+var_4547 = wile_gen_list(1, var_4548, var_4548 + 1);
+do_init_var_4547 = false;
 }
-var_4546[1] = var_4548;
-var_4545 = wile_gen_list(2, var_4546, NULL);
-do_init_var_4545 = false;
-}
-var_4514[3] = var_4545;
-var_4513 = wile_gen_list(4, var_4514, NULL);
-do_init_var_4513 = false;
-}
-var_4511[1] = var_4513;
+if (do_init_var_4551) {
+lval var_4552[8];
 if (do_init_var_4553) {
 lval var_4554[8];
 lval var_4555;
-var_4555 = LVI_SYMBOL("quasiquote");
+var_4555 = LVI_SYMBOL("let");
 var_4554[0] = var_4555;
 if (do_init_var_4556) {
 lval var_4557[8];
-lval var_4558;
-var_4558 = LVI_SYMBOL("let");
-var_4557[0] = var_4558;
-if (do_init_var_4559) {
-lval var_4560[8];
-lval var_4561;
-var_4561 = LVI_SYMBOL("unquote");
-var_4560[0] = var_4561;
-if (do_init_var_4562) {
-lval var_4563[8];
-lval var_4564;
-var_4564 = LVI_SYMBOL("map");
-var_4563[0] = var_4564;
-if (do_init_var_4565) {
-lval var_4566[8];
-lval var_4567;
-var_4567 = LVI_SYMBOL("lambda");
-var_4566[0] = var_4567;
-if (do_init_var_4568) {
-lval var_4569[8];
-lval var_4570;
-var_4570 = LVI_SYMBOL("s");
-var_4569[0] = var_4570;
-lval var_4571;
-var_4571 = LVI_SYMBOL("v");
-var_4569[1] = var_4571;
-var_4568 = wile_gen_list(2, var_4569, NULL);
-do_init_var_4568 = false;
+if (do_init_var_4558) {
+lval var_4559[8];
+lval var_4560;
+var_4560 = LVI_SYMBOL("svals");
+var_4559[0] = var_4560;
+if (do_init_var_4561) {
+lval var_4562[8];
+lval var_4563;
+var_4563 = LVI_SYMBOL("map");
+var_4562[0] = var_4563;
+if (do_init_var_4564) {
+lval var_4565[8];
+lval var_4566;
+var_4566 = LVI_SYMBOL("lambda");
+var_4565[0] = var_4566;
+if (do_init_var_4567) {
+lval var_4568[8];
+lval var_4569;
+var_4569 = LVI_SYMBOL("ig");
+var_4568[0] = var_4569;
+var_4567 = wile_gen_list(1, var_4568, NULL);
+do_init_var_4567 = false;
 }
-var_4566[1] = var_4568;
-if (do_init_var_4572) {
-lval var_4573[8];
-lval var_4574;
-var_4574 = LVI_SYMBOL("quasiquote");
-var_4573[0] = var_4574;
-if (do_init_var_4575) {
-lval var_4576[8];
+var_4565[1] = var_4567;
+if (do_init_var_4570) {
+lval var_4571[8];
+lval var_4572;
+var_4572 = LVI_SYMBOL("gensym");
+var_4571[0] = var_4572;
+var_4570 = wile_gen_list(1, var_4571, NULL);
+do_init_var_4570 = false;
+}
+var_4565[2] = var_4570;
+var_4564 = wile_gen_list(3, var_4565, NULL);
+do_init_var_4564 = false;
+}
+var_4562[1] = var_4564;
+lval var_4573;
+var_4573 = LVI_SYMBOL("vals");
+var_4562[2] = var_4573;
+var_4561 = wile_gen_list(3, var_4562, NULL);
+do_init_var_4561 = false;
+}
+var_4559[1] = var_4561;
+var_4558 = wile_gen_list(2, var_4559, NULL);
+do_init_var_4558 = false;
+}
+var_4557[0] = var_4558;
+if (do_init_var_4574) {
+lval var_4575[8];
+lval var_4576;
+var_4576 = LVI_SYMBOL("result");
+var_4575[0] = var_4576;
 if (do_init_var_4577) {
 lval var_4578[8];
 lval var_4579;
-var_4579 = LVI_SYMBOL("unquote");
+var_4579 = LVI_SYMBOL("gensym");
 var_4578[0] = var_4579;
-lval var_4580;
-var_4580 = LVI_SYMBOL("s");
-var_4578[1] = var_4580;
-var_4577 = wile_gen_list(2, var_4578, NULL);
+var_4577 = wile_gen_list(1, var_4578, NULL);
 do_init_var_4577 = false;
 }
-var_4576[0] = var_4577;
-if (do_init_var_4581) {
-lval var_4582[8];
-lval var_4583;
-var_4583 = LVI_SYMBOL("unquote");
-var_4582[0] = var_4583;
-lval var_4584;
-var_4584 = LVI_SYMBOL("v");
-var_4582[1] = var_4584;
-var_4581 = wile_gen_list(2, var_4582, NULL);
-do_init_var_4581 = false;
+var_4575[1] = var_4577;
+var_4574 = wile_gen_list(2, var_4575, NULL);
+do_init_var_4574 = false;
 }
-var_4576[1] = var_4581;
-var_4575 = wile_gen_list(2, var_4576, NULL);
-do_init_var_4575 = false;
-}
-var_4573[1] = var_4575;
-var_4572 = wile_gen_list(2, var_4573, NULL);
-do_init_var_4572 = false;
-}
-var_4566[2] = var_4572;
-var_4565 = wile_gen_list(3, var_4566, NULL);
-do_init_var_4565 = false;
-}
-var_4563[1] = var_4565;
+var_4557[1] = var_4574;
+if (do_init_var_4580) {
+lval var_4581[8];
+lval var_4582;
+var_4582 = LVI_SYMBOL("vars");
+var_4581[0] = var_4582;
+if (do_init_var_4583) {
+lval var_4584[8];
 lval var_4585;
-var_4585 = LVI_SYMBOL("svals");
-var_4563[2] = var_4585;
+var_4585 = LVI_SYMBOL("map");
+var_4584[0] = var_4585;
 lval var_4586;
-var_4586 = LVI_SYMBOL("vars");
-var_4563[3] = var_4586;
-var_4562 = wile_gen_list(4, var_4563, NULL);
-do_init_var_4562 = false;
+var_4586 = LVI_SYMBOL("car");
+var_4584[1] = var_4586;
+lval var_4587;
+var_4587 = LVI_SYMBOL("vals");
+var_4584[2] = var_4587;
+var_4583 = wile_gen_list(3, var_4584, NULL);
+do_init_var_4583 = false;
 }
-var_4560[1] = var_4562;
-var_4559 = wile_gen_list(2, var_4560, NULL);
-do_init_var_4559 = false;
+var_4581[1] = var_4583;
+var_4580 = wile_gen_list(2, var_4581, NULL);
+do_init_var_4580 = false;
 }
-var_4557[1] = var_4559;
-if (do_init_var_4587) {
-lval var_4588[8];
-lval var_4589;
-var_4589 = LVI_SYMBOL("unquote-splicing");
-var_4588[0] = var_4589;
-if (do_init_var_4590) {
-lval var_4591[8];
-lval var_4592;
-var_4592 = LVI_SYMBOL("map");
-var_4591[0] = var_4592;
-if (do_init_var_4593) {
-lval var_4594[8];
+var_4557[2] = var_4580;
+if (do_init_var_4588) {
+lval var_4589[8];
+lval var_4590;
+var_4590 = LVI_SYMBOL("tvals");
+var_4589[0] = var_4590;
+if (do_init_var_4591) {
+lval var_4592[8];
+lval var_4593;
+var_4593 = LVI_SYMBOL("map");
+var_4592[0] = var_4593;
+lval var_4594;
+var_4594 = LVI_SYMBOL("cadr");
+var_4592[1] = var_4594;
 lval var_4595;
-var_4595 = LVI_SYMBOL("lambda");
-var_4594[0] = var_4595;
+var_4595 = LVI_SYMBOL("vals");
+var_4592[2] = var_4595;
+var_4591 = wile_gen_list(3, var_4592, NULL);
+do_init_var_4591 = false;
+}
+var_4589[1] = var_4591;
+var_4588 = wile_gen_list(2, var_4589, NULL);
+do_init_var_4588 = false;
+}
+var_4557[3] = var_4588;
+var_4556 = wile_gen_list(4, var_4557, NULL);
+do_init_var_4556 = false;
+}
+var_4554[1] = var_4556;
 if (do_init_var_4596) {
 lval var_4597[8];
 lval var_4598;
-var_4598 = LVI_SYMBOL("v");
+var_4598 = LVI_SYMBOL("quasiquote");
 var_4597[0] = var_4598;
-lval var_4599;
-var_4599 = LVI_SYMBOL("t");
-var_4597[1] = var_4599;
-var_4596 = wile_gen_list(2, var_4597, NULL);
-do_init_var_4596 = false;
-}
-var_4594[1] = var_4596;
-if (do_init_var_4600) {
-lval var_4601[8];
-lval var_4602;
-var_4602 = LVI_SYMBOL("quasiquote");
-var_4601[0] = var_4602;
-if (do_init_var_4603) {
-lval var_4604[8];
-lval var_4605;
-var_4605 = LVI_SYMBOL("set!");
-var_4604[0] = var_4605;
-if (do_init_var_4606) {
-lval var_4607[8];
-lval var_4608;
-var_4608 = LVI_SYMBOL("unquote");
-var_4607[0] = var_4608;
-lval var_4609;
-var_4609 = LVI_SYMBOL("v");
-var_4607[1] = var_4609;
-var_4606 = wile_gen_list(2, var_4607, NULL);
-do_init_var_4606 = false;
-}
-var_4604[1] = var_4606;
-if (do_init_var_4610) {
-lval var_4611[8];
-lval var_4612;
-var_4612 = LVI_SYMBOL("unquote");
-var_4611[0] = var_4612;
+if (do_init_var_4599) {
+lval var_4600[8];
+lval var_4601;
+var_4601 = LVI_SYMBOL("let");
+var_4600[0] = var_4601;
+if (do_init_var_4602) {
+lval var_4603[8];
+lval var_4604;
+var_4604 = LVI_SYMBOL("unquote");
+var_4603[0] = var_4604;
+if (do_init_var_4605) {
+lval var_4606[8];
+lval var_4607;
+var_4607 = LVI_SYMBOL("map");
+var_4606[0] = var_4607;
+if (do_init_var_4608) {
+lval var_4609[8];
+lval var_4610;
+var_4610 = LVI_SYMBOL("lambda");
+var_4609[0] = var_4610;
+if (do_init_var_4611) {
+lval var_4612[8];
 lval var_4613;
-var_4613 = LVI_SYMBOL("t");
-var_4611[1] = var_4613;
-var_4610 = wile_gen_list(2, var_4611, NULL);
-do_init_var_4610 = false;
-}
-var_4604[2] = var_4610;
-var_4603 = wile_gen_list(3, var_4604, NULL);
-do_init_var_4603 = false;
-}
-var_4601[1] = var_4603;
-var_4600 = wile_gen_list(2, var_4601, NULL);
-do_init_var_4600 = false;
-}
-var_4594[2] = var_4600;
-var_4593 = wile_gen_list(3, var_4594, NULL);
-do_init_var_4593 = false;
-}
-var_4591[1] = var_4593;
+var_4613 = LVI_SYMBOL("s");
+var_4612[0] = var_4613;
 lval var_4614;
-var_4614 = LVI_SYMBOL("vars");
-var_4591[2] = var_4614;
-lval var_4615;
-var_4615 = LVI_SYMBOL("tvals");
-var_4591[3] = var_4615;
-var_4590 = wile_gen_list(4, var_4591, NULL);
-do_init_var_4590 = false;
+var_4614 = LVI_SYMBOL("v");
+var_4612[1] = var_4614;
+var_4611 = wile_gen_list(2, var_4612, NULL);
+do_init_var_4611 = false;
 }
-var_4588[1] = var_4590;
-var_4587 = wile_gen_list(2, var_4588, NULL);
-do_init_var_4587 = false;
+var_4609[1] = var_4611;
+if (do_init_var_4615) {
+lval var_4616[8];
+lval var_4617;
+var_4617 = LVI_SYMBOL("quasiquote");
+var_4616[0] = var_4617;
+if (do_init_var_4618) {
+lval var_4619[8];
+if (do_init_var_4620) {
+lval var_4621[8];
+lval var_4622;
+var_4622 = LVI_SYMBOL("unquote");
+var_4621[0] = var_4622;
+lval var_4623;
+var_4623 = LVI_SYMBOL("s");
+var_4621[1] = var_4623;
+var_4620 = wile_gen_list(2, var_4621, NULL);
+do_init_var_4620 = false;
 }
-var_4557[2] = var_4587;
-if (do_init_var_4616) {
-lval var_4617[8];
-lval var_4618;
-var_4618 = LVI_SYMBOL("let");
-var_4617[0] = var_4618;
-if (do_init_var_4619) {
-lval var_4620[8];
-if (do_init_var_4621) {
-lval var_4622[8];
-if (do_init_var_4623) {
-lval var_4624[8];
-lval var_4625;
-var_4625 = LVI_SYMBOL("unquote");
-var_4624[0] = var_4625;
+var_4619[0] = var_4620;
+if (do_init_var_4624) {
+lval var_4625[8];
 lval var_4626;
-var_4626 = LVI_SYMBOL("result");
-var_4624[1] = var_4626;
-var_4623 = wile_gen_list(2, var_4624, NULL);
-do_init_var_4623 = false;
+var_4626 = LVI_SYMBOL("unquote");
+var_4625[0] = var_4626;
+lval var_4627;
+var_4627 = LVI_SYMBOL("v");
+var_4625[1] = var_4627;
+var_4624 = wile_gen_list(2, var_4625, NULL);
+do_init_var_4624 = false;
 }
-var_4622[0] = var_4623;
-if (do_init_var_4627) {
-lval var_4628[8];
+var_4619[1] = var_4624;
+var_4618 = wile_gen_list(2, var_4619, NULL);
+do_init_var_4618 = false;
+}
+var_4616[1] = var_4618;
+var_4615 = wile_gen_list(2, var_4616, NULL);
+do_init_var_4615 = false;
+}
+var_4609[2] = var_4615;
+var_4608 = wile_gen_list(3, var_4609, NULL);
+do_init_var_4608 = false;
+}
+var_4606[1] = var_4608;
+lval var_4628;
+var_4628 = LVI_SYMBOL("svals");
+var_4606[2] = var_4628;
 lval var_4629;
-var_4629 = LVI_SYMBOL("begin");
-var_4628[0] = var_4629;
+var_4629 = LVI_SYMBOL("vars");
+var_4606[3] = var_4629;
+var_4605 = wile_gen_list(4, var_4606, NULL);
+do_init_var_4605 = false;
+}
+var_4603[1] = var_4605;
+var_4602 = wile_gen_list(2, var_4603, NULL);
+do_init_var_4602 = false;
+}
+var_4600[1] = var_4602;
 if (do_init_var_4630) {
 lval var_4631[8];
 lval var_4632;
 var_4632 = LVI_SYMBOL("unquote-splicing");
 var_4631[0] = var_4632;
-lval var_4633;
-var_4633 = LVI_SYMBOL("body");
-var_4631[1] = var_4633;
-var_4630 = wile_gen_list(2, var_4631, NULL);
-do_init_var_4630 = false;
-}
-var_4628[1] = var_4630;
-var_4627 = wile_gen_list(2, var_4628, NULL);
-do_init_var_4627 = false;
-}
-var_4622[1] = var_4627;
-var_4621 = wile_gen_list(2, var_4622, NULL);
-do_init_var_4621 = false;
-}
-var_4620[0] = var_4621;
-var_4619 = wile_gen_list(1, var_4620, NULL);
-do_init_var_4619 = false;
-}
-var_4617[1] = var_4619;
-if (do_init_var_4634) {
-lval var_4635[8];
-lval var_4636;
-var_4636 = LVI_SYMBOL("unquote-splicing");
-var_4635[0] = var_4636;
-if (do_init_var_4637) {
-lval var_4638[8];
-lval var_4639;
-var_4639 = LVI_SYMBOL("map");
-var_4638[0] = var_4639;
-if (do_init_var_4640) {
-lval var_4641[8];
+if (do_init_var_4633) {
+lval var_4634[8];
+lval var_4635;
+var_4635 = LVI_SYMBOL("map");
+var_4634[0] = var_4635;
+if (do_init_var_4636) {
+lval var_4637[8];
+lval var_4638;
+var_4638 = LVI_SYMBOL("lambda");
+var_4637[0] = var_4638;
+if (do_init_var_4639) {
+lval var_4640[8];
+lval var_4641;
+var_4641 = LVI_SYMBOL("v");
+var_4640[0] = var_4641;
 lval var_4642;
-var_4642 = LVI_SYMBOL("lambda");
-var_4641[0] = var_4642;
+var_4642 = LVI_SYMBOL("t");
+var_4640[1] = var_4642;
+var_4639 = wile_gen_list(2, var_4640, NULL);
+do_init_var_4639 = false;
+}
+var_4637[1] = var_4639;
 if (do_init_var_4643) {
 lval var_4644[8];
 lval var_4645;
-var_4645 = LVI_SYMBOL("v");
+var_4645 = LVI_SYMBOL("quasiquote");
 var_4644[0] = var_4645;
-lval var_4646;
-var_4646 = LVI_SYMBOL("s");
-var_4644[1] = var_4646;
-var_4643 = wile_gen_list(2, var_4644, NULL);
-do_init_var_4643 = false;
-}
-var_4641[1] = var_4643;
-if (do_init_var_4647) {
-lval var_4648[8];
-lval var_4649;
-var_4649 = LVI_SYMBOL("quasiquote");
-var_4648[0] = var_4649;
-if (do_init_var_4650) {
-lval var_4651[8];
+if (do_init_var_4646) {
+lval var_4647[8];
+lval var_4648;
+var_4648 = LVI_SYMBOL("set!");
+var_4647[0] = var_4648;
+if (do_init_var_4649) {
+lval var_4650[8];
+lval var_4651;
+var_4651 = LVI_SYMBOL("unquote");
+var_4650[0] = var_4651;
 lval var_4652;
-var_4652 = LVI_SYMBOL("set!");
-var_4651[0] = var_4652;
+var_4652 = LVI_SYMBOL("v");
+var_4650[1] = var_4652;
+var_4649 = wile_gen_list(2, var_4650, NULL);
+do_init_var_4649 = false;
+}
+var_4647[1] = var_4649;
 if (do_init_var_4653) {
 lval var_4654[8];
 lval var_4655;
 var_4655 = LVI_SYMBOL("unquote");
 var_4654[0] = var_4655;
 lval var_4656;
-var_4656 = LVI_SYMBOL("v");
+var_4656 = LVI_SYMBOL("t");
 var_4654[1] = var_4656;
 var_4653 = wile_gen_list(2, var_4654, NULL);
 do_init_var_4653 = false;
 }
-var_4651[1] = var_4653;
-if (do_init_var_4657) {
-lval var_4658[8];
-lval var_4659;
-var_4659 = LVI_SYMBOL("unquote");
-var_4658[0] = var_4659;
-lval var_4660;
-var_4660 = LVI_SYMBOL("s");
-var_4658[1] = var_4660;
-var_4657 = wile_gen_list(2, var_4658, NULL);
-do_init_var_4657 = false;
+var_4647[2] = var_4653;
+var_4646 = wile_gen_list(3, var_4647, NULL);
+do_init_var_4646 = false;
 }
-var_4651[2] = var_4657;
-var_4650 = wile_gen_list(3, var_4651, NULL);
-do_init_var_4650 = false;
+var_4644[1] = var_4646;
+var_4643 = wile_gen_list(2, var_4644, NULL);
+do_init_var_4643 = false;
 }
-var_4648[1] = var_4650;
-var_4647 = wile_gen_list(2, var_4648, NULL);
-do_init_var_4647 = false;
+var_4637[2] = var_4643;
+var_4636 = wile_gen_list(3, var_4637, NULL);
+do_init_var_4636 = false;
 }
-var_4641[2] = var_4647;
-var_4640 = wile_gen_list(3, var_4641, NULL);
-do_init_var_4640 = false;
+var_4634[1] = var_4636;
+lval var_4657;
+var_4657 = LVI_SYMBOL("vars");
+var_4634[2] = var_4657;
+lval var_4658;
+var_4658 = LVI_SYMBOL("tvals");
+var_4634[3] = var_4658;
+var_4633 = wile_gen_list(4, var_4634, NULL);
+do_init_var_4633 = false;
 }
-var_4638[1] = var_4640;
+var_4631[1] = var_4633;
+var_4630 = wile_gen_list(2, var_4631, NULL);
+do_init_var_4630 = false;
+}
+var_4600[2] = var_4630;
+if (do_init_var_4659) {
+lval var_4660[8];
 lval var_4661;
-var_4661 = LVI_SYMBOL("vars");
-var_4638[2] = var_4661;
-lval var_4662;
-var_4662 = LVI_SYMBOL("svals");
-var_4638[3] = var_4662;
-var_4637 = wile_gen_list(4, var_4638, NULL);
-do_init_var_4637 = false;
+var_4661 = LVI_SYMBOL("let");
+var_4660[0] = var_4661;
+if (do_init_var_4662) {
+lval var_4663[8];
+if (do_init_var_4664) {
+lval var_4665[8];
+if (do_init_var_4666) {
+lval var_4667[8];
+lval var_4668;
+var_4668 = LVI_SYMBOL("unquote");
+var_4667[0] = var_4668;
+lval var_4669;
+var_4669 = LVI_SYMBOL("result");
+var_4667[1] = var_4669;
+var_4666 = wile_gen_list(2, var_4667, NULL);
+do_init_var_4666 = false;
 }
-var_4635[1] = var_4637;
-var_4634 = wile_gen_list(2, var_4635, NULL);
-do_init_var_4634 = false;
+var_4665[0] = var_4666;
+if (do_init_var_4670) {
+lval var_4671[8];
+lval var_4672;
+var_4672 = LVI_SYMBOL("begin");
+var_4671[0] = var_4672;
+if (do_init_var_4673) {
+lval var_4674[8];
+lval var_4675;
+var_4675 = LVI_SYMBOL("unquote-splicing");
+var_4674[0] = var_4675;
+lval var_4676;
+var_4676 = LVI_SYMBOL("body");
+var_4674[1] = var_4676;
+var_4673 = wile_gen_list(2, var_4674, NULL);
+do_init_var_4673 = false;
 }
-var_4617[2] = var_4634;
-if (do_init_var_4663) {
-lval var_4664[8];
-lval var_4665;
-var_4665 = LVI_SYMBOL("unquote");
-var_4664[0] = var_4665;
-lval var_4666;
-var_4666 = LVI_SYMBOL("result");
-var_4664[1] = var_4666;
-var_4663 = wile_gen_list(2, var_4664, NULL);
-do_init_var_4663 = false;
+var_4671[1] = var_4673;
+var_4670 = wile_gen_list(2, var_4671, NULL);
+do_init_var_4670 = false;
 }
-var_4617[3] = var_4663;
-var_4616 = wile_gen_list(4, var_4617, NULL);
-do_init_var_4616 = false;
+var_4665[1] = var_4670;
+var_4664 = wile_gen_list(2, var_4665, NULL);
+do_init_var_4664 = false;
 }
-var_4557[3] = var_4616;
-var_4556 = wile_gen_list(4, var_4557, NULL);
-do_init_var_4556 = false;
+var_4663[0] = var_4664;
+var_4662 = wile_gen_list(1, var_4663, NULL);
+do_init_var_4662 = false;
 }
-var_4554[1] = var_4556;
-var_4553 = wile_gen_list(2, var_4554, NULL);
-do_init_var_4553 = false;
-}
-var_4511[2] = var_4553;
-var_4510 = wile_gen_list(3, var_4511, NULL);
-do_init_var_4510 = false;
-}
-var_4509[0] = var_4510;
-var_4508 = wile_gen_list(1, var_4509, NULL);
-do_init_var_4508 = false;
-}
-lval var_4667;
-lval var_4668[8];
-var_4668[0] = var_4503;
-var_4668[1] = var_4504;
-var_4668[2] = var_4508;
-var_4668[3] = var_4448;
-// bld-rtl-dir/wile-rtl2-000083.scm:742
-var_4667 = fn_10(NULL, var_4668, "bld-rtl-dir/wile-rtl2-000083.scm:742");
-lval var_4670;
-var_4670 = LVI_SYMBOL("namespace");
-if (do_init_var_4671) {
-lval var_4672[8];
-lval var_4673;
-var_4673 = LVI_SYMBOL("syms");
-var_4672[0] = var_4673;
-lval var_4674;
-var_4674 = LVI_SYMBOL("defs");
-var_4672[1] = var_4674;
-var_4671 = wile_gen_list(1, var_4672, var_4672 + 1);
-do_init_var_4671 = false;
-}
-if (do_init_var_4675) {
-lval var_4676[8];
+var_4660[1] = var_4662;
 if (do_init_var_4677) {
 lval var_4678[8];
 lval var_4679;
-var_4679 = LVI_SYMBOL("let*");
+var_4679 = LVI_SYMBOL("unquote-splicing");
 var_4678[0] = var_4679;
 if (do_init_var_4680) {
 lval var_4681[8];
-if (do_init_var_4682) {
-lval var_4683[8];
-lval var_4684;
-var_4684 = LVI_SYMBOL("nm");
-var_4683[0] = var_4684;
-if (do_init_var_4685) {
-lval var_4686[8];
-lval var_4687;
-var_4687 = LVI_SYMBOL("gensym");
-var_4686[0] = var_4687;
-var_4685 = wile_gen_list(1, var_4686, NULL);
-do_init_var_4685 = false;
-}
-var_4683[1] = var_4685;
-var_4682 = wile_gen_list(2, var_4683, NULL);
-do_init_var_4682 = false;
-}
+lval var_4682;
+var_4682 = LVI_SYMBOL("map");
 var_4681[0] = var_4682;
-if (do_init_var_4688) {
-lval var_4689[8];
-lval var_4690;
-var_4690 = LVI_SYMBOL("sa");
-var_4689[0] = var_4690;
-if (do_init_var_4691) {
-lval var_4692[8];
-lval var_4693;
-var_4693 = LVI_SYMBOL("gensym");
-var_4692[0] = var_4693;
-var_4691 = wile_gen_list(1, var_4692, NULL);
-do_init_var_4691 = false;
+if (do_init_var_4683) {
+lval var_4684[8];
+lval var_4685;
+var_4685 = LVI_SYMBOL("lambda");
+var_4684[0] = var_4685;
+if (do_init_var_4686) {
+lval var_4687[8];
+lval var_4688;
+var_4688 = LVI_SYMBOL("v");
+var_4687[0] = var_4688;
+lval var_4689;
+var_4689 = LVI_SYMBOL("s");
+var_4687[1] = var_4689;
+var_4686 = wile_gen_list(2, var_4687, NULL);
+do_init_var_4686 = false;
 }
-var_4689[1] = var_4691;
-var_4688 = wile_gen_list(2, var_4689, NULL);
-do_init_var_4688 = false;
-}
-var_4681[1] = var_4688;
-if (do_init_var_4694) {
-lval var_4695[8];
-lval var_4696;
-var_4696 = LVI_SYMBOL("s0");
-var_4695[0] = var_4696;
-if (do_init_var_4697) {
-lval var_4698[8];
+var_4684[1] = var_4686;
+if (do_init_var_4690) {
+lval var_4691[8];
+lval var_4692;
+var_4692 = LVI_SYMBOL("quasiquote");
+var_4691[0] = var_4692;
+if (do_init_var_4693) {
+lval var_4694[8];
+lval var_4695;
+var_4695 = LVI_SYMBOL("set!");
+var_4694[0] = var_4695;
+if (do_init_var_4696) {
+lval var_4697[8];
+lval var_4698;
+var_4698 = LVI_SYMBOL("unquote");
+var_4697[0] = var_4698;
 lval var_4699;
-var_4699 = LVI_SYMBOL("map");
-var_4698[0] = var_4699;
+var_4699 = LVI_SYMBOL("v");
+var_4697[1] = var_4699;
+var_4696 = wile_gen_list(2, var_4697, NULL);
+do_init_var_4696 = false;
+}
+var_4694[1] = var_4696;
 if (do_init_var_4700) {
 lval var_4701[8];
 lval var_4702;
-var_4702 = LVI_SYMBOL("lambda");
+var_4702 = LVI_SYMBOL("unquote");
 var_4701[0] = var_4702;
-if (do_init_var_4703) {
-lval var_4704[8];
-lval var_4705;
-var_4705 = LVI_SYMBOL("s");
-var_4704[0] = var_4705;
-var_4703 = wile_gen_list(1, var_4704, NULL);
-do_init_var_4703 = false;
-}
+lval var_4703;
+var_4703 = LVI_SYMBOL("s");
 var_4701[1] = var_4703;
+var_4700 = wile_gen_list(2, var_4701, NULL);
+do_init_var_4700 = false;
+}
+var_4694[2] = var_4700;
+var_4693 = wile_gen_list(3, var_4694, NULL);
+do_init_var_4693 = false;
+}
+var_4691[1] = var_4693;
+var_4690 = wile_gen_list(2, var_4691, NULL);
+do_init_var_4690 = false;
+}
+var_4684[2] = var_4690;
+var_4683 = wile_gen_list(3, var_4684, NULL);
+do_init_var_4683 = false;
+}
+var_4681[1] = var_4683;
+lval var_4704;
+var_4704 = LVI_SYMBOL("vars");
+var_4681[2] = var_4704;
+lval var_4705;
+var_4705 = LVI_SYMBOL("svals");
+var_4681[3] = var_4705;
+var_4680 = wile_gen_list(4, var_4681, NULL);
+do_init_var_4680 = false;
+}
+var_4678[1] = var_4680;
+var_4677 = wile_gen_list(2, var_4678, NULL);
+do_init_var_4677 = false;
+}
+var_4660[2] = var_4677;
 if (do_init_var_4706) {
 lval var_4707[8];
 lval var_4708;
-var_4708 = LVI_SYMBOL("if");
+var_4708 = LVI_SYMBOL("unquote");
 var_4707[0] = var_4708;
-if (do_init_var_4709) {
-lval var_4710[8];
-lval var_4711;
-var_4711 = LVI_SYMBOL("symbol?");
-var_4710[0] = var_4711;
-lval var_4712;
-var_4712 = LVI_SYMBOL("s");
-var_4710[1] = var_4712;
-var_4709 = wile_gen_list(2, var_4710, NULL);
-do_init_var_4709 = false;
-}
+lval var_4709;
+var_4709 = LVI_SYMBOL("result");
 var_4707[1] = var_4709;
-if (do_init_var_4713) {
-lval var_4714[8];
-lval var_4715;
-var_4715 = LVI_SYMBOL("list");
-var_4714[0] = var_4715;
-lval var_4716;
-var_4716 = LVI_SYMBOL("s");
-var_4714[1] = var_4716;
-lval var_4717;
-var_4717 = LVI_SYMBOL("s");
-var_4714[2] = var_4717;
-var_4713 = wile_gen_list(3, var_4714, NULL);
-do_init_var_4713 = false;
-}
-var_4707[2] = var_4713;
-lval var_4718;
-var_4718 = LVI_SYMBOL("s");
-var_4707[3] = var_4718;
-var_4706 = wile_gen_list(4, var_4707, NULL);
+var_4706 = wile_gen_list(2, var_4707, NULL);
 do_init_var_4706 = false;
 }
-var_4701[2] = var_4706;
-var_4700 = wile_gen_list(3, var_4701, NULL);
-do_init_var_4700 = false;
+var_4660[3] = var_4706;
+var_4659 = wile_gen_list(4, var_4660, NULL);
+do_init_var_4659 = false;
 }
-var_4698[1] = var_4700;
-lval var_4719;
-var_4719 = LVI_SYMBOL("syms");
-var_4698[2] = var_4719;
-var_4697 = wile_gen_list(3, var_4698, NULL);
-do_init_var_4697 = false;
+var_4600[3] = var_4659;
+var_4599 = wile_gen_list(4, var_4600, NULL);
+do_init_var_4599 = false;
 }
-var_4695[1] = var_4697;
-var_4694 = wile_gen_list(2, var_4695, NULL);
-do_init_var_4694 = false;
+var_4597[1] = var_4599;
+var_4596 = wile_gen_list(2, var_4597, NULL);
+do_init_var_4596 = false;
 }
-var_4681[2] = var_4694;
+var_4554[2] = var_4596;
+var_4553 = wile_gen_list(3, var_4554, NULL);
+do_init_var_4553 = false;
+}
+var_4552[0] = var_4553;
+var_4551 = wile_gen_list(1, var_4552, NULL);
+do_init_var_4551 = false;
+}
+lval var_4710;
+lval var_4711[8];
+var_4711[0] = var_4546;
+var_4711[1] = var_4547;
+var_4711[2] = var_4551;
+var_4711[3] = var_4491;
+// bld-rtl-dir/wile-rtl2-000083.scm:748
+var_4710 = fn_10(NULL, var_4711, "bld-rtl-dir/wile-rtl2-000083.scm:748");
+lval var_4713;
+var_4713 = LVI_SYMBOL("namespace");
+if (do_init_var_4714) {
+lval var_4715[8];
+lval var_4716;
+var_4716 = LVI_SYMBOL("syms");
+var_4715[0] = var_4716;
+lval var_4717;
+var_4717 = LVI_SYMBOL("defs");
+var_4715[1] = var_4717;
+var_4714 = wile_gen_list(1, var_4715, var_4715 + 1);
+do_init_var_4714 = false;
+}
+if (do_init_var_4718) {
+lval var_4719[8];
 if (do_init_var_4720) {
 lval var_4721[8];
 lval var_4722;
-var_4722 = LVI_SYMBOL("s1");
+var_4722 = LVI_SYMBOL("let*");
 var_4721[0] = var_4722;
 if (do_init_var_4723) {
 lval var_4724[8];
-lval var_4725;
-var_4725 = LVI_SYMBOL("map");
-var_4724[0] = var_4725;
-if (do_init_var_4726) {
-lval var_4727[8];
-lval var_4728;
-var_4728 = LVI_SYMBOL("lambda");
-var_4727[0] = var_4728;
-if (do_init_var_4729) {
-lval var_4730[8];
-lval var_4731;
-var_4731 = LVI_SYMBOL("s");
-var_4730[0] = var_4731;
-var_4729 = wile_gen_list(1, var_4730, NULL);
-do_init_var_4729 = false;
+if (do_init_var_4725) {
+lval var_4726[8];
+lval var_4727;
+var_4727 = LVI_SYMBOL("nm");
+var_4726[0] = var_4727;
+if (do_init_var_4728) {
+lval var_4729[8];
+lval var_4730;
+var_4730 = LVI_SYMBOL("gensym");
+var_4729[0] = var_4730;
+var_4728 = wile_gen_list(1, var_4729, NULL);
+do_init_var_4728 = false;
 }
-var_4727[1] = var_4729;
-if (do_init_var_4732) {
-lval var_4733[8];
-lval var_4734;
-var_4734 = LVI_SYMBOL("let");
-var_4733[0] = var_4734;
-if (do_init_var_4735) {
-lval var_4736[8];
+var_4726[1] = var_4728;
+var_4725 = wile_gen_list(2, var_4726, NULL);
+do_init_var_4725 = false;
+}
+var_4724[0] = var_4725;
+if (do_init_var_4731) {
+lval var_4732[8];
+lval var_4733;
+var_4733 = LVI_SYMBOL("sa");
+var_4732[0] = var_4733;
+if (do_init_var_4734) {
+lval var_4735[8];
+lval var_4736;
+var_4736 = LVI_SYMBOL("gensym");
+var_4735[0] = var_4736;
+var_4734 = wile_gen_list(1, var_4735, NULL);
+do_init_var_4734 = false;
+}
+var_4732[1] = var_4734;
+var_4731 = wile_gen_list(2, var_4732, NULL);
+do_init_var_4731 = false;
+}
+var_4724[1] = var_4731;
 if (do_init_var_4737) {
 lval var_4738[8];
 lval var_4739;
-var_4739 = LVI_SYMBOL("p");
+var_4739 = LVI_SYMBOL("s0");
 var_4738[0] = var_4739;
 if (do_init_var_4740) {
 lval var_4741[8];
 lval var_4742;
-var_4742 = LVI_SYMBOL("cadr");
+var_4742 = LVI_SYMBOL("map");
 var_4741[0] = var_4742;
-lval var_4743;
-var_4743 = LVI_SYMBOL("s");
+if (do_init_var_4743) {
+lval var_4744[8];
+lval var_4745;
+var_4745 = LVI_SYMBOL("lambda");
+var_4744[0] = var_4745;
+if (do_init_var_4746) {
+lval var_4747[8];
+lval var_4748;
+var_4748 = LVI_SYMBOL("s");
+var_4747[0] = var_4748;
+var_4746 = wile_gen_list(1, var_4747, NULL);
+do_init_var_4746 = false;
+}
+var_4744[1] = var_4746;
+if (do_init_var_4749) {
+lval var_4750[8];
+lval var_4751;
+var_4751 = LVI_SYMBOL("if");
+var_4750[0] = var_4751;
+if (do_init_var_4752) {
+lval var_4753[8];
+lval var_4754;
+var_4754 = LVI_SYMBOL("symbol?");
+var_4753[0] = var_4754;
+lval var_4755;
+var_4755 = LVI_SYMBOL("s");
+var_4753[1] = var_4755;
+var_4752 = wile_gen_list(2, var_4753, NULL);
+do_init_var_4752 = false;
+}
+var_4750[1] = var_4752;
+if (do_init_var_4756) {
+lval var_4757[8];
+lval var_4758;
+var_4758 = LVI_SYMBOL("list");
+var_4757[0] = var_4758;
+lval var_4759;
+var_4759 = LVI_SYMBOL("s");
+var_4757[1] = var_4759;
+lval var_4760;
+var_4760 = LVI_SYMBOL("s");
+var_4757[2] = var_4760;
+var_4756 = wile_gen_list(3, var_4757, NULL);
+do_init_var_4756 = false;
+}
+var_4750[2] = var_4756;
+lval var_4761;
+var_4761 = LVI_SYMBOL("s");
+var_4750[3] = var_4761;
+var_4749 = wile_gen_list(4, var_4750, NULL);
+do_init_var_4749 = false;
+}
+var_4744[2] = var_4749;
+var_4743 = wile_gen_list(3, var_4744, NULL);
+do_init_var_4743 = false;
+}
 var_4741[1] = var_4743;
-var_4740 = wile_gen_list(2, var_4741, NULL);
+lval var_4762;
+var_4762 = LVI_SYMBOL("syms");
+var_4741[2] = var_4762;
+var_4740 = wile_gen_list(3, var_4741, NULL);
 do_init_var_4740 = false;
 }
 var_4738[1] = var_4740;
 var_4737 = wile_gen_list(2, var_4738, NULL);
 do_init_var_4737 = false;
 }
-var_4736[0] = var_4737;
-var_4735 = wile_gen_list(1, var_4736, NULL);
-do_init_var_4735 = false;
+var_4724[2] = var_4737;
+if (do_init_var_4763) {
+lval var_4764[8];
+lval var_4765;
+var_4765 = LVI_SYMBOL("s1");
+var_4764[0] = var_4765;
+if (do_init_var_4766) {
+lval var_4767[8];
+lval var_4768;
+var_4768 = LVI_SYMBOL("map");
+var_4767[0] = var_4768;
+if (do_init_var_4769) {
+lval var_4770[8];
+lval var_4771;
+var_4771 = LVI_SYMBOL("lambda");
+var_4770[0] = var_4771;
+if (do_init_var_4772) {
+lval var_4773[8];
+lval var_4774;
+var_4774 = LVI_SYMBOL("s");
+var_4773[0] = var_4774;
+var_4772 = wile_gen_list(1, var_4773, NULL);
+do_init_var_4772 = false;
 }
-var_4733[1] = var_4735;
-if (do_init_var_4744) {
-lval var_4745[8];
-lval var_4746;
-var_4746 = LVI_SYMBOL("quasiquote");
-var_4745[0] = var_4746;
-if (do_init_var_4747) {
-lval var_4748[8];
-lval var_4749;
-var_4749 = LVI_SYMBOL("define");
-var_4748[0] = var_4749;
-if (do_init_var_4750) {
-lval var_4751[8];
-lval var_4752;
-var_4752 = LVI_SYMBOL("unquote");
-var_4751[0] = var_4752;
-lval var_4753;
-var_4753 = LVI_SYMBOL("p");
-var_4751[1] = var_4753;
-var_4750 = wile_gen_list(2, var_4751, NULL);
-do_init_var_4750 = false;
-}
-var_4748[1] = var_4750;
-lval var_4754;
-var_4754 = LVI_BOOL(false);
-var_4748[2] = var_4754;
-var_4747 = wile_gen_list(3, var_4748, NULL);
-do_init_var_4747 = false;
-}
-var_4745[1] = var_4747;
-var_4744 = wile_gen_list(2, var_4745, NULL);
-do_init_var_4744 = false;
-}
-var_4733[2] = var_4744;
-var_4732 = wile_gen_list(3, var_4733, NULL);
-do_init_var_4732 = false;
-}
-var_4727[2] = var_4732;
-var_4726 = wile_gen_list(3, var_4727, NULL);
-do_init_var_4726 = false;
-}
-var_4724[1] = var_4726;
-lval var_4755;
-var_4755 = LVI_SYMBOL("s0");
-var_4724[2] = var_4755;
-var_4723 = wile_gen_list(3, var_4724, NULL);
-do_init_var_4723 = false;
-}
-var_4721[1] = var_4723;
-var_4720 = wile_gen_list(2, var_4721, NULL);
-do_init_var_4720 = false;
-}
-var_4681[3] = var_4720;
-if (do_init_var_4756) {
-lval var_4757[8];
-lval var_4758;
-var_4758 = LVI_SYMBOL("s2");
-var_4757[0] = var_4758;
-if (do_init_var_4759) {
-lval var_4760[8];
-lval var_4761;
-var_4761 = LVI_SYMBOL("map");
-var_4760[0] = var_4761;
-if (do_init_var_4762) {
-lval var_4763[8];
-lval var_4764;
-var_4764 = LVI_SYMBOL("lambda");
-var_4763[0] = var_4764;
-if (do_init_var_4765) {
-lval var_4766[8];
-lval var_4767;
-var_4767 = LVI_SYMBOL("s");
-var_4766[0] = var_4767;
-var_4765 = wile_gen_list(1, var_4766, NULL);
-do_init_var_4765 = false;
-}
-var_4763[1] = var_4765;
-if (do_init_var_4768) {
-lval var_4769[8];
-lval var_4770;
-var_4770 = LVI_SYMBOL("let");
-var_4769[0] = var_4770;
-if (do_init_var_4771) {
-lval var_4772[8];
-if (do_init_var_4773) {
-lval var_4774[8];
-lval var_4775;
-var_4775 = LVI_SYMBOL("p");
-var_4774[0] = var_4775;
-if (do_init_var_4776) {
-lval var_4777[8];
-lval var_4778;
-var_4778 = LVI_SYMBOL("car");
-var_4777[0] = var_4778;
-lval var_4779;
-var_4779 = LVI_SYMBOL("s");
-var_4777[1] = var_4779;
-var_4776 = wile_gen_list(2, var_4777, NULL);
-do_init_var_4776 = false;
-}
-var_4774[1] = var_4776;
-var_4773 = wile_gen_list(2, var_4774, NULL);
-do_init_var_4773 = false;
-}
-var_4772[0] = var_4773;
-var_4771 = wile_gen_list(1, var_4772, NULL);
-do_init_var_4771 = false;
-}
-var_4769[1] = var_4771;
+var_4770[1] = var_4772;
+if (do_init_var_4775) {
+lval var_4776[8];
+lval var_4777;
+var_4777 = LVI_SYMBOL("let");
+var_4776[0] = var_4777;
+if (do_init_var_4778) {
+lval var_4779[8];
 if (do_init_var_4780) {
 lval var_4781[8];
 lval var_4782;
-var_4782 = LVI_SYMBOL("quasiquote");
+var_4782 = LVI_SYMBOL("p");
 var_4781[0] = var_4782;
 if (do_init_var_4783) {
 lval var_4784[8];
-if (do_init_var_4785) {
-lval var_4786[8];
-lval var_4787;
-var_4787 = LVI_SYMBOL("symbol=?");
-var_4786[0] = var_4787;
-if (do_init_var_4788) {
-lval var_4789[8];
-lval var_4790;
-var_4790 = LVI_SYMBOL("unquote");
-var_4789[0] = var_4790;
-lval var_4791;
-var_4791 = LVI_SYMBOL("sa");
-var_4789[1] = var_4791;
-var_4788 = wile_gen_list(2, var_4789, NULL);
-do_init_var_4788 = false;
-}
-var_4786[1] = var_4788;
-if (do_init_var_4792) {
-lval var_4793[8];
-lval var_4794;
-var_4794 = LVI_SYMBOL("unquote");
-var_4793[0] = var_4794;
-lval var_4795;
-var_4795 = LVI_SYMBOL("p");
-var_4793[1] = var_4795;
-var_4792 = wile_gen_list(2, var_4793, NULL);
-do_init_var_4792 = false;
-}
-var_4786[2] = var_4792;
-var_4785 = wile_gen_list(3, var_4786, NULL);
-do_init_var_4785 = false;
-}
+lval var_4785;
+var_4785 = LVI_SYMBOL("cadr");
 var_4784[0] = var_4785;
-if (do_init_var_4796) {
-lval var_4797[8];
-lval var_4798;
-var_4798 = LVI_SYMBOL("unquote");
-var_4797[0] = var_4798;
-lval var_4799;
-var_4799 = LVI_SYMBOL("p");
-var_4797[1] = var_4799;
-var_4796 = wile_gen_list(2, var_4797, NULL);
-do_init_var_4796 = false;
-}
-var_4784[1] = var_4796;
+lval var_4786;
+var_4786 = LVI_SYMBOL("s");
+var_4784[1] = var_4786;
 var_4783 = wile_gen_list(2, var_4784, NULL);
 do_init_var_4783 = false;
 }
@@ -21810,2137 +21817,2188 @@ var_4781[1] = var_4783;
 var_4780 = wile_gen_list(2, var_4781, NULL);
 do_init_var_4780 = false;
 }
-var_4769[2] = var_4780;
-var_4768 = wile_gen_list(3, var_4769, NULL);
-do_init_var_4768 = false;
+var_4779[0] = var_4780;
+var_4778 = wile_gen_list(1, var_4779, NULL);
+do_init_var_4778 = false;
 }
-var_4763[2] = var_4768;
-var_4762 = wile_gen_list(3, var_4763, NULL);
-do_init_var_4762 = false;
+var_4776[1] = var_4778;
+if (do_init_var_4787) {
+lval var_4788[8];
+lval var_4789;
+var_4789 = LVI_SYMBOL("quasiquote");
+var_4788[0] = var_4789;
+if (do_init_var_4790) {
+lval var_4791[8];
+lval var_4792;
+var_4792 = LVI_SYMBOL("define");
+var_4791[0] = var_4792;
+if (do_init_var_4793) {
+lval var_4794[8];
+lval var_4795;
+var_4795 = LVI_SYMBOL("unquote");
+var_4794[0] = var_4795;
+lval var_4796;
+var_4796 = LVI_SYMBOL("p");
+var_4794[1] = var_4796;
+var_4793 = wile_gen_list(2, var_4794, NULL);
+do_init_var_4793 = false;
 }
-var_4760[1] = var_4762;
-lval var_4800;
-var_4800 = LVI_SYMBOL("s0");
-var_4760[2] = var_4800;
-var_4759 = wile_gen_list(3, var_4760, NULL);
-do_init_var_4759 = false;
+var_4791[1] = var_4793;
+lval var_4797;
+var_4797 = LVI_BOOL(false);
+var_4791[2] = var_4797;
+var_4790 = wile_gen_list(3, var_4791, NULL);
+do_init_var_4790 = false;
 }
-var_4757[1] = var_4759;
-var_4756 = wile_gen_list(2, var_4757, NULL);
-do_init_var_4756 = false;
+var_4788[1] = var_4790;
+var_4787 = wile_gen_list(2, var_4788, NULL);
+do_init_var_4787 = false;
 }
-var_4681[4] = var_4756;
-if (do_init_var_4801) {
-lval var_4802[8];
-lval var_4803;
-var_4803 = LVI_SYMBOL("s3");
-var_4802[0] = var_4803;
-if (do_init_var_4804) {
-lval var_4805[8];
-lval var_4806;
-var_4806 = LVI_SYMBOL("map");
-var_4805[0] = var_4806;
-if (do_init_var_4807) {
-lval var_4808[8];
-lval var_4809;
-var_4809 = LVI_SYMBOL("lambda");
-var_4808[0] = var_4809;
-if (do_init_var_4810) {
-lval var_4811[8];
-lval var_4812;
-var_4812 = LVI_SYMBOL("s");
-var_4811[0] = var_4812;
-var_4810 = wile_gen_list(1, var_4811, NULL);
-do_init_var_4810 = false;
+var_4776[2] = var_4787;
+var_4775 = wile_gen_list(3, var_4776, NULL);
+do_init_var_4775 = false;
 }
-var_4808[1] = var_4810;
-if (do_init_var_4813) {
-lval var_4814[8];
-lval var_4815;
-var_4815 = LVI_SYMBOL("let");
-var_4814[0] = var_4815;
+var_4770[2] = var_4775;
+var_4769 = wile_gen_list(3, var_4770, NULL);
+do_init_var_4769 = false;
+}
+var_4767[1] = var_4769;
+lval var_4798;
+var_4798 = LVI_SYMBOL("s0");
+var_4767[2] = var_4798;
+var_4766 = wile_gen_list(3, var_4767, NULL);
+do_init_var_4766 = false;
+}
+var_4764[1] = var_4766;
+var_4763 = wile_gen_list(2, var_4764, NULL);
+do_init_var_4763 = false;
+}
+var_4724[3] = var_4763;
+if (do_init_var_4799) {
+lval var_4800[8];
+lval var_4801;
+var_4801 = LVI_SYMBOL("s2");
+var_4800[0] = var_4801;
+if (do_init_var_4802) {
+lval var_4803[8];
+lval var_4804;
+var_4804 = LVI_SYMBOL("map");
+var_4803[0] = var_4804;
+if (do_init_var_4805) {
+lval var_4806[8];
+lval var_4807;
+var_4807 = LVI_SYMBOL("lambda");
+var_4806[0] = var_4807;
+if (do_init_var_4808) {
+lval var_4809[8];
+lval var_4810;
+var_4810 = LVI_SYMBOL("s");
+var_4809[0] = var_4810;
+var_4808 = wile_gen_list(1, var_4809, NULL);
+do_init_var_4808 = false;
+}
+var_4806[1] = var_4808;
+if (do_init_var_4811) {
+lval var_4812[8];
+lval var_4813;
+var_4813 = LVI_SYMBOL("let");
+var_4812[0] = var_4813;
+if (do_init_var_4814) {
+lval var_4815[8];
 if (do_init_var_4816) {
 lval var_4817[8];
-if (do_init_var_4818) {
-lval var_4819[8];
-lval var_4820;
-var_4820 = LVI_SYMBOL("p1");
-var_4819[0] = var_4820;
-if (do_init_var_4821) {
-lval var_4822[8];
-lval var_4823;
-var_4823 = LVI_SYMBOL("car");
-var_4822[0] = var_4823;
-lval var_4824;
-var_4824 = LVI_SYMBOL("s");
-var_4822[1] = var_4824;
-var_4821 = wile_gen_list(2, var_4822, NULL);
-do_init_var_4821 = false;
-}
-var_4819[1] = var_4821;
-var_4818 = wile_gen_list(2, var_4819, NULL);
-do_init_var_4818 = false;
-}
+lval var_4818;
+var_4818 = LVI_SYMBOL("p");
 var_4817[0] = var_4818;
-if (do_init_var_4825) {
-lval var_4826[8];
-lval var_4827;
-var_4827 = LVI_SYMBOL("p2");
-var_4826[0] = var_4827;
-if (do_init_var_4828) {
-lval var_4829[8];
-lval var_4830;
-var_4830 = LVI_SYMBOL("cadr");
-var_4829[0] = var_4830;
-lval var_4831;
-var_4831 = LVI_SYMBOL("s");
-var_4829[1] = var_4831;
-var_4828 = wile_gen_list(2, var_4829, NULL);
-do_init_var_4828 = false;
+if (do_init_var_4819) {
+lval var_4820[8];
+lval var_4821;
+var_4821 = LVI_SYMBOL("car");
+var_4820[0] = var_4821;
+lval var_4822;
+var_4822 = LVI_SYMBOL("s");
+var_4820[1] = var_4822;
+var_4819 = wile_gen_list(2, var_4820, NULL);
+do_init_var_4819 = false;
 }
-var_4826[1] = var_4828;
-var_4825 = wile_gen_list(2, var_4826, NULL);
-do_init_var_4825 = false;
-}
-var_4817[1] = var_4825;
+var_4817[1] = var_4819;
 var_4816 = wile_gen_list(2, var_4817, NULL);
 do_init_var_4816 = false;
 }
-var_4814[1] = var_4816;
-if (do_init_var_4832) {
-lval var_4833[8];
+var_4815[0] = var_4816;
+var_4814 = wile_gen_list(1, var_4815, NULL);
+do_init_var_4814 = false;
+}
+var_4812[1] = var_4814;
+if (do_init_var_4823) {
+lval var_4824[8];
+lval var_4825;
+var_4825 = LVI_SYMBOL("quasiquote");
+var_4824[0] = var_4825;
+if (do_init_var_4826) {
+lval var_4827[8];
+if (do_init_var_4828) {
+lval var_4829[8];
+lval var_4830;
+var_4830 = LVI_SYMBOL("symbol=?");
+var_4829[0] = var_4830;
+if (do_init_var_4831) {
+lval var_4832[8];
+lval var_4833;
+var_4833 = LVI_SYMBOL("unquote");
+var_4832[0] = var_4833;
 lval var_4834;
-var_4834 = LVI_SYMBOL("quasiquote");
-var_4833[0] = var_4834;
+var_4834 = LVI_SYMBOL("sa");
+var_4832[1] = var_4834;
+var_4831 = wile_gen_list(2, var_4832, NULL);
+do_init_var_4831 = false;
+}
+var_4829[1] = var_4831;
 if (do_init_var_4835) {
 lval var_4836[8];
 lval var_4837;
-var_4837 = LVI_SYMBOL("set!");
+var_4837 = LVI_SYMBOL("unquote");
 var_4836[0] = var_4837;
-if (do_init_var_4838) {
-lval var_4839[8];
-lval var_4840;
-var_4840 = LVI_SYMBOL("unquote");
-var_4839[0] = var_4840;
-lval var_4841;
-var_4841 = LVI_SYMBOL("p2");
-var_4839[1] = var_4841;
-var_4838 = wile_gen_list(2, var_4839, NULL);
-do_init_var_4838 = false;
-}
+lval var_4838;
+var_4838 = LVI_SYMBOL("p");
 var_4836[1] = var_4838;
-if (do_init_var_4842) {
-lval var_4843[8];
+var_4835 = wile_gen_list(2, var_4836, NULL);
+do_init_var_4835 = false;
+}
+var_4829[2] = var_4835;
+var_4828 = wile_gen_list(3, var_4829, NULL);
+do_init_var_4828 = false;
+}
+var_4827[0] = var_4828;
+if (do_init_var_4839) {
+lval var_4840[8];
+lval var_4841;
+var_4841 = LVI_SYMBOL("unquote");
+var_4840[0] = var_4841;
+lval var_4842;
+var_4842 = LVI_SYMBOL("p");
+var_4840[1] = var_4842;
+var_4839 = wile_gen_list(2, var_4840, NULL);
+do_init_var_4839 = false;
+}
+var_4827[1] = var_4839;
+var_4826 = wile_gen_list(2, var_4827, NULL);
+do_init_var_4826 = false;
+}
+var_4824[1] = var_4826;
+var_4823 = wile_gen_list(2, var_4824, NULL);
+do_init_var_4823 = false;
+}
+var_4812[2] = var_4823;
+var_4811 = wile_gen_list(3, var_4812, NULL);
+do_init_var_4811 = false;
+}
+var_4806[2] = var_4811;
+var_4805 = wile_gen_list(3, var_4806, NULL);
+do_init_var_4805 = false;
+}
+var_4803[1] = var_4805;
+lval var_4843;
+var_4843 = LVI_SYMBOL("s0");
+var_4803[2] = var_4843;
+var_4802 = wile_gen_list(3, var_4803, NULL);
+do_init_var_4802 = false;
+}
+var_4800[1] = var_4802;
+var_4799 = wile_gen_list(2, var_4800, NULL);
+do_init_var_4799 = false;
+}
+var_4724[4] = var_4799;
 if (do_init_var_4844) {
 lval var_4845[8];
 lval var_4846;
-var_4846 = LVI_SYMBOL("unquote");
+var_4846 = LVI_SYMBOL("s3");
 var_4845[0] = var_4846;
-lval var_4847;
-var_4847 = LVI_SYMBOL("nm");
-var_4845[1] = var_4847;
-var_4844 = wile_gen_list(2, var_4845, NULL);
-do_init_var_4844 = false;
-}
-var_4843[0] = var_4844;
-if (do_init_var_4848) {
-lval var_4849[8];
-lval var_4850;
-var_4850 = LVI_SYMBOL("unquote");
-var_4849[0] = var_4850;
-lval var_4851;
-var_4851 = LVI_SYMBOL("p1");
-var_4849[1] = var_4851;
-var_4848 = wile_gen_list(2, var_4849, NULL);
-do_init_var_4848 = false;
-}
-var_4843[1] = var_4848;
-var_4842 = wile_gen_list(2, var_4843, NULL);
-do_init_var_4842 = false;
-}
-var_4836[2] = var_4842;
-var_4835 = wile_gen_list(3, var_4836, NULL);
-do_init_var_4835 = false;
-}
-var_4833[1] = var_4835;
-var_4832 = wile_gen_list(2, var_4833, NULL);
-do_init_var_4832 = false;
-}
-var_4814[2] = var_4832;
-var_4813 = wile_gen_list(3, var_4814, NULL);
-do_init_var_4813 = false;
-}
-var_4808[2] = var_4813;
-var_4807 = wile_gen_list(3, var_4808, NULL);
-do_init_var_4807 = false;
-}
-var_4805[1] = var_4807;
+if (do_init_var_4847) {
+lval var_4848[8];
+lval var_4849;
+var_4849 = LVI_SYMBOL("map");
+var_4848[0] = var_4849;
+if (do_init_var_4850) {
+lval var_4851[8];
 lval var_4852;
-var_4852 = LVI_SYMBOL("s0");
-var_4805[2] = var_4852;
-var_4804 = wile_gen_list(3, var_4805, NULL);
-do_init_var_4804 = false;
-}
-var_4802[1] = var_4804;
-var_4801 = wile_gen_list(2, var_4802, NULL);
-do_init_var_4801 = false;
-}
-var_4681[5] = var_4801;
-var_4680 = wile_gen_list(6, var_4681, NULL);
-do_init_var_4680 = false;
-}
-var_4678[1] = var_4680;
+var_4852 = LVI_SYMBOL("lambda");
+var_4851[0] = var_4852;
 if (do_init_var_4853) {
 lval var_4854[8];
 lval var_4855;
-var_4855 = LVI_SYMBOL("quasiquote");
+var_4855 = LVI_SYMBOL("s");
 var_4854[0] = var_4855;
+var_4853 = wile_gen_list(1, var_4854, NULL);
+do_init_var_4853 = false;
+}
+var_4851[1] = var_4853;
 if (do_init_var_4856) {
 lval var_4857[8];
 lval var_4858;
-var_4858 = LVI_SYMBOL("begin");
+var_4858 = LVI_SYMBOL("let");
 var_4857[0] = var_4858;
 if (do_init_var_4859) {
 lval var_4860[8];
-lval var_4861;
-var_4861 = LVI_SYMBOL("unquote-splicing");
+if (do_init_var_4861) {
+lval var_4862[8];
+lval var_4863;
+var_4863 = LVI_SYMBOL("p1");
+var_4862[0] = var_4863;
+if (do_init_var_4864) {
+lval var_4865[8];
+lval var_4866;
+var_4866 = LVI_SYMBOL("car");
+var_4865[0] = var_4866;
+lval var_4867;
+var_4867 = LVI_SYMBOL("s");
+var_4865[1] = var_4867;
+var_4864 = wile_gen_list(2, var_4865, NULL);
+do_init_var_4864 = false;
+}
+var_4862[1] = var_4864;
+var_4861 = wile_gen_list(2, var_4862, NULL);
+do_init_var_4861 = false;
+}
 var_4860[0] = var_4861;
-lval var_4862;
-var_4862 = LVI_SYMBOL("s1");
-var_4860[1] = var_4862;
+if (do_init_var_4868) {
+lval var_4869[8];
+lval var_4870;
+var_4870 = LVI_SYMBOL("p2");
+var_4869[0] = var_4870;
+if (do_init_var_4871) {
+lval var_4872[8];
+lval var_4873;
+var_4873 = LVI_SYMBOL("cadr");
+var_4872[0] = var_4873;
+lval var_4874;
+var_4874 = LVI_SYMBOL("s");
+var_4872[1] = var_4874;
+var_4871 = wile_gen_list(2, var_4872, NULL);
+do_init_var_4871 = false;
+}
+var_4869[1] = var_4871;
+var_4868 = wile_gen_list(2, var_4869, NULL);
+do_init_var_4868 = false;
+}
+var_4860[1] = var_4868;
 var_4859 = wile_gen_list(2, var_4860, NULL);
 do_init_var_4859 = false;
 }
 var_4857[1] = var_4859;
-if (do_init_var_4863) {
-lval var_4864[8];
-lval var_4865;
-var_4865 = LVI_SYMBOL("let");
-var_4864[0] = var_4865;
-if (do_init_var_4866) {
-lval var_4867[8];
-if (do_init_var_4868) {
-lval var_4869[8];
-if (do_init_var_4870) {
-lval var_4871[8];
-lval var_4872;
-var_4872 = LVI_SYMBOL("unquote");
-var_4871[0] = var_4872;
-lval var_4873;
-var_4873 = LVI_SYMBOL("nm");
-var_4871[1] = var_4873;
-var_4870 = wile_gen_list(2, var_4871, NULL);
-do_init_var_4870 = false;
-}
-var_4869[0] = var_4870;
-if (do_init_var_4874) {
-lval var_4875[8];
-if (do_init_var_4876) {
-lval var_4877[8];
-lval var_4878;
-var_4878 = LVI_SYMBOL("lambda");
-var_4877[0] = var_4878;
-lval var_4879;
-var_4879 = LVI_NIL();
-var_4877[1] = var_4879;
-if (do_init_var_4880) {
-lval var_4881[8];
-lval var_4882;
-var_4882 = LVI_SYMBOL("unquote-splicing");
-var_4881[0] = var_4882;
+if (do_init_var_4875) {
+lval var_4876[8];
+lval var_4877;
+var_4877 = LVI_SYMBOL("quasiquote");
+var_4876[0] = var_4877;
+if (do_init_var_4878) {
+lval var_4879[8];
+lval var_4880;
+var_4880 = LVI_SYMBOL("set!");
+var_4879[0] = var_4880;
+if (do_init_var_4881) {
+lval var_4882[8];
 lval var_4883;
-var_4883 = LVI_SYMBOL("defs");
-var_4881[1] = var_4883;
-var_4880 = wile_gen_list(2, var_4881, NULL);
-do_init_var_4880 = false;
+var_4883 = LVI_SYMBOL("unquote");
+var_4882[0] = var_4883;
+lval var_4884;
+var_4884 = LVI_SYMBOL("p2");
+var_4882[1] = var_4884;
+var_4881 = wile_gen_list(2, var_4882, NULL);
+do_init_var_4881 = false;
 }
-var_4877[2] = var_4880;
-if (do_init_var_4884) {
-lval var_4885[8];
-lval var_4886;
-var_4886 = LVI_SYMBOL("lambda");
-var_4885[0] = var_4886;
+var_4879[1] = var_4881;
+if (do_init_var_4885) {
+lval var_4886[8];
 if (do_init_var_4887) {
 lval var_4888[8];
-if (do_init_var_4889) {
-lval var_4890[8];
-lval var_4891;
-var_4891 = LVI_SYMBOL("unquote");
-var_4890[0] = var_4891;
-lval var_4892;
-var_4892 = LVI_SYMBOL("sa");
-var_4890[1] = var_4892;
-var_4889 = wile_gen_list(2, var_4890, NULL);
-do_init_var_4889 = false;
-}
+lval var_4889;
+var_4889 = LVI_SYMBOL("unquote");
 var_4888[0] = var_4889;
-var_4887 = wile_gen_list(1, var_4888, NULL);
+lval var_4890;
+var_4890 = LVI_SYMBOL("nm");
+var_4888[1] = var_4890;
+var_4887 = wile_gen_list(2, var_4888, NULL);
 do_init_var_4887 = false;
 }
-var_4885[1] = var_4887;
-if (do_init_var_4893) {
-lval var_4894[8];
-lval var_4895;
-var_4895 = LVI_SYMBOL("cond");
-var_4894[0] = var_4895;
-if (do_init_var_4896) {
-lval var_4897[8];
-lval var_4898;
-var_4898 = LVI_SYMBOL("unquote-splicing");
-var_4897[0] = var_4898;
-lval var_4899;
-var_4899 = LVI_SYMBOL("s2");
-var_4897[1] = var_4899;
-var_4896 = wile_gen_list(2, var_4897, NULL);
-do_init_var_4896 = false;
+var_4886[0] = var_4887;
+if (do_init_var_4891) {
+lval var_4892[8];
+lval var_4893;
+var_4893 = LVI_SYMBOL("unquote");
+var_4892[0] = var_4893;
+lval var_4894;
+var_4894 = LVI_SYMBOL("p1");
+var_4892[1] = var_4894;
+var_4891 = wile_gen_list(2, var_4892, NULL);
+do_init_var_4891 = false;
 }
-var_4894[1] = var_4896;
-var_4893 = wile_gen_list(2, var_4894, NULL);
-do_init_var_4893 = false;
+var_4886[1] = var_4891;
+var_4885 = wile_gen_list(2, var_4886, NULL);
+do_init_var_4885 = false;
 }
-var_4885[2] = var_4893;
-var_4884 = wile_gen_list(3, var_4885, NULL);
-do_init_var_4884 = false;
+var_4879[2] = var_4885;
+var_4878 = wile_gen_list(3, var_4879, NULL);
+do_init_var_4878 = false;
 }
-var_4877[3] = var_4884;
-var_4876 = wile_gen_list(4, var_4877, NULL);
-do_init_var_4876 = false;
+var_4876[1] = var_4878;
+var_4875 = wile_gen_list(2, var_4876, NULL);
+do_init_var_4875 = false;
 }
-var_4875[0] = var_4876;
-var_4874 = wile_gen_list(1, var_4875, NULL);
-do_init_var_4874 = false;
-}
-var_4869[1] = var_4874;
-var_4868 = wile_gen_list(2, var_4869, NULL);
-do_init_var_4868 = false;
-}
-var_4867[0] = var_4868;
-var_4866 = wile_gen_list(1, var_4867, NULL);
-do_init_var_4866 = false;
-}
-var_4864[1] = var_4866;
-if (do_init_var_4900) {
-lval var_4901[8];
-lval var_4902;
-var_4902 = LVI_SYMBOL("unquote-splicing");
-var_4901[0] = var_4902;
-lval var_4903;
-var_4903 = LVI_SYMBOL("s3");
-var_4901[1] = var_4903;
-var_4900 = wile_gen_list(2, var_4901, NULL);
-do_init_var_4900 = false;
-}
-var_4864[2] = var_4900;
-var_4863 = wile_gen_list(3, var_4864, NULL);
-do_init_var_4863 = false;
-}
-var_4857[2] = var_4863;
+var_4857[2] = var_4875;
 var_4856 = wile_gen_list(3, var_4857, NULL);
 do_init_var_4856 = false;
 }
-var_4854[1] = var_4856;
-var_4853 = wile_gen_list(2, var_4854, NULL);
-do_init_var_4853 = false;
+var_4851[2] = var_4856;
+var_4850 = wile_gen_list(3, var_4851, NULL);
+do_init_var_4850 = false;
 }
-var_4678[2] = var_4853;
-var_4677 = wile_gen_list(3, var_4678, NULL);
-do_init_var_4677 = false;
+var_4848[1] = var_4850;
+lval var_4895;
+var_4895 = LVI_SYMBOL("s0");
+var_4848[2] = var_4895;
+var_4847 = wile_gen_list(3, var_4848, NULL);
+do_init_var_4847 = false;
 }
-var_4676[0] = var_4677;
-var_4675 = wile_gen_list(1, var_4676, NULL);
-do_init_var_4675 = false;
+var_4845[1] = var_4847;
+var_4844 = wile_gen_list(2, var_4845, NULL);
+do_init_var_4844 = false;
 }
+var_4724[5] = var_4844;
+var_4723 = wile_gen_list(6, var_4724, NULL);
+do_init_var_4723 = false;
+}
+var_4721[1] = var_4723;
+if (do_init_var_4896) {
+lval var_4897[8];
+lval var_4898;
+var_4898 = LVI_SYMBOL("quasiquote");
+var_4897[0] = var_4898;
+if (do_init_var_4899) {
+lval var_4900[8];
+lval var_4901;
+var_4901 = LVI_SYMBOL("begin");
+var_4900[0] = var_4901;
+if (do_init_var_4902) {
+lval var_4903[8];
 lval var_4904;
-lval var_4905[8];
-var_4905[0] = var_4670;
-var_4905[1] = var_4671;
-var_4905[2] = var_4675;
-var_4905[3] = var_4448;
-// bld-rtl-dir/wile-rtl2-000083.scm:754
-var_4904 = fn_10(NULL, var_4905, "bld-rtl-dir/wile-rtl2-000083.scm:754");
-lval var_4907;
-var_4907 = LVI_SYMBOL("def-struct");
-if (do_init_var_4908) {
-lval var_4909[8];
-lval var_4910;
-var_4910 = LVI_SYMBOL("name");
-var_4909[0] = var_4910;
-lval var_4911;
-var_4911 = LVI_SYMBOL("field");
-var_4909[1] = var_4911;
-lval var_4912;
-var_4912 = LVI_SYMBOL("fields");
-var_4909[2] = var_4912;
-var_4908 = wile_gen_list(2, var_4909, var_4909 + 2);
-do_init_var_4908 = false;
+var_4904 = LVI_SYMBOL("unquote-splicing");
+var_4903[0] = var_4904;
+lval var_4905;
+var_4905 = LVI_SYMBOL("s1");
+var_4903[1] = var_4905;
+var_4902 = wile_gen_list(2, var_4903, NULL);
+do_init_var_4902 = false;
 }
+var_4900[1] = var_4902;
+if (do_init_var_4906) {
+lval var_4907[8];
+lval var_4908;
+var_4908 = LVI_SYMBOL("let");
+var_4907[0] = var_4908;
+if (do_init_var_4909) {
+lval var_4910[8];
+if (do_init_var_4911) {
+lval var_4912[8];
 if (do_init_var_4913) {
 lval var_4914[8];
-if (do_init_var_4915) {
-lval var_4916[8];
-lval var_4917;
-var_4917 = LVI_SYMBOL("let*");
-var_4916[0] = var_4917;
-if (do_init_var_4918) {
-lval var_4919[16];
-if (do_init_var_4920) {
-lval var_4921[8];
+lval var_4915;
+var_4915 = LVI_SYMBOL("unquote");
+var_4914[0] = var_4915;
+lval var_4916;
+var_4916 = LVI_SYMBOL("nm");
+var_4914[1] = var_4916;
+var_4913 = wile_gen_list(2, var_4914, NULL);
+do_init_var_4913 = false;
+}
+var_4912[0] = var_4913;
+if (do_init_var_4917) {
+lval var_4918[8];
+if (do_init_var_4919) {
+lval var_4920[8];
+lval var_4921;
+var_4921 = LVI_SYMBOL("lambda");
+var_4920[0] = var_4921;
 lval var_4922;
-var_4922 = LVI_SYMBOL("fs");
-var_4921[0] = var_4922;
+var_4922 = LVI_NIL();
+var_4920[1] = var_4922;
 if (do_init_var_4923) {
 lval var_4924[8];
 lval var_4925;
-var_4925 = LVI_SYMBOL("cons");
+var_4925 = LVI_SYMBOL("unquote-splicing");
 var_4924[0] = var_4925;
 lval var_4926;
-var_4926 = LVI_SYMBOL("field");
+var_4926 = LVI_SYMBOL("defs");
 var_4924[1] = var_4926;
-lval var_4927;
-var_4927 = LVI_SYMBOL("fields");
-var_4924[2] = var_4927;
-var_4923 = wile_gen_list(3, var_4924, NULL);
+var_4923 = wile_gen_list(2, var_4924, NULL);
 do_init_var_4923 = false;
 }
-var_4921[1] = var_4923;
-var_4920 = wile_gen_list(2, var_4921, NULL);
-do_init_var_4920 = false;
-}
-var_4919[0] = var_4920;
-if (do_init_var_4928) {
-lval var_4929[8];
-lval var_4930;
-var_4930 = LVI_SYMBOL("lfs");
-var_4929[0] = var_4930;
-if (do_init_var_4931) {
-lval var_4932[8];
-lval var_4933;
-var_4933 = LVI_SYMBOL("list-length");
-var_4932[0] = var_4933;
+var_4920[2] = var_4923;
+if (do_init_var_4927) {
+lval var_4928[8];
+lval var_4929;
+var_4929 = LVI_SYMBOL("lambda");
+var_4928[0] = var_4929;
+if (do_init_var_4930) {
+lval var_4931[8];
+if (do_init_var_4932) {
+lval var_4933[8];
 lval var_4934;
-var_4934 = LVI_SYMBOL("fs");
-var_4932[1] = var_4934;
-var_4931 = wile_gen_list(2, var_4932, NULL);
-do_init_var_4931 = false;
+var_4934 = LVI_SYMBOL("unquote");
+var_4933[0] = var_4934;
+lval var_4935;
+var_4935 = LVI_SYMBOL("sa");
+var_4933[1] = var_4935;
+var_4932 = wile_gen_list(2, var_4933, NULL);
+do_init_var_4932 = false;
 }
-var_4929[1] = var_4931;
-var_4928 = wile_gen_list(2, var_4929, NULL);
-do_init_var_4928 = false;
+var_4931[0] = var_4932;
+var_4930 = wile_gen_list(1, var_4931, NULL);
+do_init_var_4930 = false;
 }
-var_4919[1] = var_4928;
-if (do_init_var_4935) {
-lval var_4936[8];
-lval var_4937;
-var_4937 = LVI_SYMBOL("nfs");
-var_4936[0] = var_4937;
-if (do_init_var_4938) {
-lval var_4939[8];
-lval var_4940;
-var_4940 = LVI_SYMBOL("+");
-var_4939[0] = var_4940;
+var_4928[1] = var_4930;
+if (do_init_var_4936) {
+lval var_4937[8];
+lval var_4938;
+var_4938 = LVI_SYMBOL("cond");
+var_4937[0] = var_4938;
+if (do_init_var_4939) {
+lval var_4940[8];
 lval var_4941;
-var_4941 = LVI_INT(1);
-var_4939[1] = var_4941;
+var_4941 = LVI_SYMBOL("unquote-splicing");
+var_4940[0] = var_4941;
 lval var_4942;
-var_4942 = LVI_SYMBOL("lfs");
-var_4939[2] = var_4942;
-var_4938 = wile_gen_list(3, var_4939, NULL);
-do_init_var_4938 = false;
+var_4942 = LVI_SYMBOL("s2");
+var_4940[1] = var_4942;
+var_4939 = wile_gen_list(2, var_4940, NULL);
+do_init_var_4939 = false;
 }
-var_4936[1] = var_4938;
-var_4935 = wile_gen_list(2, var_4936, NULL);
-do_init_var_4935 = false;
+var_4937[1] = var_4939;
+var_4936 = wile_gen_list(2, var_4937, NULL);
+do_init_var_4936 = false;
 }
-var_4919[2] = var_4935;
+var_4928[2] = var_4936;
+var_4927 = wile_gen_list(3, var_4928, NULL);
+do_init_var_4927 = false;
+}
+var_4920[3] = var_4927;
+var_4919 = wile_gen_list(4, var_4920, NULL);
+do_init_var_4919 = false;
+}
+var_4918[0] = var_4919;
+var_4917 = wile_gen_list(1, var_4918, NULL);
+do_init_var_4917 = false;
+}
+var_4912[1] = var_4917;
+var_4911 = wile_gen_list(2, var_4912, NULL);
+do_init_var_4911 = false;
+}
+var_4910[0] = var_4911;
+var_4909 = wile_gen_list(1, var_4910, NULL);
+do_init_var_4909 = false;
+}
+var_4907[1] = var_4909;
 if (do_init_var_4943) {
 lval var_4944[8];
 lval var_4945;
-var_4945 = LVI_SYMBOL("J0");
+var_4945 = LVI_SYMBOL("unquote-splicing");
 var_4944[0] = var_4945;
-if (do_init_var_4946) {
-lval var_4947[8];
-lval var_4948;
-var_4948 = LVI_SYMBOL("lambda");
-var_4947[0] = var_4948;
-lval var_4949;
-var_4949 = LVI_SYMBOL("strs");
-var_4947[1] = var_4949;
-if (do_init_var_4950) {
-lval var_4951[8];
-lval var_4952;
-var_4952 = LVI_SYMBOL("apply");
-var_4951[0] = var_4952;
-lval var_4953;
-var_4953 = LVI_SYMBOL("string-append");
-var_4951[1] = var_4953;
-lval var_4954;
-var_4954 = LVI_SYMBOL("strs");
-var_4951[2] = var_4954;
-var_4950 = wile_gen_list(3, var_4951, NULL);
-do_init_var_4950 = false;
-}
-var_4947[2] = var_4950;
-var_4946 = wile_gen_list(3, var_4947, NULL);
-do_init_var_4946 = false;
-}
+lval var_4946;
+var_4946 = LVI_SYMBOL("s3");
 var_4944[1] = var_4946;
 var_4943 = wile_gen_list(2, var_4944, NULL);
 do_init_var_4943 = false;
 }
-var_4919[3] = var_4943;
-if (do_init_var_4955) {
-lval var_4956[8];
-lval var_4957;
-var_4957 = LVI_SYMBOL("J1");
-var_4956[0] = var_4957;
+var_4907[2] = var_4943;
+var_4906 = wile_gen_list(3, var_4907, NULL);
+do_init_var_4906 = false;
+}
+var_4900[2] = var_4906;
+var_4899 = wile_gen_list(3, var_4900, NULL);
+do_init_var_4899 = false;
+}
+var_4897[1] = var_4899;
+var_4896 = wile_gen_list(2, var_4897, NULL);
+do_init_var_4896 = false;
+}
+var_4721[2] = var_4896;
+var_4720 = wile_gen_list(3, var_4721, NULL);
+do_init_var_4720 = false;
+}
+var_4719[0] = var_4720;
+var_4718 = wile_gen_list(1, var_4719, NULL);
+do_init_var_4718 = false;
+}
+lval var_4947;
+lval var_4948[8];
+var_4948[0] = var_4713;
+var_4948[1] = var_4714;
+var_4948[2] = var_4718;
+var_4948[3] = var_4491;
+// bld-rtl-dir/wile-rtl2-000083.scm:760
+var_4947 = fn_10(NULL, var_4948, "bld-rtl-dir/wile-rtl2-000083.scm:760");
+lval var_4950;
+var_4950 = LVI_SYMBOL("def-struct");
+if (do_init_var_4951) {
+lval var_4952[8];
+lval var_4953;
+var_4953 = LVI_SYMBOL("name");
+var_4952[0] = var_4953;
+lval var_4954;
+var_4954 = LVI_SYMBOL("field");
+var_4952[1] = var_4954;
+lval var_4955;
+var_4955 = LVI_SYMBOL("fields");
+var_4952[2] = var_4955;
+var_4951 = wile_gen_list(2, var_4952, var_4952 + 2);
+do_init_var_4951 = false;
+}
+if (do_init_var_4956) {
+lval var_4957[8];
 if (do_init_var_4958) {
 lval var_4959[8];
 lval var_4960;
-var_4960 = LVI_SYMBOL("lambda");
+var_4960 = LVI_SYMBOL("let*");
 var_4959[0] = var_4960;
 if (do_init_var_4961) {
-lval var_4962[8];
-lval var_4963;
-var_4963 = LVI_SYMBOL("pre");
-var_4962[0] = var_4963;
-lval var_4964;
-var_4964 = LVI_SYMBOL("main");
-var_4962[1] = var_4964;
-var_4961 = wile_gen_list(2, var_4962, NULL);
-do_init_var_4961 = false;
-}
-var_4959[1] = var_4961;
-if (do_init_var_4965) {
-lval var_4966[8];
-lval var_4967;
-var_4967 = LVI_SYMBOL("string->symbol");
-var_4966[0] = var_4967;
-if (do_init_var_4968) {
-lval var_4969[8];
+lval var_4962[16];
+if (do_init_var_4963) {
+lval var_4964[8];
+lval var_4965;
+var_4965 = LVI_SYMBOL("fs");
+var_4964[0] = var_4965;
+if (do_init_var_4966) {
+lval var_4967[8];
+lval var_4968;
+var_4968 = LVI_SYMBOL("cons");
+var_4967[0] = var_4968;
+lval var_4969;
+var_4969 = LVI_SYMBOL("field");
+var_4967[1] = var_4969;
 lval var_4970;
-var_4970 = LVI_SYMBOL("J0");
-var_4969[0] = var_4970;
-lval var_4971;
-var_4971 = LVI_SYMBOL("pre");
-var_4969[1] = var_4971;
-lval var_4972;
-var_4972 = LVI_SYMBOL("main");
-var_4969[2] = var_4972;
-var_4968 = wile_gen_list(3, var_4969, NULL);
-do_init_var_4968 = false;
+var_4970 = LVI_SYMBOL("fields");
+var_4967[2] = var_4970;
+var_4966 = wile_gen_list(3, var_4967, NULL);
+do_init_var_4966 = false;
 }
-var_4966[1] = var_4968;
-var_4965 = wile_gen_list(2, var_4966, NULL);
-do_init_var_4965 = false;
+var_4964[1] = var_4966;
+var_4963 = wile_gen_list(2, var_4964, NULL);
+do_init_var_4963 = false;
 }
-var_4959[2] = var_4965;
-var_4958 = wile_gen_list(3, var_4959, NULL);
-do_init_var_4958 = false;
+var_4962[0] = var_4963;
+if (do_init_var_4971) {
+lval var_4972[8];
+lval var_4973;
+var_4973 = LVI_SYMBOL("lfs");
+var_4972[0] = var_4973;
+if (do_init_var_4974) {
+lval var_4975[8];
+lval var_4976;
+var_4976 = LVI_SYMBOL("list-length");
+var_4975[0] = var_4976;
+lval var_4977;
+var_4977 = LVI_SYMBOL("fs");
+var_4975[1] = var_4977;
+var_4974 = wile_gen_list(2, var_4975, NULL);
+do_init_var_4974 = false;
 }
-var_4956[1] = var_4958;
-var_4955 = wile_gen_list(2, var_4956, NULL);
-do_init_var_4955 = false;
+var_4972[1] = var_4974;
+var_4971 = wile_gen_list(2, var_4972, NULL);
+do_init_var_4971 = false;
 }
-var_4919[4] = var_4955;
-if (do_init_var_4973) {
-lval var_4974[8];
-lval var_4975;
-var_4975 = LVI_SYMBOL("J2");
-var_4974[0] = var_4975;
-if (do_init_var_4976) {
-lval var_4977[8];
-lval var_4978;
-var_4978 = LVI_SYMBOL("lambda");
-var_4977[0] = var_4978;
-if (do_init_var_4979) {
-lval var_4980[8];
-lval var_4981;
-var_4981 = LVI_SYMBOL("pre");
-var_4980[0] = var_4981;
-lval var_4982;
-var_4982 = LVI_SYMBOL("main");
-var_4980[1] = var_4982;
+var_4962[1] = var_4971;
+if (do_init_var_4978) {
+lval var_4979[8];
+lval var_4980;
+var_4980 = LVI_SYMBOL("nfs");
+var_4979[0] = var_4980;
+if (do_init_var_4981) {
+lval var_4982[8];
 lval var_4983;
-var_4983 = LVI_SYMBOL("post");
-var_4980[2] = var_4983;
-var_4979 = wile_gen_list(3, var_4980, NULL);
-do_init_var_4979 = false;
+var_4983 = LVI_SYMBOL("+");
+var_4982[0] = var_4983;
+lval var_4984;
+var_4984 = LVI_INT(1);
+var_4982[1] = var_4984;
+lval var_4985;
+var_4985 = LVI_SYMBOL("lfs");
+var_4982[2] = var_4985;
+var_4981 = wile_gen_list(3, var_4982, NULL);
+do_init_var_4981 = false;
 }
-var_4977[1] = var_4979;
-if (do_init_var_4984) {
-lval var_4985[8];
-lval var_4986;
-var_4986 = LVI_SYMBOL("string->symbol");
-var_4985[0] = var_4986;
-if (do_init_var_4987) {
-lval var_4988[8];
-lval var_4989;
-var_4989 = LVI_SYMBOL("J0");
-var_4988[0] = var_4989;
-lval var_4990;
-var_4990 = LVI_SYMBOL("pre");
-var_4988[1] = var_4990;
+var_4979[1] = var_4981;
+var_4978 = wile_gen_list(2, var_4979, NULL);
+do_init_var_4978 = false;
+}
+var_4962[2] = var_4978;
+if (do_init_var_4986) {
+lval var_4987[8];
+lval var_4988;
+var_4988 = LVI_SYMBOL("J0");
+var_4987[0] = var_4988;
+if (do_init_var_4989) {
+lval var_4990[8];
 lval var_4991;
-var_4991 = LVI_SYMBOL("main");
-var_4988[2] = var_4991;
+var_4991 = LVI_SYMBOL("lambda");
+var_4990[0] = var_4991;
 lval var_4992;
-var_4992 = LVI_SYMBOL("post");
-var_4988[3] = var_4992;
-var_4987 = wile_gen_list(4, var_4988, NULL);
-do_init_var_4987 = false;
-}
-var_4985[1] = var_4987;
-var_4984 = wile_gen_list(2, var_4985, NULL);
-do_init_var_4984 = false;
-}
-var_4977[2] = var_4984;
-var_4976 = wile_gen_list(3, var_4977, NULL);
-do_init_var_4976 = false;
-}
-var_4974[1] = var_4976;
-var_4973 = wile_gen_list(2, var_4974, NULL);
-do_init_var_4973 = false;
-}
-var_4919[5] = var_4973;
+var_4992 = LVI_SYMBOL("strs");
+var_4990[1] = var_4992;
 if (do_init_var_4993) {
 lval var_4994[8];
 lval var_4995;
-var_4995 = LVI_SYMBOL("nstr");
+var_4995 = LVI_SYMBOL("apply");
 var_4994[0] = var_4995;
-if (do_init_var_4996) {
-lval var_4997[8];
-lval var_4998;
-var_4998 = LVI_SYMBOL("symbol->string");
-var_4997[0] = var_4998;
-lval var_4999;
-var_4999 = LVI_SYMBOL("name");
-var_4997[1] = var_4999;
-var_4996 = wile_gen_list(2, var_4997, NULL);
-do_init_var_4996 = false;
-}
+lval var_4996;
+var_4996 = LVI_SYMBOL("string-append");
 var_4994[1] = var_4996;
-var_4993 = wile_gen_list(2, var_4994, NULL);
+lval var_4997;
+var_4997 = LVI_SYMBOL("strs");
+var_4994[2] = var_4997;
+var_4993 = wile_gen_list(3, var_4994, NULL);
 do_init_var_4993 = false;
 }
-var_4919[6] = var_4993;
-if (do_init_var_5000) {
-lval var_5001[8];
-lval var_5002;
-var_5002 = LVI_SYMBOL("mstr");
-var_5001[0] = var_5002;
-if (do_init_var_5003) {
-lval var_5004[8];
-lval var_5005;
-var_5005 = LVI_SYMBOL("J1");
-var_5004[0] = var_5005;
+var_4990[2] = var_4993;
+var_4989 = wile_gen_list(3, var_4990, NULL);
+do_init_var_4989 = false;
+}
+var_4987[1] = var_4989;
+var_4986 = wile_gen_list(2, var_4987, NULL);
+do_init_var_4986 = false;
+}
+var_4962[3] = var_4986;
+if (do_init_var_4998) {
+lval var_4999[8];
+lval var_5000;
+var_5000 = LVI_SYMBOL("J1");
+var_4999[0] = var_5000;
+if (do_init_var_5001) {
+lval var_5002[8];
+lval var_5003;
+var_5003 = LVI_SYMBOL("lambda");
+var_5002[0] = var_5003;
+if (do_init_var_5004) {
+lval var_5005[8];
 lval var_5006;
-var_5006 = LVI_STRING("make-");
-var_5004[1] = var_5006;
+var_5006 = LVI_SYMBOL("pre");
+var_5005[0] = var_5006;
 lval var_5007;
-var_5007 = LVI_SYMBOL("nstr");
-var_5004[2] = var_5007;
-var_5003 = wile_gen_list(3, var_5004, NULL);
-do_init_var_5003 = false;
+var_5007 = LVI_SYMBOL("main");
+var_5005[1] = var_5007;
+var_5004 = wile_gen_list(2, var_5005, NULL);
+do_init_var_5004 = false;
 }
-var_5001[1] = var_5003;
-var_5000 = wile_gen_list(2, var_5001, NULL);
-do_init_var_5000 = false;
-}
-var_4919[7] = var_5000;
+var_5002[1] = var_5004;
 if (do_init_var_5008) {
 lval var_5009[8];
 lval var_5010;
-var_5010 = LVI_SYMBOL("msym");
+var_5010 = LVI_SYMBOL("string->symbol");
 var_5009[0] = var_5010;
 if (do_init_var_5011) {
 lval var_5012[8];
 lval var_5013;
-var_5013 = LVI_SYMBOL("gensym");
+var_5013 = LVI_SYMBOL("J0");
 var_5012[0] = var_5013;
-var_5011 = wile_gen_list(1, var_5012, NULL);
+lval var_5014;
+var_5014 = LVI_SYMBOL("pre");
+var_5012[1] = var_5014;
+lval var_5015;
+var_5015 = LVI_SYMBOL("main");
+var_5012[2] = var_5015;
+var_5011 = wile_gen_list(3, var_5012, NULL);
 do_init_var_5011 = false;
 }
 var_5009[1] = var_5011;
 var_5008 = wile_gen_list(2, var_5009, NULL);
 do_init_var_5008 = false;
 }
-var_4919[8] = var_5008;
-if (do_init_var_5014) {
-lval var_5015[8];
-lval var_5016;
-var_5016 = LVI_SYMBOL("istr");
-var_5015[0] = var_5016;
-if (do_init_var_5017) {
-lval var_5018[8];
-lval var_5019;
-var_5019 = LVI_SYMBOL("J2");
-var_5018[0] = var_5019;
-lval var_5020;
-var_5020 = LVI_STRING("isa-");
-var_5018[1] = var_5020;
+var_5002[2] = var_5008;
+var_5001 = wile_gen_list(3, var_5002, NULL);
+do_init_var_5001 = false;
+}
+var_4999[1] = var_5001;
+var_4998 = wile_gen_list(2, var_4999, NULL);
+do_init_var_4998 = false;
+}
+var_4962[4] = var_4998;
+if (do_init_var_5016) {
+lval var_5017[8];
+lval var_5018;
+var_5018 = LVI_SYMBOL("J2");
+var_5017[0] = var_5018;
+if (do_init_var_5019) {
+lval var_5020[8];
 lval var_5021;
-var_5021 = LVI_SYMBOL("nstr");
-var_5018[2] = var_5021;
-lval var_5022;
-var_5022 = LVI_STRING("?");
-var_5018[3] = var_5022;
-var_5017 = wile_gen_list(4, var_5018, NULL);
-do_init_var_5017 = false;
-}
-var_5015[1] = var_5017;
-var_5014 = wile_gen_list(2, var_5015, NULL);
-do_init_var_5014 = false;
-}
-var_4919[9] = var_5014;
-if (do_init_var_5023) {
-lval var_5024[8];
+var_5021 = LVI_SYMBOL("lambda");
+var_5020[0] = var_5021;
+if (do_init_var_5022) {
+lval var_5023[8];
+lval var_5024;
+var_5024 = LVI_SYMBOL("pre");
+var_5023[0] = var_5024;
 lval var_5025;
-var_5025 = LVI_SYMBOL("gpre");
-var_5024[0] = var_5025;
-if (do_init_var_5026) {
-lval var_5027[8];
-lval var_5028;
-var_5028 = LVI_SYMBOL("J0");
-var_5027[0] = var_5028;
+var_5025 = LVI_SYMBOL("main");
+var_5023[1] = var_5025;
+lval var_5026;
+var_5026 = LVI_SYMBOL("post");
+var_5023[2] = var_5026;
+var_5022 = wile_gen_list(3, var_5023, NULL);
+do_init_var_5022 = false;
+}
+var_5020[1] = var_5022;
+if (do_init_var_5027) {
+lval var_5028[8];
 lval var_5029;
-var_5029 = LVI_STRING("get-");
-var_5027[1] = var_5029;
-lval var_5030;
-var_5030 = LVI_SYMBOL("nstr");
-var_5027[2] = var_5030;
-lval var_5031;
-var_5031 = LVI_STRING("-");
-var_5027[3] = var_5031;
-var_5026 = wile_gen_list(4, var_5027, NULL);
-do_init_var_5026 = false;
-}
-var_5024[1] = var_5026;
-var_5023 = wile_gen_list(2, var_5024, NULL);
-do_init_var_5023 = false;
-}
-var_4919[10] = var_5023;
-if (do_init_var_5032) {
-lval var_5033[8];
+var_5029 = LVI_SYMBOL("string->symbol");
+var_5028[0] = var_5029;
+if (do_init_var_5030) {
+lval var_5031[8];
+lval var_5032;
+var_5032 = LVI_SYMBOL("J0");
+var_5031[0] = var_5032;
+lval var_5033;
+var_5033 = LVI_SYMBOL("pre");
+var_5031[1] = var_5033;
 lval var_5034;
-var_5034 = LVI_SYMBOL("spre");
-var_5033[0] = var_5034;
-if (do_init_var_5035) {
-lval var_5036[8];
-lval var_5037;
-var_5037 = LVI_SYMBOL("J0");
-var_5036[0] = var_5037;
+var_5034 = LVI_SYMBOL("main");
+var_5031[2] = var_5034;
+lval var_5035;
+var_5035 = LVI_SYMBOL("post");
+var_5031[3] = var_5035;
+var_5030 = wile_gen_list(4, var_5031, NULL);
+do_init_var_5030 = false;
+}
+var_5028[1] = var_5030;
+var_5027 = wile_gen_list(2, var_5028, NULL);
+do_init_var_5027 = false;
+}
+var_5020[2] = var_5027;
+var_5019 = wile_gen_list(3, var_5020, NULL);
+do_init_var_5019 = false;
+}
+var_5017[1] = var_5019;
+var_5016 = wile_gen_list(2, var_5017, NULL);
+do_init_var_5016 = false;
+}
+var_4962[5] = var_5016;
+if (do_init_var_5036) {
+lval var_5037[8];
 lval var_5038;
-var_5038 = LVI_STRING("set-");
-var_5036[1] = var_5038;
-lval var_5039;
-var_5039 = LVI_SYMBOL("nstr");
-var_5036[2] = var_5039;
-lval var_5040;
-var_5040 = LVI_STRING("-");
-var_5036[3] = var_5040;
-var_5035 = wile_gen_list(4, var_5036, NULL);
-do_init_var_5035 = false;
+var_5038 = LVI_SYMBOL("nstr");
+var_5037[0] = var_5038;
+if (do_init_var_5039) {
+lval var_5040[8];
+lval var_5041;
+var_5041 = LVI_SYMBOL("symbol->string");
+var_5040[0] = var_5041;
+lval var_5042;
+var_5042 = LVI_SYMBOL("name");
+var_5040[1] = var_5042;
+var_5039 = wile_gen_list(2, var_5040, NULL);
+do_init_var_5039 = false;
 }
-var_5033[1] = var_5035;
-var_5032 = wile_gen_list(2, var_5033, NULL);
-do_init_var_5032 = false;
+var_5037[1] = var_5039;
+var_5036 = wile_gen_list(2, var_5037, NULL);
+do_init_var_5036 = false;
 }
-var_4919[11] = var_5032;
-if (do_init_var_5041) {
-lval var_5042[8];
-lval var_5043;
-var_5043 = LVI_SYMBOL("istrs");
-var_5042[0] = var_5043;
-if (do_init_var_5044) {
-lval var_5045[8];
-lval var_5046;
-var_5046 = LVI_SYMBOL("map");
-var_5045[0] = var_5046;
-if (do_init_var_5047) {
-lval var_5048[8];
+var_4962[6] = var_5036;
+if (do_init_var_5043) {
+lval var_5044[8];
+lval var_5045;
+var_5045 = LVI_SYMBOL("mstr");
+var_5044[0] = var_5045;
+if (do_init_var_5046) {
+lval var_5047[8];
+lval var_5048;
+var_5048 = LVI_SYMBOL("J1");
+var_5047[0] = var_5048;
 lval var_5049;
-var_5049 = LVI_SYMBOL("lambda");
-var_5048[0] = var_5049;
-if (do_init_var_5050) {
-lval var_5051[8];
-lval var_5052;
-var_5052 = LVI_SYMBOL("f");
-var_5051[0] = var_5052;
-lval var_5053;
-var_5053 = LVI_SYMBOL("i");
-var_5051[1] = var_5053;
-var_5050 = wile_gen_list(2, var_5051, NULL);
-do_init_var_5050 = false;
+var_5049 = LVI_STRING("make-");
+var_5047[1] = var_5049;
+lval var_5050;
+var_5050 = LVI_SYMBOL("nstr");
+var_5047[2] = var_5050;
+var_5046 = wile_gen_list(3, var_5047, NULL);
+do_init_var_5046 = false;
 }
-var_5048[1] = var_5050;
+var_5044[1] = var_5046;
+var_5043 = wile_gen_list(2, var_5044, NULL);
+do_init_var_5043 = false;
+}
+var_4962[7] = var_5043;
+if (do_init_var_5051) {
+lval var_5052[8];
+lval var_5053;
+var_5053 = LVI_SYMBOL("msym");
+var_5052[0] = var_5053;
 if (do_init_var_5054) {
 lval var_5055[8];
 lval var_5056;
-var_5056 = LVI_SYMBOL("quasiquote");
+var_5056 = LVI_SYMBOL("gensym");
 var_5055[0] = var_5056;
+var_5054 = wile_gen_list(1, var_5055, NULL);
+do_init_var_5054 = false;
+}
+var_5052[1] = var_5054;
+var_5051 = wile_gen_list(2, var_5052, NULL);
+do_init_var_5051 = false;
+}
+var_4962[8] = var_5051;
 if (do_init_var_5057) {
 lval var_5058[8];
 lval var_5059;
-var_5059 = LVI_SYMBOL("vector-set!");
+var_5059 = LVI_SYMBOL("istr");
 var_5058[0] = var_5059;
 if (do_init_var_5060) {
 lval var_5061[8];
 lval var_5062;
-var_5062 = LVI_SYMBOL("unquote");
+var_5062 = LVI_SYMBOL("J2");
 var_5061[0] = var_5062;
 lval var_5063;
-var_5063 = LVI_SYMBOL("msym");
+var_5063 = LVI_STRING("isa-");
 var_5061[1] = var_5063;
-var_5060 = wile_gen_list(2, var_5061, NULL);
+lval var_5064;
+var_5064 = LVI_SYMBOL("nstr");
+var_5061[2] = var_5064;
+lval var_5065;
+var_5065 = LVI_STRING("?");
+var_5061[3] = var_5065;
+var_5060 = wile_gen_list(4, var_5061, NULL);
 do_init_var_5060 = false;
 }
 var_5058[1] = var_5060;
-if (do_init_var_5064) {
-lval var_5065[8];
-lval var_5066;
-var_5066 = LVI_SYMBOL("unquote");
-var_5065[0] = var_5066;
-lval var_5067;
-var_5067 = LVI_SYMBOL("i");
-var_5065[1] = var_5067;
-var_5064 = wile_gen_list(2, var_5065, NULL);
-do_init_var_5064 = false;
-}
-var_5058[2] = var_5064;
-if (do_init_var_5068) {
-lval var_5069[8];
-lval var_5070;
-var_5070 = LVI_SYMBOL("unquote");
-var_5069[0] = var_5070;
-lval var_5071;
-var_5071 = LVI_SYMBOL("f");
-var_5069[1] = var_5071;
-var_5068 = wile_gen_list(2, var_5069, NULL);
-do_init_var_5068 = false;
-}
-var_5058[3] = var_5068;
-var_5057 = wile_gen_list(4, var_5058, NULL);
+var_5057 = wile_gen_list(2, var_5058, NULL);
 do_init_var_5057 = false;
 }
-var_5055[1] = var_5057;
-var_5054 = wile_gen_list(2, var_5055, NULL);
-do_init_var_5054 = false;
-}
-var_5048[2] = var_5054;
-var_5047 = wile_gen_list(3, var_5048, NULL);
-do_init_var_5047 = false;
-}
-var_5045[1] = var_5047;
+var_4962[9] = var_5057;
+if (do_init_var_5066) {
+lval var_5067[8];
+lval var_5068;
+var_5068 = LVI_SYMBOL("gpre");
+var_5067[0] = var_5068;
+if (do_init_var_5069) {
+lval var_5070[8];
+lval var_5071;
+var_5071 = LVI_SYMBOL("J0");
+var_5070[0] = var_5071;
 lval var_5072;
-var_5072 = LVI_SYMBOL("fs");
-var_5045[2] = var_5072;
-if (do_init_var_5073) {
-lval var_5074[8];
-lval var_5075;
-var_5075 = LVI_SYMBOL("fromto");
-var_5074[0] = var_5075;
-lval var_5076;
-var_5076 = LVI_INT(1);
-var_5074[1] = var_5076;
+var_5072 = LVI_STRING("get-");
+var_5070[1] = var_5072;
+lval var_5073;
+var_5073 = LVI_SYMBOL("nstr");
+var_5070[2] = var_5073;
+lval var_5074;
+var_5074 = LVI_STRING("-");
+var_5070[3] = var_5074;
+var_5069 = wile_gen_list(4, var_5070, NULL);
+do_init_var_5069 = false;
+}
+var_5067[1] = var_5069;
+var_5066 = wile_gen_list(2, var_5067, NULL);
+do_init_var_5066 = false;
+}
+var_4962[10] = var_5066;
+if (do_init_var_5075) {
+lval var_5076[8];
 lval var_5077;
-var_5077 = LVI_SYMBOL("lfs");
-var_5074[2] = var_5077;
-var_5073 = wile_gen_list(3, var_5074, NULL);
-do_init_var_5073 = false;
-}
-var_5045[3] = var_5073;
-var_5044 = wile_gen_list(4, var_5045, NULL);
-do_init_var_5044 = false;
-}
-var_5042[1] = var_5044;
-var_5041 = wile_gen_list(2, var_5042, NULL);
-do_init_var_5041 = false;
-}
-var_4919[12] = var_5041;
+var_5077 = LVI_SYMBOL("spre");
+var_5076[0] = var_5077;
 if (do_init_var_5078) {
 lval var_5079[8];
 lval var_5080;
-var_5080 = LVI_SYMBOL("gstrs");
+var_5080 = LVI_SYMBOL("J0");
 var_5079[0] = var_5080;
-if (do_init_var_5081) {
-lval var_5082[8];
+lval var_5081;
+var_5081 = LVI_STRING("set-");
+var_5079[1] = var_5081;
+lval var_5082;
+var_5082 = LVI_SYMBOL("nstr");
+var_5079[2] = var_5082;
 lval var_5083;
-var_5083 = LVI_SYMBOL("map");
-var_5082[0] = var_5083;
+var_5083 = LVI_STRING("-");
+var_5079[3] = var_5083;
+var_5078 = wile_gen_list(4, var_5079, NULL);
+do_init_var_5078 = false;
+}
+var_5076[1] = var_5078;
+var_5075 = wile_gen_list(2, var_5076, NULL);
+do_init_var_5075 = false;
+}
+var_4962[11] = var_5075;
 if (do_init_var_5084) {
 lval var_5085[8];
 lval var_5086;
-var_5086 = LVI_SYMBOL("lambda");
+var_5086 = LVI_SYMBOL("istrs");
 var_5085[0] = var_5086;
 if (do_init_var_5087) {
 lval var_5088[8];
 lval var_5089;
-var_5089 = LVI_SYMBOL("f");
+var_5089 = LVI_SYMBOL("map");
 var_5088[0] = var_5089;
-lval var_5090;
-var_5090 = LVI_SYMBOL("i");
-var_5088[1] = var_5090;
-var_5087 = wile_gen_list(2, var_5088, NULL);
-do_init_var_5087 = false;
+if (do_init_var_5090) {
+lval var_5091[8];
+lval var_5092;
+var_5092 = LVI_SYMBOL("lambda");
+var_5091[0] = var_5092;
+if (do_init_var_5093) {
+lval var_5094[8];
+lval var_5095;
+var_5095 = LVI_SYMBOL("f");
+var_5094[0] = var_5095;
+lval var_5096;
+var_5096 = LVI_SYMBOL("i");
+var_5094[1] = var_5096;
+var_5093 = wile_gen_list(2, var_5094, NULL);
+do_init_var_5093 = false;
 }
-var_5085[1] = var_5087;
-if (do_init_var_5091) {
-lval var_5092[8];
-lval var_5093;
-var_5093 = LVI_SYMBOL("let");
-var_5092[0] = var_5093;
-if (do_init_var_5094) {
-lval var_5095[8];
-if (do_init_var_5096) {
-lval var_5097[8];
-lval var_5098;
-var_5098 = LVI_SYMBOL("gfn");
-var_5097[0] = var_5098;
-if (do_init_var_5099) {
-lval var_5100[8];
-lval var_5101;
-var_5101 = LVI_SYMBOL("J1");
-var_5100[0] = var_5101;
+var_5091[1] = var_5093;
+if (do_init_var_5097) {
+lval var_5098[8];
+lval var_5099;
+var_5099 = LVI_SYMBOL("quasiquote");
+var_5098[0] = var_5099;
+if (do_init_var_5100) {
+lval var_5101[8];
 lval var_5102;
-var_5102 = LVI_SYMBOL("gpre");
-var_5100[1] = var_5102;
+var_5102 = LVI_SYMBOL("vector-set!");
+var_5101[0] = var_5102;
 if (do_init_var_5103) {
 lval var_5104[8];
 lval var_5105;
-var_5105 = LVI_SYMBOL("symbol->string");
+var_5105 = LVI_SYMBOL("unquote");
 var_5104[0] = var_5105;
 lval var_5106;
-var_5106 = LVI_SYMBOL("f");
+var_5106 = LVI_SYMBOL("msym");
 var_5104[1] = var_5106;
 var_5103 = wile_gen_list(2, var_5104, NULL);
 do_init_var_5103 = false;
 }
-var_5100[2] = var_5103;
-var_5099 = wile_gen_list(3, var_5100, NULL);
-do_init_var_5099 = false;
-}
-var_5097[1] = var_5099;
-var_5096 = wile_gen_list(2, var_5097, NULL);
-do_init_var_5096 = false;
-}
-var_5095[0] = var_5096;
-var_5094 = wile_gen_list(1, var_5095, NULL);
-do_init_var_5094 = false;
-}
-var_5092[1] = var_5094;
+var_5101[1] = var_5103;
 if (do_init_var_5107) {
 lval var_5108[8];
 lval var_5109;
-var_5109 = LVI_SYMBOL("quasiquote");
+var_5109 = LVI_SYMBOL("unquote");
 var_5108[0] = var_5109;
-if (do_init_var_5110) {
-lval var_5111[8];
-lval var_5112;
-var_5112 = LVI_SYMBOL("define");
-var_5111[0] = var_5112;
-if (do_init_var_5113) {
-lval var_5114[8];
-if (do_init_var_5115) {
-lval var_5116[8];
-lval var_5117;
-var_5117 = LVI_SYMBOL("unquote");
-var_5116[0] = var_5117;
-lval var_5118;
-var_5118 = LVI_SYMBOL("gfn");
-var_5116[1] = var_5118;
-var_5115 = wile_gen_list(2, var_5116, NULL);
-do_init_var_5115 = false;
-}
-var_5114[0] = var_5115;
-lval var_5119;
-var_5119 = LVI_SYMBOL("it");
-var_5114[1] = var_5119;
-var_5113 = wile_gen_list(2, var_5114, NULL);
-do_init_var_5113 = false;
-}
-var_5111[1] = var_5113;
-if (do_init_var_5120) {
-lval var_5121[8];
-lval var_5122;
-var_5122 = LVI_SYMBOL("vector-ref");
-var_5121[0] = var_5122;
-lval var_5123;
-var_5123 = LVI_SYMBOL("it");
-var_5121[1] = var_5123;
-if (do_init_var_5124) {
-lval var_5125[8];
-lval var_5126;
-var_5126 = LVI_SYMBOL("unquote");
-var_5125[0] = var_5126;
-lval var_5127;
-var_5127 = LVI_SYMBOL("i");
-var_5125[1] = var_5127;
-var_5124 = wile_gen_list(2, var_5125, NULL);
-do_init_var_5124 = false;
-}
-var_5121[2] = var_5124;
-var_5120 = wile_gen_list(3, var_5121, NULL);
-do_init_var_5120 = false;
-}
-var_5111[2] = var_5120;
-var_5110 = wile_gen_list(3, var_5111, NULL);
-do_init_var_5110 = false;
-}
+lval var_5110;
+var_5110 = LVI_SYMBOL("i");
 var_5108[1] = var_5110;
 var_5107 = wile_gen_list(2, var_5108, NULL);
 do_init_var_5107 = false;
 }
-var_5092[2] = var_5107;
-var_5091 = wile_gen_list(3, var_5092, NULL);
-do_init_var_5091 = false;
+var_5101[2] = var_5107;
+if (do_init_var_5111) {
+lval var_5112[8];
+lval var_5113;
+var_5113 = LVI_SYMBOL("unquote");
+var_5112[0] = var_5113;
+lval var_5114;
+var_5114 = LVI_SYMBOL("f");
+var_5112[1] = var_5114;
+var_5111 = wile_gen_list(2, var_5112, NULL);
+do_init_var_5111 = false;
 }
-var_5085[2] = var_5091;
-var_5084 = wile_gen_list(3, var_5085, NULL);
+var_5101[3] = var_5111;
+var_5100 = wile_gen_list(4, var_5101, NULL);
+do_init_var_5100 = false;
+}
+var_5098[1] = var_5100;
+var_5097 = wile_gen_list(2, var_5098, NULL);
+do_init_var_5097 = false;
+}
+var_5091[2] = var_5097;
+var_5090 = wile_gen_list(3, var_5091, NULL);
+do_init_var_5090 = false;
+}
+var_5088[1] = var_5090;
+lval var_5115;
+var_5115 = LVI_SYMBOL("fs");
+var_5088[2] = var_5115;
+if (do_init_var_5116) {
+lval var_5117[8];
+lval var_5118;
+var_5118 = LVI_SYMBOL("fromto");
+var_5117[0] = var_5118;
+lval var_5119;
+var_5119 = LVI_INT(1);
+var_5117[1] = var_5119;
+lval var_5120;
+var_5120 = LVI_SYMBOL("lfs");
+var_5117[2] = var_5120;
+var_5116 = wile_gen_list(3, var_5117, NULL);
+do_init_var_5116 = false;
+}
+var_5088[3] = var_5116;
+var_5087 = wile_gen_list(4, var_5088, NULL);
+do_init_var_5087 = false;
+}
+var_5085[1] = var_5087;
+var_5084 = wile_gen_list(2, var_5085, NULL);
 do_init_var_5084 = false;
 }
-var_5082[1] = var_5084;
-lval var_5128;
-var_5128 = LVI_SYMBOL("fs");
-var_5082[2] = var_5128;
-if (do_init_var_5129) {
-lval var_5130[8];
-lval var_5131;
-var_5131 = LVI_SYMBOL("fromto");
-var_5130[0] = var_5131;
+var_4962[12] = var_5084;
+if (do_init_var_5121) {
+lval var_5122[8];
+lval var_5123;
+var_5123 = LVI_SYMBOL("gstrs");
+var_5122[0] = var_5123;
+if (do_init_var_5124) {
+lval var_5125[8];
+lval var_5126;
+var_5126 = LVI_SYMBOL("map");
+var_5125[0] = var_5126;
+if (do_init_var_5127) {
+lval var_5128[8];
+lval var_5129;
+var_5129 = LVI_SYMBOL("lambda");
+var_5128[0] = var_5129;
+if (do_init_var_5130) {
+lval var_5131[8];
 lval var_5132;
-var_5132 = LVI_INT(1);
-var_5130[1] = var_5132;
+var_5132 = LVI_SYMBOL("f");
+var_5131[0] = var_5132;
 lval var_5133;
-var_5133 = LVI_SYMBOL("lfs");
-var_5130[2] = var_5133;
-var_5129 = wile_gen_list(3, var_5130, NULL);
-do_init_var_5129 = false;
+var_5133 = LVI_SYMBOL("i");
+var_5131[1] = var_5133;
+var_5130 = wile_gen_list(2, var_5131, NULL);
+do_init_var_5130 = false;
 }
-var_5082[3] = var_5129;
-var_5081 = wile_gen_list(4, var_5082, NULL);
-do_init_var_5081 = false;
-}
-var_5079[1] = var_5081;
-var_5078 = wile_gen_list(2, var_5079, NULL);
-do_init_var_5078 = false;
-}
-var_4919[13] = var_5078;
+var_5128[1] = var_5130;
 if (do_init_var_5134) {
 lval var_5135[8];
 lval var_5136;
-var_5136 = LVI_SYMBOL("sstrs");
+var_5136 = LVI_SYMBOL("let");
 var_5135[0] = var_5136;
 if (do_init_var_5137) {
 lval var_5138[8];
-lval var_5139;
-var_5139 = LVI_SYMBOL("map");
-var_5138[0] = var_5139;
-if (do_init_var_5140) {
-lval var_5141[8];
-lval var_5142;
-var_5142 = LVI_SYMBOL("lambda");
-var_5141[0] = var_5142;
-if (do_init_var_5143) {
-lval var_5144[8];
+if (do_init_var_5139) {
+lval var_5140[8];
+lval var_5141;
+var_5141 = LVI_SYMBOL("gfn");
+var_5140[0] = var_5141;
+if (do_init_var_5142) {
+lval var_5143[8];
+lval var_5144;
+var_5144 = LVI_SYMBOL("J1");
+var_5143[0] = var_5144;
 lval var_5145;
-var_5145 = LVI_SYMBOL("f");
-var_5144[0] = var_5145;
-lval var_5146;
-var_5146 = LVI_SYMBOL("i");
-var_5144[1] = var_5146;
-var_5143 = wile_gen_list(2, var_5144, NULL);
-do_init_var_5143 = false;
-}
-var_5141[1] = var_5143;
-if (do_init_var_5147) {
-lval var_5148[8];
+var_5145 = LVI_SYMBOL("gpre");
+var_5143[1] = var_5145;
+if (do_init_var_5146) {
+lval var_5147[8];
+lval var_5148;
+var_5148 = LVI_SYMBOL("symbol->string");
+var_5147[0] = var_5148;
 lval var_5149;
-var_5149 = LVI_SYMBOL("let");
-var_5148[0] = var_5149;
-if (do_init_var_5150) {
-lval var_5151[8];
-if (do_init_var_5152) {
-lval var_5153[8];
-lval var_5154;
-var_5154 = LVI_SYMBOL("sfn");
-var_5153[0] = var_5154;
-if (do_init_var_5155) {
-lval var_5156[8];
-lval var_5157;
-var_5157 = LVI_SYMBOL("J2");
-var_5156[0] = var_5157;
-lval var_5158;
-var_5158 = LVI_SYMBOL("spre");
-var_5156[1] = var_5158;
-if (do_init_var_5159) {
-lval var_5160[8];
-lval var_5161;
-var_5161 = LVI_SYMBOL("symbol->string");
-var_5160[0] = var_5161;
-lval var_5162;
-var_5162 = LVI_SYMBOL("f");
-var_5160[1] = var_5162;
-var_5159 = wile_gen_list(2, var_5160, NULL);
-do_init_var_5159 = false;
+var_5149 = LVI_SYMBOL("f");
+var_5147[1] = var_5149;
+var_5146 = wile_gen_list(2, var_5147, NULL);
+do_init_var_5146 = false;
 }
-var_5156[2] = var_5159;
-lval var_5163;
-var_5163 = LVI_STRING("!");
-var_5156[3] = var_5163;
-var_5155 = wile_gen_list(4, var_5156, NULL);
-do_init_var_5155 = false;
+var_5143[2] = var_5146;
+var_5142 = wile_gen_list(3, var_5143, NULL);
+do_init_var_5142 = false;
 }
-var_5153[1] = var_5155;
-var_5152 = wile_gen_list(2, var_5153, NULL);
-do_init_var_5152 = false;
+var_5140[1] = var_5142;
+var_5139 = wile_gen_list(2, var_5140, NULL);
+do_init_var_5139 = false;
 }
-var_5151[0] = var_5152;
-var_5150 = wile_gen_list(1, var_5151, NULL);
-do_init_var_5150 = false;
-}
-var_5148[1] = var_5150;
-if (do_init_var_5164) {
-lval var_5165[8];
-lval var_5166;
-var_5166 = LVI_SYMBOL("quasiquote");
-var_5165[0] = var_5166;
-if (do_init_var_5167) {
-lval var_5168[8];
-lval var_5169;
-var_5169 = LVI_SYMBOL("define");
-var_5168[0] = var_5169;
-if (do_init_var_5170) {
-lval var_5171[8];
-if (do_init_var_5172) {
-lval var_5173[8];
-lval var_5174;
-var_5174 = LVI_SYMBOL("unquote");
-var_5173[0] = var_5174;
-lval var_5175;
-var_5175 = LVI_SYMBOL("sfn");
-var_5173[1] = var_5175;
-var_5172 = wile_gen_list(2, var_5173, NULL);
-do_init_var_5172 = false;
-}
-var_5171[0] = var_5172;
-lval var_5176;
-var_5176 = LVI_SYMBOL("it");
-var_5171[1] = var_5176;
-lval var_5177;
-var_5177 = LVI_SYMBOL("val");
-var_5171[2] = var_5177;
-var_5170 = wile_gen_list(3, var_5171, NULL);
-do_init_var_5170 = false;
-}
-var_5168[1] = var_5170;
-if (do_init_var_5178) {
-lval var_5179[8];
-lval var_5180;
-var_5180 = LVI_SYMBOL("vector-set!");
-var_5179[0] = var_5180;
-lval var_5181;
-var_5181 = LVI_SYMBOL("it");
-var_5179[1] = var_5181;
-if (do_init_var_5182) {
-lval var_5183[8];
-lval var_5184;
-var_5184 = LVI_SYMBOL("unquote");
-var_5183[0] = var_5184;
-lval var_5185;
-var_5185 = LVI_SYMBOL("i");
-var_5183[1] = var_5185;
-var_5182 = wile_gen_list(2, var_5183, NULL);
-do_init_var_5182 = false;
-}
-var_5179[2] = var_5182;
-lval var_5186;
-var_5186 = LVI_SYMBOL("val");
-var_5179[3] = var_5186;
-var_5178 = wile_gen_list(4, var_5179, NULL);
-do_init_var_5178 = false;
-}
-var_5168[2] = var_5178;
-var_5167 = wile_gen_list(3, var_5168, NULL);
-do_init_var_5167 = false;
-}
-var_5165[1] = var_5167;
-var_5164 = wile_gen_list(2, var_5165, NULL);
-do_init_var_5164 = false;
-}
-var_5148[2] = var_5164;
-var_5147 = wile_gen_list(3, var_5148, NULL);
-do_init_var_5147 = false;
-}
-var_5141[2] = var_5147;
-var_5140 = wile_gen_list(3, var_5141, NULL);
-do_init_var_5140 = false;
-}
-var_5138[1] = var_5140;
-lval var_5187;
-var_5187 = LVI_SYMBOL("fs");
-var_5138[2] = var_5187;
-if (do_init_var_5188) {
-lval var_5189[8];
-lval var_5190;
-var_5190 = LVI_SYMBOL("fromto");
-var_5189[0] = var_5190;
-lval var_5191;
-var_5191 = LVI_INT(1);
-var_5189[1] = var_5191;
-lval var_5192;
-var_5192 = LVI_SYMBOL("lfs");
-var_5189[2] = var_5192;
-var_5188 = wile_gen_list(3, var_5189, NULL);
-do_init_var_5188 = false;
-}
-var_5138[3] = var_5188;
-var_5137 = wile_gen_list(4, var_5138, NULL);
+var_5138[0] = var_5139;
+var_5137 = wile_gen_list(1, var_5138, NULL);
 do_init_var_5137 = false;
 }
 var_5135[1] = var_5137;
-var_5134 = wile_gen_list(2, var_5135, NULL);
+if (do_init_var_5150) {
+lval var_5151[8];
+lval var_5152;
+var_5152 = LVI_SYMBOL("quasiquote");
+var_5151[0] = var_5152;
+if (do_init_var_5153) {
+lval var_5154[8];
+lval var_5155;
+var_5155 = LVI_SYMBOL("define");
+var_5154[0] = var_5155;
+if (do_init_var_5156) {
+lval var_5157[8];
+if (do_init_var_5158) {
+lval var_5159[8];
+lval var_5160;
+var_5160 = LVI_SYMBOL("unquote");
+var_5159[0] = var_5160;
+lval var_5161;
+var_5161 = LVI_SYMBOL("gfn");
+var_5159[1] = var_5161;
+var_5158 = wile_gen_list(2, var_5159, NULL);
+do_init_var_5158 = false;
+}
+var_5157[0] = var_5158;
+lval var_5162;
+var_5162 = LVI_SYMBOL("it");
+var_5157[1] = var_5162;
+var_5156 = wile_gen_list(2, var_5157, NULL);
+do_init_var_5156 = false;
+}
+var_5154[1] = var_5156;
+if (do_init_var_5163) {
+lval var_5164[8];
+lval var_5165;
+var_5165 = LVI_SYMBOL("vector-ref");
+var_5164[0] = var_5165;
+lval var_5166;
+var_5166 = LVI_SYMBOL("it");
+var_5164[1] = var_5166;
+if (do_init_var_5167) {
+lval var_5168[8];
+lval var_5169;
+var_5169 = LVI_SYMBOL("unquote");
+var_5168[0] = var_5169;
+lval var_5170;
+var_5170 = LVI_SYMBOL("i");
+var_5168[1] = var_5170;
+var_5167 = wile_gen_list(2, var_5168, NULL);
+do_init_var_5167 = false;
+}
+var_5164[2] = var_5167;
+var_5163 = wile_gen_list(3, var_5164, NULL);
+do_init_var_5163 = false;
+}
+var_5154[2] = var_5163;
+var_5153 = wile_gen_list(3, var_5154, NULL);
+do_init_var_5153 = false;
+}
+var_5151[1] = var_5153;
+var_5150 = wile_gen_list(2, var_5151, NULL);
+do_init_var_5150 = false;
+}
+var_5135[2] = var_5150;
+var_5134 = wile_gen_list(3, var_5135, NULL);
 do_init_var_5134 = false;
 }
-var_4919[14] = var_5134;
+var_5128[2] = var_5134;
+var_5127 = wile_gen_list(3, var_5128, NULL);
+do_init_var_5127 = false;
+}
+var_5125[1] = var_5127;
+lval var_5171;
+var_5171 = LVI_SYMBOL("fs");
+var_5125[2] = var_5171;
+if (do_init_var_5172) {
+lval var_5173[8];
+lval var_5174;
+var_5174 = LVI_SYMBOL("fromto");
+var_5173[0] = var_5174;
+lval var_5175;
+var_5175 = LVI_INT(1);
+var_5173[1] = var_5175;
+lval var_5176;
+var_5176 = LVI_SYMBOL("lfs");
+var_5173[2] = var_5176;
+var_5172 = wile_gen_list(3, var_5173, NULL);
+do_init_var_5172 = false;
+}
+var_5125[3] = var_5172;
+var_5124 = wile_gen_list(4, var_5125, NULL);
+do_init_var_5124 = false;
+}
+var_5122[1] = var_5124;
+var_5121 = wile_gen_list(2, var_5122, NULL);
+do_init_var_5121 = false;
+}
+var_4962[13] = var_5121;
+if (do_init_var_5177) {
+lval var_5178[8];
+lval var_5179;
+var_5179 = LVI_SYMBOL("sstrs");
+var_5178[0] = var_5179;
+if (do_init_var_5180) {
+lval var_5181[8];
+lval var_5182;
+var_5182 = LVI_SYMBOL("map");
+var_5181[0] = var_5182;
+if (do_init_var_5183) {
+lval var_5184[8];
+lval var_5185;
+var_5185 = LVI_SYMBOL("lambda");
+var_5184[0] = var_5185;
+if (do_init_var_5186) {
+lval var_5187[8];
+lval var_5188;
+var_5188 = LVI_SYMBOL("f");
+var_5187[0] = var_5188;
+lval var_5189;
+var_5189 = LVI_SYMBOL("i");
+var_5187[1] = var_5189;
+var_5186 = wile_gen_list(2, var_5187, NULL);
+do_init_var_5186 = false;
+}
+var_5184[1] = var_5186;
+if (do_init_var_5190) {
+lval var_5191[8];
+lval var_5192;
+var_5192 = LVI_SYMBOL("let");
+var_5191[0] = var_5192;
 if (do_init_var_5193) {
 lval var_5194[8];
-lval var_5195;
-var_5195 = LVI_SYMBOL("defs");
-var_5194[0] = var_5195;
-if (do_init_var_5196) {
-lval var_5197[8];
-lval var_5198;
-var_5198 = LVI_SYMBOL("quasiquote");
-var_5197[0] = var_5198;
-if (do_init_var_5199) {
-lval var_5200[8];
+if (do_init_var_5195) {
+lval var_5196[8];
+lval var_5197;
+var_5197 = LVI_SYMBOL("sfn");
+var_5196[0] = var_5197;
+if (do_init_var_5198) {
+lval var_5199[8];
+lval var_5200;
+var_5200 = LVI_SYMBOL("J2");
+var_5199[0] = var_5200;
 lval var_5201;
-var_5201 = LVI_SYMBOL("begin");
-var_5200[0] = var_5201;
+var_5201 = LVI_SYMBOL("spre");
+var_5199[1] = var_5201;
 if (do_init_var_5202) {
 lval var_5203[8];
 lval var_5204;
-var_5204 = LVI_SYMBOL("define");
+var_5204 = LVI_SYMBOL("symbol->string");
 var_5203[0] = var_5204;
-if (do_init_var_5205) {
-lval var_5206[8];
+lval var_5205;
+var_5205 = LVI_SYMBOL("f");
+var_5203[1] = var_5205;
+var_5202 = wile_gen_list(2, var_5203, NULL);
+do_init_var_5202 = false;
+}
+var_5199[2] = var_5202;
+lval var_5206;
+var_5206 = LVI_STRING("!");
+var_5199[3] = var_5206;
+var_5198 = wile_gen_list(4, var_5199, NULL);
+do_init_var_5198 = false;
+}
+var_5196[1] = var_5198;
+var_5195 = wile_gen_list(2, var_5196, NULL);
+do_init_var_5195 = false;
+}
+var_5194[0] = var_5195;
+var_5193 = wile_gen_list(1, var_5194, NULL);
+do_init_var_5193 = false;
+}
+var_5191[1] = var_5193;
 if (do_init_var_5207) {
 lval var_5208[8];
 lval var_5209;
-var_5209 = LVI_SYMBOL("unquote");
+var_5209 = LVI_SYMBOL("quasiquote");
 var_5208[0] = var_5209;
-lval var_5210;
-var_5210 = LVI_SYMBOL("mstr");
+if (do_init_var_5210) {
+lval var_5211[8];
+lval var_5212;
+var_5212 = LVI_SYMBOL("define");
+var_5211[0] = var_5212;
+if (do_init_var_5213) {
+lval var_5214[8];
+if (do_init_var_5215) {
+lval var_5216[8];
+lval var_5217;
+var_5217 = LVI_SYMBOL("unquote");
+var_5216[0] = var_5217;
+lval var_5218;
+var_5218 = LVI_SYMBOL("sfn");
+var_5216[1] = var_5218;
+var_5215 = wile_gen_list(2, var_5216, NULL);
+do_init_var_5215 = false;
+}
+var_5214[0] = var_5215;
+lval var_5219;
+var_5219 = LVI_SYMBOL("it");
+var_5214[1] = var_5219;
+lval var_5220;
+var_5220 = LVI_SYMBOL("val");
+var_5214[2] = var_5220;
+var_5213 = wile_gen_list(3, var_5214, NULL);
+do_init_var_5213 = false;
+}
+var_5211[1] = var_5213;
+if (do_init_var_5221) {
+lval var_5222[8];
+lval var_5223;
+var_5223 = LVI_SYMBOL("vector-set!");
+var_5222[0] = var_5223;
+lval var_5224;
+var_5224 = LVI_SYMBOL("it");
+var_5222[1] = var_5224;
+if (do_init_var_5225) {
+lval var_5226[8];
+lval var_5227;
+var_5227 = LVI_SYMBOL("unquote");
+var_5226[0] = var_5227;
+lval var_5228;
+var_5228 = LVI_SYMBOL("i");
+var_5226[1] = var_5228;
+var_5225 = wile_gen_list(2, var_5226, NULL);
+do_init_var_5225 = false;
+}
+var_5222[2] = var_5225;
+lval var_5229;
+var_5229 = LVI_SYMBOL("val");
+var_5222[3] = var_5229;
+var_5221 = wile_gen_list(4, var_5222, NULL);
+do_init_var_5221 = false;
+}
+var_5211[2] = var_5221;
+var_5210 = wile_gen_list(3, var_5211, NULL);
+do_init_var_5210 = false;
+}
 var_5208[1] = var_5210;
 var_5207 = wile_gen_list(2, var_5208, NULL);
 do_init_var_5207 = false;
 }
-var_5206[0] = var_5207;
-if (do_init_var_5211) {
-lval var_5212[8];
-lval var_5213;
-var_5213 = LVI_SYMBOL("unquote-splicing");
-var_5212[0] = var_5213;
-lval var_5214;
-var_5214 = LVI_SYMBOL("fs");
-var_5212[1] = var_5214;
-var_5211 = wile_gen_list(2, var_5212, NULL);
-do_init_var_5211 = false;
+var_5191[2] = var_5207;
+var_5190 = wile_gen_list(3, var_5191, NULL);
+do_init_var_5190 = false;
 }
-var_5206[1] = var_5211;
-var_5205 = wile_gen_list(2, var_5206, NULL);
-do_init_var_5205 = false;
+var_5184[2] = var_5190;
+var_5183 = wile_gen_list(3, var_5184, NULL);
+do_init_var_5183 = false;
 }
-var_5203[1] = var_5205;
-if (do_init_var_5215) {
-lval var_5216[8];
-lval var_5217;
-var_5217 = LVI_SYMBOL("let");
-var_5216[0] = var_5217;
-if (do_init_var_5218) {
-lval var_5219[8];
-if (do_init_var_5220) {
-lval var_5221[8];
-if (do_init_var_5222) {
-lval var_5223[8];
-lval var_5224;
-var_5224 = LVI_SYMBOL("unquote");
-var_5223[0] = var_5224;
-lval var_5225;
-var_5225 = LVI_SYMBOL("msym");
-var_5223[1] = var_5225;
-var_5222 = wile_gen_list(2, var_5223, NULL);
-do_init_var_5222 = false;
-}
-var_5221[0] = var_5222;
-if (do_init_var_5226) {
-lval var_5227[8];
-lval var_5228;
-var_5228 = LVI_SYMBOL("vector-create");
-var_5227[0] = var_5228;
-if (do_init_var_5229) {
-lval var_5230[8];
-lval var_5231;
-var_5231 = LVI_SYMBOL("unquote");
-var_5230[0] = var_5231;
-lval var_5232;
-var_5232 = LVI_SYMBOL("nfs");
-var_5230[1] = var_5232;
-var_5229 = wile_gen_list(2, var_5230, NULL);
-do_init_var_5229 = false;
-}
-var_5227[1] = var_5229;
-var_5226 = wile_gen_list(2, var_5227, NULL);
-do_init_var_5226 = false;
-}
-var_5221[1] = var_5226;
-var_5220 = wile_gen_list(2, var_5221, NULL);
-do_init_var_5220 = false;
-}
-var_5219[0] = var_5220;
-var_5218 = wile_gen_list(1, var_5219, NULL);
-do_init_var_5218 = false;
-}
-var_5216[1] = var_5218;
-if (do_init_var_5233) {
-lval var_5234[8];
+var_5181[1] = var_5183;
+lval var_5230;
+var_5230 = LVI_SYMBOL("fs");
+var_5181[2] = var_5230;
+if (do_init_var_5231) {
+lval var_5232[8];
+lval var_5233;
+var_5233 = LVI_SYMBOL("fromto");
+var_5232[0] = var_5233;
+lval var_5234;
+var_5234 = LVI_INT(1);
+var_5232[1] = var_5234;
 lval var_5235;
-var_5235 = LVI_SYMBOL("vector-set!");
-var_5234[0] = var_5235;
+var_5235 = LVI_SYMBOL("lfs");
+var_5232[2] = var_5235;
+var_5231 = wile_gen_list(3, var_5232, NULL);
+do_init_var_5231 = false;
+}
+var_5181[3] = var_5231;
+var_5180 = wile_gen_list(4, var_5181, NULL);
+do_init_var_5180 = false;
+}
+var_5178[1] = var_5180;
+var_5177 = wile_gen_list(2, var_5178, NULL);
+do_init_var_5177 = false;
+}
+var_4962[14] = var_5177;
 if (do_init_var_5236) {
 lval var_5237[8];
 lval var_5238;
-var_5238 = LVI_SYMBOL("unquote");
+var_5238 = LVI_SYMBOL("defs");
 var_5237[0] = var_5238;
-lval var_5239;
-var_5239 = LVI_SYMBOL("msym");
+if (do_init_var_5239) {
+lval var_5240[8];
+lval var_5241;
+var_5241 = LVI_SYMBOL("quasiquote");
+var_5240[0] = var_5241;
+if (do_init_var_5242) {
+lval var_5243[8];
+lval var_5244;
+var_5244 = LVI_SYMBOL("begin");
+var_5243[0] = var_5244;
+if (do_init_var_5245) {
+lval var_5246[8];
+lval var_5247;
+var_5247 = LVI_SYMBOL("define");
+var_5246[0] = var_5247;
+if (do_init_var_5248) {
+lval var_5249[8];
+if (do_init_var_5250) {
+lval var_5251[8];
+lval var_5252;
+var_5252 = LVI_SYMBOL("unquote");
+var_5251[0] = var_5252;
+lval var_5253;
+var_5253 = LVI_SYMBOL("mstr");
+var_5251[1] = var_5253;
+var_5250 = wile_gen_list(2, var_5251, NULL);
+do_init_var_5250 = false;
+}
+var_5249[0] = var_5250;
+if (do_init_var_5254) {
+lval var_5255[8];
+lval var_5256;
+var_5256 = LVI_SYMBOL("unquote-splicing");
+var_5255[0] = var_5256;
+lval var_5257;
+var_5257 = LVI_SYMBOL("fs");
+var_5255[1] = var_5257;
+var_5254 = wile_gen_list(2, var_5255, NULL);
+do_init_var_5254 = false;
+}
+var_5249[1] = var_5254;
+var_5248 = wile_gen_list(2, var_5249, NULL);
+do_init_var_5248 = false;
+}
+var_5246[1] = var_5248;
+if (do_init_var_5258) {
+lval var_5259[8];
+lval var_5260;
+var_5260 = LVI_SYMBOL("let");
+var_5259[0] = var_5260;
+if (do_init_var_5261) {
+lval var_5262[8];
+if (do_init_var_5263) {
+lval var_5264[8];
+if (do_init_var_5265) {
+lval var_5266[8];
+lval var_5267;
+var_5267 = LVI_SYMBOL("unquote");
+var_5266[0] = var_5267;
+lval var_5268;
+var_5268 = LVI_SYMBOL("msym");
+var_5266[1] = var_5268;
+var_5265 = wile_gen_list(2, var_5266, NULL);
+do_init_var_5265 = false;
+}
+var_5264[0] = var_5265;
+if (do_init_var_5269) {
+lval var_5270[8];
+lval var_5271;
+var_5271 = LVI_SYMBOL("vector-create");
+var_5270[0] = var_5271;
+if (do_init_var_5272) {
+lval var_5273[8];
+lval var_5274;
+var_5274 = LVI_SYMBOL("unquote");
+var_5273[0] = var_5274;
+lval var_5275;
+var_5275 = LVI_SYMBOL("nfs");
+var_5273[1] = var_5275;
+var_5272 = wile_gen_list(2, var_5273, NULL);
+do_init_var_5272 = false;
+}
+var_5270[1] = var_5272;
+var_5269 = wile_gen_list(2, var_5270, NULL);
+do_init_var_5269 = false;
+}
+var_5264[1] = var_5269;
+var_5263 = wile_gen_list(2, var_5264, NULL);
+do_init_var_5263 = false;
+}
+var_5262[0] = var_5263;
+var_5261 = wile_gen_list(1, var_5262, NULL);
+do_init_var_5261 = false;
+}
+var_5259[1] = var_5261;
+if (do_init_var_5276) {
+lval var_5277[8];
+lval var_5278;
+var_5278 = LVI_SYMBOL("vector-set!");
+var_5277[0] = var_5278;
+if (do_init_var_5279) {
+lval var_5280[8];
+lval var_5281;
+var_5281 = LVI_SYMBOL("unquote");
+var_5280[0] = var_5281;
+lval var_5282;
+var_5282 = LVI_SYMBOL("msym");
+var_5280[1] = var_5282;
+var_5279 = wile_gen_list(2, var_5280, NULL);
+do_init_var_5279 = false;
+}
+var_5277[1] = var_5279;
+lval var_5283;
+var_5283 = LVI_INT(0);
+var_5277[2] = var_5283;
+if (do_init_var_5284) {
+lval var_5285[8];
+lval var_5286;
+var_5286 = LVI_SYMBOL("unquote");
+var_5285[0] = var_5286;
+lval var_5287;
+var_5287 = LVI_SYMBOL("name");
+var_5285[1] = var_5287;
+var_5284 = wile_gen_list(2, var_5285, NULL);
+do_init_var_5284 = false;
+}
+var_5277[3] = var_5284;
+var_5276 = wile_gen_list(4, var_5277, NULL);
+do_init_var_5276 = false;
+}
+var_5259[2] = var_5276;
+if (do_init_var_5288) {
+lval var_5289[8];
+lval var_5290;
+var_5290 = LVI_SYMBOL("unquote-splicing");
+var_5289[0] = var_5290;
+lval var_5291;
+var_5291 = LVI_SYMBOL("istrs");
+var_5289[1] = var_5291;
+var_5288 = wile_gen_list(2, var_5289, NULL);
+do_init_var_5288 = false;
+}
+var_5259[3] = var_5288;
+if (do_init_var_5292) {
+lval var_5293[8];
+lval var_5294;
+var_5294 = LVI_SYMBOL("unquote");
+var_5293[0] = var_5294;
+lval var_5295;
+var_5295 = LVI_SYMBOL("msym");
+var_5293[1] = var_5295;
+var_5292 = wile_gen_list(2, var_5293, NULL);
+do_init_var_5292 = false;
+}
+var_5259[4] = var_5292;
+var_5258 = wile_gen_list(5, var_5259, NULL);
+do_init_var_5258 = false;
+}
+var_5246[2] = var_5258;
+var_5245 = wile_gen_list(3, var_5246, NULL);
+do_init_var_5245 = false;
+}
+var_5243[1] = var_5245;
+if (do_init_var_5296) {
+lval var_5297[8];
+lval var_5298;
+var_5298 = LVI_SYMBOL("define");
+var_5297[0] = var_5298;
+if (do_init_var_5299) {
+lval var_5300[8];
+if (do_init_var_5301) {
+lval var_5302[8];
+lval var_5303;
+var_5303 = LVI_SYMBOL("unquote");
+var_5302[0] = var_5303;
+lval var_5304;
+var_5304 = LVI_SYMBOL("istr");
+var_5302[1] = var_5304;
+var_5301 = wile_gen_list(2, var_5302, NULL);
+do_init_var_5301 = false;
+}
+var_5300[0] = var_5301;
+lval var_5305;
+var_5305 = LVI_SYMBOL("it");
+var_5300[1] = var_5305;
+var_5299 = wile_gen_list(2, var_5300, NULL);
+do_init_var_5299 = false;
+}
+var_5297[1] = var_5299;
+if (do_init_var_5306) {
+lval var_5307[8];
+lval var_5308;
+var_5308 = LVI_SYMBOL("and");
+var_5307[0] = var_5308;
+if (do_init_var_5309) {
+lval var_5310[8];
+lval var_5311;
+var_5311 = LVI_SYMBOL("vector?");
+var_5310[0] = var_5311;
+lval var_5312;
+var_5312 = LVI_SYMBOL("it");
+var_5310[1] = var_5312;
+var_5309 = wile_gen_list(2, var_5310, NULL);
+do_init_var_5309 = false;
+}
+var_5307[1] = var_5309;
+if (do_init_var_5313) {
+lval var_5314[8];
+lval var_5315;
+var_5315 = LVI_SYMBOL("eqv?");
+var_5314[0] = var_5315;
+if (do_init_var_5316) {
+lval var_5317[8];
+lval var_5318;
+var_5318 = LVI_SYMBOL("vector-ref");
+var_5317[0] = var_5318;
+lval var_5319;
+var_5319 = LVI_SYMBOL("it");
+var_5317[1] = var_5319;
+lval var_5320;
+var_5320 = LVI_INT(0);
+var_5317[2] = var_5320;
+var_5316 = wile_gen_list(3, var_5317, NULL);
+do_init_var_5316 = false;
+}
+var_5314[1] = var_5316;
+if (do_init_var_5321) {
+lval var_5322[8];
+lval var_5323;
+var_5323 = LVI_SYMBOL("unquote");
+var_5322[0] = var_5323;
+lval var_5324;
+var_5324 = LVI_SYMBOL("name");
+var_5322[1] = var_5324;
+var_5321 = wile_gen_list(2, var_5322, NULL);
+do_init_var_5321 = false;
+}
+var_5314[2] = var_5321;
+var_5313 = wile_gen_list(3, var_5314, NULL);
+do_init_var_5313 = false;
+}
+var_5307[2] = var_5313;
+var_5306 = wile_gen_list(3, var_5307, NULL);
+do_init_var_5306 = false;
+}
+var_5297[2] = var_5306;
+var_5296 = wile_gen_list(3, var_5297, NULL);
+do_init_var_5296 = false;
+}
+var_5243[2] = var_5296;
+if (do_init_var_5325) {
+lval var_5326[8];
+lval var_5327;
+var_5327 = LVI_SYMBOL("unquote-splicing");
+var_5326[0] = var_5327;
+lval var_5328;
+var_5328 = LVI_SYMBOL("gstrs");
+var_5326[1] = var_5328;
+var_5325 = wile_gen_list(2, var_5326, NULL);
+do_init_var_5325 = false;
+}
+var_5243[3] = var_5325;
+if (do_init_var_5329) {
+lval var_5330[8];
+lval var_5331;
+var_5331 = LVI_SYMBOL("unquote-splicing");
+var_5330[0] = var_5331;
+lval var_5332;
+var_5332 = LVI_SYMBOL("sstrs");
+var_5330[1] = var_5332;
+var_5329 = wile_gen_list(2, var_5330, NULL);
+do_init_var_5329 = false;
+}
+var_5243[4] = var_5329;
+var_5242 = wile_gen_list(5, var_5243, NULL);
+do_init_var_5242 = false;
+}
+var_5240[1] = var_5242;
+var_5239 = wile_gen_list(2, var_5240, NULL);
+do_init_var_5239 = false;
+}
 var_5237[1] = var_5239;
 var_5236 = wile_gen_list(2, var_5237, NULL);
 do_init_var_5236 = false;
 }
-var_5234[1] = var_5236;
-lval var_5240;
-var_5240 = LVI_INT(0);
-var_5234[2] = var_5240;
-if (do_init_var_5241) {
-lval var_5242[8];
-lval var_5243;
-var_5243 = LVI_SYMBOL("unquote");
-var_5242[0] = var_5243;
-lval var_5244;
-var_5244 = LVI_SYMBOL("name");
-var_5242[1] = var_5244;
-var_5241 = wile_gen_list(2, var_5242, NULL);
-do_init_var_5241 = false;
+var_4962[15] = var_5236;
+var_4961 = wile_gen_list(16, var_4962, NULL);
+do_init_var_4961 = false;
 }
-var_5234[3] = var_5241;
-var_5233 = wile_gen_list(4, var_5234, NULL);
-do_init_var_5233 = false;
+var_4959[1] = var_4961;
+lval var_5333;
+var_5333 = LVI_SYMBOL("defs");
+var_4959[2] = var_5333;
+var_4958 = wile_gen_list(3, var_4959, NULL);
+do_init_var_4958 = false;
 }
-var_5216[2] = var_5233;
-if (do_init_var_5245) {
-lval var_5246[8];
-lval var_5247;
-var_5247 = LVI_SYMBOL("unquote-splicing");
-var_5246[0] = var_5247;
-lval var_5248;
-var_5248 = LVI_SYMBOL("istrs");
-var_5246[1] = var_5248;
-var_5245 = wile_gen_list(2, var_5246, NULL);
-do_init_var_5245 = false;
+var_4957[0] = var_4958;
+var_4956 = wile_gen_list(1, var_4957, NULL);
+do_init_var_4956 = false;
 }
-var_5216[3] = var_5245;
-if (do_init_var_5249) {
-lval var_5250[8];
-lval var_5251;
-var_5251 = LVI_SYMBOL("unquote");
-var_5250[0] = var_5251;
-lval var_5252;
-var_5252 = LVI_SYMBOL("msym");
-var_5250[1] = var_5252;
-var_5249 = wile_gen_list(2, var_5250, NULL);
-do_init_var_5249 = false;
-}
-var_5216[4] = var_5249;
-var_5215 = wile_gen_list(5, var_5216, NULL);
-do_init_var_5215 = false;
-}
-var_5203[2] = var_5215;
-var_5202 = wile_gen_list(3, var_5203, NULL);
-do_init_var_5202 = false;
-}
-var_5200[1] = var_5202;
-if (do_init_var_5253) {
-lval var_5254[8];
-lval var_5255;
-var_5255 = LVI_SYMBOL("define");
-var_5254[0] = var_5255;
-if (do_init_var_5256) {
-lval var_5257[8];
-if (do_init_var_5258) {
-lval var_5259[8];
-lval var_5260;
-var_5260 = LVI_SYMBOL("unquote");
-var_5259[0] = var_5260;
-lval var_5261;
-var_5261 = LVI_SYMBOL("istr");
-var_5259[1] = var_5261;
-var_5258 = wile_gen_list(2, var_5259, NULL);
-do_init_var_5258 = false;
-}
-var_5257[0] = var_5258;
-lval var_5262;
-var_5262 = LVI_SYMBOL("it");
-var_5257[1] = var_5262;
-var_5256 = wile_gen_list(2, var_5257, NULL);
-do_init_var_5256 = false;
-}
-var_5254[1] = var_5256;
-if (do_init_var_5263) {
-lval var_5264[8];
-lval var_5265;
-var_5265 = LVI_SYMBOL("and");
-var_5264[0] = var_5265;
-if (do_init_var_5266) {
-lval var_5267[8];
-lval var_5268;
-var_5268 = LVI_SYMBOL("vector?");
-var_5267[0] = var_5268;
-lval var_5269;
-var_5269 = LVI_SYMBOL("it");
-var_5267[1] = var_5269;
-var_5266 = wile_gen_list(2, var_5267, NULL);
-do_init_var_5266 = false;
-}
-var_5264[1] = var_5266;
-if (do_init_var_5270) {
-lval var_5271[8];
-lval var_5272;
-var_5272 = LVI_SYMBOL("eqv?");
-var_5271[0] = var_5272;
-if (do_init_var_5273) {
-lval var_5274[8];
-lval var_5275;
-var_5275 = LVI_SYMBOL("vector-ref");
-var_5274[0] = var_5275;
-lval var_5276;
-var_5276 = LVI_SYMBOL("it");
-var_5274[1] = var_5276;
-lval var_5277;
-var_5277 = LVI_INT(0);
-var_5274[2] = var_5277;
-var_5273 = wile_gen_list(3, var_5274, NULL);
-do_init_var_5273 = false;
-}
-var_5271[1] = var_5273;
-if (do_init_var_5278) {
-lval var_5279[8];
-lval var_5280;
-var_5280 = LVI_SYMBOL("unquote");
-var_5279[0] = var_5280;
-lval var_5281;
-var_5281 = LVI_SYMBOL("name");
-var_5279[1] = var_5281;
-var_5278 = wile_gen_list(2, var_5279, NULL);
-do_init_var_5278 = false;
-}
-var_5271[2] = var_5278;
-var_5270 = wile_gen_list(3, var_5271, NULL);
-do_init_var_5270 = false;
-}
-var_5264[2] = var_5270;
-var_5263 = wile_gen_list(3, var_5264, NULL);
-do_init_var_5263 = false;
-}
-var_5254[2] = var_5263;
-var_5253 = wile_gen_list(3, var_5254, NULL);
-do_init_var_5253 = false;
-}
-var_5200[2] = var_5253;
-if (do_init_var_5282) {
-lval var_5283[8];
-lval var_5284;
-var_5284 = LVI_SYMBOL("unquote-splicing");
-var_5283[0] = var_5284;
-lval var_5285;
-var_5285 = LVI_SYMBOL("gstrs");
-var_5283[1] = var_5285;
-var_5282 = wile_gen_list(2, var_5283, NULL);
-do_init_var_5282 = false;
-}
-var_5200[3] = var_5282;
-if (do_init_var_5286) {
-lval var_5287[8];
-lval var_5288;
-var_5288 = LVI_SYMBOL("unquote-splicing");
-var_5287[0] = var_5288;
-lval var_5289;
-var_5289 = LVI_SYMBOL("sstrs");
-var_5287[1] = var_5289;
-var_5286 = wile_gen_list(2, var_5287, NULL);
-do_init_var_5286 = false;
-}
-var_5200[4] = var_5286;
-var_5199 = wile_gen_list(5, var_5200, NULL);
-do_init_var_5199 = false;
-}
-var_5197[1] = var_5199;
-var_5196 = wile_gen_list(2, var_5197, NULL);
-do_init_var_5196 = false;
-}
-var_5194[1] = var_5196;
-var_5193 = wile_gen_list(2, var_5194, NULL);
-do_init_var_5193 = false;
-}
-var_4919[15] = var_5193;
-var_4918 = wile_gen_list(16, var_4919, NULL);
-do_init_var_4918 = false;
-}
-var_4916[1] = var_4918;
-lval var_5290;
-var_5290 = LVI_SYMBOL("defs");
-var_4916[2] = var_5290;
-var_4915 = wile_gen_list(3, var_4916, NULL);
-do_init_var_4915 = false;
-}
-var_4914[0] = var_4915;
-var_4913 = wile_gen_list(1, var_4914, NULL);
-do_init_var_4913 = false;
-}
-lval var_5291;
-lval var_5292[8];
-var_5292[0] = var_4907;
-var_5292[1] = var_4908;
-var_5292[2] = var_4913;
-var_5292[3] = var_4448;
-// bld-rtl-dir/wile-rtl2-000083.scm:777
-var_5291 = fn_10(NULL, var_5292, "bld-rtl-dir/wile-rtl2-000083.scm:777");
-lval var_5294;
+lval var_5334;
+lval var_5335[8];
+var_5335[0] = var_4950;
+var_5335[1] = var_4951;
+var_5335[2] = var_4956;
+var_5335[3] = var_4491;
+// bld-rtl-dir/wile-rtl2-000083.scm:783
+var_5334 = fn_10(NULL, var_5335, "bld-rtl-dir/wile-rtl2-000083.scm:783");
+lval var_5337;
 {
-lval var_5295[4];
-var_5295[0] = var_4500;
-var_5295[1] = var_4667;
-var_5295[2] = var_4904;
-var_5295[3] = var_5291;
-var_5294 = wile_gen_list(4, var_5295, NULL);
+lval var_5338[4];
+var_5338[0] = var_4543;
+var_5338[1] = var_4710;
+var_5338[2] = var_4947;
+var_5338[3] = var_5334;
+var_5337 = wile_gen_list(4, var_5338, NULL);
 }
-lval var_5296;
+lval var_5339;
 {
-lval var_5298[2];
-var_5298[0] = var_5294;
-var_5298[1] = var_4448;
-var_5296 = wile_gen_list(2, var_5298, NULL);
+lval var_5341[2];
+var_5341[0] = var_5337;
+var_5341[1] = var_4491;
+var_5339 = wile_gen_list(2, var_5341, NULL);
 }
 {
-lval var_5297[8];
-var_5297[0] = var_5296;
-// bld-rtl-dir/wile-rtl2-000083.scm:734
-var_5296 = wile_list_append(NULL, var_5297, "bld-rtl-dir/wile-rtl2-000083.scm:734");
+lval var_5340[8];
+var_5340[0] = var_5339;
+// bld-rtl-dir/wile-rtl2-000083.scm:740
+var_5339 = wile_list_append(NULL, var_5340, "bld-rtl-dir/wile-rtl2-000083.scm:740");
 }
-var_4452 = var_5296;
-var_7 = var_4452;
+var_4495 = var_5339;
+var_7 = var_4495;
 return var_7;
 }
 // end of function fn_11
 
-// @@@ (wile-standard-environment) @@@ bld-rtl-dir/wile-rtl2-000083.scm:825 @@@ wile_std_env_no_macros @@@
-lval wile_std_env_no_macros(lptr* var_5299, lptr var_5300, const char* cloc)
+// @@@ (wile-standard-environment) @@@ bld-rtl-dir/wile-rtl2-000083.scm:831 @@@ wile_std_env_no_macros @@@
+lval wile_std_env_no_macros(lptr* var_5342, lptr var_5343, const char* cloc)
 {
-lval var_5302;
+lval var_5345;
 if (LV_IS_FALSE(var_7)) {
-// bld-rtl-dir/wile-rtl2-000083.scm:828
-TAIL_CALL fn_11(NULL, var_5300, "bld-rtl-dir/wile-rtl2-000083.scm:828");
+// bld-rtl-dir/wile-rtl2-000083.scm:834
+TAIL_CALL fn_11(NULL, var_5343, "bld-rtl-dir/wile-rtl2-000083.scm:834");
 } else {
-var_5302 = var_7;
+var_5345 = var_7;
 }
-return var_5302;
+return var_5345;
 }
 // end of function wile_std_env_no_macros
 
-// @@@ (wile-environment-with-macros env) @@@ bld-rtl-dir/wile-rtl2-000083.scm:832 @@@ wile_env_add_macros @@@
-lval wile_env_add_macros(lptr* var_5306, lptr var_5307, const char* cloc)
+// @@@ (wile-environment-with-macros env) @@@ bld-rtl-dir/wile-rtl2-000083.scm:838 @@@ wile_env_add_macros @@@
+lval wile_env_add_macros(lptr* var_5349, lptr var_5350, const char* cloc)
 {
-if (LV_IS_FALSE(var_5307[0])) {
-lval var_5310;
+if (LV_IS_FALSE(var_5350[0])) {
+lval var_5353;
 if (LV_IS_FALSE(var_7)) {
-lval var_5311;
-lval var_5312[8];
-// bld-rtl-dir/wile-rtl2-000083.scm:834
-var_5311 = fn_11(NULL, var_5312, "bld-rtl-dir/wile-rtl2-000083.scm:834");
-var_5310 = var_5311;
+lval var_5354;
+lval var_5355[8];
+// bld-rtl-dir/wile-rtl2-000083.scm:840
+var_5354 = fn_11(NULL, var_5355, "bld-rtl-dir/wile-rtl2-000083.scm:840");
+var_5353 = var_5354;
 } else {
-var_5310 = var_7;
+var_5353 = var_7;
 }
-var_5307[0] = var_5310;
+var_5350[0] = var_5353;
 (void)
- var_5307[0];
+ var_5350[0];
 } else {
 }
-lval var_5315;
-var_5315 = LVI_SYMBOL("when");
-if (do_init_var_5316) {
-lval var_5317[8];
-lval var_5318;
-var_5318 = LVI_SYMBOL("pred");
-var_5317[0] = var_5318;
-lval var_5319;
-var_5319 = LVI_SYMBOL("actions");
-var_5317[1] = var_5319;
-var_5316 = wile_gen_list(1, var_5317, var_5317 + 1);
-do_init_var_5316 = false;
-}
-if (do_init_var_5320) {
-lval var_5321[8];
-if (do_init_var_5322) {
-lval var_5323[8];
-lval var_5324;
-var_5324 = LVI_SYMBOL("quasiquote");
-var_5323[0] = var_5324;
-if (do_init_var_5325) {
-lval var_5326[8];
-lval var_5327;
-var_5327 = LVI_SYMBOL("if");
-var_5326[0] = var_5327;
-if (do_init_var_5328) {
-lval var_5329[8];
-lval var_5330;
-var_5330 = LVI_SYMBOL("unquote");
-var_5329[0] = var_5330;
-lval var_5331;
-var_5331 = LVI_SYMBOL("pred");
-var_5329[1] = var_5331;
-var_5328 = wile_gen_list(2, var_5329, NULL);
-do_init_var_5328 = false;
-}
-var_5326[1] = var_5328;
-if (do_init_var_5332) {
-lval var_5333[8];
-lval var_5334;
-var_5334 = LVI_SYMBOL("begin");
-var_5333[0] = var_5334;
-if (do_init_var_5335) {
-lval var_5336[8];
-lval var_5337;
-var_5337 = LVI_SYMBOL("unquote-splicing");
-var_5336[0] = var_5337;
-lval var_5338;
-var_5338 = LVI_SYMBOL("actions");
-var_5336[1] = var_5338;
-var_5335 = wile_gen_list(2, var_5336, NULL);
-do_init_var_5335 = false;
-}
-var_5333[1] = var_5335;
-var_5332 = wile_gen_list(2, var_5333, NULL);
-do_init_var_5332 = false;
-}
-var_5326[2] = var_5332;
-lval var_5339;
-var_5339 = LVI_BOOL(false);
-var_5326[3] = var_5339;
-var_5325 = wile_gen_list(4, var_5326, NULL);
-do_init_var_5325 = false;
-}
-var_5323[1] = var_5325;
-var_5322 = wile_gen_list(2, var_5323, NULL);
-do_init_var_5322 = false;
-}
-var_5321[0] = var_5322;
-var_5320 = wile_gen_list(1, var_5321, NULL);
-do_init_var_5320 = false;
-}
-lval var_5340;
-lval var_5341[8];
-var_5341[0] = var_5315;
-var_5341[1] = var_5316;
-var_5341[2] = var_5320;
-var_5341[3] = var_5307[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:837
-var_5340 = fn_10(NULL, var_5341, "bld-rtl-dir/wile-rtl2-000083.scm:837");
-lval var_5343;
-var_5343 = LVI_SYMBOL("unless");
-if (do_init_var_5344) {
-lval var_5345[8];
-lval var_5346;
-var_5346 = LVI_SYMBOL("pred");
-var_5345[0] = var_5346;
-lval var_5347;
-var_5347 = LVI_SYMBOL("actions");
-var_5345[1] = var_5347;
-var_5344 = wile_gen_list(1, var_5345, var_5345 + 1);
-do_init_var_5344 = false;
-}
-if (do_init_var_5348) {
-lval var_5349[8];
-if (do_init_var_5350) {
-lval var_5351[8];
-lval var_5352;
-var_5352 = LVI_SYMBOL("quasiquote");
-var_5351[0] = var_5352;
-if (do_init_var_5353) {
-lval var_5354[8];
-lval var_5355;
-var_5355 = LVI_SYMBOL("if");
-var_5354[0] = var_5355;
-if (do_init_var_5356) {
-lval var_5357[8];
 lval var_5358;
-var_5358 = LVI_SYMBOL("unquote");
-var_5357[0] = var_5358;
-lval var_5359;
-var_5359 = LVI_SYMBOL("pred");
-var_5357[1] = var_5359;
-var_5356 = wile_gen_list(2, var_5357, NULL);
-do_init_var_5356 = false;
+var_5358 = LVI_SYMBOL("when");
+if (do_init_var_5359) {
+lval var_5360[8];
+lval var_5361;
+var_5361 = LVI_SYMBOL("pred");
+var_5360[0] = var_5361;
+lval var_5362;
+var_5362 = LVI_SYMBOL("actions");
+var_5360[1] = var_5362;
+var_5359 = wile_gen_list(1, var_5360, var_5360 + 1);
+do_init_var_5359 = false;
 }
-var_5354[1] = var_5356;
-lval var_5360;
-var_5360 = LVI_BOOL(false);
-var_5354[2] = var_5360;
-if (do_init_var_5361) {
-lval var_5362[8];
-lval var_5363;
-var_5363 = LVI_SYMBOL("begin");
-var_5362[0] = var_5363;
-if (do_init_var_5364) {
-lval var_5365[8];
-lval var_5366;
-var_5366 = LVI_SYMBOL("unquote-splicing");
-var_5365[0] = var_5366;
+if (do_init_var_5363) {
+lval var_5364[8];
+if (do_init_var_5365) {
+lval var_5366[8];
 lval var_5367;
-var_5367 = LVI_SYMBOL("actions");
-var_5365[1] = var_5367;
-var_5364 = wile_gen_list(2, var_5365, NULL);
-do_init_var_5364 = false;
-}
-var_5362[1] = var_5364;
-var_5361 = wile_gen_list(2, var_5362, NULL);
-do_init_var_5361 = false;
-}
-var_5354[3] = var_5361;
-var_5353 = wile_gen_list(4, var_5354, NULL);
-do_init_var_5353 = false;
-}
-var_5351[1] = var_5353;
-var_5350 = wile_gen_list(2, var_5351, NULL);
-do_init_var_5350 = false;
-}
-var_5349[0] = var_5350;
-var_5348 = wile_gen_list(1, var_5349, NULL);
-do_init_var_5348 = false;
-}
-lval var_5368;
+var_5367 = LVI_SYMBOL("quasiquote");
+var_5366[0] = var_5367;
+if (do_init_var_5368) {
 lval var_5369[8];
-var_5369[0] = var_5343;
-var_5369[1] = var_5344;
-var_5369[2] = var_5348;
-var_5369[3] = var_5307[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:842
-var_5368 = fn_10(NULL, var_5369, "bld-rtl-dir/wile-rtl2-000083.scm:842");
-lval var_5371;
-var_5371 = LVI_SYMBOL("while");
-if (do_init_var_5372) {
-lval var_5373[8];
+lval var_5370;
+var_5370 = LVI_SYMBOL("if");
+var_5369[0] = var_5370;
+if (do_init_var_5371) {
+lval var_5372[8];
+lval var_5373;
+var_5373 = LVI_SYMBOL("unquote");
+var_5372[0] = var_5373;
 lval var_5374;
-var_5374 = LVI_SYMBOL("some-cond");
-var_5373[0] = var_5374;
-lval var_5375;
-var_5375 = LVI_SYMBOL("some-actions");
-var_5373[1] = var_5375;
-var_5372 = wile_gen_list(1, var_5373, var_5373 + 1);
-do_init_var_5372 = false;
+var_5374 = LVI_SYMBOL("pred");
+var_5372[1] = var_5374;
+var_5371 = wile_gen_list(2, var_5372, NULL);
+do_init_var_5371 = false;
 }
-if (do_init_var_5376) {
-lval var_5377[8];
+var_5369[1] = var_5371;
+if (do_init_var_5375) {
+lval var_5376[8];
+lval var_5377;
+var_5377 = LVI_SYMBOL("begin");
+var_5376[0] = var_5377;
 if (do_init_var_5378) {
 lval var_5379[8];
 lval var_5380;
-var_5380 = LVI_SYMBOL("let");
+var_5380 = LVI_SYMBOL("unquote-splicing");
 var_5379[0] = var_5380;
-if (do_init_var_5381) {
-lval var_5382[8];
-if (do_init_var_5383) {
-lval var_5384[8];
-lval var_5385;
-var_5385 = LVI_SYMBOL("mc");
-var_5384[0] = var_5385;
-if (do_init_var_5386) {
-lval var_5387[8];
-lval var_5388;
-var_5388 = LVI_SYMBOL("gensym");
-var_5387[0] = var_5388;
-var_5386 = wile_gen_list(1, var_5387, NULL);
-do_init_var_5386 = false;
-}
-var_5384[1] = var_5386;
-var_5383 = wile_gen_list(2, var_5384, NULL);
-do_init_var_5383 = false;
-}
-var_5382[0] = var_5383;
-var_5381 = wile_gen_list(1, var_5382, NULL);
-do_init_var_5381 = false;
-}
+lval var_5381;
+var_5381 = LVI_SYMBOL("actions");
 var_5379[1] = var_5381;
-if (do_init_var_5389) {
-lval var_5390[8];
-lval var_5391;
-var_5391 = LVI_SYMBOL("quasiquote");
-var_5390[0] = var_5391;
-if (do_init_var_5392) {
-lval var_5393[8];
-lval var_5394;
-var_5394 = LVI_SYMBOL("do");
-var_5393[0] = var_5394;
-if (do_init_var_5395) {
-lval var_5396[8];
-if (do_init_var_5397) {
-lval var_5398[8];
+var_5378 = wile_gen_list(2, var_5379, NULL);
+do_init_var_5378 = false;
+}
+var_5376[1] = var_5378;
+var_5375 = wile_gen_list(2, var_5376, NULL);
+do_init_var_5375 = false;
+}
+var_5369[2] = var_5375;
+lval var_5382;
+var_5382 = LVI_BOOL(false);
+var_5369[3] = var_5382;
+var_5368 = wile_gen_list(4, var_5369, NULL);
+do_init_var_5368 = false;
+}
+var_5366[1] = var_5368;
+var_5365 = wile_gen_list(2, var_5366, NULL);
+do_init_var_5365 = false;
+}
+var_5364[0] = var_5365;
+var_5363 = wile_gen_list(1, var_5364, NULL);
+do_init_var_5363 = false;
+}
+lval var_5383;
+lval var_5384[8];
+var_5384[0] = var_5358;
+var_5384[1] = var_5359;
+var_5384[2] = var_5363;
+var_5384[3] = var_5350[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:843
+var_5383 = fn_10(NULL, var_5384, "bld-rtl-dir/wile-rtl2-000083.scm:843");
+lval var_5386;
+var_5386 = LVI_SYMBOL("unless");
+if (do_init_var_5387) {
+lval var_5388[8];
+lval var_5389;
+var_5389 = LVI_SYMBOL("pred");
+var_5388[0] = var_5389;
+lval var_5390;
+var_5390 = LVI_SYMBOL("actions");
+var_5388[1] = var_5390;
+var_5387 = wile_gen_list(1, var_5388, var_5388 + 1);
+do_init_var_5387 = false;
+}
+if (do_init_var_5391) {
+lval var_5392[8];
+if (do_init_var_5393) {
+lval var_5394[8];
+lval var_5395;
+var_5395 = LVI_SYMBOL("quasiquote");
+var_5394[0] = var_5395;
+if (do_init_var_5396) {
+lval var_5397[8];
+lval var_5398;
+var_5398 = LVI_SYMBOL("if");
+var_5397[0] = var_5398;
 if (do_init_var_5399) {
 lval var_5400[8];
 lval var_5401;
 var_5401 = LVI_SYMBOL("unquote");
 var_5400[0] = var_5401;
 lval var_5402;
-var_5402 = LVI_SYMBOL("mc");
+var_5402 = LVI_SYMBOL("pred");
 var_5400[1] = var_5402;
 var_5399 = wile_gen_list(2, var_5400, NULL);
 do_init_var_5399 = false;
 }
-var_5398[0] = var_5399;
+var_5397[1] = var_5399;
 lval var_5403;
-var_5403 = LVI_INT(0);
-var_5398[1] = var_5403;
+var_5403 = LVI_BOOL(false);
+var_5397[2] = var_5403;
 if (do_init_var_5404) {
 lval var_5405[8];
 lval var_5406;
-var_5406 = LVI_SYMBOL("+");
+var_5406 = LVI_SYMBOL("begin");
 var_5405[0] = var_5406;
 if (do_init_var_5407) {
 lval var_5408[8];
 lval var_5409;
-var_5409 = LVI_SYMBOL("unquote");
+var_5409 = LVI_SYMBOL("unquote-splicing");
 var_5408[0] = var_5409;
 lval var_5410;
-var_5410 = LVI_SYMBOL("mc");
+var_5410 = LVI_SYMBOL("actions");
 var_5408[1] = var_5410;
 var_5407 = wile_gen_list(2, var_5408, NULL);
 do_init_var_5407 = false;
 }
 var_5405[1] = var_5407;
-lval var_5411;
-var_5411 = LVI_INT(1);
-var_5405[2] = var_5411;
-var_5404 = wile_gen_list(3, var_5405, NULL);
+var_5404 = wile_gen_list(2, var_5405, NULL);
 do_init_var_5404 = false;
 }
-var_5398[2] = var_5404;
-var_5397 = wile_gen_list(3, var_5398, NULL);
-do_init_var_5397 = false;
+var_5397[3] = var_5404;
+var_5396 = wile_gen_list(4, var_5397, NULL);
+do_init_var_5396 = false;
 }
-var_5396[0] = var_5397;
-var_5395 = wile_gen_list(1, var_5396, NULL);
-do_init_var_5395 = false;
+var_5394[1] = var_5396;
+var_5393 = wile_gen_list(2, var_5394, NULL);
+do_init_var_5393 = false;
 }
-var_5393[1] = var_5395;
-if (do_init_var_5412) {
-lval var_5413[8];
-if (do_init_var_5414) {
-lval var_5415[8];
-lval var_5416;
-var_5416 = LVI_SYMBOL("not");
-var_5415[0] = var_5416;
-if (do_init_var_5417) {
-lval var_5418[8];
-lval var_5419;
-var_5419 = LVI_SYMBOL("unquote");
-var_5418[0] = var_5419;
-lval var_5420;
-var_5420 = LVI_SYMBOL("some-cond");
-var_5418[1] = var_5420;
-var_5417 = wile_gen_list(2, var_5418, NULL);
-do_init_var_5417 = false;
+var_5392[0] = var_5393;
+var_5391 = wile_gen_list(1, var_5392, NULL);
+do_init_var_5391 = false;
 }
-var_5415[1] = var_5417;
-var_5414 = wile_gen_list(2, var_5415, NULL);
-do_init_var_5414 = false;
+lval var_5411;
+lval var_5412[8];
+var_5412[0] = var_5386;
+var_5412[1] = var_5387;
+var_5412[2] = var_5391;
+var_5412[3] = var_5350[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:848
+var_5411 = fn_10(NULL, var_5412, "bld-rtl-dir/wile-rtl2-000083.scm:848");
+lval var_5414;
+var_5414 = LVI_SYMBOL("while");
+if (do_init_var_5415) {
+lval var_5416[8];
+lval var_5417;
+var_5417 = LVI_SYMBOL("some-cond");
+var_5416[0] = var_5417;
+lval var_5418;
+var_5418 = LVI_SYMBOL("some-actions");
+var_5416[1] = var_5418;
+var_5415 = wile_gen_list(1, var_5416, var_5416 + 1);
+do_init_var_5415 = false;
 }
-var_5413[0] = var_5414;
+if (do_init_var_5419) {
+lval var_5420[8];
 if (do_init_var_5421) {
 lval var_5422[8];
 lval var_5423;
-var_5423 = LVI_SYMBOL("unquote");
+var_5423 = LVI_SYMBOL("let");
 var_5422[0] = var_5423;
-lval var_5424;
-var_5424 = LVI_SYMBOL("mc");
-var_5422[1] = var_5424;
-var_5421 = wile_gen_list(2, var_5422, NULL);
-do_init_var_5421 = false;
-}
-var_5413[1] = var_5421;
-var_5412 = wile_gen_list(2, var_5413, NULL);
-do_init_var_5412 = false;
-}
-var_5393[2] = var_5412;
-if (do_init_var_5425) {
-lval var_5426[8];
-lval var_5427;
-var_5427 = LVI_SYMBOL("unquote-splicing");
-var_5426[0] = var_5427;
+if (do_init_var_5424) {
+lval var_5425[8];
+if (do_init_var_5426) {
+lval var_5427[8];
 lval var_5428;
-var_5428 = LVI_SYMBOL("some-actions");
-var_5426[1] = var_5428;
-var_5425 = wile_gen_list(2, var_5426, NULL);
-do_init_var_5425 = false;
-}
-var_5393[3] = var_5425;
-var_5392 = wile_gen_list(4, var_5393, NULL);
-do_init_var_5392 = false;
-}
-var_5390[1] = var_5392;
-var_5389 = wile_gen_list(2, var_5390, NULL);
-do_init_var_5389 = false;
-}
-var_5379[2] = var_5389;
-var_5378 = wile_gen_list(3, var_5379, NULL);
-do_init_var_5378 = false;
-}
-var_5377[0] = var_5378;
-var_5376 = wile_gen_list(1, var_5377, NULL);
-do_init_var_5376 = false;
-}
-lval var_5429;
+var_5428 = LVI_SYMBOL("mc");
+var_5427[0] = var_5428;
+if (do_init_var_5429) {
 lval var_5430[8];
-var_5430[0] = var_5371;
-var_5430[1] = var_5372;
-var_5430[2] = var_5376;
-var_5430[3] = var_5307[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:847
-var_5429 = fn_10(NULL, var_5430, "bld-rtl-dir/wile-rtl2-000083.scm:847");
-lval var_5432;
-var_5432 = LVI_SYMBOL("until");
-if (do_init_var_5433) {
-lval var_5434[8];
-lval var_5435;
-var_5435 = LVI_SYMBOL("some-cond");
-var_5434[0] = var_5435;
-lval var_5436;
-var_5436 = LVI_SYMBOL("some-actions");
-var_5434[1] = var_5436;
-var_5433 = wile_gen_list(1, var_5434, var_5434 + 1);
-do_init_var_5433 = false;
+lval var_5431;
+var_5431 = LVI_SYMBOL("gensym");
+var_5430[0] = var_5431;
+var_5429 = wile_gen_list(1, var_5430, NULL);
+do_init_var_5429 = false;
 }
-if (do_init_var_5437) {
-lval var_5438[8];
-if (do_init_var_5439) {
-lval var_5440[8];
-lval var_5441;
-var_5441 = LVI_SYMBOL("let");
-var_5440[0] = var_5441;
+var_5427[1] = var_5429;
+var_5426 = wile_gen_list(2, var_5427, NULL);
+do_init_var_5426 = false;
+}
+var_5425[0] = var_5426;
+var_5424 = wile_gen_list(1, var_5425, NULL);
+do_init_var_5424 = false;
+}
+var_5422[1] = var_5424;
+if (do_init_var_5432) {
+lval var_5433[8];
+lval var_5434;
+var_5434 = LVI_SYMBOL("quasiquote");
+var_5433[0] = var_5434;
+if (do_init_var_5435) {
+lval var_5436[8];
+lval var_5437;
+var_5437 = LVI_SYMBOL("do");
+var_5436[0] = var_5437;
+if (do_init_var_5438) {
+lval var_5439[8];
+if (do_init_var_5440) {
+lval var_5441[8];
 if (do_init_var_5442) {
 lval var_5443[8];
-if (do_init_var_5444) {
-lval var_5445[8];
+lval var_5444;
+var_5444 = LVI_SYMBOL("unquote");
+var_5443[0] = var_5444;
+lval var_5445;
+var_5445 = LVI_SYMBOL("mc");
+var_5443[1] = var_5445;
+var_5442 = wile_gen_list(2, var_5443, NULL);
+do_init_var_5442 = false;
+}
+var_5441[0] = var_5442;
 lval var_5446;
-var_5446 = LVI_SYMBOL("mc");
-var_5445[0] = var_5446;
+var_5446 = LVI_INT(0);
+var_5441[1] = var_5446;
 if (do_init_var_5447) {
 lval var_5448[8];
 lval var_5449;
-var_5449 = LVI_SYMBOL("gensym");
+var_5449 = LVI_SYMBOL("+");
 var_5448[0] = var_5449;
-var_5447 = wile_gen_list(1, var_5448, NULL);
-do_init_var_5447 = false;
-}
-var_5445[1] = var_5447;
-var_5444 = wile_gen_list(2, var_5445, NULL);
-do_init_var_5444 = false;
-}
-var_5443[0] = var_5444;
-var_5442 = wile_gen_list(1, var_5443, NULL);
-do_init_var_5442 = false;
-}
-var_5440[1] = var_5442;
 if (do_init_var_5450) {
 lval var_5451[8];
 lval var_5452;
-var_5452 = LVI_SYMBOL("quasiquote");
+var_5452 = LVI_SYMBOL("unquote");
 var_5451[0] = var_5452;
-if (do_init_var_5453) {
-lval var_5454[8];
-lval var_5455;
-var_5455 = LVI_SYMBOL("do");
-var_5454[0] = var_5455;
-if (do_init_var_5456) {
-lval var_5457[8];
-if (do_init_var_5458) {
-lval var_5459[8];
+lval var_5453;
+var_5453 = LVI_SYMBOL("mc");
+var_5451[1] = var_5453;
+var_5450 = wile_gen_list(2, var_5451, NULL);
+do_init_var_5450 = false;
+}
+var_5448[1] = var_5450;
+lval var_5454;
+var_5454 = LVI_INT(1);
+var_5448[2] = var_5454;
+var_5447 = wile_gen_list(3, var_5448, NULL);
+do_init_var_5447 = false;
+}
+var_5441[2] = var_5447;
+var_5440 = wile_gen_list(3, var_5441, NULL);
+do_init_var_5440 = false;
+}
+var_5439[0] = var_5440;
+var_5438 = wile_gen_list(1, var_5439, NULL);
+do_init_var_5438 = false;
+}
+var_5436[1] = var_5438;
+if (do_init_var_5455) {
+lval var_5456[8];
+if (do_init_var_5457) {
+lval var_5458[8];
+lval var_5459;
+var_5459 = LVI_SYMBOL("not");
+var_5458[0] = var_5459;
 if (do_init_var_5460) {
 lval var_5461[8];
 lval var_5462;
 var_5462 = LVI_SYMBOL("unquote");
 var_5461[0] = var_5462;
 lval var_5463;
-var_5463 = LVI_SYMBOL("mc");
+var_5463 = LVI_SYMBOL("some-cond");
 var_5461[1] = var_5463;
 var_5460 = wile_gen_list(2, var_5461, NULL);
 do_init_var_5460 = false;
 }
-var_5459[0] = var_5460;
-lval var_5464;
-var_5464 = LVI_INT(0);
-var_5459[1] = var_5464;
-if (do_init_var_5465) {
-lval var_5466[8];
+var_5458[1] = var_5460;
+var_5457 = wile_gen_list(2, var_5458, NULL);
+do_init_var_5457 = false;
+}
+var_5456[0] = var_5457;
+if (do_init_var_5464) {
+lval var_5465[8];
+lval var_5466;
+var_5466 = LVI_SYMBOL("unquote");
+var_5465[0] = var_5466;
 lval var_5467;
-var_5467 = LVI_SYMBOL("+");
-var_5466[0] = var_5467;
+var_5467 = LVI_SYMBOL("mc");
+var_5465[1] = var_5467;
+var_5464 = wile_gen_list(2, var_5465, NULL);
+do_init_var_5464 = false;
+}
+var_5456[1] = var_5464;
+var_5455 = wile_gen_list(2, var_5456, NULL);
+do_init_var_5455 = false;
+}
+var_5436[2] = var_5455;
 if (do_init_var_5468) {
 lval var_5469[8];
 lval var_5470;
-var_5470 = LVI_SYMBOL("unquote");
+var_5470 = LVI_SYMBOL("unquote-splicing");
 var_5469[0] = var_5470;
 lval var_5471;
-var_5471 = LVI_SYMBOL("mc");
+var_5471 = LVI_SYMBOL("some-actions");
 var_5469[1] = var_5471;
 var_5468 = wile_gen_list(2, var_5469, NULL);
 do_init_var_5468 = false;
 }
-var_5466[1] = var_5468;
+var_5436[3] = var_5468;
+var_5435 = wile_gen_list(4, var_5436, NULL);
+do_init_var_5435 = false;
+}
+var_5433[1] = var_5435;
+var_5432 = wile_gen_list(2, var_5433, NULL);
+do_init_var_5432 = false;
+}
+var_5422[2] = var_5432;
+var_5421 = wile_gen_list(3, var_5422, NULL);
+do_init_var_5421 = false;
+}
+var_5420[0] = var_5421;
+var_5419 = wile_gen_list(1, var_5420, NULL);
+do_init_var_5419 = false;
+}
 lval var_5472;
-var_5472 = LVI_INT(1);
-var_5466[2] = var_5472;
-var_5465 = wile_gen_list(3, var_5466, NULL);
-do_init_var_5465 = false;
-}
-var_5459[2] = var_5465;
-var_5458 = wile_gen_list(3, var_5459, NULL);
-do_init_var_5458 = false;
-}
-var_5457[0] = var_5458;
-var_5456 = wile_gen_list(1, var_5457, NULL);
-do_init_var_5456 = false;
-}
-var_5454[1] = var_5456;
-if (do_init_var_5473) {
-lval var_5474[8];
-if (do_init_var_5475) {
-lval var_5476[8];
-lval var_5477;
-var_5477 = LVI_SYMBOL("unquote");
-var_5476[0] = var_5477;
+lval var_5473[8];
+var_5473[0] = var_5414;
+var_5473[1] = var_5415;
+var_5473[2] = var_5419;
+var_5473[3] = var_5350[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:853
+var_5472 = fn_10(NULL, var_5473, "bld-rtl-dir/wile-rtl2-000083.scm:853");
+lval var_5475;
+var_5475 = LVI_SYMBOL("until");
+if (do_init_var_5476) {
+lval var_5477[8];
 lval var_5478;
 var_5478 = LVI_SYMBOL("some-cond");
-var_5476[1] = var_5478;
-var_5475 = wile_gen_list(2, var_5476, NULL);
-do_init_var_5475 = false;
+var_5477[0] = var_5478;
+lval var_5479;
+var_5479 = LVI_SYMBOL("some-actions");
+var_5477[1] = var_5479;
+var_5476 = wile_gen_list(1, var_5477, var_5477 + 1);
+do_init_var_5476 = false;
 }
-var_5474[0] = var_5475;
-if (do_init_var_5479) {
-lval var_5480[8];
-lval var_5481;
-var_5481 = LVI_SYMBOL("unquote");
-var_5480[0] = var_5481;
-lval var_5482;
-var_5482 = LVI_SYMBOL("mc");
-var_5480[1] = var_5482;
-var_5479 = wile_gen_list(2, var_5480, NULL);
-do_init_var_5479 = false;
-}
-var_5474[1] = var_5479;
-var_5473 = wile_gen_list(2, var_5474, NULL);
-do_init_var_5473 = false;
-}
-var_5454[2] = var_5473;
-if (do_init_var_5483) {
-lval var_5484[8];
-lval var_5485;
-var_5485 = LVI_SYMBOL("unquote-splicing");
-var_5484[0] = var_5485;
-lval var_5486;
-var_5486 = LVI_SYMBOL("some-actions");
-var_5484[1] = var_5486;
-var_5483 = wile_gen_list(2, var_5484, NULL);
-do_init_var_5483 = false;
-}
-var_5454[3] = var_5483;
-var_5453 = wile_gen_list(4, var_5454, NULL);
-do_init_var_5453 = false;
-}
-var_5451[1] = var_5453;
-var_5450 = wile_gen_list(2, var_5451, NULL);
-do_init_var_5450 = false;
-}
-var_5440[2] = var_5450;
-var_5439 = wile_gen_list(3, var_5440, NULL);
-do_init_var_5439 = false;
-}
-var_5438[0] = var_5439;
-var_5437 = wile_gen_list(1, var_5438, NULL);
-do_init_var_5437 = false;
-}
-lval var_5487;
+if (do_init_var_5480) {
+lval var_5481[8];
+if (do_init_var_5482) {
+lval var_5483[8];
+lval var_5484;
+var_5484 = LVI_SYMBOL("let");
+var_5483[0] = var_5484;
+if (do_init_var_5485) {
+lval var_5486[8];
+if (do_init_var_5487) {
 lval var_5488[8];
-var_5488[0] = var_5432;
-var_5488[1] = var_5433;
-var_5488[2] = var_5437;
-var_5488[3] = var_5307[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:855
-var_5487 = fn_10(NULL, var_5488, "bld-rtl-dir/wile-rtl2-000083.scm:855");
-lval var_5490;
-var_5490 = LVI_SYMBOL("do-while");
-if (do_init_var_5491) {
-lval var_5492[8];
-lval var_5493;
-var_5493 = LVI_SYMBOL("some-cond");
-var_5492[0] = var_5493;
-lval var_5494;
-var_5494 = LVI_SYMBOL("some-actions");
-var_5492[1] = var_5494;
-var_5491 = wile_gen_list(1, var_5492, var_5492 + 1);
-do_init_var_5491 = false;
+lval var_5489;
+var_5489 = LVI_SYMBOL("mc");
+var_5488[0] = var_5489;
+if (do_init_var_5490) {
+lval var_5491[8];
+lval var_5492;
+var_5492 = LVI_SYMBOL("gensym");
+var_5491[0] = var_5492;
+var_5490 = wile_gen_list(1, var_5491, NULL);
+do_init_var_5490 = false;
 }
-if (do_init_var_5495) {
-lval var_5496[8];
-if (do_init_var_5497) {
-lval var_5498[8];
-lval var_5499;
-var_5499 = LVI_SYMBOL("let");
-var_5498[0] = var_5499;
-if (do_init_var_5500) {
-lval var_5501[8];
-if (do_init_var_5502) {
-lval var_5503[8];
-lval var_5504;
-var_5504 = LVI_SYMBOL("mc");
-var_5503[0] = var_5504;
-if (do_init_var_5505) {
-lval var_5506[8];
+var_5488[1] = var_5490;
+var_5487 = wile_gen_list(2, var_5488, NULL);
+do_init_var_5487 = false;
+}
+var_5486[0] = var_5487;
+var_5485 = wile_gen_list(1, var_5486, NULL);
+do_init_var_5485 = false;
+}
+var_5483[1] = var_5485;
+if (do_init_var_5493) {
+lval var_5494[8];
+lval var_5495;
+var_5495 = LVI_SYMBOL("quasiquote");
+var_5494[0] = var_5495;
+if (do_init_var_5496) {
+lval var_5497[8];
+lval var_5498;
+var_5498 = LVI_SYMBOL("do");
+var_5497[0] = var_5498;
+if (do_init_var_5499) {
+lval var_5500[8];
+if (do_init_var_5501) {
+lval var_5502[8];
+if (do_init_var_5503) {
+lval var_5504[8];
+lval var_5505;
+var_5505 = LVI_SYMBOL("unquote");
+var_5504[0] = var_5505;
+lval var_5506;
+var_5506 = LVI_SYMBOL("mc");
+var_5504[1] = var_5506;
+var_5503 = wile_gen_list(2, var_5504, NULL);
+do_init_var_5503 = false;
+}
+var_5502[0] = var_5503;
 lval var_5507;
-var_5507 = LVI_SYMBOL("gensym");
-var_5506[0] = var_5507;
-var_5505 = wile_gen_list(1, var_5506, NULL);
-do_init_var_5505 = false;
-}
-var_5503[1] = var_5505;
-var_5502 = wile_gen_list(2, var_5503, NULL);
-do_init_var_5502 = false;
-}
-var_5501[0] = var_5502;
-var_5500 = wile_gen_list(1, var_5501, NULL);
-do_init_var_5500 = false;
-}
-var_5498[1] = var_5500;
+var_5507 = LVI_INT(0);
+var_5502[1] = var_5507;
 if (do_init_var_5508) {
 lval var_5509[8];
 lval var_5510;
-var_5510 = LVI_SYMBOL("quasiquote");
+var_5510 = LVI_SYMBOL("+");
 var_5509[0] = var_5510;
 if (do_init_var_5511) {
 lval var_5512[8];
 lval var_5513;
-var_5513 = LVI_SYMBOL("do");
+var_5513 = LVI_SYMBOL("unquote");
 var_5512[0] = var_5513;
-if (do_init_var_5514) {
-lval var_5515[8];
+lval var_5514;
+var_5514 = LVI_SYMBOL("mc");
+var_5512[1] = var_5514;
+var_5511 = wile_gen_list(2, var_5512, NULL);
+do_init_var_5511 = false;
+}
+var_5509[1] = var_5511;
+lval var_5515;
+var_5515 = LVI_INT(1);
+var_5509[2] = var_5515;
+var_5508 = wile_gen_list(3, var_5509, NULL);
+do_init_var_5508 = false;
+}
+var_5502[2] = var_5508;
+var_5501 = wile_gen_list(3, var_5502, NULL);
+do_init_var_5501 = false;
+}
+var_5500[0] = var_5501;
+var_5499 = wile_gen_list(1, var_5500, NULL);
+do_init_var_5499 = false;
+}
+var_5497[1] = var_5499;
 if (do_init_var_5516) {
 lval var_5517[8];
 if (do_init_var_5518) {
@@ -23949,1471 +24007,1420 @@ lval var_5520;
 var_5520 = LVI_SYMBOL("unquote");
 var_5519[0] = var_5520;
 lval var_5521;
-var_5521 = LVI_SYMBOL("mc");
+var_5521 = LVI_SYMBOL("some-cond");
 var_5519[1] = var_5521;
 var_5518 = wile_gen_list(2, var_5519, NULL);
 do_init_var_5518 = false;
 }
 var_5517[0] = var_5518;
-lval var_5522;
-var_5522 = LVI_INT(0);
-var_5517[1] = var_5522;
-if (do_init_var_5523) {
-lval var_5524[8];
+if (do_init_var_5522) {
+lval var_5523[8];
+lval var_5524;
+var_5524 = LVI_SYMBOL("unquote");
+var_5523[0] = var_5524;
 lval var_5525;
-var_5525 = LVI_SYMBOL("+");
-var_5524[0] = var_5525;
+var_5525 = LVI_SYMBOL("mc");
+var_5523[1] = var_5525;
+var_5522 = wile_gen_list(2, var_5523, NULL);
+do_init_var_5522 = false;
+}
+var_5517[1] = var_5522;
+var_5516 = wile_gen_list(2, var_5517, NULL);
+do_init_var_5516 = false;
+}
+var_5497[2] = var_5516;
 if (do_init_var_5526) {
 lval var_5527[8];
 lval var_5528;
-var_5528 = LVI_SYMBOL("unquote");
+var_5528 = LVI_SYMBOL("unquote-splicing");
 var_5527[0] = var_5528;
 lval var_5529;
-var_5529 = LVI_SYMBOL("mc");
+var_5529 = LVI_SYMBOL("some-actions");
 var_5527[1] = var_5529;
 var_5526 = wile_gen_list(2, var_5527, NULL);
 do_init_var_5526 = false;
 }
-var_5524[1] = var_5526;
+var_5497[3] = var_5526;
+var_5496 = wile_gen_list(4, var_5497, NULL);
+do_init_var_5496 = false;
+}
+var_5494[1] = var_5496;
+var_5493 = wile_gen_list(2, var_5494, NULL);
+do_init_var_5493 = false;
+}
+var_5483[2] = var_5493;
+var_5482 = wile_gen_list(3, var_5483, NULL);
+do_init_var_5482 = false;
+}
+var_5481[0] = var_5482;
+var_5480 = wile_gen_list(1, var_5481, NULL);
+do_init_var_5480 = false;
+}
 lval var_5530;
-var_5530 = LVI_INT(1);
-var_5524[2] = var_5530;
-var_5523 = wile_gen_list(3, var_5524, NULL);
-do_init_var_5523 = false;
+lval var_5531[8];
+var_5531[0] = var_5475;
+var_5531[1] = var_5476;
+var_5531[2] = var_5480;
+var_5531[3] = var_5350[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:861
+var_5530 = fn_10(NULL, var_5531, "bld-rtl-dir/wile-rtl2-000083.scm:861");
+lval var_5533;
+var_5533 = LVI_SYMBOL("do-while");
+if (do_init_var_5534) {
+lval var_5535[8];
+lval var_5536;
+var_5536 = LVI_SYMBOL("some-cond");
+var_5535[0] = var_5536;
+lval var_5537;
+var_5537 = LVI_SYMBOL("some-actions");
+var_5535[1] = var_5537;
+var_5534 = wile_gen_list(1, var_5535, var_5535 + 1);
+do_init_var_5534 = false;
 }
-var_5517[2] = var_5523;
-var_5516 = wile_gen_list(3, var_5517, NULL);
-do_init_var_5516 = false;
-}
-var_5515[0] = var_5516;
-var_5514 = wile_gen_list(1, var_5515, NULL);
-do_init_var_5514 = false;
-}
-var_5512[1] = var_5514;
-if (do_init_var_5531) {
-lval var_5532[8];
-if (do_init_var_5533) {
-lval var_5534[8];
-lval var_5535;
-var_5535 = LVI_SYMBOL("and");
-var_5534[0] = var_5535;
-if (do_init_var_5536) {
-lval var_5537[8];
-lval var_5538;
-var_5538 = LVI_SYMBOL("positive?");
-var_5537[0] = var_5538;
-if (do_init_var_5539) {
-lval var_5540[8];
-lval var_5541;
-var_5541 = LVI_SYMBOL("unquote");
-var_5540[0] = var_5541;
+if (do_init_var_5538) {
+lval var_5539[8];
+if (do_init_var_5540) {
+lval var_5541[8];
 lval var_5542;
-var_5542 = LVI_SYMBOL("mc");
-var_5540[1] = var_5542;
-var_5539 = wile_gen_list(2, var_5540, NULL);
-do_init_var_5539 = false;
-}
-var_5537[1] = var_5539;
-var_5536 = wile_gen_list(2, var_5537, NULL);
-do_init_var_5536 = false;
-}
-var_5534[1] = var_5536;
+var_5542 = LVI_SYMBOL("let");
+var_5541[0] = var_5542;
 if (do_init_var_5543) {
 lval var_5544[8];
-lval var_5545;
-var_5545 = LVI_SYMBOL("not");
-var_5544[0] = var_5545;
-if (do_init_var_5546) {
-lval var_5547[8];
-lval var_5548;
-var_5548 = LVI_SYMBOL("unquote");
-var_5547[0] = var_5548;
-lval var_5549;
-var_5549 = LVI_SYMBOL("some-cond");
-var_5547[1] = var_5549;
-var_5546 = wile_gen_list(2, var_5547, NULL);
-do_init_var_5546 = false;
+if (do_init_var_5545) {
+lval var_5546[8];
+lval var_5547;
+var_5547 = LVI_SYMBOL("mc");
+var_5546[0] = var_5547;
+if (do_init_var_5548) {
+lval var_5549[8];
+lval var_5550;
+var_5550 = LVI_SYMBOL("gensym");
+var_5549[0] = var_5550;
+var_5548 = wile_gen_list(1, var_5549, NULL);
+do_init_var_5548 = false;
 }
-var_5544[1] = var_5546;
-var_5543 = wile_gen_list(2, var_5544, NULL);
+var_5546[1] = var_5548;
+var_5545 = wile_gen_list(2, var_5546, NULL);
+do_init_var_5545 = false;
+}
+var_5544[0] = var_5545;
+var_5543 = wile_gen_list(1, var_5544, NULL);
 do_init_var_5543 = false;
 }
-var_5534[2] = var_5543;
-var_5533 = wile_gen_list(3, var_5534, NULL);
-do_init_var_5533 = false;
-}
-var_5532[0] = var_5533;
-if (do_init_var_5550) {
-lval var_5551[8];
-lval var_5552;
-var_5552 = LVI_SYMBOL("unquote");
-var_5551[0] = var_5552;
+var_5541[1] = var_5543;
+if (do_init_var_5551) {
+lval var_5552[8];
 lval var_5553;
-var_5553 = LVI_SYMBOL("mc");
-var_5551[1] = var_5553;
-var_5550 = wile_gen_list(2, var_5551, NULL);
-do_init_var_5550 = false;
-}
-var_5532[1] = var_5550;
-var_5531 = wile_gen_list(2, var_5532, NULL);
-do_init_var_5531 = false;
-}
-var_5512[2] = var_5531;
+var_5553 = LVI_SYMBOL("quasiquote");
+var_5552[0] = var_5553;
 if (do_init_var_5554) {
 lval var_5555[8];
 lval var_5556;
-var_5556 = LVI_SYMBOL("unquote-splicing");
+var_5556 = LVI_SYMBOL("do");
 var_5555[0] = var_5556;
-lval var_5557;
-var_5557 = LVI_SYMBOL("some-actions");
-var_5555[1] = var_5557;
-var_5554 = wile_gen_list(2, var_5555, NULL);
-do_init_var_5554 = false;
-}
-var_5512[3] = var_5554;
-var_5511 = wile_gen_list(4, var_5512, NULL);
-do_init_var_5511 = false;
-}
-var_5509[1] = var_5511;
-var_5508 = wile_gen_list(2, var_5509, NULL);
-do_init_var_5508 = false;
-}
-var_5498[2] = var_5508;
-var_5497 = wile_gen_list(3, var_5498, NULL);
-do_init_var_5497 = false;
-}
-var_5496[0] = var_5497;
-var_5495 = wile_gen_list(1, var_5496, NULL);
-do_init_var_5495 = false;
-}
-lval var_5558;
-lval var_5559[8];
-var_5559[0] = var_5490;
-var_5559[1] = var_5491;
-var_5559[2] = var_5495;
-var_5559[3] = var_5307[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:863
-var_5558 = fn_10(NULL, var_5559, "bld-rtl-dir/wile-rtl2-000083.scm:863");
-lval var_5561;
-var_5561 = LVI_SYMBOL("do-until");
-if (do_init_var_5562) {
-lval var_5563[8];
+if (do_init_var_5557) {
+lval var_5558[8];
+if (do_init_var_5559) {
+lval var_5560[8];
+if (do_init_var_5561) {
+lval var_5562[8];
+lval var_5563;
+var_5563 = LVI_SYMBOL("unquote");
+var_5562[0] = var_5563;
 lval var_5564;
-var_5564 = LVI_SYMBOL("some-cond");
-var_5563[0] = var_5564;
-lval var_5565;
-var_5565 = LVI_SYMBOL("some-actions");
-var_5563[1] = var_5565;
-var_5562 = wile_gen_list(1, var_5563, var_5563 + 1);
-do_init_var_5562 = false;
+var_5564 = LVI_SYMBOL("mc");
+var_5562[1] = var_5564;
+var_5561 = wile_gen_list(2, var_5562, NULL);
+do_init_var_5561 = false;
 }
+var_5560[0] = var_5561;
+lval var_5565;
+var_5565 = LVI_INT(0);
+var_5560[1] = var_5565;
 if (do_init_var_5566) {
 lval var_5567[8];
-if (do_init_var_5568) {
-lval var_5569[8];
-lval var_5570;
-var_5570 = LVI_SYMBOL("let");
-var_5569[0] = var_5570;
-if (do_init_var_5571) {
-lval var_5572[8];
-if (do_init_var_5573) {
-lval var_5574[8];
-lval var_5575;
-var_5575 = LVI_SYMBOL("mc");
-var_5574[0] = var_5575;
+lval var_5568;
+var_5568 = LVI_SYMBOL("+");
+var_5567[0] = var_5568;
+if (do_init_var_5569) {
+lval var_5570[8];
+lval var_5571;
+var_5571 = LVI_SYMBOL("unquote");
+var_5570[0] = var_5571;
+lval var_5572;
+var_5572 = LVI_SYMBOL("mc");
+var_5570[1] = var_5572;
+var_5569 = wile_gen_list(2, var_5570, NULL);
+do_init_var_5569 = false;
+}
+var_5567[1] = var_5569;
+lval var_5573;
+var_5573 = LVI_INT(1);
+var_5567[2] = var_5573;
+var_5566 = wile_gen_list(3, var_5567, NULL);
+do_init_var_5566 = false;
+}
+var_5560[2] = var_5566;
+var_5559 = wile_gen_list(3, var_5560, NULL);
+do_init_var_5559 = false;
+}
+var_5558[0] = var_5559;
+var_5557 = wile_gen_list(1, var_5558, NULL);
+do_init_var_5557 = false;
+}
+var_5555[1] = var_5557;
+if (do_init_var_5574) {
+lval var_5575[8];
 if (do_init_var_5576) {
 lval var_5577[8];
 lval var_5578;
-var_5578 = LVI_SYMBOL("gensym");
+var_5578 = LVI_SYMBOL("and");
 var_5577[0] = var_5578;
-var_5576 = wile_gen_list(1, var_5577, NULL);
-do_init_var_5576 = false;
-}
-var_5574[1] = var_5576;
-var_5573 = wile_gen_list(2, var_5574, NULL);
-do_init_var_5573 = false;
-}
-var_5572[0] = var_5573;
-var_5571 = wile_gen_list(1, var_5572, NULL);
-do_init_var_5571 = false;
-}
-var_5569[1] = var_5571;
 if (do_init_var_5579) {
 lval var_5580[8];
 lval var_5581;
-var_5581 = LVI_SYMBOL("quasiquote");
+var_5581 = LVI_SYMBOL("positive?");
 var_5580[0] = var_5581;
 if (do_init_var_5582) {
 lval var_5583[8];
 lval var_5584;
-var_5584 = LVI_SYMBOL("do");
+var_5584 = LVI_SYMBOL("unquote");
 var_5583[0] = var_5584;
-if (do_init_var_5585) {
-lval var_5586[8];
-if (do_init_var_5587) {
-lval var_5588[8];
-if (do_init_var_5589) {
-lval var_5590[8];
-lval var_5591;
-var_5591 = LVI_SYMBOL("unquote");
-var_5590[0] = var_5591;
-lval var_5592;
-var_5592 = LVI_SYMBOL("mc");
-var_5590[1] = var_5592;
-var_5589 = wile_gen_list(2, var_5590, NULL);
-do_init_var_5589 = false;
-}
-var_5588[0] = var_5589;
-lval var_5593;
-var_5593 = LVI_INT(0);
-var_5588[1] = var_5593;
-if (do_init_var_5594) {
-lval var_5595[8];
-lval var_5596;
-var_5596 = LVI_SYMBOL("+");
-var_5595[0] = var_5596;
-if (do_init_var_5597) {
-lval var_5598[8];
-lval var_5599;
-var_5599 = LVI_SYMBOL("unquote");
-var_5598[0] = var_5599;
-lval var_5600;
-var_5600 = LVI_SYMBOL("mc");
-var_5598[1] = var_5600;
-var_5597 = wile_gen_list(2, var_5598, NULL);
-do_init_var_5597 = false;
-}
-var_5595[1] = var_5597;
-lval var_5601;
-var_5601 = LVI_INT(1);
-var_5595[2] = var_5601;
-var_5594 = wile_gen_list(3, var_5595, NULL);
-do_init_var_5594 = false;
-}
-var_5588[2] = var_5594;
-var_5587 = wile_gen_list(3, var_5588, NULL);
-do_init_var_5587 = false;
-}
-var_5586[0] = var_5587;
-var_5585 = wile_gen_list(1, var_5586, NULL);
-do_init_var_5585 = false;
-}
+lval var_5585;
+var_5585 = LVI_SYMBOL("mc");
 var_5583[1] = var_5585;
-if (do_init_var_5602) {
-lval var_5603[8];
-if (do_init_var_5604) {
-lval var_5605[8];
-lval var_5606;
-var_5606 = LVI_SYMBOL("and");
-var_5605[0] = var_5606;
-if (do_init_var_5607) {
-lval var_5608[8];
-lval var_5609;
-var_5609 = LVI_SYMBOL("positive?");
-var_5608[0] = var_5609;
-if (do_init_var_5610) {
-lval var_5611[8];
-lval var_5612;
-var_5612 = LVI_SYMBOL("unquote");
-var_5611[0] = var_5612;
-lval var_5613;
-var_5613 = LVI_SYMBOL("mc");
-var_5611[1] = var_5613;
-var_5610 = wile_gen_list(2, var_5611, NULL);
-do_init_var_5610 = false;
-}
-var_5608[1] = var_5610;
-var_5607 = wile_gen_list(2, var_5608, NULL);
-do_init_var_5607 = false;
-}
-var_5605[1] = var_5607;
-if (do_init_var_5614) {
-lval var_5615[8];
-lval var_5616;
-var_5616 = LVI_SYMBOL("unquote");
-var_5615[0] = var_5616;
-lval var_5617;
-var_5617 = LVI_SYMBOL("some-cond");
-var_5615[1] = var_5617;
-var_5614 = wile_gen_list(2, var_5615, NULL);
-do_init_var_5614 = false;
-}
-var_5605[2] = var_5614;
-var_5604 = wile_gen_list(3, var_5605, NULL);
-do_init_var_5604 = false;
-}
-var_5603[0] = var_5604;
-if (do_init_var_5618) {
-lval var_5619[8];
-lval var_5620;
-var_5620 = LVI_SYMBOL("unquote");
-var_5619[0] = var_5620;
-lval var_5621;
-var_5621 = LVI_SYMBOL("mc");
-var_5619[1] = var_5621;
-var_5618 = wile_gen_list(2, var_5619, NULL);
-do_init_var_5618 = false;
-}
-var_5603[1] = var_5618;
-var_5602 = wile_gen_list(2, var_5603, NULL);
-do_init_var_5602 = false;
-}
-var_5583[2] = var_5602;
-if (do_init_var_5622) {
-lval var_5623[8];
-lval var_5624;
-var_5624 = LVI_SYMBOL("unquote-splicing");
-var_5623[0] = var_5624;
-lval var_5625;
-var_5625 = LVI_SYMBOL("some-actions");
-var_5623[1] = var_5625;
-var_5622 = wile_gen_list(2, var_5623, NULL);
-do_init_var_5622 = false;
-}
-var_5583[3] = var_5622;
-var_5582 = wile_gen_list(4, var_5583, NULL);
+var_5582 = wile_gen_list(2, var_5583, NULL);
 do_init_var_5582 = false;
 }
 var_5580[1] = var_5582;
 var_5579 = wile_gen_list(2, var_5580, NULL);
 do_init_var_5579 = false;
 }
-var_5569[2] = var_5579;
-var_5568 = wile_gen_list(3, var_5569, NULL);
-do_init_var_5568 = false;
+var_5577[1] = var_5579;
+if (do_init_var_5586) {
+lval var_5587[8];
+lval var_5588;
+var_5588 = LVI_SYMBOL("not");
+var_5587[0] = var_5588;
+if (do_init_var_5589) {
+lval var_5590[8];
+lval var_5591;
+var_5591 = LVI_SYMBOL("unquote");
+var_5590[0] = var_5591;
+lval var_5592;
+var_5592 = LVI_SYMBOL("some-cond");
+var_5590[1] = var_5592;
+var_5589 = wile_gen_list(2, var_5590, NULL);
+do_init_var_5589 = false;
 }
-var_5567[0] = var_5568;
-var_5566 = wile_gen_list(1, var_5567, NULL);
-do_init_var_5566 = false;
+var_5587[1] = var_5589;
+var_5586 = wile_gen_list(2, var_5587, NULL);
+do_init_var_5586 = false;
 }
-lval var_5626;
-lval var_5627[8];
-var_5627[0] = var_5561;
-var_5627[1] = var_5562;
-var_5627[2] = var_5566;
-var_5627[3] = var_5307[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:871
-var_5626 = fn_10(NULL, var_5627, "bld-rtl-dir/wile-rtl2-000083.scm:871");
-lval var_5629;
-var_5629 = LVI_SYMBOL("assert");
+var_5577[2] = var_5586;
+var_5576 = wile_gen_list(3, var_5577, NULL);
+do_init_var_5576 = false;
+}
+var_5575[0] = var_5576;
+if (do_init_var_5593) {
+lval var_5594[8];
+lval var_5595;
+var_5595 = LVI_SYMBOL("unquote");
+var_5594[0] = var_5595;
+lval var_5596;
+var_5596 = LVI_SYMBOL("mc");
+var_5594[1] = var_5596;
+var_5593 = wile_gen_list(2, var_5594, NULL);
+do_init_var_5593 = false;
+}
+var_5575[1] = var_5593;
+var_5574 = wile_gen_list(2, var_5575, NULL);
+do_init_var_5574 = false;
+}
+var_5555[2] = var_5574;
+if (do_init_var_5597) {
+lval var_5598[8];
+lval var_5599;
+var_5599 = LVI_SYMBOL("unquote-splicing");
+var_5598[0] = var_5599;
+lval var_5600;
+var_5600 = LVI_SYMBOL("some-actions");
+var_5598[1] = var_5600;
+var_5597 = wile_gen_list(2, var_5598, NULL);
+do_init_var_5597 = false;
+}
+var_5555[3] = var_5597;
+var_5554 = wile_gen_list(4, var_5555, NULL);
+do_init_var_5554 = false;
+}
+var_5552[1] = var_5554;
+var_5551 = wile_gen_list(2, var_5552, NULL);
+do_init_var_5551 = false;
+}
+var_5541[2] = var_5551;
+var_5540 = wile_gen_list(3, var_5541, NULL);
+do_init_var_5540 = false;
+}
+var_5539[0] = var_5540;
+var_5538 = wile_gen_list(1, var_5539, NULL);
+do_init_var_5538 = false;
+}
+lval var_5601;
+lval var_5602[8];
+var_5602[0] = var_5533;
+var_5602[1] = var_5534;
+var_5602[2] = var_5538;
+var_5602[3] = var_5350[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:869
+var_5601 = fn_10(NULL, var_5602, "bld-rtl-dir/wile-rtl2-000083.scm:869");
+lval var_5604;
+var_5604 = LVI_SYMBOL("do-until");
+if (do_init_var_5605) {
+lval var_5606[8];
+lval var_5607;
+var_5607 = LVI_SYMBOL("some-cond");
+var_5606[0] = var_5607;
+lval var_5608;
+var_5608 = LVI_SYMBOL("some-actions");
+var_5606[1] = var_5608;
+var_5605 = wile_gen_list(1, var_5606, var_5606 + 1);
+do_init_var_5605 = false;
+}
+if (do_init_var_5609) {
+lval var_5610[8];
+if (do_init_var_5611) {
+lval var_5612[8];
+lval var_5613;
+var_5613 = LVI_SYMBOL("let");
+var_5612[0] = var_5613;
+if (do_init_var_5614) {
+lval var_5615[8];
+if (do_init_var_5616) {
+lval var_5617[8];
+lval var_5618;
+var_5618 = LVI_SYMBOL("mc");
+var_5617[0] = var_5618;
+if (do_init_var_5619) {
+lval var_5620[8];
+lval var_5621;
+var_5621 = LVI_SYMBOL("gensym");
+var_5620[0] = var_5621;
+var_5619 = wile_gen_list(1, var_5620, NULL);
+do_init_var_5619 = false;
+}
+var_5617[1] = var_5619;
+var_5616 = wile_gen_list(2, var_5617, NULL);
+do_init_var_5616 = false;
+}
+var_5615[0] = var_5616;
+var_5614 = wile_gen_list(1, var_5615, NULL);
+do_init_var_5614 = false;
+}
+var_5612[1] = var_5614;
+if (do_init_var_5622) {
+lval var_5623[8];
+lval var_5624;
+var_5624 = LVI_SYMBOL("quasiquote");
+var_5623[0] = var_5624;
+if (do_init_var_5625) {
+lval var_5626[8];
+lval var_5627;
+var_5627 = LVI_SYMBOL("do");
+var_5626[0] = var_5627;
+if (do_init_var_5628) {
+lval var_5629[8];
 if (do_init_var_5630) {
 lval var_5631[8];
-lval var_5632;
-var_5632 = LVI_SYMBOL("some-cond");
+if (do_init_var_5632) {
+lval var_5633[8];
+lval var_5634;
+var_5634 = LVI_SYMBOL("unquote");
+var_5633[0] = var_5634;
+lval var_5635;
+var_5635 = LVI_SYMBOL("mc");
+var_5633[1] = var_5635;
+var_5632 = wile_gen_list(2, var_5633, NULL);
+do_init_var_5632 = false;
+}
 var_5631[0] = var_5632;
-var_5630 = wile_gen_list(1, var_5631, NULL);
+lval var_5636;
+var_5636 = LVI_INT(0);
+var_5631[1] = var_5636;
+if (do_init_var_5637) {
+lval var_5638[8];
+lval var_5639;
+var_5639 = LVI_SYMBOL("+");
+var_5638[0] = var_5639;
+if (do_init_var_5640) {
+lval var_5641[8];
+lval var_5642;
+var_5642 = LVI_SYMBOL("unquote");
+var_5641[0] = var_5642;
+lval var_5643;
+var_5643 = LVI_SYMBOL("mc");
+var_5641[1] = var_5643;
+var_5640 = wile_gen_list(2, var_5641, NULL);
+do_init_var_5640 = false;
+}
+var_5638[1] = var_5640;
+lval var_5644;
+var_5644 = LVI_INT(1);
+var_5638[2] = var_5644;
+var_5637 = wile_gen_list(3, var_5638, NULL);
+do_init_var_5637 = false;
+}
+var_5631[2] = var_5637;
+var_5630 = wile_gen_list(3, var_5631, NULL);
 do_init_var_5630 = false;
 }
-if (do_init_var_5633) {
-lval var_5634[8];
-if (do_init_var_5635) {
-lval var_5636[8];
-lval var_5637;
-var_5637 = LVI_SYMBOL("quasiquote");
-var_5636[0] = var_5637;
-if (do_init_var_5638) {
-lval var_5639[8];
-lval var_5640;
-var_5640 = LVI_SYMBOL("when");
-var_5639[0] = var_5640;
-if (do_init_var_5641) {
-lval var_5642[8];
-lval var_5643;
-var_5643 = LVI_SYMBOL("not");
-var_5642[0] = var_5643;
-if (do_init_var_5644) {
-lval var_5645[8];
-lval var_5646;
-var_5646 = LVI_SYMBOL("unquote");
-var_5645[0] = var_5646;
-lval var_5647;
-var_5647 = LVI_SYMBOL("some-cond");
-var_5645[1] = var_5647;
-var_5644 = wile_gen_list(2, var_5645, NULL);
-do_init_var_5644 = false;
+var_5629[0] = var_5630;
+var_5628 = wile_gen_list(1, var_5629, NULL);
+do_init_var_5628 = false;
 }
-var_5642[1] = var_5644;
-var_5641 = wile_gen_list(2, var_5642, NULL);
-do_init_var_5641 = false;
-}
-var_5639[1] = var_5641;
-if (do_init_var_5648) {
-lval var_5649[8];
-lval var_5650;
-var_5650 = LVI_SYMBOL("write-string");
-var_5649[0] = var_5650;
-lval var_5651;
-var_5651 = LVI_SYMBOL("stderr");
-var_5649[1] = var_5651;
+var_5626[1] = var_5628;
+if (do_init_var_5645) {
+lval var_5646[8];
+if (do_init_var_5647) {
+lval var_5648[8];
+lval var_5649;
+var_5649 = LVI_SYMBOL("and");
+var_5648[0] = var_5649;
+if (do_init_var_5650) {
+lval var_5651[8];
 lval var_5652;
-var_5652 = LVI_STRING("assertion failure: ");
-var_5649[2] = var_5652;
-var_5648 = wile_gen_list(3, var_5649, NULL);
-do_init_var_5648 = false;
-}
-var_5639[2] = var_5648;
+var_5652 = LVI_SYMBOL("positive?");
+var_5651[0] = var_5652;
 if (do_init_var_5653) {
 lval var_5654[8];
 lval var_5655;
-var_5655 = LVI_SYMBOL("display");
+var_5655 = LVI_SYMBOL("unquote");
 var_5654[0] = var_5655;
-if (do_init_var_5656) {
-lval var_5657[8];
-lval var_5658;
-var_5658 = LVI_SYMBOL("unquote");
-var_5657[0] = var_5658;
-lval var_5659;
-var_5659 = LVI_SYMBOL("some-cond");
-var_5657[1] = var_5659;
-var_5656 = wile_gen_list(2, var_5657, NULL);
-do_init_var_5656 = false;
-}
+lval var_5656;
+var_5656 = LVI_SYMBOL("mc");
 var_5654[1] = var_5656;
-lval var_5660;
-var_5660 = LVI_SYMBOL("stderr");
-var_5654[2] = var_5660;
-var_5653 = wile_gen_list(3, var_5654, NULL);
+var_5653 = wile_gen_list(2, var_5654, NULL);
 do_init_var_5653 = false;
 }
-var_5639[3] = var_5653;
+var_5651[1] = var_5653;
+var_5650 = wile_gen_list(2, var_5651, NULL);
+do_init_var_5650 = false;
+}
+var_5648[1] = var_5650;
+if (do_init_var_5657) {
+lval var_5658[8];
+lval var_5659;
+var_5659 = LVI_SYMBOL("unquote");
+var_5658[0] = var_5659;
+lval var_5660;
+var_5660 = LVI_SYMBOL("some-cond");
+var_5658[1] = var_5660;
+var_5657 = wile_gen_list(2, var_5658, NULL);
+do_init_var_5657 = false;
+}
+var_5648[2] = var_5657;
+var_5647 = wile_gen_list(3, var_5648, NULL);
+do_init_var_5647 = false;
+}
+var_5646[0] = var_5647;
 if (do_init_var_5661) {
 lval var_5662[8];
 lval var_5663;
-var_5663 = LVI_SYMBOL("newline");
+var_5663 = LVI_SYMBOL("unquote");
 var_5662[0] = var_5663;
 lval var_5664;
-var_5664 = LVI_SYMBOL("stderr");
+var_5664 = LVI_SYMBOL("mc");
 var_5662[1] = var_5664;
 var_5661 = wile_gen_list(2, var_5662, NULL);
 do_init_var_5661 = false;
 }
-var_5639[4] = var_5661;
+var_5646[1] = var_5661;
+var_5645 = wile_gen_list(2, var_5646, NULL);
+do_init_var_5645 = false;
+}
+var_5626[2] = var_5645;
 if (do_init_var_5665) {
 lval var_5666[8];
 lval var_5667;
-var_5667 = LVI_SYMBOL("raise");
+var_5667 = LVI_SYMBOL("unquote-splicing");
 var_5666[0] = var_5667;
 lval var_5668;
-var_5668 = LVI_STRING("assertion failure!");
+var_5668 = LVI_SYMBOL("some-actions");
 var_5666[1] = var_5668;
 var_5665 = wile_gen_list(2, var_5666, NULL);
 do_init_var_5665 = false;
 }
-var_5639[5] = var_5665;
-var_5638 = wile_gen_list(6, var_5639, NULL);
-do_init_var_5638 = false;
+var_5626[3] = var_5665;
+var_5625 = wile_gen_list(4, var_5626, NULL);
+do_init_var_5625 = false;
 }
-var_5636[1] = var_5638;
-var_5635 = wile_gen_list(2, var_5636, NULL);
-do_init_var_5635 = false;
+var_5623[1] = var_5625;
+var_5622 = wile_gen_list(2, var_5623, NULL);
+do_init_var_5622 = false;
 }
-var_5634[0] = var_5635;
-var_5633 = wile_gen_list(1, var_5634, NULL);
-do_init_var_5633 = false;
+var_5612[2] = var_5622;
+var_5611 = wile_gen_list(3, var_5612, NULL);
+do_init_var_5611 = false;
+}
+var_5610[0] = var_5611;
+var_5609 = wile_gen_list(1, var_5610, NULL);
+do_init_var_5609 = false;
 }
 lval var_5669;
 lval var_5670[8];
-var_5670[0] = var_5629;
-var_5670[1] = var_5630;
-var_5670[2] = var_5633;
-var_5670[3] = var_5307[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:879
-var_5669 = fn_10(NULL, var_5670, "bld-rtl-dir/wile-rtl2-000083.scm:879");
+var_5670[0] = var_5604;
+var_5670[1] = var_5605;
+var_5670[2] = var_5609;
+var_5670[3] = var_5350[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:877
+var_5669 = fn_10(NULL, var_5670, "bld-rtl-dir/wile-rtl2-000083.scm:877");
 lval var_5672;
-var_5672 = LVI_SYMBOL("begin-breakable");
+var_5672 = LVI_SYMBOL("assert");
 if (do_init_var_5673) {
 lval var_5674[8];
 lval var_5675;
-var_5675 = LVI_SYMBOL("tag");
+var_5675 = LVI_SYMBOL("some-cond");
 var_5674[0] = var_5675;
-lval var_5676;
-var_5676 = LVI_SYMBOL("actions");
-var_5674[1] = var_5676;
-var_5673 = wile_gen_list(1, var_5674, var_5674 + 1);
+var_5673 = wile_gen_list(1, var_5674, NULL);
 do_init_var_5673 = false;
 }
-if (do_init_var_5677) {
-lval var_5678[8];
-if (do_init_var_5679) {
-lval var_5680[8];
-lval var_5681;
-var_5681 = LVI_SYMBOL("let");
-var_5680[0] = var_5681;
-if (do_init_var_5682) {
-lval var_5683[8];
+if (do_init_var_5676) {
+lval var_5677[8];
+if (do_init_var_5678) {
+lval var_5679[8];
+lval var_5680;
+var_5680 = LVI_SYMBOL("quasiquote");
+var_5679[0] = var_5680;
+if (do_init_var_5681) {
+lval var_5682[8];
+lval var_5683;
+var_5683 = LVI_SYMBOL("when");
+var_5682[0] = var_5683;
 if (do_init_var_5684) {
 lval var_5685[8];
 lval var_5686;
-var_5686 = LVI_SYMBOL("cname");
+var_5686 = LVI_SYMBOL("not");
 var_5685[0] = var_5686;
 if (do_init_var_5687) {
 lval var_5688[8];
 lval var_5689;
-var_5689 = LVI_SYMBOL("gensym");
+var_5689 = LVI_SYMBOL("unquote");
 var_5688[0] = var_5689;
-var_5687 = wile_gen_list(1, var_5688, NULL);
+lval var_5690;
+var_5690 = LVI_SYMBOL("some-cond");
+var_5688[1] = var_5690;
+var_5687 = wile_gen_list(2, var_5688, NULL);
 do_init_var_5687 = false;
 }
 var_5685[1] = var_5687;
 var_5684 = wile_gen_list(2, var_5685, NULL);
 do_init_var_5684 = false;
 }
-var_5683[0] = var_5684;
-var_5682 = wile_gen_list(1, var_5683, NULL);
-do_init_var_5682 = false;
-}
-var_5680[1] = var_5682;
-if (do_init_var_5690) {
-lval var_5691[8];
-lval var_5692;
-var_5692 = LVI_SYMBOL("quasiquote");
-var_5691[0] = var_5692;
-if (do_init_var_5693) {
-lval var_5694[8];
+var_5682[1] = var_5684;
+if (do_init_var_5691) {
+lval var_5692[8];
+lval var_5693;
+var_5693 = LVI_SYMBOL("write-string");
+var_5692[0] = var_5693;
+lval var_5694;
+var_5694 = LVI_SYMBOL("stderr");
+var_5692[1] = var_5694;
 lval var_5695;
-var_5695 = LVI_SYMBOL("guard");
-var_5694[0] = var_5695;
+var_5695 = LVI_STRING("assertion failure: ");
+var_5692[2] = var_5695;
+var_5691 = wile_gen_list(3, var_5692, NULL);
+do_init_var_5691 = false;
+}
+var_5682[2] = var_5691;
 if (do_init_var_5696) {
 lval var_5697[8];
-if (do_init_var_5698) {
-lval var_5699[8];
-lval var_5700;
-var_5700 = LVI_SYMBOL("unquote");
-var_5699[0] = var_5700;
-lval var_5701;
-var_5701 = LVI_SYMBOL("cname");
-var_5699[1] = var_5701;
-var_5698 = wile_gen_list(2, var_5699, NULL);
-do_init_var_5698 = false;
-}
+lval var_5698;
+var_5698 = LVI_SYMBOL("display");
 var_5697[0] = var_5698;
-if (do_init_var_5702) {
-lval var_5703[8];
+if (do_init_var_5699) {
+lval var_5700[8];
+lval var_5701;
+var_5701 = LVI_SYMBOL("unquote");
+var_5700[0] = var_5701;
+lval var_5702;
+var_5702 = LVI_SYMBOL("some-cond");
+var_5700[1] = var_5702;
+var_5699 = wile_gen_list(2, var_5700, NULL);
+do_init_var_5699 = false;
+}
+var_5697[1] = var_5699;
+lval var_5703;
+var_5703 = LVI_SYMBOL("stderr");
+var_5697[2] = var_5703;
+var_5696 = wile_gen_list(3, var_5697, NULL);
+do_init_var_5696 = false;
+}
+var_5682[3] = var_5696;
 if (do_init_var_5704) {
 lval var_5705[8];
 lval var_5706;
-var_5706 = LVI_SYMBOL("symbol=?");
+var_5706 = LVI_SYMBOL("newline");
 var_5705[0] = var_5706;
-if (do_init_var_5707) {
-lval var_5708[8];
-lval var_5709;
-var_5709 = LVI_SYMBOL("unquote");
-var_5708[0] = var_5709;
-lval var_5710;
-var_5710 = LVI_SYMBOL("cname");
-var_5708[1] = var_5710;
-var_5707 = wile_gen_list(2, var_5708, NULL);
-do_init_var_5707 = false;
-}
+lval var_5707;
+var_5707 = LVI_SYMBOL("stderr");
 var_5705[1] = var_5707;
-if (do_init_var_5711) {
-lval var_5712[8];
-lval var_5713;
-var_5713 = LVI_SYMBOL("unquote");
-var_5712[0] = var_5713;
-lval var_5714;
-var_5714 = LVI_SYMBOL("tag");
-var_5712[1] = var_5714;
-var_5711 = wile_gen_list(2, var_5712, NULL);
-do_init_var_5711 = false;
-}
-var_5705[2] = var_5711;
-var_5704 = wile_gen_list(3, var_5705, NULL);
+var_5704 = wile_gen_list(2, var_5705, NULL);
 do_init_var_5704 = false;
 }
-var_5703[0] = var_5704;
-var_5702 = wile_gen_list(1, var_5703, NULL);
-do_init_var_5702 = false;
+var_5682[4] = var_5704;
+if (do_init_var_5708) {
+lval var_5709[8];
+lval var_5710;
+var_5710 = LVI_SYMBOL("raise");
+var_5709[0] = var_5710;
+lval var_5711;
+var_5711 = LVI_STRING("assertion failure!");
+var_5709[1] = var_5711;
+var_5708 = wile_gen_list(2, var_5709, NULL);
+do_init_var_5708 = false;
 }
-var_5697[1] = var_5702;
-var_5696 = wile_gen_list(2, var_5697, NULL);
-do_init_var_5696 = false;
+var_5682[5] = var_5708;
+var_5681 = wile_gen_list(6, var_5682, NULL);
+do_init_var_5681 = false;
 }
-var_5694[1] = var_5696;
-if (do_init_var_5715) {
-lval var_5716[8];
-lval var_5717;
-var_5717 = LVI_SYMBOL("unquote-splicing");
-var_5716[0] = var_5717;
+var_5679[1] = var_5681;
+var_5678 = wile_gen_list(2, var_5679, NULL);
+do_init_var_5678 = false;
+}
+var_5677[0] = var_5678;
+var_5676 = wile_gen_list(1, var_5677, NULL);
+do_init_var_5676 = false;
+}
+lval var_5712;
+lval var_5713[8];
+var_5713[0] = var_5672;
+var_5713[1] = var_5673;
+var_5713[2] = var_5676;
+var_5713[3] = var_5350[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:885
+var_5712 = fn_10(NULL, var_5713, "bld-rtl-dir/wile-rtl2-000083.scm:885");
+lval var_5715;
+var_5715 = LVI_SYMBOL("begin-breakable");
+if (do_init_var_5716) {
+lval var_5717[8];
 lval var_5718;
-var_5718 = LVI_SYMBOL("actions");
-var_5716[1] = var_5718;
-var_5715 = wile_gen_list(2, var_5716, NULL);
-do_init_var_5715 = false;
-}
-var_5694[2] = var_5715;
-var_5693 = wile_gen_list(3, var_5694, NULL);
-do_init_var_5693 = false;
-}
-var_5691[1] = var_5693;
-var_5690 = wile_gen_list(2, var_5691, NULL);
-do_init_var_5690 = false;
-}
-var_5680[2] = var_5690;
-var_5679 = wile_gen_list(3, var_5680, NULL);
-do_init_var_5679 = false;
-}
-var_5678[0] = var_5679;
-var_5677 = wile_gen_list(1, var_5678, NULL);
-do_init_var_5677 = false;
-}
+var_5718 = LVI_SYMBOL("tag");
+var_5717[0] = var_5718;
 lval var_5719;
-lval var_5720[8];
-var_5720[0] = var_5672;
-var_5720[1] = var_5673;
-var_5720[2] = var_5677;
-var_5720[3] = var_5307[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:888
-var_5719 = fn_10(NULL, var_5720, "bld-rtl-dir/wile-rtl2-000083.scm:888");
-lval var_5722;
-var_5722 = LVI_SYMBOL("fluid-let");
-if (do_init_var_5723) {
-lval var_5724[8];
-lval var_5725;
-var_5725 = LVI_SYMBOL("vals");
-var_5724[0] = var_5725;
-lval var_5726;
-var_5726 = LVI_SYMBOL("body");
-var_5724[1] = var_5726;
-var_5723 = wile_gen_list(1, var_5724, var_5724 + 1);
-do_init_var_5723 = false;
+var_5719 = LVI_SYMBOL("actions");
+var_5717[1] = var_5719;
+var_5716 = wile_gen_list(1, var_5717, var_5717 + 1);
+do_init_var_5716 = false;
 }
+if (do_init_var_5720) {
+lval var_5721[8];
+if (do_init_var_5722) {
+lval var_5723[8];
+lval var_5724;
+var_5724 = LVI_SYMBOL("let");
+var_5723[0] = var_5724;
+if (do_init_var_5725) {
+lval var_5726[8];
 if (do_init_var_5727) {
 lval var_5728[8];
-if (do_init_var_5729) {
-lval var_5730[8];
-lval var_5731;
-var_5731 = LVI_SYMBOL("let");
-var_5730[0] = var_5731;
-if (do_init_var_5732) {
-lval var_5733[8];
-if (do_init_var_5734) {
-lval var_5735[8];
-lval var_5736;
-var_5736 = LVI_SYMBOL("svals");
-var_5735[0] = var_5736;
-if (do_init_var_5737) {
-lval var_5738[8];
-lval var_5739;
-var_5739 = LVI_SYMBOL("map");
-var_5738[0] = var_5739;
-if (do_init_var_5740) {
-lval var_5741[8];
-lval var_5742;
-var_5742 = LVI_SYMBOL("lambda");
-var_5741[0] = var_5742;
-if (do_init_var_5743) {
-lval var_5744[8];
-lval var_5745;
-var_5745 = LVI_SYMBOL("ig");
-var_5744[0] = var_5745;
-var_5743 = wile_gen_list(1, var_5744, NULL);
-do_init_var_5743 = false;
+lval var_5729;
+var_5729 = LVI_SYMBOL("cname");
+var_5728[0] = var_5729;
+if (do_init_var_5730) {
+lval var_5731[8];
+lval var_5732;
+var_5732 = LVI_SYMBOL("gensym");
+var_5731[0] = var_5732;
+var_5730 = wile_gen_list(1, var_5731, NULL);
+do_init_var_5730 = false;
 }
-var_5741[1] = var_5743;
-if (do_init_var_5746) {
-lval var_5747[8];
-lval var_5748;
-var_5748 = LVI_SYMBOL("gensym");
-var_5747[0] = var_5748;
-var_5746 = wile_gen_list(1, var_5747, NULL);
-do_init_var_5746 = false;
+var_5728[1] = var_5730;
+var_5727 = wile_gen_list(2, var_5728, NULL);
+do_init_var_5727 = false;
 }
-var_5741[2] = var_5746;
-var_5740 = wile_gen_list(3, var_5741, NULL);
-do_init_var_5740 = false;
+var_5726[0] = var_5727;
+var_5725 = wile_gen_list(1, var_5726, NULL);
+do_init_var_5725 = false;
 }
-var_5738[1] = var_5740;
+var_5723[1] = var_5725;
+if (do_init_var_5733) {
+lval var_5734[8];
+lval var_5735;
+var_5735 = LVI_SYMBOL("quasiquote");
+var_5734[0] = var_5735;
+if (do_init_var_5736) {
+lval var_5737[8];
+lval var_5738;
+var_5738 = LVI_SYMBOL("guard");
+var_5737[0] = var_5738;
+if (do_init_var_5739) {
+lval var_5740[8];
+if (do_init_var_5741) {
+lval var_5742[8];
+lval var_5743;
+var_5743 = LVI_SYMBOL("unquote");
+var_5742[0] = var_5743;
+lval var_5744;
+var_5744 = LVI_SYMBOL("cname");
+var_5742[1] = var_5744;
+var_5741 = wile_gen_list(2, var_5742, NULL);
+do_init_var_5741 = false;
+}
+var_5740[0] = var_5741;
+if (do_init_var_5745) {
+lval var_5746[8];
+if (do_init_var_5747) {
+lval var_5748[8];
 lval var_5749;
-var_5749 = LVI_SYMBOL("vals");
-var_5738[2] = var_5749;
-var_5737 = wile_gen_list(3, var_5738, NULL);
-do_init_var_5737 = false;
-}
-var_5735[1] = var_5737;
-var_5734 = wile_gen_list(2, var_5735, NULL);
-do_init_var_5734 = false;
-}
-var_5733[0] = var_5734;
+var_5749 = LVI_SYMBOL("symbol=?");
+var_5748[0] = var_5749;
 if (do_init_var_5750) {
 lval var_5751[8];
 lval var_5752;
-var_5752 = LVI_SYMBOL("result");
+var_5752 = LVI_SYMBOL("unquote");
 var_5751[0] = var_5752;
-if (do_init_var_5753) {
-lval var_5754[8];
-lval var_5755;
-var_5755 = LVI_SYMBOL("gensym");
-var_5754[0] = var_5755;
-var_5753 = wile_gen_list(1, var_5754, NULL);
-do_init_var_5753 = false;
-}
+lval var_5753;
+var_5753 = LVI_SYMBOL("cname");
 var_5751[1] = var_5753;
 var_5750 = wile_gen_list(2, var_5751, NULL);
 do_init_var_5750 = false;
 }
-var_5733[1] = var_5750;
-if (do_init_var_5756) {
-lval var_5757[8];
-lval var_5758;
-var_5758 = LVI_SYMBOL("vars");
-var_5757[0] = var_5758;
-if (do_init_var_5759) {
-lval var_5760[8];
+var_5748[1] = var_5750;
+if (do_init_var_5754) {
+lval var_5755[8];
+lval var_5756;
+var_5756 = LVI_SYMBOL("unquote");
+var_5755[0] = var_5756;
+lval var_5757;
+var_5757 = LVI_SYMBOL("tag");
+var_5755[1] = var_5757;
+var_5754 = wile_gen_list(2, var_5755, NULL);
+do_init_var_5754 = false;
+}
+var_5748[2] = var_5754;
+var_5747 = wile_gen_list(3, var_5748, NULL);
+do_init_var_5747 = false;
+}
+var_5746[0] = var_5747;
+var_5745 = wile_gen_list(1, var_5746, NULL);
+do_init_var_5745 = false;
+}
+var_5740[1] = var_5745;
+var_5739 = wile_gen_list(2, var_5740, NULL);
+do_init_var_5739 = false;
+}
+var_5737[1] = var_5739;
+if (do_init_var_5758) {
+lval var_5759[8];
+lval var_5760;
+var_5760 = LVI_SYMBOL("unquote-splicing");
+var_5759[0] = var_5760;
 lval var_5761;
-var_5761 = LVI_SYMBOL("map");
-var_5760[0] = var_5761;
+var_5761 = LVI_SYMBOL("actions");
+var_5759[1] = var_5761;
+var_5758 = wile_gen_list(2, var_5759, NULL);
+do_init_var_5758 = false;
+}
+var_5737[2] = var_5758;
+var_5736 = wile_gen_list(3, var_5737, NULL);
+do_init_var_5736 = false;
+}
+var_5734[1] = var_5736;
+var_5733 = wile_gen_list(2, var_5734, NULL);
+do_init_var_5733 = false;
+}
+var_5723[2] = var_5733;
+var_5722 = wile_gen_list(3, var_5723, NULL);
+do_init_var_5722 = false;
+}
+var_5721[0] = var_5722;
+var_5720 = wile_gen_list(1, var_5721, NULL);
+do_init_var_5720 = false;
+}
 lval var_5762;
-var_5762 = LVI_SYMBOL("car");
-var_5760[1] = var_5762;
-lval var_5763;
-var_5763 = LVI_SYMBOL("vals");
-var_5760[2] = var_5763;
-var_5759 = wile_gen_list(3, var_5760, NULL);
-do_init_var_5759 = false;
-}
-var_5757[1] = var_5759;
-var_5756 = wile_gen_list(2, var_5757, NULL);
-do_init_var_5756 = false;
-}
-var_5733[2] = var_5756;
-if (do_init_var_5764) {
-lval var_5765[8];
-lval var_5766;
-var_5766 = LVI_SYMBOL("tvals");
-var_5765[0] = var_5766;
-if (do_init_var_5767) {
-lval var_5768[8];
+lval var_5763[8];
+var_5763[0] = var_5715;
+var_5763[1] = var_5716;
+var_5763[2] = var_5720;
+var_5763[3] = var_5350[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:894
+var_5762 = fn_10(NULL, var_5763, "bld-rtl-dir/wile-rtl2-000083.scm:894");
+lval var_5765;
+var_5765 = LVI_SYMBOL("fluid-let");
+if (do_init_var_5766) {
+lval var_5767[8];
+lval var_5768;
+var_5768 = LVI_SYMBOL("vals");
+var_5767[0] = var_5768;
 lval var_5769;
-var_5769 = LVI_SYMBOL("map");
-var_5768[0] = var_5769;
-lval var_5770;
-var_5770 = LVI_SYMBOL("cadr");
-var_5768[1] = var_5770;
-lval var_5771;
-var_5771 = LVI_SYMBOL("vals");
-var_5768[2] = var_5771;
-var_5767 = wile_gen_list(3, var_5768, NULL);
-do_init_var_5767 = false;
+var_5769 = LVI_SYMBOL("body");
+var_5767[1] = var_5769;
+var_5766 = wile_gen_list(1, var_5767, var_5767 + 1);
+do_init_var_5766 = false;
 }
-var_5765[1] = var_5767;
-var_5764 = wile_gen_list(2, var_5765, NULL);
-do_init_var_5764 = false;
-}
-var_5733[3] = var_5764;
-var_5732 = wile_gen_list(4, var_5733, NULL);
-do_init_var_5732 = false;
-}
-var_5730[1] = var_5732;
+if (do_init_var_5770) {
+lval var_5771[8];
 if (do_init_var_5772) {
 lval var_5773[8];
 lval var_5774;
-var_5774 = LVI_SYMBOL("quasiquote");
+var_5774 = LVI_SYMBOL("let");
 var_5773[0] = var_5774;
 if (do_init_var_5775) {
 lval var_5776[8];
-lval var_5777;
-var_5777 = LVI_SYMBOL("let");
-var_5776[0] = var_5777;
-if (do_init_var_5778) {
-lval var_5779[8];
-lval var_5780;
-var_5780 = LVI_SYMBOL("unquote");
-var_5779[0] = var_5780;
-if (do_init_var_5781) {
-lval var_5782[8];
-lval var_5783;
-var_5783 = LVI_SYMBOL("map");
-var_5782[0] = var_5783;
-if (do_init_var_5784) {
-lval var_5785[8];
-lval var_5786;
-var_5786 = LVI_SYMBOL("lambda");
-var_5785[0] = var_5786;
-if (do_init_var_5787) {
-lval var_5788[8];
-lval var_5789;
-var_5789 = LVI_SYMBOL("s");
-var_5788[0] = var_5789;
-lval var_5790;
-var_5790 = LVI_SYMBOL("v");
-var_5788[1] = var_5790;
-var_5787 = wile_gen_list(2, var_5788, NULL);
-do_init_var_5787 = false;
+if (do_init_var_5777) {
+lval var_5778[8];
+lval var_5779;
+var_5779 = LVI_SYMBOL("svals");
+var_5778[0] = var_5779;
+if (do_init_var_5780) {
+lval var_5781[8];
+lval var_5782;
+var_5782 = LVI_SYMBOL("map");
+var_5781[0] = var_5782;
+if (do_init_var_5783) {
+lval var_5784[8];
+lval var_5785;
+var_5785 = LVI_SYMBOL("lambda");
+var_5784[0] = var_5785;
+if (do_init_var_5786) {
+lval var_5787[8];
+lval var_5788;
+var_5788 = LVI_SYMBOL("ig");
+var_5787[0] = var_5788;
+var_5786 = wile_gen_list(1, var_5787, NULL);
+do_init_var_5786 = false;
 }
-var_5785[1] = var_5787;
-if (do_init_var_5791) {
-lval var_5792[8];
-lval var_5793;
-var_5793 = LVI_SYMBOL("quasiquote");
-var_5792[0] = var_5793;
-if (do_init_var_5794) {
-lval var_5795[8];
+var_5784[1] = var_5786;
+if (do_init_var_5789) {
+lval var_5790[8];
+lval var_5791;
+var_5791 = LVI_SYMBOL("gensym");
+var_5790[0] = var_5791;
+var_5789 = wile_gen_list(1, var_5790, NULL);
+do_init_var_5789 = false;
+}
+var_5784[2] = var_5789;
+var_5783 = wile_gen_list(3, var_5784, NULL);
+do_init_var_5783 = false;
+}
+var_5781[1] = var_5783;
+lval var_5792;
+var_5792 = LVI_SYMBOL("vals");
+var_5781[2] = var_5792;
+var_5780 = wile_gen_list(3, var_5781, NULL);
+do_init_var_5780 = false;
+}
+var_5778[1] = var_5780;
+var_5777 = wile_gen_list(2, var_5778, NULL);
+do_init_var_5777 = false;
+}
+var_5776[0] = var_5777;
+if (do_init_var_5793) {
+lval var_5794[8];
+lval var_5795;
+var_5795 = LVI_SYMBOL("result");
+var_5794[0] = var_5795;
 if (do_init_var_5796) {
 lval var_5797[8];
 lval var_5798;
-var_5798 = LVI_SYMBOL("unquote");
+var_5798 = LVI_SYMBOL("gensym");
 var_5797[0] = var_5798;
-lval var_5799;
-var_5799 = LVI_SYMBOL("s");
-var_5797[1] = var_5799;
-var_5796 = wile_gen_list(2, var_5797, NULL);
+var_5796 = wile_gen_list(1, var_5797, NULL);
 do_init_var_5796 = false;
 }
-var_5795[0] = var_5796;
-if (do_init_var_5800) {
-lval var_5801[8];
-lval var_5802;
-var_5802 = LVI_SYMBOL("unquote");
-var_5801[0] = var_5802;
-lval var_5803;
-var_5803 = LVI_SYMBOL("v");
-var_5801[1] = var_5803;
-var_5800 = wile_gen_list(2, var_5801, NULL);
-do_init_var_5800 = false;
+var_5794[1] = var_5796;
+var_5793 = wile_gen_list(2, var_5794, NULL);
+do_init_var_5793 = false;
 }
-var_5795[1] = var_5800;
-var_5794 = wile_gen_list(2, var_5795, NULL);
-do_init_var_5794 = false;
-}
-var_5792[1] = var_5794;
-var_5791 = wile_gen_list(2, var_5792, NULL);
-do_init_var_5791 = false;
-}
-var_5785[2] = var_5791;
-var_5784 = wile_gen_list(3, var_5785, NULL);
-do_init_var_5784 = false;
-}
-var_5782[1] = var_5784;
+var_5776[1] = var_5793;
+if (do_init_var_5799) {
+lval var_5800[8];
+lval var_5801;
+var_5801 = LVI_SYMBOL("vars");
+var_5800[0] = var_5801;
+if (do_init_var_5802) {
+lval var_5803[8];
 lval var_5804;
-var_5804 = LVI_SYMBOL("svals");
-var_5782[2] = var_5804;
+var_5804 = LVI_SYMBOL("map");
+var_5803[0] = var_5804;
 lval var_5805;
-var_5805 = LVI_SYMBOL("vars");
-var_5782[3] = var_5805;
-var_5781 = wile_gen_list(4, var_5782, NULL);
-do_init_var_5781 = false;
+var_5805 = LVI_SYMBOL("car");
+var_5803[1] = var_5805;
+lval var_5806;
+var_5806 = LVI_SYMBOL("vals");
+var_5803[2] = var_5806;
+var_5802 = wile_gen_list(3, var_5803, NULL);
+do_init_var_5802 = false;
 }
-var_5779[1] = var_5781;
-var_5778 = wile_gen_list(2, var_5779, NULL);
-do_init_var_5778 = false;
+var_5800[1] = var_5802;
+var_5799 = wile_gen_list(2, var_5800, NULL);
+do_init_var_5799 = false;
 }
-var_5776[1] = var_5778;
-if (do_init_var_5806) {
-lval var_5807[8];
-lval var_5808;
-var_5808 = LVI_SYMBOL("unquote-splicing");
-var_5807[0] = var_5808;
-if (do_init_var_5809) {
-lval var_5810[8];
-lval var_5811;
-var_5811 = LVI_SYMBOL("map");
-var_5810[0] = var_5811;
-if (do_init_var_5812) {
-lval var_5813[8];
+var_5776[2] = var_5799;
+if (do_init_var_5807) {
+lval var_5808[8];
+lval var_5809;
+var_5809 = LVI_SYMBOL("tvals");
+var_5808[0] = var_5809;
+if (do_init_var_5810) {
+lval var_5811[8];
+lval var_5812;
+var_5812 = LVI_SYMBOL("map");
+var_5811[0] = var_5812;
+lval var_5813;
+var_5813 = LVI_SYMBOL("cadr");
+var_5811[1] = var_5813;
 lval var_5814;
-var_5814 = LVI_SYMBOL("lambda");
-var_5813[0] = var_5814;
+var_5814 = LVI_SYMBOL("vals");
+var_5811[2] = var_5814;
+var_5810 = wile_gen_list(3, var_5811, NULL);
+do_init_var_5810 = false;
+}
+var_5808[1] = var_5810;
+var_5807 = wile_gen_list(2, var_5808, NULL);
+do_init_var_5807 = false;
+}
+var_5776[3] = var_5807;
+var_5775 = wile_gen_list(4, var_5776, NULL);
+do_init_var_5775 = false;
+}
+var_5773[1] = var_5775;
 if (do_init_var_5815) {
 lval var_5816[8];
 lval var_5817;
-var_5817 = LVI_SYMBOL("v");
+var_5817 = LVI_SYMBOL("quasiquote");
 var_5816[0] = var_5817;
-lval var_5818;
-var_5818 = LVI_SYMBOL("t");
-var_5816[1] = var_5818;
-var_5815 = wile_gen_list(2, var_5816, NULL);
-do_init_var_5815 = false;
-}
-var_5813[1] = var_5815;
-if (do_init_var_5819) {
-lval var_5820[8];
-lval var_5821;
-var_5821 = LVI_SYMBOL("quasiquote");
-var_5820[0] = var_5821;
-if (do_init_var_5822) {
-lval var_5823[8];
-lval var_5824;
-var_5824 = LVI_SYMBOL("set!");
-var_5823[0] = var_5824;
-if (do_init_var_5825) {
-lval var_5826[8];
-lval var_5827;
-var_5827 = LVI_SYMBOL("unquote");
-var_5826[0] = var_5827;
-lval var_5828;
-var_5828 = LVI_SYMBOL("v");
-var_5826[1] = var_5828;
-var_5825 = wile_gen_list(2, var_5826, NULL);
-do_init_var_5825 = false;
-}
-var_5823[1] = var_5825;
-if (do_init_var_5829) {
-lval var_5830[8];
-lval var_5831;
-var_5831 = LVI_SYMBOL("unquote");
-var_5830[0] = var_5831;
+if (do_init_var_5818) {
+lval var_5819[8];
+lval var_5820;
+var_5820 = LVI_SYMBOL("let");
+var_5819[0] = var_5820;
+if (do_init_var_5821) {
+lval var_5822[8];
+lval var_5823;
+var_5823 = LVI_SYMBOL("unquote");
+var_5822[0] = var_5823;
+if (do_init_var_5824) {
+lval var_5825[8];
+lval var_5826;
+var_5826 = LVI_SYMBOL("map");
+var_5825[0] = var_5826;
+if (do_init_var_5827) {
+lval var_5828[8];
+lval var_5829;
+var_5829 = LVI_SYMBOL("lambda");
+var_5828[0] = var_5829;
+if (do_init_var_5830) {
+lval var_5831[8];
 lval var_5832;
-var_5832 = LVI_SYMBOL("t");
-var_5830[1] = var_5832;
-var_5829 = wile_gen_list(2, var_5830, NULL);
-do_init_var_5829 = false;
-}
-var_5823[2] = var_5829;
-var_5822 = wile_gen_list(3, var_5823, NULL);
-do_init_var_5822 = false;
-}
-var_5820[1] = var_5822;
-var_5819 = wile_gen_list(2, var_5820, NULL);
-do_init_var_5819 = false;
-}
-var_5813[2] = var_5819;
-var_5812 = wile_gen_list(3, var_5813, NULL);
-do_init_var_5812 = false;
-}
-var_5810[1] = var_5812;
+var_5832 = LVI_SYMBOL("s");
+var_5831[0] = var_5832;
 lval var_5833;
-var_5833 = LVI_SYMBOL("vars");
-var_5810[2] = var_5833;
-lval var_5834;
-var_5834 = LVI_SYMBOL("tvals");
-var_5810[3] = var_5834;
-var_5809 = wile_gen_list(4, var_5810, NULL);
-do_init_var_5809 = false;
+var_5833 = LVI_SYMBOL("v");
+var_5831[1] = var_5833;
+var_5830 = wile_gen_list(2, var_5831, NULL);
+do_init_var_5830 = false;
 }
-var_5807[1] = var_5809;
-var_5806 = wile_gen_list(2, var_5807, NULL);
-do_init_var_5806 = false;
+var_5828[1] = var_5830;
+if (do_init_var_5834) {
+lval var_5835[8];
+lval var_5836;
+var_5836 = LVI_SYMBOL("quasiquote");
+var_5835[0] = var_5836;
+if (do_init_var_5837) {
+lval var_5838[8];
+if (do_init_var_5839) {
+lval var_5840[8];
+lval var_5841;
+var_5841 = LVI_SYMBOL("unquote");
+var_5840[0] = var_5841;
+lval var_5842;
+var_5842 = LVI_SYMBOL("s");
+var_5840[1] = var_5842;
+var_5839 = wile_gen_list(2, var_5840, NULL);
+do_init_var_5839 = false;
 }
-var_5776[2] = var_5806;
-if (do_init_var_5835) {
-lval var_5836[8];
-lval var_5837;
-var_5837 = LVI_SYMBOL("let");
-var_5836[0] = var_5837;
-if (do_init_var_5838) {
-lval var_5839[8];
-if (do_init_var_5840) {
-lval var_5841[8];
-if (do_init_var_5842) {
-lval var_5843[8];
-lval var_5844;
-var_5844 = LVI_SYMBOL("unquote");
-var_5843[0] = var_5844;
+var_5838[0] = var_5839;
+if (do_init_var_5843) {
+lval var_5844[8];
 lval var_5845;
-var_5845 = LVI_SYMBOL("result");
-var_5843[1] = var_5845;
-var_5842 = wile_gen_list(2, var_5843, NULL);
-do_init_var_5842 = false;
+var_5845 = LVI_SYMBOL("unquote");
+var_5844[0] = var_5845;
+lval var_5846;
+var_5846 = LVI_SYMBOL("v");
+var_5844[1] = var_5846;
+var_5843 = wile_gen_list(2, var_5844, NULL);
+do_init_var_5843 = false;
 }
-var_5841[0] = var_5842;
-if (do_init_var_5846) {
-lval var_5847[8];
+var_5838[1] = var_5843;
+var_5837 = wile_gen_list(2, var_5838, NULL);
+do_init_var_5837 = false;
+}
+var_5835[1] = var_5837;
+var_5834 = wile_gen_list(2, var_5835, NULL);
+do_init_var_5834 = false;
+}
+var_5828[2] = var_5834;
+var_5827 = wile_gen_list(3, var_5828, NULL);
+do_init_var_5827 = false;
+}
+var_5825[1] = var_5827;
+lval var_5847;
+var_5847 = LVI_SYMBOL("svals");
+var_5825[2] = var_5847;
 lval var_5848;
-var_5848 = LVI_SYMBOL("begin");
-var_5847[0] = var_5848;
+var_5848 = LVI_SYMBOL("vars");
+var_5825[3] = var_5848;
+var_5824 = wile_gen_list(4, var_5825, NULL);
+do_init_var_5824 = false;
+}
+var_5822[1] = var_5824;
+var_5821 = wile_gen_list(2, var_5822, NULL);
+do_init_var_5821 = false;
+}
+var_5819[1] = var_5821;
 if (do_init_var_5849) {
 lval var_5850[8];
 lval var_5851;
 var_5851 = LVI_SYMBOL("unquote-splicing");
 var_5850[0] = var_5851;
-lval var_5852;
-var_5852 = LVI_SYMBOL("body");
-var_5850[1] = var_5852;
-var_5849 = wile_gen_list(2, var_5850, NULL);
-do_init_var_5849 = false;
-}
-var_5847[1] = var_5849;
-var_5846 = wile_gen_list(2, var_5847, NULL);
-do_init_var_5846 = false;
-}
-var_5841[1] = var_5846;
-var_5840 = wile_gen_list(2, var_5841, NULL);
-do_init_var_5840 = false;
-}
-var_5839[0] = var_5840;
-var_5838 = wile_gen_list(1, var_5839, NULL);
-do_init_var_5838 = false;
-}
-var_5836[1] = var_5838;
-if (do_init_var_5853) {
-lval var_5854[8];
-lval var_5855;
-var_5855 = LVI_SYMBOL("unquote-splicing");
-var_5854[0] = var_5855;
-if (do_init_var_5856) {
-lval var_5857[8];
-lval var_5858;
-var_5858 = LVI_SYMBOL("map");
-var_5857[0] = var_5858;
-if (do_init_var_5859) {
-lval var_5860[8];
+if (do_init_var_5852) {
+lval var_5853[8];
+lval var_5854;
+var_5854 = LVI_SYMBOL("map");
+var_5853[0] = var_5854;
+if (do_init_var_5855) {
+lval var_5856[8];
+lval var_5857;
+var_5857 = LVI_SYMBOL("lambda");
+var_5856[0] = var_5857;
+if (do_init_var_5858) {
+lval var_5859[8];
+lval var_5860;
+var_5860 = LVI_SYMBOL("v");
+var_5859[0] = var_5860;
 lval var_5861;
-var_5861 = LVI_SYMBOL("lambda");
-var_5860[0] = var_5861;
+var_5861 = LVI_SYMBOL("t");
+var_5859[1] = var_5861;
+var_5858 = wile_gen_list(2, var_5859, NULL);
+do_init_var_5858 = false;
+}
+var_5856[1] = var_5858;
 if (do_init_var_5862) {
 lval var_5863[8];
 lval var_5864;
-var_5864 = LVI_SYMBOL("v");
+var_5864 = LVI_SYMBOL("quasiquote");
 var_5863[0] = var_5864;
-lval var_5865;
-var_5865 = LVI_SYMBOL("s");
-var_5863[1] = var_5865;
-var_5862 = wile_gen_list(2, var_5863, NULL);
-do_init_var_5862 = false;
-}
-var_5860[1] = var_5862;
-if (do_init_var_5866) {
-lval var_5867[8];
-lval var_5868;
-var_5868 = LVI_SYMBOL("quasiquote");
-var_5867[0] = var_5868;
-if (do_init_var_5869) {
-lval var_5870[8];
+if (do_init_var_5865) {
+lval var_5866[8];
+lval var_5867;
+var_5867 = LVI_SYMBOL("set!");
+var_5866[0] = var_5867;
+if (do_init_var_5868) {
+lval var_5869[8];
+lval var_5870;
+var_5870 = LVI_SYMBOL("unquote");
+var_5869[0] = var_5870;
 lval var_5871;
-var_5871 = LVI_SYMBOL("set!");
-var_5870[0] = var_5871;
+var_5871 = LVI_SYMBOL("v");
+var_5869[1] = var_5871;
+var_5868 = wile_gen_list(2, var_5869, NULL);
+do_init_var_5868 = false;
+}
+var_5866[1] = var_5868;
 if (do_init_var_5872) {
 lval var_5873[8];
 lval var_5874;
 var_5874 = LVI_SYMBOL("unquote");
 var_5873[0] = var_5874;
 lval var_5875;
-var_5875 = LVI_SYMBOL("v");
+var_5875 = LVI_SYMBOL("t");
 var_5873[1] = var_5875;
 var_5872 = wile_gen_list(2, var_5873, NULL);
 do_init_var_5872 = false;
 }
-var_5870[1] = var_5872;
-if (do_init_var_5876) {
-lval var_5877[8];
-lval var_5878;
-var_5878 = LVI_SYMBOL("unquote");
-var_5877[0] = var_5878;
-lval var_5879;
-var_5879 = LVI_SYMBOL("s");
-var_5877[1] = var_5879;
-var_5876 = wile_gen_list(2, var_5877, NULL);
-do_init_var_5876 = false;
+var_5866[2] = var_5872;
+var_5865 = wile_gen_list(3, var_5866, NULL);
+do_init_var_5865 = false;
 }
-var_5870[2] = var_5876;
-var_5869 = wile_gen_list(3, var_5870, NULL);
-do_init_var_5869 = false;
+var_5863[1] = var_5865;
+var_5862 = wile_gen_list(2, var_5863, NULL);
+do_init_var_5862 = false;
 }
-var_5867[1] = var_5869;
-var_5866 = wile_gen_list(2, var_5867, NULL);
-do_init_var_5866 = false;
+var_5856[2] = var_5862;
+var_5855 = wile_gen_list(3, var_5856, NULL);
+do_init_var_5855 = false;
 }
-var_5860[2] = var_5866;
-var_5859 = wile_gen_list(3, var_5860, NULL);
-do_init_var_5859 = false;
+var_5853[1] = var_5855;
+lval var_5876;
+var_5876 = LVI_SYMBOL("vars");
+var_5853[2] = var_5876;
+lval var_5877;
+var_5877 = LVI_SYMBOL("tvals");
+var_5853[3] = var_5877;
+var_5852 = wile_gen_list(4, var_5853, NULL);
+do_init_var_5852 = false;
 }
-var_5857[1] = var_5859;
+var_5850[1] = var_5852;
+var_5849 = wile_gen_list(2, var_5850, NULL);
+do_init_var_5849 = false;
+}
+var_5819[2] = var_5849;
+if (do_init_var_5878) {
+lval var_5879[8];
 lval var_5880;
-var_5880 = LVI_SYMBOL("vars");
-var_5857[2] = var_5880;
-lval var_5881;
-var_5881 = LVI_SYMBOL("svals");
-var_5857[3] = var_5881;
-var_5856 = wile_gen_list(4, var_5857, NULL);
-do_init_var_5856 = false;
+var_5880 = LVI_SYMBOL("let");
+var_5879[0] = var_5880;
+if (do_init_var_5881) {
+lval var_5882[8];
+if (do_init_var_5883) {
+lval var_5884[8];
+if (do_init_var_5885) {
+lval var_5886[8];
+lval var_5887;
+var_5887 = LVI_SYMBOL("unquote");
+var_5886[0] = var_5887;
+lval var_5888;
+var_5888 = LVI_SYMBOL("result");
+var_5886[1] = var_5888;
+var_5885 = wile_gen_list(2, var_5886, NULL);
+do_init_var_5885 = false;
 }
-var_5854[1] = var_5856;
-var_5853 = wile_gen_list(2, var_5854, NULL);
-do_init_var_5853 = false;
+var_5884[0] = var_5885;
+if (do_init_var_5889) {
+lval var_5890[8];
+lval var_5891;
+var_5891 = LVI_SYMBOL("begin");
+var_5890[0] = var_5891;
+if (do_init_var_5892) {
+lval var_5893[8];
+lval var_5894;
+var_5894 = LVI_SYMBOL("unquote-splicing");
+var_5893[0] = var_5894;
+lval var_5895;
+var_5895 = LVI_SYMBOL("body");
+var_5893[1] = var_5895;
+var_5892 = wile_gen_list(2, var_5893, NULL);
+do_init_var_5892 = false;
 }
-var_5836[2] = var_5853;
-if (do_init_var_5882) {
-lval var_5883[8];
-lval var_5884;
-var_5884 = LVI_SYMBOL("unquote");
-var_5883[0] = var_5884;
-lval var_5885;
-var_5885 = LVI_SYMBOL("result");
-var_5883[1] = var_5885;
-var_5882 = wile_gen_list(2, var_5883, NULL);
-do_init_var_5882 = false;
+var_5890[1] = var_5892;
+var_5889 = wile_gen_list(2, var_5890, NULL);
+do_init_var_5889 = false;
 }
-var_5836[3] = var_5882;
-var_5835 = wile_gen_list(4, var_5836, NULL);
-do_init_var_5835 = false;
+var_5884[1] = var_5889;
+var_5883 = wile_gen_list(2, var_5884, NULL);
+do_init_var_5883 = false;
 }
-var_5776[3] = var_5835;
-var_5775 = wile_gen_list(4, var_5776, NULL);
-do_init_var_5775 = false;
+var_5882[0] = var_5883;
+var_5881 = wile_gen_list(1, var_5882, NULL);
+do_init_var_5881 = false;
 }
-var_5773[1] = var_5775;
-var_5772 = wile_gen_list(2, var_5773, NULL);
-do_init_var_5772 = false;
-}
-var_5730[2] = var_5772;
-var_5729 = wile_gen_list(3, var_5730, NULL);
-do_init_var_5729 = false;
-}
-var_5728[0] = var_5729;
-var_5727 = wile_gen_list(1, var_5728, NULL);
-do_init_var_5727 = false;
-}
-lval var_5886;
-lval var_5887[8];
-var_5887[0] = var_5722;
-var_5887[1] = var_5723;
-var_5887[2] = var_5727;
-var_5887[3] = var_5307[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:895
-var_5886 = fn_10(NULL, var_5887, "bld-rtl-dir/wile-rtl2-000083.scm:895");
-lval var_5889;
-var_5889 = LVI_SYMBOL("namespace");
-if (do_init_var_5890) {
-lval var_5891[8];
-lval var_5892;
-var_5892 = LVI_SYMBOL("syms");
-var_5891[0] = var_5892;
-lval var_5893;
-var_5893 = LVI_SYMBOL("defs");
-var_5891[1] = var_5893;
-var_5890 = wile_gen_list(1, var_5891, var_5891 + 1);
-do_init_var_5890 = false;
-}
-if (do_init_var_5894) {
-lval var_5895[8];
+var_5879[1] = var_5881;
 if (do_init_var_5896) {
 lval var_5897[8];
 lval var_5898;
-var_5898 = LVI_SYMBOL("let*");
+var_5898 = LVI_SYMBOL("unquote-splicing");
 var_5897[0] = var_5898;
 if (do_init_var_5899) {
 lval var_5900[8];
-if (do_init_var_5901) {
-lval var_5902[8];
-lval var_5903;
-var_5903 = LVI_SYMBOL("nm");
-var_5902[0] = var_5903;
-if (do_init_var_5904) {
-lval var_5905[8];
-lval var_5906;
-var_5906 = LVI_SYMBOL("gensym");
-var_5905[0] = var_5906;
-var_5904 = wile_gen_list(1, var_5905, NULL);
-do_init_var_5904 = false;
-}
-var_5902[1] = var_5904;
-var_5901 = wile_gen_list(2, var_5902, NULL);
-do_init_var_5901 = false;
-}
+lval var_5901;
+var_5901 = LVI_SYMBOL("map");
 var_5900[0] = var_5901;
-if (do_init_var_5907) {
-lval var_5908[8];
-lval var_5909;
-var_5909 = LVI_SYMBOL("sa");
-var_5908[0] = var_5909;
-if (do_init_var_5910) {
-lval var_5911[8];
-lval var_5912;
-var_5912 = LVI_SYMBOL("gensym");
-var_5911[0] = var_5912;
-var_5910 = wile_gen_list(1, var_5911, NULL);
-do_init_var_5910 = false;
+if (do_init_var_5902) {
+lval var_5903[8];
+lval var_5904;
+var_5904 = LVI_SYMBOL("lambda");
+var_5903[0] = var_5904;
+if (do_init_var_5905) {
+lval var_5906[8];
+lval var_5907;
+var_5907 = LVI_SYMBOL("v");
+var_5906[0] = var_5907;
+lval var_5908;
+var_5908 = LVI_SYMBOL("s");
+var_5906[1] = var_5908;
+var_5905 = wile_gen_list(2, var_5906, NULL);
+do_init_var_5905 = false;
 }
-var_5908[1] = var_5910;
-var_5907 = wile_gen_list(2, var_5908, NULL);
-do_init_var_5907 = false;
-}
-var_5900[1] = var_5907;
-if (do_init_var_5913) {
-lval var_5914[8];
-lval var_5915;
-var_5915 = LVI_SYMBOL("s0");
-var_5914[0] = var_5915;
-if (do_init_var_5916) {
-lval var_5917[8];
+var_5903[1] = var_5905;
+if (do_init_var_5909) {
+lval var_5910[8];
+lval var_5911;
+var_5911 = LVI_SYMBOL("quasiquote");
+var_5910[0] = var_5911;
+if (do_init_var_5912) {
+lval var_5913[8];
+lval var_5914;
+var_5914 = LVI_SYMBOL("set!");
+var_5913[0] = var_5914;
+if (do_init_var_5915) {
+lval var_5916[8];
+lval var_5917;
+var_5917 = LVI_SYMBOL("unquote");
+var_5916[0] = var_5917;
 lval var_5918;
-var_5918 = LVI_SYMBOL("map");
-var_5917[0] = var_5918;
+var_5918 = LVI_SYMBOL("v");
+var_5916[1] = var_5918;
+var_5915 = wile_gen_list(2, var_5916, NULL);
+do_init_var_5915 = false;
+}
+var_5913[1] = var_5915;
 if (do_init_var_5919) {
 lval var_5920[8];
 lval var_5921;
-var_5921 = LVI_SYMBOL("lambda");
+var_5921 = LVI_SYMBOL("unquote");
 var_5920[0] = var_5921;
-if (do_init_var_5922) {
-lval var_5923[8];
-lval var_5924;
-var_5924 = LVI_SYMBOL("s");
-var_5923[0] = var_5924;
-var_5922 = wile_gen_list(1, var_5923, NULL);
-do_init_var_5922 = false;
-}
+lval var_5922;
+var_5922 = LVI_SYMBOL("s");
 var_5920[1] = var_5922;
+var_5919 = wile_gen_list(2, var_5920, NULL);
+do_init_var_5919 = false;
+}
+var_5913[2] = var_5919;
+var_5912 = wile_gen_list(3, var_5913, NULL);
+do_init_var_5912 = false;
+}
+var_5910[1] = var_5912;
+var_5909 = wile_gen_list(2, var_5910, NULL);
+do_init_var_5909 = false;
+}
+var_5903[2] = var_5909;
+var_5902 = wile_gen_list(3, var_5903, NULL);
+do_init_var_5902 = false;
+}
+var_5900[1] = var_5902;
+lval var_5923;
+var_5923 = LVI_SYMBOL("vars");
+var_5900[2] = var_5923;
+lval var_5924;
+var_5924 = LVI_SYMBOL("svals");
+var_5900[3] = var_5924;
+var_5899 = wile_gen_list(4, var_5900, NULL);
+do_init_var_5899 = false;
+}
+var_5897[1] = var_5899;
+var_5896 = wile_gen_list(2, var_5897, NULL);
+do_init_var_5896 = false;
+}
+var_5879[2] = var_5896;
 if (do_init_var_5925) {
 lval var_5926[8];
 lval var_5927;
-var_5927 = LVI_SYMBOL("if");
+var_5927 = LVI_SYMBOL("unquote");
 var_5926[0] = var_5927;
-if (do_init_var_5928) {
-lval var_5929[8];
-lval var_5930;
-var_5930 = LVI_SYMBOL("symbol?");
-var_5929[0] = var_5930;
-lval var_5931;
-var_5931 = LVI_SYMBOL("s");
-var_5929[1] = var_5931;
-var_5928 = wile_gen_list(2, var_5929, NULL);
-do_init_var_5928 = false;
-}
+lval var_5928;
+var_5928 = LVI_SYMBOL("result");
 var_5926[1] = var_5928;
-if (do_init_var_5932) {
-lval var_5933[8];
-lval var_5934;
-var_5934 = LVI_SYMBOL("list");
-var_5933[0] = var_5934;
-lval var_5935;
-var_5935 = LVI_SYMBOL("s");
-var_5933[1] = var_5935;
-lval var_5936;
-var_5936 = LVI_SYMBOL("s");
-var_5933[2] = var_5936;
-var_5932 = wile_gen_list(3, var_5933, NULL);
-do_init_var_5932 = false;
-}
-var_5926[2] = var_5932;
-lval var_5937;
-var_5937 = LVI_SYMBOL("s");
-var_5926[3] = var_5937;
-var_5925 = wile_gen_list(4, var_5926, NULL);
+var_5925 = wile_gen_list(2, var_5926, NULL);
 do_init_var_5925 = false;
 }
-var_5920[2] = var_5925;
-var_5919 = wile_gen_list(3, var_5920, NULL);
-do_init_var_5919 = false;
+var_5879[3] = var_5925;
+var_5878 = wile_gen_list(4, var_5879, NULL);
+do_init_var_5878 = false;
 }
-var_5917[1] = var_5919;
-lval var_5938;
-var_5938 = LVI_SYMBOL("syms");
-var_5917[2] = var_5938;
-var_5916 = wile_gen_list(3, var_5917, NULL);
-do_init_var_5916 = false;
+var_5819[3] = var_5878;
+var_5818 = wile_gen_list(4, var_5819, NULL);
+do_init_var_5818 = false;
 }
-var_5914[1] = var_5916;
-var_5913 = wile_gen_list(2, var_5914, NULL);
-do_init_var_5913 = false;
+var_5816[1] = var_5818;
+var_5815 = wile_gen_list(2, var_5816, NULL);
+do_init_var_5815 = false;
 }
-var_5900[2] = var_5913;
+var_5773[2] = var_5815;
+var_5772 = wile_gen_list(3, var_5773, NULL);
+do_init_var_5772 = false;
+}
+var_5771[0] = var_5772;
+var_5770 = wile_gen_list(1, var_5771, NULL);
+do_init_var_5770 = false;
+}
+lval var_5929;
+lval var_5930[8];
+var_5930[0] = var_5765;
+var_5930[1] = var_5766;
+var_5930[2] = var_5770;
+var_5930[3] = var_5350[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:901
+var_5929 = fn_10(NULL, var_5930, "bld-rtl-dir/wile-rtl2-000083.scm:901");
+lval var_5932;
+var_5932 = LVI_SYMBOL("namespace");
+if (do_init_var_5933) {
+lval var_5934[8];
+lval var_5935;
+var_5935 = LVI_SYMBOL("syms");
+var_5934[0] = var_5935;
+lval var_5936;
+var_5936 = LVI_SYMBOL("defs");
+var_5934[1] = var_5936;
+var_5933 = wile_gen_list(1, var_5934, var_5934 + 1);
+do_init_var_5933 = false;
+}
+if (do_init_var_5937) {
+lval var_5938[8];
 if (do_init_var_5939) {
 lval var_5940[8];
 lval var_5941;
-var_5941 = LVI_SYMBOL("s1");
+var_5941 = LVI_SYMBOL("let*");
 var_5940[0] = var_5941;
 if (do_init_var_5942) {
 lval var_5943[8];
-lval var_5944;
-var_5944 = LVI_SYMBOL("map");
-var_5943[0] = var_5944;
-if (do_init_var_5945) {
-lval var_5946[8];
-lval var_5947;
-var_5947 = LVI_SYMBOL("lambda");
-var_5946[0] = var_5947;
-if (do_init_var_5948) {
-lval var_5949[8];
-lval var_5950;
-var_5950 = LVI_SYMBOL("s");
-var_5949[0] = var_5950;
-var_5948 = wile_gen_list(1, var_5949, NULL);
-do_init_var_5948 = false;
+if (do_init_var_5944) {
+lval var_5945[8];
+lval var_5946;
+var_5946 = LVI_SYMBOL("nm");
+var_5945[0] = var_5946;
+if (do_init_var_5947) {
+lval var_5948[8];
+lval var_5949;
+var_5949 = LVI_SYMBOL("gensym");
+var_5948[0] = var_5949;
+var_5947 = wile_gen_list(1, var_5948, NULL);
+do_init_var_5947 = false;
 }
-var_5946[1] = var_5948;
-if (do_init_var_5951) {
-lval var_5952[8];
-lval var_5953;
-var_5953 = LVI_SYMBOL("let");
-var_5952[0] = var_5953;
-if (do_init_var_5954) {
-lval var_5955[8];
+var_5945[1] = var_5947;
+var_5944 = wile_gen_list(2, var_5945, NULL);
+do_init_var_5944 = false;
+}
+var_5943[0] = var_5944;
+if (do_init_var_5950) {
+lval var_5951[8];
+lval var_5952;
+var_5952 = LVI_SYMBOL("sa");
+var_5951[0] = var_5952;
+if (do_init_var_5953) {
+lval var_5954[8];
+lval var_5955;
+var_5955 = LVI_SYMBOL("gensym");
+var_5954[0] = var_5955;
+var_5953 = wile_gen_list(1, var_5954, NULL);
+do_init_var_5953 = false;
+}
+var_5951[1] = var_5953;
+var_5950 = wile_gen_list(2, var_5951, NULL);
+do_init_var_5950 = false;
+}
+var_5943[1] = var_5950;
 if (do_init_var_5956) {
 lval var_5957[8];
 lval var_5958;
-var_5958 = LVI_SYMBOL("p");
+var_5958 = LVI_SYMBOL("s0");
 var_5957[0] = var_5958;
 if (do_init_var_5959) {
 lval var_5960[8];
 lval var_5961;
-var_5961 = LVI_SYMBOL("cadr");
+var_5961 = LVI_SYMBOL("map");
 var_5960[0] = var_5961;
-lval var_5962;
-var_5962 = LVI_SYMBOL("s");
+if (do_init_var_5962) {
+lval var_5963[8];
+lval var_5964;
+var_5964 = LVI_SYMBOL("lambda");
+var_5963[0] = var_5964;
+if (do_init_var_5965) {
+lval var_5966[8];
+lval var_5967;
+var_5967 = LVI_SYMBOL("s");
+var_5966[0] = var_5967;
+var_5965 = wile_gen_list(1, var_5966, NULL);
+do_init_var_5965 = false;
+}
+var_5963[1] = var_5965;
+if (do_init_var_5968) {
+lval var_5969[8];
+lval var_5970;
+var_5970 = LVI_SYMBOL("if");
+var_5969[0] = var_5970;
+if (do_init_var_5971) {
+lval var_5972[8];
+lval var_5973;
+var_5973 = LVI_SYMBOL("symbol?");
+var_5972[0] = var_5973;
+lval var_5974;
+var_5974 = LVI_SYMBOL("s");
+var_5972[1] = var_5974;
+var_5971 = wile_gen_list(2, var_5972, NULL);
+do_init_var_5971 = false;
+}
+var_5969[1] = var_5971;
+if (do_init_var_5975) {
+lval var_5976[8];
+lval var_5977;
+var_5977 = LVI_SYMBOL("list");
+var_5976[0] = var_5977;
+lval var_5978;
+var_5978 = LVI_SYMBOL("s");
+var_5976[1] = var_5978;
+lval var_5979;
+var_5979 = LVI_SYMBOL("s");
+var_5976[2] = var_5979;
+var_5975 = wile_gen_list(3, var_5976, NULL);
+do_init_var_5975 = false;
+}
+var_5969[2] = var_5975;
+lval var_5980;
+var_5980 = LVI_SYMBOL("s");
+var_5969[3] = var_5980;
+var_5968 = wile_gen_list(4, var_5969, NULL);
+do_init_var_5968 = false;
+}
+var_5963[2] = var_5968;
+var_5962 = wile_gen_list(3, var_5963, NULL);
+do_init_var_5962 = false;
+}
 var_5960[1] = var_5962;
-var_5959 = wile_gen_list(2, var_5960, NULL);
+lval var_5981;
+var_5981 = LVI_SYMBOL("syms");
+var_5960[2] = var_5981;
+var_5959 = wile_gen_list(3, var_5960, NULL);
 do_init_var_5959 = false;
 }
 var_5957[1] = var_5959;
 var_5956 = wile_gen_list(2, var_5957, NULL);
 do_init_var_5956 = false;
 }
-var_5955[0] = var_5956;
-var_5954 = wile_gen_list(1, var_5955, NULL);
-do_init_var_5954 = false;
+var_5943[2] = var_5956;
+if (do_init_var_5982) {
+lval var_5983[8];
+lval var_5984;
+var_5984 = LVI_SYMBOL("s1");
+var_5983[0] = var_5984;
+if (do_init_var_5985) {
+lval var_5986[8];
+lval var_5987;
+var_5987 = LVI_SYMBOL("map");
+var_5986[0] = var_5987;
+if (do_init_var_5988) {
+lval var_5989[8];
+lval var_5990;
+var_5990 = LVI_SYMBOL("lambda");
+var_5989[0] = var_5990;
+if (do_init_var_5991) {
+lval var_5992[8];
+lval var_5993;
+var_5993 = LVI_SYMBOL("s");
+var_5992[0] = var_5993;
+var_5991 = wile_gen_list(1, var_5992, NULL);
+do_init_var_5991 = false;
 }
-var_5952[1] = var_5954;
-if (do_init_var_5963) {
-lval var_5964[8];
-lval var_5965;
-var_5965 = LVI_SYMBOL("quasiquote");
-var_5964[0] = var_5965;
-if (do_init_var_5966) {
-lval var_5967[8];
-lval var_5968;
-var_5968 = LVI_SYMBOL("define");
-var_5967[0] = var_5968;
-if (do_init_var_5969) {
-lval var_5970[8];
-lval var_5971;
-var_5971 = LVI_SYMBOL("unquote");
-var_5970[0] = var_5971;
-lval var_5972;
-var_5972 = LVI_SYMBOL("p");
-var_5970[1] = var_5972;
-var_5969 = wile_gen_list(2, var_5970, NULL);
-do_init_var_5969 = false;
-}
-var_5967[1] = var_5969;
-lval var_5973;
-var_5973 = LVI_BOOL(false);
-var_5967[2] = var_5973;
-var_5966 = wile_gen_list(3, var_5967, NULL);
-do_init_var_5966 = false;
-}
-var_5964[1] = var_5966;
-var_5963 = wile_gen_list(2, var_5964, NULL);
-do_init_var_5963 = false;
-}
-var_5952[2] = var_5963;
-var_5951 = wile_gen_list(3, var_5952, NULL);
-do_init_var_5951 = false;
-}
-var_5946[2] = var_5951;
-var_5945 = wile_gen_list(3, var_5946, NULL);
-do_init_var_5945 = false;
-}
-var_5943[1] = var_5945;
-lval var_5974;
-var_5974 = LVI_SYMBOL("s0");
-var_5943[2] = var_5974;
-var_5942 = wile_gen_list(3, var_5943, NULL);
-do_init_var_5942 = false;
-}
-var_5940[1] = var_5942;
-var_5939 = wile_gen_list(2, var_5940, NULL);
-do_init_var_5939 = false;
-}
-var_5900[3] = var_5939;
-if (do_init_var_5975) {
-lval var_5976[8];
-lval var_5977;
-var_5977 = LVI_SYMBOL("s2");
-var_5976[0] = var_5977;
-if (do_init_var_5978) {
-lval var_5979[8];
-lval var_5980;
-var_5980 = LVI_SYMBOL("map");
-var_5979[0] = var_5980;
-if (do_init_var_5981) {
-lval var_5982[8];
-lval var_5983;
-var_5983 = LVI_SYMBOL("lambda");
-var_5982[0] = var_5983;
-if (do_init_var_5984) {
-lval var_5985[8];
-lval var_5986;
-var_5986 = LVI_SYMBOL("s");
-var_5985[0] = var_5986;
-var_5984 = wile_gen_list(1, var_5985, NULL);
-do_init_var_5984 = false;
-}
-var_5982[1] = var_5984;
-if (do_init_var_5987) {
-lval var_5988[8];
-lval var_5989;
-var_5989 = LVI_SYMBOL("let");
-var_5988[0] = var_5989;
-if (do_init_var_5990) {
-lval var_5991[8];
-if (do_init_var_5992) {
-lval var_5993[8];
-lval var_5994;
-var_5994 = LVI_SYMBOL("p");
-var_5993[0] = var_5994;
-if (do_init_var_5995) {
-lval var_5996[8];
-lval var_5997;
-var_5997 = LVI_SYMBOL("car");
-var_5996[0] = var_5997;
-lval var_5998;
-var_5998 = LVI_SYMBOL("s");
-var_5996[1] = var_5998;
-var_5995 = wile_gen_list(2, var_5996, NULL);
-do_init_var_5995 = false;
-}
-var_5993[1] = var_5995;
-var_5992 = wile_gen_list(2, var_5993, NULL);
-do_init_var_5992 = false;
-}
-var_5991[0] = var_5992;
-var_5990 = wile_gen_list(1, var_5991, NULL);
-do_init_var_5990 = false;
-}
-var_5988[1] = var_5990;
+var_5989[1] = var_5991;
+if (do_init_var_5994) {
+lval var_5995[8];
+lval var_5996;
+var_5996 = LVI_SYMBOL("let");
+var_5995[0] = var_5996;
+if (do_init_var_5997) {
+lval var_5998[8];
 if (do_init_var_5999) {
 lval var_6000[8];
 lval var_6001;
-var_6001 = LVI_SYMBOL("quasiquote");
+var_6001 = LVI_SYMBOL("p");
 var_6000[0] = var_6001;
 if (do_init_var_6002) {
 lval var_6003[8];
-if (do_init_var_6004) {
-lval var_6005[8];
-lval var_6006;
-var_6006 = LVI_SYMBOL("symbol=?");
-var_6005[0] = var_6006;
-if (do_init_var_6007) {
-lval var_6008[8];
-lval var_6009;
-var_6009 = LVI_SYMBOL("unquote");
-var_6008[0] = var_6009;
-lval var_6010;
-var_6010 = LVI_SYMBOL("sa");
-var_6008[1] = var_6010;
-var_6007 = wile_gen_list(2, var_6008, NULL);
-do_init_var_6007 = false;
-}
-var_6005[1] = var_6007;
-if (do_init_var_6011) {
-lval var_6012[8];
-lval var_6013;
-var_6013 = LVI_SYMBOL("unquote");
-var_6012[0] = var_6013;
-lval var_6014;
-var_6014 = LVI_SYMBOL("p");
-var_6012[1] = var_6014;
-var_6011 = wile_gen_list(2, var_6012, NULL);
-do_init_var_6011 = false;
-}
-var_6005[2] = var_6011;
-var_6004 = wile_gen_list(3, var_6005, NULL);
-do_init_var_6004 = false;
-}
+lval var_6004;
+var_6004 = LVI_SYMBOL("cadr");
 var_6003[0] = var_6004;
-if (do_init_var_6015) {
-lval var_6016[8];
-lval var_6017;
-var_6017 = LVI_SYMBOL("unquote");
-var_6016[0] = var_6017;
-lval var_6018;
-var_6018 = LVI_SYMBOL("p");
-var_6016[1] = var_6018;
-var_6015 = wile_gen_list(2, var_6016, NULL);
-do_init_var_6015 = false;
-}
-var_6003[1] = var_6015;
+lval var_6005;
+var_6005 = LVI_SYMBOL("s");
+var_6003[1] = var_6005;
 var_6002 = wile_gen_list(2, var_6003, NULL);
 do_init_var_6002 = false;
 }
@@ -25421,1540 +25428,1712 @@ var_6000[1] = var_6002;
 var_5999 = wile_gen_list(2, var_6000, NULL);
 do_init_var_5999 = false;
 }
-var_5988[2] = var_5999;
-var_5987 = wile_gen_list(3, var_5988, NULL);
-do_init_var_5987 = false;
+var_5998[0] = var_5999;
+var_5997 = wile_gen_list(1, var_5998, NULL);
+do_init_var_5997 = false;
 }
-var_5982[2] = var_5987;
-var_5981 = wile_gen_list(3, var_5982, NULL);
-do_init_var_5981 = false;
+var_5995[1] = var_5997;
+if (do_init_var_6006) {
+lval var_6007[8];
+lval var_6008;
+var_6008 = LVI_SYMBOL("quasiquote");
+var_6007[0] = var_6008;
+if (do_init_var_6009) {
+lval var_6010[8];
+lval var_6011;
+var_6011 = LVI_SYMBOL("define");
+var_6010[0] = var_6011;
+if (do_init_var_6012) {
+lval var_6013[8];
+lval var_6014;
+var_6014 = LVI_SYMBOL("unquote");
+var_6013[0] = var_6014;
+lval var_6015;
+var_6015 = LVI_SYMBOL("p");
+var_6013[1] = var_6015;
+var_6012 = wile_gen_list(2, var_6013, NULL);
+do_init_var_6012 = false;
 }
-var_5979[1] = var_5981;
-lval var_6019;
-var_6019 = LVI_SYMBOL("s0");
-var_5979[2] = var_6019;
-var_5978 = wile_gen_list(3, var_5979, NULL);
-do_init_var_5978 = false;
+var_6010[1] = var_6012;
+lval var_6016;
+var_6016 = LVI_BOOL(false);
+var_6010[2] = var_6016;
+var_6009 = wile_gen_list(3, var_6010, NULL);
+do_init_var_6009 = false;
 }
-var_5976[1] = var_5978;
-var_5975 = wile_gen_list(2, var_5976, NULL);
-do_init_var_5975 = false;
+var_6007[1] = var_6009;
+var_6006 = wile_gen_list(2, var_6007, NULL);
+do_init_var_6006 = false;
 }
-var_5900[4] = var_5975;
-if (do_init_var_6020) {
-lval var_6021[8];
-lval var_6022;
-var_6022 = LVI_SYMBOL("s3");
-var_6021[0] = var_6022;
-if (do_init_var_6023) {
-lval var_6024[8];
-lval var_6025;
-var_6025 = LVI_SYMBOL("map");
-var_6024[0] = var_6025;
-if (do_init_var_6026) {
-lval var_6027[8];
-lval var_6028;
-var_6028 = LVI_SYMBOL("lambda");
-var_6027[0] = var_6028;
-if (do_init_var_6029) {
-lval var_6030[8];
-lval var_6031;
-var_6031 = LVI_SYMBOL("s");
-var_6030[0] = var_6031;
-var_6029 = wile_gen_list(1, var_6030, NULL);
-do_init_var_6029 = false;
+var_5995[2] = var_6006;
+var_5994 = wile_gen_list(3, var_5995, NULL);
+do_init_var_5994 = false;
 }
-var_6027[1] = var_6029;
-if (do_init_var_6032) {
-lval var_6033[8];
-lval var_6034;
-var_6034 = LVI_SYMBOL("let");
-var_6033[0] = var_6034;
+var_5989[2] = var_5994;
+var_5988 = wile_gen_list(3, var_5989, NULL);
+do_init_var_5988 = false;
+}
+var_5986[1] = var_5988;
+lval var_6017;
+var_6017 = LVI_SYMBOL("s0");
+var_5986[2] = var_6017;
+var_5985 = wile_gen_list(3, var_5986, NULL);
+do_init_var_5985 = false;
+}
+var_5983[1] = var_5985;
+var_5982 = wile_gen_list(2, var_5983, NULL);
+do_init_var_5982 = false;
+}
+var_5943[3] = var_5982;
+if (do_init_var_6018) {
+lval var_6019[8];
+lval var_6020;
+var_6020 = LVI_SYMBOL("s2");
+var_6019[0] = var_6020;
+if (do_init_var_6021) {
+lval var_6022[8];
+lval var_6023;
+var_6023 = LVI_SYMBOL("map");
+var_6022[0] = var_6023;
+if (do_init_var_6024) {
+lval var_6025[8];
+lval var_6026;
+var_6026 = LVI_SYMBOL("lambda");
+var_6025[0] = var_6026;
+if (do_init_var_6027) {
+lval var_6028[8];
+lval var_6029;
+var_6029 = LVI_SYMBOL("s");
+var_6028[0] = var_6029;
+var_6027 = wile_gen_list(1, var_6028, NULL);
+do_init_var_6027 = false;
+}
+var_6025[1] = var_6027;
+if (do_init_var_6030) {
+lval var_6031[8];
+lval var_6032;
+var_6032 = LVI_SYMBOL("let");
+var_6031[0] = var_6032;
+if (do_init_var_6033) {
+lval var_6034[8];
 if (do_init_var_6035) {
 lval var_6036[8];
-if (do_init_var_6037) {
-lval var_6038[8];
-lval var_6039;
-var_6039 = LVI_SYMBOL("p1");
-var_6038[0] = var_6039;
-if (do_init_var_6040) {
-lval var_6041[8];
-lval var_6042;
-var_6042 = LVI_SYMBOL("car");
-var_6041[0] = var_6042;
-lval var_6043;
-var_6043 = LVI_SYMBOL("s");
-var_6041[1] = var_6043;
-var_6040 = wile_gen_list(2, var_6041, NULL);
-do_init_var_6040 = false;
-}
-var_6038[1] = var_6040;
-var_6037 = wile_gen_list(2, var_6038, NULL);
-do_init_var_6037 = false;
-}
+lval var_6037;
+var_6037 = LVI_SYMBOL("p");
 var_6036[0] = var_6037;
-if (do_init_var_6044) {
-lval var_6045[8];
-lval var_6046;
-var_6046 = LVI_SYMBOL("p2");
-var_6045[0] = var_6046;
-if (do_init_var_6047) {
-lval var_6048[8];
-lval var_6049;
-var_6049 = LVI_SYMBOL("cadr");
-var_6048[0] = var_6049;
-lval var_6050;
-var_6050 = LVI_SYMBOL("s");
-var_6048[1] = var_6050;
-var_6047 = wile_gen_list(2, var_6048, NULL);
-do_init_var_6047 = false;
+if (do_init_var_6038) {
+lval var_6039[8];
+lval var_6040;
+var_6040 = LVI_SYMBOL("car");
+var_6039[0] = var_6040;
+lval var_6041;
+var_6041 = LVI_SYMBOL("s");
+var_6039[1] = var_6041;
+var_6038 = wile_gen_list(2, var_6039, NULL);
+do_init_var_6038 = false;
 }
-var_6045[1] = var_6047;
-var_6044 = wile_gen_list(2, var_6045, NULL);
-do_init_var_6044 = false;
-}
-var_6036[1] = var_6044;
+var_6036[1] = var_6038;
 var_6035 = wile_gen_list(2, var_6036, NULL);
 do_init_var_6035 = false;
 }
-var_6033[1] = var_6035;
-if (do_init_var_6051) {
-lval var_6052[8];
+var_6034[0] = var_6035;
+var_6033 = wile_gen_list(1, var_6034, NULL);
+do_init_var_6033 = false;
+}
+var_6031[1] = var_6033;
+if (do_init_var_6042) {
+lval var_6043[8];
+lval var_6044;
+var_6044 = LVI_SYMBOL("quasiquote");
+var_6043[0] = var_6044;
+if (do_init_var_6045) {
+lval var_6046[8];
+if (do_init_var_6047) {
+lval var_6048[8];
+lval var_6049;
+var_6049 = LVI_SYMBOL("symbol=?");
+var_6048[0] = var_6049;
+if (do_init_var_6050) {
+lval var_6051[8];
+lval var_6052;
+var_6052 = LVI_SYMBOL("unquote");
+var_6051[0] = var_6052;
 lval var_6053;
-var_6053 = LVI_SYMBOL("quasiquote");
-var_6052[0] = var_6053;
+var_6053 = LVI_SYMBOL("sa");
+var_6051[1] = var_6053;
+var_6050 = wile_gen_list(2, var_6051, NULL);
+do_init_var_6050 = false;
+}
+var_6048[1] = var_6050;
 if (do_init_var_6054) {
 lval var_6055[8];
 lval var_6056;
-var_6056 = LVI_SYMBOL("set!");
+var_6056 = LVI_SYMBOL("unquote");
 var_6055[0] = var_6056;
-if (do_init_var_6057) {
-lval var_6058[8];
-lval var_6059;
-var_6059 = LVI_SYMBOL("unquote");
-var_6058[0] = var_6059;
-lval var_6060;
-var_6060 = LVI_SYMBOL("p2");
-var_6058[1] = var_6060;
-var_6057 = wile_gen_list(2, var_6058, NULL);
-do_init_var_6057 = false;
-}
+lval var_6057;
+var_6057 = LVI_SYMBOL("p");
 var_6055[1] = var_6057;
-if (do_init_var_6061) {
-lval var_6062[8];
+var_6054 = wile_gen_list(2, var_6055, NULL);
+do_init_var_6054 = false;
+}
+var_6048[2] = var_6054;
+var_6047 = wile_gen_list(3, var_6048, NULL);
+do_init_var_6047 = false;
+}
+var_6046[0] = var_6047;
+if (do_init_var_6058) {
+lval var_6059[8];
+lval var_6060;
+var_6060 = LVI_SYMBOL("unquote");
+var_6059[0] = var_6060;
+lval var_6061;
+var_6061 = LVI_SYMBOL("p");
+var_6059[1] = var_6061;
+var_6058 = wile_gen_list(2, var_6059, NULL);
+do_init_var_6058 = false;
+}
+var_6046[1] = var_6058;
+var_6045 = wile_gen_list(2, var_6046, NULL);
+do_init_var_6045 = false;
+}
+var_6043[1] = var_6045;
+var_6042 = wile_gen_list(2, var_6043, NULL);
+do_init_var_6042 = false;
+}
+var_6031[2] = var_6042;
+var_6030 = wile_gen_list(3, var_6031, NULL);
+do_init_var_6030 = false;
+}
+var_6025[2] = var_6030;
+var_6024 = wile_gen_list(3, var_6025, NULL);
+do_init_var_6024 = false;
+}
+var_6022[1] = var_6024;
+lval var_6062;
+var_6062 = LVI_SYMBOL("s0");
+var_6022[2] = var_6062;
+var_6021 = wile_gen_list(3, var_6022, NULL);
+do_init_var_6021 = false;
+}
+var_6019[1] = var_6021;
+var_6018 = wile_gen_list(2, var_6019, NULL);
+do_init_var_6018 = false;
+}
+var_5943[4] = var_6018;
 if (do_init_var_6063) {
 lval var_6064[8];
 lval var_6065;
-var_6065 = LVI_SYMBOL("unquote");
+var_6065 = LVI_SYMBOL("s3");
 var_6064[0] = var_6065;
-lval var_6066;
-var_6066 = LVI_SYMBOL("nm");
-var_6064[1] = var_6066;
-var_6063 = wile_gen_list(2, var_6064, NULL);
-do_init_var_6063 = false;
-}
-var_6062[0] = var_6063;
-if (do_init_var_6067) {
-lval var_6068[8];
-lval var_6069;
-var_6069 = LVI_SYMBOL("unquote");
-var_6068[0] = var_6069;
-lval var_6070;
-var_6070 = LVI_SYMBOL("p1");
-var_6068[1] = var_6070;
-var_6067 = wile_gen_list(2, var_6068, NULL);
-do_init_var_6067 = false;
-}
-var_6062[1] = var_6067;
-var_6061 = wile_gen_list(2, var_6062, NULL);
-do_init_var_6061 = false;
-}
-var_6055[2] = var_6061;
-var_6054 = wile_gen_list(3, var_6055, NULL);
-do_init_var_6054 = false;
-}
-var_6052[1] = var_6054;
-var_6051 = wile_gen_list(2, var_6052, NULL);
-do_init_var_6051 = false;
-}
-var_6033[2] = var_6051;
-var_6032 = wile_gen_list(3, var_6033, NULL);
-do_init_var_6032 = false;
-}
-var_6027[2] = var_6032;
-var_6026 = wile_gen_list(3, var_6027, NULL);
-do_init_var_6026 = false;
-}
-var_6024[1] = var_6026;
+if (do_init_var_6066) {
+lval var_6067[8];
+lval var_6068;
+var_6068 = LVI_SYMBOL("map");
+var_6067[0] = var_6068;
+if (do_init_var_6069) {
+lval var_6070[8];
 lval var_6071;
-var_6071 = LVI_SYMBOL("s0");
-var_6024[2] = var_6071;
-var_6023 = wile_gen_list(3, var_6024, NULL);
-do_init_var_6023 = false;
-}
-var_6021[1] = var_6023;
-var_6020 = wile_gen_list(2, var_6021, NULL);
-do_init_var_6020 = false;
-}
-var_5900[5] = var_6020;
-var_5899 = wile_gen_list(6, var_5900, NULL);
-do_init_var_5899 = false;
-}
-var_5897[1] = var_5899;
+var_6071 = LVI_SYMBOL("lambda");
+var_6070[0] = var_6071;
 if (do_init_var_6072) {
 lval var_6073[8];
 lval var_6074;
-var_6074 = LVI_SYMBOL("quasiquote");
+var_6074 = LVI_SYMBOL("s");
 var_6073[0] = var_6074;
+var_6072 = wile_gen_list(1, var_6073, NULL);
+do_init_var_6072 = false;
+}
+var_6070[1] = var_6072;
 if (do_init_var_6075) {
 lval var_6076[8];
 lval var_6077;
-var_6077 = LVI_SYMBOL("begin");
+var_6077 = LVI_SYMBOL("let");
 var_6076[0] = var_6077;
 if (do_init_var_6078) {
 lval var_6079[8];
-lval var_6080;
-var_6080 = LVI_SYMBOL("unquote-splicing");
+if (do_init_var_6080) {
+lval var_6081[8];
+lval var_6082;
+var_6082 = LVI_SYMBOL("p1");
+var_6081[0] = var_6082;
+if (do_init_var_6083) {
+lval var_6084[8];
+lval var_6085;
+var_6085 = LVI_SYMBOL("car");
+var_6084[0] = var_6085;
+lval var_6086;
+var_6086 = LVI_SYMBOL("s");
+var_6084[1] = var_6086;
+var_6083 = wile_gen_list(2, var_6084, NULL);
+do_init_var_6083 = false;
+}
+var_6081[1] = var_6083;
+var_6080 = wile_gen_list(2, var_6081, NULL);
+do_init_var_6080 = false;
+}
 var_6079[0] = var_6080;
-lval var_6081;
-var_6081 = LVI_SYMBOL("s1");
-var_6079[1] = var_6081;
+if (do_init_var_6087) {
+lval var_6088[8];
+lval var_6089;
+var_6089 = LVI_SYMBOL("p2");
+var_6088[0] = var_6089;
+if (do_init_var_6090) {
+lval var_6091[8];
+lval var_6092;
+var_6092 = LVI_SYMBOL("cadr");
+var_6091[0] = var_6092;
+lval var_6093;
+var_6093 = LVI_SYMBOL("s");
+var_6091[1] = var_6093;
+var_6090 = wile_gen_list(2, var_6091, NULL);
+do_init_var_6090 = false;
+}
+var_6088[1] = var_6090;
+var_6087 = wile_gen_list(2, var_6088, NULL);
+do_init_var_6087 = false;
+}
+var_6079[1] = var_6087;
 var_6078 = wile_gen_list(2, var_6079, NULL);
 do_init_var_6078 = false;
 }
 var_6076[1] = var_6078;
-if (do_init_var_6082) {
-lval var_6083[8];
-lval var_6084;
-var_6084 = LVI_SYMBOL("let");
-var_6083[0] = var_6084;
-if (do_init_var_6085) {
-lval var_6086[8];
-if (do_init_var_6087) {
-lval var_6088[8];
-if (do_init_var_6089) {
-lval var_6090[8];
-lval var_6091;
-var_6091 = LVI_SYMBOL("unquote");
-var_6090[0] = var_6091;
-lval var_6092;
-var_6092 = LVI_SYMBOL("nm");
-var_6090[1] = var_6092;
-var_6089 = wile_gen_list(2, var_6090, NULL);
-do_init_var_6089 = false;
-}
-var_6088[0] = var_6089;
-if (do_init_var_6093) {
-lval var_6094[8];
-if (do_init_var_6095) {
-lval var_6096[8];
-lval var_6097;
-var_6097 = LVI_SYMBOL("lambda");
-var_6096[0] = var_6097;
-lval var_6098;
-var_6098 = LVI_NIL();
-var_6096[1] = var_6098;
-if (do_init_var_6099) {
-lval var_6100[8];
-lval var_6101;
-var_6101 = LVI_SYMBOL("unquote-splicing");
-var_6100[0] = var_6101;
+if (do_init_var_6094) {
+lval var_6095[8];
+lval var_6096;
+var_6096 = LVI_SYMBOL("quasiquote");
+var_6095[0] = var_6096;
+if (do_init_var_6097) {
+lval var_6098[8];
+lval var_6099;
+var_6099 = LVI_SYMBOL("set!");
+var_6098[0] = var_6099;
+if (do_init_var_6100) {
+lval var_6101[8];
 lval var_6102;
-var_6102 = LVI_SYMBOL("defs");
-var_6100[1] = var_6102;
-var_6099 = wile_gen_list(2, var_6100, NULL);
-do_init_var_6099 = false;
+var_6102 = LVI_SYMBOL("unquote");
+var_6101[0] = var_6102;
+lval var_6103;
+var_6103 = LVI_SYMBOL("p2");
+var_6101[1] = var_6103;
+var_6100 = wile_gen_list(2, var_6101, NULL);
+do_init_var_6100 = false;
 }
-var_6096[2] = var_6099;
-if (do_init_var_6103) {
-lval var_6104[8];
-lval var_6105;
-var_6105 = LVI_SYMBOL("lambda");
-var_6104[0] = var_6105;
+var_6098[1] = var_6100;
+if (do_init_var_6104) {
+lval var_6105[8];
 if (do_init_var_6106) {
 lval var_6107[8];
-if (do_init_var_6108) {
-lval var_6109[8];
-lval var_6110;
-var_6110 = LVI_SYMBOL("unquote");
-var_6109[0] = var_6110;
-lval var_6111;
-var_6111 = LVI_SYMBOL("sa");
-var_6109[1] = var_6111;
-var_6108 = wile_gen_list(2, var_6109, NULL);
-do_init_var_6108 = false;
-}
+lval var_6108;
+var_6108 = LVI_SYMBOL("unquote");
 var_6107[0] = var_6108;
-var_6106 = wile_gen_list(1, var_6107, NULL);
+lval var_6109;
+var_6109 = LVI_SYMBOL("nm");
+var_6107[1] = var_6109;
+var_6106 = wile_gen_list(2, var_6107, NULL);
 do_init_var_6106 = false;
 }
-var_6104[1] = var_6106;
-if (do_init_var_6112) {
-lval var_6113[8];
-lval var_6114;
-var_6114 = LVI_SYMBOL("cond");
-var_6113[0] = var_6114;
-if (do_init_var_6115) {
-lval var_6116[8];
-lval var_6117;
-var_6117 = LVI_SYMBOL("unquote-splicing");
-var_6116[0] = var_6117;
-lval var_6118;
-var_6118 = LVI_SYMBOL("s2");
-var_6116[1] = var_6118;
-var_6115 = wile_gen_list(2, var_6116, NULL);
-do_init_var_6115 = false;
+var_6105[0] = var_6106;
+if (do_init_var_6110) {
+lval var_6111[8];
+lval var_6112;
+var_6112 = LVI_SYMBOL("unquote");
+var_6111[0] = var_6112;
+lval var_6113;
+var_6113 = LVI_SYMBOL("p1");
+var_6111[1] = var_6113;
+var_6110 = wile_gen_list(2, var_6111, NULL);
+do_init_var_6110 = false;
 }
-var_6113[1] = var_6115;
-var_6112 = wile_gen_list(2, var_6113, NULL);
-do_init_var_6112 = false;
+var_6105[1] = var_6110;
+var_6104 = wile_gen_list(2, var_6105, NULL);
+do_init_var_6104 = false;
 }
-var_6104[2] = var_6112;
-var_6103 = wile_gen_list(3, var_6104, NULL);
-do_init_var_6103 = false;
+var_6098[2] = var_6104;
+var_6097 = wile_gen_list(3, var_6098, NULL);
+do_init_var_6097 = false;
 }
-var_6096[3] = var_6103;
-var_6095 = wile_gen_list(4, var_6096, NULL);
-do_init_var_6095 = false;
+var_6095[1] = var_6097;
+var_6094 = wile_gen_list(2, var_6095, NULL);
+do_init_var_6094 = false;
 }
-var_6094[0] = var_6095;
-var_6093 = wile_gen_list(1, var_6094, NULL);
-do_init_var_6093 = false;
-}
-var_6088[1] = var_6093;
-var_6087 = wile_gen_list(2, var_6088, NULL);
-do_init_var_6087 = false;
-}
-var_6086[0] = var_6087;
-var_6085 = wile_gen_list(1, var_6086, NULL);
-do_init_var_6085 = false;
-}
-var_6083[1] = var_6085;
-if (do_init_var_6119) {
-lval var_6120[8];
-lval var_6121;
-var_6121 = LVI_SYMBOL("unquote-splicing");
-var_6120[0] = var_6121;
-lval var_6122;
-var_6122 = LVI_SYMBOL("s3");
-var_6120[1] = var_6122;
-var_6119 = wile_gen_list(2, var_6120, NULL);
-do_init_var_6119 = false;
-}
-var_6083[2] = var_6119;
-var_6082 = wile_gen_list(3, var_6083, NULL);
-do_init_var_6082 = false;
-}
-var_6076[2] = var_6082;
+var_6076[2] = var_6094;
 var_6075 = wile_gen_list(3, var_6076, NULL);
 do_init_var_6075 = false;
 }
-var_6073[1] = var_6075;
-var_6072 = wile_gen_list(2, var_6073, NULL);
-do_init_var_6072 = false;
+var_6070[2] = var_6075;
+var_6069 = wile_gen_list(3, var_6070, NULL);
+do_init_var_6069 = false;
 }
-var_5897[2] = var_6072;
-var_5896 = wile_gen_list(3, var_5897, NULL);
-do_init_var_5896 = false;
+var_6067[1] = var_6069;
+lval var_6114;
+var_6114 = LVI_SYMBOL("s0");
+var_6067[2] = var_6114;
+var_6066 = wile_gen_list(3, var_6067, NULL);
+do_init_var_6066 = false;
 }
-var_5895[0] = var_5896;
-var_5894 = wile_gen_list(1, var_5895, NULL);
-do_init_var_5894 = false;
+var_6064[1] = var_6066;
+var_6063 = wile_gen_list(2, var_6064, NULL);
+do_init_var_6063 = false;
 }
+var_5943[5] = var_6063;
+var_5942 = wile_gen_list(6, var_5943, NULL);
+do_init_var_5942 = false;
+}
+var_5940[1] = var_5942;
+if (do_init_var_6115) {
+lval var_6116[8];
+lval var_6117;
+var_6117 = LVI_SYMBOL("quasiquote");
+var_6116[0] = var_6117;
+if (do_init_var_6118) {
+lval var_6119[8];
+lval var_6120;
+var_6120 = LVI_SYMBOL("begin");
+var_6119[0] = var_6120;
+if (do_init_var_6121) {
+lval var_6122[8];
 lval var_6123;
-lval var_6124[8];
-var_6124[0] = var_5889;
-var_6124[1] = var_5890;
-var_6124[2] = var_5894;
-var_6124[3] = var_5307[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:908
-var_6123 = fn_10(NULL, var_6124, "bld-rtl-dir/wile-rtl2-000083.scm:908");
-lval var_6126;
-var_6126 = LVI_SYMBOL("def-struct");
-if (do_init_var_6127) {
-lval var_6128[8];
-lval var_6129;
-var_6129 = LVI_SYMBOL("name");
-var_6128[0] = var_6129;
-lval var_6130;
-var_6130 = LVI_SYMBOL("field");
-var_6128[1] = var_6130;
-lval var_6131;
-var_6131 = LVI_SYMBOL("fields");
-var_6128[2] = var_6131;
-var_6127 = wile_gen_list(2, var_6128, var_6128 + 2);
-do_init_var_6127 = false;
+var_6123 = LVI_SYMBOL("unquote-splicing");
+var_6122[0] = var_6123;
+lval var_6124;
+var_6124 = LVI_SYMBOL("s1");
+var_6122[1] = var_6124;
+var_6121 = wile_gen_list(2, var_6122, NULL);
+do_init_var_6121 = false;
 }
+var_6119[1] = var_6121;
+if (do_init_var_6125) {
+lval var_6126[8];
+lval var_6127;
+var_6127 = LVI_SYMBOL("let");
+var_6126[0] = var_6127;
+if (do_init_var_6128) {
+lval var_6129[8];
+if (do_init_var_6130) {
+lval var_6131[8];
 if (do_init_var_6132) {
 lval var_6133[8];
-if (do_init_var_6134) {
-lval var_6135[8];
-lval var_6136;
-var_6136 = LVI_SYMBOL("let*");
-var_6135[0] = var_6136;
-if (do_init_var_6137) {
-lval var_6138[16];
-if (do_init_var_6139) {
-lval var_6140[8];
+lval var_6134;
+var_6134 = LVI_SYMBOL("unquote");
+var_6133[0] = var_6134;
+lval var_6135;
+var_6135 = LVI_SYMBOL("nm");
+var_6133[1] = var_6135;
+var_6132 = wile_gen_list(2, var_6133, NULL);
+do_init_var_6132 = false;
+}
+var_6131[0] = var_6132;
+if (do_init_var_6136) {
+lval var_6137[8];
+if (do_init_var_6138) {
+lval var_6139[8];
+lval var_6140;
+var_6140 = LVI_SYMBOL("lambda");
+var_6139[0] = var_6140;
 lval var_6141;
-var_6141 = LVI_SYMBOL("fs");
-var_6140[0] = var_6141;
+var_6141 = LVI_NIL();
+var_6139[1] = var_6141;
 if (do_init_var_6142) {
 lval var_6143[8];
 lval var_6144;
-var_6144 = LVI_SYMBOL("cons");
+var_6144 = LVI_SYMBOL("unquote-splicing");
 var_6143[0] = var_6144;
 lval var_6145;
-var_6145 = LVI_SYMBOL("field");
+var_6145 = LVI_SYMBOL("defs");
 var_6143[1] = var_6145;
-lval var_6146;
-var_6146 = LVI_SYMBOL("fields");
-var_6143[2] = var_6146;
-var_6142 = wile_gen_list(3, var_6143, NULL);
+var_6142 = wile_gen_list(2, var_6143, NULL);
 do_init_var_6142 = false;
 }
-var_6140[1] = var_6142;
-var_6139 = wile_gen_list(2, var_6140, NULL);
-do_init_var_6139 = false;
-}
-var_6138[0] = var_6139;
-if (do_init_var_6147) {
-lval var_6148[8];
-lval var_6149;
-var_6149 = LVI_SYMBOL("lfs");
-var_6148[0] = var_6149;
-if (do_init_var_6150) {
-lval var_6151[8];
-lval var_6152;
-var_6152 = LVI_SYMBOL("list-length");
-var_6151[0] = var_6152;
+var_6139[2] = var_6142;
+if (do_init_var_6146) {
+lval var_6147[8];
+lval var_6148;
+var_6148 = LVI_SYMBOL("lambda");
+var_6147[0] = var_6148;
+if (do_init_var_6149) {
+lval var_6150[8];
+if (do_init_var_6151) {
+lval var_6152[8];
 lval var_6153;
-var_6153 = LVI_SYMBOL("fs");
-var_6151[1] = var_6153;
-var_6150 = wile_gen_list(2, var_6151, NULL);
-do_init_var_6150 = false;
+var_6153 = LVI_SYMBOL("unquote");
+var_6152[0] = var_6153;
+lval var_6154;
+var_6154 = LVI_SYMBOL("sa");
+var_6152[1] = var_6154;
+var_6151 = wile_gen_list(2, var_6152, NULL);
+do_init_var_6151 = false;
 }
-var_6148[1] = var_6150;
-var_6147 = wile_gen_list(2, var_6148, NULL);
-do_init_var_6147 = false;
+var_6150[0] = var_6151;
+var_6149 = wile_gen_list(1, var_6150, NULL);
+do_init_var_6149 = false;
 }
-var_6138[1] = var_6147;
-if (do_init_var_6154) {
-lval var_6155[8];
-lval var_6156;
-var_6156 = LVI_SYMBOL("nfs");
-var_6155[0] = var_6156;
-if (do_init_var_6157) {
-lval var_6158[8];
-lval var_6159;
-var_6159 = LVI_SYMBOL("+");
-var_6158[0] = var_6159;
+var_6147[1] = var_6149;
+if (do_init_var_6155) {
+lval var_6156[8];
+lval var_6157;
+var_6157 = LVI_SYMBOL("cond");
+var_6156[0] = var_6157;
+if (do_init_var_6158) {
+lval var_6159[8];
 lval var_6160;
-var_6160 = LVI_INT(1);
-var_6158[1] = var_6160;
+var_6160 = LVI_SYMBOL("unquote-splicing");
+var_6159[0] = var_6160;
 lval var_6161;
-var_6161 = LVI_SYMBOL("lfs");
-var_6158[2] = var_6161;
-var_6157 = wile_gen_list(3, var_6158, NULL);
-do_init_var_6157 = false;
+var_6161 = LVI_SYMBOL("s2");
+var_6159[1] = var_6161;
+var_6158 = wile_gen_list(2, var_6159, NULL);
+do_init_var_6158 = false;
 }
-var_6155[1] = var_6157;
-var_6154 = wile_gen_list(2, var_6155, NULL);
-do_init_var_6154 = false;
+var_6156[1] = var_6158;
+var_6155 = wile_gen_list(2, var_6156, NULL);
+do_init_var_6155 = false;
 }
-var_6138[2] = var_6154;
+var_6147[2] = var_6155;
+var_6146 = wile_gen_list(3, var_6147, NULL);
+do_init_var_6146 = false;
+}
+var_6139[3] = var_6146;
+var_6138 = wile_gen_list(4, var_6139, NULL);
+do_init_var_6138 = false;
+}
+var_6137[0] = var_6138;
+var_6136 = wile_gen_list(1, var_6137, NULL);
+do_init_var_6136 = false;
+}
+var_6131[1] = var_6136;
+var_6130 = wile_gen_list(2, var_6131, NULL);
+do_init_var_6130 = false;
+}
+var_6129[0] = var_6130;
+var_6128 = wile_gen_list(1, var_6129, NULL);
+do_init_var_6128 = false;
+}
+var_6126[1] = var_6128;
 if (do_init_var_6162) {
 lval var_6163[8];
 lval var_6164;
-var_6164 = LVI_SYMBOL("J0");
+var_6164 = LVI_SYMBOL("unquote-splicing");
 var_6163[0] = var_6164;
-if (do_init_var_6165) {
-lval var_6166[8];
-lval var_6167;
-var_6167 = LVI_SYMBOL("lambda");
-var_6166[0] = var_6167;
-lval var_6168;
-var_6168 = LVI_SYMBOL("strs");
-var_6166[1] = var_6168;
-if (do_init_var_6169) {
-lval var_6170[8];
-lval var_6171;
-var_6171 = LVI_SYMBOL("apply");
-var_6170[0] = var_6171;
-lval var_6172;
-var_6172 = LVI_SYMBOL("string-append");
-var_6170[1] = var_6172;
-lval var_6173;
-var_6173 = LVI_SYMBOL("strs");
-var_6170[2] = var_6173;
-var_6169 = wile_gen_list(3, var_6170, NULL);
-do_init_var_6169 = false;
-}
-var_6166[2] = var_6169;
-var_6165 = wile_gen_list(3, var_6166, NULL);
-do_init_var_6165 = false;
-}
+lval var_6165;
+var_6165 = LVI_SYMBOL("s3");
 var_6163[1] = var_6165;
 var_6162 = wile_gen_list(2, var_6163, NULL);
 do_init_var_6162 = false;
 }
-var_6138[3] = var_6162;
-if (do_init_var_6174) {
-lval var_6175[8];
-lval var_6176;
-var_6176 = LVI_SYMBOL("J1");
-var_6175[0] = var_6176;
+var_6126[2] = var_6162;
+var_6125 = wile_gen_list(3, var_6126, NULL);
+do_init_var_6125 = false;
+}
+var_6119[2] = var_6125;
+var_6118 = wile_gen_list(3, var_6119, NULL);
+do_init_var_6118 = false;
+}
+var_6116[1] = var_6118;
+var_6115 = wile_gen_list(2, var_6116, NULL);
+do_init_var_6115 = false;
+}
+var_5940[2] = var_6115;
+var_5939 = wile_gen_list(3, var_5940, NULL);
+do_init_var_5939 = false;
+}
+var_5938[0] = var_5939;
+var_5937 = wile_gen_list(1, var_5938, NULL);
+do_init_var_5937 = false;
+}
+lval var_6166;
+lval var_6167[8];
+var_6167[0] = var_5932;
+var_6167[1] = var_5933;
+var_6167[2] = var_5937;
+var_6167[3] = var_5350[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:914
+var_6166 = fn_10(NULL, var_6167, "bld-rtl-dir/wile-rtl2-000083.scm:914");
+lval var_6169;
+var_6169 = LVI_SYMBOL("def-struct");
+if (do_init_var_6170) {
+lval var_6171[8];
+lval var_6172;
+var_6172 = LVI_SYMBOL("name");
+var_6171[0] = var_6172;
+lval var_6173;
+var_6173 = LVI_SYMBOL("field");
+var_6171[1] = var_6173;
+lval var_6174;
+var_6174 = LVI_SYMBOL("fields");
+var_6171[2] = var_6174;
+var_6170 = wile_gen_list(2, var_6171, var_6171 + 2);
+do_init_var_6170 = false;
+}
+if (do_init_var_6175) {
+lval var_6176[8];
 if (do_init_var_6177) {
 lval var_6178[8];
 lval var_6179;
-var_6179 = LVI_SYMBOL("lambda");
+var_6179 = LVI_SYMBOL("let*");
 var_6178[0] = var_6179;
 if (do_init_var_6180) {
-lval var_6181[8];
-lval var_6182;
-var_6182 = LVI_SYMBOL("pre");
-var_6181[0] = var_6182;
-lval var_6183;
-var_6183 = LVI_SYMBOL("main");
-var_6181[1] = var_6183;
-var_6180 = wile_gen_list(2, var_6181, NULL);
-do_init_var_6180 = false;
-}
-var_6178[1] = var_6180;
-if (do_init_var_6184) {
-lval var_6185[8];
-lval var_6186;
-var_6186 = LVI_SYMBOL("string->symbol");
-var_6185[0] = var_6186;
-if (do_init_var_6187) {
-lval var_6188[8];
+lval var_6181[16];
+if (do_init_var_6182) {
+lval var_6183[8];
+lval var_6184;
+var_6184 = LVI_SYMBOL("fs");
+var_6183[0] = var_6184;
+if (do_init_var_6185) {
+lval var_6186[8];
+lval var_6187;
+var_6187 = LVI_SYMBOL("cons");
+var_6186[0] = var_6187;
+lval var_6188;
+var_6188 = LVI_SYMBOL("field");
+var_6186[1] = var_6188;
 lval var_6189;
-var_6189 = LVI_SYMBOL("J0");
-var_6188[0] = var_6189;
-lval var_6190;
-var_6190 = LVI_SYMBOL("pre");
-var_6188[1] = var_6190;
-lval var_6191;
-var_6191 = LVI_SYMBOL("main");
-var_6188[2] = var_6191;
-var_6187 = wile_gen_list(3, var_6188, NULL);
-do_init_var_6187 = false;
+var_6189 = LVI_SYMBOL("fields");
+var_6186[2] = var_6189;
+var_6185 = wile_gen_list(3, var_6186, NULL);
+do_init_var_6185 = false;
 }
-var_6185[1] = var_6187;
-var_6184 = wile_gen_list(2, var_6185, NULL);
-do_init_var_6184 = false;
+var_6183[1] = var_6185;
+var_6182 = wile_gen_list(2, var_6183, NULL);
+do_init_var_6182 = false;
 }
-var_6178[2] = var_6184;
-var_6177 = wile_gen_list(3, var_6178, NULL);
-do_init_var_6177 = false;
+var_6181[0] = var_6182;
+if (do_init_var_6190) {
+lval var_6191[8];
+lval var_6192;
+var_6192 = LVI_SYMBOL("lfs");
+var_6191[0] = var_6192;
+if (do_init_var_6193) {
+lval var_6194[8];
+lval var_6195;
+var_6195 = LVI_SYMBOL("list-length");
+var_6194[0] = var_6195;
+lval var_6196;
+var_6196 = LVI_SYMBOL("fs");
+var_6194[1] = var_6196;
+var_6193 = wile_gen_list(2, var_6194, NULL);
+do_init_var_6193 = false;
 }
-var_6175[1] = var_6177;
-var_6174 = wile_gen_list(2, var_6175, NULL);
-do_init_var_6174 = false;
+var_6191[1] = var_6193;
+var_6190 = wile_gen_list(2, var_6191, NULL);
+do_init_var_6190 = false;
 }
-var_6138[4] = var_6174;
-if (do_init_var_6192) {
-lval var_6193[8];
-lval var_6194;
-var_6194 = LVI_SYMBOL("J2");
-var_6193[0] = var_6194;
-if (do_init_var_6195) {
-lval var_6196[8];
-lval var_6197;
-var_6197 = LVI_SYMBOL("lambda");
-var_6196[0] = var_6197;
-if (do_init_var_6198) {
-lval var_6199[8];
-lval var_6200;
-var_6200 = LVI_SYMBOL("pre");
-var_6199[0] = var_6200;
-lval var_6201;
-var_6201 = LVI_SYMBOL("main");
-var_6199[1] = var_6201;
+var_6181[1] = var_6190;
+if (do_init_var_6197) {
+lval var_6198[8];
+lval var_6199;
+var_6199 = LVI_SYMBOL("nfs");
+var_6198[0] = var_6199;
+if (do_init_var_6200) {
+lval var_6201[8];
 lval var_6202;
-var_6202 = LVI_SYMBOL("post");
-var_6199[2] = var_6202;
-var_6198 = wile_gen_list(3, var_6199, NULL);
-do_init_var_6198 = false;
+var_6202 = LVI_SYMBOL("+");
+var_6201[0] = var_6202;
+lval var_6203;
+var_6203 = LVI_INT(1);
+var_6201[1] = var_6203;
+lval var_6204;
+var_6204 = LVI_SYMBOL("lfs");
+var_6201[2] = var_6204;
+var_6200 = wile_gen_list(3, var_6201, NULL);
+do_init_var_6200 = false;
 }
-var_6196[1] = var_6198;
-if (do_init_var_6203) {
-lval var_6204[8];
-lval var_6205;
-var_6205 = LVI_SYMBOL("string->symbol");
-var_6204[0] = var_6205;
-if (do_init_var_6206) {
-lval var_6207[8];
-lval var_6208;
-var_6208 = LVI_SYMBOL("J0");
-var_6207[0] = var_6208;
-lval var_6209;
-var_6209 = LVI_SYMBOL("pre");
-var_6207[1] = var_6209;
+var_6198[1] = var_6200;
+var_6197 = wile_gen_list(2, var_6198, NULL);
+do_init_var_6197 = false;
+}
+var_6181[2] = var_6197;
+if (do_init_var_6205) {
+lval var_6206[8];
+lval var_6207;
+var_6207 = LVI_SYMBOL("J0");
+var_6206[0] = var_6207;
+if (do_init_var_6208) {
+lval var_6209[8];
 lval var_6210;
-var_6210 = LVI_SYMBOL("main");
-var_6207[2] = var_6210;
+var_6210 = LVI_SYMBOL("lambda");
+var_6209[0] = var_6210;
 lval var_6211;
-var_6211 = LVI_SYMBOL("post");
-var_6207[3] = var_6211;
-var_6206 = wile_gen_list(4, var_6207, NULL);
-do_init_var_6206 = false;
-}
-var_6204[1] = var_6206;
-var_6203 = wile_gen_list(2, var_6204, NULL);
-do_init_var_6203 = false;
-}
-var_6196[2] = var_6203;
-var_6195 = wile_gen_list(3, var_6196, NULL);
-do_init_var_6195 = false;
-}
-var_6193[1] = var_6195;
-var_6192 = wile_gen_list(2, var_6193, NULL);
-do_init_var_6192 = false;
-}
-var_6138[5] = var_6192;
+var_6211 = LVI_SYMBOL("strs");
+var_6209[1] = var_6211;
 if (do_init_var_6212) {
 lval var_6213[8];
 lval var_6214;
-var_6214 = LVI_SYMBOL("nstr");
+var_6214 = LVI_SYMBOL("apply");
 var_6213[0] = var_6214;
-if (do_init_var_6215) {
-lval var_6216[8];
-lval var_6217;
-var_6217 = LVI_SYMBOL("symbol->string");
-var_6216[0] = var_6217;
-lval var_6218;
-var_6218 = LVI_SYMBOL("name");
-var_6216[1] = var_6218;
-var_6215 = wile_gen_list(2, var_6216, NULL);
-do_init_var_6215 = false;
-}
+lval var_6215;
+var_6215 = LVI_SYMBOL("string-append");
 var_6213[1] = var_6215;
-var_6212 = wile_gen_list(2, var_6213, NULL);
+lval var_6216;
+var_6216 = LVI_SYMBOL("strs");
+var_6213[2] = var_6216;
+var_6212 = wile_gen_list(3, var_6213, NULL);
 do_init_var_6212 = false;
 }
-var_6138[6] = var_6212;
-if (do_init_var_6219) {
-lval var_6220[8];
-lval var_6221;
-var_6221 = LVI_SYMBOL("mstr");
-var_6220[0] = var_6221;
-if (do_init_var_6222) {
-lval var_6223[8];
-lval var_6224;
-var_6224 = LVI_SYMBOL("J1");
-var_6223[0] = var_6224;
+var_6209[2] = var_6212;
+var_6208 = wile_gen_list(3, var_6209, NULL);
+do_init_var_6208 = false;
+}
+var_6206[1] = var_6208;
+var_6205 = wile_gen_list(2, var_6206, NULL);
+do_init_var_6205 = false;
+}
+var_6181[3] = var_6205;
+if (do_init_var_6217) {
+lval var_6218[8];
+lval var_6219;
+var_6219 = LVI_SYMBOL("J1");
+var_6218[0] = var_6219;
+if (do_init_var_6220) {
+lval var_6221[8];
+lval var_6222;
+var_6222 = LVI_SYMBOL("lambda");
+var_6221[0] = var_6222;
+if (do_init_var_6223) {
+lval var_6224[8];
 lval var_6225;
-var_6225 = LVI_STRING("make-");
-var_6223[1] = var_6225;
+var_6225 = LVI_SYMBOL("pre");
+var_6224[0] = var_6225;
 lval var_6226;
-var_6226 = LVI_SYMBOL("nstr");
-var_6223[2] = var_6226;
-var_6222 = wile_gen_list(3, var_6223, NULL);
-do_init_var_6222 = false;
+var_6226 = LVI_SYMBOL("main");
+var_6224[1] = var_6226;
+var_6223 = wile_gen_list(2, var_6224, NULL);
+do_init_var_6223 = false;
 }
-var_6220[1] = var_6222;
-var_6219 = wile_gen_list(2, var_6220, NULL);
-do_init_var_6219 = false;
-}
-var_6138[7] = var_6219;
+var_6221[1] = var_6223;
 if (do_init_var_6227) {
 lval var_6228[8];
 lval var_6229;
-var_6229 = LVI_SYMBOL("msym");
+var_6229 = LVI_SYMBOL("string->symbol");
 var_6228[0] = var_6229;
 if (do_init_var_6230) {
 lval var_6231[8];
 lval var_6232;
-var_6232 = LVI_SYMBOL("gensym");
+var_6232 = LVI_SYMBOL("J0");
 var_6231[0] = var_6232;
-var_6230 = wile_gen_list(1, var_6231, NULL);
+lval var_6233;
+var_6233 = LVI_SYMBOL("pre");
+var_6231[1] = var_6233;
+lval var_6234;
+var_6234 = LVI_SYMBOL("main");
+var_6231[2] = var_6234;
+var_6230 = wile_gen_list(3, var_6231, NULL);
 do_init_var_6230 = false;
 }
 var_6228[1] = var_6230;
 var_6227 = wile_gen_list(2, var_6228, NULL);
 do_init_var_6227 = false;
 }
-var_6138[8] = var_6227;
-if (do_init_var_6233) {
-lval var_6234[8];
-lval var_6235;
-var_6235 = LVI_SYMBOL("istr");
-var_6234[0] = var_6235;
-if (do_init_var_6236) {
-lval var_6237[8];
-lval var_6238;
-var_6238 = LVI_SYMBOL("J2");
-var_6237[0] = var_6238;
-lval var_6239;
-var_6239 = LVI_STRING("isa-");
-var_6237[1] = var_6239;
+var_6221[2] = var_6227;
+var_6220 = wile_gen_list(3, var_6221, NULL);
+do_init_var_6220 = false;
+}
+var_6218[1] = var_6220;
+var_6217 = wile_gen_list(2, var_6218, NULL);
+do_init_var_6217 = false;
+}
+var_6181[4] = var_6217;
+if (do_init_var_6235) {
+lval var_6236[8];
+lval var_6237;
+var_6237 = LVI_SYMBOL("J2");
+var_6236[0] = var_6237;
+if (do_init_var_6238) {
+lval var_6239[8];
 lval var_6240;
-var_6240 = LVI_SYMBOL("nstr");
-var_6237[2] = var_6240;
-lval var_6241;
-var_6241 = LVI_STRING("?");
-var_6237[3] = var_6241;
-var_6236 = wile_gen_list(4, var_6237, NULL);
-do_init_var_6236 = false;
-}
-var_6234[1] = var_6236;
-var_6233 = wile_gen_list(2, var_6234, NULL);
-do_init_var_6233 = false;
-}
-var_6138[9] = var_6233;
-if (do_init_var_6242) {
-lval var_6243[8];
+var_6240 = LVI_SYMBOL("lambda");
+var_6239[0] = var_6240;
+if (do_init_var_6241) {
+lval var_6242[8];
+lval var_6243;
+var_6243 = LVI_SYMBOL("pre");
+var_6242[0] = var_6243;
 lval var_6244;
-var_6244 = LVI_SYMBOL("gpre");
-var_6243[0] = var_6244;
-if (do_init_var_6245) {
-lval var_6246[8];
-lval var_6247;
-var_6247 = LVI_SYMBOL("J0");
-var_6246[0] = var_6247;
+var_6244 = LVI_SYMBOL("main");
+var_6242[1] = var_6244;
+lval var_6245;
+var_6245 = LVI_SYMBOL("post");
+var_6242[2] = var_6245;
+var_6241 = wile_gen_list(3, var_6242, NULL);
+do_init_var_6241 = false;
+}
+var_6239[1] = var_6241;
+if (do_init_var_6246) {
+lval var_6247[8];
 lval var_6248;
-var_6248 = LVI_STRING("get-");
-var_6246[1] = var_6248;
-lval var_6249;
-var_6249 = LVI_SYMBOL("nstr");
-var_6246[2] = var_6249;
-lval var_6250;
-var_6250 = LVI_STRING("-");
-var_6246[3] = var_6250;
-var_6245 = wile_gen_list(4, var_6246, NULL);
-do_init_var_6245 = false;
-}
-var_6243[1] = var_6245;
-var_6242 = wile_gen_list(2, var_6243, NULL);
-do_init_var_6242 = false;
-}
-var_6138[10] = var_6242;
-if (do_init_var_6251) {
-lval var_6252[8];
+var_6248 = LVI_SYMBOL("string->symbol");
+var_6247[0] = var_6248;
+if (do_init_var_6249) {
+lval var_6250[8];
+lval var_6251;
+var_6251 = LVI_SYMBOL("J0");
+var_6250[0] = var_6251;
+lval var_6252;
+var_6252 = LVI_SYMBOL("pre");
+var_6250[1] = var_6252;
 lval var_6253;
-var_6253 = LVI_SYMBOL("spre");
-var_6252[0] = var_6253;
-if (do_init_var_6254) {
-lval var_6255[8];
-lval var_6256;
-var_6256 = LVI_SYMBOL("J0");
-var_6255[0] = var_6256;
+var_6253 = LVI_SYMBOL("main");
+var_6250[2] = var_6253;
+lval var_6254;
+var_6254 = LVI_SYMBOL("post");
+var_6250[3] = var_6254;
+var_6249 = wile_gen_list(4, var_6250, NULL);
+do_init_var_6249 = false;
+}
+var_6247[1] = var_6249;
+var_6246 = wile_gen_list(2, var_6247, NULL);
+do_init_var_6246 = false;
+}
+var_6239[2] = var_6246;
+var_6238 = wile_gen_list(3, var_6239, NULL);
+do_init_var_6238 = false;
+}
+var_6236[1] = var_6238;
+var_6235 = wile_gen_list(2, var_6236, NULL);
+do_init_var_6235 = false;
+}
+var_6181[5] = var_6235;
+if (do_init_var_6255) {
+lval var_6256[8];
 lval var_6257;
-var_6257 = LVI_STRING("set-");
-var_6255[1] = var_6257;
-lval var_6258;
-var_6258 = LVI_SYMBOL("nstr");
-var_6255[2] = var_6258;
-lval var_6259;
-var_6259 = LVI_STRING("-");
-var_6255[3] = var_6259;
-var_6254 = wile_gen_list(4, var_6255, NULL);
-do_init_var_6254 = false;
+var_6257 = LVI_SYMBOL("nstr");
+var_6256[0] = var_6257;
+if (do_init_var_6258) {
+lval var_6259[8];
+lval var_6260;
+var_6260 = LVI_SYMBOL("symbol->string");
+var_6259[0] = var_6260;
+lval var_6261;
+var_6261 = LVI_SYMBOL("name");
+var_6259[1] = var_6261;
+var_6258 = wile_gen_list(2, var_6259, NULL);
+do_init_var_6258 = false;
 }
-var_6252[1] = var_6254;
-var_6251 = wile_gen_list(2, var_6252, NULL);
-do_init_var_6251 = false;
+var_6256[1] = var_6258;
+var_6255 = wile_gen_list(2, var_6256, NULL);
+do_init_var_6255 = false;
 }
-var_6138[11] = var_6251;
-if (do_init_var_6260) {
-lval var_6261[8];
-lval var_6262;
-var_6262 = LVI_SYMBOL("istrs");
-var_6261[0] = var_6262;
-if (do_init_var_6263) {
-lval var_6264[8];
-lval var_6265;
-var_6265 = LVI_SYMBOL("map");
-var_6264[0] = var_6265;
-if (do_init_var_6266) {
-lval var_6267[8];
+var_6181[6] = var_6255;
+if (do_init_var_6262) {
+lval var_6263[8];
+lval var_6264;
+var_6264 = LVI_SYMBOL("mstr");
+var_6263[0] = var_6264;
+if (do_init_var_6265) {
+lval var_6266[8];
+lval var_6267;
+var_6267 = LVI_SYMBOL("J1");
+var_6266[0] = var_6267;
 lval var_6268;
-var_6268 = LVI_SYMBOL("lambda");
-var_6267[0] = var_6268;
-if (do_init_var_6269) {
-lval var_6270[8];
-lval var_6271;
-var_6271 = LVI_SYMBOL("f");
-var_6270[0] = var_6271;
-lval var_6272;
-var_6272 = LVI_SYMBOL("i");
-var_6270[1] = var_6272;
-var_6269 = wile_gen_list(2, var_6270, NULL);
-do_init_var_6269 = false;
+var_6268 = LVI_STRING("make-");
+var_6266[1] = var_6268;
+lval var_6269;
+var_6269 = LVI_SYMBOL("nstr");
+var_6266[2] = var_6269;
+var_6265 = wile_gen_list(3, var_6266, NULL);
+do_init_var_6265 = false;
 }
-var_6267[1] = var_6269;
+var_6263[1] = var_6265;
+var_6262 = wile_gen_list(2, var_6263, NULL);
+do_init_var_6262 = false;
+}
+var_6181[7] = var_6262;
+if (do_init_var_6270) {
+lval var_6271[8];
+lval var_6272;
+var_6272 = LVI_SYMBOL("msym");
+var_6271[0] = var_6272;
 if (do_init_var_6273) {
 lval var_6274[8];
 lval var_6275;
-var_6275 = LVI_SYMBOL("quasiquote");
+var_6275 = LVI_SYMBOL("gensym");
 var_6274[0] = var_6275;
+var_6273 = wile_gen_list(1, var_6274, NULL);
+do_init_var_6273 = false;
+}
+var_6271[1] = var_6273;
+var_6270 = wile_gen_list(2, var_6271, NULL);
+do_init_var_6270 = false;
+}
+var_6181[8] = var_6270;
 if (do_init_var_6276) {
 lval var_6277[8];
 lval var_6278;
-var_6278 = LVI_SYMBOL("vector-set!");
+var_6278 = LVI_SYMBOL("istr");
 var_6277[0] = var_6278;
 if (do_init_var_6279) {
 lval var_6280[8];
 lval var_6281;
-var_6281 = LVI_SYMBOL("unquote");
+var_6281 = LVI_SYMBOL("J2");
 var_6280[0] = var_6281;
 lval var_6282;
-var_6282 = LVI_SYMBOL("msym");
+var_6282 = LVI_STRING("isa-");
 var_6280[1] = var_6282;
-var_6279 = wile_gen_list(2, var_6280, NULL);
+lval var_6283;
+var_6283 = LVI_SYMBOL("nstr");
+var_6280[2] = var_6283;
+lval var_6284;
+var_6284 = LVI_STRING("?");
+var_6280[3] = var_6284;
+var_6279 = wile_gen_list(4, var_6280, NULL);
 do_init_var_6279 = false;
 }
 var_6277[1] = var_6279;
-if (do_init_var_6283) {
-lval var_6284[8];
-lval var_6285;
-var_6285 = LVI_SYMBOL("unquote");
-var_6284[0] = var_6285;
-lval var_6286;
-var_6286 = LVI_SYMBOL("i");
-var_6284[1] = var_6286;
-var_6283 = wile_gen_list(2, var_6284, NULL);
-do_init_var_6283 = false;
-}
-var_6277[2] = var_6283;
-if (do_init_var_6287) {
-lval var_6288[8];
-lval var_6289;
-var_6289 = LVI_SYMBOL("unquote");
-var_6288[0] = var_6289;
-lval var_6290;
-var_6290 = LVI_SYMBOL("f");
-var_6288[1] = var_6290;
-var_6287 = wile_gen_list(2, var_6288, NULL);
-do_init_var_6287 = false;
-}
-var_6277[3] = var_6287;
-var_6276 = wile_gen_list(4, var_6277, NULL);
+var_6276 = wile_gen_list(2, var_6277, NULL);
 do_init_var_6276 = false;
 }
-var_6274[1] = var_6276;
-var_6273 = wile_gen_list(2, var_6274, NULL);
-do_init_var_6273 = false;
-}
-var_6267[2] = var_6273;
-var_6266 = wile_gen_list(3, var_6267, NULL);
-do_init_var_6266 = false;
-}
-var_6264[1] = var_6266;
+var_6181[9] = var_6276;
+if (do_init_var_6285) {
+lval var_6286[8];
+lval var_6287;
+var_6287 = LVI_SYMBOL("gpre");
+var_6286[0] = var_6287;
+if (do_init_var_6288) {
+lval var_6289[8];
+lval var_6290;
+var_6290 = LVI_SYMBOL("J0");
+var_6289[0] = var_6290;
 lval var_6291;
-var_6291 = LVI_SYMBOL("fs");
-var_6264[2] = var_6291;
-if (do_init_var_6292) {
-lval var_6293[8];
-lval var_6294;
-var_6294 = LVI_SYMBOL("fromto");
-var_6293[0] = var_6294;
-lval var_6295;
-var_6295 = LVI_INT(1);
-var_6293[1] = var_6295;
+var_6291 = LVI_STRING("get-");
+var_6289[1] = var_6291;
+lval var_6292;
+var_6292 = LVI_SYMBOL("nstr");
+var_6289[2] = var_6292;
+lval var_6293;
+var_6293 = LVI_STRING("-");
+var_6289[3] = var_6293;
+var_6288 = wile_gen_list(4, var_6289, NULL);
+do_init_var_6288 = false;
+}
+var_6286[1] = var_6288;
+var_6285 = wile_gen_list(2, var_6286, NULL);
+do_init_var_6285 = false;
+}
+var_6181[10] = var_6285;
+if (do_init_var_6294) {
+lval var_6295[8];
 lval var_6296;
-var_6296 = LVI_SYMBOL("lfs");
-var_6293[2] = var_6296;
-var_6292 = wile_gen_list(3, var_6293, NULL);
-do_init_var_6292 = false;
-}
-var_6264[3] = var_6292;
-var_6263 = wile_gen_list(4, var_6264, NULL);
-do_init_var_6263 = false;
-}
-var_6261[1] = var_6263;
-var_6260 = wile_gen_list(2, var_6261, NULL);
-do_init_var_6260 = false;
-}
-var_6138[12] = var_6260;
+var_6296 = LVI_SYMBOL("spre");
+var_6295[0] = var_6296;
 if (do_init_var_6297) {
 lval var_6298[8];
 lval var_6299;
-var_6299 = LVI_SYMBOL("gstrs");
+var_6299 = LVI_SYMBOL("J0");
 var_6298[0] = var_6299;
-if (do_init_var_6300) {
-lval var_6301[8];
+lval var_6300;
+var_6300 = LVI_STRING("set-");
+var_6298[1] = var_6300;
+lval var_6301;
+var_6301 = LVI_SYMBOL("nstr");
+var_6298[2] = var_6301;
 lval var_6302;
-var_6302 = LVI_SYMBOL("map");
-var_6301[0] = var_6302;
+var_6302 = LVI_STRING("-");
+var_6298[3] = var_6302;
+var_6297 = wile_gen_list(4, var_6298, NULL);
+do_init_var_6297 = false;
+}
+var_6295[1] = var_6297;
+var_6294 = wile_gen_list(2, var_6295, NULL);
+do_init_var_6294 = false;
+}
+var_6181[11] = var_6294;
 if (do_init_var_6303) {
 lval var_6304[8];
 lval var_6305;
-var_6305 = LVI_SYMBOL("lambda");
+var_6305 = LVI_SYMBOL("istrs");
 var_6304[0] = var_6305;
 if (do_init_var_6306) {
 lval var_6307[8];
 lval var_6308;
-var_6308 = LVI_SYMBOL("f");
+var_6308 = LVI_SYMBOL("map");
 var_6307[0] = var_6308;
-lval var_6309;
-var_6309 = LVI_SYMBOL("i");
-var_6307[1] = var_6309;
-var_6306 = wile_gen_list(2, var_6307, NULL);
-do_init_var_6306 = false;
+if (do_init_var_6309) {
+lval var_6310[8];
+lval var_6311;
+var_6311 = LVI_SYMBOL("lambda");
+var_6310[0] = var_6311;
+if (do_init_var_6312) {
+lval var_6313[8];
+lval var_6314;
+var_6314 = LVI_SYMBOL("f");
+var_6313[0] = var_6314;
+lval var_6315;
+var_6315 = LVI_SYMBOL("i");
+var_6313[1] = var_6315;
+var_6312 = wile_gen_list(2, var_6313, NULL);
+do_init_var_6312 = false;
 }
-var_6304[1] = var_6306;
-if (do_init_var_6310) {
-lval var_6311[8];
-lval var_6312;
-var_6312 = LVI_SYMBOL("let");
-var_6311[0] = var_6312;
-if (do_init_var_6313) {
-lval var_6314[8];
-if (do_init_var_6315) {
-lval var_6316[8];
-lval var_6317;
-var_6317 = LVI_SYMBOL("gfn");
-var_6316[0] = var_6317;
-if (do_init_var_6318) {
-lval var_6319[8];
-lval var_6320;
-var_6320 = LVI_SYMBOL("J1");
-var_6319[0] = var_6320;
+var_6310[1] = var_6312;
+if (do_init_var_6316) {
+lval var_6317[8];
+lval var_6318;
+var_6318 = LVI_SYMBOL("quasiquote");
+var_6317[0] = var_6318;
+if (do_init_var_6319) {
+lval var_6320[8];
 lval var_6321;
-var_6321 = LVI_SYMBOL("gpre");
-var_6319[1] = var_6321;
+var_6321 = LVI_SYMBOL("vector-set!");
+var_6320[0] = var_6321;
 if (do_init_var_6322) {
 lval var_6323[8];
 lval var_6324;
-var_6324 = LVI_SYMBOL("symbol->string");
+var_6324 = LVI_SYMBOL("unquote");
 var_6323[0] = var_6324;
 lval var_6325;
-var_6325 = LVI_SYMBOL("f");
+var_6325 = LVI_SYMBOL("msym");
 var_6323[1] = var_6325;
 var_6322 = wile_gen_list(2, var_6323, NULL);
 do_init_var_6322 = false;
 }
-var_6319[2] = var_6322;
-var_6318 = wile_gen_list(3, var_6319, NULL);
-do_init_var_6318 = false;
-}
-var_6316[1] = var_6318;
-var_6315 = wile_gen_list(2, var_6316, NULL);
-do_init_var_6315 = false;
-}
-var_6314[0] = var_6315;
-var_6313 = wile_gen_list(1, var_6314, NULL);
-do_init_var_6313 = false;
-}
-var_6311[1] = var_6313;
+var_6320[1] = var_6322;
 if (do_init_var_6326) {
 lval var_6327[8];
 lval var_6328;
-var_6328 = LVI_SYMBOL("quasiquote");
+var_6328 = LVI_SYMBOL("unquote");
 var_6327[0] = var_6328;
-if (do_init_var_6329) {
-lval var_6330[8];
-lval var_6331;
-var_6331 = LVI_SYMBOL("define");
-var_6330[0] = var_6331;
-if (do_init_var_6332) {
-lval var_6333[8];
-if (do_init_var_6334) {
-lval var_6335[8];
-lval var_6336;
-var_6336 = LVI_SYMBOL("unquote");
-var_6335[0] = var_6336;
-lval var_6337;
-var_6337 = LVI_SYMBOL("gfn");
-var_6335[1] = var_6337;
-var_6334 = wile_gen_list(2, var_6335, NULL);
-do_init_var_6334 = false;
-}
-var_6333[0] = var_6334;
-lval var_6338;
-var_6338 = LVI_SYMBOL("it");
-var_6333[1] = var_6338;
-var_6332 = wile_gen_list(2, var_6333, NULL);
-do_init_var_6332 = false;
-}
-var_6330[1] = var_6332;
-if (do_init_var_6339) {
-lval var_6340[8];
-lval var_6341;
-var_6341 = LVI_SYMBOL("vector-ref");
-var_6340[0] = var_6341;
-lval var_6342;
-var_6342 = LVI_SYMBOL("it");
-var_6340[1] = var_6342;
-if (do_init_var_6343) {
-lval var_6344[8];
-lval var_6345;
-var_6345 = LVI_SYMBOL("unquote");
-var_6344[0] = var_6345;
-lval var_6346;
-var_6346 = LVI_SYMBOL("i");
-var_6344[1] = var_6346;
-var_6343 = wile_gen_list(2, var_6344, NULL);
-do_init_var_6343 = false;
-}
-var_6340[2] = var_6343;
-var_6339 = wile_gen_list(3, var_6340, NULL);
-do_init_var_6339 = false;
-}
-var_6330[2] = var_6339;
-var_6329 = wile_gen_list(3, var_6330, NULL);
-do_init_var_6329 = false;
-}
+lval var_6329;
+var_6329 = LVI_SYMBOL("i");
 var_6327[1] = var_6329;
 var_6326 = wile_gen_list(2, var_6327, NULL);
 do_init_var_6326 = false;
 }
-var_6311[2] = var_6326;
-var_6310 = wile_gen_list(3, var_6311, NULL);
-do_init_var_6310 = false;
+var_6320[2] = var_6326;
+if (do_init_var_6330) {
+lval var_6331[8];
+lval var_6332;
+var_6332 = LVI_SYMBOL("unquote");
+var_6331[0] = var_6332;
+lval var_6333;
+var_6333 = LVI_SYMBOL("f");
+var_6331[1] = var_6333;
+var_6330 = wile_gen_list(2, var_6331, NULL);
+do_init_var_6330 = false;
 }
-var_6304[2] = var_6310;
-var_6303 = wile_gen_list(3, var_6304, NULL);
+var_6320[3] = var_6330;
+var_6319 = wile_gen_list(4, var_6320, NULL);
+do_init_var_6319 = false;
+}
+var_6317[1] = var_6319;
+var_6316 = wile_gen_list(2, var_6317, NULL);
+do_init_var_6316 = false;
+}
+var_6310[2] = var_6316;
+var_6309 = wile_gen_list(3, var_6310, NULL);
+do_init_var_6309 = false;
+}
+var_6307[1] = var_6309;
+lval var_6334;
+var_6334 = LVI_SYMBOL("fs");
+var_6307[2] = var_6334;
+if (do_init_var_6335) {
+lval var_6336[8];
+lval var_6337;
+var_6337 = LVI_SYMBOL("fromto");
+var_6336[0] = var_6337;
+lval var_6338;
+var_6338 = LVI_INT(1);
+var_6336[1] = var_6338;
+lval var_6339;
+var_6339 = LVI_SYMBOL("lfs");
+var_6336[2] = var_6339;
+var_6335 = wile_gen_list(3, var_6336, NULL);
+do_init_var_6335 = false;
+}
+var_6307[3] = var_6335;
+var_6306 = wile_gen_list(4, var_6307, NULL);
+do_init_var_6306 = false;
+}
+var_6304[1] = var_6306;
+var_6303 = wile_gen_list(2, var_6304, NULL);
 do_init_var_6303 = false;
 }
-var_6301[1] = var_6303;
-lval var_6347;
-var_6347 = LVI_SYMBOL("fs");
-var_6301[2] = var_6347;
-if (do_init_var_6348) {
-lval var_6349[8];
-lval var_6350;
-var_6350 = LVI_SYMBOL("fromto");
-var_6349[0] = var_6350;
+var_6181[12] = var_6303;
+if (do_init_var_6340) {
+lval var_6341[8];
+lval var_6342;
+var_6342 = LVI_SYMBOL("gstrs");
+var_6341[0] = var_6342;
+if (do_init_var_6343) {
+lval var_6344[8];
+lval var_6345;
+var_6345 = LVI_SYMBOL("map");
+var_6344[0] = var_6345;
+if (do_init_var_6346) {
+lval var_6347[8];
+lval var_6348;
+var_6348 = LVI_SYMBOL("lambda");
+var_6347[0] = var_6348;
+if (do_init_var_6349) {
+lval var_6350[8];
 lval var_6351;
-var_6351 = LVI_INT(1);
-var_6349[1] = var_6351;
+var_6351 = LVI_SYMBOL("f");
+var_6350[0] = var_6351;
 lval var_6352;
-var_6352 = LVI_SYMBOL("lfs");
-var_6349[2] = var_6352;
-var_6348 = wile_gen_list(3, var_6349, NULL);
-do_init_var_6348 = false;
+var_6352 = LVI_SYMBOL("i");
+var_6350[1] = var_6352;
+var_6349 = wile_gen_list(2, var_6350, NULL);
+do_init_var_6349 = false;
 }
-var_6301[3] = var_6348;
-var_6300 = wile_gen_list(4, var_6301, NULL);
-do_init_var_6300 = false;
-}
-var_6298[1] = var_6300;
-var_6297 = wile_gen_list(2, var_6298, NULL);
-do_init_var_6297 = false;
-}
-var_6138[13] = var_6297;
+var_6347[1] = var_6349;
 if (do_init_var_6353) {
 lval var_6354[8];
 lval var_6355;
-var_6355 = LVI_SYMBOL("sstrs");
+var_6355 = LVI_SYMBOL("let");
 var_6354[0] = var_6355;
 if (do_init_var_6356) {
 lval var_6357[8];
-lval var_6358;
-var_6358 = LVI_SYMBOL("map");
-var_6357[0] = var_6358;
-if (do_init_var_6359) {
-lval var_6360[8];
-lval var_6361;
-var_6361 = LVI_SYMBOL("lambda");
-var_6360[0] = var_6361;
-if (do_init_var_6362) {
-lval var_6363[8];
+if (do_init_var_6358) {
+lval var_6359[8];
+lval var_6360;
+var_6360 = LVI_SYMBOL("gfn");
+var_6359[0] = var_6360;
+if (do_init_var_6361) {
+lval var_6362[8];
+lval var_6363;
+var_6363 = LVI_SYMBOL("J1");
+var_6362[0] = var_6363;
 lval var_6364;
-var_6364 = LVI_SYMBOL("f");
-var_6363[0] = var_6364;
-lval var_6365;
-var_6365 = LVI_SYMBOL("i");
-var_6363[1] = var_6365;
-var_6362 = wile_gen_list(2, var_6363, NULL);
-do_init_var_6362 = false;
-}
-var_6360[1] = var_6362;
-if (do_init_var_6366) {
-lval var_6367[8];
+var_6364 = LVI_SYMBOL("gpre");
+var_6362[1] = var_6364;
+if (do_init_var_6365) {
+lval var_6366[8];
+lval var_6367;
+var_6367 = LVI_SYMBOL("symbol->string");
+var_6366[0] = var_6367;
 lval var_6368;
-var_6368 = LVI_SYMBOL("let");
-var_6367[0] = var_6368;
-if (do_init_var_6369) {
-lval var_6370[8];
-if (do_init_var_6371) {
-lval var_6372[8];
-lval var_6373;
-var_6373 = LVI_SYMBOL("sfn");
-var_6372[0] = var_6373;
-if (do_init_var_6374) {
-lval var_6375[8];
-lval var_6376;
-var_6376 = LVI_SYMBOL("J2");
-var_6375[0] = var_6376;
-lval var_6377;
-var_6377 = LVI_SYMBOL("spre");
-var_6375[1] = var_6377;
-if (do_init_var_6378) {
-lval var_6379[8];
-lval var_6380;
-var_6380 = LVI_SYMBOL("symbol->string");
-var_6379[0] = var_6380;
-lval var_6381;
-var_6381 = LVI_SYMBOL("f");
-var_6379[1] = var_6381;
-var_6378 = wile_gen_list(2, var_6379, NULL);
-do_init_var_6378 = false;
+var_6368 = LVI_SYMBOL("f");
+var_6366[1] = var_6368;
+var_6365 = wile_gen_list(2, var_6366, NULL);
+do_init_var_6365 = false;
 }
-var_6375[2] = var_6378;
-lval var_6382;
-var_6382 = LVI_STRING("!");
-var_6375[3] = var_6382;
-var_6374 = wile_gen_list(4, var_6375, NULL);
-do_init_var_6374 = false;
+var_6362[2] = var_6365;
+var_6361 = wile_gen_list(3, var_6362, NULL);
+do_init_var_6361 = false;
 }
-var_6372[1] = var_6374;
-var_6371 = wile_gen_list(2, var_6372, NULL);
-do_init_var_6371 = false;
+var_6359[1] = var_6361;
+var_6358 = wile_gen_list(2, var_6359, NULL);
+do_init_var_6358 = false;
 }
-var_6370[0] = var_6371;
-var_6369 = wile_gen_list(1, var_6370, NULL);
-do_init_var_6369 = false;
-}
-var_6367[1] = var_6369;
-if (do_init_var_6383) {
-lval var_6384[8];
-lval var_6385;
-var_6385 = LVI_SYMBOL("quasiquote");
-var_6384[0] = var_6385;
-if (do_init_var_6386) {
-lval var_6387[8];
-lval var_6388;
-var_6388 = LVI_SYMBOL("define");
-var_6387[0] = var_6388;
-if (do_init_var_6389) {
-lval var_6390[8];
-if (do_init_var_6391) {
-lval var_6392[8];
-lval var_6393;
-var_6393 = LVI_SYMBOL("unquote");
-var_6392[0] = var_6393;
-lval var_6394;
-var_6394 = LVI_SYMBOL("sfn");
-var_6392[1] = var_6394;
-var_6391 = wile_gen_list(2, var_6392, NULL);
-do_init_var_6391 = false;
-}
-var_6390[0] = var_6391;
-lval var_6395;
-var_6395 = LVI_SYMBOL("it");
-var_6390[1] = var_6395;
-lval var_6396;
-var_6396 = LVI_SYMBOL("val");
-var_6390[2] = var_6396;
-var_6389 = wile_gen_list(3, var_6390, NULL);
-do_init_var_6389 = false;
-}
-var_6387[1] = var_6389;
-if (do_init_var_6397) {
-lval var_6398[8];
-lval var_6399;
-var_6399 = LVI_SYMBOL("vector-set!");
-var_6398[0] = var_6399;
-lval var_6400;
-var_6400 = LVI_SYMBOL("it");
-var_6398[1] = var_6400;
-if (do_init_var_6401) {
-lval var_6402[8];
-lval var_6403;
-var_6403 = LVI_SYMBOL("unquote");
-var_6402[0] = var_6403;
-lval var_6404;
-var_6404 = LVI_SYMBOL("i");
-var_6402[1] = var_6404;
-var_6401 = wile_gen_list(2, var_6402, NULL);
-do_init_var_6401 = false;
-}
-var_6398[2] = var_6401;
-lval var_6405;
-var_6405 = LVI_SYMBOL("val");
-var_6398[3] = var_6405;
-var_6397 = wile_gen_list(4, var_6398, NULL);
-do_init_var_6397 = false;
-}
-var_6387[2] = var_6397;
-var_6386 = wile_gen_list(3, var_6387, NULL);
-do_init_var_6386 = false;
-}
-var_6384[1] = var_6386;
-var_6383 = wile_gen_list(2, var_6384, NULL);
-do_init_var_6383 = false;
-}
-var_6367[2] = var_6383;
-var_6366 = wile_gen_list(3, var_6367, NULL);
-do_init_var_6366 = false;
-}
-var_6360[2] = var_6366;
-var_6359 = wile_gen_list(3, var_6360, NULL);
-do_init_var_6359 = false;
-}
-var_6357[1] = var_6359;
-lval var_6406;
-var_6406 = LVI_SYMBOL("fs");
-var_6357[2] = var_6406;
-if (do_init_var_6407) {
-lval var_6408[8];
-lval var_6409;
-var_6409 = LVI_SYMBOL("fromto");
-var_6408[0] = var_6409;
-lval var_6410;
-var_6410 = LVI_INT(1);
-var_6408[1] = var_6410;
-lval var_6411;
-var_6411 = LVI_SYMBOL("lfs");
-var_6408[2] = var_6411;
-var_6407 = wile_gen_list(3, var_6408, NULL);
-do_init_var_6407 = false;
-}
-var_6357[3] = var_6407;
-var_6356 = wile_gen_list(4, var_6357, NULL);
+var_6357[0] = var_6358;
+var_6356 = wile_gen_list(1, var_6357, NULL);
 do_init_var_6356 = false;
 }
 var_6354[1] = var_6356;
-var_6353 = wile_gen_list(2, var_6354, NULL);
+if (do_init_var_6369) {
+lval var_6370[8];
+lval var_6371;
+var_6371 = LVI_SYMBOL("quasiquote");
+var_6370[0] = var_6371;
+if (do_init_var_6372) {
+lval var_6373[8];
+lval var_6374;
+var_6374 = LVI_SYMBOL("define");
+var_6373[0] = var_6374;
+if (do_init_var_6375) {
+lval var_6376[8];
+if (do_init_var_6377) {
+lval var_6378[8];
+lval var_6379;
+var_6379 = LVI_SYMBOL("unquote");
+var_6378[0] = var_6379;
+lval var_6380;
+var_6380 = LVI_SYMBOL("gfn");
+var_6378[1] = var_6380;
+var_6377 = wile_gen_list(2, var_6378, NULL);
+do_init_var_6377 = false;
+}
+var_6376[0] = var_6377;
+lval var_6381;
+var_6381 = LVI_SYMBOL("it");
+var_6376[1] = var_6381;
+var_6375 = wile_gen_list(2, var_6376, NULL);
+do_init_var_6375 = false;
+}
+var_6373[1] = var_6375;
+if (do_init_var_6382) {
+lval var_6383[8];
+lval var_6384;
+var_6384 = LVI_SYMBOL("vector-ref");
+var_6383[0] = var_6384;
+lval var_6385;
+var_6385 = LVI_SYMBOL("it");
+var_6383[1] = var_6385;
+if (do_init_var_6386) {
+lval var_6387[8];
+lval var_6388;
+var_6388 = LVI_SYMBOL("unquote");
+var_6387[0] = var_6388;
+lval var_6389;
+var_6389 = LVI_SYMBOL("i");
+var_6387[1] = var_6389;
+var_6386 = wile_gen_list(2, var_6387, NULL);
+do_init_var_6386 = false;
+}
+var_6383[2] = var_6386;
+var_6382 = wile_gen_list(3, var_6383, NULL);
+do_init_var_6382 = false;
+}
+var_6373[2] = var_6382;
+var_6372 = wile_gen_list(3, var_6373, NULL);
+do_init_var_6372 = false;
+}
+var_6370[1] = var_6372;
+var_6369 = wile_gen_list(2, var_6370, NULL);
+do_init_var_6369 = false;
+}
+var_6354[2] = var_6369;
+var_6353 = wile_gen_list(3, var_6354, NULL);
 do_init_var_6353 = false;
 }
-var_6138[14] = var_6353;
+var_6347[2] = var_6353;
+var_6346 = wile_gen_list(3, var_6347, NULL);
+do_init_var_6346 = false;
+}
+var_6344[1] = var_6346;
+lval var_6390;
+var_6390 = LVI_SYMBOL("fs");
+var_6344[2] = var_6390;
+if (do_init_var_6391) {
+lval var_6392[8];
+lval var_6393;
+var_6393 = LVI_SYMBOL("fromto");
+var_6392[0] = var_6393;
+lval var_6394;
+var_6394 = LVI_INT(1);
+var_6392[1] = var_6394;
+lval var_6395;
+var_6395 = LVI_SYMBOL("lfs");
+var_6392[2] = var_6395;
+var_6391 = wile_gen_list(3, var_6392, NULL);
+do_init_var_6391 = false;
+}
+var_6344[3] = var_6391;
+var_6343 = wile_gen_list(4, var_6344, NULL);
+do_init_var_6343 = false;
+}
+var_6341[1] = var_6343;
+var_6340 = wile_gen_list(2, var_6341, NULL);
+do_init_var_6340 = false;
+}
+var_6181[13] = var_6340;
+if (do_init_var_6396) {
+lval var_6397[8];
+lval var_6398;
+var_6398 = LVI_SYMBOL("sstrs");
+var_6397[0] = var_6398;
+if (do_init_var_6399) {
+lval var_6400[8];
+lval var_6401;
+var_6401 = LVI_SYMBOL("map");
+var_6400[0] = var_6401;
+if (do_init_var_6402) {
+lval var_6403[8];
+lval var_6404;
+var_6404 = LVI_SYMBOL("lambda");
+var_6403[0] = var_6404;
+if (do_init_var_6405) {
+lval var_6406[8];
+lval var_6407;
+var_6407 = LVI_SYMBOL("f");
+var_6406[0] = var_6407;
+lval var_6408;
+var_6408 = LVI_SYMBOL("i");
+var_6406[1] = var_6408;
+var_6405 = wile_gen_list(2, var_6406, NULL);
+do_init_var_6405 = false;
+}
+var_6403[1] = var_6405;
+if (do_init_var_6409) {
+lval var_6410[8];
+lval var_6411;
+var_6411 = LVI_SYMBOL("let");
+var_6410[0] = var_6411;
 if (do_init_var_6412) {
 lval var_6413[8];
-lval var_6414;
-var_6414 = LVI_SYMBOL("defs");
-var_6413[0] = var_6414;
-if (do_init_var_6415) {
-lval var_6416[8];
-lval var_6417;
-var_6417 = LVI_SYMBOL("quasiquote");
-var_6416[0] = var_6417;
-if (do_init_var_6418) {
-lval var_6419[8];
+if (do_init_var_6414) {
+lval var_6415[8];
+lval var_6416;
+var_6416 = LVI_SYMBOL("sfn");
+var_6415[0] = var_6416;
+if (do_init_var_6417) {
+lval var_6418[8];
+lval var_6419;
+var_6419 = LVI_SYMBOL("J2");
+var_6418[0] = var_6419;
 lval var_6420;
-var_6420 = LVI_SYMBOL("begin");
-var_6419[0] = var_6420;
+var_6420 = LVI_SYMBOL("spre");
+var_6418[1] = var_6420;
 if (do_init_var_6421) {
 lval var_6422[8];
 lval var_6423;
-var_6423 = LVI_SYMBOL("define");
+var_6423 = LVI_SYMBOL("symbol->string");
 var_6422[0] = var_6423;
-if (do_init_var_6424) {
-lval var_6425[8];
+lval var_6424;
+var_6424 = LVI_SYMBOL("f");
+var_6422[1] = var_6424;
+var_6421 = wile_gen_list(2, var_6422, NULL);
+do_init_var_6421 = false;
+}
+var_6418[2] = var_6421;
+lval var_6425;
+var_6425 = LVI_STRING("!");
+var_6418[3] = var_6425;
+var_6417 = wile_gen_list(4, var_6418, NULL);
+do_init_var_6417 = false;
+}
+var_6415[1] = var_6417;
+var_6414 = wile_gen_list(2, var_6415, NULL);
+do_init_var_6414 = false;
+}
+var_6413[0] = var_6414;
+var_6412 = wile_gen_list(1, var_6413, NULL);
+do_init_var_6412 = false;
+}
+var_6410[1] = var_6412;
 if (do_init_var_6426) {
 lval var_6427[8];
 lval var_6428;
-var_6428 = LVI_SYMBOL("unquote");
+var_6428 = LVI_SYMBOL("quasiquote");
 var_6427[0] = var_6428;
-lval var_6429;
-var_6429 = LVI_SYMBOL("mstr");
+if (do_init_var_6429) {
+lval var_6430[8];
+lval var_6431;
+var_6431 = LVI_SYMBOL("define");
+var_6430[0] = var_6431;
+if (do_init_var_6432) {
+lval var_6433[8];
+if (do_init_var_6434) {
+lval var_6435[8];
+lval var_6436;
+var_6436 = LVI_SYMBOL("unquote");
+var_6435[0] = var_6436;
+lval var_6437;
+var_6437 = LVI_SYMBOL("sfn");
+var_6435[1] = var_6437;
+var_6434 = wile_gen_list(2, var_6435, NULL);
+do_init_var_6434 = false;
+}
+var_6433[0] = var_6434;
+lval var_6438;
+var_6438 = LVI_SYMBOL("it");
+var_6433[1] = var_6438;
+lval var_6439;
+var_6439 = LVI_SYMBOL("val");
+var_6433[2] = var_6439;
+var_6432 = wile_gen_list(3, var_6433, NULL);
+do_init_var_6432 = false;
+}
+var_6430[1] = var_6432;
+if (do_init_var_6440) {
+lval var_6441[8];
+lval var_6442;
+var_6442 = LVI_SYMBOL("vector-set!");
+var_6441[0] = var_6442;
+lval var_6443;
+var_6443 = LVI_SYMBOL("it");
+var_6441[1] = var_6443;
+if (do_init_var_6444) {
+lval var_6445[8];
+lval var_6446;
+var_6446 = LVI_SYMBOL("unquote");
+var_6445[0] = var_6446;
+lval var_6447;
+var_6447 = LVI_SYMBOL("i");
+var_6445[1] = var_6447;
+var_6444 = wile_gen_list(2, var_6445, NULL);
+do_init_var_6444 = false;
+}
+var_6441[2] = var_6444;
+lval var_6448;
+var_6448 = LVI_SYMBOL("val");
+var_6441[3] = var_6448;
+var_6440 = wile_gen_list(4, var_6441, NULL);
+do_init_var_6440 = false;
+}
+var_6430[2] = var_6440;
+var_6429 = wile_gen_list(3, var_6430, NULL);
+do_init_var_6429 = false;
+}
 var_6427[1] = var_6429;
 var_6426 = wile_gen_list(2, var_6427, NULL);
 do_init_var_6426 = false;
 }
-var_6425[0] = var_6426;
-if (do_init_var_6430) {
-lval var_6431[8];
-lval var_6432;
-var_6432 = LVI_SYMBOL("unquote-splicing");
-var_6431[0] = var_6432;
-lval var_6433;
-var_6433 = LVI_SYMBOL("fs");
-var_6431[1] = var_6433;
-var_6430 = wile_gen_list(2, var_6431, NULL);
-do_init_var_6430 = false;
+var_6410[2] = var_6426;
+var_6409 = wile_gen_list(3, var_6410, NULL);
+do_init_var_6409 = false;
 }
-var_6425[1] = var_6430;
-var_6424 = wile_gen_list(2, var_6425, NULL);
-do_init_var_6424 = false;
+var_6403[2] = var_6409;
+var_6402 = wile_gen_list(3, var_6403, NULL);
+do_init_var_6402 = false;
 }
-var_6422[1] = var_6424;
-if (do_init_var_6434) {
-lval var_6435[8];
-lval var_6436;
-var_6436 = LVI_SYMBOL("let");
-var_6435[0] = var_6436;
-if (do_init_var_6437) {
-lval var_6438[8];
-if (do_init_var_6439) {
-lval var_6440[8];
-if (do_init_var_6441) {
-lval var_6442[8];
-lval var_6443;
-var_6443 = LVI_SYMBOL("unquote");
-var_6442[0] = var_6443;
-lval var_6444;
-var_6444 = LVI_SYMBOL("msym");
-var_6442[1] = var_6444;
-var_6441 = wile_gen_list(2, var_6442, NULL);
-do_init_var_6441 = false;
-}
-var_6440[0] = var_6441;
-if (do_init_var_6445) {
-lval var_6446[8];
-lval var_6447;
-var_6447 = LVI_SYMBOL("vector-create");
-var_6446[0] = var_6447;
-if (do_init_var_6448) {
-lval var_6449[8];
-lval var_6450;
-var_6450 = LVI_SYMBOL("unquote");
-var_6449[0] = var_6450;
-lval var_6451;
-var_6451 = LVI_SYMBOL("nfs");
-var_6449[1] = var_6451;
-var_6448 = wile_gen_list(2, var_6449, NULL);
-do_init_var_6448 = false;
-}
-var_6446[1] = var_6448;
-var_6445 = wile_gen_list(2, var_6446, NULL);
-do_init_var_6445 = false;
-}
-var_6440[1] = var_6445;
-var_6439 = wile_gen_list(2, var_6440, NULL);
-do_init_var_6439 = false;
-}
-var_6438[0] = var_6439;
-var_6437 = wile_gen_list(1, var_6438, NULL);
-do_init_var_6437 = false;
-}
-var_6435[1] = var_6437;
-if (do_init_var_6452) {
-lval var_6453[8];
+var_6400[1] = var_6402;
+lval var_6449;
+var_6449 = LVI_SYMBOL("fs");
+var_6400[2] = var_6449;
+if (do_init_var_6450) {
+lval var_6451[8];
+lval var_6452;
+var_6452 = LVI_SYMBOL("fromto");
+var_6451[0] = var_6452;
+lval var_6453;
+var_6453 = LVI_INT(1);
+var_6451[1] = var_6453;
 lval var_6454;
-var_6454 = LVI_SYMBOL("vector-set!");
-var_6453[0] = var_6454;
+var_6454 = LVI_SYMBOL("lfs");
+var_6451[2] = var_6454;
+var_6450 = wile_gen_list(3, var_6451, NULL);
+do_init_var_6450 = false;
+}
+var_6400[3] = var_6450;
+var_6399 = wile_gen_list(4, var_6400, NULL);
+do_init_var_6399 = false;
+}
+var_6397[1] = var_6399;
+var_6396 = wile_gen_list(2, var_6397, NULL);
+do_init_var_6396 = false;
+}
+var_6181[14] = var_6396;
 if (do_init_var_6455) {
 lval var_6456[8];
 lval var_6457;
-var_6457 = LVI_SYMBOL("unquote");
+var_6457 = LVI_SYMBOL("defs");
 var_6456[0] = var_6457;
-lval var_6458;
-var_6458 = LVI_SYMBOL("msym");
+if (do_init_var_6458) {
+lval var_6459[8];
+lval var_6460;
+var_6460 = LVI_SYMBOL("quasiquote");
+var_6459[0] = var_6460;
+if (do_init_var_6461) {
+lval var_6462[8];
+lval var_6463;
+var_6463 = LVI_SYMBOL("begin");
+var_6462[0] = var_6463;
+if (do_init_var_6464) {
+lval var_6465[8];
+lval var_6466;
+var_6466 = LVI_SYMBOL("define");
+var_6465[0] = var_6466;
+if (do_init_var_6467) {
+lval var_6468[8];
+if (do_init_var_6469) {
+lval var_6470[8];
+lval var_6471;
+var_6471 = LVI_SYMBOL("unquote");
+var_6470[0] = var_6471;
+lval var_6472;
+var_6472 = LVI_SYMBOL("mstr");
+var_6470[1] = var_6472;
+var_6469 = wile_gen_list(2, var_6470, NULL);
+do_init_var_6469 = false;
+}
+var_6468[0] = var_6469;
+if (do_init_var_6473) {
+lval var_6474[8];
+lval var_6475;
+var_6475 = LVI_SYMBOL("unquote-splicing");
+var_6474[0] = var_6475;
+lval var_6476;
+var_6476 = LVI_SYMBOL("fs");
+var_6474[1] = var_6476;
+var_6473 = wile_gen_list(2, var_6474, NULL);
+do_init_var_6473 = false;
+}
+var_6468[1] = var_6473;
+var_6467 = wile_gen_list(2, var_6468, NULL);
+do_init_var_6467 = false;
+}
+var_6465[1] = var_6467;
+if (do_init_var_6477) {
+lval var_6478[8];
+lval var_6479;
+var_6479 = LVI_SYMBOL("let");
+var_6478[0] = var_6479;
+if (do_init_var_6480) {
+lval var_6481[8];
+if (do_init_var_6482) {
+lval var_6483[8];
+if (do_init_var_6484) {
+lval var_6485[8];
+lval var_6486;
+var_6486 = LVI_SYMBOL("unquote");
+var_6485[0] = var_6486;
+lval var_6487;
+var_6487 = LVI_SYMBOL("msym");
+var_6485[1] = var_6487;
+var_6484 = wile_gen_list(2, var_6485, NULL);
+do_init_var_6484 = false;
+}
+var_6483[0] = var_6484;
+if (do_init_var_6488) {
+lval var_6489[8];
+lval var_6490;
+var_6490 = LVI_SYMBOL("vector-create");
+var_6489[0] = var_6490;
+if (do_init_var_6491) {
+lval var_6492[8];
+lval var_6493;
+var_6493 = LVI_SYMBOL("unquote");
+var_6492[0] = var_6493;
+lval var_6494;
+var_6494 = LVI_SYMBOL("nfs");
+var_6492[1] = var_6494;
+var_6491 = wile_gen_list(2, var_6492, NULL);
+do_init_var_6491 = false;
+}
+var_6489[1] = var_6491;
+var_6488 = wile_gen_list(2, var_6489, NULL);
+do_init_var_6488 = false;
+}
+var_6483[1] = var_6488;
+var_6482 = wile_gen_list(2, var_6483, NULL);
+do_init_var_6482 = false;
+}
+var_6481[0] = var_6482;
+var_6480 = wile_gen_list(1, var_6481, NULL);
+do_init_var_6480 = false;
+}
+var_6478[1] = var_6480;
+if (do_init_var_6495) {
+lval var_6496[8];
+lval var_6497;
+var_6497 = LVI_SYMBOL("vector-set!");
+var_6496[0] = var_6497;
+if (do_init_var_6498) {
+lval var_6499[8];
+lval var_6500;
+var_6500 = LVI_SYMBOL("unquote");
+var_6499[0] = var_6500;
+lval var_6501;
+var_6501 = LVI_SYMBOL("msym");
+var_6499[1] = var_6501;
+var_6498 = wile_gen_list(2, var_6499, NULL);
+do_init_var_6498 = false;
+}
+var_6496[1] = var_6498;
+lval var_6502;
+var_6502 = LVI_INT(0);
+var_6496[2] = var_6502;
+if (do_init_var_6503) {
+lval var_6504[8];
+lval var_6505;
+var_6505 = LVI_SYMBOL("unquote");
+var_6504[0] = var_6505;
+lval var_6506;
+var_6506 = LVI_SYMBOL("name");
+var_6504[1] = var_6506;
+var_6503 = wile_gen_list(2, var_6504, NULL);
+do_init_var_6503 = false;
+}
+var_6496[3] = var_6503;
+var_6495 = wile_gen_list(4, var_6496, NULL);
+do_init_var_6495 = false;
+}
+var_6478[2] = var_6495;
+if (do_init_var_6507) {
+lval var_6508[8];
+lval var_6509;
+var_6509 = LVI_SYMBOL("unquote-splicing");
+var_6508[0] = var_6509;
+lval var_6510;
+var_6510 = LVI_SYMBOL("istrs");
+var_6508[1] = var_6510;
+var_6507 = wile_gen_list(2, var_6508, NULL);
+do_init_var_6507 = false;
+}
+var_6478[3] = var_6507;
+if (do_init_var_6511) {
+lval var_6512[8];
+lval var_6513;
+var_6513 = LVI_SYMBOL("unquote");
+var_6512[0] = var_6513;
+lval var_6514;
+var_6514 = LVI_SYMBOL("msym");
+var_6512[1] = var_6514;
+var_6511 = wile_gen_list(2, var_6512, NULL);
+do_init_var_6511 = false;
+}
+var_6478[4] = var_6511;
+var_6477 = wile_gen_list(5, var_6478, NULL);
+do_init_var_6477 = false;
+}
+var_6465[2] = var_6477;
+var_6464 = wile_gen_list(3, var_6465, NULL);
+do_init_var_6464 = false;
+}
+var_6462[1] = var_6464;
+if (do_init_var_6515) {
+lval var_6516[8];
+lval var_6517;
+var_6517 = LVI_SYMBOL("define");
+var_6516[0] = var_6517;
+if (do_init_var_6518) {
+lval var_6519[8];
+if (do_init_var_6520) {
+lval var_6521[8];
+lval var_6522;
+var_6522 = LVI_SYMBOL("unquote");
+var_6521[0] = var_6522;
+lval var_6523;
+var_6523 = LVI_SYMBOL("istr");
+var_6521[1] = var_6523;
+var_6520 = wile_gen_list(2, var_6521, NULL);
+do_init_var_6520 = false;
+}
+var_6519[0] = var_6520;
+lval var_6524;
+var_6524 = LVI_SYMBOL("it");
+var_6519[1] = var_6524;
+var_6518 = wile_gen_list(2, var_6519, NULL);
+do_init_var_6518 = false;
+}
+var_6516[1] = var_6518;
+if (do_init_var_6525) {
+lval var_6526[8];
+lval var_6527;
+var_6527 = LVI_SYMBOL("and");
+var_6526[0] = var_6527;
+if (do_init_var_6528) {
+lval var_6529[8];
+lval var_6530;
+var_6530 = LVI_SYMBOL("vector?");
+var_6529[0] = var_6530;
+lval var_6531;
+var_6531 = LVI_SYMBOL("it");
+var_6529[1] = var_6531;
+var_6528 = wile_gen_list(2, var_6529, NULL);
+do_init_var_6528 = false;
+}
+var_6526[1] = var_6528;
+if (do_init_var_6532) {
+lval var_6533[8];
+lval var_6534;
+var_6534 = LVI_SYMBOL("eqv?");
+var_6533[0] = var_6534;
+if (do_init_var_6535) {
+lval var_6536[8];
+lval var_6537;
+var_6537 = LVI_SYMBOL("vector-ref");
+var_6536[0] = var_6537;
+lval var_6538;
+var_6538 = LVI_SYMBOL("it");
+var_6536[1] = var_6538;
+lval var_6539;
+var_6539 = LVI_INT(0);
+var_6536[2] = var_6539;
+var_6535 = wile_gen_list(3, var_6536, NULL);
+do_init_var_6535 = false;
+}
+var_6533[1] = var_6535;
+if (do_init_var_6540) {
+lval var_6541[8];
+lval var_6542;
+var_6542 = LVI_SYMBOL("unquote");
+var_6541[0] = var_6542;
+lval var_6543;
+var_6543 = LVI_SYMBOL("name");
+var_6541[1] = var_6543;
+var_6540 = wile_gen_list(2, var_6541, NULL);
+do_init_var_6540 = false;
+}
+var_6533[2] = var_6540;
+var_6532 = wile_gen_list(3, var_6533, NULL);
+do_init_var_6532 = false;
+}
+var_6526[2] = var_6532;
+var_6525 = wile_gen_list(3, var_6526, NULL);
+do_init_var_6525 = false;
+}
+var_6516[2] = var_6525;
+var_6515 = wile_gen_list(3, var_6516, NULL);
+do_init_var_6515 = false;
+}
+var_6462[2] = var_6515;
+if (do_init_var_6544) {
+lval var_6545[8];
+lval var_6546;
+var_6546 = LVI_SYMBOL("unquote-splicing");
+var_6545[0] = var_6546;
+lval var_6547;
+var_6547 = LVI_SYMBOL("gstrs");
+var_6545[1] = var_6547;
+var_6544 = wile_gen_list(2, var_6545, NULL);
+do_init_var_6544 = false;
+}
+var_6462[3] = var_6544;
+if (do_init_var_6548) {
+lval var_6549[8];
+lval var_6550;
+var_6550 = LVI_SYMBOL("unquote-splicing");
+var_6549[0] = var_6550;
+lval var_6551;
+var_6551 = LVI_SYMBOL("sstrs");
+var_6549[1] = var_6551;
+var_6548 = wile_gen_list(2, var_6549, NULL);
+do_init_var_6548 = false;
+}
+var_6462[4] = var_6548;
+var_6461 = wile_gen_list(5, var_6462, NULL);
+do_init_var_6461 = false;
+}
+var_6459[1] = var_6461;
+var_6458 = wile_gen_list(2, var_6459, NULL);
+do_init_var_6458 = false;
+}
 var_6456[1] = var_6458;
 var_6455 = wile_gen_list(2, var_6456, NULL);
 do_init_var_6455 = false;
 }
-var_6453[1] = var_6455;
-lval var_6459;
-var_6459 = LVI_INT(0);
-var_6453[2] = var_6459;
-if (do_init_var_6460) {
-lval var_6461[8];
-lval var_6462;
-var_6462 = LVI_SYMBOL("unquote");
-var_6461[0] = var_6462;
-lval var_6463;
-var_6463 = LVI_SYMBOL("name");
-var_6461[1] = var_6463;
-var_6460 = wile_gen_list(2, var_6461, NULL);
-do_init_var_6460 = false;
+var_6181[15] = var_6455;
+var_6180 = wile_gen_list(16, var_6181, NULL);
+do_init_var_6180 = false;
 }
-var_6453[3] = var_6460;
-var_6452 = wile_gen_list(4, var_6453, NULL);
-do_init_var_6452 = false;
+var_6178[1] = var_6180;
+lval var_6552;
+var_6552 = LVI_SYMBOL("defs");
+var_6178[2] = var_6552;
+var_6177 = wile_gen_list(3, var_6178, NULL);
+do_init_var_6177 = false;
 }
-var_6435[2] = var_6452;
-if (do_init_var_6464) {
-lval var_6465[8];
-lval var_6466;
-var_6466 = LVI_SYMBOL("unquote-splicing");
-var_6465[0] = var_6466;
-lval var_6467;
-var_6467 = LVI_SYMBOL("istrs");
-var_6465[1] = var_6467;
-var_6464 = wile_gen_list(2, var_6465, NULL);
-do_init_var_6464 = false;
+var_6176[0] = var_6177;
+var_6175 = wile_gen_list(1, var_6176, NULL);
+do_init_var_6175 = false;
 }
-var_6435[3] = var_6464;
-if (do_init_var_6468) {
-lval var_6469[8];
-lval var_6470;
-var_6470 = LVI_SYMBOL("unquote");
-var_6469[0] = var_6470;
-lval var_6471;
-var_6471 = LVI_SYMBOL("msym");
-var_6469[1] = var_6471;
-var_6468 = wile_gen_list(2, var_6469, NULL);
-do_init_var_6468 = false;
-}
-var_6435[4] = var_6468;
-var_6434 = wile_gen_list(5, var_6435, NULL);
-do_init_var_6434 = false;
-}
-var_6422[2] = var_6434;
-var_6421 = wile_gen_list(3, var_6422, NULL);
-do_init_var_6421 = false;
-}
-var_6419[1] = var_6421;
-if (do_init_var_6472) {
-lval var_6473[8];
-lval var_6474;
-var_6474 = LVI_SYMBOL("define");
-var_6473[0] = var_6474;
-if (do_init_var_6475) {
-lval var_6476[8];
-if (do_init_var_6477) {
-lval var_6478[8];
-lval var_6479;
-var_6479 = LVI_SYMBOL("unquote");
-var_6478[0] = var_6479;
-lval var_6480;
-var_6480 = LVI_SYMBOL("istr");
-var_6478[1] = var_6480;
-var_6477 = wile_gen_list(2, var_6478, NULL);
-do_init_var_6477 = false;
-}
-var_6476[0] = var_6477;
-lval var_6481;
-var_6481 = LVI_SYMBOL("it");
-var_6476[1] = var_6481;
-var_6475 = wile_gen_list(2, var_6476, NULL);
-do_init_var_6475 = false;
-}
-var_6473[1] = var_6475;
-if (do_init_var_6482) {
-lval var_6483[8];
-lval var_6484;
-var_6484 = LVI_SYMBOL("and");
-var_6483[0] = var_6484;
-if (do_init_var_6485) {
-lval var_6486[8];
-lval var_6487;
-var_6487 = LVI_SYMBOL("vector?");
-var_6486[0] = var_6487;
-lval var_6488;
-var_6488 = LVI_SYMBOL("it");
-var_6486[1] = var_6488;
-var_6485 = wile_gen_list(2, var_6486, NULL);
-do_init_var_6485 = false;
-}
-var_6483[1] = var_6485;
-if (do_init_var_6489) {
-lval var_6490[8];
-lval var_6491;
-var_6491 = LVI_SYMBOL("eqv?");
-var_6490[0] = var_6491;
-if (do_init_var_6492) {
-lval var_6493[8];
-lval var_6494;
-var_6494 = LVI_SYMBOL("vector-ref");
-var_6493[0] = var_6494;
-lval var_6495;
-var_6495 = LVI_SYMBOL("it");
-var_6493[1] = var_6495;
-lval var_6496;
-var_6496 = LVI_INT(0);
-var_6493[2] = var_6496;
-var_6492 = wile_gen_list(3, var_6493, NULL);
-do_init_var_6492 = false;
-}
-var_6490[1] = var_6492;
-if (do_init_var_6497) {
-lval var_6498[8];
-lval var_6499;
-var_6499 = LVI_SYMBOL("unquote");
-var_6498[0] = var_6499;
-lval var_6500;
-var_6500 = LVI_SYMBOL("name");
-var_6498[1] = var_6500;
-var_6497 = wile_gen_list(2, var_6498, NULL);
-do_init_var_6497 = false;
-}
-var_6490[2] = var_6497;
-var_6489 = wile_gen_list(3, var_6490, NULL);
-do_init_var_6489 = false;
-}
-var_6483[2] = var_6489;
-var_6482 = wile_gen_list(3, var_6483, NULL);
-do_init_var_6482 = false;
-}
-var_6473[2] = var_6482;
-var_6472 = wile_gen_list(3, var_6473, NULL);
-do_init_var_6472 = false;
-}
-var_6419[2] = var_6472;
-if (do_init_var_6501) {
-lval var_6502[8];
-lval var_6503;
-var_6503 = LVI_SYMBOL("unquote-splicing");
-var_6502[0] = var_6503;
-lval var_6504;
-var_6504 = LVI_SYMBOL("gstrs");
-var_6502[1] = var_6504;
-var_6501 = wile_gen_list(2, var_6502, NULL);
-do_init_var_6501 = false;
-}
-var_6419[3] = var_6501;
-if (do_init_var_6505) {
-lval var_6506[8];
-lval var_6507;
-var_6507 = LVI_SYMBOL("unquote-splicing");
-var_6506[0] = var_6507;
-lval var_6508;
-var_6508 = LVI_SYMBOL("sstrs");
-var_6506[1] = var_6508;
-var_6505 = wile_gen_list(2, var_6506, NULL);
-do_init_var_6505 = false;
-}
-var_6419[4] = var_6505;
-var_6418 = wile_gen_list(5, var_6419, NULL);
-do_init_var_6418 = false;
-}
-var_6416[1] = var_6418;
-var_6415 = wile_gen_list(2, var_6416, NULL);
-do_init_var_6415 = false;
-}
-var_6413[1] = var_6415;
-var_6412 = wile_gen_list(2, var_6413, NULL);
-do_init_var_6412 = false;
-}
-var_6138[15] = var_6412;
-var_6137 = wile_gen_list(16, var_6138, NULL);
-do_init_var_6137 = false;
-}
-var_6135[1] = var_6137;
-lval var_6509;
-var_6509 = LVI_SYMBOL("defs");
-var_6135[2] = var_6509;
-var_6134 = wile_gen_list(3, var_6135, NULL);
-do_init_var_6134 = false;
-}
-var_6133[0] = var_6134;
-var_6132 = wile_gen_list(1, var_6133, NULL);
-do_init_var_6132 = false;
-}
-lval var_6510;
-lval var_6511[8];
-var_6511[0] = var_6126;
-var_6511[1] = var_6127;
-var_6511[2] = var_6132;
-var_6511[3] = var_5307[0];
-// bld-rtl-dir/wile-rtl2-000083.scm:931
-var_6510 = fn_10(NULL, var_6511, "bld-rtl-dir/wile-rtl2-000083.scm:931");
-lval var_6513;
+lval var_6553;
+lval var_6554[8];
+var_6554[0] = var_6169;
+var_6554[1] = var_6170;
+var_6554[2] = var_6175;
+var_6554[3] = var_5350[0];
+// bld-rtl-dir/wile-rtl2-000083.scm:937
+var_6553 = fn_10(NULL, var_6554, "bld-rtl-dir/wile-rtl2-000083.scm:937");
+lval var_6556;
 {
-lval var_6514[11];
-var_6514[0] = var_5340;
-var_6514[1] = var_5368;
-var_6514[2] = var_5429;
-var_6514[3] = var_5487;
-var_6514[4] = var_5558;
-var_6514[5] = var_5626;
-var_6514[6] = var_5669;
-var_6514[7] = var_5719;
-var_6514[8] = var_5886;
-var_6514[9] = var_6123;
-var_6514[10] = var_6510;
-var_6513 = wile_gen_list(11, var_6514, NULL);
+lval var_6557[11];
+var_6557[0] = var_5383;
+var_6557[1] = var_5411;
+var_6557[2] = var_5472;
+var_6557[3] = var_5530;
+var_6557[4] = var_5601;
+var_6557[5] = var_5669;
+var_6557[6] = var_5712;
+var_6557[7] = var_5762;
+var_6557[8] = var_5929;
+var_6557[9] = var_6166;
+var_6557[10] = var_6553;
+var_6556 = wile_gen_list(11, var_6557, NULL);
 }
-lval var_6515;
+lval var_6558;
 {
-lval var_6517[2];
-var_6517[0] = var_6513;
-var_6517[1] = var_5307[0];
-var_6515 = wile_gen_list(2, var_6517, NULL);
+lval var_6560[2];
+var_6560[0] = var_6556;
+var_6560[1] = var_5350[0];
+var_6558 = wile_gen_list(2, var_6560, NULL);
 }
 {
-lval var_6516[8];
-var_6516[0] = var_6515;
-// bld-rtl-dir/wile-rtl2-000083.scm:835
-var_6515 = wile_list_append(NULL, var_6516, "bld-rtl-dir/wile-rtl2-000083.scm:835");
+lval var_6559[8];
+var_6559[0] = var_6558;
+// bld-rtl-dir/wile-rtl2-000083.scm:841
+var_6558 = wile_list_append(NULL, var_6559, "bld-rtl-dir/wile-rtl2-000083.scm:841");
 }
-return var_6515;
+return var_6558;
 }
 // end of function wile_env_add_macros

@@ -9,15 +9,16 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_get_gensym(void)
+lval wile_get_gensym(lisp_loc_t origin)
 {
     static unsigned long count = 0;
     char buf[64];
-    lval res;
+    lval ret;
 
     snprintf(buf, sizeof(buf), " symbol.%lu", ++count);
-    res.vt = LV_SYMBOL;
-    res.v.str = LISP_STRDUP(buf);
-    return res;
+    ret.vt = LV_SYMBOL;
+    ret.origin = origin;
+    ret.v.str = LISP_STRDUP(buf);
+    return ret;
 }
 

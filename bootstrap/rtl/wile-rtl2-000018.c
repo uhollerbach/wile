@@ -37,6 +37,7 @@ lval var_8;
 {
 size_t i, capa;
 var_8.vt = LV_BVECTOR;
+var_8.origin = var_4.origin;
 capa = var_4.v.iv;
 var_8.v.bvec.capa = capa;
 var_8.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));

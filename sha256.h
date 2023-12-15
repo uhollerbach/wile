@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 #define SHA256_BYTE_ORDER		1234
 
@@ -19,9 +20,10 @@ typedef struct {
     uint64_t count;			// 64-bit bit count
     uint8_t data[SHA256_BLOCKSIZE];	// SHA data buffer
     int local;				// unprocessed amount in data
+    bool is_256;			// true if SHA-256, false if SHA-224
 } SHA256_info;
 
-void sha256_init(SHA256_info*);
+void sha256_init(SHA256_info*, bool);
 void sha256_update(SHA256_info*, uint8_t*, uint64_t);
 void sha256_final(unsigned char[32], SHA256_info*);
 

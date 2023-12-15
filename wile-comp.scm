@@ -577,6 +577,8 @@
 	 (emit-code
 	  "{"
 	  "@1.vt = LV_@5TOR;"
+	  ;;; TODO: find better origin than this
+	  "@1.origin = 0;"
 	  "@1.v.@3.capa = @2;"
 	  "@1.v.@3.arr = LISP_ALLOC(@4, @2);"
 	  ""))
@@ -618,6 +620,8 @@
 	    (a2 (number->string (denominator expr))))
 	(emit-code
 	 "@@.vt = LV_RAT;"
+	 ;;; TODO: find better origin than this
+	 "@@.origin = 0;"
 	 "@@.v.irv.num = @1;"
 	 "@@.v.irv.den = @2;")))
      ((real? expr)
@@ -628,6 +632,8 @@
 	    (a2 (format-real (cimag expr))))
 	(emit-code
 	 "@@.vt = LV_CMPLX;"
+	 ;;; TODO: find better origin than this
+	 "@@.origin = 0;"
 	 "@@.v.cv = (@1) + (@2)*I;")))
      ((string? expr)
       (let ((a1 (escapify expr)))

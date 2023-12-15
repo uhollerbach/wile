@@ -79,7 +79,10 @@ void wile_print_lisp_val(lptr vp, FILE* fp, const char* loc)
     psign = false;
     if (vp) {
 	if (vp->vt == LV_VECTOR &&
-	    vp->v.vec.arr != NULL &&
+// comment this out, it should never be NULL by construction, and
+// coverity flags below if this is tested. if it ever is NULL,
+// we'll find out about it in about a microsecond...
+//	    vp->v.vec.arr != NULL &&
 	    vp->v.vec.capa > 0 && 
 	    vp->v.vec.arr[0] != NULL &&
 	    vp->v.vec.arr[0]->vt == LV_SYMBOL) {

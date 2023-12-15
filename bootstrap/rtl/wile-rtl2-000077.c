@@ -124,6 +124,7 @@ if (var_36.v.iv < var_33.v.iv || (size_t) var_36.v.iv >= len) {
 WILE_EX("string-copy", "end index is out of range");
 }
 var_39.vt = LV_STRING;
+var_39.origin = var_20.origin;
 var_39.v.str = LISP_ALLOC(char, 1 + var_36.v.iv - var_33.v.iv);
 memcpy(var_39.v.str, var_20.v.str + var_33.v.iv, var_36.v.iv - var_33.v.iv);
 var_39.v.str[var_36.v.iv - var_33.v.iv] = '\0';

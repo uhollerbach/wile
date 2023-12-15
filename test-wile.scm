@@ -2278,7 +2278,7 @@
 		    (vector-fill! vec 13)
 		    (vector-ref vec 0))))
 
-(test "caught exception from wile-out.c:85\n    'vector-ref' got bad index value"
+(test "caught exception from wile-out.c:86\n    'vector-ref' got bad index value"
       (doco '(let ((vec (vector-create 5)))
 	       (vector-fill! vec 13)
 	       (vector-ref vec 'foo))))
@@ -2809,7 +2809,7 @@
 
 (test "#u8(#x61 #x62 #x63 #x64 #x65)" (doco '(bytevector #\a #\b #\c #\d #\e)))
 (test "#u8()" (doco '(bytevector)))
-(test "caught exception from bld-rtl-dir/wile-rtl2-000018.c:213\n    list->bytevector got a bad value"
+(test "caught exception from bld-rtl-dir/wile-rtl2-000018.c:214\n    list->bytevector got a bad value"
       (doco '(bytevector 311)))
 
 (test "2" (doco '(string-find-first-char "breep" #\e)))
