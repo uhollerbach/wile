@@ -6,8 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "wile.h"
-#include "alloc.h"
+#include "wile-rtl1.h"
 #define ULEX_PRIVATE_DEFS
 #include "ulexlib.h"
 

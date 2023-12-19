@@ -7,11 +7,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "wile.h"
 #include "wile-rtl1.h"
 #include "wile-rtl2.h"
-#include "alloc.h"
-#include "lib-macros.h"
 
 // let's see what this does
 

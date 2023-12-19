@@ -12,8 +12,6 @@
 #include <sys/types.h>
 
 #include "wile-rtl1.h"
-#include "alloc.h"
-#include "lib-macros.h"
 
 // compute the GCD of two integers; this is here because of CAN_RAT below
 

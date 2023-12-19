@@ -10,10 +10,7 @@
 #include <limits.h>
 #include <ctype.h>
 
-#include "wile.h"
-#include "fsi_set.h"
-#include "nfa.h"
-#include "alloc.h"
+#include "wile-rtl1.h"
 
 /* Allocate & free NFA state structs */
 

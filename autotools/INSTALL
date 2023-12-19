@@ -1,0 +1,4 @@
+Mini-install instructions: you should be able to do "./configure && make"
+in this directory; or run "./configure --help" to see a few options that
+you can configure. After you've made the compiler, it gets fuzzy... this
+is still very much in progress.

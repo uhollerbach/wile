@@ -13,9 +13,7 @@
 #include <string.h>
 #include <limits.h>
 
-#include "wile.h"
-#include "fsi_set.h"
-#include "alloc.h"
+#include "wile-rtl1.h"
 
 /* Allocate a fsi_set, specifying the number of integers which it can hold */
 

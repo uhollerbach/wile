@@ -20,8 +20,7 @@ $Id: yucc_c.skel,v 1.39 2016/02/18 07:21:01 uwe Exp $
 #include <stdarg.h>
 #include <math.h>
 
-#include "wile.h"
-#include "alloc.h"
+#include "wile-rtl1.h"
 #include "wile-lex.h"
 
 static lptr cp_lv(const lptr old);

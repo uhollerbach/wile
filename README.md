@@ -1,36 +1,43 @@
-Last update: 2023-12-17 22:30 PST
+Last update: 2023-12-19 18:00 PST
 
-# `wile` - the extremely stable scheming genius compiler - version 1.0.5
+# `wile` - the extremely stable scheming genius compiler - version 1.0.6
 
 `wile` is a small scheme-to-c compiler which I'm writing; it's by no
-means complete, but it's capable enough that writing small to medium
-programs with it is starting to be pretty pleasant. `wile` **is
-self-hosting**, and it seems to have first-class closures as well as
-first-class continuations. I'm calling that "1.0.0"!
+means complete, but it's capable enough that writing programs with it
+is starting to be pretty pleasant. `wile` **is self-hosting**.
+The name `wile` is, of course, the name of that extremely stable
+super-genius schemer, Wile E. Coyote. 'nuff said
 
 My design philosophy for it is the unix way of small simple tools; I
 have tried to keep it simple and self-contained, with minimal
 dependencies: in a minimal version, I want it to be usable without any
 requirements beyond a reasonably-modern C compiler (although I do rely
 on the [Boehm garbage collector](https://www.hboehm.info/gc); without
-that, you'll be limited to small programs... that said, the bootstrap
-stage0 compiler is configured to build without GC, and it can recompile
-itself; that's not tiny.)
+that, you'll be limited to small programs... that said, the
+pre-autotools bootstrap stage0 compiler is configured to build without
+GC, and it can recompile itself; that's not tiny.)
 
-This release of it is still incomplete: batteries *not* included,
-some assembly required! This is alpha software (mainly because not
-implemented yet, less because bugs)... but it's increasingly stable
-and capable. See below for a roadmap.
+This release of it is still incomplete: batteries *not* included, some
+assembly required! That said, an autotools-based build+install system
+is coming along pretty well: it can build the compiler and runtime
+library from the bootstrap sources, and that compiler can compile
+almost all of the tests: two tests are known failures, and one lists
+the configuration, so that may well differ from system to system.
 
-Since Coverity offers free scans of open-source projects, I am
-starting to scan `wile`, I intend to make it as clean as I can. I have
-cleaned up most issues, there is still a moderately large number of
-instances of uninitialized `origin` variable; however, that does not
-play a role in the output of compilation, it just localizes errors
-better in error messages. So overall it is quite clean already.
+To try out the autotools-based build, `cd autotools ; configure ;
+make` should do the trick, although it does not yet set up the
+environment, and I have not attempted to do or configure installation.
 
-The name `wile` is, of course, the name of that extremely stable
-super-genius schemer, Wile E. Coyote. 'nuff said
+Since Coverity offers free scans of open-source projects, I have
+scanned `wile`, I intend to make it as clean as I can. There are two
+remaining sets of flagged issues: first, Coverity claims (quite
+correctly) that my use of `drand48()` is not cryptographically
+secure. That's ok, I think, for the purposes for which I'm using
+it. Second, there are a number of places where Coverity flags
+"structurally dead" code. That too is correct, these are spots where
+`wile` put in tail calls, and the dead-code eliminator, which is still
+pretty stupid, failed to clean up all of the dead code that it should
+have. But these are harmless. So overall it is quite clean already.
 
 ## Table of contents
 
@@ -84,14 +91,12 @@ to detect and prevent these crazinesses.
 * I'm aiming at R*N*RS compliance, for suitably recent value of *N*;
   not there yet, but working on it.
 
-* There is no automake/autoconf-style build+install system yet; I only
-  have a couple of hacked-up shell scripts. See below for installation
-  details.
-
 * Tail recursion seems to be largely working, but since `wile` is a
   scheme-to-c compiler, it can be a bit tricky at times. We depend on
   the c compiler, and not every c compiler will do this correctly
-  in all cases.
+  in all cases. In particular, there is a path through `(apply)` that
+  should be a tail call, but I've been unable to persuade either `gcc`
+  or `clang` to make that happen.
 
 * There are no bignums. Recent versions of gcc and clang support
   128-bit integers, and I have support for that in `wile`, but no true
@@ -318,6 +323,13 @@ to detect and prevent these crazinesses.
   library, but already throws around a fair number of continuations.
 
 ## Configuration and installation details
+
+Increasingly, the below is becoming obsolete; the autotools-based
+stuff is starting to work, and it should be able to figure this out.
+I leave this here for reference for now. In the autotools-based build,
+you have slightly fewer choices: Boehm GC yes or no, sqlite3 yes or
+no, 128-bit floats or long double (which may be 80-bit or 64-bit),
+128-bit ints or long long (which is probably 64-bit).
 
 If you go for the more ambitious build described above, you have to
 decide how to configure `wile`. If you read the stuff below and your

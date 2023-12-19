@@ -17,8 +17,7 @@
 #include <stdarg.h>
 #include <math.h>
 
-#include "wile.h"
-#include "alloc.h"
+#include "wile-rtl1.h"
 #include "wile-lex.h"
 
 static lptr cp_lv(const lptr old);

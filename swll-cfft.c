@@ -13,8 +13,6 @@
 #include <unistd.h>
 
 #include "wile-rtl1.h"
-#include "alloc.h"
-#include "lib-macros.h"
 
 static bool cfft_init = false;
 

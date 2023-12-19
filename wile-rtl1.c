@@ -215,18 +215,18 @@ uint16_t wile_binfo(void)
 
     // bits 3-4: 0 = plain old double, 1 = long double, 2 = quad double
 
-#ifdef WILE_USES_LONG_DOUBLE
+#if defined(WILE_USES_LONG_DOUBLE)
     ret |= (1 << shift);
-#elif WILE_USES_QUAD_DOUBLE
+#elif defined(WILE_USES_QUAD_DOUBLE)
     ret |= (2 << shift);
 #endif
     shift += 2;
 
     // bits 5-6: 0 = plain old long int, 1 = int128, 2 = bigint
 
-#ifdef WILE_USES_INT128
+#if defined(WILE_USES_INT128)
     ret |= (1 << shift);
-#elif WILE_USES_BIGINT
+#elif defined(WILE_USES_BIGINT)
     ret |= (2 << shift);
 #endif
     shift += 2;

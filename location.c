@@ -8,10 +8,7 @@
 #include <string.h>
 #include <math.h>
 
-#include "wile.h"
 #include "wile-rtl1.h"
-#include "alloc.h"
-#include "lib-macros.h"
 
 // Munge file names and line numbers together into one integer-y "location",
 // a pair of bit-fields of which one denotes the file and the other the line

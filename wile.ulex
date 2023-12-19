@@ -19,10 +19,7 @@
 #include <ctype.h>
 #include <math.h>
 
-#include "wile.h"
 #include "wile-rtl1.h"
-#include "alloc.h"
-#include "lib-macros.h"
 #include "wile-parse.h"
 
 #define AB_ATYPE	char

@@ -10,9 +10,6 @@
 #include <inttypes.h>
 #include <math.h>
 
-#include "wile.h"
-#include "alloc.h"
-#include "lib-macros.h"
 #include "wile-rtl1.h"
 
 extern lval var_show_sign;

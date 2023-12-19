@@ -2,6 +2,11 @@ Last update: 2023-12-17 22:30 PST
 
 # Changelog for `wile`
 
+## Current version `wile` "1.0.6" 2023-12-19 18:00 PST
+
+- add an autotools sub-tree which can already do the magic
+  "./configure && make"; testing and installation are not yet there
+
 ## Current version `wile` "1.0.5" 2023-12-17 22:30 PST
 
 - make wile_get_gensym() take an argument, so that we can deal with origin

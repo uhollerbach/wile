@@ -34,10 +34,44 @@
 #include <linux/limits.h>
 #endif
 
+#include "config.h"
+
+// prepare for autotools-based build
+
+#ifndef WILE_USES_GC
+#if HAVE_GC_H
+#define WILE_USES_GC
+#endif // HAVE_GC_H
+#endif // WILE_USES_GC
+
+#ifndef WILE_USES_SQLITE
+#if HAVE_SQLITE3_H
+#define WILE_USES_SQLITE
+#endif // HAVE_SQLITE3_H
+#endif // WILE_USES_SQLITE
+
+#if !defined(WILE_USES_QUAD_DOUBLE) && !defined(WILE_USES_LONG_DOUBLE) && !defined(WILE_USES_DOUBLE)
+#if HAVE_QUADMATH_H
+#define WILE_USES_QUAD_DOUBLE
+#else
+#define WILE_USES_LONG_DOUBLE
+#endif // HAVE_QUADMATH_H
+#endif // !defined(double stuff) etc
+
+#if !defined(WILE_USES_LONG_INT) && !defined(WILE_USES_INT128) && !defined(WILE_USES_BIGINT)
+#if HAVE_INT128
+#define WILE_USES_INT128
+#else
+#define WILE_USES_LONG_INT
+#endif // HAVE_INT128
+#endif // !defined(int stuff) etc
+
+// end of prep for autotools
+
+#include "wile.h"
 #include "nfa.h"
 #include "fsi_set.h"
 #include "regex.h"
-#include "wile.h"
 #include "alloc.h"
 #include "lib-macros.h"
 
