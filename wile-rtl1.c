@@ -72,7 +72,7 @@ int main(int argc, char** argv)
 	lims.rlim_cur = 64*1024*1024;
 	setrlimit(RLIMIT_STACK, &lims);
     }
-    srand48((time(NULL)) ^ (getpid() << 4));
+    wile_rand_seed((time(NULL)) ^ (getpid() << 4));
 
     tcatch.errval = NULL;
     tcatch.next = NULL;
@@ -184,6 +184,16 @@ lval wile_num2string(lval num, int base, int prec, const char* loc)
     } else {
 	wile_exception("number->string", loc, "first input is not numeric");
     }
+}
+
+void wile_rand_seed(long int seed)
+{
+    srand48(seed);
+}
+
+double wile_rand_dbl(void)
+{
+    return drand48();
 }
 
 // --8><----8><----8><--
@@ -1345,8 +1355,8 @@ lval wile_rand_normal_pair(lisp_real_t m, lisp_real_t s)
 {
     while (1) {
 	lisp_real_t v1, v2, r2;
-	v1 = 2.0*drand48() - 1.0;
-	v2 = 2.0*drand48() - 1.0;
+	v1 = 2.0*wile_rand_dbl() - 1.0;
+	v2 = 2.0*wile_rand_dbl() - 1.0;
 	r2 = v1*v1 + v2*v2;
 	if (r2 > 0.0 && r2 < 1.0) {
 	    lval vs[2];

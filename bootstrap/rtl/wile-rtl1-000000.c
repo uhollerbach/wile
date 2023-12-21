@@ -71,7 +71,7 @@ int main(int argc, char** argv)
 	lims.rlim_cur = 64*1024*1024;
 	setrlimit(RLIMIT_STACK, &lims);
     }
-    srand48((time(NULL)) ^ (getpid() << 4));
+    wile_rand_seed((time(NULL)) ^ (getpid() << 4));
 
     tcatch.errval = NULL;
     tcatch.next = NULL;
@@ -183,5 +183,15 @@ lval wile_num2string(lval num, int base, int prec, const char* loc)
     } else {
 	wile_exception("number->string", loc, "first input is not numeric");
     }
+}
+
+void wile_rand_seed(long int seed)
+{
+    srand48(seed);
+}
+
+double wile_rand_dbl(void)
+{
+    return drand48();
 }
 

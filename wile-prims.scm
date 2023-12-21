@@ -2782,31 +2782,31 @@
 	 'prim
 	 0 (lambda (r)
 	     (emit-code
-	      "srand48((time(NULL)) ^ (getpid() << 4));"
+	      "wile_rand_seed((time(NULL)) ^ (getpid() << 4));"
 	      "@@ = LVI_BOOL(true);"))
 	 1 (lambda (r a1)
 	     (emit-code
-	      "srand48(@1.v.iv);"
+	      "wile_rand_seed(@1.v.iv);"
 	      "@@ = LVI_BOOL(true);")))
 
    (list 'random-uniform
 	 "expects 0 or 2 real-valued arguments L1 and L2 and returns a uniformly distributed random variable in the range [L1,L2); if no arguments are given, L1 and L2 are assumed to be 0 and 1 respectively"
 	 'prim
 	 0 (lambda (r)
-	     (emit-code "@@ = LVI_REAL(drand48());"))
+	     (emit-code "@@ = LVI_REAL(wile_rand_dbl());"))
 	 2 (lambda (r a1 a2)
 	     (let ((a9 (new-svar))
 		   (a8 (new-svar)))
 	       (promote/real+check "random-uniform" a9 a1)
 	       (promote/real+check "random-uniform" a8 a2)
 	       (emit-code
-		"@@ = LVI_REAL(@9.v.rv + (@8.v.rv - @9.v.rv)*drand48());"))))
+		"@@ = LVI_REAL(@9.v.rv + (@8.v.rv - @9.v.rv)*wile_rand_dbl());"))))
 
    (list 'random-exponential
 	 "expects no arguments or one positive real-valued argument and returns an exponentially-distributed random variable with the specified rate parameter, or with rate 1 if no rate parameter is specified"
 	 'prim
 	 0 (lambda (r)
-	     (emit-code "@@ = LVI_REAL(-LOG(1.0 -drand48()));"))
+	     (emit-code "@@ = LVI_REAL(-LOG(1.0 -wile_rand_dbl()));"))
 	 1 (lambda (r a1)
 	     (let ((a9 (new-svar)))
 	       (promote/real+check "random-exponential" a9 a1)
@@ -2814,7 +2814,7 @@
 		"if (@9.v.rv <= 0.0) {"
 		"WILE_EX(\"random-exponential\", \"expects a positive rate\");"
 		"}"
-		"@@ = LVI_REAL(-LOG(1.0 - drand48())/@9.v.rv);"))))
+		"@@ = LVI_REAL(-LOG(1.0 - wile_rand_dbl())/@9.v.rv);"))))
 
    (list 'random-poisson
 	 "expects one positive real-valued argument and returns a Poisson-distributed random variable"
@@ -2831,7 +2831,7 @@
 	      "lisp_real_t l = EXP(-@9.v.rv), p = 1.0;"
 	      "do {"
 	      "++k;"
-	      "p *= drand48();"
+	      "p *= wile_rand_dbl();"
 	      "} while (p > l);"
 	      "@@ = LVI_INT(k - 1);"
 	      "}"))))
@@ -2854,13 +2854,13 @@
 	 "expects 0 or 2 real-valued arguments X0 and W and returns a Cauchy-distributed random variable; if no arguments are given, X0 and W are assumed to be 0 and 1 respectively"
 	 'prim
 	 0 (lambda (r)
-	     (emit-code "@@ = LVI_REAL(TAN(PI_L*(drand48() - 0.5)));"))
+	     (emit-code "@@ = LVI_REAL(TAN(PI_L*(wile_rand_dbl() - 0.5)));"))
 	 2 (lambda (r a1 a2)
 	     (let ((a9 (new-svar))
 		   (a8 (new-svar)))
 	       (promote/real+check "random-uniform" a9 a1)
 	       (promote/real+check "random-uniform" a8 a2)
-	       (emit-code "@@ = LVI_REAL(@9.v.rv + @8.v.rv*TAN(PI_L*(drand48() - 0.5)));"))))
+	       (emit-code "@@ = LVI_REAL(@9.v.rv + @8.v.rv*TAN(PI_L*(wile_rand_dbl() - 0.5)));"))))
 
    (list 'factorial
 	 "expects one non-negative integer argument and returns the factorial of the input"
@@ -3760,6 +3760,12 @@
 	 (lambda (r)
 	   (emit-code "@@ = LVI_INT(wile_binfo());")))
 
+   (list 'implementation-name
+	 "expects no arguments and returns a string which names this compiler"
+	 'prim 0
+	 (lambda (r)
+	   (emit-code "@@ = LVI_STRING(\"wile\");")))
+
    (list 'wile-os-name
 	 "expects no arguments and returns a string which describes the OS"
 	 'prim 0
@@ -3771,6 +3777,17 @@
 	 'prim 0
 	 (lambda (r)
 	   (emit-code "@@ = wile_arch_name();")))
+
+   (list 'wile-config-file
+	 "expects no arguments and returns the absolute path to the compiler config file if known, or #f"
+	 'prim 0
+	 (lambda (r)
+	   (emit-code
+	    "#ifdef WILE_CONF_FILE"
+	    "@@ = LVI_STRING(WILE_CONF_FILE);"
+	    "#else"
+	    "@@ = LVI_BOOL(false);"
+	    "#endif //  WILE_LIBDIR")))
 
    (list 'stack-trace-minimal
 	 "expects one optional output file port to which the stack trace is written; the default is stderr. returns nothing useful"
@@ -4031,9 +4048,8 @@
 
 ;;; Add the stuff in wile-rtl2.scm to the primitives list
 
-(define prim-table
-  (let* ((wld (get-environment-variable "WILE_LINK_DIRECTORIES"))
-	 (wlds (if wld (string-split-by is-colon? wld) (list ".")))
+(define (prim-table)
+  (let* ((wlds (get-config-val 'c-link-directories))
 	 (found #f))
     (for-each (lambda (d)
 		(unless found
@@ -4044,7 +4060,7 @@
     (if found
 	(append found prim-table-internal)
 	(begin
-	  (fprintf stderr "cannot find interface file 'wrtl.sch' in search path, skipping\n    %s\n" wld)
+	  (fprintf stderr "cannot find interface file 'wrtl.sch', skipping\n")
 	  prim-table-internal))))
 
 ;;; (define-as "wile_day_of_week" (day-of-week v . vs)

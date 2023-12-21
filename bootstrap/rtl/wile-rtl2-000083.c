@@ -1419,7 +1419,7 @@ return var_28;
 }
 // end of function fn_2
 
-// @@@ (get-bbox-name it) @@@ ./wrtl.sch:0 @@@ fn_3 @@@
+// @@@ (get-bbox-name it) @@@ ./wile-config.dat:0 @@@ fn_3 @@@
 static lval fn_3(lptr* var_34, lptr var_35, const char* cloc)
 {
 lval var_37;
@@ -1438,7 +1438,7 @@ return var_38;
 }
 // end of function fn_3
 
-// @@@ (get-bbox-value it) @@@ ./wrtl.sch:0 @@@ fn_4 @@@
+// @@@ (get-bbox-value it) @@@ ./wile-config.dat:0 @@@ fn_4 @@@
 static lval fn_4(lptr* var_39, lptr var_40, const char* cloc)
 {
 lval var_42;
@@ -1457,7 +1457,7 @@ return var_43;
 }
 // end of function fn_4
 
-// @@@ (set-bbox-name! it val) @@@ ./wrtl.sch:0 @@@ fn_5 @@@
+// @@@ (set-bbox-name! it val) @@@ ./wile-config.dat:0 @@@ fn_5 @@@
 static lval fn_5(lptr* var_44, lptr var_45, const char* cloc)
 {
 lval var_47;
@@ -1478,7 +1478,7 @@ return var_48;
 }
 // end of function fn_5
 
-// @@@ (set-bbox-value! it val) @@@ ./wrtl.sch:0 @@@ fn_6 @@@
+// @@@ (set-bbox-value! it val) @@@ ./wile-config.dat:0 @@@ fn_6 @@@
 static lval fn_6(lptr* var_49, lptr var_50, const char* cloc)
 {
 lval var_52;
@@ -1804,8 +1804,8 @@ lval var_205;
 {
 lval var_206[8];
 var_206[0] = var_203[0];
-// wrtl.sch:0
-var_205 = wile_list_length(NULL, var_206, "wrtl.sch:0");
+// wile-config.dat:0
+var_205 = wile_list_length(NULL, var_206, "wile-config.dat:0");
 }
 lval var_207;
 if (var_205.vt != LV_INT) {
@@ -1937,8 +1937,8 @@ lval var_240;
 {
 lval var_241[8];
 var_241[0] = var_238[0];
-// wrtl.sch:0
-var_240 = wile_list_length(NULL, var_241, "wrtl.sch:0");
+// wile-config.dat:0
+var_240 = wile_list_length(NULL, var_241, "wile-config.dat:0");
 }
 lval var_242;
 if (var_240.vt != LV_INT) {
@@ -2046,8 +2046,8 @@ lval var_266;
 {
 lval var_267[8];
 var_267[0] = var_264[0];
-// wrtl.sch:0
-var_266 = wile_list_length(NULL, var_267, "wrtl.sch:0");
+// wile-config.dat:0
+var_266 = wile_list_length(NULL, var_267, "wile-config.dat:0");
 }
 lval var_268;
 if (var_266.vt != LV_INT) {
@@ -2271,8 +2271,8 @@ lval var_366;
 {
 lval var_367[8];
 var_367[0] = var_364[0];
-// wrtl.sch:0
-var_366 = wile_list_length(NULL, var_367, "wrtl.sch:0");
+// wile-config.dat:0
+var_366 = wile_list_length(NULL, var_367, "wile-config.dat:0");
 }
 lval var_368;
 if (var_366.vt != LV_INT) {
@@ -2413,8 +2413,8 @@ lval var_410;
 {
 lval var_411[8];
 var_411[0] = var_408[0];
-// wrtl.sch:0
-var_410 = wile_list_length(NULL, var_411, "wrtl.sch:0");
+// wile-config.dat:0
+var_410 = wile_list_length(NULL, var_411, "wile-config.dat:0");
 }
 lval var_412;
 if (var_410.vt != LV_INT) {
@@ -2551,8 +2551,8 @@ lval var_443;
 {
 lval var_444[8];
 var_444[0] = var_441[0];
-// wrtl.sch:0
-var_443 = wile_list_length(NULL, var_444, "wrtl.sch:0");
+// wile-config.dat:0
+var_443 = wile_list_length(NULL, var_444, "wile-config.dat:0");
 }
 lval var_445;
 if (var_443.vt != LV_INT) {
@@ -3080,8 +3080,8 @@ lval var_635;
 {
 lval var_636[8];
 var_636[0] = var_633[0];
-// wrtl.sch:0
-var_635 = wile_list_length(NULL, var_636, "wrtl.sch:0");
+// wile-config.dat:0
+var_635 = wile_list_length(NULL, var_636, "wile-config.dat:0");
 }
 lval var_637;
 if (var_635.vt != LV_INT) {
@@ -3481,8 +3481,8 @@ lval var_744;
 {
 lval var_745[8];
 var_745[0] = var_742[0];
-// wrtl.sch:0
-var_744 = wile_list_length(NULL, var_745, "wrtl.sch:0");
+// wile-config.dat:0
+var_744 = wile_list_length(NULL, var_745, "wile-config.dat:0");
 }
 lval var_746;
 if (var_744.vt != LV_INT) {
@@ -3840,8 +3840,8 @@ lval var_895;
 {
 lval var_896[8];
 var_896[0] = var_893[0];
-// wrtl.sch:0
-var_895 = wile_list_length(NULL, var_896, "wrtl.sch:0");
+// wile-config.dat:0
+var_895 = wile_list_length(NULL, var_896, "wile-config.dat:0");
 }
 lval var_897;
 if (var_895.vt != LV_INT) {
@@ -5528,8 +5528,8 @@ lval var_1593;
 {
 lval var_1594[8];
 var_1594[0] = var_1591[0];
-// wrtl.sch:0
-var_1593 = wile_list_length(NULL, var_1594, "wrtl.sch:0");
+// wile-config.dat:0
+var_1593 = wile_list_length(NULL, var_1594, "wile-config.dat:0");
 }
 lval var_1595;
 if (var_1593.vt != LV_INT) {
@@ -5786,8 +5786,8 @@ lval var_1693;
 {
 lval var_1694[8];
 var_1694[0] = var_1691[0];
-// wrtl.sch:0
-var_1693 = wile_list_length(NULL, var_1694, "wrtl.sch:0");
+// wile-config.dat:0
+var_1693 = wile_list_length(NULL, var_1694, "wile-config.dat:0");
 }
 lval var_1695;
 if (var_1693.vt != LV_INT) {
@@ -6245,8 +6245,8 @@ lval var_1888;
 {
 lval var_1889[8];
 var_1889[0] = var_1886[0];
-// wrtl.sch:0
-var_1888 = wile_list_length(NULL, var_1889, "wrtl.sch:0");
+// wile-config.dat:0
+var_1888 = wile_list_length(NULL, var_1889, "wile-config.dat:0");
 }
 lval var_1890;
 if (var_1888.vt != LV_INT) {
@@ -6631,8 +6631,8 @@ lval var_2084;
 {
 lval var_2085[8];
 var_2085[0] = var_2082[0];
-// wrtl.sch:0
-var_2084 = wile_list_length(NULL, var_2085, "wrtl.sch:0");
+// wile-config.dat:0
+var_2084 = wile_list_length(NULL, var_2085, "wile-config.dat:0");
 }
 lval var_2086;
 if (var_2084.vt != LV_INT) {
@@ -6784,8 +6784,8 @@ lval var_2154;
 {
 lval var_2155[8];
 var_2155[0] = var_2152[0];
-// wrtl.sch:0
-var_2154 = wile_list_length(NULL, var_2155, "wrtl.sch:0");
+// wile-config.dat:0
+var_2154 = wile_list_length(NULL, var_2155, "wile-config.dat:0");
 }
 lval var_2156;
 if (var_2154.vt != LV_INT) {
@@ -7600,8 +7600,8 @@ lval var_2566;
 {
 lval var_2567[8];
 var_2567[0] = var_2564[0];
-// wrtl.sch:0
-var_2566 = wile_list_length(NULL, var_2567, "wrtl.sch:0");
+// wile-config.dat:0
+var_2566 = wile_list_length(NULL, var_2567, "wile-config.dat:0");
 }
 lval var_2568;
 if (var_2566.vt != LV_INT) {
@@ -8015,8 +8015,8 @@ lval var_2737;
 {
 lval var_2738[8];
 var_2738[0] = var_2735[0];
-// wrtl.sch:0
-var_2737 = wile_list_length(NULL, var_2738, "wrtl.sch:0");
+// wile-config.dat:0
+var_2737 = wile_list_length(NULL, var_2738, "wile-config.dat:0");
 }
 lval var_2739;
 if (var_2737.vt != LV_INT) {
@@ -8137,8 +8137,8 @@ lval var_2777;
 {
 lval var_2778[8];
 var_2778[0] = var_2775[0];
-// wrtl.sch:0
-var_2777 = wile_list_length(NULL, var_2778, "wrtl.sch:0");
+// wile-config.dat:0
+var_2777 = wile_list_length(NULL, var_2778, "wile-config.dat:0");
 }
 lval var_2779;
 if (var_2777.vt != LV_INT) {
@@ -8700,7 +8700,7 @@ return var_3046;
 static lval fn_3056(lptr* var_3057, lptr var_3058, const char* cloc)
 {
 lval var_3060;
-var_3060 = LVI_REAL(TAN(PI_L*(drand48() - 0.5)));
+var_3060 = LVI_REAL(TAN(PI_L*(wile_rand_dbl() - 0.5)));
 return var_3060;
 }
 // end of lambda fn_3056
@@ -8729,7 +8729,7 @@ var_3069 = var_3065[1];
 WILE_EX("random-uniform", "expects a real-valued input");
 }
 lval var_3067;
-var_3067 = LVI_REAL(var_3068.v.rv + var_3069.v.rv*TAN(PI_L*(drand48() - 0.5)));
+var_3067 = LVI_REAL(var_3068.v.rv + var_3069.v.rv*TAN(PI_L*(wile_rand_dbl() - 0.5)));
 return var_3067;
 }
 // end of lambda fn_3063
@@ -8741,8 +8741,8 @@ lval var_3053;
 {
 lval var_3054[8];
 var_3054[0] = var_3051[0];
-// wrtl.sch:0
-var_3053 = wile_list_length(NULL, var_3054, "wrtl.sch:0");
+// wile-config.dat:0
+var_3053 = wile_list_length(NULL, var_3054, "wile-config.dat:0");
 }
 lval var_3055;
 if (var_3053.vt != LV_INT) {
@@ -8807,7 +8807,7 @@ return var_3055;
 static lval fn_3084(lptr* var_3085, lptr var_3086, const char* cloc)
 {
 lval var_3088;
-var_3088 = LVI_REAL(-LOG(1.0 -drand48()));
+var_3088 = LVI_REAL(-LOG(1.0 -wile_rand_dbl()));
 return var_3088;
 }
 // end of lambda fn_3084
@@ -8829,7 +8829,7 @@ lval var_3095;
 if (var_3096.v.rv <= 0.0) {
 WILE_EX("random-exponential", "expects a positive rate");
 }
-var_3095 = LVI_REAL(-LOG(1.0 - drand48())/var_3096.v.rv);
+var_3095 = LVI_REAL(-LOG(1.0 - wile_rand_dbl())/var_3096.v.rv);
 return var_3095;
 }
 // end of lambda fn_3091
@@ -8841,8 +8841,8 @@ lval var_3081;
 {
 lval var_3082[8];
 var_3082[0] = var_3079[0];
-// wrtl.sch:0
-var_3081 = wile_list_length(NULL, var_3082, "wrtl.sch:0");
+// wile-config.dat:0
+var_3081 = wile_list_length(NULL, var_3082, "wile-config.dat:0");
 }
 lval var_3083;
 if (var_3081.vt != LV_INT) {
@@ -8948,8 +8948,8 @@ lval var_3108;
 {
 lval var_3109[8];
 var_3109[0] = var_3106[0];
-// wrtl.sch:0
-var_3108 = wile_list_length(NULL, var_3109, "wrtl.sch:0");
+// wile-config.dat:0
+var_3108 = wile_list_length(NULL, var_3109, "wile-config.dat:0");
 }
 lval var_3110;
 if (var_3108.vt != LV_INT) {
@@ -9046,7 +9046,7 @@ lisp_int_t k = 0;
 lisp_real_t l = EXP(-var_3145.v.rv), p = 1.0;
 do {
 ++k;
-p *= drand48();
+p *= wile_rand_dbl();
 } while (p > l);
 var_3144 = LVI_INT(k - 1);
 }
@@ -9058,7 +9058,7 @@ return var_3144;
 static lval fn_3155(lptr* var_3156, lptr var_3157, const char* cloc)
 {
 lval var_3159;
-srand48((time(NULL)) ^ (getpid() << 4));
+wile_rand_seed((time(NULL)) ^ (getpid() << 4));
 var_3159 = LVI_BOOL(true);
 return var_3159;
 }
@@ -9068,7 +9068,7 @@ return var_3159;
 static lval fn_3162(lptr* var_3163, lptr var_3164, const char* cloc)
 {
 lval var_3166;
-srand48(var_3164[0].v.iv);
+wile_rand_seed(var_3164[0].v.iv);
 var_3166 = LVI_BOOL(true);
 return var_3166;
 }
@@ -9081,8 +9081,8 @@ lval var_3152;
 {
 lval var_3153[8];
 var_3153[0] = var_3150[0];
-// wrtl.sch:0
-var_3152 = wile_list_length(NULL, var_3153, "wrtl.sch:0");
+// wile-config.dat:0
+var_3152 = wile_list_length(NULL, var_3153, "wile-config.dat:0");
 }
 lval var_3154;
 if (var_3152.vt != LV_INT) {
@@ -9147,7 +9147,7 @@ return var_3154;
 static lval fn_3181(lptr* var_3182, lptr var_3183, const char* cloc)
 {
 lval var_3185;
-var_3185 = LVI_REAL(drand48());
+var_3185 = LVI_REAL(wile_rand_dbl());
 return var_3185;
 }
 // end of lambda fn_3181
@@ -9176,7 +9176,7 @@ var_3194 = var_3190[1];
 WILE_EX("random-uniform", "expects a real-valued input");
 }
 lval var_3192;
-var_3192 = LVI_REAL(var_3193.v.rv + (var_3194.v.rv - var_3193.v.rv)*drand48());
+var_3192 = LVI_REAL(var_3193.v.rv + (var_3194.v.rv - var_3193.v.rv)*wile_rand_dbl());
 return var_3192;
 }
 // end of lambda fn_3188
@@ -9188,8 +9188,8 @@ lval var_3178;
 {
 lval var_3179[8];
 var_3179[0] = var_3176[0];
-// wrtl.sch:0
-var_3178 = wile_list_length(NULL, var_3179, "wrtl.sch:0");
+// wile-config.dat:0
+var_3178 = wile_list_length(NULL, var_3179, "wile-config.dat:0");
 }
 lval var_3180;
 if (var_3178.vt != LV_INT) {
@@ -9308,8 +9308,8 @@ lval var_3220;
 {
 lval var_3221[8];
 var_3221[0] = var_3218[0];
-// wrtl.sch:0
-var_3220 = wile_list_length(NULL, var_3221, "wrtl.sch:0");
+// wile-config.dat:0
+var_3220 = wile_list_length(NULL, var_3221, "wile-config.dat:0");
 }
 lval var_3222;
 if (var_3220.vt != LV_INT) {
@@ -9401,8 +9401,8 @@ lval var_3246;
 {
 lval var_3247[8];
 var_3247[0] = var_3244[0];
-// wrtl.sch:0
-var_3246 = wile_list_length(NULL, var_3247, "wrtl.sch:0");
+// wile-config.dat:0
+var_3246 = wile_list_length(NULL, var_3247, "wile-config.dat:0");
 }
 lval var_3248;
 if (var_3246.vt != LV_INT) {
@@ -10351,8 +10351,8 @@ lval var_3707;
 {
 lval var_3708[8];
 var_3708[0] = var_3705[0];
-// wrtl.sch:0
-var_3707 = wile_list_length(NULL, var_3708, "wrtl.sch:0");
+// wile-config.dat:0
+var_3707 = wile_list_length(NULL, var_3708, "wile-config.dat:0");
 }
 lval var_3709;
 if (var_3707.vt != LV_INT) {
@@ -10590,8 +10590,8 @@ lval var_3815;
 {
 lval var_3816[8];
 var_3816[0] = var_3813[0];
-// wrtl.sch:0
-var_3815 = wile_list_length(NULL, var_3816, "wrtl.sch:0");
+// wile-config.dat:0
+var_3815 = wile_list_length(NULL, var_3816, "wile-config.dat:0");
 }
 lval var_3817;
 if (var_3815.vt != LV_INT) {
@@ -10708,8 +10708,8 @@ lval var_3848;
 {
 lval var_3849[8];
 var_3849[0] = var_3846[0];
-// wrtl.sch:0
-var_3848 = wile_list_length(NULL, var_3849, "wrtl.sch:0");
+// wile-config.dat:0
+var_3848 = wile_list_length(NULL, var_3849, "wile-config.dat:0");
 }
 lval var_3850;
 if (var_3848.vt != LV_INT) {
@@ -11305,8 +11305,8 @@ lval var_4124;
 {
 lval var_4125[8];
 var_4125[0] = var_4122[0];
-// wrtl.sch:0
-var_4124 = wile_list_length(NULL, var_4125, "wrtl.sch:0");
+// wile-config.dat:0
+var_4124 = wile_list_length(NULL, var_4125, "wile-config.dat:0");
 }
 lval var_4126;
 if (var_4124.vt != LV_INT) {
@@ -11496,8 +11496,8 @@ lval var_4203;
 {
 lval var_4204[8];
 var_4204[0] = var_4201[0];
-// wrtl.sch:0
-var_4203 = wile_list_length(NULL, var_4204, "wrtl.sch:0");
+// wile-config.dat:0
+var_4203 = wile_list_length(NULL, var_4204, "wile-config.dat:0");
 }
 lval var_4205;
 if (var_4203.vt != LV_INT) {
@@ -11866,8 +11866,8 @@ lval var_4327;
 {
 lval var_4328[8];
 var_4328[0] = var_4325[0];
-// wrtl.sch:0
-var_4327 = wile_list_length(NULL, var_4328, "wrtl.sch:0");
+// wile-config.dat:0
+var_4327 = wile_list_length(NULL, var_4328, "wile-config.dat:0");
 }
 lval var_4329;
 if (var_4327.vt != LV_INT) {
@@ -12042,8 +12042,8 @@ lval var_4398;
 {
 lval var_4399[8];
 var_4399[0] = var_4396[0];
-// wrtl.sch:0
-var_4398 = wile_list_length(NULL, var_4399, "wrtl.sch:0");
+// wile-config.dat:0
+var_4398 = wile_list_length(NULL, var_4399, "wile-config.dat:0");
 }
 lval var_4400;
 if (var_4398.vt != LV_INT) {

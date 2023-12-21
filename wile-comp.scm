@@ -422,7 +422,7 @@
   (let ((mk-real (lambda (val)
 		   (string-append "LVI_REAL(" (format-real val) ")"))))
     (foldr
-     cons prim-table
+     cons (prim-table)
      (list
       (let ((tmp "var_argv")
 	    (fstr (string-join-by
@@ -741,11 +741,8 @@
 		     cur-env))
 
 	      ((eqv? 'load-library (caar exprs))
-	       (let* ((env-var (get-environment-variable "WILE_LIBRARY_PATH"))
-		      (fname (cadar exprs))
-		      (paths (if env-var
-				 (string-split-by is-colon? env-var)
-				 '(".")))
+	       (let* ((fname (cadar exprs))
+		      (paths (get-config-val 'scheme-include-directories))
 		      (filepath
 		       (let loop ((ps paths))
 			 (if (null? ps)
@@ -2127,8 +2124,7 @@
 		(global-func func-port))
       (emit-str global-file-head)
       (let* ((inc-hash (hash-table-create string-hash string=?))
-	     (wlp (get-environment-variable "WILE_LIBRARY_PATH"))
-	     (dirs (string-split-by is-colon? (if wlp wlp ".")))
+	     (dirs (get-config-val 'scheme-include-directories))
 	     (data1 (read-recursive dirs inc-hash in-file))
 	     (data2 (partition is-pragma? data1))
 	     (prags (map cdr (car data2)))

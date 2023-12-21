@@ -4,21 +4,9 @@
 ;;; Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
 ;;; License: GPLv3 or later, see file 'LICENSE' for details
 
-(unless (and (get-environment-variable "WILE_CONFIG")
-	     (get-environment-variable "WILE_INCLUDE_DIRECTORIES")
-	     (get-environment-variable "WILE_LINK_DIRECTORIES")
-	     (get-environment-variable "WILE_LINK_LIBRARIES")
-	     (get-environment-variable "WILE_LIBRARY_PATH"))
-  (write-string stderr "wile warning: environment is not fully set up\n"))
-
-(unless (get-environment-variable "WILE_LIBRARY_PATH")
-  (set-environment-variable "WILE_LIBRARY_PATH" "."))
-
 ;;; comment this out for closing the self-hosting loop
 ;;; (defmacro (load-library fname)
-;;;   (letrec* ((paths (string-split-by
-;;; 		    (lambda (c) (eqv? c #\:))
-;;; 		    (get-environment-variable "WILE_LIBRARY_PATH")))
+;;;   (letrec* ((paths (get-config-val 'scheme-include-directories))
 ;;; 	    (find (lambda (ps)
 ;;; 		    (if (null? ps)
 ;;; 			#f
@@ -39,6 +27,14 @@
 (define string-hash string-hash-64)
 (define (symbol-hash sym) (string-hash (symbol->string sym)))
 
+(define global-config ())
+
+(define (get-config-val key)
+  (let ((kv (assv key global-config)))
+    (if kv
+	(cadr kv)
+	(ERR "key '%s' was not found in config!" key))))
+
 (load-library "hash.scm")
 ;;; comment this out for closing the self-hosting loop
 ;;; (load-library "struct.scm")
@@ -55,6 +51,77 @@
 		(else 3)))
 	3)))
 
+;;; Process the specified config file
+
+(define (setup-config-from file)
+  (let ((data (read-all file))
+	(multi-string? (lambda (val)
+			 (all-true? (map string? val))))
+	(check-item (lambda (key test)
+		      (let ((cv (get-config-val key)))
+			(unless (and cv (test cv))
+			  (ERR "bad config entry '%s' -> %v" key cv))))))
+    (set! global-config (car data))
+    (check-item 'c-compiler string?)
+    (check-item 'c-compiler-flags string?)
+    (check-item 'c-include-directories multi-string?)
+    (check-item 'c-link-directories multi-string?)
+    (check-item 'c-link-libraries multi-string?)
+    (check-item 'scheme-include-directories multi-string?)
+    (check-item 'wile-config multi-string?)
+    (let* ((cv (get-config-val 'scheme-include-directories))
+	   (sv (if (null? cv)
+		   "."
+		   (string-join-by ";" cv))))
+      (set-environment-variable "WILE_LIBRARY_PATH" sv))))
+
+(define (write-build-info)
+  (let* ((conf1 (wile-build-info #f))
+	 (ftype (cadr (assv 'float-type conf1)))
+	 (itype (cadr (assv 'integer-type conf1)))
+	 (gc? (cadr (assv 'garbage-collector-version conf1)))
+	 (sqlite? (cadr (assv 'sqlite-version conf1)))
+	 (libs ())
+	 (conf2 ()))
+    ;;; don't mess with the order of these, gc has to come last in libs
+    ;;; which means it has to get processed first
+    (when gc?
+      (set! libs (cons "gc" libs))
+      (set! conf2 (cons "-DWILE_USES_GC" conf2)))
+    (cond ((eqv? ftype 'quad-double)
+	   (set! libs (cons "quadmath" libs))
+	   (set! conf2 (cons "-DWILE_USES_QUAD_DOUBLE" conf2)))
+	  ((eqv? ftype 'long-double)
+	   (set! conf2 (cons "-DWILE_USES_LONG_DOUBLE" conf2)))
+	  (else
+	   (set! conf2 (cons "-DWILE_USES_DOUBLE" conf2))))
+    (cond ((eqv? itype 'int-128)
+	   (set! conf2 (cons "-DWILE_USES_INT128" conf2)))
+	  (else
+	   (set! conf2 (cons "-DWILE_USES_LONG_INT" conf2))))
+    (when sqlite?
+      (set! libs (cons "sqlite3" libs))
+      (set! conf2 (cons "-DWILE_USES_SQLITE" conf2)))
+    (printf " (c-link-libraries %v)\n (wile-config %v)\n)\n" libs conf2)))
+
+;;; Check for config files in the order command-line, env-var, baked-in, cwd;
+;;; use the first one that's found
+
+(define (setup-configuration cmd-line-file)
+  (let ((baked-in-file (wile-config-file))
+	(env-file (get-environment-variable "WILE_CONFIG_FILE"))
+	(local-file "wile-config.dat"))
+    (cond ((and cmd-line-file (file-exists? cmd-line-file))
+	   (setup-config-from cmd-line-file))
+	  ((and env-file (file-exists? env-file))
+	   (setup-config-from env-file))
+	  ((and baked-in-file (file-exists? baked-in-file))
+	   (setup-config-from baked-in-file))
+	  ((file-exists? local-file)
+	   (setup-config-from local-file))
+	  (else (write-string stderr "no compiler configuration file found!\n")
+		(exit 1)))))
+
 (define (compile-s2c do-debug opt-level input output keep-int fvals)
   (let* ((sepos (string-find-last-char output #\/))
 	 (out-path (if sepos (string-copy output 0 (+ sepos 1)) ""))
@@ -66,35 +133,24 @@
       (write-string stderr "compilation failed!\n")
       (exit 1))))
 
-(define (get-env-val env-var def-val)
-  (let ((val (get-environment-variable env-var)))
-    (if val val def-val)))
-
-(define cc-default "gcc")
-
-(define cf-default "-ansi -std=c11 -Wall -Wstrict-prototypes -Wmissing-prototypes -Winline -Wpointer-arith -Wshadow -Wnested-externs -Wformat-security -Wunused -Wsign-compare -D_DEFAULT_SOURCE")
-
 ;;; currently turned off: -DWILE_USES_RC4_RAND
 
-(define wc-default "-DWILE_USES_LONG_INT -DWILE_USES_LONG_DOUBLE")
-
 (define (debug-filter-wc wc do-debug)
-  (if do-debug
-      (string-join-by
-       " " (cons "-g" (filter (lambda (s) (not (string=? s "-DWILE_USES_GC")))
-			      (string-split-by char-whitespace? wc))))
-      wc))
+  (string-join-by
+   " "
+   (if do-debug
+       (cons "-g" (filter (lambda (s) (not (string=? s "-DWILE_USES_GC"))) wc))
+       wc)))
 
 (define (colon-split-string val)
   (if (or (not val) (null? val) (string=? val ""))
       () (string-split-by is-colon? val)))
 
 (define (compile-c2o do-debug opt-level input output)
-  (let* ((cc (get-env-val "CC" cc-default))
-	 (cf (get-env-val "CFLAGS" cf-default))
-	 (wc (get-env-val "WILE_CONFIG" wc-default))
-	 (wi (get-env-val "WILE_INCLUDE_DIRECTORIES" ()))
-	 (wis (colon-split-string wi))
+  (let* ((cc (get-config-val 'c-compiler))
+	 (cf (get-config-val 'c-compiler-flags))
+	 (wc (get-config-val 'wile-config))
+	 (wis (get-config-val 'c-include-directories))
 	 (cmd (string-join-by " " cc cf (debug-filter-wc wc do-debug)
 			      (string-append "-O" (number->string opt-level))))
 	 (status #f))
@@ -107,13 +163,11 @@
       (exit 1))))
 
 (define (compile-o2x do-debug opt-level input output)
-  (let* ((cc (get-env-val "CC" cc-default))
-	 (cf (get-env-val "CFLAGS" cf-default))
-	 (wc (get-env-val "WILE_CONFIG" wc-default))
-	 (wld (get-env-val "WILE_LINK_DIRECTORIES" ()))
-	 (wll (get-env-val "WILE_LINK_LIBRARIES" ()))
-	 (wlds (colon-split-string wld))
-	 (wlls (colon-split-string wll))
+  (let* ((cc (get-config-val 'c-compiler))
+	 (cf (get-config-val 'c-compiler-flags))
+	 (wc (get-config-val 'wile-config))
+	 (wlds (get-config-val 'c-link-directories))
+	 (wlls (get-config-val 'c-link-libraries))
 	 (rtlib (if do-debug "wrtl-dbg" "wrtl"))
 	 (cmd (string-join-by " " cc cf  (debug-filter-wc wc do-debug)
 			      (string-append "-O" (number->string opt-level))))
@@ -140,6 +194,8 @@
 	       '("-D" flag "show undocumented primitives")
 	       '("-Q" strings "show doc-strings for specified primitives")
 	       '("-V" flag "show compiler version and configuration")
+	       '("-CF" string "specify compiler configuration file")
+	       '("-write-config" flag "initialize default config file")
 	       '("-c" flag "compile to c")
 	       '("-o" flag "compile to object")
 	       '("-p" flag "do profiling: count function invocations")
@@ -174,10 +230,9 @@
        (input-prefix #f)
        (output-file #f)
        (output-type #f))
-  (let ((wc (get-env-val "WILE_CONFIG" wc-default)))
-    (unless (null? (filter (lambda (s) (string=? s "-g"))
-			   (string-split-by char-whitespace? wc)))
-      (set! do-debug #t)))
+  (when (hash-table-ref fvals "-write-config" #f)
+    (write-build-info)
+    (exit 0))
   (when (hash-table-ref fvals "-V" #f)
     (write-string
      ";;; Wile, the extremely stable scheming genius compiler\n"
@@ -204,6 +259,10 @@
 			      #\newline #\newline))
 	      doc-prims)
     (exit 0))
+  (setup-configuration (hash-table-ref fvals "-CF" #f))
+  (unless (null? (filter (lambda (s) (string=? s "-g"))
+			 (get-config-val 'wile-config)))
+    (set! do-debug #t))
   (unless opt-level
     (set! opt-level (if do-debug 0 3)))
   (set! global-tc-min-args (max global-tc-min-args targs))

@@ -1,6 +1,6 @@
-Last update: 2023-12-19 18:00 PST
+Last update: 2023-12-24 21:00 PST
 
-# `wile` - the extremely stable scheming genius compiler - version 1.0.6
+# `wile` - the extremely stable scheming genius compiler - version 1.1.0
 
 `wile` is a small scheme-to-c compiler which I'm writing; it's by no
 means complete, but it's capable enough that writing programs with it
@@ -17,16 +17,14 @@ that, you'll be limited to small programs... that said, the
 pre-autotools bootstrap stage0 compiler is configured to build without
 GC, and it can recompile itself; that's not tiny.)
 
-This release of it is still incomplete: batteries *not* included, some
-assembly required! That said, an autotools-based build+install system
-is coming along pretty well: it can build the compiler and runtime
-library from the bootstrap sources, and that compiler can compile
+This release of it is starting to tend toward batteries-included.
+The autotools-based build+install is looking pretty good; the files
+and directories are still structured as a separate sub-tree, but
+the required steps look a whole lot like the standard autotols
+build: `cd autotools && configure && make && make install` produces
+a working compiler, and that compiler can compile itself and
 almost all of the tests: two tests are known failures, and one lists
-the configuration, so that may well differ from system to system.
-
-To try out the autotools-based build, `cd autotools ; configure ;
-make` should do the trick, although it does not yet set up the
-environment, and I have not attempted to do or configure installation.
+the configuration, so that will differ from system to system.
 
 Since Coverity offers free scans of open-source projects, I have
 scanned `wile`, I intend to make it as clean as I can. There are two
@@ -58,26 +56,6 @@ under LGPLv3 or later; linking your code with the runtime library will
 not cause your code to become GPL'd. You retain copyright of your
 scheme source code and may keep your code as open or closed as you
 desire.
-
-## Short installation
-
-The tl;dr you set the environment variable CC to your c compiler, for
-example `export CC=gcc`, then run `bootstrap.sh` which should build a
-functional `wilec` to play with. Then edit the file `setup.env` in the
-`bootstrap/` directory to specify the right location for the `wile`
-home, source that file, and you should be able to play.
-
-If you are feeling slightly more ambitious and want a slightly
-differently-configured compiler, read the section below, edit the
-`bootstrap.sh` file in the main directory according to taste, still
-set CC as above, and rerun `bootstrap.sh`.
-
-If you get link errors like `undefined reference to
-wile_config_real_QD_int_I128_gc_Y_sqlite_Y`, make sure the
-configuration with which you built the runtime library is the same as
-the one with which you compiled and linked your main program. If there
-are differences, things go crazy quickly, and this is how `wile` attempts
-to detect and prevent these crazinesses.
 
 ## Limitations and Bugs
 
@@ -324,92 +302,31 @@ to detect and prevent these crazinesses.
 
 ## Configuration and installation details
 
-Increasingly, the below is becoming obsolete; the autotools-based
-stuff is starting to work, and it should be able to figure this out.
-I leave this here for reference for now. In the autotools-based build,
-you have slightly fewer choices: Boehm GC yes or no, sqlite3 yes or
-no, 128-bit floats or long double (which may be 80-bit or 64-bit),
-128-bit ints or long long (which is probably 64-bit).
+Increasingly, the stuff I wrote here is obsolete. Instead, I'll briefly
+describe what to do if you want to recompile the compiler itself. The
+simplest way is to build the `build-stages` program in the top-level
+directory, then in that directory, run it: it will rebuild the compiler
+and libraries either two or three times, each time using the previous
+build result. If the SHA-256 hashes of the corresponding stage1 and stage2
+files all match, it will stop early, and if they don't match, it will
+build stage3. Either after stage2 or after stage3, the SHA-256 hashes
+should match; if they do not, I think there is something seriously wrong.
 
-If you go for the more ambitious build described above, you have to
-decide how to configure `wile`. If you read the stuff below and your
-eyes start to bleed, just go back up to the tl;dr above.
-
-* Use Boehm garbage collector, or not. This is not a real choice; you
-  need this, except if you're only playing. Real programs will suck
-  down goo-gobs of memory without garbage collection, and will bring
-  almost any system to its knees quickly. The Boehm garbage collector
-  is located [here](https://www.hboehm.info/gc), or you can probably
-  install it using your system's package manager. Add "-DWILE_USES_GC"
-  to WILE_CONFIG, and also add "gc" to WILE_LINK_LIBRARIES.
-
-* Use sqlite, or not. If you are dealing with sqlite databases, this
-  is very useful. Sqlite is located [here](https://www.sqlite.org/),
-  and again you can probably install it using your system's package
-  manager. But you can safely skip this if you don't speak SQL. If you
-  want this, add "-DWILE_USES_SQLITE" to WILE_CONFIG, and also add
-  "sqlite3" to WILE_LINK_LIBRARIES.
-
-* Decide on what kind of floating-point numbers you want to use: you
-  can select 64-bit regular `double`, or `long double` which may be
-  64-bit or 80-bit depending on your hardware, or `__float128` aka
-  quad-double which are software-emulated 128-bit. The first two are
-  natively supported by most modern c compilers, the last requires the
-  `quadmath` library from gcc, or again package manager.
-
-  - To use 128-bit floats, add "-DWILE_USES_QUAD_DOUBLE" to WILE_CONFIG,
-    and also add "quadmath" to WILE_LINK_LIBRARIES.
-
-  - To use `long double`, add "-DWILE_USES_LONG_DOUBLE" to WILE_CONFIG.
-
-  - To use `double`, add "-DWILE_USES_DOUBLE" to WILE_CONFIG.
-
-  - *NOT IMPLEMENTED*, but would probably be pretty easy, would be
-    "-DWILE_USES_FLOAT" for C-native "float" which is generally 32-bit
-
-* Decide on what kind of integers you want to use: you can select
-  (usually) 64-bit `long int`, or 128-bit `__int128` which recent
-  versions of both `gcc` and `clang` support. Add
-  "-DWILE_USES_LONG_INT" for `long int` or "-DWILE_USES_INT128" for
-  `__int128`.
-
-After you've made your selections, the environment variables should
-look like this:
-
-* `WILE_CONFIG="-DWILE_USES_GC -DWILE_USES_SQLITE -DWILE_USES_LONG_INT
-  -DWILE_USES_DOUBLE"`
-* `WILE_LINK_LIBRARIES=sqlite3:gc`
-
-Finally, you need to set `WILE_INCLUDE_DIRECTORIES` to point to the
-locations where the sqlite3, gc, and quadmath header files are
-located, assuming they aren't in fully-standard system-ish
-locations; and similarly set `WILE_LINK_DIRECTORIES` to point to the
-locations where the sqlite3, gc, and quadmath libraries are located.
-My configuration is
-
-- `WILE_INCLUDE_DIRECTORIES=.:$WHOME:$HOME/tools/include`
-- `WILE_LINK_DIRECTORIES=.:$WHOME:$HOME/tools/lib`
-
-After you've run `bootstrap.sh`, it should have created `wilec1` and
-`wilec2` which should be identical.
-
-I don't have a clean post-build install procedure yet, it's best to
-leave `libwrtl.a`, `wrtl.sch`, and all header files in place. The
-`wilec1` executable can be moved to some `bin` directory in your
-path, and renamed `wile`. I still have some cleanup to do in this area.
+If you want to build cross-compiled or cross-configured programs, you
+will need to do some manual tweaking of the installed files. Look for
+the wile-config.dat file in the locations where the `wile` files got
+installed, make a copy, and tweak it + build a copy of libwrtl.a with
+the tweaked settings. If you try this, you will need to tell `wile` to
+use the tweaked versions rather than the originals; you can set the
+environment variable WILE_CONFIG_FILE or use the -CF command-line
+option.
 
 ## Howto run `wile`
 
-To start with, you need to set up the above environment variables in
-the environment where you'll run `wile`. You can do that by sourcing
-the file `setup.env` from the main directory. Then try `wile -h` for a
-tiny usage message, which directs you to try `wile -help`. That list
-the command-line flags that `wile` understands. Note that `wile` is
-picky about filename extensions: scheme source files must end in
-`.scm`, c files in `.c`, object files in `.o`. I may relax this at
-some point, but for now it seems safer. `wile` also requires that the
-input file comes before the output file on the command line, unlike
-say `gcc`.
+After you've built `wile` with the autotools dance, you need to either
+put the directory where it's installed into your PATH if it's not
+already, or you need to invoke it with the explicit full path; that
+should be all.
 
 So here's a tiny scheme program, call it hello.scm:
 

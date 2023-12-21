@@ -1,6 +1,23 @@
-Last update: 2023-12-17 22:30 PST
+Last update: 2023-12-24 21:00 PST
 
 # Changelog for `wile`
+
+## Current version `wile` "1.1.0"
+
+- make calls to drand48 go through a wrapper - consolidate coverity
+  errors and provide a single place where it may get changed later
+
+- add (implementation-name) function, which returns the string "wile";
+  this is from SRFI 112 I believe?
+
+- remove all environment variables; instead, put all that stuff into
+  a config file whose location is baked into the executable (if built
+  via autotools) and is available via (wile-config-file); that's
+  overridable via an environment variable and/or a command-line flag,
+  so cross-compilation or cross-configuration should be doable.
+
+- "configure && make && make install" from the autotools directory
+  seems to be working
 
 ## Current version `wile` "1.0.6" 2023-12-19 18:00 PST
 

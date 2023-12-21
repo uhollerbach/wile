@@ -1575,7 +1575,8 @@
 				   ((2) 'semi-big-int-untested)
 				   (else 'unknown-int-type!?!)))
 		  (garbage-collector-version ,(gc-version))
-		  (sqlite-version ,(sqlite-version)))))
+		  (sqlite-version ,(sqlite-version))
+		  (wile-config-file ,(wile-config-file)))))
     info1))
 ;;;    (if add-ctime?
 ;;;	(list-append info1 (list `(wrtl-compiled-on ,(compile-time))))

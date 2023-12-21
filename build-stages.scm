@@ -89,10 +89,9 @@
 
 (when (or (file-exists? "wilec") (file-exists? "wilec.c"))
   (raise "build-stages: wilec and/or wilec.c exist!"))
-(symlink-or-die (if (and (not (null? command-line-arguments))
-			 (file-executable? (car command-line-arguments)))
-		    (car command-line-arguments)
-		    "wile-wrap.scm"))
+(when (and (not (null? command-line-arguments))
+	   (file-executable? (car command-line-arguments)))
+  (symlink-or-die (car command-line-arguments)))
 
 (make-stage 1)
 (set! m1x (get-hash "wilec.stage1"))

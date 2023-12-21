@@ -158,7 +158,7 @@ var_81 = var_76;
 WILE_EX("random-uniform", "expects a real-valued input");
 }
 lval var_79;
-var_79 = LVI_REAL(var_80.v.rv + (var_81.v.rv - var_80.v.rv)*drand48());
+var_79 = LVI_REAL(var_80.v.rv + (var_81.v.rv - var_80.v.rv)*wile_rand_dbl());
 lval var_82;
 if (var_79.vt == LV_INT) {
 var_82 = var_79;

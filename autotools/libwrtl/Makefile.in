@@ -14,6 +14,7 @@
 
 @SET_MAKE@
 
+
 VPATH = @srcdir@
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
@@ -123,7 +124,7 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(libdir)"
+am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(my_libdir)"
 LIBRARIES = $(lib_LIBRARIES)
 AR = ar
 ARFLAGS = cru
@@ -494,6 +495,7 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
+DATA = $(my_lib_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
 # and print each of them once, without duplicates.  Input order is
@@ -606,6 +608,10 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 lib_LIBRARIES = libwrtl.a
+
+# want this file with libwrtl.a until/unless I figure out a better location
+my_libdir = $(libdir)
+my_lib_DATA = wrtl.sch
 libwrtl_a_SOURCES = alloc.c continuations.c fsi_set.c location.c \
 	math-funcs-000000.c math-funcs-000001.c math-funcs-000002.c \
 	math-funcs-000003.c math-funcs-000004.c math-funcs-000005.c \
@@ -659,7 +665,7 @@ libwrtl_a_SOURCES = alloc.c continuations.c fsi_set.c location.c \
 	wile-rtl2-000077.c wile-rtl2-000078.c wile-rtl2-000079.c \
 	wile-rtl2-000080.c wile-rtl2-000081.c wile-rtl2-000082.c \
 	wile-rtl2-000083.c wile-rtl2-000084.c wile-sql.c
-libwrtl_a_CPPFLAGS = -I$(top_srcdir)/include
+libwrtl_a_CPPFLAGS = -I$(top_srcdir)/include -DWILE_CONF_FILE=\"$(sysconfdir)/wile-config.dat\"
 all: all-am
 
 .SUFFIXES:
@@ -3216,6 +3222,27 @@ libwrtl_a-wile-sql.obj: wile-sql.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='wile-sql.c' object='libwrtl_a-wile-sql.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libwrtl_a-wile-sql.obj `if test -f 'wile-sql.c'; then $(CYGPATH_W) 'wile-sql.c'; else $(CYGPATH_W) '$(srcdir)/wile-sql.c'; fi`
+install-my_libDATA: $(my_lib_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(my_lib_DATA)'; test -n "$(my_libdir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(my_libdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(my_libdir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(my_libdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(my_libdir)" || exit $$?; \
+	done
+
+uninstall-my_libDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(my_lib_DATA)'; test -n "$(my_libdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(my_libdir)'; $(am__uninstall_files_from_dir)
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -3303,9 +3330,9 @@ distdir-am: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LIBRARIES)
+all-am: Makefile $(LIBRARIES) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(libdir)"; do \
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(my_libdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -3523,7 +3550,7 @@ info: info-am
 
 info-am:
 
-install-data-am:
+install-data-am: install-my_libDATA
 
 install-dvi: install-dvi-am
 
@@ -3731,7 +3758,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-libLIBRARIES
+uninstall-am: uninstall-libLIBRARIES uninstall-my_libDATA
 
 .MAKE: install-am install-strip
 
@@ -3742,12 +3769,13 @@ uninstall-am: uninstall-libLIBRARIES
 	install-am install-data install-data-am install-dvi \
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am \
-	install-libLIBRARIES install-man install-pdf install-pdf-am \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am uninstall-libLIBRARIES
+	install-libLIBRARIES install-man install-my_libDATA \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
+	tags tags-am uninstall uninstall-am uninstall-libLIBRARIES \
+	uninstall-my_libDATA
 
 .PRECIOUS: Makefile
 

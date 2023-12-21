@@ -152,6 +152,9 @@ lval wile_gc_version(lptr*, lptr, const char*);
 lval wile_os_name(void);
 lval wile_arch_name(void);
 
+void wile_rand_seed(long int seed);
+double wile_rand_dbl(void);
+
 void wile_stack_trace_minimal(int fd);
 
 void wile_exception(const char* func_name, const char* loc,

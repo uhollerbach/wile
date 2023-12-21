@@ -54,6 +54,7 @@ boot-files:	wrtl.sch $(WRSRC1) $(WRSRC2)
 	cp bld-rtl-dir/*.c bootstrap/rtl/
 	cp wrtl.sch wile-rtl2.h bootstrap/
 	rm -rf bld-rtl-dir
+	wile -c wile-main.scm bootstrap/wilec.c
 
 wilec:	wile-main.scm wile-comp.scm wile-prims.scm libwrtl.a
 	wile -x -v wile-main.scm wilec
