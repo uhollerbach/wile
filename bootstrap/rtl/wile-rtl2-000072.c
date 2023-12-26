@@ -31,7 +31,7 @@ var_11 = LVI_INT(var_9[0].v.vec.capa);
 } else if (var_9[0].vt == LV_BVECTOR) {
 var_11 = LVI_INT(var_9[0].v.bvec.capa);
 } else {
-WILE_EX("vector-length", "input is not a vector");
+wile_exception("vector-length", "bld-rtl-dir/wile-rtl2-000072.scm:15", "input is not a vector");
 }
 }
 return var_11;
@@ -74,10 +74,10 @@ static lval fn_45(lptr* var_46, lptr var_47, const char* cloc)
 lval var_49;
 {
 if (var_47[0].vt != LV_VECTOR) {
-WILE_EX("vector-ref", "input is not a vector");
+wile_exception("vector-ref", "bld-rtl-dir/wile-rtl2-000072.scm:21", "input is not a vector");
 }
 if (V_CLOS(var_46,0).vt != LV_INT || V_CLOS(var_46,0).v.iv < 0 || (size_t) V_CLOS(var_46,0).v.iv >= var_47[0].v.vec.capa) {
-WILE_EX("vector-ref", "got bad index value");
+wile_exception("vector-ref", "bld-rtl-dir/wile-rtl2-000072.scm:21", "got bad index value");
 }
 var_49 = var_47[0].v.vec.arr[V_CLOS(var_46,0).v.iv] ? *(var_47[0].v.vec.arr[V_CLOS(var_46,0).v.iv]) : LVI_NIL();
 }
@@ -161,7 +161,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_31 = LVI_BOOL(var_21.v.rv == var_29.v.rv);
 break;
 default:
-WILE_EX("==", "inputs are not real-valued numbers");
+wile_exception("==", "bld-rtl-dir/wile-rtl2-000072.scm:16", "inputs are not real-valued numbers");
 break;
 }
 if (LV_IS_FALSE(var_31)) {
@@ -179,14 +179,14 @@ var_33 = (var_33.v.pair.car ? *(var_33.v.pair.car) : LVI_NIL());
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_33;
 cachalot->l_whence = 0;
-cachalot->c_whence = LISP_WHENCE;
+cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000072.scm:17";
 longjmp(cachalot->cenv, 1);
 } else {
 }
 lval var_36;
 lval var_37;
 if (var_6.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000072.scm:18", "input is not a pair!");
 }
 var_37 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
 var_36 = var_37;
@@ -229,7 +229,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_43 = LVI_BOOL(var_39.v.rv == var_36.v.rv);
 break;
 default:
-WILE_EX("==", "inputs are not real-valued numbers");
+wile_exception("==", "bld-rtl-dir/wile-rtl2-000072.scm:20", "inputs are not real-valued numbers");
 break;
 }
 if (!LV_IS_FALSE(var_43)) {

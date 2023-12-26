@@ -214,9 +214,12 @@
 ;;; 	   (cond ((null? cs)
 ;;; 		  (cons (list->string (list-reverse accs))
 ;;; 			(map (lambda (c)
-;;; 			       (if (char=? c #\@)
-;;; 				   'r
-;;; 				   (string->symbol (char->string #\a c))))
+;;; 			       (case c
+;;; 				 ((#\@) 'r)
+;;; 				 ((#\#) 'loc)
+;;; 				 (else => (lambda (c)
+;;; 					    (string->symbol
+;;; 					     (char->string #\a c))))))
 ;;; 			     (list-reverse acca))))
 ;;; 		 ((char=? (car cs) #\@)
 ;;; 		  (loop (cddr cs)
@@ -290,6 +293,10 @@
 
 ;;; a primitive
 ;;; s-name 'prim arity (lambda) arity (lambda) arity (lambda) ...
+
+;;; a primitive that cares about location: source location
+;;; gets added as a hidden first argument to the lambda(s)
+;;; s-name 'priml arity (lambda) arity (lambda) arity (lambda) ...
 
 ;;; a macro
 ;;; s-name 'macro arity (lambda)
@@ -1305,10 +1312,12 @@
 		       (symbol? (caar expr))
 		       (symbol=? (caar expr) 'unquote-splicing)))
 	 (merge-fn (cdr (lookup-symbol cur-env (if splice? 'append 'cons)))))
-    (unless (symbol=? 'prim (car merge-fn))
+    (unless (or (symbol=? (car merge-fn) 'prim)
+		(symbol=? (car merge-fn) 'priml))
       (ERR "'quasiquote' merge lookup failed!!"))
     (apply-prim "quasiquote merge" (cdr merge-fn)
-		(list lh lt) (token-source-line expr))))
+		(list lh lt) (token-source-line expr)
+		(symbol=? (car merge-fn) 'priml))))
 
 (define (compile-qq level cur-env expr)
   (cond ((or (symbol? expr)
@@ -1334,10 +1343,12 @@
 	 (let ((tmp (compile-qq-ordinary-list
 		     level cur-env (vector->list expr)))
 	       (conv-fn (cdr (lookup-symbol cur-env 'list->vector))))
-	   (unless (symbol=? 'prim (car conv-fn))
+	   (unless (or (symbol=? (car conv-fn) 'prim)
+		       (symbol=? (car conv-fn) 'priml))
 	     (ERR "'quasiquote' conversion lookup failed!"))
 	   (apply-prim "quasiquote convert" (cdr conv-fn) (list tmp)
-		       (token-source-line expr))))
+		       (token-source-line expr)
+		       (symbol=? (car conv-fn) 'priml))))
 
 ;;; bytevectors are a little problematic, because they assume the contents
 ;;; are always bytes, and thus only have space for bytes. so storing some
@@ -1345,15 +1356,17 @@
 ;;; a byte at the end. probably not going to support this for a while if
 ;;; ever. instead, use a vector, generate only bytes, and then convert it
 ;;; to a bytevector
-
 ;;;	((bytevector? expr)
 ;;;	 (let ((tmp (compile-qq-ordinary-list
 ;;;		     level cur-env (bytevector->list expr)))
 ;;;	       (conv-fn (cdr (lookup-symbol cur-env 'list->bytevector))))
-;;;	   (unless (symbol=? 'prim (car conv-fn))
+;;;	   (unless (or (symbol=? (car conv-fn) 'prim)
+;;;		       (symbol=? (car conv-fn) 'priml))
 ;;;	     (ERR "'quasiquote' conversion lookup failed!!"))
-;;;	   (apply-prim "quasiquote convert" (cdr conv-fn) (list tmp) (token-source-line expr))))
-;;;	 (compile-immediate cur-env 'BYTEVECTOR))
+;;;	   (apply-prim "quasiquote convert" (cdr conv-fn) (list tmp)
+;;;		       (token-source-line expr)
+;;;		       (symbol=? (car conv-fn) 'priml))))
+
 	(else				;;; unimplemented or impossible cases
 	 (ERR "malformed 'quasiquote' expression '%v'" expr))))
 
@@ -1468,7 +1481,7 @@
 	   (emit-function-call res c-fn #f tmp #f #f call-loc)
 	   (emit-fstr "}\n")))))
 
-(define (apply-prim s-name ops args call-loc)
+(define (apply-prim s-name ops args call-loc add-loc?)
   (let* ((res (new-svar))
 	 (nargs (list-length args))
 	 (aop (let loop ((os ops))
@@ -1487,14 +1500,14 @@
 	 (op (cadr aop)))
     (if (string? op)
 	(build-regular-prim res nargs arity op args call-loc)
-	(apply op (cons res args)))
+	(apply op (cons res (if add-loc? (cons call-loc args) args))))
     res))
 
 (define global-prims-memoized #f)
 
-(define (wrap-prim s-name codelets call-loc)
+(define (wrap-prim s-name codelets call-loc add-loc?)
   (let ((lookup (assv s-name global-prims-memoized)))
-    (if lookup
+    (if (and lookup (not add-loc?))
 	(cdr lookup)
 	(let ((f-name (new-svar 'fn))
 	      (c-name (new-svar))
@@ -1520,7 +1533,9 @@
 		   (let ((op (cadr codelets)))
 		     (if (string? op)
 			 (build-regular-prim res arity arity op cas call-loc)
-			 (apply op (cons res cas)))))))
+			 (apply op (cons res (if add-loc?
+						 (cons call-loc cas)
+						 cas))) )))))
 	   (emit-function-tail res)
 	   (emit-fstr "// end of prim %s\n" f-name))
 	  (let ((res (string-append "LVI_PROC(" f-name "," "NULL" ","
@@ -1666,8 +1681,10 @@
 		   (let ((tmp (new-svar)))
 		     (apply build-basic-list tmp args)
 		     (compile-runtime-apply (new-svar) (cadr op) tmp)))
-		  ((symbol=? (car op) 'prim)
-		   (apply-prim s-name (cdr op) args call-loc))
+		  ((or (symbol=? (car op) 'prim)
+		       (symbol=? (car op) 'priml))
+		   (apply-prim s-name (cdr op) args call-loc
+			       (symbol=? (car op) 'priml)))
 		  ((symbol=? (car op) 'proc)
 		   (apply-proc s-name (caddr op) (cadddr op) (cadr op)
 			       args tcall (lookup-frame cur-env) call-loc))
@@ -1688,8 +1705,10 @@
 	     (si (cdr tmp)))
 	(cond ((symbol=? (car si) 'c-var)
 	       (cadr si))
-	      ((symbol=? (car si) 'prim)
-	       (wrap-prim expr (cdr si) (token-source-line expr)))
+	      ((or (symbol=? (car si) 'prim)
+		   (symbol=? (car si) 'priml))
+	       (wrap-prim expr (cdr si) (token-source-line expr)
+			  (symbol=? (car si) 'priml)))
 	      ((symbol=? (car si) 'proc)
 	       (let ((r (new-svar))
 		     (a1 (caddr si))

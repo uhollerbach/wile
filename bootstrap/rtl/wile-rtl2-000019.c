@@ -54,7 +54,7 @@ case LV_CMPLX:
 var_13 = LVI_BOOL(CREAL(var_4.v.cv) == 0.0 && CIMAG(var_4.v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000019.scm:18", "expects a real-valued number");
 }
 if (!LV_IS_FALSE(var_13)) {
 break;
@@ -66,10 +66,10 @@ var_15 = LVI_INT(var_4.v.iv - var_14.v.iv);
 var_4 = var_15;
 lval var_16;
 if (var_2[0].vt != LV_STRING) {
-WILE_EX("string-ref", "expects a string input");
+wile_exception("string-ref", "bld-rtl-dir/wile-rtl2-000019.scm:20", "expects a string input");
 }
 if (var_4.v.iv < 0 || (size_t) var_4.v.iv >= strlen(var_2[0].v.str)) {
-WILE_EX("string-ref", "index is out of range");
+wile_exception("string-ref", "bld-rtl-dir/wile-rtl2-000019.scm:20", "index is out of range");
 }
 var_16 = LVI_CHAR(var_2[0].v.str[var_4.v.iv]);
 lval var_17;

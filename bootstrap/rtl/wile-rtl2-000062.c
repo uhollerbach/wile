@@ -31,7 +31,7 @@ lval var_6;
 var_6 = LVI_INT(1);
 lval var_7;
 if (var_2[1].vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000062.scm:16", "input is not a pair!");
 }
 var_7 = (var_2[1].v.pair.car ? *(var_2[1].v.pair.car) : LVI_NIL());
 lval var_8;
@@ -42,14 +42,14 @@ char* cp = strchr(var_8.v.str, 'r');
 var_9 = var_2[1];
 while (*(--cp) != 'c') {
 if (var_9.vt != LV_PAIR) {
-WILE_EX("cxr", "input does not have the right structure!");
+wile_exception("cxr", "bld-rtl-dir/wile-rtl2-000062.scm:16", "input does not have the right structure!");
 }
 if (*cp == 'a') {
 var_9 = (var_9.v.pair.car ? *(var_9.v.pair.car) : LVI_NIL());
 } else if (*cp == 'd') {
 var_9 = (var_9.v.pair.cdr ? *(var_9.v.pair.cdr) : LVI_NIL());
 } else {
-WILE_EX("cxr", "got malformed control string '%s'", var_8.v.str);
+wile_exception("cxr", "bld-rtl-dir/wile-rtl2-000062.scm:16", "got malformed control string '%s'", var_8.v.str);
 }
 }
 }
@@ -69,7 +69,7 @@ var_13 = LVI_INT(7);
 lval var_14;
 {
 lisp_int_t nq, nr;
-floor_qr(var_12.v.iv, var_13.v.iv, &nq, &nr);
+floor_qr(var_12.v.iv, var_13.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000062.scm:16");
 var_14 = LVI_INT(nr);
 }
 var_4 = var_14;
@@ -83,7 +83,7 @@ var_17 = LVI_INT(7);
 lval var_18;
 {
 lisp_int_t nq, nr;
-floor_qr(var_16.v.iv, var_17.v.iv, &nq, &nr);
+floor_qr(var_16.v.iv, var_17.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000062.scm:15");
 var_18 = LVI_INT(nr);
 }
 var_4 = var_18;

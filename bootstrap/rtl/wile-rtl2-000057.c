@@ -36,14 +36,14 @@ char* cp = strchr(var_26.v.str, 'r');
 var_27 = var_24[0];
 while (*(--cp) != 'c') {
 if (var_27.vt != LV_PAIR) {
-WILE_EX("cxr", "input does not have the right structure!");
+wile_exception("cxr", "./wile-config.dat:0", "input does not have the right structure!");
 }
 if (*cp == 'a') {
 var_27 = (var_27.v.pair.car ? *(var_27.v.pair.car) : LVI_NIL());
 } else if (*cp == 'd') {
 var_27 = (var_27.v.pair.cdr ? *(var_27.v.pair.cdr) : LVI_NIL());
 } else {
-WILE_EX("cxr", "got malformed control string '%s'", var_26.v.str);
+wile_exception("cxr", "./wile-config.dat:0", "got malformed control string '%s'", var_26.v.str);
 }
 }
 }
@@ -62,14 +62,14 @@ char* cp = strchr(var_35.v.str, 'r');
 var_36 = var_33[0];
 while (*(--cp) != 'c') {
 if (var_36.vt != LV_PAIR) {
-WILE_EX("cxr", "input does not have the right structure!");
+wile_exception("cxr", "./wile-config.dat:0", "input does not have the right structure!");
 }
 if (*cp == 'a') {
 var_36 = (var_36.v.pair.car ? *(var_36.v.pair.car) : LVI_NIL());
 } else if (*cp == 'd') {
 var_36 = (var_36.v.pair.cdr ? *(var_36.v.pair.cdr) : LVI_NIL());
 } else {
-WILE_EX("cxr", "got malformed control string '%s'", var_35.v.str);
+wile_exception("cxr", "./wile-config.dat:0", "got malformed control string '%s'", var_35.v.str);
 }
 }
 }
@@ -262,9 +262,9 @@ var_17 = wile_string_append(NULL, var_18, "bld-rtl-dir/wile-rtl2-000057.scm:20")
 lval var_20;
 #ifdef WILE_USES_SQLITE
 if (var_2[0].vt == LV_SQLITE_PORT && var_17.vt == LV_STRING) {
-var_20 = wile_sql_run(var_2[0].v.sqlite_conn, var_17.v.str, LISP_WHENCE);
+var_20 = wile_sql_run(var_2[0].v.sqlite_conn, var_17.v.str, "bld-rtl-dir/wile-rtl2-000057.scm:19");
 } else {
-WILE_EX("sqlite-run", "expects one sqlite-port and one string");
+wile_exception("sqlite-run", "bld-rtl-dir/wile-rtl2-000057.scm:19", "expects one sqlite-port and one string");
 }
 #else
 var_20 = LVI_BOOL(false);
@@ -315,9 +315,9 @@ var_41 = wile_string_append(NULL, var_42, "bld-rtl-dir/wile-rtl2-000057.scm:23")
 lval var_44;
 #ifdef WILE_USES_SQLITE
 if (var_2[0].vt == LV_SQLITE_PORT && var_41.vt == LV_STRING) {
-var_44 = wile_sql_run(var_2[0].v.sqlite_conn, var_41.v.str, LISP_WHENCE);
+var_44 = wile_sql_run(var_2[0].v.sqlite_conn, var_41.v.str, "bld-rtl-dir/wile-rtl2-000057.scm:23");
 } else {
-WILE_EX("sqlite-run", "expects one sqlite-port and one string");
+wile_exception("sqlite-run", "bld-rtl-dir/wile-rtl2-000057.scm:23", "expects one sqlite-port and one string");
 }
 #else
 var_44 = LVI_BOOL(false);

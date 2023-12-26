@@ -256,7 +256,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-include_HEADERS = alloc.h array_builder.h fsi_set.h lib-macros.h nfa.h regex.h sha256.h ulexlib.h wile.h wile-lex.h wile-parse.h wile-rtl1.h wile-rtl2.h ../config.h
+include_HEADERS = array_builder.h sha256.h ulexlib.h wile-lex.h wile-parse.h wile-rtl1.h wile-rtl2.h ../config.h
 all: all-am
 
 .SUFFIXES:

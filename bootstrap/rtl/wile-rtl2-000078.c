@@ -44,7 +44,7 @@ var_9 = (var_9.v.pair.car ? *(var_9.v.pair.car) : LVI_NIL());
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_9;
 cachalot->l_whence = 0;
-cachalot->c_whence = LISP_WHENCE;
+cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000078.scm:14";
 longjmp(cachalot->cenv, 1);
 return var_9;
 }
@@ -74,7 +74,7 @@ var_17 = (var_17.v.pair.car ? *(var_17.v.pair.car) : LVI_NIL());
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_17;
 cachalot->l_whence = 0;
-cachalot->c_whence = LISP_WHENCE;
+cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000078.scm:17";
 longjmp(cachalot->cenv, 1);
 return var_17;
 }
@@ -127,7 +127,7 @@ case LV_CMPLX:
 var_31 = LVI_REAL(CABS(var_28.v.cv));
 break;
 default:
-WILE_EX("abs", "got a non-numeric argument");
+wile_exception("abs", "bld-rtl-dir/wile-rtl2-000078.scm:23", "got a non-numeric argument");
 }
 lval var_32;
 {
@@ -222,7 +222,7 @@ case LV_REAL:
 var_60 = LVI_INT(WILE_SIGN(var_49.v.rv));
 break;
 default:
-WILE_EX("sign", "got a non-real-valued argument");
+wile_exception("sign", "bld-rtl-dir/wile-rtl2-000078.scm:33", "got a non-real-valued argument");
 }
 lval var_61;
 switch (var_54.vt) {
@@ -239,7 +239,7 @@ case LV_REAL:
 var_61 = LVI_INT(WILE_SIGN(var_54.v.rv));
 break;
 default:
-WILE_EX("sign", "got a non-real-valued argument");
+wile_exception("sign", "bld-rtl-dir/wile-rtl2-000078.scm:33", "got a non-real-valued argument");
 }
 lval var_62;
 switch (TYPE_COMBO(var_60.vt,var_61.vt)) {
@@ -271,7 +271,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_62 = LVI_BOOL(var_60.v.rv != var_61.v.rv);
 break;
 default:
-WILE_EX("!=", "inputs are not real-valued numbers");
+wile_exception("!=", "bld-rtl-dir/wile-rtl2-000078.scm:33", "inputs are not real-valued numbers");
 break;
 }
 if (LV_IS_FALSE(var_62)) {
@@ -426,7 +426,7 @@ case LV_CMPLX:
 var_120 = LVI_BOOL(CREAL(var_95[0].v.cv) == 0.0 && CIMAG(var_95[0].v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000078.scm:50", "expects a real-valued number");
 }
 if (!LV_IS_FALSE(var_120)) {
 lval var_123[8];
@@ -450,7 +450,7 @@ case LV_CMPLX:
 var_124 = LVI_BOOL(CREAL(var_105.v.cv) == 0.0 && CIMAG(var_105.v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000078.scm:51", "expects a real-valued number");
 }
 if (!LV_IS_FALSE(var_124)) {
 lval var_127[8];
@@ -490,7 +490,7 @@ case LV_INT:
 var_132 = LVI_BOOL(var_105.v.iv < 0);
 break;
 default:
-WILE_EX("negative?", "expects a real-valued number");
+wile_exception("negative?", "bld-rtl-dir/wile-rtl2-000078.scm:53", "expects a real-valued number");
 }
 if (!LV_IS_FALSE(var_132)) {
 lval var_133;
@@ -602,7 +602,7 @@ case LV_CMPLX:
 var_145 = LVI_BOOL(CREAL(var_80.v.cv) == 0.0 && CIMAG(var_80.v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000078.scm:55", "expects a real-valued number");
 }
 if (!LV_IS_FALSE(var_145)) {
 lval var_148[8];
@@ -626,7 +626,7 @@ case LV_CMPLX:
 var_149 = LVI_BOOL(CREAL(var_81.v.cv) == 0.0 && CIMAG(var_81.v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000078.scm:56", "expects a real-valued number");
 }
 if (!LV_IS_FALSE(var_149)) {
 lval var_152[8];
@@ -650,7 +650,7 @@ case LV_REAL:
 var_153 = LVI_INT(WILE_SIGN(var_80.v.rv));
 break;
 default:
-WILE_EX("sign", "got a non-real-valued argument");
+wile_exception("sign", "bld-rtl-dir/wile-rtl2-000078.scm:57", "got a non-real-valued argument");
 }
 lval var_154;
 switch (var_81.vt) {
@@ -667,7 +667,7 @@ case LV_REAL:
 var_154 = LVI_INT(WILE_SIGN(var_81.v.rv));
 break;
 default:
-WILE_EX("sign", "got a non-real-valued argument");
+wile_exception("sign", "bld-rtl-dir/wile-rtl2-000078.scm:57", "got a non-real-valued argument");
 }
 lval var_155;
 switch (TYPE_COMBO(var_153.vt,var_154.vt)) {
@@ -699,7 +699,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_155 = LVI_BOOL(var_153.v.rv == var_154.v.rv);
 break;
 default:
-WILE_EX("==", "inputs are not real-valued numbers");
+wile_exception("==", "bld-rtl-dir/wile-rtl2-000078.scm:57", "inputs are not real-valued numbers");
 break;
 }
 if (!LV_IS_FALSE(var_155)) {
@@ -718,7 +718,7 @@ case LV_INT:
 var_159 = LVI_BOOL(var_80.v.iv < 0);
 break;
 default:
-WILE_EX("negative?", "expects a real-valued number");
+wile_exception("negative?", "bld-rtl-dir/wile-rtl2-000078.scm:58", "expects a real-valued number");
 }
 if (!LV_IS_FALSE(var_159)) {
 lval var_160;
@@ -864,7 +864,7 @@ case LV_REAL:
 var_208 = LVI_INT(WILE_SIGN(var_205.v.rv));
 break;
 default:
-WILE_EX("sign", "got a non-real-valued argument");
+wile_exception("sign", "bld-rtl-dir/wile-rtl2-000078.scm:97", "got a non-real-valued argument");
 }
 lval var_209;
 {
@@ -937,7 +937,7 @@ var_221 = LVI_REAL(SQRT(var_222.v.rv));
 } else if (var_222.vt == LV_CMPLX) {
 var_221 = LVI_CMPLX1(CSQRT(var_222.v.cv));
 } else {
-WILE_EX("sqrt", "expects one numeric argument");
+wile_exception("sqrt", "bld-rtl-dir/wile-rtl2-000078.scm:98", "expects one numeric argument");
 }
 lval var_223;
 {
@@ -1025,7 +1025,7 @@ case LV_CMPLX:
 var_244 = LVI_BOOL(CREAL(var_186[0].v.cv) == 0.0 && CIMAG(var_186[0].v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000078.scm:102", "expects a real-valued number");
 }
 if (!LV_IS_FALSE(var_244)) {
 lval var_247[8];
@@ -1049,7 +1049,7 @@ case LV_CMPLX:
 var_248 = LVI_BOOL(CREAL(var_196.v.cv) == 0.0 && CIMAG(var_196.v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000078.scm:103", "expects a real-valued number");
 }
 if (!LV_IS_FALSE(var_248)) {
 lval var_251[8];
@@ -1073,7 +1073,7 @@ case LV_CMPLX:
 var_252 = LVI_BOOL(CREAL(var_229.v.cv) == 0.0 && CIMAG(var_229.v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000078.scm:104", "expects a real-valued number");
 }
 if (!LV_IS_FALSE(var_252)) {
 lval var_255[8];
@@ -1116,7 +1116,7 @@ case LV_REAL:
 var_260 = LVI_INT(WILE_SIGN(var_229.v.rv));
 break;
 default:
-WILE_EX("sign", "got a non-real-valued argument");
+wile_exception("sign", "bld-rtl-dir/wile-rtl2-000078.scm:106", "got a non-real-valued argument");
 }
 lval var_261;
 switch (var_196.vt) {
@@ -1133,7 +1133,7 @@ case LV_REAL:
 var_261 = LVI_INT(WILE_SIGN(var_196.v.rv));
 break;
 default:
-WILE_EX("sign", "got a non-real-valued argument");
+wile_exception("sign", "bld-rtl-dir/wile-rtl2-000078.scm:106", "got a non-real-valued argument");
 }
 lval var_262;
 switch (TYPE_COMBO(var_260.vt,var_261.vt)) {
@@ -1165,7 +1165,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_262 = LVI_BOOL(var_260.v.rv != var_261.v.rv);
 break;
 default:
-WILE_EX("!=", "inputs are not real-valued numbers");
+wile_exception("!=", "bld-rtl-dir/wile-rtl2-000078.scm:106", "inputs are not real-valued numbers");
 break;
 }
 if (!LV_IS_FALSE(var_262)) {
@@ -1205,7 +1205,7 @@ case LV_REAL:
 var_267 = LVI_INT(WILE_SIGN(var_229.v.rv));
 break;
 default:
-WILE_EX("sign", "got a non-real-valued argument");
+wile_exception("sign", "bld-rtl-dir/wile-rtl2-000078.scm:107", "got a non-real-valued argument");
 }
 lval var_268;
 switch (var_186[2].vt) {
@@ -1222,7 +1222,7 @@ case LV_REAL:
 var_268 = LVI_INT(WILE_SIGN(var_186[2].v.rv));
 break;
 default:
-WILE_EX("sign", "got a non-real-valued argument");
+wile_exception("sign", "bld-rtl-dir/wile-rtl2-000078.scm:107", "got a non-real-valued argument");
 }
 lval var_269;
 switch (TYPE_COMBO(var_267.vt,var_268.vt)) {
@@ -1254,7 +1254,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_269 = LVI_BOOL(var_267.v.rv != var_268.v.rv);
 break;
 default:
-WILE_EX("!=", "inputs are not real-valued numbers");
+wile_exception("!=", "bld-rtl-dir/wile-rtl2-000078.scm:107", "inputs are not real-valued numbers");
 break;
 }
 if (!LV_IS_FALSE(var_269)) {
@@ -1367,7 +1367,7 @@ case LV_CMPLX:
 var_282 = LVI_BOOL(CREAL(var_171.v.cv) == 0.0 && CIMAG(var_171.v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000078.scm:109", "expects a real-valued number");
 }
 if (!LV_IS_FALSE(var_282)) {
 lval var_285[8];
@@ -1391,7 +1391,7 @@ case LV_CMPLX:
 var_286 = LVI_BOOL(CREAL(var_172.v.cv) == 0.0 && CIMAG(var_172.v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000078.scm:110", "expects a real-valued number");
 }
 if (!LV_IS_FALSE(var_286)) {
 lval var_289[8];
@@ -1415,7 +1415,7 @@ case LV_REAL:
 var_290 = LVI_INT(WILE_SIGN(var_171.v.rv));
 break;
 default:
-WILE_EX("sign", "got a non-real-valued argument");
+wile_exception("sign", "bld-rtl-dir/wile-rtl2-000078.scm:111", "got a non-real-valued argument");
 }
 lval var_291;
 switch (var_172.vt) {
@@ -1432,7 +1432,7 @@ case LV_REAL:
 var_291 = LVI_INT(WILE_SIGN(var_172.v.rv));
 break;
 default:
-WILE_EX("sign", "got a non-real-valued argument");
+wile_exception("sign", "bld-rtl-dir/wile-rtl2-000078.scm:111", "got a non-real-valued argument");
 }
 lval var_292;
 switch (TYPE_COMBO(var_290.vt,var_291.vt)) {
@@ -1464,7 +1464,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_292 = LVI_BOOL(var_290.v.rv == var_291.v.rv);
 break;
 default:
-WILE_EX("==", "inputs are not real-valued numbers");
+wile_exception("==", "bld-rtl-dir/wile-rtl2-000078.scm:111", "inputs are not real-valued numbers");
 break;
 }
 if (!LV_IS_FALSE(var_292)) {

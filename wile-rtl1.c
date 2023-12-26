@@ -680,10 +680,11 @@ lisp_real_t phermite2(int n, lisp_real_t x)
 
 // --8><----8><----8><--
 
-void floor_qr(lisp_int_t n1, lisp_int_t n2, lisp_int_t* nq, lisp_int_t* nr)
+void floor_qr(lisp_int_t n1, lisp_int_t n2,
+	      lisp_int_t* nq, lisp_int_t* nr, const char* loc)
 {
     if (n2 == 0) {
-	wile_exception("floor_qr", LISP_WHENCE, "division by zero!");
+	wile_exception("floor_qr", loc, "division by zero!");
     }
     *nq = n1/n2;
     *nr = n1 - *nq*n2;
@@ -695,10 +696,11 @@ void floor_qr(lisp_int_t n1, lisp_int_t n2, lisp_int_t* nq, lisp_int_t* nr)
 
 // --8><----8><----8><--
 
-void trunc_qr(lisp_int_t n1, lisp_int_t n2, lisp_int_t* nq, lisp_int_t* nr)
+void trunc_qr(lisp_int_t n1, lisp_int_t n2,
+	      lisp_int_t* nq, lisp_int_t* nr, const char* loc)
 {
     if (n2 == 0) {
-	wile_exception("trunc_qr", LISP_WHENCE, "division by zero!");
+	wile_exception("trunc_qr", loc, "division by zero!");
     }
     *nq = n1/n2;
     *nr = n1 - *nq*n2;
@@ -706,10 +708,11 @@ void trunc_qr(lisp_int_t n1, lisp_int_t n2, lisp_int_t* nq, lisp_int_t* nr)
 
 // --8><----8><----8><--
 
-void ceil_qr(lisp_int_t n1, lisp_int_t n2, lisp_int_t* nq, lisp_int_t* nr)
+void ceil_qr(lisp_int_t n1, lisp_int_t n2,
+	     lisp_int_t* nq, lisp_int_t* nr, const char* loc)
 {
     if (n2 == 0) {
-	wile_exception("ceiling_qr", LISP_WHENCE, "division by zero!");
+	wile_exception("ceiling_qr", loc, "division by zero!");
     }
     *nq = n1/n2;
     *nr = n1 - *nq*n2;

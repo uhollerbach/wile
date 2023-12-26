@@ -58,7 +58,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_7 = LVI_BOOL(var_4.v.rv < var_2[2].v.rv);
 break;
 default:
-WILE_EX("<", "inputs are not real-valued numbers");
+wile_exception("<", "bld-rtl-dir/wile-rtl2-000046.scm:15", "inputs are not real-valued numbers");
 break;
 }
 if (LV_IS_FALSE(var_7)) {
@@ -74,7 +74,7 @@ var_11 = LVI_INT(2);
 lval var_12;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_8.v.iv, var_11.v.iv, &nq, &nr);
+trunc_qr(var_8.v.iv, var_11.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000046.scm:17");
 var_12 = LVI_INT(nq);
 }
 var_10 = var_12;
@@ -86,10 +86,10 @@ lval var_15;
 var_15 = LVI_STRING("");
 lval var_16;
 if (var_10.vt != LV_INT || var_10.v.iv < 0) {
-WILE_EX("string-create", "first input is not a non-negative integer");
+wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000046.scm:19", "first input is not a non-negative integer");
 }
 if (var_2[1].vt != LV_CHAR || var_2[1].v.chr == '\0') {
-WILE_EX("string-create", "second input is not a valid character");
+wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000046.scm:19", "second input is not a valid character");
 }
 var_16.vt = LV_STRING;
 var_16.origin = var_10.origin;
@@ -98,10 +98,10 @@ memset(var_16.v.str, var_2[1].v.chr, var_10.v.iv);
 var_16.v.str[var_10.v.iv] = '\0';
 lval var_17;
 if (var_13.vt != LV_INT || var_13.v.iv < 0) {
-WILE_EX("string-create", "first input is not a non-negative integer");
+wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000046.scm:20", "first input is not a non-negative integer");
 }
 if (var_2[1].vt != LV_CHAR || var_2[1].v.chr == '\0') {
-WILE_EX("string-create", "second input is not a valid character");
+wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000046.scm:20", "second input is not a valid character");
 }
 var_17.vt = LV_STRING;
 var_17.origin = var_13.origin;

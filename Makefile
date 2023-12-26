@@ -23,7 +23,7 @@ CGCOV =
 CFLAGS = $(CFDEF) $(CGCOV) $(WILE_CONFIG)
 
 ASRC =	wile-lex.[ch] wile-parse.[ch] wile-parse.txt
-HDRS =	wile.h alloc.h wile-lex.h wile-parse.h lib-macros.h
+HDRS =	wile.h wile-lex.h wile-parse.h
 
 WRSRC1 = wile-sql.c alloc.c print.c location.c wile-parse.c wile-lex.c \
 	swll-cfft.c continuations.c fsi_set.c nfa.c regex.c ulexlib.c \

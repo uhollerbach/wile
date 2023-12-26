@@ -9,10 +9,11 @@
 extern lisp_escape_t cachalot;
 
 
-void trunc_qr(lisp_int_t n1, lisp_int_t n2, lisp_int_t* nq, lisp_int_t* nr)
+void trunc_qr(lisp_int_t n1, lisp_int_t n2,
+	      lisp_int_t* nq, lisp_int_t* nr, const char* loc)
 {
     if (n2 == 0) {
-	wile_exception("trunc_qr", LISP_WHENCE, "division by zero!");
+	wile_exception("trunc_qr", loc, "division by zero!");
     }
     *nq = n1/n2;
     *nr = n1 - *nq*n2;

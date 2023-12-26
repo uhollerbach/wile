@@ -36,7 +36,7 @@ var_5 = var_7;
 if (LV_IS_FALSE(var_5)) { break; }
 lval var_8;
 if (var_2[1].vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000041.scm:14", "input is not a pair!");
 }
 var_8 = (var_2[1].v.pair.car ? *(var_2[1].v.pair.car) : LVI_NIL());
 lval var_9;
@@ -61,7 +61,7 @@ var_4 = var_2[1];
 } else {
 lval var_13;
 if (var_2[1].vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
+wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000041.scm:15", "input is not a pair!");
 }
 var_13 = (var_2[1].v.pair.cdr ? *(var_2[1].v.pair.cdr) : LVI_NIL());
 lval var_16[8];

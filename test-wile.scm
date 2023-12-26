@@ -25,6 +25,18 @@
 (define (is-colon? c) (char=? c #\:))
 (define string-hash string-hash-64)
 
+;;; serial numbers filed off and body lines changed from autotools build
+
+(define global-config
+  '((c-compiler "gcc")
+    (c-compiler-flags "-g -O2")
+    (c-include-directories ("."))
+    (c-link-directories ("."))
+    (scheme-include-directories ("." "./library"))
+    (c-link-libraries ("sqlite3" "quadmath" "gc"))
+    (wile-config ("-DWILE_USES_SQLITE" "-DWILE_USES_INT128"
+		  "-DWILE_USES_QUAD_DOUBLE" "-DWILE_USES_GC"))))
+
 (load-library "wile-macros.scm")
 (load-library "hash.scm")
 (load-library "wile-comp.scm")
@@ -1804,13 +1816,13 @@
 (test "(c b)" (doco '(set-car! (cons 'a (cons 'b ())) 'c)))
 (test "(a . c)" (doco '(set-cdr! (cons 'a (cons 'b ())) 'c)))
 
-(test "caught exception from wile-out.c:52\n    'car' input is not a pair!"
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:1820\n    'car' input is not a pair!"
       (doco '(car 14)))
-(test "caught exception from wile-out.c:52\n    'cdr' input is not a pair!"
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:1822\n    'cdr' input is not a pair!"
       (doco '(cdr 14)))
-(test "caught exception from wile-out.c:55\n    'set-car!' input is not a pair!"
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:1824\n    'set-car!' input is not a pair!"
       (doco '(set-car! 14 15)))
-(test "caught exception from wile-out.c:55\n    'set-cdr!' input is not a pair!"
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:1826\n    'set-cdr!' input is not a pair!"
       (doco '(set-cdr! 14 15)))
 
 (test "#f" (doco '(port? 17)))
@@ -1897,7 +1909,7 @@
 ;;; TODO: after compiling the code, the error message gets generated elsewhere
 ;;; fix, but it's low priority
 ;;; (test "caught exception\n    'list-length' input is not a proper list"
-(test "caught exception from bld-rtl-dir/wile-rtl2-000001.c:52\n    'cdr' input is not a pair!"
+(test "caught exception from bld-rtl-dir/wile-rtl2-000001.scm:20\n    'cdr' input is not a pair!"
       (doco '(list-length (cons 'a (cons 'b (cons 'c (cons 'd 'e)))))))
 (test "4" (doco '(length (cons 'a (cons 'b (cons 'c (cons 'd ())))))))
 
@@ -2278,7 +2290,7 @@
 		    (vector-fill! vec 13)
 		    (vector-ref vec 0))))
 
-(test "caught exception from wile-out.c:86\n    'vector-ref' got bad index value"
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:2296\n    'vector-ref' got bad index value"
       (doco '(let ((vec (vector-create 5)))
 	       (vector-fill! vec 13)
 	       (vector-ref vec 'foo))))
@@ -2473,7 +2485,7 @@
 (test "()" (doco '(list-last ())))
 ;;; TODO: after compiling the code, the error message gets generated elsewhere
 ;;; fix, but it's low priority
-(test "caught exception from bld-rtl-dir/wile-rtl2-000007.c:47\n    'car' input is not a pair!"
+(test "caught exception from bld-rtl-dir/wile-rtl2-000007.scm:17\n    'car' input is not a pair!"
       (doco '(list-last (cons 1 (cons 2 (cons 3 4))))))
 
 (test "14" (doco '(integer 14)))
@@ -2482,7 +2494,7 @@
 (test "-14" (doco '(integer -143/10)))
 (test "14" (doco '(integer 14.37)))
 (test "-14" (doco '(integer -14.37)))
-(test "caught exception from wile-out.c:58\n    'integer' expects one real-valued argument"
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:2498\n    'integer' expects one real-valued argument"
       (doco '(integer 'chezbro)))
 
 (test "1.400000000000000e+01" (doco '(float 14)))
@@ -2491,7 +2503,7 @@
 (test "-1.430000000000000e+01" (doco '(float -143/10)))
 (test "1.437000000000000e+01" (doco '(float 14.37)))
 (test "-1.437000000000000e+01" (doco '(float -14.37)))
-(test "caught exception from wile-out.c:58\n    'float' expects a real-valued input"
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:2507\n    'float' expects a real-valued input"
       (doco '(float 'chezbro)))
 
 (test "65536" (doco '(expt 2 16)))
@@ -2509,11 +2521,11 @@
 
 (test "\"meh\"" (doco '(string-copy "meh")))
 (test "\"ooh\"" (doco '(string-copy "fooh" 1)))
-(test "caught exception from wile-out.c:59\n    'string-copy' start index is out of range"
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:2525\n    'string-copy' start index is out of range"
       (doco '(string-copy "fooh" 13)))
 
 (test "\"oobi\"" (doco '(string-copy "fooboobish's son's sea" 4 8)))
-(test "caught exception from wile-out.c:64\n    'string-copy' end index is out of range"
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:2529\n    'string-copy' end index is out of range"
       (doco '(string-copy "fooboobish's son's sea" 8 4)))
 
 (test "(1 2 3 4 5) (5 4 3 2 1)\n#t"
@@ -2550,7 +2562,7 @@
 ;;; TODO: after compiling the code, the error message gets generated elsewhere
 ;;; fix, but it's low priority
 ;;; (test "caught exception\n    'list-reverse' expects one list argument"
-(test "caught exception from bld-rtl-dir/wile-rtl2-000000.c:47\n    'car' input is not a pair!"
+(test "caught exception from bld-rtl-dir/wile-rtl2-000000.scm:19\n    'car' input is not a pair!"
       (doco '(let* ((lst (cons 1 (cons 2 (cons 3 4))))
 		    (tsl (list-reverse lst)))
 	       (display lst)
@@ -2809,7 +2821,7 @@
 
 (test "#u8(#x61 #x62 #x63 #x64 #x65)" (doco '(bytevector #\a #\b #\c #\d #\e)))
 (test "#u8()" (doco '(bytevector)))
-(test "caught exception from bld-rtl-dir/wile-rtl2-000018.c:214\n    list->bytevector got a bad value"
+(test "caught exception from bld-rtl-dir/wile-rtl2-000018.scm:23\n    list->bytevector got a bad value"
       (doco '(bytevector 311)))
 
 (test "2" (doco '(string-find-first-char "breep" #\e)))
@@ -2850,9 +2862,39 @@
 (test "#u8(#x53 #x51 #x4c #x69 #x74 #x65 #x20 #x66 #x6f #x72 #x6d #x61 #x74 #x20 #x33 #x0)"
       (doco '(let ((port (open-file "cars.db" "rb"))) (read-bytes port 16))))
 
+(test "#(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16)"
+      (doco '(let* ((v1 (list->vector (fromto 1 16)))
+		    (v2 (vector-copy v1)))
+	       (vector-fill! v1 #\O)
+	       v2)))
+
+(test "#(5 6 7 8 9 10 11 12 13 14 15 16)"
+      (doco '(let* ((v1 (list->vector (fromto 1 16)))
+		    (v2 (vector-copy v1 4)))
+	       (vector-fill! v1 #\O)
+	       v2)))
+
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:2879\n    'vector-copy' start index is out of range"
+      (doco '(let* ((v1 (list->vector (fromto 1 16)))
+		    (v2 (vector-copy v1 24)))
+	       (vector-fill! v1 #\O)
+	       v2)))
+
+(test "#(5 6 7 8 9 10)"
+      (doco '(let* ((v1 (list->vector (fromto 1 16)))
+		    (v2 (vector-copy v1 4 10)))
+	       (vector-fill! v1 #\O)
+	       v2)))
+
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:2891\n    'vector-copy' end index is out of range"
+      (doco '(let* ((v1 (list->vector (fromto 1 16)))
+		    (v2 (vector-copy v1 4 3)))
+	       (vector-fill! v1 #\O)
+	       v2)))
+
 (test-report "wile compiler tests")
 
-(if (test-expected 1756 0 12 0)
+(if (test-expected 1761 0 12 0)
     (write-string "results are as expected\n")
     (write-string "results are unexpected!\n"))
 

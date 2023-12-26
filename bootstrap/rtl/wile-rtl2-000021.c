@@ -27,7 +27,7 @@ lval var_4;
 lval var_5;
 {
 if (var_2[0].vt != LV_BVECTOR) {
-WILE_EX("bytevector-length", "input is not a bytevector");
+wile_exception("bytevector-length", "bld-rtl-dir/wile-rtl2-000021.scm:14", "input is not a bytevector");
 }
 var_5 = LVI_INT(var_2[0].v.bvec.capa);
 }
@@ -59,7 +59,7 @@ case LV_CMPLX:
 var_13 = LVI_BOOL(CREAL(var_4.v.cv) == 0.0 && CIMAG(var_4.v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000021.scm:16", "expects a real-valued number");
 }
 if (!LV_IS_FALSE(var_13)) {
 break;
@@ -72,10 +72,10 @@ var_4 = var_15;
 lval var_16;
 {
 if (var_2[0].vt != LV_BVECTOR) {
-WILE_EX("bytevector-ref", "input is not a bytevector");
+wile_exception("bytevector-ref", "bld-rtl-dir/wile-rtl2-000021.scm:18", "input is not a bytevector");
 }
 if (var_4.vt != LV_INT || var_4.v.iv < 0 || (size_t) var_4.v.iv >= var_2[0].v.bvec.capa) {
-WILE_EX("bytevector-ref", "got bad index value");
+wile_exception("bytevector-ref", "bld-rtl-dir/wile-rtl2-000021.scm:18", "got bad index value");
 }
 var_16 = LVI_INT(var_2[0].v.bvec.arr[var_4.v.iv]);
 }

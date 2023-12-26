@@ -90,7 +90,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_17 = LVI_BOOL(var_10.v.rv == var_4.v.rv);
 break;
 default:
-WILE_EX("==", "inputs are not real-valued numbers");
+wile_exception("==", "bld-rtl-dir/wile-rtl2-000017.scm:18", "inputs are not real-valued numbers");
 break;
 }
 if (!LV_IS_FALSE(var_17)) {
@@ -99,15 +99,15 @@ break;
 }
 lval var_18;
 if (var_11.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000017.scm:19", "input is not a pair!");
 }
 var_18 = (var_11.v.pair.car ? *(var_11.v.pair.car) : LVI_NIL());
 {
 if (var_7.vt != LV_VECTOR) {
-WILE_EX("vector-set!", "input is not a vector");
+wile_exception("vector-set!", "bld-rtl-dir/wile-rtl2-000017.scm:19", "input is not a vector");
 }
 if (var_10.vt != LV_INT || var_10.v.iv < 0 || (size_t) var_10.v.iv >= var_7.v.vec.capa) {
-WILE_EX("vector-set!", "got bad index value");
+wile_exception("vector-set!", "bld-rtl-dir/wile-rtl2-000017.scm:19", "got bad index value");
 }
 var_7.v.vec.arr[var_10.v.iv] = new_lv(LV_NIL);
 *(var_7.v.vec.arr[var_10.v.iv]) = var_18;
@@ -119,7 +119,7 @@ var_21 = LVI_INT(var_10.v.iv + var_20.v.iv);
 var_12 = var_21;
 lval var_22;
 if (var_11.vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
+wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000017.scm:17", "input is not a pair!");
 }
 var_22 = (var_11.v.pair.cdr ? *(var_11.v.pair.cdr) : LVI_NIL());
 var_13 = var_22;

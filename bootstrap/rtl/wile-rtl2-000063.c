@@ -31,7 +31,7 @@ var_5 = LVI_INT(4);
 lval var_6;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_2[0].v.iv, var_5.v.iv, &nq, &nr);
+trunc_qr(var_2[0].v.iv, var_5.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000063.scm:17");
 var_6 = LVI_INT(nr);
 }
 lval var_7;
@@ -49,7 +49,7 @@ case LV_CMPLX:
 var_7 = LVI_BOOL(CREAL(var_6.v.cv) == 0.0 && CIMAG(var_6.v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000063.scm:17", "expects a real-valued number");
 }
 var_4 = var_7;
 if (LV_IS_FALSE(var_4)) { break; }
@@ -61,7 +61,7 @@ var_9 = LVI_INT(100);
 lval var_10;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_2[0].v.iv, var_9.v.iv, &nq, &nr);
+trunc_qr(var_2[0].v.iv, var_9.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000063.scm:19");
 var_10 = LVI_INT(nr);
 }
 lval var_11;
@@ -79,7 +79,7 @@ case LV_CMPLX:
 var_11 = LVI_BOOL(CREAL(var_10.v.cv) == 0.0 && CIMAG(var_10.v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000063.scm:19", "expects a real-valued number");
 }
 lval var_12;
 var_12 = LVI_BOOL(LV_IS_FALSE(var_11));
@@ -90,7 +90,7 @@ var_13 = LVI_INT(400);
 lval var_14;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_2[0].v.iv, var_13.v.iv, &nq, &nr);
+trunc_qr(var_2[0].v.iv, var_13.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000063.scm:20");
 var_14 = LVI_INT(nr);
 }
 lval var_15;
@@ -108,7 +108,7 @@ case LV_CMPLX:
 var_15 = LVI_BOOL(CREAL(var_14.v.cv) == 0.0 && CIMAG(var_14.v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000063.scm:20", "expects a real-valued number");
 }
 var_8 = var_15;
 if (!LV_IS_FALSE(var_8)) { break; }

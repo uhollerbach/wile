@@ -82,10 +82,10 @@ var_23 = LVI_INT(var_3[1].v.iv - var_22.v.iv);
 lval var_24;
 {
 if (var_1.vt != LV_VECTOR) {
-WILE_EX("vector-ref", "input is not a vector");
+wile_exception("vector-ref", "bld-rtl-dir/wile-rtl2-000064.scm:21", "input is not a vector");
 }
 if (var_23.vt != LV_INT || var_23.v.iv < 0 || (size_t) var_23.v.iv >= var_1.v.vec.capa) {
-WILE_EX("vector-ref", "got bad index value");
+wile_exception("vector-ref", "bld-rtl-dir/wile-rtl2-000064.scm:21", "got bad index value");
 }
 var_24 = var_1.v.vec.arr[var_23.v.iv] ? *(var_1.v.vec.arr[var_23.v.iv]) : LVI_NIL();
 }
@@ -125,7 +125,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_28 = LVI_BOOL(var_3[1].v.rv > var_27.v.rv);
 break;
 default:
-WILE_EX(">", "inputs are not real-valued numbers");
+wile_exception(">", "bld-rtl-dir/wile-rtl2-000064.scm:22", "inputs are not real-valued numbers");
 break;
 }
 var_26 = var_28;

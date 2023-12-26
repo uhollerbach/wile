@@ -58,7 +58,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_7 = LVI_BOOL(var_4.v.rv < var_2[2].v.rv);
 break;
 default:
-WILE_EX("<", "inputs are not real-valued numbers");
+wile_exception("<", "bld-rtl-dir/wile-rtl2-000045.scm:15", "inputs are not real-valued numbers");
 break;
 }
 if (LV_IS_FALSE(var_7)) {
@@ -70,10 +70,10 @@ lval var_9;
 var_9 = LVI_INT(var_2[2].v.iv - var_4.v.iv);
 lval var_10;
 if (var_9.vt != LV_INT || var_9.v.iv < 0) {
-WILE_EX("string-create", "first input is not a non-negative integer");
+wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000045.scm:16", "first input is not a non-negative integer");
 }
 if (var_2[1].vt != LV_CHAR || var_2[1].v.chr == '\0') {
-WILE_EX("string-create", "second input is not a valid character");
+wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000045.scm:16", "second input is not a valid character");
 }
 var_10.vt = LV_STRING;
 var_10.origin = var_9.origin;

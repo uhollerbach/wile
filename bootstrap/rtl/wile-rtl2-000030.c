@@ -26,7 +26,7 @@ static lval fn_11(lptr* var_12, lptr var_13, const char* cloc)
 {
 lval var_15;
 if (var_13[0].vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000030.scm:17", "input is not a pair!");
 }
 var_15 = (var_13[0].v.pair.car ? *(var_13[0].v.pair.car) : LVI_NIL());
 return var_15;
@@ -38,7 +38,7 @@ static lval fn_20(lptr* var_21, lptr var_22, const char* cloc)
 {
 lval var_24;
 if (var_22[0].vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
+wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000030.scm:18", "input is not a pair!");
 }
 var_24 = (var_22[0].v.pair.cdr ? *(var_22[0].v.pair.cdr) : LVI_NIL());
 return var_24;
@@ -52,7 +52,7 @@ lbl_7:;
 lval var_8;
 lval var_9;
 if (var_6[1].vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000030.scm:15", "input is not a pair!");
 }
 var_9 = (var_6[1].v.pair.car ? *(var_6[1].v.pair.car) : LVI_NIL());
 lval var_10;
@@ -211,7 +211,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_57 = LVI_BOOL(var_48.v.rv != var_55.v.rv);
 break;
 default:
-WILE_EX("!=", "inputs are not real-valued numbers");
+wile_exception("!=", "bld-rtl-dir/wile-rtl2-000030.scm:21", "inputs are not real-valued numbers");
 break;
 }
 if (LV_IS_FALSE(var_57)) {
@@ -237,7 +237,7 @@ var_62 = (var_62.v.pair.car ? *(var_62.v.pair.car) : LVI_NIL());
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_62;
 cachalot->l_whence = 0;
-cachalot->c_whence = LISP_WHENCE;
+cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000030.scm:22";
 longjmp(cachalot->cenv, 1);
 var_42 = var_62;
 }

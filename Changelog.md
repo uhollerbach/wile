@@ -2,7 +2,18 @@ Last update: 2023-12-24 21:00 PST
 
 # Changelog for `wile`
 
-## Current version `wile` "1.1.0"
+## Current version `wile` "1.2.0" 2023-12-31 17:00 PST
+
+- cleanups: delete some no-longer-needed scripts, consolidate headers
+
+- add vector-copy primitive
+
+- significantly improve error localization in calls to a bunch of
+  primitives: instead of "car: input is not a pair" (terrible) or
+  "car: input is not a pair at test-bad-int.c:12345" (only slightly
+  better), now write "car:input is not a pair at test-bad.scm:27"
+
+## Current version `wile` "1.1.0" 2023-12-24 21:00 PST
 
 - make calls to drand48 go through a wrapper - consolidate coverity
   errors and provide a single place where it may get changed later

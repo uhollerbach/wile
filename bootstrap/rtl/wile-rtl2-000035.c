@@ -161,7 +161,7 @@ break;
 }
 lval var_44;
 if (var_2[0].vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
+wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000035.scm:17", "input is not a pair!");
 }
 var_44 = (var_2[0].v.pair.cdr ? *(var_2[0].v.pair.cdr) : LVI_NIL());
 lval var_45;
@@ -170,7 +170,7 @@ if (!LV_IS_FALSE(var_45)) {
 lval var_46;
 lval var_47;
 if (var_2[0].vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000035.scm:18", "input is not a pair!");
 }
 var_47 = (var_2[0].v.pair.car ? *(var_2[0].v.pair.car) : LVI_NIL());
 lval var_48;
@@ -223,7 +223,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_50 = LVI_BOOL(var_48.v.rv < var_49.v.rv);
 break;
 default:
-WILE_EX("<", "inputs are not real-valued numbers");
+wile_exception("<", "bld-rtl-dir/wile-rtl2-000035.scm:18", "inputs are not real-valued numbers");
 break;
 }
 if (LV_IS_FALSE(var_50)) {
@@ -241,13 +241,13 @@ var_52 = (var_52.v.pair.car ? *(var_52.v.pair.car) : LVI_NIL());
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_52;
 cachalot->l_whence = 0;
-cachalot->c_whence = LISP_WHENCE;
+cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000035.scm:20";
 longjmp(cachalot->cenv, 1);
 var_46 = var_52;
 } else {
 lval var_54;
 if (var_2[0].vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000035.scm:19", "input is not a pair!");
 }
 var_54 = (var_2[0].v.pair.car ? *(var_2[0].v.pair.car) : LVI_NIL());
 var_46 = var_54;
@@ -311,7 +311,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_73 = LVI_BOOL(var_55.v.rv < var_72.v.rv);
 break;
 default:
-WILE_EX("<", "inputs are not real-valued numbers");
+wile_exception("<", "bld-rtl-dir/wile-rtl2-000035.scm:23", "inputs are not real-valued numbers");
 break;
 }
 if (LV_IS_FALSE(var_73)) {
@@ -329,7 +329,7 @@ var_75 = (var_75.v.pair.car ? *(var_75.v.pair.car) : LVI_NIL());
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_75;
 cachalot->l_whence = 0;
-cachalot->c_whence = LISP_WHENCE;
+cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000035.scm:25";
 longjmp(cachalot->cenv, 1);
 var_71 = var_75;
 } else {

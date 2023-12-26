@@ -72,14 +72,14 @@ char* cp = strchr(var_17.v.str, 'r');
 var_18 = var_12;
 while (*(--cp) != 'c') {
 if (var_18.vt != LV_PAIR) {
-WILE_EX("cxr", "input does not have the right structure!");
+wile_exception("cxr", "bld-rtl-dir/wile-rtl2-000056.scm:19", "input does not have the right structure!");
 }
 if (*cp == 'a') {
 var_18 = (var_18.v.pair.car ? *(var_18.v.pair.car) : LVI_NIL());
 } else if (*cp == 'd') {
 var_18 = (var_18.v.pair.cdr ? *(var_18.v.pair.cdr) : LVI_NIL());
 } else {
-WILE_EX("cxr", "got malformed control string '%s'", var_17.v.str);
+wile_exception("cxr", "bld-rtl-dir/wile-rtl2-000056.scm:19", "got malformed control string '%s'", var_17.v.str);
 }
 }
 }

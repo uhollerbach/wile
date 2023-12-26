@@ -435,7 +435,7 @@ double cosine_integral(double x)
 
 // compute a^b, (hopefully) taking into account most of the special cases
 
-lval wile_expt(lval* a, lval* b)
+lval wile_expt(lval* a, lval* b, const char* loc)
 {
     lval res;
 
@@ -507,7 +507,7 @@ lval wile_expt(lval* a, lval* b)
 	break;
 
     default:
-	WILE_EX("expt", "expects two numeric arguments");
+	wile_exception("expt", loc, "expects two numeric arguments");
 	break;
     }
 

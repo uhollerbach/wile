@@ -75,7 +75,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_11 = LVI_BOOL(var_7.v.rv == var_2[0].v.rv);
 break;
 default:
-WILE_EX("==", "inputs are not real-valued numbers");
+wile_exception("==", "bld-rtl-dir/wile-rtl2-000068.scm:16", "inputs are not real-valued numbers");
 break;
 }
 if (!LV_IS_FALSE(var_11)) {
@@ -85,10 +85,10 @@ break;
 }
 {
 if (var_4.vt != LV_VECTOR) {
-WILE_EX("vector-set!", "input is not a vector");
+wile_exception("vector-set!", "bld-rtl-dir/wile-rtl2-000068.scm:17", "input is not a vector");
 }
 if (var_7.vt != LV_INT || var_7.v.iv < 0 || (size_t) var_7.v.iv >= var_4.v.vec.capa) {
-WILE_EX("vector-set!", "got bad index value");
+wile_exception("vector-set!", "bld-rtl-dir/wile-rtl2-000068.scm:17", "got bad index value");
 }
 var_4.v.vec.arr[var_7.v.iv] = new_lv(LV_NIL);
 *(var_4.v.vec.arr[var_7.v.iv]) = var_7;
@@ -127,7 +127,7 @@ case LV_CMPLX:
 var_22 = LVI_BOOL(CREAL(var_17.v.cv) == 0.0 && CIMAG(var_17.v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000068.scm:19", "expects a real-valued number");
 }
 if (!LV_IS_FALSE(var_22)) {
 var_16 = var_4;
@@ -143,7 +143,7 @@ var_25 = LVI_REAL(LV_RAT2REAL(var_23));
 } else if (var_23.vt == LV_REAL) {
 var_25 = var_23;
 } else {
-WILE_EX("random-uniform", "expects a real-valued input");
+wile_exception("random-uniform", "bld-rtl-dir/wile-rtl2-000068.scm:20", "expects a real-valued input");
 }
 lval var_26;
 if (var_17.vt == LV_INT) {
@@ -153,7 +153,7 @@ var_26 = LVI_REAL(LV_RAT2REAL(var_17));
 } else if (var_17.vt == LV_REAL) {
 var_26 = var_17;
 } else {
-WILE_EX("random-uniform", "expects a real-valued input");
+wile_exception("random-uniform", "bld-rtl-dir/wile-rtl2-000068.scm:20", "expects a real-valued input");
 }
 lval var_24;
 var_24 = LVI_REAL(var_25.v.rv + (var_26.v.rv - var_25.v.rv)*wile_rand_dbl());
@@ -165,14 +165,14 @@ var_27 = LVI_INT(var_24.v.irv.num/var_24.v.irv.den);
 } else if (var_24.vt == LV_REAL) {
 var_27 = LVI_INT((var_24.v.rv >= 0.0) ? FLOOR(var_24.v.rv) : CEIL(var_24.v.rv));
 } else {
-WILE_EX("integer", "expects one real-valued argument");
+wile_exception("integer", "bld-rtl-dir/wile-rtl2-000068.scm:20", "expects one real-valued argument");
 }
 {
 if (var_4.vt != LV_VECTOR) {
-WILE_EX("vector-swap!", "input is not a vector");
+wile_exception("vector-swap!", "bld-rtl-dir/wile-rtl2-000068.scm:20", "input is not a vector");
 }
 if (var_17.vt != LV_INT || var_17.v.iv < 0 || (size_t) var_17.v.iv >= var_4.v.vec.capa || var_27.vt != LV_INT || var_27.v.iv < 0 || (size_t) var_27.v.iv >= var_4.v.vec.capa) {
-WILE_EX("vector-swap!", "got bad index value");
+wile_exception("vector-swap!", "bld-rtl-dir/wile-rtl2-000068.scm:20", "got bad index value");
 }
 lptr tmp = var_4.v.vec.arr[var_17.v.iv];
 var_4.v.vec.arr[var_17.v.iv] = var_4.v.vec.arr[var_27.v.iv];

@@ -25,12 +25,12 @@ lval wile_foldl1(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 if (var_2[1].vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000028.scm:14", "input is not a pair!");
 }
 var_4 = (var_2[1].v.pair.car ? *(var_2[1].v.pair.car) : LVI_NIL());
 lval var_5;
 if (var_2[1].vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
+wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000028.scm:14", "input is not a pair!");
 }
 var_5 = (var_2[1].v.pair.cdr ? *(var_2[1].v.pair.cdr) : LVI_NIL());
 lval var_6;

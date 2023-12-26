@@ -31,7 +31,7 @@ var_11 = LVI_INT(var_9[0].v.vec.capa);
 } else if (var_9[0].vt == LV_BVECTOR) {
 var_11 = LVI_INT(var_9[0].v.bvec.capa);
 } else {
-WILE_EX("vector-length", "input is not a vector");
+wile_exception("vector-length", "bld-rtl-dir/wile-rtl2-000070.scm:14", "input is not a vector");
 }
 }
 return var_11;
@@ -74,10 +74,10 @@ static lval fn_46(lptr* var_47, lptr var_48, const char* cloc)
 lval var_50;
 {
 if (var_48[0].vt != LV_VECTOR) {
-WILE_EX("vector-ref", "input is not a vector");
+wile_exception("vector-ref", "bld-rtl-dir/wile-rtl2-000070.scm:22", "input is not a vector");
 }
 if (V_CLOS(var_47,0).vt != LV_INT || V_CLOS(var_47,0).v.iv < 0 || (size_t) V_CLOS(var_47,0).v.iv >= var_48[0].v.vec.capa) {
-WILE_EX("vector-ref", "got bad index value");
+wile_exception("vector-ref", "bld-rtl-dir/wile-rtl2-000070.scm:22", "got bad index value");
 }
 var_50 = var_48[0].v.vec.arr[V_CLOS(var_47,0).v.iv] ? *(var_48[0].v.vec.arr[V_CLOS(var_47,0).v.iv]) : LVI_NIL();
 }
@@ -161,7 +161,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_31 = LVI_BOOL(var_21.v.rv == var_29.v.rv);
 break;
 default:
-WILE_EX("==", "inputs are not real-valued numbers");
+wile_exception("==", "bld-rtl-dir/wile-rtl2-000070.scm:15", "inputs are not real-valued numbers");
 break;
 }
 if (LV_IS_FALSE(var_31)) {
@@ -179,14 +179,14 @@ var_33 = (var_33.v.pair.car ? *(var_33.v.pair.car) : LVI_NIL());
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_33;
 cachalot->l_whence = 0;
-cachalot->c_whence = LISP_WHENCE;
+cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000070.scm:16";
 longjmp(cachalot->cenv, 1);
 } else {
 }
 lval var_36;
 lval var_37;
 if (var_6.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000070.scm:17", "input is not a pair!");
 }
 var_37 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
 var_36 = var_37;
@@ -243,7 +243,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_45 = LVI_BOOL(var_41.v.rv == var_36.v.rv);
 break;
 default:
-WILE_EX("==", "inputs are not real-valued numbers");
+wile_exception("==", "bld-rtl-dir/wile-rtl2-000070.scm:20", "inputs are not real-valued numbers");
 break;
 }
 if (!LV_IS_FALSE(var_45)) {
@@ -272,10 +272,10 @@ var_53 = wile_gen_list(2, var_54, NULL);
 var_53 = wile_apply_function(&(var_53), LISP_WHENCE);
 {
 if (var_38.vt != LV_VECTOR) {
-WILE_EX("vector-set!", "input is not a vector");
+wile_exception("vector-set!", "bld-rtl-dir/wile-rtl2-000070.scm:21", "input is not a vector");
 }
 if (var_41.vt != LV_INT || var_41.v.iv < 0 || (size_t) var_41.v.iv >= var_38.v.vec.capa) {
-WILE_EX("vector-set!", "got bad index value");
+wile_exception("vector-set!", "bld-rtl-dir/wile-rtl2-000070.scm:21", "got bad index value");
 }
 var_38.v.vec.arr[var_41.v.iv] = new_lv(LV_NIL);
 *(var_38.v.vec.arr[var_41.v.iv]) = var_53;

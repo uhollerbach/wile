@@ -40,7 +40,7 @@ var_8 = var_10;
 if (LV_IS_FALSE(var_8)) { break; }
 lval var_11;
 if (var_6.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000054.scm:19", "input is not a pair!");
 }
 var_11 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
 lval var_12;
@@ -52,13 +52,13 @@ if (LV_IS_FALSE(var_8)) {
 } else {
 lval var_14;
 if (var_6.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000054.scm:20", "input is not a pair!");
 }
 var_14 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
 var_4 = var_14;
 lval var_15;
 if (var_6.vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
+wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000054.scm:21", "input is not a pair!");
 }
 var_15 = (var_6.v.pair.cdr ? *(var_6.v.pair.cdr) : LVI_NIL());
 var_6 = var_15;
@@ -82,7 +82,7 @@ break;
 }
 lval var_23;
 if (var_6.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000054.scm:27", "input is not a pair!");
 }
 var_23 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
 if (var_23.vt == LV_CHAR) {
@@ -90,13 +90,13 @@ fputc(var_23.v.chr, stdout);
 } else if (var_23.vt == LV_STRING) {
 fputs(var_23.v.str, stdout);
 } else {
-WILE_EX("write-string", "input is not a string or char!");
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000054.scm:27", "input is not a string or char!");
 }
 (void)
  LVI_BOOL(true);
 lval var_25;
 if (var_6.vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
+wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000054.scm:28", "input is not a pair!");
 }
 var_25 = (var_6.v.pair.cdr ? *(var_6.v.pair.cdr) : LVI_NIL());
 var_6 = var_25;
@@ -127,7 +127,7 @@ break;
 }
 lval var_34;
 if (var_6.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000054.scm:24", "input is not a pair!");
 }
 var_34 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
 {
@@ -135,21 +135,21 @@ FILE* fp;
 if (var_4.vt == LV_FILE_PORT || var_4.vt == LV_PIPE_PORT || var_4.vt == LV_SOCK_PORT) {
 fp = var_4.v.fp;
 } else {
-WILE_EX("write-string", "first input is not a port!");
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000054.scm:24", "first input is not a port!");
 }
 if (var_34.vt == LV_CHAR) {
 fputc(var_34.v.chr, fp);
 } else if (var_34.vt == LV_STRING) {
 fputs(var_34.v.str, fp);
 } else {
-WILE_EX("write-string", "second input is not a string or char!");
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000054.scm:24", "second input is not a string or char!");
 }
 (void)
  LVI_BOOL(true);
 }
 lval var_36;
 if (var_6.vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
+wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000054.scm:25", "input is not a pair!");
 }
 var_36 = (var_6.v.pair.cdr ? *(var_6.v.pair.cdr) : LVI_NIL());
 var_6 = var_36;

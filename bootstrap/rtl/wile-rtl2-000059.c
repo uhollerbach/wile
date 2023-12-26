@@ -39,7 +39,7 @@ var_10 = LVI_INT(146097);
 lval var_11;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_9.v.iv, var_10.v.iv, &nq, &nr);
+trunc_qr(var_9.v.iv, var_10.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000059.scm:20");
 var_11 = LVI_INT(nq);
 }
 var_7 = var_11;
@@ -57,7 +57,7 @@ var_17 = LVI_INT(4);
 lval var_18;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_16.v.iv, var_17.v.iv, &nq, &nr);
+trunc_qr(var_16.v.iv, var_17.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000059.scm:21");
 var_18 = LVI_INT(nq);
 }
 lval var_19;
@@ -77,7 +77,7 @@ var_25 = LVI_INT(1461001);
 lval var_26;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_24.v.iv, var_25.v.iv, &nq, &nr);
+trunc_qr(var_24.v.iv, var_25.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000059.scm:22");
 var_26 = LVI_INT(nq);
 }
 var_20 = var_26;
@@ -93,7 +93,7 @@ var_31 = LVI_INT(4);
 lval var_32;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_30.v.iv, var_31.v.iv, &nq, &nr);
+trunc_qr(var_30.v.iv, var_31.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000059.scm:23");
 var_32 = LVI_INT(nq);
 }
 lval var_33;
@@ -111,7 +111,7 @@ var_38 = LVI_INT(2447);
 lval var_39;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_37.v.iv, var_38.v.iv, &nq, &nr);
+trunc_qr(var_37.v.iv, var_38.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000059.scm:24");
 var_39 = LVI_INT(nq);
 }
 var_35 = var_39;
@@ -125,7 +125,7 @@ var_43 = LVI_INT(80);
 lval var_44;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_42.v.iv, var_43.v.iv, &nq, &nr);
+trunc_qr(var_42.v.iv, var_43.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000059.scm:25");
 var_44 = LVI_INT(nq);
 }
 lval var_45;
@@ -137,7 +137,7 @@ var_47 = LVI_INT(11);
 lval var_48;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_35.v.iv, var_47.v.iv, &nq, &nr);
+trunc_qr(var_35.v.iv, var_47.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000059.scm:26");
 var_48 = LVI_INT(nq);
 }
 var_46 = var_48;
@@ -167,7 +167,7 @@ case LV_CMPLX:
 var_53 = LVI_CMPLX2(-CREAL(var_52.v.cv), -CIMAG(var_52.v.cv));
 break;
 default:
-WILE_EX("negative", "got a non-numeric argument");
+wile_exception("negative", "bld-rtl-dir/wile-rtl2-000059.scm:27", "got a non-numeric argument");
 }
 lval var_54;
 var_54 = LVI_INT(var_35.v.iv + var_50.v.iv + var_53.v.iv);

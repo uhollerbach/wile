@@ -56,7 +56,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_9 = LVI_BOOL(var_6[1].v.rv < var_6[0].v.rv);
 break;
 default:
-WILE_EX("<", "inputs are not real-valued numbers");
+wile_exception("<", "bld-rtl-dir/wile-rtl2-000051.scm:17", "inputs are not real-valued numbers");
 break;
 }
 if (LV_IS_FALSE(var_9)) {

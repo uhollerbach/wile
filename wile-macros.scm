@@ -2,8 +2,8 @@
 ;;; they are inaccessible there, so bring them back here and include this
 ;;; file into test-wile.scm
 
-(set-environment-variable "SKEEM_LIBRARY_PATH"
-			  (get-environment-variable "WILE_LIBRARY_PATH"))
+(set-environment-variable "SKEEM_LIBRARY_PATH" ".:library")
+(set-environment-variable "WILE_LIBRARY_PATH" ".:library")
 
 ;;; stuff that skeem doesn't know about
 
@@ -11,7 +11,7 @@
 
 (define list-reverse reverse)
 
-(define(list-length=? n lst)
+(define (list-length=? n lst)
   (cond ((and (zero? n) (null? lst)) #t)
 	((or (zero? n) (null? lst)) #f)
 	(else (list-length=? (- n 1) (cdr lst)))))
@@ -34,6 +34,12 @@
 
 (define (make-iproc args ig-arity body ig-env ig-mac)
   (eval (cons 'lambda (cons args body))))
+
+(define (get-config-val key)
+  (let ((kv (assv key global-config)))
+    (if kv
+	(cadr kv)
+	(ERR "key '%s' was not found in config!" key))))
 
 ;;; the first group of macros are somewhat generic
 

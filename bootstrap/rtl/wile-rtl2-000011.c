@@ -72,7 +72,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_13 = LVI_BOOL(var_4.v.rv <= var_12.v.rv);
 break;
 default:
-WILE_EX("<=", "inputs are not real-valued numbers");
+wile_exception("<=", "bld-rtl-dir/wile-rtl2-000011.scm:15", "inputs are not real-valued numbers");
 break;
 }
 var_10 = var_13;
@@ -88,7 +88,7 @@ var_15 = LVI_INT(var_4.v.iv - var_14.v.iv);
 var_4 = var_15;
 lval var_16;
 if (var_2[0].vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
+wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000011.scm:17", "input is not a pair!");
 }
 var_16 = (var_2[0].v.pair.cdr ? *(var_2[0].v.pair.cdr) : LVI_NIL());
 var_2[0] = var_16;

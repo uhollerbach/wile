@@ -41,7 +41,7 @@ case LV_CMPLX:
 var_5 = LVI_BOOL(CREAL(var_2[0].v.cv) == 0.0 && CIMAG(var_2[0].v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000003.scm:14", "expects a real-valued number");
 }
 if (!LV_IS_FALSE(var_5)) {
 lval var_6;
@@ -74,7 +74,7 @@ var_10 = wile_subtract(NULL, var_11, "bld-rtl-dir/wile-rtl2-000003.scm:16");
 }
 lval var_13;
 if (var_2[1].vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
+wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000003.scm:16", "input is not a pair!");
 }
 var_13 = (var_2[1].v.pair.cdr ? *(var_2[1].v.pair.cdr) : LVI_NIL());
 lval var_16[8];

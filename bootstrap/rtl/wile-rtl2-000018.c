@@ -90,7 +90,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_17 = LVI_BOOL(var_10.v.rv == var_4.v.rv);
 break;
 default:
-WILE_EX("==", "inputs are not real-valued numbers");
+wile_exception("==", "bld-rtl-dir/wile-rtl2-000018.scm:18", "inputs are not real-valued numbers");
 break;
 }
 if (!LV_IS_FALSE(var_17)) {
@@ -100,7 +100,7 @@ break;
 lval var_18;
 lval var_19;
 if (var_11.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000018.scm:19", "input is not a pair!");
 }
 var_19 = (var_11.v.pair.car ? *(var_11.v.pair.car) : LVI_NIL());
 var_18 = var_19;
@@ -150,7 +150,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_26 = LVI_BOOL(var_18.v.rv >= var_25.v.rv);
 break;
 default:
-WILE_EX(">=", "inputs are not real-valued numbers");
+wile_exception(">=", "bld-rtl-dir/wile-rtl2-000018.scm:21", "inputs are not real-valued numbers");
 break;
 }
 var_23 = var_26;
@@ -187,7 +187,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_28 = LVI_BOOL(var_18.v.rv < var_27.v.rv);
 break;
 default:
-WILE_EX("<", "inputs are not real-valued numbers");
+wile_exception("<", "bld-rtl-dir/wile-rtl2-000018.scm:21", "inputs are not real-valued numbers");
 break;
 }
 var_23 = var_28;
@@ -211,18 +211,18 @@ var_30 = (var_30.v.pair.car ? *(var_30.v.pair.car) : LVI_NIL());
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_30;
 cachalot->l_whence = 0;
-cachalot->c_whence = LISP_WHENCE;
+cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000018.scm:23";
 longjmp(cachalot->cenv, 1);
 } else {
 {
 if (var_7.vt != LV_BVECTOR) {
-WILE_EX("bytevector-set!", "input is not a bytevector");
+wile_exception("bytevector-set!", "bld-rtl-dir/wile-rtl2-000018.scm:22", "input is not a bytevector");
 }
 if (var_10.vt != LV_INT || var_10.v.iv < 0 || (size_t) var_10.v.iv >= var_7.v.bvec.capa) {
-WILE_EX("bytevector-set!", "got bad index value");
+wile_exception("bytevector-set!", "bld-rtl-dir/wile-rtl2-000018.scm:22", "got bad index value");
 }
 if (!(var_18.vt == LV_CHAR || (var_18.vt == LV_INT && var_18.v.iv >= 0 && var_18.v.iv < 256))) {
-WILE_EX("bytevector-set!", "got bad input value");
+wile_exception("bytevector-set!", "bld-rtl-dir/wile-rtl2-000018.scm:22", "got bad input value");
 }
 var_7.v.bvec.arr[var_10.v.iv] = (var_18.vt == LV_CHAR) ? var_18.v.chr : (unsigned char) var_18.v.iv;
 }
@@ -234,7 +234,7 @@ var_34 = LVI_INT(var_10.v.iv + var_33.v.iv);
 var_12 = var_34;
 lval var_35;
 if (var_11.vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
+wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000018.scm:17", "input is not a pair!");
 }
 var_35 = (var_11.v.pair.cdr ? *(var_11.v.pair.cdr) : LVI_NIL());
 var_13 = var_35;

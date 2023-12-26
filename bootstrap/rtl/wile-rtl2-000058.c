@@ -33,7 +33,7 @@ var_7 = LVI_INT(12);
 lval var_8;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_6.v.iv, var_7.v.iv, &nq, &nr);
+trunc_qr(var_6.v.iv, var_7.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:23");
 var_8 = LVI_INT(nq);
 }
 var_4 = var_8;
@@ -59,7 +59,7 @@ case LV_CMPLX:
 var_11 = LVI_CMPLX2(-CREAL(var_4.v.cv), -CIMAG(var_4.v.cv));
 break;
 default:
-WILE_EX("negative", "got a non-numeric argument");
+wile_exception("negative", "bld-rtl-dir/wile-rtl2-000058.scm:24", "got a non-numeric argument");
 }
 lval var_12;
 var_12 = LVI_INT(var_2[0].v.iv + var_10.v.iv + var_11.v.iv);
@@ -87,7 +87,7 @@ var_22 = LVI_INT(5);
 lval var_23;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_21.v.iv, var_22.v.iv, &nq, &nr);
+trunc_qr(var_21.v.iv, var_22.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:26");
 var_23 = LVI_INT(nq);
 }
 lval var_24;
@@ -99,7 +99,7 @@ var_26 = LVI_INT(4);
 lval var_27;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_9.v.iv, var_26.v.iv, &nq, &nr);
+trunc_qr(var_9.v.iv, var_26.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:27");
 var_27 = LVI_INT(nq);
 }
 lval var_28;
@@ -107,7 +107,7 @@ var_28 = LVI_INT(-100);
 lval var_29;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_9.v.iv, var_28.v.iv, &nq, &nr);
+trunc_qr(var_9.v.iv, var_28.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:27");
 var_29 = LVI_INT(nq);
 }
 lval var_30;
@@ -115,7 +115,7 @@ var_30 = LVI_INT(400);
 lval var_31;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_9.v.iv, var_30.v.iv, &nq, &nr);
+trunc_qr(var_9.v.iv, var_30.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:27");
 var_31 = LVI_INT(nq);
 }
 lval var_32;

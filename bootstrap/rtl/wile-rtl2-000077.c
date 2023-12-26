@@ -51,7 +51,7 @@ if (LV_IS_FALSE(var_20)) {
 if (LV_IS_FALSE(V_CLOS(var_17,0))) {
 lval var_27;
 if (var_20.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000077.scm:25", "input is not a pair!");
 }
 var_27 = (var_20.v.pair.car ? *(var_20.v.pair.car) : LVI_NIL());
 V_CLOS(var_17,0) = var_27;
@@ -67,27 +67,27 @@ char* cp = strchr(var_29.v.str, 'r');
 var_30 = var_20;
 while (*(--cp) != 'c') {
 if (var_30.vt != LV_PAIR) {
-WILE_EX("cxr", "input does not have the right structure!");
+wile_exception("cxr", "bld-rtl-dir/wile-rtl2-000077.scm:26", "input does not have the right structure!");
 }
 if (*cp == 'a') {
 var_30 = (var_30.v.pair.car ? *(var_30.v.pair.car) : LVI_NIL());
 } else if (*cp == 'd') {
 var_30 = (var_30.v.pair.cdr ? *(var_30.v.pair.cdr) : LVI_NIL());
 } else {
-WILE_EX("cxr", "got malformed control string '%s'", var_29.v.str);
+wile_exception("cxr", "bld-rtl-dir/wile-rtl2-000077.scm:26", "got malformed control string '%s'", var_29.v.str);
 }
 }
 }
 lval var_31;
 var_31 = LVI_INT(2);
 lval var_32;
-if (var_30.vt != LV_STRING) {
-WILE_EX("string-copy", "expects a string input");
+if (var_30.vt != LV_STRING || var_31.vt != LV_INT) {
+wile_exception("string-copy", "bld-rtl-dir/wile-rtl2-000077.scm:26", "expects a string and an integer input");
 }
 {
 size_t len = strlen(var_30.v.str);
 if (var_31.v.iv < 0 || (size_t) var_31.v.iv >= len) {
-WILE_EX("string-copy", "start index is out of range");
+wile_exception("string-copy", "bld-rtl-dir/wile-rtl2-000077.scm:26", "start index is out of range");
 }
 var_32 = LVI_STRING(var_30.v.str + var_31.v.iv);
 }
@@ -112,16 +112,16 @@ var_37[0] = var_36;
 var_36 = wile_subtract(NULL, var_37, "bld-rtl-dir/wile-rtl2-000077.scm:27");
 }
 lval var_39;
-if (var_20.vt != LV_STRING) {
-WILE_EX("string-copy", "expects a string input");
+if (var_20.vt != LV_STRING || var_33.vt != LV_INT || var_36.vt != LV_INT) {
+wile_exception("string-copy", "bld-rtl-dir/wile-rtl2-000077.scm:27", "expects a string and two integer inputs");
 }
 {
 size_t len = strlen(var_20.v.str);
 if (var_33.v.iv < 0 || (size_t) var_33.v.iv >= len) {
-WILE_EX("string-copy", "start index is out of range");
+wile_exception("string-copy", "bld-rtl-dir/wile-rtl2-000077.scm:27", "start index is out of range");
 }
 if (var_36.v.iv < var_33.v.iv || (size_t) var_36.v.iv >= len) {
-WILE_EX("string-copy", "end index is out of range");
+wile_exception("string-copy", "bld-rtl-dir/wile-rtl2-000077.scm:27", "end index is out of range");
 }
 var_39.vt = LV_STRING;
 var_39.origin = var_20.origin;
@@ -261,7 +261,7 @@ var_54 = wile_gen_list(6, var_55, NULL);
 var_54 = wile_apply_function(&(var_54), LISP_WHENCE);
 var_8 = var_54;
 lval var_56;
-var_56 = wile_run_pipe_command(var_8, "r", LISP_WHENCE);
+var_56 = wile_run_pipe_command(var_8, "r", "bld-rtl-dir/wile-rtl2-000077.scm:33");
 var_10 = var_56;
 lval var_57;
 var_57 = LVI_STRING("wile stack trace begin\n");
@@ -375,7 +375,7 @@ var_90 = var_92;
 lval var_94;
 lval var_95;
 if (var_90.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000077.scm:47", "input is not a pair!");
 }
 var_95 = (var_90.v.pair.car ? *(var_90.v.pair.car) : LVI_NIL());
 var_94 = var_95;
@@ -388,14 +388,14 @@ char* cp = strchr(var_97.v.str, 'r');
 var_98 = var_90;
 while (*(--cp) != 'c') {
 if (var_98.vt != LV_PAIR) {
-WILE_EX("cxr", "input does not have the right structure!");
+wile_exception("cxr", "bld-rtl-dir/wile-rtl2-000077.scm:48", "input does not have the right structure!");
 }
 if (*cp == 'a') {
 var_98 = (var_98.v.pair.car ? *(var_98.v.pair.car) : LVI_NIL());
 } else if (*cp == 'd') {
 var_98 = (var_98.v.pair.cdr ? *(var_98.v.pair.cdr) : LVI_NIL());
 } else {
-WILE_EX("cxr", "got malformed control string '%s'", var_97.v.str);
+wile_exception("cxr", "bld-rtl-dir/wile-rtl2-000077.scm:48", "got malformed control string '%s'", var_97.v.str);
 }
 }
 }

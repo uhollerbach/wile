@@ -31,7 +31,7 @@ var_5 = LVI_INT(var_2[0].v.vec.capa);
 } else if (var_2[0].vt == LV_BVECTOR) {
 var_5 = LVI_INT(var_2[0].v.bvec.capa);
 } else {
-WILE_EX("vector-length", "input is not a vector");
+wile_exception("vector-length", "bld-rtl-dir/wile-rtl2-000020.scm:14", "input is not a vector");
 }
 }
 var_4 = var_5;
@@ -62,7 +62,7 @@ case LV_CMPLX:
 var_13 = LVI_BOOL(CREAL(var_4.v.cv) == 0.0 && CIMAG(var_4.v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000020.scm:16", "expects a real-valued number");
 }
 if (!LV_IS_FALSE(var_13)) {
 break;
@@ -75,10 +75,10 @@ var_4 = var_15;
 lval var_16;
 {
 if (var_2[0].vt != LV_VECTOR) {
-WILE_EX("vector-ref", "input is not a vector");
+wile_exception("vector-ref", "bld-rtl-dir/wile-rtl2-000020.scm:18", "input is not a vector");
 }
 if (var_4.vt != LV_INT || var_4.v.iv < 0 || (size_t) var_4.v.iv >= var_2[0].v.vec.capa) {
-WILE_EX("vector-ref", "got bad index value");
+wile_exception("vector-ref", "bld-rtl-dir/wile-rtl2-000020.scm:18", "got bad index value");
 }
 var_16 = var_2[0].v.vec.arr[var_4.v.iv] ? *(var_2[0].v.vec.arr[var_4.v.iv]) : LVI_NIL();
 }

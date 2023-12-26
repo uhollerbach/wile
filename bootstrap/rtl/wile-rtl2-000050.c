@@ -57,7 +57,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_14 = LVI_BOOL(var_11[1].v.rv < var_11[0].v.rv);
 break;
 default:
-WILE_EX("<", "inputs are not real-valued numbers");
+wile_exception("<", "bld-rtl-dir/wile-rtl2-000050.scm:16", "inputs are not real-valued numbers");
 break;
 }
 if (LV_IS_FALSE(var_14)) {
@@ -129,7 +129,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_31 = LVI_BOOL(var_28[1].v.rv > var_28[0].v.rv);
 break;
 default:
-WILE_EX(">", "inputs are not real-valued numbers");
+wile_exception(">", "bld-rtl-dir/wile-rtl2-000050.scm:18", "inputs are not real-valued numbers");
 break;
 }
 if (LV_IS_FALSE(var_31)) {
@@ -201,7 +201,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_5 = LVI_BOOL(var_2[0].v.rv == var_2[1].v.rv);
 break;
 default:
-WILE_EX("==", "inputs are not real-valued numbers");
+wile_exception("==", "bld-rtl-dir/wile-rtl2-000050.scm:14", "inputs are not real-valued numbers");
 break;
 }
 if (!LV_IS_FALSE(var_5)) {
@@ -244,7 +244,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_8 = LVI_BOOL(var_2[0].v.rv < var_2[1].v.rv);
 break;
 default:
-WILE_EX("<", "inputs are not real-valued numbers");
+wile_exception("<", "bld-rtl-dir/wile-rtl2-000050.scm:15", "inputs are not real-valued numbers");
 break;
 }
 if (!LV_IS_FALSE(var_8)) {
@@ -291,7 +291,7 @@ case TYPE_COMBO(LV_REAL,LV_REAL):
 var_25 = LVI_BOOL(var_2[0].v.rv > var_2[1].v.rv);
 break;
 default:
-WILE_EX(">", "inputs are not real-valued numbers");
+wile_exception(">", "bld-rtl-dir/wile-rtl2-000050.scm:17", "inputs are not real-valued numbers");
 break;
 }
 if (!LV_IS_FALSE(var_25)) {

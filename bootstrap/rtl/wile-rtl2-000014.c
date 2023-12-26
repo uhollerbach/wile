@@ -39,7 +39,7 @@ case LV_INT:
 var_7 = LVI_BOOL(var_5.v.iv < 0);
 break;
 default:
-WILE_EX("negative?", "expects a real-valued number");
+wile_exception("negative?", "bld-rtl-dir/wile-rtl2-000014.scm:16", "expects a real-valued number");
 }
 if (LV_IS_FALSE(var_7)) {
 } else {
@@ -67,7 +67,7 @@ case LV_INT:
 var_13 = LVI_BOOL(var_5.v.iv < 0);
 break;
 default:
-WILE_EX("negative?", "expects a real-valued number");
+wile_exception("negative?", "bld-rtl-dir/wile-rtl2-000014.scm:18", "expects a real-valued number");
 }
 if (LV_IS_FALSE(var_13)) {
 lval var_15;
@@ -95,7 +95,7 @@ case LV_CMPLX:
 var_19 = LVI_BOOL(CREAL(var_15.v.cv) == 0.0 && CIMAG(var_15.v.cv) == 0.0);
 break;
 default:
-WILE_EX("zero?", "expects a real-valued number");
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000014.scm:21", "expects a real-valued number");
 }
 var_18 = var_19;
 if (!LV_IS_FALSE(var_18)) { break; }
@@ -111,7 +111,7 @@ var_22 = LVI_BOOL(var_4.vt == LV_NIL);
 if (LV_IS_FALSE(var_22)) {
 lval var_23;
 if (var_4.vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000014.scm:21", "input is not a pair!");
 }
 var_23 = (var_4.v.pair.car ? *(var_4.v.pair.car) : LVI_NIL());
 var_21 = var_23;
@@ -125,7 +125,7 @@ break;
 }
 lval var_25;
 if (var_4.vt != LV_PAIR) {
-WILE_EX("cdr", "input is not a pair!");
+wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000014.scm:22", "input is not a pair!");
 }
 var_25 = (var_4.v.pair.cdr ? *(var_4.v.pair.cdr) : LVI_NIL());
 var_4 = var_25;

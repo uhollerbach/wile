@@ -25,7 +25,7 @@ static lval fn_4(lptr* var_5, lptr var_6, const char* cloc)
 {
 lval var_8;
 if (var_6[0].vt != LV_PAIR) {
-WILE_EX("car", "input is not a pair!");
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000055.scm:14", "input is not a pair!");
 }
 var_8 = (var_6[0].v.pair.car ? *(var_6[0].v.pair.car) : LVI_NIL());
 return var_8;
@@ -40,9 +40,9 @@ var_9 = LVI_STRING("select name from sqlite_schema");
 lval var_10;
 #ifdef WILE_USES_SQLITE
 if (var_2[0].vt == LV_SQLITE_PORT && var_9.vt == LV_STRING) {
-var_10 = wile_sql_run(var_2[0].v.sqlite_conn, var_9.v.str, LISP_WHENCE);
+var_10 = wile_sql_run(var_2[0].v.sqlite_conn, var_9.v.str, "bld-rtl-dir/wile-rtl2-000055.scm:14");
 } else {
-WILE_EX("sqlite-run", "expects one sqlite-port and one string");
+wile_exception("sqlite-run", "bld-rtl-dir/wile-rtl2-000055.scm:14", "expects one sqlite-port and one string");
 }
 #else
 var_10 = LVI_BOOL(false);
