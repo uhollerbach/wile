@@ -268,7 +268,9 @@ lptr lst2bvec(lptr lst)
 	++len;
 	lt = CAR(ret);
 	if (!IS_INT(lt) || lt->v.iv < 0 || lt->v.iv > UCHAR_MAX) {
-	    ERR("list->bytevector", "got bad byte value");
+	    wile_exception("list->bytevector",
+			   wile_decode_line_loc(wile_get_lisp_loc(ret)),
+			   "got bad byte value");
 	}
 	ret = CDR(ret);
     }

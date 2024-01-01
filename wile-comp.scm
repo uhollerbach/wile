@@ -908,24 +908,25 @@
     (emit-fstr "} while (0);\n")
     res))
 
-(define (cond-fail-or-raise res raze)
+(define (cond-fail-or-raise res raze loc)
   (if raze
       (let ((r #f)
-	    (a1 raze))
+	    (a1 raze)
+	    (aL loc))
 	(emit-code
 	 "cachalot = @1.next;"
 	 "cachalot->errval = @1.errval;"
-	 "cachalot->l_whence = 0;"
-	 "cachalot->c_whence = LISP_WHENCE;"
+	 "cachalot->whence = \"@L\";"
 	 "fflush(NULL);"
 	 "longjmp(cachalot->cenv, 1);"))
       (emit-fstr "%s = LVI_BOOL(false);\n" res)))
 
-(define (compile-special-cond imp-raise cur-env tcall clauses)
+(define (compile-special-cond imp-raise cur-env tcall clauses loc)
   (debug-trace 'compile-special-cond cur-env tcall clauses)
   (if (null? clauses)
       (let ((res (new-svar)))
-	(cond-fail-or-raise res imp-raise)
+	(emit-decl res)
+	(cond-fail-or-raise res imp-raise loc)
 	res)
       (let* ((is-else? (lambda (t) (and (symbol? t) (symbol=? t 'else))))
 	     (all-ts (list-reverse (map car clauses)))
@@ -956,7 +957,7 @@
 		(reset-mirrors global-mirrors)))
 	      (else
 	       (for-each doit clauses)
-	       (cond-fail-or-raise res imp-raise)))
+	       (cond-fail-or-raise res imp-raise loc)))
 	(emit-fstr "} while (0);\n")
 	res)))
 
@@ -1146,7 +1147,8 @@
 	(let ((proc (compile-expr cur-env tcall (caddr clause)))
 	      (tmp (new-svar)))
 	  (apply build-basic-list tmp (list val))
-	  (compile-runtime-apply (new-svar) proc tmp))
+	  (compile-runtime-apply
+	   (new-svar) (token-source-line clause) proc tmp))
 	(compile-special-begin cur-env tcall (cdr clause))))
    (reset-mirrors global-mirrors))
   (emit-fstr "break;\n}\n"))
@@ -1164,10 +1166,11 @@
 
 (define (do-compile-case1 type member to-int def? cur-env tcall clauses)
   (debug-trace 'do-compile-case1 cur-env tcall clauses)
-  (let ((val (maybe-compile-expr cur-env #f (car clauses)))
+  (let ((loc (token-source-line (car clauses)))
+	(val (maybe-compile-expr cur-env #f (car clauses)))
 	(res (new-svar)))
     (emit-decl res)
-    (emit-fstr "if (%s.vt != %s) {\nwile_exception(\"case\", LISP_WHENCE, \"case-value type does not match case type\");\n}\nswitch (%s%s) {\n" val type val member)
+    (emit-fstr "if (%s.vt != %s) {\nwile_exception(\"case\", \"%s\", \"case-value type does not match case type\");\n}\nswitch (%s%s) {\n" val type loc val member)
     (for-each (lambda (c) (do-one-case1 res to-int cur-env tcall val c))
 	      (cdr clauses))
     (unless def?
@@ -1191,11 +1194,12 @@
 
 (define (do-compile-case2 type member to-str def? cur-env tcall clauses)
   (debug-trace 'do-compile-case2 cur-env tcall clauses)
-  (let* ((val (maybe-compile-expr cur-env #f (car clauses)))
+  (let* ((loc (token-source-line (car clauses)))
+	 (val (maybe-compile-expr cur-env #f (car clauses)))
 	 (vm (string-append val member))
 	 (res (new-svar)))
     (emit-decl res)
-    (emit-fstr "if (%s.vt != %s) {\nwile_exception(\"case\", LISP_WHENCE, \"case-value type does not match case type\");\n}\ndo {\n" val type)
+    (emit-fstr "if (%s.vt != %s) {\nwile_exception(\"case\", \"%s\", \"case-value type does not match case type\");\n}\ndo {\n" val type loc)
     (for-each (lambda (c) (do-one-case2 res to-str cur-env tcall val vm c))
 	      (cdr clauses))
     (unless def?
@@ -1291,17 +1295,18 @@
 	(when provide-loc
 	  ;;; the commented-out mention of the variable prevents
 	  ;;; the not-used optimizer from turning this into
-	  ;;;     (void) (cachalot->c_whence) ? LVI_STRING()...
+	  ;;;     (void) (cachalot->whence) ? LVI_STRING()...
 	  ;;; which at least gcc is unhappy about, and the
 	  ;;;     __attribute__((unused))
 	  ;;; prevents gcc from complaining if this doesn't get used
 	  (emit-fstr "#ifdef __GNUC__\n__attribute__((unused))\n#endif\n")
 	  (emit-decl locv)
-	  (emit-fstr "%s = (cachalot->c_whence) ? LVI_STRING(cachalot->c_whence) : LVI_NIL();\t// %s\n" locv locv))
+	  (emit-fstr "%s = (cachalot->whence) ? LVI_STRING(cachalot->whence) : LVI_NIL();\t// %s\n" locv locv))
 	(emit-fstr "cachalot = %s.next;\n%s = %s;\n}\n}\n"
 		   ecv res (compile-special-cond
 			    ecv new-env #f
-			    ((if provide-loc cddar cdar) clauses)))
+			    ((if provide-loc cddar cdar) clauses)
+			    (token-source-line clauses)))
 	res)
       (ERR "malformed 'guard' expression '%v'" clauses)))
 
@@ -1389,7 +1394,8 @@
 	((symbol=? (car expr) 'if)
 	 (compile-special-if cur-env tcall (cdr expr)))
 	((symbol=? (car expr) 'cond)
-	 (compile-special-cond #f cur-env tcall (cdr expr)))
+	 (compile-special-cond #f cur-env tcall (cdr expr)
+			       (token-source-line expr)))
 	((symbol=? (car expr) 'do)
 	 (compile-special-do cur-env tcall (cdr expr)))
 	((symbol=? (car expr) 'let)
@@ -1680,7 +1686,8 @@
 	    (cond ((symbol=? (car op) 'c-var)
 		   (let ((tmp (new-svar)))
 		     (apply build-basic-list tmp args)
-		     (compile-runtime-apply (new-svar) (cadr op) tmp)))
+		     (compile-runtime-apply
+		      (new-svar) (token-source-line expr) (cadr op) tmp)))
 		  ((or (symbol=? (car op) 'prim)
 		       (symbol=? (car op) 'priml))
 		   (apply-prim s-name (cdr op) args call-loc
@@ -1696,7 +1703,7 @@
 		     (cdr expr)))
 	  (tmp (new-svar)))
       (apply build-basic-list tmp args)
-      (compile-runtime-apply (new-svar) ator tmp)))))
+      (compile-runtime-apply (new-svar) (token-source-line expr) ator tmp)))))
 
 (define (maybe-compile-expr cur-env tcall expr)
   (if (symbol? expr)

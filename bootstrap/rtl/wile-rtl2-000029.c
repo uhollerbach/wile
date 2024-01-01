@@ -62,7 +62,7 @@ var_20[0] = V_CLOS(var_10,0);
 var_20[1] = var_17;
 var_19 = wile_gen_list(2, var_20, NULL);
 }
-var_19 = wile_apply_function(&(var_19), LISP_WHENCE);
+var_19 = wile_apply_function(&(var_19), "bld-rtl-dir/wile-rtl2-000029.scm:16");
 lval var_21;
 {
 lptr p1 = NULL, p2 = NULL;
@@ -159,7 +159,7 @@ var_62[0] = V_CLOS(var_50,0);
 var_62[1] = var_59;
 var_61 = wile_gen_list(2, var_62, NULL);
 }
-var_61 = wile_apply_function(&(var_61), LISP_WHENCE);
+var_61 = wile_apply_function(&(var_61), "bld-rtl-dir/wile-rtl2-000029.scm:29");
 lval var_63;
 {
 lptr p1 = NULL, p2 = NULL;
@@ -279,8 +279,7 @@ var_47 = (var_47.v.pair.car ? *(var_47.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_47;
-cachalot->l_whence = 0;
-cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000029.scm:31";
+cachalot->whence = "bld-rtl-dir/wile-rtl2-000029.scm:31";
 longjmp(cachalot->cenv, 1);
 var_41 = var_47;
 } else {
@@ -357,7 +356,7 @@ var_111[0] = V_CLOS(var_97,0);
 var_111[1] = var_108;
 var_110 = wile_gen_list(2, var_111, NULL);
 }
-var_110 = wile_apply_function(&(var_110), LISP_WHENCE);
+var_110 = wile_apply_function(&(var_110), "bld-rtl-dir/wile-rtl2-000029.scm:47");
 lval var_112;
 {
 lptr p1 = NULL, p2 = NULL;
@@ -530,8 +529,7 @@ var_94 = (var_94.v.pair.car ? *(var_94.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_94;
-cachalot->l_whence = 0;
-cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000029.scm:49";
+cachalot->whence = "bld-rtl-dir/wile-rtl2-000029.scm:49";
 longjmp(cachalot->cenv, 1);
 var_86 = var_94;
 } else {
@@ -620,7 +618,7 @@ var_166[0] = V_CLOS(var_150,0);
 var_166[1] = var_163;
 var_165 = wile_gen_list(2, var_166, NULL);
 }
-var_165 = wile_apply_function(&(var_165), LISP_WHENCE);
+var_165 = wile_apply_function(&(var_165), "bld-rtl-dir/wile-rtl2-000029.scm:68");
 lval var_167;
 {
 lptr p1 = NULL, p2 = NULL;
@@ -840,8 +838,7 @@ var_147 = (var_147.v.pair.car ? *(var_147.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_147;
-cachalot->l_whence = 0;
-cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000029.scm:70";
+cachalot->whence = "bld-rtl-dir/wile-rtl2-000029.scm:70";
 longjmp(cachalot->cenv, 1);
 var_138 = var_147;
 } else {
@@ -942,7 +939,7 @@ var_227[0] = V_CLOS(var_209,0);
 var_227[1] = var_224;
 var_226 = wile_gen_list(2, var_227, NULL);
 }
-var_226 = wile_apply_function(&(var_226), LISP_WHENCE);
+var_226 = wile_apply_function(&(var_226), "bld-rtl-dir/wile-rtl2-000029.scm:93");
 lval var_228;
 {
 lptr p1 = NULL, p2 = NULL;
@@ -1209,8 +1206,7 @@ var_206 = (var_206.v.pair.car ? *(var_206.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_206;
-cachalot->l_whence = 0;
-cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000029.scm:95";
+cachalot->whence = "bld-rtl-dir/wile-rtl2-000029.scm:95";
 longjmp(cachalot->cenv, 1);
 var_196 = var_206;
 } else {
@@ -1287,7 +1283,7 @@ var_258[0] = var_244[0];
 var_258[1] = var_254;
 var_257 = wile_gen_list(2, var_258, NULL);
 }
-var_257 = wile_apply_function(&(var_257), LISP_WHENCE);
+var_257 = wile_apply_function(&(var_257), "bld-rtl-dir/wile-rtl2-000029.scm:104");
 lval var_259;
 {
 lptr p1 = NULL, p2 = NULL;
@@ -1374,7 +1370,7 @@ var_273 = wile_list_length(NULL, var_274, "bld-rtl-dir/wile-rtl2-000029.scm:105"
 }
 lval var_275;
 if (var_273.vt != LV_INT) {
-wile_exception("case", LISP_WHENCE, "case-value type does not match case type");
+wile_exception("case", "bld-rtl-dir/wile-rtl2-000029.scm:105", "case-value type does not match case type");
 }
 switch (var_273.v.iv) {
 case 0:
@@ -1682,8 +1678,7 @@ var_340 = (var_340.v.pair.car ? *(var_340.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_340;
-cachalot->l_whence = 0;
-cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000029.scm:115";
+cachalot->whence = "bld-rtl-dir/wile-rtl2-000029.scm:115";
 longjmp(cachalot->cenv, 1);
 var_319 = var_340;
 }

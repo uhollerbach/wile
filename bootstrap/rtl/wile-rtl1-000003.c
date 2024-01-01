@@ -23,8 +23,7 @@ void wile_exception(const char* func_name, const char* loc,
     snprintf(buf2, sizeof(buf2), "'%s' %s", func_name, buf1);
 
     cachalot->errval = new_string(buf2);
-    cachalot->l_whence = 0;
-    cachalot->c_whence = LISP_STRDUP(loc);
+    cachalot->whence = LISP_STRDUP(loc);
     longjmp(cachalot->cenv, 1);
 }
 

@@ -17,7 +17,7 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval var_1 = LVI_STRING_NOCPY("1.2.0");		// wile-version
+static lval var_1 = LVI_STRING_NOCPY("1.2.1");		// wile-version
 
 // definitions
 
@@ -184,7 +184,7 @@ lval var_31;
 var_31 = LVI_INT((var_30.v.iv >= 0) ? (var_29.v.iv << var_30.v.iv) : (var_29.v.iv >> -var_30.v.iv));
 lval var_32;
 if (var_31.vt != LV_INT) {
-wile_exception("case", LISP_WHENCE, "case-value type does not match case type");
+wile_exception("case", "bld-rtl-dir/wile-rtl2-000076.scm:31", "case-value type does not match case type");
 }
 switch (var_31.v.iv) {
 case 0:
@@ -269,7 +269,7 @@ lval var_45;
 var_45 = LVI_INT((var_44.v.iv >= 0) ? (var_43.v.iv << var_44.v.iv) : (var_43.v.iv >> -var_44.v.iv));
 lval var_46;
 if (var_45.vt != LV_INT) {
-wile_exception("case", LISP_WHENCE, "case-value type does not match case type");
+wile_exception("case", "bld-rtl-dir/wile-rtl2-000076.scm:26", "case-value type does not match case type");
 }
 switch (var_45.v.iv) {
 case 0:

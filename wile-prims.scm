@@ -45,9 +45,9 @@
 
 ;;; used here for apply and in wile-comp.scm
 
-(define (compile-runtime-apply r . as)
+(define (compile-runtime-apply r aL . as)
   (apply build-basic-list r as)
-  (emit-fstr "%s = wile_apply_function(&(%s), LISP_WHENCE);\n" r r)
+  (emit-fstr "%s = wile_apply_function(&(%s), \"%s\");\n" r r aL)
   r)
 
 ;;; Promote a number to be at least real type; checking for complex
@@ -931,7 +931,7 @@
 
    (list 'apply
 	 "expects one procedure and any number of arguments, and returns the result of applying the procedure to those arguments"
-	 'prim -3 compile-runtime-apply)
+	 'priml -3 compile-runtime-apply)
 
    (list 'gensym
 	 "expects no arguments, returns one newly-generated symbol which is supposed to be unique unless the user takes hostile measures to defeat the uniqueness"
@@ -3671,8 +3671,7 @@
 	      "}"
 	      "cachalot->errval = new_lv(LV_NIL);"
 	      "*(cachalot->errval) = @1;"
-	      "cachalot->l_whence = 0;"
-	      "cachalot->c_whence = \"@L\";"
+	      "cachalot->whence = \"@L\";"
 	      "longjmp(cachalot->cenv, 1);"))))
 
    (list 'log-gamma "expects one complex-valued argument and returns the complex-valued log of the gamma function of that argument"

@@ -231,8 +231,7 @@ var_52 = (var_52.v.pair.car ? *(var_52.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_52;
-cachalot->l_whence = 0;
-cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000036.scm:20";
+cachalot->whence = "bld-rtl-dir/wile-rtl2-000036.scm:20";
 longjmp(cachalot->cenv, 1);
 var_46 = var_52;
 } else {
@@ -319,8 +318,7 @@ var_70 = (var_70.v.pair.car ? *(var_70.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_70;
-cachalot->l_whence = 0;
-cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000036.scm:25";
+cachalot->whence = "bld-rtl-dir/wile-rtl2-000036.scm:25";
 longjmp(cachalot->cenv, 1);
 var_66 = var_70;
 } else {

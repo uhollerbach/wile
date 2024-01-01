@@ -258,7 +258,7 @@ var_55[4] = var_53;
 var_55[5] = var_6;
 var_54 = wile_gen_list(6, var_55, NULL);
 }
-var_54 = wile_apply_function(&(var_54), LISP_WHENCE);
+var_54 = wile_apply_function(&(var_54), "bld-rtl-dir/wile-rtl2-000077.scm:31");
 var_8 = var_54;
 lval var_56;
 var_56 = wile_run_pipe_command(var_8, "r", "bld-rtl-dir/wile-rtl2-000077.scm:33");

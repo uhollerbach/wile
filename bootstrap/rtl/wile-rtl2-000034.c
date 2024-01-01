@@ -98,7 +98,7 @@ var_13 = var_14;
 var_11 = var_2[0];
 lval var_24;
 if (var_9.vt != LV_INT) {
-wile_exception("case", LISP_WHENCE, "case-value type does not match case type");
+wile_exception("case", "bld-rtl-dir/wile-rtl2-000034.scm:24", "case-value type does not match case type");
 }
 switch (var_9.v.iv) {
 case 0:
@@ -510,8 +510,7 @@ var_100 = (var_100.v.pair.car ? *(var_100.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_100;
-cachalot->l_whence = 0;
-cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000034.scm:53";
+cachalot->whence = "bld-rtl-dir/wile-rtl2-000034.scm:53";
 longjmp(cachalot->cenv, 1);
 var_24 = var_100;
 break;

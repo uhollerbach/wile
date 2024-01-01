@@ -1,6 +1,12 @@
-Last update: 2023-12-24 21:00 PST
+Last update: 2024-1-1 23:00 PST
 
 # Changelog for `wile`
+
+## Current version `wile` "1.2.1" 2024-1-1 23:00 PST
+
+- fix a couple more bad error messages
+
+- clean up some no-longer-needed code
 
 ## Current version `wile` "1.2.0" 2023-12-31 17:00 PST
 

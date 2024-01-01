@@ -47,7 +47,7 @@ var_10[0] = var_2[0];
 var_10[1] = var_7;
 var_9 = wile_gen_list(2, var_10, NULL);
 }
-var_9 = wile_apply_function(&(var_9), LISP_WHENCE);
+var_9 = wile_apply_function(&(var_9), "bld-rtl-dir/wile-rtl2-000024.scm:16");
 lval var_11;
 if (var_2[2].vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000024.scm:16", "input is not a pair!");

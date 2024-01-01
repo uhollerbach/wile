@@ -104,7 +104,7 @@ var_16[0] = var_2[0];
 var_16[1] = var_13;
 var_15 = wile_gen_list(2, var_16, NULL);
 }
-var_15 = wile_apply_function(&(var_15), LISP_WHENCE);
+var_15 = wile_apply_function(&(var_15), "bld-rtl-dir/wile-rtl2-000071.scm:17");
 {
 if (var_2[1].vt != LV_VECTOR) {
 wile_exception("vector-set!", "bld-rtl-dir/wile-rtl2-000071.scm:17", "input is not a vector");

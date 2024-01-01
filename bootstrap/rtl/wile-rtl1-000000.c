@@ -81,8 +81,8 @@ int main(int argc, char** argv)
 	wile_main(argc, argv);
     } else {
 	fputs("caught exception", stderr);
-	if (cachalot->c_whence) {
-	    fprintf(stderr, " from %s", cachalot->c_whence);
+	if (cachalot->whence) {
+	    fprintf(stderr, " from %s", cachalot->whence);
 	}
 	if (cachalot->errval) {
 	    fputs("\n    ", stderr);

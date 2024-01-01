@@ -563,8 +563,7 @@ typedef struct lisp_ifunc {
 struct lisp_escape_info {
     jmp_buf cenv;
     lptr errval;
-    lisp_loc_t l_whence;
-    const char* c_whence;
+    const char* whence;
     struct lisp_escape_info* next;
 };
 
@@ -844,9 +843,6 @@ lptr new_spine(lptr lp);
 	exit(1);							\
     } while (0)
 
-#define ERR(fname, ...)							\
-    err_print(fname, 0, LISP_WHENCE, __VA_ARGS__)
-
 #define WARN(fname, ...)						\
     do {								\
 	fprintf(stderr, "warning: '%s' ", fname);			\
@@ -1112,10 +1108,6 @@ lisp_loc_t wile_encode_line_loc(size_t lineno);
 char* wile_decode_line_loc(lisp_loc_t lloc);
 void wile_set_lisp_loc_file(const char* fname);
 lisp_loc_t wile_get_lisp_loc(lptr vp);
-
-void err_print(const char* fname, lisp_loc_t l_whence,
-	       const char* c_whence, const char* fmt, ...)
-    WILE_ATTR((noreturn,format(printf,4,5)));
 
 const char* typename(enum val_type vt);
 

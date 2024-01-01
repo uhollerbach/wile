@@ -75,7 +75,7 @@ var_19[0] = var_6[0];
 var_19[1] = var_16;
 var_18 = wile_gen_list(2, var_19, NULL);
 }
-var_18 = wile_apply_function(&(var_18), LISP_WHENCE);
+var_18 = wile_apply_function(&(var_18), "bld-rtl-dir/wile-rtl2-000030.scm:17");
 lval var_25;
 var_25 = LVI_NIL();
 {
@@ -236,8 +236,7 @@ var_62 = (var_62.v.pair.car ? *(var_62.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_62;
-cachalot->l_whence = 0;
-cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000030.scm:22";
+cachalot->whence = "bld-rtl-dir/wile-rtl2-000030.scm:22";
 longjmp(cachalot->cenv, 1);
 var_42 = var_62;
 }

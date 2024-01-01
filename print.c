@@ -32,31 +32,6 @@ static void print_real_dec(char* buf, size_t bsize,
 
 static const char digits[] = "0123456789abcdefghijklmnopqrstuvwxyz";
 
-void err_print(const char* fname, lisp_loc_t l_whence,
-	       const char* c_whence, const char* fmt, ...)
-{
-    char buf1[1024], buf2[1280];
-    va_list ap;
-    lptr err1, err2;
-
-    wile_stack_trace_minimal(fileno(stderr));
-    va_start(ap, fmt);
-    vsnprintf(buf1, sizeof(buf1), fmt, ap);
-    va_end(ap);
-    if (fname) {
-	snprintf(buf2, sizeof(buf2), "'%s' %s", fname, buf1);
-	err2 = new_string(buf2);
-    } else {
-	err2 = new_string(buf1);
-    }
-    err1 = new_string("wile");
-    err1->vt = LV_SYMBOL;
-    cachalot->errval = new_pair(err1, err2);
-    cachalot->l_whence = l_whence;
-    cachalot->c_whence = c_whence;
-    longjmp(cachalot->cenv, 1);
-}
-
 #define PUTC(c)		fputc((c), fp)
 #define PUTS(s)		fputs((s), fp)
 
@@ -379,7 +354,8 @@ void wile_sprint_lisp_num(char* buf, size_t bsize, lptr num,
 	    } else if (base == 2 || base == 8 || base == 16) {
 		print_real_bin(buf, /*bsize,*/ rval, base, prec, psign);
 	    } else {
-		ERR("number->string", "bad base %d for FP values", base);
+		wile_exception("number->string", LISP_WHENCE,
+			       "bad base %d for FP values", base);
 	    }
 	}
 	break;
@@ -410,7 +386,8 @@ void wile_sprint_lisp_num(char* buf, size_t bsize, lptr num,
 	break;
 
     default:
-	ERR("number->string", "expects a numeric argument");
+	wile_exception("number->string", LISP_WHENCE,
+		       "expects a numeric argument");
     }
 }
 

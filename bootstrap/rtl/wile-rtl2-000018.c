@@ -210,8 +210,7 @@ var_30 = (var_30.v.pair.car ? *(var_30.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_30;
-cachalot->l_whence = 0;
-cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000018.scm:23";
+cachalot->whence = "bld-rtl-dir/wile-rtl2-000018.scm:23";
 longjmp(cachalot->cenv, 1);
 } else {
 {

@@ -54,7 +54,7 @@ var_16[0] = V_CLOS(var_6,0);
 var_16[1] = var_13;
 var_15 = wile_gen_list(2, var_16, NULL);
 }
-var_15 = wile_apply_function(&(var_15), LISP_WHENCE);
+var_15 = wile_apply_function(&(var_15), "bld-rtl-dir/wile-rtl2-000027.scm:14");
 lval var_17;
 var_17 = LVI_BOOL(LV_IS_FALSE(var_15));
 var_10 = var_17;
@@ -148,7 +148,7 @@ var_48[0] = V_CLOS(var_42,0);
 var_48[1] = var_45;
 var_47 = wile_gen_list(2, var_48, NULL);
 }
-var_47 = wile_apply_function(&(var_47), LISP_WHENCE);
+var_47 = wile_apply_function(&(var_47), "bld-rtl-dir/wile-rtl2-000027.scm:23");
 lval var_49;
 var_49 = LVI_BOOL(LV_IS_FALSE(var_47));
 return var_49;

@@ -122,7 +122,7 @@ var_22[0] = LVI_PROC(fn_15,NULL,-1);
 var_22[1] = var_6;
 var_21 = wile_gen_list(2, var_22, NULL);
 }
-var_21 = wile_apply_function(&(var_21), LISP_WHENCE);
+var_21 = wile_apply_function(&(var_21), "bld-rtl-dir/wile-rtl2-000070.scm:15");
 lval var_29;
 {
 lval var_30[2];
@@ -130,7 +130,7 @@ var_30[0] = LVI_PROC(fn_23,NULL,-1);
 var_30[1] = var_6;
 var_29 = wile_gen_list(2, var_30, NULL);
 }
-var_29 = wile_apply_function(&(var_29), LISP_WHENCE);
+var_29 = wile_apply_function(&(var_29), "bld-rtl-dir/wile-rtl2-000070.scm:15");
 lval var_31;
 switch (TYPE_COMBO(var_21.vt,var_29.vt)) {
 case TYPE_COMBO(LV_INT,LV_INT):
@@ -178,8 +178,7 @@ var_33 = (var_33.v.pair.car ? *(var_33.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
 *(cachalot->errval) = var_33;
-cachalot->l_whence = 0;
-cachalot->c_whence = "bld-rtl-dir/wile-rtl2-000070.scm:16";
+cachalot->whence = "bld-rtl-dir/wile-rtl2-000070.scm:16";
 longjmp(cachalot->cenv, 1);
 } else {
 }
@@ -269,7 +268,7 @@ var_54[0] = var_2[0];
 var_54[1] = var_51;
 var_53 = wile_gen_list(2, var_54, NULL);
 }
-var_53 = wile_apply_function(&(var_53), LISP_WHENCE);
+var_53 = wile_apply_function(&(var_53), "bld-rtl-dir/wile-rtl2-000070.scm:22");
 {
 if (var_38.vt != LV_VECTOR) {
 wile_exception("vector-set!", "bld-rtl-dir/wile-rtl2-000070.scm:21", "input is not a vector");

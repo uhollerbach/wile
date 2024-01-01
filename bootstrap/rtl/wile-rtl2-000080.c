@@ -48,7 +48,7 @@ var_21[0] = var_17;
 var_21[1] = var_18;
 var_20 = wile_gen_list(2, var_21, NULL);
 }
-var_20 = wile_apply_function(&(var_20), LISP_WHENCE);
+var_20 = wile_apply_function(&(var_20), "bld-rtl-dir/wile-rtl2-000080.scm:20");
 lval var_22;
 if (var_13[1].vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000080.scm:20", "input is not a pair!");
@@ -84,7 +84,7 @@ var_28[0] = var_26;
 var_28[1] = var_9[0];
 var_27 = wile_gen_list(2, var_28, NULL);
 }
-var_27 = wile_apply_function(&(var_27), LISP_WHENCE);
+var_27 = wile_apply_function(&(var_27), "bld-rtl-dir/wile-rtl2-000080.scm:16");
 lval var_29;
 if (V_CLOS(var_8,0).vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000080.scm:17", "input is not a pair!");

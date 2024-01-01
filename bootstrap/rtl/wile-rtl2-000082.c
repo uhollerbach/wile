@@ -90,7 +90,7 @@ var_53[0] = V_CLOS(var_35,0);
 var_53[1] = var_50;
 var_52 = wile_gen_list(2, var_53, NULL);
 }
-var_52 = wile_apply_function(&(var_52), LISP_WHENCE);
+var_52 = wile_apply_function(&(var_52), "bld-rtl-dir/wile-rtl2-000082.scm:25");
 var_38 = var_52;
 }
 return var_38;
@@ -274,7 +274,7 @@ var_94[0] = V_CLOS(var_68,3);
 var_94[1] = var_91;
 var_93 = wile_gen_list(2, var_94, NULL);
 }
-var_93 = wile_apply_function(&(var_93), LISP_WHENCE);
+var_93 = wile_apply_function(&(var_93), "bld-rtl-dir/wile-rtl2-000082.scm:38");
 var_86 = var_93;
 } else {
 lval var_95;
@@ -305,7 +305,7 @@ var_102[0] = V_CLOS(var_68,5);
 var_102[1] = var_99;
 var_101 = wile_gen_list(2, var_102, NULL);
 }
-var_101 = wile_apply_function(&(var_101), LISP_WHENCE);
+var_101 = wile_apply_function(&(var_101), "bld-rtl-dir/wile-rtl2-000082.scm:37");
 var_86 = var_101;
 }
 var_71 = var_86;
@@ -458,7 +458,7 @@ var_132[0] = V_CLOS(var_111,2);
 var_132[1] = var_129;
 var_131 = wile_gen_list(2, var_132, NULL);
 }
-var_131 = wile_apply_function(&(var_131), LISP_WHENCE);
+var_131 = wile_apply_function(&(var_131), "bld-rtl-dir/wile-rtl2-000082.scm:44");
 var_120 = var_131;
 break;
 }
@@ -492,7 +492,7 @@ var_140[0] = V_CLOS(var_111,3);
 var_140[1] = var_137;
 var_139 = wile_gen_list(2, var_140, NULL);
 }
-var_139 = wile_apply_function(&(var_139), LISP_WHENCE);
+var_139 = wile_apply_function(&(var_139), "bld-rtl-dir/wile-rtl2-000082.scm:45");
 var_120 = var_139;
 } while (0);
 var_114 = var_120;
@@ -685,7 +685,7 @@ var_59[0] = var_24;
 var_59[1] = var_56;
 var_58 = wile_gen_list(2, var_59, NULL);
 }
-var_58 = wile_apply_function(&(var_58), LISP_WHENCE);
+var_58 = wile_apply_function(&(var_58), "bld-rtl-dir/wile-rtl2-000082.scm:27");
 var_25 = var_58;
 lval var_60;
 if (var_25.vt != LV_PAIR) {
@@ -767,7 +767,7 @@ var_145[0] = var_28;
 var_145[1] = var_142;
 var_144 = wile_gen_list(2, var_145, NULL);
 }
-var_144 = wile_apply_function(&(var_144), LISP_WHENCE);
+var_144 = wile_apply_function(&(var_144), "bld-rtl-dir/wile-rtl2-000082.scm:46");
 *var_105 = var_27;
 *var_54 = var_24;
 *var_109 = var_2[0];
