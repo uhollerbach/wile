@@ -46,7 +46,7 @@ var_12 = LVI_INT(0);
 var_10 = var_12;
 lval var_9;
 lptr var_13 = new_lv(VT_UNINIT);
-var_13->v.pair.car = &(var_10); //  symbol.3
+var_13->v.pair.car = &(var_10);
 do {
 lval var_14;
 var_14 = LVI_BOOL(true);
@@ -63,7 +63,7 @@ case LV_INT:
 var_15 = LVI_BOOL(var_10.v.iv > 0);
 break;
 default:
-wile_exception("positive?", "./wile-config.dat:0", "expects a real-valued number");
+wile_exception("positive?", "/home/uwe/github/wile/wile-config.dat:0", "expects a real-valued number");
 }
 var_14 = var_15;
 if (LV_IS_FALSE(var_14)) { break; }
@@ -139,7 +139,6 @@ var_26 = wile_gen_list(2, var_28, NULL);
 {
 lval var_27[8];
 var_27[0] = var_26;
-// bld-rtl-dir/wile-rtl2-000069.scm:20
 var_26 = wile_max(NULL, var_27, "bld-rtl-dir/wile-rtl2-000069.scm:20");
 }
 var_6 = var_26;
@@ -147,7 +146,7 @@ lval var_30;
 lval var_31;
 var_30 = var_6;
 lptr var_32 = new_lv(VT_UNINIT);
-var_32->v.pair.car = &(var_30); // j
+var_32->v.pair.car = &(var_30);
 do {
 lval var_33;
 switch (TYPE_COMBO(var_30.vt,var_4.vt)) {
@@ -205,7 +204,7 @@ lval var_39;
 var_39 = LVI_INT(var_30.v.iv - var_6.v.iv);
 var_37 = var_39;
 lptr var_40 = new_lv(VT_UNINIT);
-var_40->v.pair.car = &(var_37); // i
+var_40->v.pair.car = &(var_37);
 do {
 lval var_41;
 var_41 = LVI_BOOL(false);

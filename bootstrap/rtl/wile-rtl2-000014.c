@@ -47,7 +47,6 @@ lval var_9;
 {
 lval var_10[8];
 var_10[0] = var_4;
-// bld-rtl-dir/wile-rtl2-000014.scm:17
 var_9 = wile_list_length(NULL, var_10, "bld-rtl-dir/wile-rtl2-000014.scm:17");
 }
 lval var_11;
@@ -75,7 +74,7 @@ lval var_16;
 var_15 = var_5;
 lval var_14;
 lptr var_17 = new_lv(VT_UNINIT);
-var_17->v.pair.car = &(var_15); // j
+var_17->v.pair.car = &(var_15);
 do {
 lval var_18;
 var_18 = LVI_BOOL(false);

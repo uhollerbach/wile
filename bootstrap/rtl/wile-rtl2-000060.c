@@ -29,7 +29,6 @@ lval var_5[8];
 var_5[0] = var_2[0];
 var_5[1] = var_2[1];
 var_5[2] = var_2[2];
-// bld-rtl-dir/wile-rtl2-000060.scm:17
 var_4 = wile_julian_day(NULL, var_5, "bld-rtl-dir/wile-rtl2-000060.scm:17");
 }
 lval var_6;
@@ -38,7 +37,6 @@ lval var_7;
 {
 lval var_8[8];
 var_8[0] = var_6;
-// bld-rtl-dir/wile-rtl2-000060.scm:17
 var_7 = wile_gregorian_date(NULL, var_8, "bld-rtl-dir/wile-rtl2-000060.scm:17");
 }
 return var_7;

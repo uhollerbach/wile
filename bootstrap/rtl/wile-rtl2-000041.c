@@ -69,8 +69,7 @@ var_16[0] = var_2[0];
 var_16[1] = var_13;
 var_2[0] = var_16[0];
 var_2[1] = var_16[1];
-// bld-rtl-dir/wile-rtl2-000041.scm:15
-goto lbl_3;	// selfie
+goto lbl_3;
 }
 return var_4;
 }

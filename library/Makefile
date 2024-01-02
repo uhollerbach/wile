@@ -4,7 +4,7 @@
 
 SHELL = /bin/sh
 
-ALL = ttest strtest aptest dqtest htest stktest statest
+ALL = ttest strtest aptest dqtest htest stktest statest qtest
 
 all:	$(ALL)
 
@@ -16,11 +16,12 @@ test:	$(ALL)
 	htest
 	stktest
 	statest
+	qtest
 
 clean:
 	rm -f $(ALL)
 
-ttest:	test-test.scm test.scm
+ttest:		test-test.scm test.scm
 	wile -x test-test.scm ttest
 
 strtest:	struct-test.scm struct.scm test.scm
@@ -40,3 +41,6 @@ stktest:	stack-test.scm stack.scm struct.scm test.scm
 
 statest:	stats-test.scm stats.scm test.scm
 	wile -x stats-test.scm statest
+
+qtest:		queue-test.scm queue.scm test.scm
+	wile -x queue-test.scm qtest

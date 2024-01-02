@@ -54,7 +54,6 @@ lval var_12[8];
 var_12[0] = LVI_PROC(fn_4,NULL,1);
 var_12[1] = var_10;
 var_12[2] = var_11;
-// bld-rtl-dir/wile-rtl2-000055.scm:14
 var_11 = wile_map(NULL, var_12, "bld-rtl-dir/wile-rtl2-000055.scm:14");
 }
 return var_11;

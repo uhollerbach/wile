@@ -86,8 +86,7 @@ var_17[0] = var_2[0];
 var_17[1] = var_14;
 var_2[0] = var_17[0];
 var_2[1] = var_17[1];
-// bld-rtl-dir/wile-rtl2-000040.scm:16
-goto lbl_3;	// selfie
+goto lbl_3;
 } while (0);
 return var_4;
 }
@@ -147,8 +146,7 @@ var_31[0] = var_19[0];
 var_31[1] = var_28;
 var_19[0] = var_31[0];
 var_19[1] = var_31[1];
-// bld-rtl-dir/wile-rtl2-000040.scm:23
-goto lbl_20;	// selfie
+goto lbl_20;
 } while (0);
 return var_21;
 }

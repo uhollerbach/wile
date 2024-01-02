@@ -120,7 +120,6 @@ var_18 = wile_gen_list(3, var_20, NULL);
 lval var_19[8];
 var_19[0] = var_15;
 var_19[1] = var_18;
-// bld-rtl-dir/wile-rtl2-000046.scm:19
 var_18 = wile_string_join_by(NULL, var_19, "bld-rtl-dir/wile-rtl2-000046.scm:19");
 }
 var_6 = var_18;

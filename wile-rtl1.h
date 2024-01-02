@@ -1132,7 +1132,7 @@ lval wile_rand_normal_pair(lisp_real_t m, lisp_real_t s);
 lval wile_cfft_good_n(lptr* clos, lptr args, const char* loc);
 lval wile_cfft(lptr* clos, lptr args, const char* loc);
 
-lval wile_sha256_wrap(bool is_256, lval input);
+lval wile_sha256_wrap(bool is_256, lval input, const char* loc);
 lval wile_sha256_init(bool is_256);
 lval wile_sha256_update(lptr*, lptr, const char*);
 lval wile_sha256_finish(lptr*, lptr args, const char* loc);

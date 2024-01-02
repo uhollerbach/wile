@@ -53,8 +53,7 @@ var_9 = (var_2[0].v.pair.cdr ? *(var_2[0].v.pair.cdr) : LVI_NIL());
 lval var_12[8];
 var_12[0] = var_9;
 var_2[0] = var_12[0];
-// bld-rtl-dir/wile-rtl2-000052.scm:16
-goto lbl_3;	// selfie
+goto lbl_3;
 } while (0);
 return var_4;
 }

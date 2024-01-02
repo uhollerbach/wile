@@ -17,7 +17,7 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval var_1 = LVI_BOOL(false);		// day-vec
+static lval var_1 = LVI_BOOL(false);
 
 // definitions
 
@@ -69,7 +69,6 @@ var_18 = wile_gen_list(12, var_20, NULL);
 {
 lval var_19[8];
 var_19[0] = var_18;
-// bld-rtl-dir/wile-rtl2-000064.scm:20
 var_18 = wile_list2vector(NULL, var_19, "bld-rtl-dir/wile-rtl2-000064.scm:20");
 }
 var_1 = var_18;
@@ -134,7 +133,6 @@ lval var_29;
 {
 lval var_30[8];
 var_30[0] = var_3[0];
-// bld-rtl-dir/wile-rtl2-000064.scm:22
 var_29 = wile_is_leap_year(NULL, var_30, "bld-rtl-dir/wile-rtl2-000064.scm:22");
 }
 var_26 = var_29;

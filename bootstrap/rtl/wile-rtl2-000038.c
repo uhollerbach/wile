@@ -35,9 +35,9 @@ var_10 = LVI_NIL();
 var_6 = var_10;
 lval var_4;
 lptr var_11 = new_lv(VT_UNINIT);
-var_11->v.pair.car = &(var_5); // i
+var_11->v.pair.car = &(var_5);
 lptr var_12 = new_lv(VT_UNINIT);
-var_12->v.pair.car = &(var_6); // acc
+var_12->v.pair.car = &(var_6);
 do {
 lval var_13;
 switch (TYPE_COMBO(var_5.vt,var_2[1].vt)) {

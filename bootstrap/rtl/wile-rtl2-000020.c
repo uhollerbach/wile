@@ -45,7 +45,7 @@ lval var_11;
 var_11 = LVI_INT(0);
 var_9 = var_11;
 lptr var_12 = new_lv(VT_UNINIT);
-var_12->v.pair.car = &(var_9); //  symbol.3
+var_12->v.pair.car = &(var_9);
 do {
 lval var_13;
 switch (var_4.vt) {

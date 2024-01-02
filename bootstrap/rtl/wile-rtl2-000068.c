@@ -27,6 +27,9 @@ lval var_4;
 lval var_5;
 {
 size_t i, capa;
+if (var_2[0].vt != LV_INT || var_2[0].v.iv < 0) {
+wile_exception("vector-create", "bld-rtl-dir/wile-rtl2-000068.scm:14", "expects a non-negative integer");
+}
 var_5.vt = LV_VECTOR;
 var_5.origin = var_2[0].origin;
 capa = var_2[0].v.iv;
@@ -43,7 +46,7 @@ lval var_9;
 var_9 = LVI_INT(0);
 var_7 = var_9;
 lptr var_10 = new_lv(VT_UNINIT);
-var_10->v.pair.car = &(var_7); // i
+var_10->v.pair.car = &(var_7);
 do {
 lval var_11;
 switch (TYPE_COMBO(var_7.vt,var_2[0].vt)) {
@@ -110,7 +113,7 @@ var_20 = LVI_INT(var_2[0].v.iv - var_19.v.iv);
 var_17 = var_20;
 lval var_16;
 lptr var_21 = new_lv(VT_UNINIT);
-var_21->v.pair.car = &(var_17); // i
+var_21->v.pair.car = &(var_17);
 do {
 lval var_22;
 switch (var_17.vt) {

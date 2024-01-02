@@ -91,7 +91,6 @@ var_11 = wile_gen_list(2, var_13, NULL);
 lval var_12[8];
 var_12[0] = var_8;
 var_12[1] = var_11;
-// bld-rtl-dir/wile-rtl2-000044.scm:16
 var_11 = wile_string_join_by(NULL, var_12, "bld-rtl-dir/wile-rtl2-000044.scm:16");
 }
 var_6 = var_11;

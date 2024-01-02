@@ -27,7 +27,6 @@ lval var_4;
 {
 lval var_5[8];
 var_5[0] = var_2[0];
-// bld-rtl-dir/wile-rtl2-000013.scm:14
 var_4 = wile_list_length(NULL, var_5, "bld-rtl-dir/wile-rtl2-000013.scm:14");
 }
 lval var_6;
@@ -37,7 +36,6 @@ lval var_7;
 lval var_8[8];
 var_8[0] = var_2[0];
 var_8[1] = var_6;
-// bld-rtl-dir/wile-rtl2-000013.scm:14
 var_7 = wile_list_head(NULL, var_8, "bld-rtl-dir/wile-rtl2-000013.scm:14");
 }
 return var_7;

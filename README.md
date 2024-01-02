@@ -1,6 +1,6 @@
-Last update: 2024-1-1 23:00 PST
+Last update: 2024-1-5 23:30 PST
 
-# `wile` - the extremely stable scheming genius compiler - version 1.2.1
+# `wile` - the extremely stable scheming genius compiler - version 1.2.2
 
 `wile` is a small scheme-to-c compiler which I'm writing; it's by no
 means complete, but it's capable enough that writing programs with it
@@ -20,7 +20,7 @@ GC, and it can recompile itself; that's not tiny.)
 This release of it is starting to tend toward batteries-included.
 The autotools-based build+install is looking pretty good; the files
 and directories are still structured as a separate sub-tree, but
-the required steps look a whole lot like the standard autotols
+the required steps look a whole lot like the standard autotools
 build: `cd autotools && configure && make && make install` produces
 a working compiler, and that compiler can compile itself and
 almost all of the tests: two tests are known failures, and one lists

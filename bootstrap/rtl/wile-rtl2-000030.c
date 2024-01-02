@@ -17,7 +17,7 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval fn_4(lptr*, lptr, const char*);	// (fore2 proc ls)
+static lval fn_4(lptr*, lptr, const char*);
 
 // definitions
 
@@ -65,7 +65,6 @@ lval var_17[8];
 var_17[0] = LVI_PROC(fn_11,NULL,1);
 var_17[1] = var_6[1];
 var_17[2] = var_16;
-// bld-rtl-dir/wile-rtl2-000030.scm:17
 var_16 = wile_map(NULL, var_17, "bld-rtl-dir/wile-rtl2-000030.scm:17");
 }
 lval var_18;
@@ -83,7 +82,6 @@ lval var_26[8];
 var_26[0] = LVI_PROC(fn_20,NULL,1);
 var_26[1] = var_6[1];
 var_26[2] = var_25;
-// bld-rtl-dir/wile-rtl2-000030.scm:18
 var_25 = wile_map(NULL, var_26, "bld-rtl-dir/wile-rtl2-000030.scm:18");
 }
 lval var_29[8];
@@ -91,8 +89,7 @@ var_29[0] = var_6[0];
 var_29[1] = var_25;
 var_6[0] = var_29[0];
 var_6[1] = var_29[1];
-// bld-rtl-dir/wile-rtl2-000030.scm:18
-goto lbl_7;	// selfie
+goto lbl_7;
 } else {
 lval var_30;
 var_30 = LVI_BOOL(true);
@@ -109,7 +106,6 @@ lval var_38;
 {
 lval var_39[8];
 var_39[0] = var_36[0];
-// bld-rtl-dir/wile-rtl2-000030.scm:20
 var_38 = wile_list_length(NULL, var_39, "bld-rtl-dir/wile-rtl2-000030.scm:20");
 }
 return var_38;
@@ -160,7 +156,6 @@ lval var_41[8];
 var_41[0] = LVI_PROC(fn_34,NULL,1);
 var_41[1] = var_31;
 var_41[2] = var_40;
-// bld-rtl-dir/wile-rtl2-000030.scm:20
 var_40 = wile_map(NULL, var_41, "bld-rtl-dir/wile-rtl2-000030.scm:20");
 }
 var_33 = var_40;
@@ -170,7 +165,6 @@ lval var_48;
 lval var_49[8];
 var_49[0] = LVI_PROC(fn_43,NULL,2);
 var_49[1] = var_33;
-// bld-rtl-dir/wile-rtl2-000030.scm:21
 var_48 = wile_foldl1(NULL, var_49, "bld-rtl-dir/wile-rtl2-000030.scm:21");
 }
 lval var_55;
@@ -178,7 +172,6 @@ lval var_55;
 lval var_56[8];
 var_56[0] = LVI_PROC(fn_50,NULL,2);
 var_56[1] = var_33;
-// bld-rtl-dir/wile-rtl2-000030.scm:21
 var_55 = wile_foldl1(NULL, var_56, "bld-rtl-dir/wile-rtl2-000030.scm:21");
 }
 lval var_57;
@@ -220,7 +213,6 @@ var_60[0] = var_2[0];
 var_60[1] = var_31;
 var_2[0] = var_60[0];
 var_2[1] = var_60[1];
-// bld-rtl-dir/wile-rtl2-000030.scm:23
 TAIL_CALL fn_4(NULL, var_2, "bld-rtl-dir/wile-rtl2-000030.scm:23");
 } else {
 lval var_61;

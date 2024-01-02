@@ -2284,13 +2284,12 @@
 (test "#(13 13 13 13 13)" (doco '(vector-fill! (vector-create 5) 13)))
 
 (test "5" (doco '(vector-length (vector-create 5))))
-(test "25" (doco '(vector-capacity (vector-create 25))))
 
 (test "13" (doco '(let ((vec (vector-create 5)))
 		    (vector-fill! vec 13)
 		    (vector-ref vec 0))))
 
-(test "caught exception from /home/uwe/github/wile/test-wile.scm:2296\n    'vector-ref' got bad index value"
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:2295\n    'vector-ref' got bad index value"
       (doco '(let ((vec (vector-create 5)))
 	       (vector-fill! vec 13)
 	       (vector-ref vec 'foo))))
@@ -2494,7 +2493,7 @@
 (test "-14" (doco '(integer -143/10)))
 (test "14" (doco '(integer 14.37)))
 (test "-14" (doco '(integer -14.37)))
-(test "caught exception from /home/uwe/github/wile/test-wile.scm:2498\n    'integer' expects one real-valued argument"
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:2497\n    'integer' expects one real-valued argument"
       (doco '(integer 'chezbro)))
 
 (test "1.400000000000000e+01" (doco '(float 14)))
@@ -2503,7 +2502,7 @@
 (test "-1.430000000000000e+01" (doco '(float -143/10)))
 (test "1.437000000000000e+01" (doco '(float 14.37)))
 (test "-1.437000000000000e+01" (doco '(float -14.37)))
-(test "caught exception from /home/uwe/github/wile/test-wile.scm:2507\n    'float' expects a real-valued input"
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:2506\n    'float' expects a real-valued input"
       (doco '(float 'chezbro)))
 
 (test "65536" (doco '(expt 2 16)))
@@ -2521,11 +2520,11 @@
 
 (test "\"meh\"" (doco '(string-copy "meh")))
 (test "\"ooh\"" (doco '(string-copy "fooh" 1)))
-(test "caught exception from /home/uwe/github/wile/test-wile.scm:2525\n    'string-copy' start index is out of range"
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:2524\n    'string-copy' start index is out of range"
       (doco '(string-copy "fooh" 13)))
 
 (test "\"oobi\"" (doco '(string-copy "fooboobish's son's sea" 4 8)))
-(test "caught exception from /home/uwe/github/wile/test-wile.scm:2529\n    'string-copy' end index is out of range"
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:2528\n    'string-copy' end index is out of range"
       (doco '(string-copy "fooboobish's son's sea" 8 4)))
 
 (test "(1 2 3 4 5) (5 4 3 2 1)\n#t"
@@ -2874,7 +2873,7 @@
 	       (vector-fill! v1 #\O)
 	       v2)))
 
-(test "caught exception from /home/uwe/github/wile/test-wile.scm:2879\n    'vector-copy' start index is out of range"
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:2878\n    'vector-copy' start index is out of range"
       (doco '(let* ((v1 (list->vector (fromto 1 16)))
 		    (v2 (vector-copy v1 24)))
 	       (vector-fill! v1 #\O)
@@ -2886,15 +2885,51 @@
 	       (vector-fill! v1 #\O)
 	       v2)))
 
-(test "caught exception from /home/uwe/github/wile/test-wile.scm:2891\n    'vector-copy' end index is out of range"
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:2890\n    'vector-copy' end index is out of range"
       (doco '(let* ((v1 (list->vector (fromto 1 16)))
 		    (v2 (vector-copy v1 4 3)))
 	       (vector-fill! v1 #\O)
 	       v2)))
 
+(test "#u8(#xd #xd #xd #xd #xd)" (doco '(bytevector-fill! (bytevector-create 5) 13)))
+
+(test "13" (doco '(let ((vec (bytevector-create 5)))
+		    (bytevector-fill! vec 13)
+		    (bytevector-ref vec 0))))
+
+(test "#u8(#x1 #x2 #x3 #x4 #x5 #x6 #x7 #x8 #x9 #xa #xb #xc #xd #xe #xf #x10)"
+      (doco '(let* ((v1 (bytevector 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16))
+		    (v2 (bytevector-copy v1)))
+	       (bytevector-fill! v1 #\O)
+	       v2)))
+
+(test "#u8(#x5 #x6 #x7 #x8 #x9 #xa #xb #xc #xd #xe #xf #x10)"
+      (doco '(let* ((v1 (bytevector 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16))
+		    (v2 (bytevector-copy v1 4)))
+	       (bytevector-fill! v1 #\O)
+	       v2)))
+
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:2914\n    'bytevector-copy' start index is out of range"
+      (doco '(let* ((v1 (bytevector 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16))
+		    (v2 (bytevector-copy v1 24)))
+	       (bytevector-fill! v1 #\O)
+	       v2)))
+
+(test "#u8(#x5 #x6 #x7 #x8 #x9 #xa)"
+      (doco '(let* ((v1 (bytevector 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16))
+		    (v2 (bytevector-copy v1 4 10)))
+	       (bytevector-fill! v1 #\O)
+	       v2)))
+
+(test "caught exception from /home/uwe/github/wile/test-wile.scm:2926\n    'bytevector-copy' end index is out of range"
+      (doco '(let* ((v1 (bytevector 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16))
+		    (v2 (bytevector-copy v1 4 3)))
+	       (bytevector-fill! v1 #\O)
+	       v2)))
+
 (test-report "wile compiler tests")
 
-(if (test-expected 1761 0 12 0)
+(if (test-expected 1767 0 12 0)
     (write-string "results are as expected\n")
     (write-string "results are unexpected!\n"))
 

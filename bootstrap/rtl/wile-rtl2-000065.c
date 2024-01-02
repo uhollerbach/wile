@@ -248,7 +248,6 @@ lval var_79[8];
 var_79[0] = var_2[0];
 var_79[1] = var_71;
 var_79[2] = var_73;
-// bld-rtl-dir/wile-rtl2-000065.scm:32
 var_78 = wile_julian_day(NULL, var_79, "bld-rtl-dir/wile-rtl2-000065.scm:32");
 }
 return var_78;

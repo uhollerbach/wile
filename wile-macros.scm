@@ -198,7 +198,6 @@
 			       (substring a1 a2))
 			   3 (lambda (a1 a2 a3)
 			       (substring a1 a2 a3))))
-	(cons 'vector-capacity vector-length)
 	(cons 'write-char write-string)
 	(cons '* *)
 	(cons '+ +)

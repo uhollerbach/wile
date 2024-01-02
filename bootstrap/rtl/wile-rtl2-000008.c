@@ -37,7 +37,6 @@ lval var_9;
 {
 lval var_10[8];
 var_10[0] = var_8;
-// bld-rtl-dir/wile-rtl2-000008.scm:20
 var_9 = wile_list_reverse(NULL, var_10, "bld-rtl-dir/wile-rtl2-000008.scm:20");
 }
 var_8 = var_9;
@@ -59,7 +58,7 @@ lval var_16;
 var_16 = LVI_INT(0);
 var_14 = var_16;
 lptr var_17 = new_lv(VT_UNINIT);
-var_17->v.pair.car = &(var_14); //  symbol.3
+var_17->v.pair.car = &(var_14);
 do {
 lval var_18;
 var_18 = LVI_BOOL(var_8.vt == LV_NIL);
@@ -80,7 +79,6 @@ lval var_23;
 {
 lval var_24[8];
 var_24[0] = var_22;
-// bld-rtl-dir/wile-rtl2-000008.scm:24
 var_23 = wile_list_reverse(NULL, var_24, "bld-rtl-dir/wile-rtl2-000008.scm:24");
 }
 var_21 = var_23;
@@ -90,7 +88,7 @@ lval var_28;
 var_28 = LVI_INT(0);
 var_26 = var_28;
 lptr var_29 = new_lv(VT_UNINIT);
-var_29->v.pair.car = &(var_26); //  symbol.4
+var_29->v.pair.car = &(var_26);
 do {
 lval var_30;
 var_30 = LVI_BOOL(var_21.vt == LV_NIL);

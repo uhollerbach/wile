@@ -28,7 +28,6 @@ lval var_5;
 {
 lval var_6[8];
 var_6[0] = var_2[0];
-// bld-rtl-dir/wile-rtl2-000017.scm:14
 var_5 = wile_list_length(NULL, var_6, "bld-rtl-dir/wile-rtl2-000017.scm:14");
 }
 var_4 = var_5;
@@ -36,6 +35,9 @@ lval var_7;
 lval var_8;
 {
 size_t i, capa;
+if (var_4.vt != LV_INT || var_4.v.iv < 0) {
+wile_exception("vector-create", "bld-rtl-dir/wile-rtl2-000017.scm:15", "expects a non-negative integer");
+}
 var_8.vt = LV_VECTOR;
 var_8.origin = var_4.origin;
 capa = var_4.v.iv;
@@ -56,9 +58,9 @@ lval var_13;
 var_11 = var_2[0];
 lval var_9;
 lptr var_15 = new_lv(VT_UNINIT);
-var_15->v.pair.car = &(var_10); // i
+var_15->v.pair.car = &(var_10);
 lptr var_16 = new_lv(VT_UNINIT);
-var_16->v.pair.car = &(var_11); // lp
+var_16->v.pair.car = &(var_11);
 do {
 lval var_17;
 switch (TYPE_COMBO(var_10.vt,var_4.vt)) {

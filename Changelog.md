@@ -1,6 +1,14 @@
-Last update: 2024-1-1 23:00 PST
+Last update: 2024-1-5 23:30 PST
 
 # Changelog for `wile`
+
+## Current version `wile` "1.2.2" 2024-1-5 23:30 PST
+
+- add queue data structure
+
+- small cleanups, remove comments in generated c code and the like
+
+- add a few bytevector routines
 
 ## Current version `wile` "1.2.1" 2024-1-1 23:00 PST
 

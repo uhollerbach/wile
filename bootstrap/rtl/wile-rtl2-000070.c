@@ -46,7 +46,6 @@ var_19 = var_17[0];
 {
 lval var_20[8];
 var_20[0] = var_19;
-// bld-rtl-dir/wile-rtl2-000070.scm:15
 var_19 = wile_min(NULL, var_20, "bld-rtl-dir/wile-rtl2-000070.scm:15");
 }
 return var_19;
@@ -61,7 +60,6 @@ var_27 = var_25[0];
 {
 lval var_28[8];
 var_28[0] = var_27;
-// bld-rtl-dir/wile-rtl2-000070.scm:15
 var_27 = wile_max(NULL, var_28, "bld-rtl-dir/wile-rtl2-000070.scm:15");
 }
 return var_27;
@@ -111,7 +109,6 @@ lval var_13[8];
 var_13[0] = LVI_PROC(fn_7,NULL,1);
 var_13[1] = var_4;
 var_13[2] = var_12;
-// bld-rtl-dir/wile-rtl2-000070.scm:14
 var_12 = wile_map(NULL, var_13, "bld-rtl-dir/wile-rtl2-000070.scm:14");
 }
 var_6 = var_12;
@@ -193,6 +190,9 @@ lval var_38;
 lval var_39;
 {
 size_t i, capa;
+if (var_36.vt != LV_INT || var_36.v.iv < 0) {
+wile_exception("vector-create", "bld-rtl-dir/wile-rtl2-000070.scm:18", "expects a non-negative integer");
+}
 var_39.vt = LV_VECTOR;
 var_39.origin = var_36.origin;
 capa = var_36.v.iv;
@@ -210,7 +210,7 @@ var_43 = LVI_INT(0);
 var_41 = var_43;
 lval var_40;
 lptr var_44 = new_lv(VT_UNINIT);
-var_44->v.pair.car = &(var_41); // i
+var_44->v.pair.car = &(var_41);
 do {
 lval var_45;
 switch (TYPE_COMBO(var_41.vt,var_36.vt)) {
@@ -258,7 +258,6 @@ lval var_52[8];
 var_52[0] = LVI_PROC(fn_46,var_47,1);
 var_52[1] = var_4;
 var_52[2] = var_51;
-// bld-rtl-dir/wile-rtl2-000070.scm:22
 var_51 = wile_map(NULL, var_52, "bld-rtl-dir/wile-rtl2-000070.scm:22");
 }
 lval var_53;
@@ -291,7 +290,6 @@ var_57 = wile_gen_list(2, var_59, NULL);
 {
 lval var_58[8];
 var_58[0] = var_57;
-// bld-rtl-dir/wile-rtl2-000070.scm:19
 var_57 = wile_add(NULL, var_58, "bld-rtl-dir/wile-rtl2-000070.scm:19");
 }
 var_42 = var_57;

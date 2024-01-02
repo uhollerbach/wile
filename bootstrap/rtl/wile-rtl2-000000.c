@@ -35,7 +35,7 @@ lval var_10;
 var_10 = LVI_INT(0);
 var_8 = var_10;
 lptr var_11 = new_lv(VT_UNINIT);
-var_11->v.pair.car = &(var_8); //  symbol.3
+var_11->v.pair.car = &(var_8);
 do {
 lval var_12;
 var_12 = LVI_BOOL(var_6.vt == LV_NIL);

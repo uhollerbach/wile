@@ -255,12 +255,11 @@
 	(set! closure (sprintf "(lptr*) %s" (cdr cl-entry))))))
   (when (string=? (string-copy call-loc 0 2) "./")
     (set! call-loc (string-copy call-loc 2)))
-  (emit-fstr "// %s\n" call-loc)
   (let ((call (sprintf "%s(%s, %s, \"%s\")"
 		       fn (if closure closure "NULL") args call-loc)))
     (if tcall
 	(if (and frame (string=? fn (car frame)))
-	    (emit-fstr "goto %s;\t// selfie\n" (cadr frame))
+	    (emit-fstr "goto %s;\n" (cadr frame))
 	    (emit-fstr "TAIL_CALL %s;\n" call))
 	(emit-fstr "%s = %s;\n" res call))))
 
@@ -521,7 +520,7 @@
      global-decl
      (when global-library
        (emit-fstr "static bool do_init_%s = true;\n" vname))
-     (emit-fstr "static lval %s;\t\t// const list(%d)\n" vname alen))
+     (emit-fstr "static lval %s;\n" vname))
 
     ;;; In no-main mode, the prior output is most likely a function which is
     ;;; getting processed via its own (with-output), so we need to write this
@@ -563,8 +562,7 @@
      global-decl
      (when global-library
        (emit-fstr "static bool do_init_%s = true;\n" vname))
-     (emit-fstr "static lval %s;\t\t// const %svector(%d)\n"
-		vname (if is-bv? "byte" "") vlen))
+     (emit-fstr "static lval %s;\n" vname))
 
     ;;; In no-main mode, the prior output is most likely a function which is
     ;;; getting processed via its own (with-output), so we need to write this
@@ -869,10 +867,9 @@
      (for-each (lambda (v n)
 		 (let ((r #f)
 		       (a1 (new-svar))
-		       (a2 v)
-		       (a3 n))
+		       (a2 v))
 		   (emit-code "lptr @1 = new_lv(VT_UNINIT);"
-			      "@1->v.pair.car = &(@2); // @3")
+			      "@1->v.pair.car = &(@2);")
 		   (hash-table-set! global-mirrors v a1)))
 	       cs1 vs)
      (emit-fstr "do {\n")
@@ -1748,31 +1745,29 @@
      ;;; statically initialize nil, boolean, char, string,
      ;;; and real-valued numeric LITERAL data
      (cond ((null? (cadr def))
-	    (emit-fstr "static lval %s = LVI_NIL();\t\t// %v\n"
-		       tmp const-name))
+	    (emit-fstr "static lval %s = LVI_NIL();\n" tmp))
 	   ((boolean? (cadr def))
-	    (emit-fstr "static lval %s = LVI_BOOL(%s);\t\t// %v\n"
-		       tmp (if (cadr def) "true" "false") const-name))
+	    (emit-fstr "static lval %s = LVI_BOOL(%s);\n"
+		       tmp (if (cadr def) "true" "false")))
 	   ((char? (cadr def))
-	    (emit-fstr "static lval %s = LVI_CHAR(%d);\t\t// %v\n"
-		       tmp (char->integer (cadr def)) const-name))
+	    (emit-fstr "static lval %s = LVI_CHAR(%d);\n"
+		       tmp (char->integer (cadr def))))
 	   ((integer? (cadr def))
-	    (emit-fstr "static lval %s = LVI_INT(%d);\t\t// %v\n"
-		       tmp (cadr def) const-name))
+	    (emit-fstr "static lval %s = LVI_INT(%d);\n" tmp (cadr def)))
 	   ((rational? (cadr def))
-	    (emit-fstr "static lval %s = LVI_RAT(%d,%d);\t\t// %v\n"
+	    (emit-fstr "static lval %s = LVI_RAT(%d,%d);\n"
 		       tmp (numerator (cadr def))
-		       (denominator (cadr def)) const-name))
+		       (denominator (cadr def))))
 	   ((real? (cadr def))
-	    (emit-fstr "static lval %s = LVI_REAL(%s);\t\t// %v\n"
-		       tmp (format-real (cadr def)) const-name))
+	    (emit-fstr "static lval %s = LVI_REAL(%s);\n"
+		       tmp (format-real (cadr def))))
 	   ;;; we don't have complex literals: (cmplx) is a runtime
 	   ;;; constructor. so no way to do complex values here atm
 	   ((string? (cadr def))
-	    (emit-fstr "static lval %s = LVI_STRING_NOCPY(\"%s\");\t\t// %v\n"
-		       tmp (escapify (cadr def)) const-name))
+	    (emit-fstr "static lval %s = LVI_STRING_NOCPY(\"%s\");\n"
+		       tmp (escapify (cadr def))))
 	   (else
-	    (emit-fstr "static lval %s;\t\t// %v\n" tmp const-name)
+	    (emit-fstr "static lval %s;\n" tmp)
 	    (set! do-init #t))))
     (when do-init
       (with-output
@@ -1795,8 +1790,7 @@
 	    (let ((c-bag (make-string-bag ())))
 	      (with-output
 	       c-bag
-	       (emit-fstr "lval %s(lptr*, lptr, const char*);\t// %v\n"
-			  tmp-fn (car def)))
+	       (emit-fstr "lval %s(lptr*, lptr, const char*);\n" tmp-fn))
 	      (display c-bag c-port)))
 	  (when s-port
 	    (if (string=? doc-string "")
@@ -1806,8 +1800,7 @@
 			 (caar def) doc-string arity c-fn-name))))
 	(with-output
 	 global-decl
-	 (emit-fstr "static lval %s(lptr*, lptr, const char*);\t// %v\n"
-		    tmp-fn (car def))))
+	 (emit-fstr "static lval %s(lptr*, lptr, const char*);\n" tmp-fn)))
     (make-fn-def (caar def) tmp-fn "NULL" arity)))
 
 (define (compile-function c-fn-name cur-env def)

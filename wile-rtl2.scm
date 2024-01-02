@@ -1441,6 +1441,22 @@
 
 ;;; --8><----8><----8><--
 
+(define-primitive "wile_bytevector_map" "expects a function of N arguments and N equal-length bytevectors, and returns a bytevector of the same length whose entries are the values of the function applied to the corresponding entries of the input bytevectors"
+  (bytevector-map proc vec . vecs)
+  (let* ((vs (cons vec vecs))
+	 (ls (map bytevector-length vs)))
+    (unless (= (apply min ls) (apply max ls))
+      (raise "bytevector-map: unequal bytevector lengths"))
+    (let* ((len (car ls))
+	   (res (make-bytevector len)))
+      (do ((i 0 (+ i 1)))
+	  ((= i len) res)
+	(bytevector-set! res i
+			 (apply proc (map (lambda (v)
+					    (bytevector-ref v i)) vs)))))))
+
+;;; --8><----8><----8><--
+
 (define-primitive "wile_vector_map_inplace"
   "expects a function of one argument and a vector, and updates the vector in place by applying the function to each element and replacing it with that value"
   (vector-map! proc vec)
@@ -1448,6 +1464,16 @@
     (do ((i 0 (+ i 1)))
 	((= i len) vec)
       (vector-set! vec i (proc (vector-ref vec i))))))
+
+;;; --8><----8><----8><--
+
+(define-primitive "wile_bytevector_map_inplace"
+  "expects a function of one argument and a bytevector, and updates the bytevector in place by applying the function to each element and replacing it with that value"
+  (bytevector-map! proc vec)
+  (let ((len (bytevector-length vec)))
+    (do ((i 0 (+ i 1)))
+	((= i len) vec)
+      (bytevector-set! vec i (proc (bytevector-ref vec i))))))
 
 ;;; --8><----8><----8><--
 
@@ -1924,7 +1950,6 @@
 			       (substring a1 a2))
 			   3 (lambda (a1 a2 a3)
 			       (substring a1 a2 a3))))
-	(cons 'vector-capacity vector-length)
 	(cons 'write-char write-string)
 	(cons '* *)
 	(cons '+ +)

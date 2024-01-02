@@ -31,7 +31,6 @@ lval var_6;
 lval var_7[8];
 var_7[0] = var_2[0];
 var_7[1] = var_5;
-// bld-rtl-dir/wile-rtl2-000056.scm:14
 var_6 = wile_sql_stmt_prep(NULL, var_7, "bld-rtl-dir/wile-rtl2-000056.scm:14");
 }
 var_4 = var_6;
@@ -45,7 +44,6 @@ var_9 = wile_gen_list(1, var_11, NULL);
 lval var_10[8];
 var_10[0] = var_4;
 var_10[1] = var_9;
-// bld-rtl-dir/wile-rtl2-000056.scm:16
 var_9 = wile_sql_stmt_bind(NULL, var_10, "bld-rtl-dir/wile-rtl2-000056.scm:16");
 }
 lval var_12;
@@ -53,14 +51,12 @@ lval var_13;
 {
 lval var_14[8];
 var_14[0] = var_4;
-// bld-rtl-dir/wile-rtl2-000056.scm:17
 var_13 = wile_sql_stmt_run(NULL, var_14, "bld-rtl-dir/wile-rtl2-000056.scm:17");
 }
 var_12 = var_13;
 {
 lval var_16[8];
 var_16[0] = var_4;
-// bld-rtl-dir/wile-rtl2-000056.scm:18
 (void)
  wile_sql_stmt_clean(NULL, var_16, "bld-rtl-dir/wile-rtl2-000056.scm:18");
 }

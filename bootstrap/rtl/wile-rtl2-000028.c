@@ -39,7 +39,6 @@ lval var_7[8];
 var_7[0] = var_2[0];
 var_7[1] = var_4;
 var_7[2] = var_5;
-// bld-rtl-dir/wile-rtl2-000028.scm:14
 var_6 = wile_foldl(NULL, var_7, "bld-rtl-dir/wile-rtl2-000028.scm:14");
 }
 return var_6;

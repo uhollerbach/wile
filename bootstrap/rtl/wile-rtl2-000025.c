@@ -97,8 +97,7 @@ var_17[2] = var_2[2];
 var_2[0] = var_17[0];
 var_2[1] = var_17[1];
 var_2[2] = var_17[2];
-// bld-rtl-dir/wile-rtl2-000025.scm:16
-goto lbl_3;	// selfie
+goto lbl_3;
 }
 lval var_18;
 var_18 = LVI_INT(1);
@@ -109,7 +108,6 @@ lval var_21[8];
 var_21[0] = var_2[0];
 var_21[1] = var_19;
 var_21[2] = var_2[2];
-// bld-rtl-dir/wile-rtl2-000025.scm:17
 var_20 = wile_expmod(NULL, var_21, "bld-rtl-dir/wile-rtl2-000025.scm:17");
 lval var_23;
 var_23 = LVI_INT(var_2[0].v.iv * var_20.v.iv);

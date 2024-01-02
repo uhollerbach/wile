@@ -69,7 +69,6 @@ var_10 = wile_gen_list(2, var_12, NULL);
 {
 lval var_11[8];
 var_11[0] = var_10;
-// bld-rtl-dir/wile-rtl2-000003.scm:16
 var_10 = wile_subtract(NULL, var_11, "bld-rtl-dir/wile-rtl2-000003.scm:16");
 }
 lval var_13;
@@ -82,8 +81,7 @@ var_16[0] = var_10;
 var_16[1] = var_13;
 var_2[0] = var_16[0];
 var_2[1] = var_16[1];
-// bld-rtl-dir/wile-rtl2-000003.scm:16
-goto lbl_3;	// selfie
+goto lbl_3;
 } while (0);
 return var_4;
 }

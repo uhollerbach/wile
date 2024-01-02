@@ -39,7 +39,7 @@ lval var_12;
 var_12 = LVI_INT(0);
 var_10 = var_12;
 lptr var_13 = new_lv(VT_UNINIT);
-var_13->v.pair.car = &(var_10); //  symbol.3
+var_13->v.pair.car = &(var_10);
 do {
 lval var_14;
 var_14 = LVI_BOOL(var_6.vt == LV_NIL);
@@ -90,7 +90,7 @@ lval var_26;
 var_26 = LVI_INT(0);
 var_24 = var_26;
 lptr var_27 = new_lv(VT_UNINIT);
-var_27->v.pair.car = &(var_24); //  symbol.4
+var_27->v.pair.car = &(var_24);
 do {
 lval var_28;
 var_28 = LVI_BOOL(var_6.vt == LV_NIL);
@@ -114,7 +114,7 @@ lval var_36;
 var_36 = LVI_INT(0);
 var_34 = var_36;
 lptr var_37 = new_lv(VT_UNINIT);
-var_37->v.pair.car = &(var_34); // i
+var_37->v.pair.car = &(var_34);
 do {
 lval var_38;
 switch (TYPE_COMBO(var_34.vt,var_31.vt)) {

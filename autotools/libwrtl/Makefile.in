@@ -292,6 +292,8 @@ am_libwrtl_a_OBJECTS = libwrtl_a-alloc.$(OBJEXT) \
 	libwrtl_a-wile-rtl2-000082.$(OBJEXT) \
 	libwrtl_a-wile-rtl2-000083.$(OBJEXT) \
 	libwrtl_a-wile-rtl2-000084.$(OBJEXT) \
+	libwrtl_a-wile-rtl2-000085.$(OBJEXT) \
+	libwrtl_a-wile-rtl2-000086.$(OBJEXT) \
 	libwrtl_a-wile-sql.$(OBJEXT)
 libwrtl_a_OBJECTS = $(am_libwrtl_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -470,6 +472,8 @@ am__depfiles_remade = ./$(DEPDIR)/libwrtl_a-alloc.Po \
 	./$(DEPDIR)/libwrtl_a-wile-rtl2-000082.Po \
 	./$(DEPDIR)/libwrtl_a-wile-rtl2-000083.Po \
 	./$(DEPDIR)/libwrtl_a-wile-rtl2-000084.Po \
+	./$(DEPDIR)/libwrtl_a-wile-rtl2-000085.Po \
+	./$(DEPDIR)/libwrtl_a-wile-rtl2-000086.Po \
 	./$(DEPDIR)/libwrtl_a-wile-sql.Po
 am__mv = mv -f
 AM_V_lt = $(am__v_lt_@AM_V@)
@@ -664,7 +668,8 @@ libwrtl_a_SOURCES = alloc.c continuations.c fsi_set.c location.c \
 	wile-rtl2-000074.c wile-rtl2-000075.c wile-rtl2-000076.c \
 	wile-rtl2-000077.c wile-rtl2-000078.c wile-rtl2-000079.c \
 	wile-rtl2-000080.c wile-rtl2-000081.c wile-rtl2-000082.c \
-	wile-rtl2-000083.c wile-rtl2-000084.c wile-sql.c
+	wile-rtl2-000083.c wile-rtl2-000084.c wile-rtl2-000085.c \
+	wile-rtl2-000086.c wile-sql.c
 libwrtl_a_CPPFLAGS = -I$(top_srcdir)/include -DWILE_CONF_FILE=\"$(sysconfdir)/wile-config.dat\"
 all: all-am
 
@@ -905,6 +910,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-wile-rtl2-000082.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-wile-rtl2-000083.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-wile-rtl2-000084.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-wile-rtl2-000085.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-wile-rtl2-000086.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-wile-sql.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
@@ -3209,6 +3216,34 @@ libwrtl_a-wile-rtl2-000084.obj: wile-rtl2-000084.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libwrtl_a-wile-rtl2-000084.obj `if test -f 'wile-rtl2-000084.c'; then $(CYGPATH_W) 'wile-rtl2-000084.c'; else $(CYGPATH_W) '$(srcdir)/wile-rtl2-000084.c'; fi`
 
+libwrtl_a-wile-rtl2-000085.o: wile-rtl2-000085.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libwrtl_a-wile-rtl2-000085.o -MD -MP -MF $(DEPDIR)/libwrtl_a-wile-rtl2-000085.Tpo -c -o libwrtl_a-wile-rtl2-000085.o `test -f 'wile-rtl2-000085.c' || echo '$(srcdir)/'`wile-rtl2-000085.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libwrtl_a-wile-rtl2-000085.Tpo $(DEPDIR)/libwrtl_a-wile-rtl2-000085.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='wile-rtl2-000085.c' object='libwrtl_a-wile-rtl2-000085.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libwrtl_a-wile-rtl2-000085.o `test -f 'wile-rtl2-000085.c' || echo '$(srcdir)/'`wile-rtl2-000085.c
+
+libwrtl_a-wile-rtl2-000085.obj: wile-rtl2-000085.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libwrtl_a-wile-rtl2-000085.obj -MD -MP -MF $(DEPDIR)/libwrtl_a-wile-rtl2-000085.Tpo -c -o libwrtl_a-wile-rtl2-000085.obj `if test -f 'wile-rtl2-000085.c'; then $(CYGPATH_W) 'wile-rtl2-000085.c'; else $(CYGPATH_W) '$(srcdir)/wile-rtl2-000085.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libwrtl_a-wile-rtl2-000085.Tpo $(DEPDIR)/libwrtl_a-wile-rtl2-000085.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='wile-rtl2-000085.c' object='libwrtl_a-wile-rtl2-000085.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libwrtl_a-wile-rtl2-000085.obj `if test -f 'wile-rtl2-000085.c'; then $(CYGPATH_W) 'wile-rtl2-000085.c'; else $(CYGPATH_W) '$(srcdir)/wile-rtl2-000085.c'; fi`
+
+libwrtl_a-wile-rtl2-000086.o: wile-rtl2-000086.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libwrtl_a-wile-rtl2-000086.o -MD -MP -MF $(DEPDIR)/libwrtl_a-wile-rtl2-000086.Tpo -c -o libwrtl_a-wile-rtl2-000086.o `test -f 'wile-rtl2-000086.c' || echo '$(srcdir)/'`wile-rtl2-000086.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libwrtl_a-wile-rtl2-000086.Tpo $(DEPDIR)/libwrtl_a-wile-rtl2-000086.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='wile-rtl2-000086.c' object='libwrtl_a-wile-rtl2-000086.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libwrtl_a-wile-rtl2-000086.o `test -f 'wile-rtl2-000086.c' || echo '$(srcdir)/'`wile-rtl2-000086.c
+
+libwrtl_a-wile-rtl2-000086.obj: wile-rtl2-000086.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libwrtl_a-wile-rtl2-000086.obj -MD -MP -MF $(DEPDIR)/libwrtl_a-wile-rtl2-000086.Tpo -c -o libwrtl_a-wile-rtl2-000086.obj `if test -f 'wile-rtl2-000086.c'; then $(CYGPATH_W) 'wile-rtl2-000086.c'; else $(CYGPATH_W) '$(srcdir)/wile-rtl2-000086.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libwrtl_a-wile-rtl2-000086.Tpo $(DEPDIR)/libwrtl_a-wile-rtl2-000086.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='wile-rtl2-000086.c' object='libwrtl_a-wile-rtl2-000086.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libwrtl_a-wile-rtl2-000086.obj `if test -f 'wile-rtl2-000086.c'; then $(CYGPATH_W) 'wile-rtl2-000086.c'; else $(CYGPATH_W) '$(srcdir)/wile-rtl2-000086.c'; fi`
+
 libwrtl_a-wile-sql.o: wile-sql.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libwrtl_a-wile-sql.o -MD -MP -MF $(DEPDIR)/libwrtl_a-wile-sql.Tpo -c -o libwrtl_a-wile-sql.o `test -f 'wile-sql.c' || echo '$(srcdir)/'`wile-sql.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libwrtl_a-wile-sql.Tpo $(DEPDIR)/libwrtl_a-wile-sql.Po
@@ -3533,6 +3568,8 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl2-000082.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl2-000083.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl2-000084.Po
+	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl2-000085.Po
+	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl2-000086.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-sql.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
@@ -3742,6 +3779,8 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl2-000082.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl2-000083.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl2-000084.Po
+	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl2-000085.Po
+	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl2-000086.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-sql.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic

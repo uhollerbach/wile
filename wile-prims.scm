@@ -238,7 +238,6 @@
    '(rename-directory alias rename-file)
    '(make-vector alias vector-create)
    '(make-string alias string-create)
-   '(vector-capacity alias vector-length)
    '(make-bytevector alias bytevector-create)
    '(substring alias string-copy)
    '(read-all alias parse-file)
@@ -3318,14 +3317,15 @@
 
    (list 'cputime "returns a list containing two floating-point numbers which are the process user and system times, respectively, in seconds" 'prim 0 "wile_cputime")
 
-   ;;; TODO: check int-ness of arg1
-
    (list 'vector-create "expects one integer, the size of the vector to be created, and optionally a second argument which is used to fill all slots of the new vector; returns a new vector of the given size"
-	 'prim
-	 1 (lambda (r a1)
+	 'priml
+	 1 (lambda (r aL a1)
 	     (emit-code
 	      "{"
 	      "size_t i, capa;"
+	      "if (@1.vt != LV_INT || @1.v.iv < 0) {"
+	      "wile_exception(\"vector-create\", \"@L\", \"expects a non-negative integer\");"
+	      "}"
 	      "@@.vt = LV_VECTOR;"
 	      "@@.origin = @1.origin;"
 	      "capa = @1.v.iv;"
@@ -3335,10 +3335,13 @@
 	      "@@.v.vec.arr[i] = NULL;"
 	      "}"
 	      "}"))
-	 2 (lambda (r a1 a2)
+	 2 (lambda (r aL a1 a2)
 	     (emit-code
 	      "{"
 	      "size_t i, capa;"
+	      "if (@1.vt != LV_INT || @1.v.iv < 0) {"
+	      "wile_exception(\"vector-create\", \"@L\", \"expects a non-negative integer\");"
+	      "}"
 	      "@@.vt = LV_VECTOR;"
 	      "@@.origin = @1.origin;"
 	      "capa = @1.v.iv;"
@@ -3490,8 +3493,6 @@
 	      "}"
 	      "}")))
 
-   ;;; TODO: check int-ness of arg1
-
    (list 'bytevector-create
 	 "expects one integer, the size of the bytevector to be created, and optionally a second argument, a char or small integer, which is used to fill all slots of the new bytevector; returns a new bytevector of the given size"
 	 'priml
@@ -3499,6 +3500,9 @@
 	     (emit-code
 	      "{"
 	      "size_t i, capa;"
+	      "if (@1.vt != LV_INT || @1.v.iv < 0) {"
+	      "wile_exception(\"bytevector-create\", \"@L\", \"expects a non-negative integer\");"
+	      "}"
 	      "@@.vt = LV_BVECTOR;"
 	      "@@.origin = @1.origin;"
 	      "capa = @1.v.iv;"
@@ -3512,6 +3516,9 @@
 	     (emit-code
 	      "{"
 	      "size_t i, capa;"
+	      "if (@1.vt != LV_INT || @1.v.iv < 0) {"
+	      "wile_exception(\"bytevector-create\", \"@L\", \"expects a non-negative integer\");"
+	      "}"
 	      "@@.vt = LV_BVECTOR;"
 	      "@@.origin = @1.origin;"
 	      "capa = @1.v.iv;"
@@ -3607,6 +3614,112 @@
 	    "@@.v.str = LISP_ALLOC(char, 1 + @1.v.bvec.capa);"
 	    "memcpy(@@.v.str, @1.v.bvec.arr, @1.v.bvec.capa);"
 	    "@@.v.str[@1.v.bvec.capa] = 0;")))
+
+   (list 'bytevector-fill!
+	 "expects one bytevector and one character or small integer and fills all slots of the bytevector with that value"
+	 'priml 2
+	 (lambda (r aL a1 a2)
+	   (emit-code
+	    "{"
+	    "size_t i, capa;"
+	    "if (@1.vt != LV_BVECTOR) {"
+	    "wile_exception(\"bytevector-fill!\", \"@L\", \"first input is not a bytevector\");"
+	    "}"
+	    "if (!(@2.vt == LV_CHAR || (@2.vt == LV_INT && @2.v.iv >= 0 && @2.v.iv < 256))) {"
+	    "wile_exception(\"bytevector-fill!\", \"@L\", \"got bad input value\");"
+	    "}"
+	    "unsigned char pv = (@2.vt == LV_CHAR) ? @2.v.chr : (unsigned char) @2.v.iv;"
+	    "capa = @1.v.vec.capa;"
+	    "for (i = 0; i < capa; ++i) {"
+	    "@1.v.bvec.arr[i] = pv;"
+	    "}"
+	    "@@ = @1;"
+	    "}")))
+
+   (list 'bytevector-copy
+	 "expects a bytevector, an optional start index, and an optional end index, and returns a newly-allocated copy of the sub-bytevector from the start to but not including the end index; if the end index is not specified, it defaults to the end of the bytevector, and if the start index is also not specified, it defaults to the beginning of the bytevector"
+	 'priml
+	 1 (lambda (r aL a1)
+	     (emit-code
+	      "if (@1.vt != LV_BVECTOR) {"
+	      "wile_exception(\"bytevector-copy\", \"@L\", \"expects a bytevector input\");"
+	      "} else {"
+	      "size_t i, capa;"
+	      "@@.vt = LV_BVECTOR;"
+	      "@@.origin = @1.origin;"
+	      "capa = @1.v.bvec.capa;"
+	      "@@.v.bvec.capa = capa;"
+	      "@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));"
+	      "for (i = 0; i < capa; ++i) {"
+	      "@@.v.bvec.arr[i] = @1.v.bvec.arr[i];"
+	      "}"
+	      "}"))
+	 2 (lambda (r aL a1 a2)
+	     (emit-code
+	      "if (@1.vt != LV_BVECTOR || @2.vt != LV_INT) {"
+	      "wile_exception(\"bytevector-copy\", \"@L\", \"expects a bytevector and an integer input\");"
+	      "} else if (@2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.bvec.capa) {"
+	      "wile_exception(\"bytevector-copy\", \"@L\", \"start index is out of range\");"
+	      "} else {"
+	      "size_t i, capa;"
+	      "@@.vt = LV_BVECTOR;"
+	      "@@.origin = @1.origin;"
+	      "capa = @1.v.bvec.capa - @2.v.iv;"
+	      "@@.v.bvec.capa = capa;"
+	      "@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));"
+	      "for (i = 0; i < capa; ++i) {"
+	      "@@.v.bvec.arr[i] = @1.v.bvec.arr[i + @2.v.iv];"
+	      "}"
+	      "}"))
+	 3 (lambda (r aL a1 a2 a3)
+	     (emit-code
+	      "if (@1.vt != LV_BVECTOR || @2.vt != LV_INT || @3.vt != LV_INT) {"
+	      "wile_exception(\"bytevector-copy\", \"@L\", \"expects a bytevector and two integer inputs\");"
+	      "} else if (@2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.bvec.capa) {"
+	      "wile_exception(\"bytevector-copy\", \"@L\", \"start index is out of range\");"
+	      "} else if (@3.v.iv < @2.v.iv || (size_t) @3.v.iv >= @1.v.bvec.capa) {"
+	      "wile_exception(\"bytevector-copy\", \"@L\", \"end index is out of range\");"
+	      "} else {"
+	      "size_t i, capa;"
+	      "@@.vt = LV_BVECTOR;"
+	      "@@.origin = @1.origin;"
+	      "capa = @3.v.iv - @2.v.iv;"
+	      "@@.v.bvec.capa = capa;"
+	      "@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));"
+	      "for (i = 0; i < capa; ++i) {"
+	      "@@.v.bvec.arr[i] = @1.v.bvec.arr[i + @2.v.iv];"
+	      "}"
+	      "}")))
+
+   ;;; TODO: make a general version that allows for a comparison test
+
+   (list 'bytevector-sort!
+	 "expects a bytevector and sorts it in-place in ascending order; returns the bytevector"
+	 'priml
+	 1 (lambda (r aL a1)
+	     (emit-code
+	      "if (@1.vt != LV_BVECTOR) {"
+	      "wile_exception(\"bytevector-sort!\", \"@L\", \"expects a bytevector input\");"
+	      "} else {"
+	      "size_t i, j, k, capa, hist[256];"
+	      "capa = @1.v.bvec.capa;"
+	      "for (i = 0; i < 256; ++i) {"
+	      "hist[i] = 0;"
+	      "}"
+	      "for (i = 0; i < capa; ++i) {"
+	      "hist[@1.v.bvec.arr[i]] += 1;"
+	      "}"
+	      "i = 0;"
+	      "for (j = 0; j < 256; ++j) {"
+	      "for (k = 0; k < hist[j]; ++k) {"
+	      "@1.v.bvec.arr[i++] = j;"
+	      "}"
+	      "}"
+	      "if (i != capa) {"
+	      "wile_exception(\"bytevector-sort!\", \"@L\", \"internal failure! size mismatch %%zu vs %%zu\", i, capa);"
+	      "}"
+	      "@@ = @1;"
+	      "}")))
 
    (list 'UTCtime
 	 "returns a 9-element list (Y M D h m s dow doy dst?) corresponding to UTC time 'now'"
@@ -4066,11 +4179,7 @@
 	 "expects one string or port and returns the SHA-256 hash of that string or the contents of that port as a 64-character string"
 	 'priml 1
 	 (lambda (r aL a1)
-	   (emit-code
-	    "if (@1.vt != LV_STRING && @1.vt != LV_FILE_PORT && @1.vt != LV_PIPE_PORT && @1.vt != LV_SOCK_PORT) {"
-	    "wile_exception(\"sha-256\", \"@L\", \"expects a string or file or pipe or socket port\");"
-	    "}"
-	    "@@ = wile_sha256_wrap(true, @1);")))
+	   (emit-code "@@ = wile_sha256_wrap(true, @1, \"@L\");")))
 
    (list 'sha-256-init
 	 "expects no arguments and returns an initialized SHA-256 hash data structure ready to accept data"
@@ -4097,11 +4206,7 @@
 	 "expects one string or port and returns the SHA-224 hash of that string or the contents of that port as a 64-character string"
 	 'priml 1
 	 (lambda (r aL a1)
-	   (emit-code
-	    "if (@1.vt != LV_STRING && @1.vt != LV_FILE_PORT && @1.vt != LV_PIPE_PORT && @1.vt != LV_SOCK_PORT) {"
-	    "wile_exception(\"sha-224\", \"@L\", \"expects a string or file or pipe or socket port\");"
-	    "}"
-	    "@@ = wile_sha256_wrap(false, @1);")))
+	   (emit-code "@@ = wile_sha256_wrap(false, @1, \"@L\");")))
 
    (list 'sha-224-init
 	 "expects no arguments and returns an initialized SHA-224 hash data structure ready to accept data"

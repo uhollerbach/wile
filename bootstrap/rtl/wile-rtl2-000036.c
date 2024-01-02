@@ -255,7 +255,6 @@ lval var_63[8];
 var_63[0] = LVI_PROC(fn_57,NULL,1);
 var_63[1] = var_2[0];
 var_63[2] = var_62;
-// bld-rtl-dir/wile-rtl2-000036.scm:22
 var_62 = wile_map(NULL, var_63, "bld-rtl-dir/wile-rtl2-000036.scm:22");
 }
 lval var_64;
@@ -264,7 +263,6 @@ lval var_65[8];
 var_65[0] = LVI_PROC(fn_22,NULL,2);
 var_65[1] = var_56;
 var_65[2] = var_62;
-// bld-rtl-dir/wile-rtl2-000036.scm:22
 var_64 = wile_foldl(NULL, var_65, "bld-rtl-dir/wile-rtl2-000036.scm:22");
 }
 var_55 = var_64;
@@ -327,7 +325,6 @@ lval var_72;
 lval var_73[8];
 var_73[0] = var_21;
 var_73[1] = var_55;
-// bld-rtl-dir/wile-rtl2-000036.scm:24
 var_72 = wile_list_ref(NULL, var_73, "bld-rtl-dir/wile-rtl2-000036.scm:24");
 }
 lval var_74;
@@ -335,7 +332,6 @@ lval var_74;
 lval var_75[8];
 var_75[0] = var_4;
 var_75[1] = var_55;
-// bld-rtl-dir/wile-rtl2-000036.scm:24
 var_74 = wile_list_ref(NULL, var_75, "bld-rtl-dir/wile-rtl2-000036.scm:24");
 }
 lval var_76;
@@ -345,7 +341,6 @@ lval var_77[8];
 var_77[0] = var_74;
 var_77[1] = var_2[0];
 var_77[2] = var_76;
-// bld-rtl-dir/wile-rtl2-000036.scm:24
 var_76 = wile_map(NULL, var_77, "bld-rtl-dir/wile-rtl2-000036.scm:24");
 }
 lval var_78;
@@ -353,7 +348,6 @@ lval var_78;
 lval var_79[8];
 var_79[0] = var_72;
 var_79[1] = var_76;
-// bld-rtl-dir/wile-rtl2-000036.scm:24
 var_78 = wile_foldl1(NULL, var_79, "bld-rtl-dir/wile-rtl2-000036.scm:24");
 }
 var_66 = var_78;

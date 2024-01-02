@@ -26,7 +26,7 @@
 (define (make-stage n)
   (let* ((scur (string-append "stage" (number->string n)))
 	 (name1-exe (string-append "wilec." scur))
-	 (name2-exe (string-append "wilec-dbg." scur))
+;;;	 (name2-exe (string-append "wilec-dbg." scur))
 	 (name-c (string-append "wilec." scur ".c"))
 	 (name1-lib (string-append "libwrtl." scur ".a"))
 	 (name2-lib (string-append "libwrtl-dbg." scur ".a")))
@@ -43,13 +43,13 @@
 
     (run-cmd-or-die "wile -c wile-main.scm wilec.c")
     (run-cmd-or-die "wile -x wilec.c wilec")
-    (run-cmd-or-die "wile -x -g wilec.c wilec-dbg")
+;;;    (run-cmd-or-die "wile -x -g wilec.c wilec-dbg")
     (rm-file-or-chirp "wile")
     (rm-file-or-chirp name1-exe)
     (rm-file-or-chirp name-c)
     (rename-file-or-die "wilec.c" name-c)
     (rename-file-or-die "wilec" name1-exe)
-    (rename-file-or-die "wilec-dbg" name2-exe)
+;;;    (rename-file-or-die "wilec-dbg" name2-exe)
     (rename-file-or-die "libwrtl.a" name1-lib)
     (rename-file-or-die "libwrtl-dbg.a" name2-lib)
     (symlink-or-die name1-exe)))
@@ -82,7 +82,8 @@
 (define m2c #f)
 (define m2l #f)
 
-(define files (list "wilec.stage%.c" "wilec.stage%" "wilec-dbg.stage%"
+(define files (list "wilec.stage%.c" "wilec.stage%"
+;;;		    "wilec-dbg.stage%"
 		    "libwrtl.stage%.a" "libwrtl-dbg.stage%.a"))
 
 (write-string "######## setup\n")
@@ -113,7 +114,7 @@
       (write-string "## clean up redundant stage1\n")
       (rm-file-or-chirp "wilec.stage1.c")
       (rm-file-or-chirp "wilec.stage1")
-      (rm-file-or-chirp "wilec-dbg.stage1")
+;;;      (rm-file-or-chirp "wilec-dbg.stage1")
       (rm-file-or-chirp "libwrtl.stage1.a")
       (rm-file-or-chirp "libwrtl-dbg.stage1.a"))
     (begin

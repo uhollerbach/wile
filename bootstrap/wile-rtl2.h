@@ -1,108 +1,110 @@
 #ifndef WILE_RTL2_H_2569976297095881579
 #define WILE_RTL2_H_2569976297095881579
 
-lval wile_list_reverse(lptr*, lptr, const char*);	// (list-reverse lst)
-lval wile_list_length(lptr*, lptr, const char*);	// (list-length lst)
-lval wile_list_length_eq(lptr*, lptr, const char*);	// (list-length=? n lst)
-lval wile_list_length_ge(lptr*, lptr, const char*);	// (list-length>=? n lst)
-lval wile_list_length_gt(lptr*, lptr, const char*);	// (list-length>? n lst)
-lval wile_list_length_lt(lptr*, lptr, const char*);	// (list-length<? n lst)
-lval wile_list_length_le(lptr*, lptr, const char*);	// (list-length<=? n lst)
-lval wile_list_last(lptr*, lptr, const char*);	// (list-last lst)
-lval wile_list_append(lptr*, lptr, const char*);	// (list-append . lsts)
-lval wile_list_flatten(lptr*, lptr, const char*);	// (list-flatten lst)
-lval wile_list_head(lptr*, lptr, const char*);	// (list-head lst n)
-lval wile_list_tail(lptr*, lptr, const char*);	// (list-tail lst n)
-lval wile_list_unhead(lptr*, lptr, const char*);	// (list-unhead lst n)
-lval wile_list_untail(lptr*, lptr, const char*);	// (list-untail lst n)
-lval wile_list_ref(lptr*, lptr, const char*);	// (list-ref lst n)
-lval wile_list_filter(lptr*, lptr, const char*);	// (list-filter pred lst)
-lval wile_list_partition(lptr*, lptr, const char*);	// (list-partition pred lst)
-lval wile_list2vector(lptr*, lptr, const char*);	// (list->vector lst)
-lval wile_list2bytevector(lptr*, lptr, const char*);	// (list->bytevector lst)
-lval wile_string2list(lptr*, lptr, const char*);	// (string->list str)
-lval wile_vector2list(lptr*, lptr, const char*);	// (vector->list vec)
-lval wile_bytevector2list(lptr*, lptr, const char*);	// (bytevector->list vec)
-lval wile_string_append(lptr*, lptr, const char*);	// (string-append . strs)
-lval wile_foldr(lptr*, lptr, const char*);	// (foldr func end lst)
-lval wile_foldl(lptr*, lptr, const char*);	// (foldl func accum lst)
-lval wile_expmod(lptr*, lptr, const char*);	// (expmod a n m)
-lval wile_string_join_by(lptr*, lptr, const char*);	// (string-join-by join . strs)
-lval wile_string_split_by(lptr*, lptr, const char*);	// (string-split-by drop? str)
-lval wile_string_split_by_whitespace(lptr*, lptr, const char*);	// (string-split-by-whitespace str)
-lval wile_foldl1(lptr*, lptr, const char*);	// (foldl1 proc lst)
-lval wile_map(lptr*, lptr, const char*);	// (map proc lst . ls)
-lval wile_for_each(lptr*, lptr, const char*);	// (for-each proc lst . lsts)
-lval wile_add(lptr*, lptr, const char*);	// (+ . vs)
-lval wile_multiply(lptr*, lptr, const char*);	// (* . vs)
-lval wile_subtract(lptr*, lptr, const char*);	// (- . vs)
-lval wile_divide(lptr*, lptr, const char*);	// (/ . vs)
-lval wile_min(lptr*, lptr, const char*);	// (min . vs)
-lval wile_max(lptr*, lptr, const char*);	// (max . vs)
-lval wile_list_sort(lptr*, lptr, const char*);	// (list-sort is-lt? lst)
-lval wile_replicate(lptr*, lptr, const char*);	// (replicate c n)
-lval wile_memp(lptr*, lptr, const char*);	// (memp test? lst)
-lval wile_memv(lptr*, lptr, const char*);	// (memv obj lst)
-lval wile_assp(lptr*, lptr, const char*);	// (assp test? lst)
-lval wile_assv(lptr*, lptr, const char*);	// (assv obj lst)
-lval wile_list_drop_while(lptr*, lptr, const char*);	// (list-drop-while drop? lst)
-lval wile_list_take_while(lptr*, lptr, const char*);	// (list-take-while keep? lst)
-lval wile_list_remove_dups(lptr*, lptr, const char*);	// (list-remove-dups lst)
-lval wile_string_pad_left(lptr*, lptr, const char*);	// (string-pad-left str pch lmin)
-lval wile_string_pad_right(lptr*, lptr, const char*);	// (string-pad-right str pch lmin)
-lval wile_string_pad_center(lptr*, lptr, const char*);	// (string-pad-center str pch lmin)
-lval wile_string_trim_left(lptr*, lptr, const char*);	// (string-trim-left drop? str)
-lval wile_string_trim_right(lptr*, lptr, const char*);	// (string-trim-right drop? str)
-lval wile_string_trim(lptr*, lptr, const char*);	// (string-trim drop? str)
-lval wile_fromto(lptr*, lptr, const char*);	// (fromto f l)
-lval wile_upfrom(lptr*, lptr, const char*);	// (upfrom s n0)
-lval wile_any_true(lptr*, lptr, const char*);	// (any-true? vals)
-lval wile_all_true(lptr*, lptr, const char*);	// (all-true? vals)
-lval wile_write_string(lptr*, lptr, const char*);	// (write-string . strs)
-lval wile_sql_meta_tables(lptr*, lptr, const char*);	// (sqlite-meta-tables port)
-lval wile_sql_meta_schema(lptr*, lptr, const char*);	// (sqlite-meta-schema port tbl)
-lval wile_sql_dump_table(lptr*, lptr, const char*);	// (sqlite-dump-table sport tbl oport)
-lval wile_julian_day(lptr*, lptr, const char*);	// (julian-day year month day)
-lval wile_gregorian_date(lptr*, lptr, const char*);	// (gregorian-date jday)
-lval wile_offset_date(lptr*, lptr, const char*);	// (offset-date year month day offset)
-lval wile_delta_dates(lptr*, lptr, const char*);	// (delta-dates y1 m1 d1 y2 m2 d2)
-lval wile_day_of_week(lptr*, lptr, const char*);	// (day-of-week v . vs)
-lval wile_is_leap_year(lptr*, lptr, const char*);	// (is-leap-year? y)
-lval wile_day_of_year(lptr*, lptr, const char*);	// (day-of-year y m d)
-lval wile_julian_day_of_easter(lptr*, lptr, const char*);	// (julian-day-of-easter year)
-lval wile_typeof(lptr*, lptr, const char*);	// (type-of v)
-lval wile_printf(lptr*, lptr, const char*);	// (printf fstr . vals)
-lval wile_fprintf(lptr*, lptr, const char*);	// (fprintf port fstr . vals)
-lval wile_sprintf(lptr*, lptr, const char*);	// (sprintf fstr . vals)
-lval wile_random_permutation(lptr*, lptr, const char*);	// (random-permutation n)
-lval wile_vector_sort_inplace(lptr*, lptr, const char*);	// (vector-sort! is-le? vec)
-lval wile_vector_map(lptr*, lptr, const char*);	// (vector-map proc vec . vecs)
-lval wile_vector_map_inplace(lptr*, lptr, const char*);	// (vector-map! proc vec)
-lval wile_vector_foreach(lptr*, lptr, const char*);	// (vector-for-each proc vec . vecs)
-lval wile_bytevector_foreach(lptr*, lptr, const char*);	// (bytevector-for-each proc vec . vecs)
-lval wile_cholesky_decompose(lptr*, lptr, const char*);	// (cholesky-decompose mat)
-lval wile_cholesky_solve(lptr*, lptr, const char*);	// (cholesky-solve mat vec)
-lval wile_build_info(lptr*, lptr, const char*);	// (wile-build-info add-ctime?)
-lval wile_display_stack_trace(lptr*, lptr, const char*);	// (display-stack-trace trace-data port)
-lval wile_stack_trace(lptr*, lptr, const char*);	// (stack-trace port)
-lval wile_root_bracket(lptr*, lptr, const char*);	// (root-bracket f x scale)
-lval wile_root_bisect(lptr*, lptr, const char*);	// (root-bisect et fn a0 b0)
-lval wile_root_ridders(lptr*, lptr, const char*);	// (root-ridders et fn a0 b0)
-lval wile_curry(lptr*, lptr, const char*);	// (curry func arg1)
-lval wile_compose(lptr*, lptr, const char*);	// (compose f . fs)
-lval wile_list_group_by(lptr*, lptr, const char*);	// (list-group-by cmp lst)
-lval wile_mr_primality(lptr*, lptr, const char*);	// (is-prime? n . k)
-lval wile_next_prime(lptr*, lptr, const char*);	// (next-prime n)
-lval wile_std_env_no_macros(lptr*, lptr, const char*);	// (wile-standard-environment)
-lval wile_env_add_macros(lptr*, lptr, const char*);	// (wile-environment-with-macros env)
-lval wile_eval_define_form(lptr*, lptr, const char*);	// (define-form? expr)
-lval wile_eval_load_path(lptr*, lptr, const char*);	// (load-file-path pathy? fname)
-lval wile_eval_load_form(lptr*, lptr, const char*);	// (load-form? expr)
-lval wile_eval_begin_form(lptr*, lptr, const char*);	// (begin-form? expr)
-lval wile_eval_define(lptr*, lptr, const char*);	// (eval-define macro env expr)
-lval wile_eval_begin(lptr*, lptr, const char*);	// (eval-begin ebox env expr)
-lval wile_eval_apply_lambda(lptr*, lptr, const char*);	// (apply-lambda fn args)
-lval wile_eval_apply_interp(lptr*, lptr, const char*);	// (apply-interp fn . args)
-lval wile_eval(lptr*, lptr, const char*);	// (eval env expr)
+lval wile_list_reverse(lptr*, lptr, const char*);
+lval wile_list_length(lptr*, lptr, const char*);
+lval wile_list_length_eq(lptr*, lptr, const char*);
+lval wile_list_length_ge(lptr*, lptr, const char*);
+lval wile_list_length_gt(lptr*, lptr, const char*);
+lval wile_list_length_lt(lptr*, lptr, const char*);
+lval wile_list_length_le(lptr*, lptr, const char*);
+lval wile_list_last(lptr*, lptr, const char*);
+lval wile_list_append(lptr*, lptr, const char*);
+lval wile_list_flatten(lptr*, lptr, const char*);
+lval wile_list_head(lptr*, lptr, const char*);
+lval wile_list_tail(lptr*, lptr, const char*);
+lval wile_list_unhead(lptr*, lptr, const char*);
+lval wile_list_untail(lptr*, lptr, const char*);
+lval wile_list_ref(lptr*, lptr, const char*);
+lval wile_list_filter(lptr*, lptr, const char*);
+lval wile_list_partition(lptr*, lptr, const char*);
+lval wile_list2vector(lptr*, lptr, const char*);
+lval wile_list2bytevector(lptr*, lptr, const char*);
+lval wile_string2list(lptr*, lptr, const char*);
+lval wile_vector2list(lptr*, lptr, const char*);
+lval wile_bytevector2list(lptr*, lptr, const char*);
+lval wile_string_append(lptr*, lptr, const char*);
+lval wile_foldr(lptr*, lptr, const char*);
+lval wile_foldl(lptr*, lptr, const char*);
+lval wile_expmod(lptr*, lptr, const char*);
+lval wile_string_join_by(lptr*, lptr, const char*);
+lval wile_string_split_by(lptr*, lptr, const char*);
+lval wile_string_split_by_whitespace(lptr*, lptr, const char*);
+lval wile_foldl1(lptr*, lptr, const char*);
+lval wile_map(lptr*, lptr, const char*);
+lval wile_for_each(lptr*, lptr, const char*);
+lval wile_add(lptr*, lptr, const char*);
+lval wile_multiply(lptr*, lptr, const char*);
+lval wile_subtract(lptr*, lptr, const char*);
+lval wile_divide(lptr*, lptr, const char*);
+lval wile_min(lptr*, lptr, const char*);
+lval wile_max(lptr*, lptr, const char*);
+lval wile_list_sort(lptr*, lptr, const char*);
+lval wile_replicate(lptr*, lptr, const char*);
+lval wile_memp(lptr*, lptr, const char*);
+lval wile_memv(lptr*, lptr, const char*);
+lval wile_assp(lptr*, lptr, const char*);
+lval wile_assv(lptr*, lptr, const char*);
+lval wile_list_drop_while(lptr*, lptr, const char*);
+lval wile_list_take_while(lptr*, lptr, const char*);
+lval wile_list_remove_dups(lptr*, lptr, const char*);
+lval wile_string_pad_left(lptr*, lptr, const char*);
+lval wile_string_pad_right(lptr*, lptr, const char*);
+lval wile_string_pad_center(lptr*, lptr, const char*);
+lval wile_string_trim_left(lptr*, lptr, const char*);
+lval wile_string_trim_right(lptr*, lptr, const char*);
+lval wile_string_trim(lptr*, lptr, const char*);
+lval wile_fromto(lptr*, lptr, const char*);
+lval wile_upfrom(lptr*, lptr, const char*);
+lval wile_any_true(lptr*, lptr, const char*);
+lval wile_all_true(lptr*, lptr, const char*);
+lval wile_write_string(lptr*, lptr, const char*);
+lval wile_sql_meta_tables(lptr*, lptr, const char*);
+lval wile_sql_meta_schema(lptr*, lptr, const char*);
+lval wile_sql_dump_table(lptr*, lptr, const char*);
+lval wile_julian_day(lptr*, lptr, const char*);
+lval wile_gregorian_date(lptr*, lptr, const char*);
+lval wile_offset_date(lptr*, lptr, const char*);
+lval wile_delta_dates(lptr*, lptr, const char*);
+lval wile_day_of_week(lptr*, lptr, const char*);
+lval wile_is_leap_year(lptr*, lptr, const char*);
+lval wile_day_of_year(lptr*, lptr, const char*);
+lval wile_julian_day_of_easter(lptr*, lptr, const char*);
+lval wile_typeof(lptr*, lptr, const char*);
+lval wile_printf(lptr*, lptr, const char*);
+lval wile_fprintf(lptr*, lptr, const char*);
+lval wile_sprintf(lptr*, lptr, const char*);
+lval wile_random_permutation(lptr*, lptr, const char*);
+lval wile_vector_sort_inplace(lptr*, lptr, const char*);
+lval wile_vector_map(lptr*, lptr, const char*);
+lval wile_bytevector_map(lptr*, lptr, const char*);
+lval wile_vector_map_inplace(lptr*, lptr, const char*);
+lval wile_bytevector_map_inplace(lptr*, lptr, const char*);
+lval wile_vector_foreach(lptr*, lptr, const char*);
+lval wile_bytevector_foreach(lptr*, lptr, const char*);
+lval wile_cholesky_decompose(lptr*, lptr, const char*);
+lval wile_cholesky_solve(lptr*, lptr, const char*);
+lval wile_build_info(lptr*, lptr, const char*);
+lval wile_display_stack_trace(lptr*, lptr, const char*);
+lval wile_stack_trace(lptr*, lptr, const char*);
+lval wile_root_bracket(lptr*, lptr, const char*);
+lval wile_root_bisect(lptr*, lptr, const char*);
+lval wile_root_ridders(lptr*, lptr, const char*);
+lval wile_curry(lptr*, lptr, const char*);
+lval wile_compose(lptr*, lptr, const char*);
+lval wile_list_group_by(lptr*, lptr, const char*);
+lval wile_mr_primality(lptr*, lptr, const char*);
+lval wile_next_prime(lptr*, lptr, const char*);
+lval wile_std_env_no_macros(lptr*, lptr, const char*);
+lval wile_env_add_macros(lptr*, lptr, const char*);
+lval wile_eval_define_form(lptr*, lptr, const char*);
+lval wile_eval_load_path(lptr*, lptr, const char*);
+lval wile_eval_load_form(lptr*, lptr, const char*);
+lval wile_eval_begin_form(lptr*, lptr, const char*);
+lval wile_eval_define(lptr*, lptr, const char*);
+lval wile_eval_begin(lptr*, lptr, const char*);
+lval wile_eval_apply_lambda(lptr*, lptr, const char*);
+lval wile_eval_apply_interp(lptr*, lptr, const char*);
+lval wile_eval(lptr*, lptr, const char*);
 
 #endif // WILE_RTL2_H_2569976297095881579

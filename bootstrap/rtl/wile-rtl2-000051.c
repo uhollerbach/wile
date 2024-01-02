@@ -84,8 +84,7 @@ var_15[2] = var_12;
 var_6[0] = var_15[0];
 var_6[1] = var_15[1];
 var_6[2] = var_15[2];
-// bld-rtl-dir/wile-rtl2-000051.scm:19
-goto lbl_7;	// selfie
+goto lbl_7;
 } else {
 var_8 = var_6[2];
 }
@@ -110,7 +109,6 @@ lval var_21[8];
 var_21[0] = var_2[0];
 var_21[1] = var_18;
 var_21[2] = var_19;
-// bld-rtl-dir/wile-rtl2-000051.scm:14
 var_20 = fn_4(var_5, var_21, "bld-rtl-dir/wile-rtl2-000051.scm:14");
 return var_20;
 }

@@ -106,14 +106,12 @@ var_20[2] = var_17;
 var_6[0] = var_20[0];
 var_6[1] = var_20[1];
 var_6[2] = var_20[2];
-// bld-rtl-dir/wile-rtl2-000010.scm:19
-goto lbl_7;	// selfie
+goto lbl_7;
 } else {
 lval var_21;
 {
 lval var_22[8];
 var_22[0] = var_6[1];
-// bld-rtl-dir/wile-rtl2-000010.scm:18
 var_21 = wile_list_reverse(NULL, var_22, "bld-rtl-dir/wile-rtl2-000010.scm:18");
 }
 var_8 = var_21;
@@ -133,7 +131,6 @@ lval var_25[8];
 var_25[0] = var_2[0];
 var_25[1] = var_23;
 var_25[2] = var_2[1];
-// bld-rtl-dir/wile-rtl2-000010.scm:14
 var_24 = fn_4(var_5, var_25, "bld-rtl-dir/wile-rtl2-000010.scm:14");
 return var_24;
 }

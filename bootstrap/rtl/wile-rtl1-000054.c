@@ -15,7 +15,7 @@ extern lisp_escape_t cachalot;
 
 #define BLOCK_SIZE	8192
 
-lval wile_sha256_wrap(bool is_256, lval input)
+lval wile_sha256_wrap(bool is_256, lval input, const char* loc)
 {
     int i, lim;
     uint8_t data[BLOCK_SIZE];
@@ -33,8 +33,8 @@ lval wile_sha256_wrap(bool is_256, lval input)
 	    sha256_update(&sha_info, (uint8_t*) data, i);
 	}
     } else {
-	wile_exception(is_256 ? "sha-256" : "sha-224",
-		       LISP_WHENCE, "expects a string or port argument");
+	wile_exception(is_256 ? "sha-256" : "sha-224", loc,
+		       "expects a string or port argument");
     }
     sha256_final(digest, &sha_info);
     lim = is_256 ? 32 : 28;
