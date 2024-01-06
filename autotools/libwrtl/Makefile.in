@@ -670,7 +670,7 @@ libwrtl_a_SOURCES = alloc.c continuations.c fsi_set.c location.c \
 	wile-rtl2-000080.c wile-rtl2-000081.c wile-rtl2-000082.c \
 	wile-rtl2-000083.c wile-rtl2-000084.c wile-rtl2-000085.c \
 	wile-rtl2-000086.c wile-sql.c
-libwrtl_a_CPPFLAGS = -I$(top_srcdir)/include -DWILE_CONF_FILE=\"$(sysconfdir)/wile-config.dat\"
+libwrtl_a_CPPFLAGS = -I$(top_srcdir)/include -DWILE_CONF_FILE=$(sysconfdir)/wile-config.dat
 all: all-am
 
 .SUFFIXES:

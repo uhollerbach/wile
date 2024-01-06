@@ -136,7 +136,7 @@ int main(int argc, char** argv)
 
 // trivial function to get gc code version
 
-lval wile_gc_version(lptr*, lptr, const char*)
+lval wile_gc_version(lptr* clos, lptr args, const char* loc)
 {
 #ifdef WILE_USES_GC
     char buf[64];
@@ -427,7 +427,7 @@ lval wile_run_pipe_command(lval cmd, const char* rw, const char* loc)
 #include <sys/types.h>
 #include <sys/stat.h>
 
-lval wile_temp_file(lptr*, lptr args, const char* loc)
+lval wile_temp_file(lptr* clos, lptr args, const char* loc)
 {
     char *template, *tp;
     size_t tlen;
@@ -842,7 +842,7 @@ bool wile_do_eqv(lptr arg1, lptr arg2)
 
 #include "array_builder.h"
 
-lval wile_read_line(lptr*, lptr args, const char* loc)
+lval wile_read_line(lptr* clos, lptr args, const char* loc)
 {
     FILE* fp;
 
@@ -894,7 +894,7 @@ lval wile_read_line(lptr*, lptr args, const char* loc)
 void set_start_state(struct ulex_context* context);
 #endif // WILE_NEEDS_ULEX
 
-lval wile_parse_string(lptr*, lptr args, const char* loc)
+lval wile_parse_string(lptr* clos, lptr args, const char* loc)
 {
     lval res;
 
@@ -934,7 +934,7 @@ lval wile_parse_string(lptr*, lptr args, const char* loc)
 void set_start_state(struct ulex_context* context);
 #endif // WILE_NEEDS_ULEX
 
-lval wile_parse_file(lptr*, lptr args, const char* loc)
+lval wile_parse_file(lptr* clos, lptr args, const char* loc)
 {
     lval res;
 
@@ -969,7 +969,7 @@ lval wile_parse_file(lptr*, lptr args, const char* loc)
 
 // (regex-match pattern string) => #f || (pre-match match post-match)
 
-lval wile_regex_match(lptr*, lptr args, const char* loc)
+lval wile_regex_match(lptr* clos, lptr args, const char* loc)
 {
     struct nfa_state* nstate;
     struct nfa_work* nwork;
@@ -1116,7 +1116,7 @@ lval wile_apply_function(lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_read_directory(lptr*, lptr args, const char* loc)
+lval wile_read_directory(lptr* clos, lptr args, const char* loc)
 {
     DIR* dp;
     struct dirent* de;
@@ -1146,7 +1146,7 @@ lval wile_read_directory(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_char2string(lptr*, lptr args, const char* loc)
+lval wile_char2string(lptr* clos, lptr args, const char* loc)
 {
     lval lv, ac;
     lisp_int_t i, len;
@@ -1215,7 +1215,7 @@ static int tcp_proto = 0;
 	}								\
     } while (0)
 
-lval wile_listen_port(lptr*, lptr args, const char* loc)
+lval wile_listen_port(lptr* clos, lptr args, const char* loc)
 {
     int sd;
     FILE* fp;
@@ -1261,7 +1261,7 @@ lval wile_listen_port(lptr*, lptr args, const char* loc)
     }
 }
 
-lval wile_accept_connection(lptr*, lptr args, const char* loc)
+lval wile_accept_connection(lptr* clos, lptr args, const char* loc)
 {
     int fd;
     unsigned int psize;
@@ -1296,7 +1296,7 @@ lval wile_accept_connection(lptr*, lptr args, const char* loc)
     }
 }
 
-lval wile_connect_to(lptr*, lptr args, const char* loc)
+lval wile_connect_to(lptr* clos, lptr args, const char* loc)
 {
     char pstr[8];
     struct addrinfo hints, *server, *sp;
@@ -1372,7 +1372,7 @@ lval wile_rand_normal_pair(lisp_real_t m, lisp_real_t s)
 
 // --8><----8><----8><--
 
-lval wile_gethostname(lptr*, lptr, const char*)
+lval wile_gethostname(lptr* clos, lptr args, const char* loc)
 {
     char buf[HOST_NAME_MAX+1];
     if (gethostname(buf, sizeof(buf)) < 0) {
@@ -1384,7 +1384,7 @@ lval wile_gethostname(lptr*, lptr, const char*)
 
 // --8><----8><----8><--
 
-lval wile_getdomainname(lptr*, lptr, const char*)
+lval wile_getdomainname(lptr* clos, lptr args, const char* loc)
 {
     char buf[HOST_NAME_MAX+1];
     if (getdomainname(buf, sizeof(buf)) < 0) {
@@ -1396,7 +1396,7 @@ lval wile_getdomainname(lptr*, lptr, const char*)
 
 // --8><----8><----8><--
 
-lval wile_getcwd(lptr*, lptr, const char*)
+lval wile_getcwd(lptr* clos, lptr args, const char* loc)
 {
     char str[1+PATH_MAX], *sp;
     sp = getcwd(str, sizeof(str));
@@ -1409,7 +1409,7 @@ lval wile_getcwd(lptr*, lptr, const char*)
 
 // --8><----8><----8><--
 
-lval wile_cputime(lptr*, lptr, const char*)
+lval wile_cputime(lptr* clos, lptr args, const char* loc)
 {
     struct rusage usage;
     if (getrusage(RUSAGE_SELF, &usage) == 0) {
@@ -1424,7 +1424,7 @@ lval wile_cputime(lptr*, lptr, const char*)
 
 // --8><----8><----8><--
 
-lval wile_filestat(lptr*, lptr args, const char* loc)
+lval wile_filestat(lptr* clos, lptr args, const char* loc)
 {
     struct stat sbuf;
     if (args[0].vt != LV_STRING) {
@@ -1453,7 +1453,7 @@ lval wile_filestat(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_symlinkstat(lptr*, lptr args, const char* loc)
+lval wile_symlinkstat(lptr* clos, lptr args, const char* loc)
 {
     struct stat sbuf;
     if (args[0].vt != LV_STRING) {
@@ -1483,7 +1483,7 @@ lval wile_symlinkstat(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_getuserinfo(lptr*, lptr args, const char* loc)
+lval wile_getuserinfo(lptr* clos, lptr args, const char* loc)
 {
     struct passwd* pwp;
     if (args[0].vt == LV_STRING) {
@@ -1511,7 +1511,7 @@ lval wile_getuserinfo(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_getalluserinfo(lptr*, lptr args, const char* loc)
+lval wile_getalluserinfo(lptr* clos, lptr args, const char* loc)
 {
     struct passwd* pwp;
     lptr p1, res = NULL;
@@ -1540,7 +1540,7 @@ lval wile_getalluserinfo(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_getgroupinfo(lptr*, lptr args, const char* loc)
+lval wile_getgroupinfo(lptr* clos, lptr args, const char* loc)
 {
     struct group* grp;
     if (args[0].vt == LV_STRING) {
@@ -1570,7 +1570,7 @@ lval wile_getgroupinfo(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_getallgroupinfo(lptr*, lptr args, const char* loc)
+lval wile_getallgroupinfo(lptr* clos, lptr args, const char* loc)
 {
     struct group* grp;
     lptr res = NULL;
@@ -1599,7 +1599,7 @@ lval wile_getallgroupinfo(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_localtime(lptr*, lptr args, const char* loc)
+lval wile_localtime(lptr* clos, lptr args, const char* loc)
 {
     time_t now;
     if (args == NULL) {
@@ -1630,7 +1630,7 @@ lval wile_localtime(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_gmtime(lptr*, lptr args, const char* loc)
+lval wile_gmtime(lptr* clos, lptr args, const char* loc)
 {
     time_t now;
     if (args == NULL) {
@@ -1661,7 +1661,7 @@ lval wile_gmtime(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_closeport(lptr*, lptr args, const char* loc)
+lval wile_closeport(lptr* clos, lptr args, const char* loc)
 {
     if (args[0].vt == LV_FILE_PORT ||
 	args[0].vt == LV_SOCK_PORT) {
@@ -1681,7 +1681,7 @@ lval wile_closeport(lptr*, lptr args, const char* loc)
 	   
 // --8><----8><----8><--
 
-lval wile_flushport(lptr*, lptr args, const char* loc)
+lval wile_flushport(lptr* clos, lptr args, const char* loc)
 {
     if (args[0].vt == LV_FILE_PORT ||
 	args[0].vt == LV_PIPE_PORT ||
@@ -1701,7 +1701,7 @@ lval wile_flushport(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_setlinebuffering(lptr*, lptr args, const char* loc)
+lval wile_setlinebuffering(lptr* clos, lptr args, const char* loc)
 {
     if (args[0].vt == LV_FILE_PORT ||
 	args[0].vt == LV_PIPE_PORT ||
@@ -1721,7 +1721,7 @@ lval wile_setlinebuffering(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_setnobuffering(lptr*, lptr args, const char* loc)
+lval wile_setnobuffering(lptr* clos, lptr args, const char* loc)
 {
     if (args[0].vt == LV_FILE_PORT ||
 	args[0].vt == LV_PIPE_PORT ||
@@ -1740,7 +1740,7 @@ lval wile_setnobuffering(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_setfilepos2(lptr*, lptr args, const char* loc)
+lval wile_setfilepos2(lptr* clos, lptr args, const char* loc)
 {
     if (args[0].vt != LV_FILE_PORT ||
 	args[1].vt != LV_INT) {
@@ -1752,7 +1752,7 @@ lval wile_setfilepos2(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_setfilepos3(lptr*, lptr args, const char* loc)
+lval wile_setfilepos3(lptr* clos, lptr args, const char* loc)
 {
     if (args[0].vt != LV_FILE_PORT ||
 	args[1].vt != LV_INT ||
@@ -1776,7 +1776,7 @@ lval wile_setfilepos3(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_string_reverse(lptr*, lptr args, const char* loc)
+lval wile_string_reverse(lptr* clos, lptr args, const char* loc)
 {
     size_t i, j;
     char c;
@@ -1796,7 +1796,7 @@ lval wile_string_reverse(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_string_hash_32(lptr*, lptr args, const char* loc)
+lval wile_string_hash_32(lptr* clos, lptr args, const char* loc)
 {
     uint32_t hash;
     size_t i, n_os;
@@ -1815,7 +1815,7 @@ lval wile_string_hash_32(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_string_hash_64(lptr*, lptr args, const char* loc)
+lval wile_string_hash_64(lptr* clos, lptr args, const char* loc)
 {
     uint64_t hash;
     size_t i, n_os;
@@ -1834,7 +1834,7 @@ lval wile_string_hash_64(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_string_ci_hash_32(lptr*, lptr args, const char* loc)
+lval wile_string_ci_hash_32(lptr* clos, lptr args, const char* loc)
 {
     uint32_t hash;
     size_t i, n_os;
@@ -1853,7 +1853,7 @@ lval wile_string_ci_hash_32(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_string_ci_hash_64(lptr*, lptr args, const char* loc)
+lval wile_string_ci_hash_64(lptr* clos, lptr args, const char* loc)
 {
     uint64_t hash;
     size_t i, n_os;
@@ -1872,7 +1872,7 @@ lval wile_string_ci_hash_64(lptr*, lptr args, const char* loc)
 
 // --8><----8><----8><--
 
-lval wile_cfft_good_n(lptr*, lptr args, const char* loc)
+lval wile_cfft_good_n(lptr* clos, lptr args, const char* loc)
 {
     if (args[0].vt != LV_INT) {
 	wile_exception("cfft-good-n?", loc, "expects an integer argument");
@@ -1880,7 +1880,7 @@ lval wile_cfft_good_n(lptr*, lptr args, const char* loc)
     return LVI_BOOL(wilec_cfft_good_n(args[0].v.iv));
 }
 
-lval wile_cfft(lptr*, lptr args, const char* loc)
+lval wile_cfft(lptr* clos, lptr args, const char* loc)
 {
     if (args[0].vt != LV_INT || args[1].vt != LV_VECTOR) {
 	wile_exception("vector-cfft!", loc,
@@ -2004,7 +2004,7 @@ lval wile_sha256_init(bool is_256)
     return ret;
 }
 
-lval wile_sha256_update(lptr*, lptr args, const char* loc)
+lval wile_sha256_update(lptr* clos, lptr args, const char* loc)
 {
     if (args[0].vt != LV_SHA256_DATA ||
 	(args[1].vt != LV_STRING && args[1].vt != LV_BVECTOR)) {
@@ -2022,7 +2022,7 @@ lval wile_sha256_update(lptr*, lptr args, const char* loc)
     return LVI_BOOL(true);
 }
 
-lval wile_sha256_finish(lptr*, lptr args, const char* loc)
+lval wile_sha256_finish(lptr* clos, lptr args, const char* loc)
 {
     int i, lim;
     unsigned char digest[32];

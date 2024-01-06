@@ -1,6 +1,6 @@
 bin_PROGRAMS = wile
 wile_SOURCES = wilec.c
-wile_CPPFLAGS = -I$(top_srcdir)/include -DWILE_CONF_FILE=\"$(sysconfdir)/wile-config.dat\"
+wile_CPPFLAGS = -I$(top_srcdir)/include -DWILE_CONF_FILE=$(sysconfdir)/wile-config.dat
 wile_LDADD = ../libwrtl/libwrtl.a
 
 sysconf_DATA = wile-config.dat

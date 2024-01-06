@@ -830,11 +830,6 @@ lptr new_string(const char* str)		WILE_ATTR((malloc));
 lptr new_vec(size_t capa)			WILE_ATTR((malloc));
 lptr new_bvec(size_t capa)			WILE_ATTR((malloc));
 
-lptr lst2vec(lptr lst);
-lptr lst2bvec(lptr lst);
-
-lptr new_spine(lptr lp);
-
 #define FATAL(fname, ...)						\
     do {								\
 	fprintf(stderr, "fatal error: '%s' ", fname);			\

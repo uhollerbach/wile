@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_filestat(lptr*, lptr args, const char* loc)
+lval wile_filestat(lptr* clos, lptr args, const char* loc)
 {
     struct stat sbuf;
     if (args[0].vt != LV_STRING) {

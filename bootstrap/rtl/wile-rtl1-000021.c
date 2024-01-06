@@ -18,7 +18,7 @@ extern lisp_escape_t cachalot;
 
 #include "array_builder.h"
 
-lval wile_read_line(lptr*, lptr args, const char* loc)
+lval wile_read_line(lptr* clos, lptr args, const char* loc)
 {
     FILE* fp;
 

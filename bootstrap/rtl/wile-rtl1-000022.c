@@ -21,7 +21,7 @@ extern lisp_escape_t cachalot;
 void set_start_state(struct ulex_context* context);
 #endif // WILE_NEEDS_ULEX
 
-lval wile_parse_string(lptr*, lptr args, const char* loc)
+lval wile_parse_string(lptr* clos, lptr args, const char* loc)
 {
     lval res;
 

@@ -155,7 +155,7 @@ static unsigned int yyl_actions(unsigned int* yyl_user_return,
 				void* user_data,
 				void* yyl_lexval)
 {
-#line 322 "wile.ulex"
+#line 319 "wile.ulex"
     YYSTYPE* lexval = (YYSTYPE*) yyl_lexval;
     lexval->vt = VT_UNINIT;
     // TODO: DANGER WILL ROBINSON! This is not thread-safe!
@@ -167,19 +167,19 @@ static unsigned int yyl_actions(unsigned int* yyl_user_return,
 
 case 1:
   {
-#line 331 "wile.ulex"
+#line 328 "wile.ulex"
 			return HASHBANG;
   }
   break;
 case 2:
   {
-#line 336 "wile.ulex"
+#line 333 "wile.ulex"
 			return VECTOR;
   }
   break;
 case 3:
   {
-#line 337 "wile.ulex"
+#line 334 "wile.ulex"
 			return BVECTOR;
   }
   break;
@@ -189,7 +189,7 @@ case 6:
   break;
 case 7:
   {
-#line 350 "wile.ulex"
+#line 347 "wile.ulex"
 				    lexval->v.bv =
 					(yytext[1] == 't' || yytext[1] == 'T');
 				    set_tag(LV_BOOL, BOOLEAN);
@@ -197,74 +197,74 @@ case 7:
   break;
 case 8:
   {
-#line 358 "wile.ulex"
+#line 355 "wile.ulex"
 		set_char(0x07);
   }
   break;
 case 9:
   {
-#line 359 "wile.ulex"
+#line 356 "wile.ulex"
 		set_char(0x08);
   }
   break;
 case 10:
   {
-#line 360 "wile.ulex"
+#line 357 "wile.ulex"
 		set_char(0x7f);
   }
   break;
 case 11:
   {
-#line 361 "wile.ulex"
+#line 358 "wile.ulex"
 		set_char(0x1b);
   }
   break;
 case 12:
   {
-#line 362 "wile.ulex"
+#line 359 "wile.ulex"
 		set_char('\r');
   }
   break;
 case 13:
 case 14:
   {
-#line 364 "wile.ulex"
+#line 361 "wile.ulex"
 		set_char('\n');
   }
   break;
 case 15:
   {
-#line 365 "wile.ulex"
+#line 362 "wile.ulex"
 		set_char(0x00);
   }
   break;
 case 16:
   {
-#line 366 "wile.ulex"
+#line 363 "wile.ulex"
 			set_char(0x0c);
   }
   break;
 case 17:
   {
-#line 367 "wile.ulex"
+#line 364 "wile.ulex"
 		set_char(' ');
   }
   break;
 case 18:
   {
-#line 368 "wile.ulex"
+#line 365 "wile.ulex"
 			set_char('\t');
   }
   break;
 case 19:
   {
-#line 369 "wile.ulex"
+#line 366 "wile.ulex"
 			set_char(0x0b);
   }
   break;
 case 20:
   {
-#line 372 "wile.ulex"
+#line 369 "wile.ulex"
 				     lisp_int_t ci;
 				     read_int(16, yytext + 3, &ci);
 				     lexval->v.chr = ci & 0xff;
@@ -273,13 +273,13 @@ case 20:
   break;
 case 21:
   {
-#line 378 "wile.ulex"
+#line 375 "wile.ulex"
 			set_char(yytext[2]);
   }
   break;
 case 22:
   {
-#line 383 "wile.ulex"
+#line 380 "wile.ulex"
 				    lexval->v.str =
 					LISP_STRDUP((char*) yytext + 1);
 				    LISP_ASSERT(lexval->v.str != NULL);
@@ -290,187 +290,187 @@ case 22:
   break;
 case 23:
   {
-#line 398 "wile.ulex"
+#line 395 "wile.ulex"
 		set_int(2, yytext + 2);
   }
   break;
 case 24:
   {
-#line 399 "wile.ulex"
+#line 396 "wile.ulex"
 		set_int(3, yytext + 4);
   }
   break;
 case 25:
   {
-#line 400 "wile.ulex"
+#line 397 "wile.ulex"
 		set_int(4, yytext + 4);
   }
   break;
 case 26:
   {
-#line 401 "wile.ulex"
+#line 398 "wile.ulex"
 		set_int(5, yytext + 4);
   }
   break;
 case 27:
   {
-#line 402 "wile.ulex"
+#line 399 "wile.ulex"
 		set_int(6, yytext + 4);
   }
   break;
 case 28:
   {
-#line 403 "wile.ulex"
+#line 400 "wile.ulex"
 		set_int(7, yytext + 4);
   }
   break;
 case 29:
   {
-#line 404 "wile.ulex"
+#line 401 "wile.ulex"
 		set_int(8, yytext + 2);
   }
   break;
 case 30:
   {
-#line 405 "wile.ulex"
+#line 402 "wile.ulex"
 		set_int(9, yytext + 4);
   }
   break;
 case 31:
   {
-#line 406 "wile.ulex"
+#line 403 "wile.ulex"
 		set_int(10, yytext + (yytext[0] == '#' ? 2 : 0));
   }
   break;
 case 32:
   {
-#line 407 "wile.ulex"
+#line 404 "wile.ulex"
 		set_int(11, yytext + 5);
   }
   break;
 case 33:
   {
-#line 408 "wile.ulex"
+#line 405 "wile.ulex"
 		set_int(12, yytext + 5);
   }
   break;
 case 34:
   {
-#line 409 "wile.ulex"
+#line 406 "wile.ulex"
 		set_int(13, yytext + 5);
   }
   break;
 case 35:
   {
-#line 410 "wile.ulex"
+#line 407 "wile.ulex"
 		set_int(14, yytext + 5);
   }
   break;
 case 36:
   {
-#line 411 "wile.ulex"
+#line 408 "wile.ulex"
 		set_int(15, yytext + 5);
   }
   break;
 case 37:
   {
-#line 412 "wile.ulex"
+#line 409 "wile.ulex"
 		set_int(16, yytext + 2);
   }
   break;
 case 38:
   {
-#line 414 "wile.ulex"
+#line 411 "wile.ulex"
 		set_rat(2, yytext + 2);
   }
   break;
 case 39:
   {
-#line 415 "wile.ulex"
+#line 412 "wile.ulex"
 		set_rat(3, yytext + 4);
   }
   break;
 case 40:
   {
-#line 416 "wile.ulex"
+#line 413 "wile.ulex"
 		set_rat(4, yytext + 4);
   }
   break;
 case 41:
   {
-#line 417 "wile.ulex"
+#line 414 "wile.ulex"
 		set_rat(5, yytext + 4);
   }
   break;
 case 42:
   {
-#line 418 "wile.ulex"
+#line 415 "wile.ulex"
 		set_rat(6, yytext + 4);
   }
   break;
 case 43:
   {
-#line 419 "wile.ulex"
+#line 416 "wile.ulex"
 		set_rat(7, yytext + 4);
   }
   break;
 case 44:
   {
-#line 420 "wile.ulex"
+#line 417 "wile.ulex"
 		set_rat(8, yytext + 2);
   }
   break;
 case 45:
   {
-#line 421 "wile.ulex"
+#line 418 "wile.ulex"
 		set_rat(9, yytext + 4);
   }
   break;
 case 46:
   {
-#line 422 "wile.ulex"
+#line 419 "wile.ulex"
 		set_rat(10, yytext + (yytext[0] == '#' ? 2 : 0));
   }
   break;
 case 47:
   {
-#line 423 "wile.ulex"
+#line 420 "wile.ulex"
 		set_rat(11, yytext + 5);
   }
   break;
 case 48:
   {
-#line 424 "wile.ulex"
+#line 421 "wile.ulex"
 		set_rat(12, yytext + 5);
   }
   break;
 case 49:
   {
-#line 425 "wile.ulex"
+#line 422 "wile.ulex"
 		set_rat(13, yytext + 5);
   }
   break;
 case 50:
   {
-#line 426 "wile.ulex"
+#line 423 "wile.ulex"
 		set_rat(14, yytext + 5);
   }
   break;
 case 51:
   {
-#line 427 "wile.ulex"
+#line 424 "wile.ulex"
 		set_rat(15, yytext + 5);
   }
   break;
 case 52:
   {
-#line 428 "wile.ulex"
+#line 425 "wile.ulex"
 		set_rat(16, yytext + 2);
   }
   break;
 case 53:
   {
-#line 431 "wile.ulex"
+#line 428 "wile.ulex"
 				    int ix = yytext[0] == '#' ? 2 : 0;
 		#ifdef WILE_USES_QUAD_DOUBLE
 				    lexval->v.rv =
@@ -486,7 +486,7 @@ case 54:
 case 55:
 case 56:
   {
-#line 445 "wile.ulex"
+#line 442 "wile.ulex"
 				    read_real((char*) yytext, &(lexval->v.rv));
 				    set_tag(LV_REAL, REAL);
   }
@@ -496,7 +496,7 @@ case 58:
 case 59:
 case 60:
   {
-#line 453 "wile.ulex"
+#line 450 "wile.ulex"
 				    int ix = yytext[0] == '#' ? 2 : 0;
 				    set_special_real(rv, REAL_INF);
 				    set_tag(LV_REAL, REAL);
@@ -507,7 +507,7 @@ case 62:
 case 63:
 case 64:
   {
-#line 462 "wile.ulex"
+#line 459 "wile.ulex"
 				    int ix = yytext[0] == '#' ? 2 : 0;
 				    set_special_real(rv, REAL_NAN);
 				    set_tag(LV_REAL, REAL);
@@ -515,7 +515,7 @@ case 64:
   break;
 case 65:
   {
-#line 468 "wile.ulex"
+#line 465 "wile.ulex"
 				    int ix = yytext[0] == '#' ? 2 : 0;
 				    lisp_real_t im;
 		#ifdef WILE_USES_QUAD_DOUBLE
@@ -532,7 +532,7 @@ case 66:
 case 67:
 case 68:
   {
-#line 483 "wile.ulex"
+#line 480 "wile.ulex"
 				    lisp_real_t im;
 				    read_real((char*) yytext, &im);
 				    lexval->v.cv = im*I;
@@ -544,7 +544,7 @@ case 70:
 case 71:
 case 72:
   {
-#line 493 "wile.ulex"
+#line 490 "wile.ulex"
 				    int ix = yytext[0] == '#' ? 2 : 0;
 				    set_special_imag(yytext[ix] == '-' ? -1: 1);
 				    set_tag(LV_CMPLX, COMPLEX);
@@ -555,7 +555,7 @@ case 74:
 case 75:
 case 76:
   {
-#line 502 "wile.ulex"
+#line 499 "wile.ulex"
 				    int ix = yytext[0] == '#' ? 2 : 0;
 				    set_special_imag(REAL_INF);
 				    set_tag(LV_CMPLX, COMPLEX);
@@ -566,7 +566,7 @@ case 78:
 case 79:
 case 80:
   {
-#line 511 "wile.ulex"
+#line 508 "wile.ulex"
 				    int ix = yytext[0] == '#' ? 2 : 0;
 				    set_special_imag(REAL_NAN);
 				    set_tag(LV_CMPLX, COMPLEX);
@@ -574,7 +574,7 @@ case 80:
   break;
 case 81:
   {
-#line 521 "wile.ulex"
+#line 518 "wile.ulex"
 				    int ix = yytext[0] == '#' ? 2 : 0;
 				    lisp_real_t re, im;
 		#ifdef WILE_USES_QUAD_DOUBLE
@@ -595,7 +595,7 @@ case 83:
 case 84:
 case 85:
   {
-#line 544 "wile.ulex"
+#line 541 "wile.ulex"
 				    lexval->v.str = LISP_STRDUP((char*) yytext);
 				    LISP_ASSERT(lexval->v.str != NULL);
 				    set_tag(LV_SYMBOL, SYMBOL);
@@ -603,7 +603,7 @@ case 85:
   break;
 case 86:
   {
-#line 553 "wile.ulex"
+#line 550 "wile.ulex"
 				    here_delim = LISP_STRDUP((char*) yytext + 3);
 				    astr = ab_char_setup(32);
 				    BEGIN(S_HEREDOC);
@@ -611,7 +611,7 @@ case 86:
   break;
 case 87:
   {
-#line 559 "wile.ulex"
+#line 556 "wile.ulex"
 				    if (strcmp(here_delim, (char*) yytext)) {
 					size_t i;
 					for (i = 0; i < yyleng; ++i) {
@@ -635,7 +635,7 @@ case 87:
   break;
 case 88:
   {
-#line 583 "wile.ulex"
+#line 580 "wile.ulex"
 			return yytext[0];
   }
   break;
@@ -1806,7 +1806,7 @@ unsigned int wile_lex(struct ulex_context* scan_ctx,
     return ulex_generic(&yyl_spec, scan_ctx, user_data, match_ret, yucc_val);
 }
 
-#line 587 "wile.ulex"
+#line 584 "wile.ulex"
 
 static void read_int(int base, const unsigned char* str, lisp_int_t* res)
 {
@@ -1846,7 +1846,7 @@ static void read_int(int base, const unsigned char* str, lisp_int_t* res)
 #define IPART(b,d)							\
     do {								\
 	if (base < b) {							\
-	    wile_exception("<read_real>", LISP_WHENCE,			\
+	    wile_exception("<read-real>", LISP_WHENCE,			\
 			   "got bad base-%d digit %c", base, *sp);	\
 	}								\
 	ipart = base*ipart + d;						\
@@ -1855,7 +1855,7 @@ static void read_int(int base, const unsigned char* str, lisp_int_t* res)
 #define FPART(b,d)							\
     do {								\
 	if (base < b) {							\
-	    wile_exception("<read_real>", LISP_WHENCE,			\
+	    wile_exception("<read-real>", LISP_WHENCE,			\
 			   "got bad base-%d digit %c", base, *sp);	\
 	}								\
 	fpart += scale*d;						\
@@ -1865,7 +1865,7 @@ static void read_int(int base, const unsigned char* str, lisp_int_t* res)
 #define EPART(b,d)							\
     do {								\
 	if (base < b) {							\
-	    wile_exception("<read_real>", LISP_WHENCE,			\
+	    wile_exception("<read-real>", LISP_WHENCE,			\
 			   "got bad base-%d digit %c", base, *sp);	\
 	}								\
 	epart = base*epart + d;						\
@@ -1897,7 +1897,7 @@ static void read_int(int base, const unsigned char* str, lisp_int_t* res)
 	case 'f':							\
 	case 'F':	mac(16, 15);	break;				\
 	default:							\
-	    wile_exception("<read_real>", LISP_WHENCE,			\
+	    wile_exception("<read-real>", LISP_WHENCE,			\
 			   "got bad base-%d digit %c", 16, *sp);	\
 	}								\
 	++sp;								\
@@ -1924,7 +1924,7 @@ static void read_real(char* sp, lisp_real_t* res)
 	case 'x':
 	case 'X':	base = 16;	break;
 	default:
-	    wile_exception("<read_real>", LISP_WHENCE,
+	    wile_exception("<read-real>", LISP_WHENCE,
 			   "saw an unrecognized base specifier");
 	}
 	++sp;

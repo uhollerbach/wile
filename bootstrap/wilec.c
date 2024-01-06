@@ -21460,7 +21460,7 @@ var_11005[1] = LVI_NIL();
  fn_142(NULL, var_11005, "/home/uwe/github/wile/wile-config.dat:0");
 }
 lval var_11008;
-var_11008 = LVI_STRING("#ifdef WILE_CONF_FILE\n%s = LVI_STRING(WILE_CONF_FILE);\n#else\n%s = LVI_BOOL(false);\n#endif //  WILE_LIBDIR");
+var_11008 = LVI_STRING("#ifdef WILE_CONF_FILE\n%s = LVI_STRING(LISP_STRING(WILE_CONF_FILE));\n#else\n%s = LVI_BOOL(false);\n#endif //  WILE_LIBDIR");
 lval var_11009;
 var_11009 = LVI_NIL();
 lval var_11010;
@@ -53405,7 +53405,7 @@ static lval fn_11802(lptr* var_20993, lptr var_20994, const char* cloc)
 lval var_20996;
 lval var_20997;
 #ifdef WILE_CONF_FILE
-var_20997 = LVI_STRING(WILE_CONF_FILE);
+var_20997 = LVI_STRING(LISP_STRING(WILE_CONF_FILE));
 #else
 var_20997 = LVI_BOOL(false);
 #endif //  WILE_LIBDIR

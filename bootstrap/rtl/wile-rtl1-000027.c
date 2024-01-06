@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_char2string(lptr*, lptr args, const char* loc)
+lval wile_char2string(lptr* clos, lptr args, const char* loc)
 {
     lval lv, ac;
     lisp_int_t i, len;

@@ -25,6 +25,8 @@ $Id: yucc_c.skel,v 1.39 2016/02/18 07:21:01 uwe Exp $
 
 static lptr cp_lv(const lptr old);
 static lptr rev_lst(lptr list, lptr tail);
+static lptr lst2vec(lptr lst);
+static lptr lst2bvec(lptr lst);
 
 #define PUSHQ(q)				\
     do {					\
@@ -588,4 +590,50 @@ static lptr rev_lst(lptr list, lptr tail)
 	list = p;
     }
     return tail;
+}
+
+static lptr lst2vec(lptr lst)
+{
+    size_t len = 0;
+    lptr ret = lst, lt;
+
+    while (ret) {
+	++len;
+	ret = CDR(ret);
+    }
+    ret = new_vec(len);
+    len = 0;
+    while (lst) {
+	ret->v.vec.arr[len++] = CAR(lst);
+	lt = CDR(lst);
+	LISP_FREE(lst);
+	lst = lt;
+    }
+    return ret;
+}
+
+static lptr lst2bvec(lptr lst)
+{
+    size_t len = 0;
+    lptr ret = lst, lt;
+
+    while (ret) {
+	++len;
+	lt = CAR(ret);
+	if (!IS_INT(lt) || lt->v.iv < 0 || lt->v.iv > UCHAR_MAX) {
+	    wile_exception("<read-bytevector>",
+			   wile_decode_line_loc(wile_get_lisp_loc(ret)),
+			   "saw bad byte value");
+	}
+	ret = CDR(ret);
+    }
+    ret = new_bvec(len);
+    len = 0;
+    while (lst) {
+	ret->v.bvec.arr[len++] = (unsigned char) CAR(lst)->v.iv;
+	lt = CDR(lst);
+	LISP_FREE(lst);
+	lst = lt;
+    }
+    return ret;
 }

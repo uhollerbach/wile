@@ -1,6 +1,15 @@
-Last update: 2024-1-5 23:30 PST
+Last update: 2024-1-7 22:30 PST
 
 # Changelog for `wile`
+
+## Current version `wile` "1.2.3" 2024-1-7 22:30 PST
+
+- restore names of arguments, older compilers didn't like that
+
+- remove quotes from around defs of WILE_CONF_FILE in
+  */Makefile.am and stringize it inside the c code
+
+- small cleanups
 
 ## Current version `wile` "1.2.2" 2024-1-5 23:30 PST
 

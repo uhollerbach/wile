@@ -135,7 +135,7 @@ int main(int argc, char** argv)
 
 // trivial function to get gc code version
 
-lval wile_gc_version(lptr*, lptr, const char*)
+lval wile_gc_version(lptr* clos, lptr args, const char* loc)
 {
 #ifdef WILE_USES_GC
     char buf[64];

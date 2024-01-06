@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_flushport(lptr*, lptr args, const char* loc)
+lval wile_flushport(lptr* clos, lptr args, const char* loc)
 {
     if (args[0].vt == LV_FILE_PORT ||
 	args[0].vt == LV_PIPE_PORT ||

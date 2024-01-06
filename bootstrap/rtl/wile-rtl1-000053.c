@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_cfft_good_n(lptr*, lptr args, const char* loc)
+lval wile_cfft_good_n(lptr* clos, lptr args, const char* loc)
 {
     if (args[0].vt != LV_INT) {
 	wile_exception("cfft-good-n?", loc, "expects an integer argument");
@@ -17,7 +17,7 @@ lval wile_cfft_good_n(lptr*, lptr args, const char* loc)
     return LVI_BOOL(wilec_cfft_good_n(args[0].v.iv));
 }
 
-lval wile_cfft(lptr*, lptr args, const char* loc)
+lval wile_cfft(lptr* clos, lptr args, const char* loc)
 {
     if (args[0].vt != LV_INT || args[1].vt != LV_VECTOR) {
 	wile_exception("vector-cfft!", loc,

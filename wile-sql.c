@@ -19,7 +19,7 @@
 
 // trivial function to get sqlite code version
 
-lval wile_sql_version(lptr*, lptr, const char*)
+lval wile_sql_version(lptr* clos, lptr args, const char* loc)
 {
 #ifdef WILE_USES_SQLITE
     return LVI_STRING(sqlite3_libversion());
@@ -80,7 +80,7 @@ lval wile_sql_open(const char* fname, int mode, const char* loc)
 // TODO: very preliminary interface
 
 #ifdef WILE_USES_SQLITE
-static int sql_collect(void* arg, int nres, char** vals, char** /*hdrs*/)
+static int sql_collect(void* arg, int nres, char** vals, char** hdrs)
 {
     lptr* res = (lptr*) arg;
     lptr row = NULL;
@@ -112,7 +112,7 @@ lval wile_sql_run(sqlite3* sqlite_conn, const char* cmd, const char* loc)
 
 // (sqlite-statement-prepare db statement)
 
-lval wile_sql_stmt_prep(lptr*, lptr args, const char* loc)
+lval wile_sql_stmt_prep(lptr* clos, lptr args, const char* loc)
 {
 #ifdef WILE_USES_SQLITE
     lval res;
@@ -141,7 +141,7 @@ lval wile_sql_stmt_prep(lptr*, lptr args, const char* loc)
 
 // (sqlite-statement-cleanup statement)
 
-lval wile_sql_stmt_clean(lptr*, lptr args, const char* loc)
+lval wile_sql_stmt_clean(lptr* clos, lptr args, const char* loc)
 {
 #ifdef WILE_USES_SQLITE
     if (args[0].vt != LV_SQLITE_STMT) {
@@ -162,7 +162,7 @@ lval wile_sql_stmt_clean(lptr*, lptr args, const char* loc)
 
 // (sqlite-statement-info statement)
 
-lval wile_sql_stmt_info(lptr*, lptr args, const char* loc)
+lval wile_sql_stmt_info(lptr* clos, lptr args, const char* loc)
 {
 #ifdef WILE_USES_SQLITE
     int i, n;
@@ -186,7 +186,7 @@ lval wile_sql_stmt_info(lptr*, lptr args, const char* loc)
 
 // (sqlite-statement-bind statement val1 ...)
 
-lval wile_sql_stmt_bind(lptr*, lptr args, const char* loc)
+lval wile_sql_stmt_bind(lptr* clos, lptr args, const char* loc)
 {
 #ifdef WILE_USES_SQLITE
     int i, n, ec;
@@ -262,7 +262,7 @@ lval wile_sql_stmt_bind(lptr*, lptr args, const char* loc)
 
 // (sqlite-statement-run statement)
 
-lval wile_sql_stmt_run(lptr*, lptr args, const char* loc)
+lval wile_sql_stmt_run(lptr* clos, lptr args, const char* loc)
 {
 #ifdef WILE_USES_SQLITE
     int i, n, ec;

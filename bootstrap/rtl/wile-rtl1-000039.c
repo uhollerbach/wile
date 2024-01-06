@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_getallgroupinfo(lptr*, lptr args, const char* loc)
+lval wile_getallgroupinfo(lptr* clos, lptr args, const char* loc)
 {
     struct group* grp;
     lptr res = NULL;

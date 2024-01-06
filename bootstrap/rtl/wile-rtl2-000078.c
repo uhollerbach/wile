@@ -17,7 +17,7 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval var_1 = LVI_STRING_NOCPY("1.2.2");
+static lval var_1 = LVI_STRING_NOCPY("1.2.3");
 
 // definitions
 
@@ -35,7 +35,7 @@ lval var_9;
 var_9 = LVI_NIL();
 lval var_10;
 #ifdef WILE_CONF_FILE
-var_10 = LVI_STRING(WILE_CONF_FILE);
+var_10 = LVI_STRING(LISP_STRING(WILE_CONF_FILE));
 #else
 var_10 = LVI_BOOL(false);
 #endif //  WILE_LIBDIR

@@ -619,7 +619,7 @@ static void read_int(int base, const unsigned char* str, lisp_int_t* res)
 #define IPART(b,d)							\
     do {								\
 	if (base < b) {							\
-	    wile_exception("<read_real>", LISP_WHENCE,			\
+	    wile_exception("<read-real>", LISP_WHENCE,			\
 			   "got bad base-%d digit %c", base, *sp);	\
 	}								\
 	ipart = base*ipart + d;						\
@@ -628,7 +628,7 @@ static void read_int(int base, const unsigned char* str, lisp_int_t* res)
 #define FPART(b,d)							\
     do {								\
 	if (base < b) {							\
-	    wile_exception("<read_real>", LISP_WHENCE,			\
+	    wile_exception("<read-real>", LISP_WHENCE,			\
 			   "got bad base-%d digit %c", base, *sp);	\
 	}								\
 	fpart += scale*d;						\
@@ -638,7 +638,7 @@ static void read_int(int base, const unsigned char* str, lisp_int_t* res)
 #define EPART(b,d)							\
     do {								\
 	if (base < b) {							\
-	    wile_exception("<read_real>", LISP_WHENCE,			\
+	    wile_exception("<read-real>", LISP_WHENCE,			\
 			   "got bad base-%d digit %c", base, *sp);	\
 	}								\
 	epart = base*epart + d;						\
@@ -670,7 +670,7 @@ static void read_int(int base, const unsigned char* str, lisp_int_t* res)
 	case 'f':							\
 	case 'F':	mac(16, 15);	break;				\
 	default:							\
-	    wile_exception("<read_real>", LISP_WHENCE,			\
+	    wile_exception("<read-real>", LISP_WHENCE,			\
 			   "got bad base-%d digit %c", 16, *sp);	\
 	}								\
 	++sp;								\
@@ -697,7 +697,7 @@ static void read_real(char* sp, lisp_real_t* res)
 	case 'x':
 	case 'X':	base = 16;	break;
 	default:
-	    wile_exception("<read_real>", LISP_WHENCE,
+	    wile_exception("<read-real>", LISP_WHENCE,
 			   "saw an unrecognized base specifier");
 	}
 	++sp;

@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_closeport(lptr*, lptr args, const char* loc)
+lval wile_closeport(lptr* clos, lptr args, const char* loc)
 {
     if (args[0].vt == LV_FILE_PORT ||
 	args[0].vt == LV_SOCK_PORT) {

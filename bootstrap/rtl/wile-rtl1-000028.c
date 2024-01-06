@@ -25,7 +25,7 @@ static int tcp_proto = 0;
 	}								\
     } while (0)
 
-lval wile_listen_port(lptr*, lptr args, const char* loc)
+lval wile_listen_port(lptr* clos, lptr args, const char* loc)
 {
     int sd;
     FILE* fp;
@@ -71,7 +71,7 @@ lval wile_listen_port(lptr*, lptr args, const char* loc)
     }
 }
 
-lval wile_accept_connection(lptr*, lptr args, const char* loc)
+lval wile_accept_connection(lptr* clos, lptr args, const char* loc)
 {
     int fd;
     unsigned int psize;
@@ -106,7 +106,7 @@ lval wile_accept_connection(lptr*, lptr args, const char* loc)
     }
 }
 
-lval wile_connect_to(lptr*, lptr args, const char* loc)
+lval wile_connect_to(lptr* clos, lptr args, const char* loc)
 {
     char pstr[8];
     struct addrinfo hints, *server, *sp;

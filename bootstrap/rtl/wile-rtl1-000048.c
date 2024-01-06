@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_string_reverse(lptr*, lptr args, const char* loc)
+lval wile_string_reverse(lptr* clos, lptr args, const char* loc)
 {
     size_t i, j;
     char c;

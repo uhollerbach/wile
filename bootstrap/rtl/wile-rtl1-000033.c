@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_cputime(lptr*, lptr, const char*)
+lval wile_cputime(lptr* clos, lptr args, const char* loc)
 {
     struct rusage usage;
     if (getrusage(RUSAGE_SELF, &usage) == 0) {

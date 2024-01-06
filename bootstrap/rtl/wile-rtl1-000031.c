@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_getdomainname(lptr*, lptr, const char*)
+lval wile_getdomainname(lptr* clos, lptr args, const char* loc)
 {
     char buf[HOST_NAME_MAX+1];
     if (getdomainname(buf, sizeof(buf)) < 0) {

@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_getuserinfo(lptr*, lptr args, const char* loc)
+lval wile_getuserinfo(lptr* clos, lptr args, const char* loc)
 {
     struct passwd* pwp;
     if (args[0].vt == LV_STRING) {

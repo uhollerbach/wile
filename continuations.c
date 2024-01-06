@@ -219,7 +219,7 @@ void wile_invoke_continuation(lptr cc, lptr args)
 
 extern const int wile_tc_min_args;
 
-lval wile_call_cc(lptr*, lptr args, const char* loc)
+lval wile_call_cc(lptr* clos, lptr args, const char* loc)
 {
     lval cc;
 

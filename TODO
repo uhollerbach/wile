@@ -34,30 +34,14 @@ Stuff TODO
 * Add a profiler - start with a counter for each compiled function,
   incremented for every call (including tail calls).
 
-* I think I understand why the queue test stuff is failing... skeem uses
-  pointers into the heap uniformly; so the (hidden) vector-ref getting the
-  tail of the queue in queue-insert-back gets the pointer that is stored
-  in the last element of the vector; then the set-cdr updates the cdr of
-  that pair, and then the last element of the vector is updated, all via
-  pointers. In wile, the vector-ref returns a *value*, a copy of what's
-  stored there, and set-cdr updates the cdr of that pair, but *not* the cdr
-  of the original that's stored in the vector.
+* Naive version of queue fails: cons cells aren't "far enough" away from
+  the cpu, so often/always, we modify a version on the stack with set-c[ad]r!
+  and don't touch the "real" version. Needs set-c[ad]r! to be fixed
 
-  Fixing this requires some more thought. One "trivial" way would be to
-  rewrite everything so that all variables are stored in the heap, and
-  we deal only with lptrs. That's... kind of a non-trivial "trivial".
-
-  Maybe could write some special-purpose primitives that get pointers.
-  First attempt at this was mixed... need to fetch something that is
-  guaranteed to be there; for purposes of queue.scm, that might mean
-  that we need to store the "tail" as the *next-to-tail* element,
-  which is really awkward.
-
-  Needs More Thought!
-
-* make all the configurable stuff that's currently in environment variables
-  come from a config file, want to be able to change configurations very
-  easily
+  > workaround is a different version of queues that internally provides
+    a version of lists that use little vectors as cons cells -> this
+    basically boxes the data that needs to go in the heap, and then
+    it all works
 
 * more tail-call optimization: want to do tail self-recursion, ie routine
   calls itself directly in a tail call, regardless of the pragma; it's a

@@ -11,7 +11,7 @@ extern lisp_escape_t cachalot;
 
 // (regex-match pattern string) => #f || (pre-match match post-match)
 
-lval wile_regex_match(lptr*, lptr args, const char* loc)
+lval wile_regex_match(lptr* clos, lptr args, const char* loc)
 {
     struct nfa_state* nstate;
     struct nfa_work* nwork;

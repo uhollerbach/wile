@@ -1,6 +1,6 @@
 (operating-system "GNU/Linux")
 (machine-architecture "x86-64")
-(wile-version "1.2.2")
+(wile-version "1.2.4")
 (float-type double)
 (integer-type long-int)
 (garbage-collector-version "8.0.6")

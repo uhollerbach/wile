@@ -12,7 +12,7 @@ extern lisp_escape_t cachalot;
 #include <sys/types.h>
 #include <sys/stat.h>
 
-lval wile_temp_file(lptr*, lptr args, const char* loc)
+lval wile_temp_file(lptr* clos, lptr args, const char* loc)
 {
     char *template, *tp;
     size_t tlen;

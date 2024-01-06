@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_string_ci_hash_32(lptr*, lptr args, const char* loc)
+lval wile_string_ci_hash_32(lptr* clos, lptr args, const char* loc)
 {
     uint32_t hash;
     size_t i, n_os;

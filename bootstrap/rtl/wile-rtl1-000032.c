@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_getcwd(lptr*, lptr, const char*)
+lval wile_getcwd(lptr* clos, lptr args, const char* loc)
 {
     char str[1+PATH_MAX], *sp;
     sp = getcwd(str, sizeof(str));

@@ -26,7 +26,7 @@ lval wile_sha256_init(bool is_256)
     return ret;
 }
 
-lval wile_sha256_update(lptr*, lptr args, const char* loc)
+lval wile_sha256_update(lptr* clos, lptr args, const char* loc)
 {
     if (args[0].vt != LV_SHA256_DATA ||
 	(args[1].vt != LV_STRING && args[1].vt != LV_BVECTOR)) {
@@ -44,7 +44,7 @@ lval wile_sha256_update(lptr*, lptr args, const char* loc)
     return LVI_BOOL(true);
 }
 
-lval wile_sha256_finish(lptr*, lptr args, const char* loc)
+lval wile_sha256_finish(lptr* clos, lptr args, const char* loc)
 {
     int i, lim;
     unsigned char digest[32];

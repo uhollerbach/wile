@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_gmtime(lptr*, lptr args, const char* loc)
+lval wile_gmtime(lptr* clos, lptr args, const char* loc)
 {
     time_t now;
     if (args == NULL) {

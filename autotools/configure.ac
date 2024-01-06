@@ -1,4 +1,4 @@
-AC_INIT([wile], [1.1.1], [uhollerbach@gmail.com], [],
+AC_INIT([wile], [1.2.3], [uhollerbach@gmail.com], [],
     [https://github.com/uhollerbach/wile])
 
 AM_INIT_AUTOMAKE

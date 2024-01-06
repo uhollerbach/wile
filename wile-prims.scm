@@ -3963,7 +3963,7 @@
 	 (lambda (r)
 	   (emit-code
 	    "#ifdef WILE_CONF_FILE"
-	    "@@ = LVI_STRING(WILE_CONF_FILE);"
+	    "@@ = LVI_STRING(LISP_STRING(WILE_CONF_FILE));"
 	    "#else"
 	    "@@ = LVI_BOOL(false);"
 	    "#endif //  WILE_LIBDIR")))
