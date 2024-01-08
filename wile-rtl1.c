@@ -250,9 +250,12 @@ lval wile_os_name(void)
     return LVI_STRING("GNU/Linux");
 #elif defined(__OpenBSD__)
     return LVI_STRING("OpenBSD");
-#elif defined(__cygwin__)
+#elif defined(__CYGWIN__)
     // TODO: what's the right thing here for cygwin?
     return LVI_STRING("Cygwin");
+#elif defined(__APPLE__)
+    // TODO: what's the right thing here for Apple operating systems?
+    return LVI_STRING("MacOS");
 #else
     return LVI_STRING("Unknown-OS");
 #endif
@@ -322,9 +325,9 @@ lval wile_arch_name(void)
 
 // --8><----8><----8><--
 
-#ifndef __OpenBSD__
+#if !(defined(__OpenBSD__) || defined(__CYGWIN__))
 #include <execinfo.h>
-#endif // __OpenBSD__
+#endif // __OpenBSD__ || __CYGWIN__
 
 void wile_stack_trace_minimal(int fd)
 {
@@ -334,13 +337,13 @@ void wile_stack_trace_minimal(int fd)
 
     fflush(NULL);
     (void) !write(fd, "wile stack trace begin\n", 23);
-#ifndef __OpenBSD__
+#if !(defined(__OpenBSD__) || defined(__CYGWIN__))
     // for some reason, backtrace is not showing up on openbsd,
     // even though the manpages claim it ought(?) to be there
     void* buff[64];
     int bsize = backtrace(buff, sizeof(buff)/sizeof(buff[0]));
     backtrace_symbols_fd(buff, bsize, fd);
-#endif // __OpenBSD__
+#endif // __OpenBSD__ || __CYGWIN__
     (void) !write(fd, "wile stack trace end\n", 21);
 }
 
@@ -1372,6 +1375,10 @@ lval wile_rand_normal_pair(lisp_real_t m, lisp_real_t s)
 
 // --8><----8><----8><--
 
+#ifndef HOST_NAME_MAX
+#define HOST_NAME_MAX		1024
+#endif // HOST_NAME_MAX
+
 lval wile_gethostname(lptr* clos, lptr args, const char* loc)
 {
     char buf[HOST_NAME_MAX+1];
@@ -1383,6 +1390,10 @@ lval wile_gethostname(lptr* clos, lptr args, const char* loc)
 }
 
 // --8><----8><----8><--
+
+#ifndef HOST_NAME_MAX
+#define HOST_NAME_MAX		1024
+#endif // HOST_NAME_MAX
 
 lval wile_getdomainname(lptr* clos, lptr args, const char* loc)
 {

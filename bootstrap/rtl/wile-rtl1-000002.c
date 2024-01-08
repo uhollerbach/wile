@@ -9,9 +9,9 @@
 extern lisp_escape_t cachalot;
 
 
-#ifndef __OpenBSD__
+#if !(defined(__OpenBSD__) || defined(__CYGWIN__))
 #include <execinfo.h>
-#endif // __OpenBSD__
+#endif // __OpenBSD__ || __CYGWIN__
 
 void wile_stack_trace_minimal(int fd)
 {
@@ -21,13 +21,13 @@ void wile_stack_trace_minimal(int fd)
 
     fflush(NULL);
     (void) !write(fd, "wile stack trace begin\n", 23);
-#ifndef __OpenBSD__
+#if !(defined(__OpenBSD__) || defined(__CYGWIN__))
     // for some reason, backtrace is not showing up on openbsd,
     // even though the manpages claim it ought(?) to be there
     void* buff[64];
     int bsize = backtrace(buff, sizeof(buff)/sizeof(buff[0]));
     backtrace_symbols_fd(buff, bsize, fd);
-#endif // __OpenBSD__
+#endif // __OpenBSD__ || __CYGWIN__
     (void) !write(fd, "wile stack trace end\n", 21);
 }
 

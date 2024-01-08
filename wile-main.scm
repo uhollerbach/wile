@@ -54,6 +54,8 @@
 ;;; Process the specified config file
 
 (define (setup-config-from file)
+  (when (positive? global-verbose)
+    (write-string "#### config is " file "\n"))
   (let ((data (read-all file))
 	(multi-string? (lambda (val)
 			 (all-true? (map string? val))))
@@ -246,6 +248,7 @@
 ;;;    (display `(wile-compiled-on ,(compile-time)))
 ;;;    (newline)
     (exit 0))
+  (set! global-verbose (hash-table-ref fvals "-v" 0))
   (setup-configuration (hash-table-ref fvals "-CF" #f))
   (when (hash-table-ref fvals "-P" #f)
     (show-prims-table)
@@ -324,8 +327,6 @@
   (unless (file-exists? input-file)
     (write-string stderr "wile cannot find input file!\n")
     (exit 1))
-
-  (set! global-verbose (hash-table-ref fvals "-v" 0))
 
   (let* ((intermediates (cond ((and (= input-type 0) (= output-type 3))
 			       (list (string-append input-prefix "-int.c")

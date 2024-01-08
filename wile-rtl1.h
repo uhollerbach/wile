@@ -459,6 +459,13 @@ typedef __complex128 lisp_cmplx_t;
 #define YN(n,v)			yn(n,v)
 #endif // __OpenBSD__
 
+#ifdef __APPLE__
+#undef JN
+#undef YN
+#define JN(n,v)			jn(n,v)
+#define YN(n,v)			yn(n,v)
+#endif // __APPLE__
+
 #ifdef __clang__
 #ifndef CMPLX
 #define CMPLX(x,y)		((x) + I*(y))

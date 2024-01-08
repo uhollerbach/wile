@@ -285,7 +285,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 wile_SOURCES = wilec.c
-wile_CPPFLAGS = -I$(top_srcdir)/include -DWILE_CONF_FILE=$(sysconfdir)/wile-config.dat
+wile_CPPFLAGS = -I$(top_srcdir)/include -DWILE_CONFIG_FILE=$(sysconfdir)/wile-config.dat
 wile_LDADD = ../libwrtl/libwrtl.a
 sysconf_DATA = wile-config.dat
 my_datadir = $(datadir)/wile

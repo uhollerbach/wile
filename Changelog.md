@@ -2,6 +2,13 @@ Last update: 2024-1-7 22:30 PST
 
 # Changelog for `wile`
 
+## Current version `wile` "1.2.4"
+
+- small tweaks for cygwin and macos
+
+- change WILE_CONF_FILE macro to WILE_CONFIG_FILE, then macro and
+  environment variable are the same
+
 ## Current version `wile` "1.2.3" 2024-1-7 22:30 PST
 
 - restore names of arguments, older compilers didn't like that

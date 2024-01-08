@@ -3962,8 +3962,8 @@
 	 'prim 0
 	 (lambda (r)
 	   (emit-code
-	    "#ifdef WILE_CONF_FILE"
-	    "@@ = LVI_STRING(LISP_STRING(WILE_CONF_FILE));"
+	    "#ifdef WILE_CONFIG_FILE"
+	    "@@ = LVI_STRING(LISP_STRING(WILE_CONFIG_FILE));"
 	    "#else"
 	    "@@ = LVI_BOOL(false);"
 	    "#endif //  WILE_LIBDIR")))

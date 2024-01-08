@@ -61,9 +61,12 @@ lval wile_os_name(void)
     return LVI_STRING("GNU/Linux");
 #elif defined(__OpenBSD__)
     return LVI_STRING("OpenBSD");
-#elif defined(__cygwin__)
+#elif defined(__CYGWIN__)
     // TODO: what's the right thing here for cygwin?
     return LVI_STRING("Cygwin");
+#elif defined(__APPLE__)
+    // TODO: what's the right thing here for Apple operating systems?
+    return LVI_STRING("MacOS");
 #else
     return LVI_STRING("Unknown-OS");
 #endif

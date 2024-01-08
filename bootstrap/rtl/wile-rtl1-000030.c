@@ -9,6 +9,10 @@
 extern lisp_escape_t cachalot;
 
 
+#ifndef HOST_NAME_MAX
+#define HOST_NAME_MAX		1024
+#endif // HOST_NAME_MAX
+
 lval wile_gethostname(lptr* clos, lptr args, const char* loc)
 {
     char buf[HOST_NAME_MAX+1];
