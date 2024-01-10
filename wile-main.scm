@@ -63,7 +63,7 @@
 		      (let ((cv (get-config-val key)))
 			(unless (and cv (test cv))
 			  (ERR "bad config entry '%s' -> %v" key cv))))))
-    (set! global-config (car data))
+    (set! global-config data)
     (check-item 'c-compiler string?)
     (check-item 'c-compiler-flags string?)
     (check-item 'c-include-directories multi-string?)
@@ -104,7 +104,7 @@
     (when sqlite?
       (set! libs (cons "sqlite3" libs))
       (set! conf2 (cons "-DWILE_USES_SQLITE" conf2)))
-    (printf " (c-link-libraries %v)\n (wile-config %v)\n)\n" libs conf2)))
+    (printf "(c-link-libraries %v)\n(wile-config %v)\n" libs conf2)))
 
 ;;; Check for config files in the order command-line, env-var, baked-in, cwd;
 ;;; use the first one that's found

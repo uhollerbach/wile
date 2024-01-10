@@ -289,7 +289,7 @@ wile_CPPFLAGS = -I$(top_srcdir)/include -DWILE_CONFIG_FILE=$(sysconfdir)/wile-co
 wile_LDADD = ../libwrtl/libwrtl.a
 sysconf_DATA = wile-config.dat
 my_datadir = $(datadir)/wile
-dist_my_data_DATA = arg-parse.scm deque.scm gthread.scm hash.scm monad-list.scm monad.scm stack.scm stats.scm struct.scm test.scm
+dist_my_data_DATA = arg-parse.scm deque.scm gthread.scm hash.scm monad-list.scm monad.scm queue.scm stack.scm stats.scm struct.scm test.scm
 all: all-am
 
 .SUFFIXES:
@@ -671,14 +671,13 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_my_dataDATA \
 wile-config.dat:	wile
 	echo ';;; -*- mode: scheme; -*-' > wile-config.dat
 	echo >> wile-config.dat
-	echo '(' >> wile-config.dat
-	echo " (c-compiler \"$(CC)\")" >> wile-config.dat
-	echo " (c-compiler-flags \"$(CFLAGS)\")" |\
+	echo "(c-compiler \"$(CC)\")" >> wile-config.dat
+	echo "(c-compiler-flags \"$(CFLAGS)\")" |\
 		sed -e 's/ *-g *//' |\
 		sed -e 's/ *-O[0123] *//' >> wile-config.dat
-	echo " (c-include-directories (\"$(includedir)\"))" >> wile-config.dat
-	echo " (c-link-directories (\"$(libdir)\"))" >> wile-config.dat
-	echo " (scheme-include-directories (\".\" \"$(datadir)/wile\"))" >> wile-config.dat
+	echo "(c-include-directories (\"$(includedir)\"))" >> wile-config.dat
+	echo "(c-link-directories (\"$(libdir)\"))" >> wile-config.dat
+	echo "(scheme-include-directories (\".\" \"$(datadir)/wile\"))" >> wile-config.dat
 	./wile -write-config >> wile-config.dat
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

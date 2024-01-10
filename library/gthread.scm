@@ -1,5 +1,6 @@
-;;; lightweight cooperative multi-threading
-;;; $Id: gthread.scm,v 1.4 2021/04/19 16:47:13 uwe Exp $
+;;; Wile -- the extremely stable scheming genius compiler
+;;; Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+;;; License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
 
 ;;; call (thread-spawn <thunk>) any number of times;
 ;;; each <thunk> does its thing and calls (thread-yield)

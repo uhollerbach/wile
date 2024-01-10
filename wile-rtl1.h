@@ -1014,6 +1014,7 @@ lval wile_gen_list(size_t nitems, lval* items, lval* tail);
 bool wile_do_eqv(lptr arg1, lptr arg2);
 
 lval wile_read_line(lptr* clos, lptr args, const char* loc);
+lval wile_read_line_interactive(lptr* clos, lptr args, const char* loc);
 
 lval wile_parse_string(lptr* clos, lptr args, const char* loc);
 lval wile_parse_file(lptr* clos, lptr args, const char* loc);

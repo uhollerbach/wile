@@ -1,5 +1,6 @@
-;;; test of cooperative multi-threading
-;;; $Id: gthread-test.scm,v 1.1 2019/10/05 04:05:04 uwe Exp $
+;;; Wile -- the extremely stable scheming genius compiler
+;;; Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+;;; License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
 
 (load-library "gthread.scm")
 

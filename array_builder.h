@@ -1,5 +1,6 @@
-/* Copyright 2009 -- 2010, Uwe Hollerbach <uh@alumni.caltech.edu>
-   $Id: array_builder.h,v 1.4 2019/03/14 23:35:33 uwe Exp $ */
+// Wile -- the extremely stable scheming genius compiler
+// Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+// License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
 
 /* An analog of STL::vector: an array builder. It's pure C, so we have to
    use macros to make it type-specific.

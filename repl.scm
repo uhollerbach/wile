@@ -15,13 +15,16 @@
   (guard (err (#t (fprintf stderr "caught exception\n    %v\n" err)
 		  (run-repl env)))
 	 (let loop ()
-	   (write-string "wile> ")
-	   (flush-port stdout)
-	   (let ((line (read-line stdin)))
+	   (let ((line (read-line-interactive "iso-wile")))
+;;;	   (write-string "wile> ")
+;;;	   (flush-port stdout)
+;;;	   (let ((line (read-line stdin)))
 	     (if line
 		 (let ((line (string-trim char-whitespace? line)))
 		   (cond ((string=? line "bye")
 			  (finish ";;; gis baldau!\n"))
+			 ((string=? line "quit")
+			  (finish ";;; goodbye\n"))
 			 ((string=? line "")
 			  (loop))
 			 (else
@@ -92,5 +95,6 @@
 	 ";;; Welcome to wile          https://github.com/uhollerbach/wile\n"
 	 ";;; Copyright 2023 Uwe Hollerbach         available under GPLv3+\n")
 	(for-each (lambda (v) (printf ";;;   %v\n" v)) (wile-build-info #t))
+	(write-string ";;; type 'bye' or 'quit' to exit\n")
 	(run-repl std-env))
       (run-batch std-env (car command-line-arguments))))

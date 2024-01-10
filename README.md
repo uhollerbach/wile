@@ -1,6 +1,6 @@
-Last update: 2024-1-9 21:00 PST
+Last update: 2024-1-12 17:00 PST
 
-# `wile` - the extremely stable scheming genius compiler - version 1.2.4
+# `wile` - the extremely stable scheming genius compiler - version 1.2.5
 
 `wile` is a small scheme-to-c compiler which I'm writing; it's by no
 means complete, but it's capable enough that writing programs with it
@@ -36,6 +36,15 @@ it. Second, there are a number of places where Coverity flags
 `wile` put in tail calls, and the dead-code eliminator, which is still
 pretty stupid, failed to clean up all of the dead code that it should
 have. But these are harmless. So overall it is quite clean already.
+
+On the usability front, I have just added another dependency, however
+it is now internal so no need to fetch more software: I added readline
+capability to the repl in the form of the very nice
+[isocline](https://github.com/daanx/isocline) library; with Daan's
+kind permission, I added an amalgamated form of it into the wile repo,
+and as a result the repl is becoming very pleasant to use. It doesn't
+get built by default (yet), but it's pretty trivial: once `wile` is
+built and installed, the command `wile -x repl.scm` will do the trick.
 
 ## Table of contents
 

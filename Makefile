@@ -27,7 +27,7 @@ HDRS =	wile.h wile-lex.h wile-parse.h
 
 WRSRC1 = wile-sql.c alloc.c print.c location.c wile-parse.c wile-lex.c \
 	swll-cfft.c continuations.c fsi_set.c nfa.c regex.c ulexlib.c \
-	sha256.c
+	sha256.c isocline.c
 
 WRSRC2 = wile-rtl1.c wile-rtl2.scm math-funcs.c
 

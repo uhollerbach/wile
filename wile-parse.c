@@ -1,9 +1,6 @@
-/* -*- mode: c; -*-
-This file is part of yucc... Uwe's compiler-compiler
-Copyright 2013-2014, Uwe Hollerbach <uhollerbach@gmail.com>
-License: 2clause BSD, see file 'LICENSE' for details
-$Id: yucc_c.skel,v 1.39 2016/02/18 07:21:01 uwe Exp $
-*/
+// Wile -- the extremely stable scheming genius compiler
+// Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+// License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
 
 #include <stdlib.h>
 #include <stdio.h>

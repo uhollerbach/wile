@@ -1,6 +1,20 @@
-Last update: 2024-1-9 21:00 PST
+Last update: 2024-1-12 17:00 PST
 
 # Changelog for `wile`
+
+## Current version `wile` "1.2.5" 2024-1-12 17:00 PST
+
+- add queue.scm to library
+
+- clean up a few copyright notices
+
+- add a convenient build and update-installed that does not go through
+  the autotools; mainly for my use, but it's there for anyone to use
+
+- add an interface to Daan Leijen's really nice 'isocline' readline
+  library: adds recall of past text, nice editing, matching-parenthesis
+  highlighting, etc. amalgamation of isocline is included, with Daan's
+  permission.
 
 ## Current version `wile` "1.2.4" 2024-1-9 21:00 PST
 

@@ -26,6 +26,12 @@
 (define (make-stage n)
   (let* ((scur (string-append "stage" (number->string n)))
 	 (name1-exe (string-append "wilec." scur))
+	 (rtl-fileish (list "wile-sql.c" "alloc.c" "print.c" "location.c"
+			    "wile-parse.c" "wile-lex.c" "swll-cfft.c"
+			    "continuations.c" "fsi_set.c" "nfa.c" "regex.c"
+			    "ulexlib.c" "sha256.c" "isocline.c"
+			    "-s" "wile-rtl1.c" "wile-rtl2.scm" "math-funcs.c"))
+	 (rtl-flist (apply string-join-by " " rtl-fileish))
 ;;;	 (name2-exe (string-append "wilec-dbg." scur))
 	 (name-c (string-append "wilec." scur ".c"))
 	 (name1-lib (string-append "libwrtl." scur ".a"))
@@ -34,11 +40,12 @@
     (run-cmd-or-die "make realclean")
     (run-cmd-or-die "wile -c wile-rtl2.scm wile-rtl2.c")
     (run-cmd-or-die "rm -rf bld-rtl-dir")
-    (run-cmd-or-die "build-rtl libwrtl.a wile-sql.c alloc.c print.c location.c wile-parse.c wile-lex.c swll-cfft.c continuations.c fsi_set.c nfa.c regex.c ulexlib.c sha256.c -s wile-rtl1.c wile-rtl2.scm math-funcs.c")
+    (run-cmd-or-die (string-join-by " " "build-rtl libwrtl.a" rtl-flist))
     (run-cmd-or-die "nm -a libwrtl.a | grep wile_config")
 
     (run-cmd-or-die "rm -rf bld-rtl-dir")
-    (run-cmd-or-die "build-rtl -g libwrtl-dbg.a wile-sql.c alloc.c print.c location.c wile-parse.c wile-lex.c swll-cfft.c continuations.c fsi_set.c nfa.c regex.c ulexlib.c sha256.c -s wile-rtl1.c wile-rtl2.scm math-funcs.c")
+    (run-cmd-or-die (string-join-by
+		     " " "build-rtl -g libwrtl-dbg.a" rtl-flist))
     (run-cmd-or-die "nm -a libwrtl-dbg.a | grep wile_config")
 
     (run-cmd-or-die "wile -c wile-main.scm wilec.c")

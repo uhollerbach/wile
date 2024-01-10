@@ -1040,6 +1040,10 @@
 	 "expects one input port argument and reads and returns one line, ie, up to the next #\newline character; if the port is positioned at EOF, ie, there are no more characters to be read, returns #f"
 	 'prim 1 "wile_read_line")
 
+   (list 'read-line-interactive
+	 "expects one string argument which it prints as a prompt, then reads and returns one line, with nice interactive editing and history recall; on error, returns #f"
+	 'prim 1 "wile_read_line_interactive")
+
    (list 'read-char "expects no arguments or one port argument, attempts to read one character from stdin or the port, and returns the character if the read was successful, #f otherwise"
 	 'priml
 	 0 (lambda (r aL)

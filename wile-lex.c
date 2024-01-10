@@ -1,10 +1,6 @@
-/*
-This file is part of ulex -- Uwe's lex
-Copyright 2014, Uwe Hollerbach <uhollerbach@gmail.com>
-License: 2clause BSD, see file 'LICENSE' for details
-
-$Id: ulex_c.skel,v 1.46 2014/09/28 07:31:47 uwe Exp $
-*/
+// Wile -- the extremely stable scheming genius compiler
+// Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+// License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
 
 #define ULEX_PRIVATE_DEFS
 #include "ulexlib.h"

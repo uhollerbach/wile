@@ -1,8 +1,6 @@
 // Wile -- the extremely stable scheming genius compiler
 // Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
-// License: 2clause BSD, see file 'LICENSE' for details
-
-// $Id: wile-sql.c,v 1.5 2023/03/15 16:07:13 uwe Exp $
+// License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
 
 #include <stdlib.h>
 #include <stdio.h>
