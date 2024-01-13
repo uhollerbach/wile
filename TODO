@@ -18,6 +18,14 @@ Stuff TODO
 
   > almost all special forms are there except 'delay' etc
 
+  > need to improve outer loop: typing
+
+      (def-struct time yr mon day hr min sec)
+
+    at the prompt works, but does not produce the desired new functions
+
+    --> probably need to tie it all in together with (begin-new)
+
 * investigate difference in behavior among mit-scheme, (ha)skeem, repl,
   wile: mit-scheme, (ha)skeem and repl agree that the following is a
   quine (this is good):

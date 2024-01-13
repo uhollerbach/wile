@@ -18,11 +18,6 @@ extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
 static lval fn_1(lptr*, lptr, const char*);
-static lval fn_2(lptr*, lptr, const char*);
-static lval fn_3(lptr*, lptr, const char*);
-static lval fn_4(lptr*, lptr, const char*);
-static lval fn_5(lptr*, lptr, const char*);
-static lval fn_6(lptr*, lptr, const char*);
 static lval var_7 = LVI_BOOL(false);
 static lval fn_8(lptr*, lptr, const char*);
 static lval fn_9(lptr*, lptr, const char*);
@@ -1397,118 +1392,15 @@ return var_15;
 }
 // end of function fn_1
 
-// @@@ (isa-bbox? it) @@@ bld-rtl-dir/wile-rtl2-000085.scm:18 @@@ fn_2 @@@
-static lval fn_2(lptr* var_25, lptr var_26, const char* cloc)
-{
-lval var_28;
-var_28 = LVI_BOOL(true);
-do {
-lval var_29;
-var_29 = LVI_BOOL(var_26[0].vt == LV_VECTOR);
-var_28 = var_29;
-if (LV_IS_FALSE(var_28)) { break; }
-lval var_30;
-var_30 = LVI_INT(0);
-lval var_31;
-{
-if (var_26[0].vt != LV_VECTOR) {
-wile_exception("vector-ref", "/home/uwe/github/wile/wile-config.dat:0", "input is not a vector");
-}
-if (var_30.vt != LV_INT || var_30.v.iv < 0 || (size_t) var_30.v.iv >= var_26[0].v.vec.capa) {
-wile_exception("vector-ref", "/home/uwe/github/wile/wile-config.dat:0", "got bad index value");
-}
-var_31 = var_26[0].v.vec.arr[var_30.v.iv] ? *(var_26[0].v.vec.arr[var_30.v.iv]) : LVI_NIL();
-}
-lval var_32;
-var_32 = LVI_SYMBOL("bbox");
-lval var_33;
-var_33 = LVI_BOOL(wile_do_eqv(&(var_31), &(var_32)));
-var_28 = var_33;
-if (LV_IS_FALSE(var_28)) { break; }
-} while (0);
-return var_28;
-}
-// end of function fn_2
+// dropped unused function fn_2
 
-// @@@ (get-bbox-name it) @@@ /home/uwe/github/wile/wile-config.dat:0 @@@ fn_3 @@@
-static lval fn_3(lptr* var_34, lptr var_35, const char* cloc)
-{
-lval var_37;
-var_37 = LVI_INT(1);
-lval var_38;
-{
-if (var_35[0].vt != LV_VECTOR) {
-wile_exception("vector-ref", "/home/uwe/github/wile/wile-config.dat:0", "input is not a vector");
-}
-if (var_37.vt != LV_INT || var_37.v.iv < 0 || (size_t) var_37.v.iv >= var_35[0].v.vec.capa) {
-wile_exception("vector-ref", "/home/uwe/github/wile/wile-config.dat:0", "got bad index value");
-}
-var_38 = var_35[0].v.vec.arr[var_37.v.iv] ? *(var_35[0].v.vec.arr[var_37.v.iv]) : LVI_NIL();
-}
-return var_38;
-}
-// end of function fn_3
+// dropped unused function fn_3
 
-// @@@ (get-bbox-value it) @@@ /home/uwe/github/wile/wile-config.dat:0 @@@ fn_4 @@@
-static lval fn_4(lptr* var_39, lptr var_40, const char* cloc)
-{
-lval var_42;
-var_42 = LVI_INT(2);
-lval var_43;
-{
-if (var_40[0].vt != LV_VECTOR) {
-wile_exception("vector-ref", "/home/uwe/github/wile/wile-config.dat:0", "input is not a vector");
-}
-if (var_42.vt != LV_INT || var_42.v.iv < 0 || (size_t) var_42.v.iv >= var_40[0].v.vec.capa) {
-wile_exception("vector-ref", "/home/uwe/github/wile/wile-config.dat:0", "got bad index value");
-}
-var_43 = var_40[0].v.vec.arr[var_42.v.iv] ? *(var_40[0].v.vec.arr[var_42.v.iv]) : LVI_NIL();
-}
-return var_43;
-}
-// end of function fn_4
+// dropped unused function fn_4
 
-// @@@ (set-bbox-name! it val) @@@ /home/uwe/github/wile/wile-config.dat:0 @@@ fn_5 @@@
-static lval fn_5(lptr* var_44, lptr var_45, const char* cloc)
-{
-lval var_47;
-var_47 = LVI_INT(1);
-lval var_48;
-{
-if (var_45[0].vt != LV_VECTOR) {
-wile_exception("vector-set!", "/home/uwe/github/wile/wile-config.dat:0", "input is not a vector");
-}
-if (var_47.vt != LV_INT || var_47.v.iv < 0 || (size_t) var_47.v.iv >= var_45[0].v.vec.capa) {
-wile_exception("vector-set!", "/home/uwe/github/wile/wile-config.dat:0", "got bad index value");
-}
-var_45[0].v.vec.arr[var_47.v.iv] = new_lv(LV_NIL);
-*(var_45[0].v.vec.arr[var_47.v.iv]) = var_45[1];
-var_48 = var_45[0];
-}
-return var_48;
-}
-// end of function fn_5
+// dropped unused function fn_5
 
-// @@@ (set-bbox-value! it val) @@@ /home/uwe/github/wile/wile-config.dat:0 @@@ fn_6 @@@
-static lval fn_6(lptr* var_49, lptr var_50, const char* cloc)
-{
-lval var_52;
-var_52 = LVI_INT(2);
-lval var_53;
-{
-if (var_50[0].vt != LV_VECTOR) {
-wile_exception("vector-set!", "/home/uwe/github/wile/wile-config.dat:0", "input is not a vector");
-}
-if (var_52.vt != LV_INT || var_52.v.iv < 0 || (size_t) var_52.v.iv >= var_50[0].v.vec.capa) {
-wile_exception("vector-set!", "/home/uwe/github/wile/wile-config.dat:0", "got bad index value");
-}
-var_50[0].v.vec.arr[var_52.v.iv] = new_lv(LV_NIL);
-*(var_50[0].v.vec.arr[var_52.v.iv]) = var_50[1];
-var_53 = var_50[0];
-}
-return var_53;
-}
-// end of function fn_6
+// dropped unused function fn_6
 
 // @@@ lambda (p) @@@ bld-rtl-dir/wile-rtl2-000085.scm:26 @@@ fn_57 @@@
 static lval fn_57(lptr* var_58, lptr var_59, const char* cloc)
@@ -2040,10 +1932,9 @@ var_280.origin = var_278[0].origin;
 capa = var_278[0].v.iv;
 var_280.v.vec.capa = capa;
 var_280.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
-var_280.v.vec.arr[0] = new_lv(LV_NIL);
-*(var_280.v.vec.arr[0]) = var_278[1];
-for (i = 1; i < capa; ++i) {
-var_280.v.vec.arr[i] = var_280.v.vec.arr[0];
+for (i = 0; i < capa; ++i) {
+var_280.v.vec.arr[i] = new_lv(LV_NIL);
+*(var_280.v.vec.arr[i]) = var_278[1];
 }
 }
 return var_280;
@@ -11694,10 +11585,9 @@ var_4320.origin = var_4318[0].origin;
 capa = var_4318[0].v.iv;
 var_4320.v.vec.capa = capa;
 var_4320.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
-var_4320.v.vec.arr[0] = new_lv(LV_NIL);
-*(var_4320.v.vec.arr[0]) = var_4318[1];
-for (i = 1; i < capa; ++i) {
-var_4320.v.vec.arr[i] = var_4320.v.vec.arr[0];
+for (i = 0; i < capa; ++i) {
+var_4320.v.vec.arr[i] = new_lv(LV_NIL);
+*(var_4320.v.vec.arr[i]) = var_4318[1];
 }
 }
 return var_4320;
@@ -11785,7 +11675,12 @@ capa = var_4337[0].v.vec.capa;
 var_4339.v.vec.capa = capa;
 var_4339.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
 for (i = 0; i < capa; ++i) {
-var_4339.v.vec.arr[i] = var_4337[0].v.vec.arr[i];
+if (var_4337[0].v.vec.arr[i]) {
+var_4339.v.vec.arr[i] = new_lv(LV_NIL);
+*(var_4339.v.vec.arr[i]) = *(var_4337[0].v.vec.arr[i]);
+} else {
+var_4339.v.vec.arr[i] = NULL;
+}
 }
 }
 return var_4339;
@@ -11808,7 +11703,12 @@ capa = var_4344[0].v.vec.capa - var_4344[1].v.iv;
 var_4346.v.vec.capa = capa;
 var_4346.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
 for (i = 0; i < capa; ++i) {
-var_4346.v.vec.arr[i] = var_4344[0].v.vec.arr[i + var_4344[1].v.iv];
+if (var_4344[0].v.vec.arr[i + var_4344[1].v.iv]) {
+var_4346.v.vec.arr[i] = new_lv(LV_NIL);
+*(var_4346.v.vec.arr[i]) = *(var_4344[0].v.vec.arr[i + var_4344[1].v.iv]);
+} else {
+var_4346.v.vec.arr[i] = NULL;
+}
 }
 }
 return var_4346;
@@ -11833,7 +11733,12 @@ capa = var_4351[2].v.iv - var_4351[1].v.iv;
 var_4353.v.vec.capa = capa;
 var_4353.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
 for (i = 0; i < capa; ++i) {
-var_4353.v.vec.arr[i] = var_4351[0].v.vec.arr[i + var_4351[1].v.iv];
+if (var_4351[0].v.vec.arr[i + var_4351[1].v.iv]) {
+var_4353.v.vec.arr[i] = new_lv(LV_NIL);
+*(var_4353.v.vec.arr[i]) = *(var_4351[0].v.vec.arr[i + var_4351[1].v.iv]);
+} else {
+var_4353.v.vec.arr[i] = NULL;
+}
 }
 }
 return var_4353;
@@ -11931,10 +11836,9 @@ if (var_4363[0].vt != LV_VECTOR) {
 wile_exception("vector-fill!", "bld-rtl-dir/wile-rtl2-000085.scm:681", "first input is not a vector");
 }
 capa = var_4363[0].v.vec.capa;
-lptr pv = new_lv(LV_NIL);
-*pv = var_4363[1];
 for (i = 0; i < capa; ++i) {
-var_4363[0].v.vec.arr[i] = pv;
+var_4363[0].v.vec.arr[i] = new_lv(LV_NIL);
+*(var_4363[0].v.vec.arr[i]) = var_4363[1];
 }
 var_4365 = var_4363[0];
 }

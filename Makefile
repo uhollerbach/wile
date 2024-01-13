@@ -74,6 +74,9 @@ build-rtl:	build-rtl.scm
 build-stages:	build-stages.scm
 	wile -x -v build-stages.scm build-stages
 
+build-update:	build-update.scm
+	wile -x -v build-update.scm build-update
+
 test:	libwrtl.a twp
 	test-wile.scm
 	twp wtest

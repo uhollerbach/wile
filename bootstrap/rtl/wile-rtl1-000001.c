@@ -50,7 +50,7 @@ uint16_t wile_binfo(void)
 #elif defined(WILE_USES_BIGINT)
     ret |= (2 << shift);
 #endif
-    shift += 2;
+//    shift += 2;
 
     return ret;
 }
@@ -62,7 +62,6 @@ lval wile_os_name(void)
 #elif defined(__OpenBSD__)
     return LVI_STRING("OpenBSD");
 #elif defined(__CYGWIN__)
-    // TODO: what's the right thing here for cygwin?
     return LVI_STRING("Cygwin");
 #elif defined(__APPLE__)
     // TODO: what's the right thing here for Apple operating systems?

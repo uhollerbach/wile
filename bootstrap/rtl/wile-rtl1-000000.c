@@ -130,6 +130,8 @@ int main(int argc, char** argv)
 	}
     }
 
+    cachalot = NULL;
+    wile_cont_stack_base = NULL;
     return ret;
 }
 

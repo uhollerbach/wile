@@ -1,6 +1,25 @@
-Last update: 2024-1-12 17:00 PST
+Last update: 2024-2-3 13:30 PST
 
 # Changelog for `wile`
+
+## Current version `wile` "1.2.6" 2024-2-3 13:30 PST
+
+- small cleanups of coverity issues, remove a couple of unused functions
+
+- fix a small bug: vectors created by, for example, (make-vector N 0)
+  shared storage for the default element, which caused weird updating
+  errors - first noticed in FFT routine. no more shared storage.
+
+- bigint is coming along well: initially as library routines, but
+  functionality at least for unsigned integers is pretty complete:
+  add, subtract, multiply, divide; left & right shift; and, or, xor;
+  compare; ilog; min, max; exp-mod; convert to & from strings in
+  several bases; a number of special functions: factorial, binomial
+  coefficients, Stirling numbers, Catalan numbers.  
+
+- add remove-unused-function functionality, so far only at first level:
+  functions that become unused due to no longer being called from
+  removed functions are not detected.
 
 ## Current version `wile` "1.2.5" 2024-1-12 17:00 PST
 

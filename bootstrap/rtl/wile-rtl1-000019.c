@@ -27,6 +27,7 @@ lval wile_gen_list(size_t nitems, lval* items, lval* tail)
 	*p1 = items[--nitems];
 	list = new_pair(p1, list);
     }
+    LISP_ASSERT(list != NULL);
     return *list;
 }
 

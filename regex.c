@@ -359,6 +359,7 @@ static struct nfa_state* p_qstring(struct p_state* pstate)
 	    fprintf(stderr,
 		    "regex parse error: uncompleted quoted-string\n");
 	    pstate->status = REGEX_ERR;
+	    nfa_state_free(nfa);
 	    return(NULL);
 	} else if (cur == '"') {
 	    break;
@@ -691,6 +692,7 @@ struct nfa_state* regex_parse(const char* regex, struct regex_defs* rdefs,
     pstate.rdefs = rdefs;
     nfa = p_regex(&pstate);
     if (nfa == NULL || pstate.status != REGEX_OK) {
+	nfa_state_free(nfa);
 	fprintf(stderr, "regex parse error\n");
 	return(NULL);
     }

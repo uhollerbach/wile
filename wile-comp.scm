@@ -24,6 +24,14 @@
 (define global-func #f)
 (define global-code #f)
 
+;;; track how many times each function gets called
+
+(define global-funcs-used #f)
+
+(define (increment-func-used-count fn)
+  (let ((count (hash-table-ref global-funcs-used fn 0)))
+    (hash-table-set! global-funcs-used fn (+ count 1))))
+
 (def-struct string-bag bag)
 
 (define (add-to-bag! bag str)
@@ -240,6 +248,8 @@
    "\n// @@@ %v @@@ %s @@@ %s @@@\n%slval %s(lptr* %s, lptr %s, const char* cloc)\n{\n%s:;\n"
    info1 info2 fn-name (if visible? "" "static ")
    fn-name clos-name args-name top-label)
+  (unless (hash-table-contains? global-funcs-used fn-name)
+    (hash-table-set! global-funcs-used fn-name 0))
   (when global-profile
     (emit-fstr "wile_profile[%d].count += 1;\n" (list-length global-profile))
     (set! global-profile
@@ -255,6 +265,7 @@
 	(set! closure (sprintf "(lptr*) %s" (cdr cl-entry))))))
   (when (string=? (string-copy call-loc 0 2) "./")
     (set! call-loc (string-copy call-loc 2)))
+  (increment-func-used-count fn)
   (let ((call (sprintf "%s(%s, %s, \"%s\")"
 		       fn (if closure closure "NULL") args call-loc)))
     (if tcall
@@ -1128,6 +1139,7 @@
 	  (emit-function-tail res))
 	(emit-fstr "// end of lambda %s\n" tmp-fn)))
       (build-closure)
+      (increment-func-used-count tmp-fn)
       (string-append "LVI_PROC(" tmp-fn "," c-name ","
 		     (number->string arity) ")"))))
 
@@ -1541,6 +1553,7 @@
 						 cas))) )))))
 	   (emit-function-tail res)
 	   (emit-fstr "// end of prim %s\n" f-name))
+	  (increment-func-used-count f-name)
 	  (let ((res (string-append "LVI_PROC(" f-name "," "NULL" ","
 				    (number->string arity) ")")))
 	    (set! global-prims-memoized
@@ -1659,12 +1672,6 @@
 
 (define (compile-expr cur-env tcall expr)
   (debug-trace 'compile-expr cur-env tcall expr)
-;;; This only adds approximate line number info: since the compiler emits
-;;; multiple C lines, it can be off a little. Still a useful approximation
-;;; TODO: need to think about this a bit more, was getting some very weird
-;;; error messages from compiler - including pointers to stdlib-skeem???
-;;;  (let ((loc (string-split-by is-colon? (token-source-line expr))))
-;;;    (emit-fstr "#line %s \"%s\"\n" (cadr loc) (car loc)))
   (cond
    ((is-immediate? expr)
     (compile-immediate cur-env expr))
@@ -1718,6 +1725,7 @@
 		     (a1 (caddr si))
 		     (a2 (cadddr si))
 		     (a3 (number->string (cadr si))))
+		 (increment-func-used-count a1)
 		 (emit-code "@@ = LVI_PROC(@1,@2,@3);")))
 	      ((symbol=? (car si) 'macro)
 	       (compile-expr cur-env tcall (wrap-macro expr si)))
@@ -1866,10 +1874,6 @@
     (write-string stderr "compile ")
     (display (cadr def) stderr)
     (newline stderr))
-;;; TODO: need to think about this a bit more, was getting some very weird
-;;; error messages from compiler - including pointers to stdlib-skeem???
-;;;  (let ((loc (string-split-by is-colon? (token-source-line def))))
-;;;    (emit-fstr "#line %s \"%s\"\n" (cadr loc) (car loc)))
   (guard (err (#t (fprintf stderr "caught exception\n    %v\n" err)
 		  (set! global-errors #t)))
 	 (cond
@@ -1996,6 +2000,50 @@
 		(else
 		 (loop (cdr ls) #f acc)))))))
 
+;;; remove unused functions - still very imperfect: it only catches
+;;; the first level of unused functions; if, after removal of these,
+;;; more functions become unused, it doesn't catch those. need a
+;;; proper intermediate language!
+
+(define (drop-until-fn-end fname lst)
+  (let ((str (string-append "// end of function " fname)))
+    (until (or (null? lst)
+	       (string=? "" (car lst))
+	       (string=? str (car lst)))
+	   (set! lst (cdr lst)))
+    (cons (string-append "// dropped unused function " fname) (cdr lst))))
+
+(define (remove-unused-functions lines)
+  (let loop ((ls lines)
+	     (acc ()))
+    (if (null? ls)
+	(list-reverse acc)
+	(let* ((l1 (car ls))
+	       (rmat1 (regex-match "@@@ +fn_[0-9]+ +@@@$" l1))
+	       (rmat2 (regex-match "static lval fn_[0-9]+\\(lptr\\*, lptr, const char\\*\\);" l1)))
+	  (if rmat1
+	      (let* ((fn1 (cadr rmat1))
+		     (fn (string-trim (lambda (c)
+					(or (char=? c #\@)
+					    (char-whitespace? c))) fn1))
+		     (cc (hash-table-ref global-funcs-used fn #f)))
+		(if (and cc (zero? cc))
+		    (begin
+		      (when (> global-verbose 1)
+			(write-string stderr l1 "\n"))
+		      (loop (drop-until-fn-end fn (cdr ls)) acc))
+		    (loop (cdr ls) (cons l1 acc))))
+	      (if rmat2
+		  (let* ((fn1 (cadr rmat2))
+			 (fn2 (string-copy fn1 12))
+			 (pix (string-find-first-char fn2 #\())
+			 (fn (string-copy fn2 0 pix))
+			 (cc (hash-table-ref global-funcs-used fn #f)))
+		    (if (and cc (zero? cc))
+			(loop (cdr ls) acc)
+			(loop (cdr ls) (cons l1 acc))))
+		  (loop (cdr ls) (cons l1 acc))))))))
+
 (define (remove-unused-lbls lines)
   (let ((decl (hash-table-create string-hash string=?))
 	(used (hash-table-create string-hash string=?))
@@ -2054,7 +2102,7 @@
   (let ((decl (bytevector-create nvars 0))
 	(set (bytevector-create nvars 0))
 	(used (bytevector-create nvars 0))
-	(re-dec "^((__attribute__[(][(]unused[)][)]|static)[ \t]+)?(lval|lptr|lptr[*]) var_[0-9]+(\[[0-9]+\])?(;| = LVI_(NIL|BOOL|INT|CHAR|REAL|RAT))")
+	(re-dec "^((__attribute__\\(\\(unused\\)\\)|static)[ \t]+)?(lval|lptr|lptr\\*) var_[0-9]+(\[[0-9]+\])?(;| = LVI_(NIL|BOOL|INT|CHAR|REAL|RAT))")
 	(re-set "^var_[0-9]+ =")
 	(re-use "var_[0-9]+")
 	(re-num "[0-9]+")
@@ -2137,6 +2185,7 @@
 	(code-port (make-string-bag ()))
 	(func-port (make-string-bag ())))
     (set! global-prims-memoized ())
+    (set! global-funcs-used (hash-table-create string-hash string=?))
     (fluid-let ((global-out decl-port)
 		(global-decl decl-port)
 		(global-code code-port)
@@ -2185,6 +2234,7 @@
 	     ;;; otherwise use the lookup
 
 	     (rm-dc (not (hash-table-ref fvals "-rm-dc" #f)))
+	     (rm-uf (not (hash-table-ref fvals "-rm-uf" #f)))
 	     (rm-ul (not (hash-table-ref fvals "-rm-ul" #f)))
 	     (rm-uv (not (hash-table-ref fvals "-rm-uv" #f)))
 	     (do-prof (hash-table-ref fvals "-p" #f)))
@@ -2247,6 +2297,10 @@
 		     (when (> global-verbose 0)
 		       (fprintf stderr "removing dead code\n"))
 		     (set! lines (remove-dead-code lines)))
+		   (when rm-uf
+		     (when (> global-verbose 0)
+		       (fprintf stderr "removing unused functions\n"))
+		     (set! lines (remove-unused-functions lines)))
 		   (when rm-ul
 		     (when (> global-verbose 0)
 		       (fprintf stderr "removing unused labels\n"))

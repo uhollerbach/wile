@@ -207,7 +207,6 @@ lval wile_sql_stmt_bind(lptr* clos, lptr args, const char* loc)
 	}
 	name = sqlite3_bind_parameter_name(ss, i);
 	if (name) {
-	    ec = SQLITE_ERROR;
 	    if (CAR(args) == NULL) {
 		ec = sqlite3_bind_null(ss, i);
 	    } else {

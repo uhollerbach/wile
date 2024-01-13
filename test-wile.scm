@@ -22,7 +22,6 @@
 ;;; need this here because it's defined in wile-main.scm
 ;;; rather than wile-comp.scm
 
-(define (is-colon? c) (char=? c #\:))
 (define string-hash string-hash-64)
 
 ;;; serial numbers filed off and body lines changed from autotools build
@@ -140,7 +139,8 @@
   (remove-file "wile-out.o")
   (remove-file "coyote")
 
-  (fluid-let ((global-out (make-string-bag ())))
+  (fluid-let ((global-out (make-string-bag ()))
+	      (global-funcs-used (hash-table-create string-hash string=?)))
     (emit-str global-file-head)
     (for-each (lambda (v) (emit-fstr "lval var_%s;\n" v))
 	      '("argv" "cmd_name" "stdin" "stdout" "stderr"

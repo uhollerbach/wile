@@ -22,10 +22,7 @@
 ;;; 	       `(load ,filepath)
 ;;; 	       `(write-string "unable to find file '" ,fname "'\n"))))
 
-(define (is-colon? c) (char=? c #\:))
-
 (define string-hash string-hash-64)
-(define (symbol-hash sym) (string-hash (symbol->string sym)))
 
 (define global-config ())
 
@@ -144,10 +141,6 @@
        (cons "-g" (filter (lambda (s) (not (string=? s "-DWILE_USES_GC"))) wc))
        wc)))
 
-(define (colon-split-string val)
-  (if (or (not val) (null? val) (string=? val ""))
-      () (string-split-by is-colon? val)))
-
 (define (compile-c2o do-debug opt-level input output)
   (let* ((cc (get-config-val 'c-compiler))
 	 (cf (get-config-val 'c-compiler-flags))
@@ -207,6 +200,7 @@
 	       '("-T" int "set tail call #args")
 	       '("-k" flag "keep intermediate files")
 	       '("-rm-dc" flag "suppress dead-code removal")
+	       '("-rm-uf" flag "suppress unused-functions removal")
 	       '("-rm-ul" flag "suppress unused-labels removal")
 	       '("-rm-uv" flag "suppress unused-variables removal")
 	       "Other arguments are the (required) input file, which must end in one of"

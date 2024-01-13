@@ -1041,7 +1041,7 @@
 	 'prim 1 "wile_read_line")
 
    (list 'read-line-interactive
-	 "expects one string argument which it prints as a prompt, then reads and returns one line, with nice interactive editing and history recall; on error, returns #f"
+	 "expects one string argument which it prints as a prompt, then reads from stdin and returns one line, with nice interactive editing and history recall; on error, returns #f"
 	 'prim 1 "wile_read_line_interactive")
 
    (list 'read-char "expects no arguments or one port argument, attempts to read one character from stdin or the port, and returns the character if the read was successful, #f otherwise"
@@ -3351,10 +3351,9 @@
 	      "capa = @1.v.iv;"
 	      "@@.v.vec.capa = capa;"
 	      "@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));"
-	      "@@.v.vec.arr[0] = new_lv(LV_NIL);"
-	      "*(@@.v.vec.arr[0]) = @2;"
-	      "for (i = 1; i < capa; ++i) {"
-	      "@@.v.vec.arr[i] = @@.v.vec.arr[0];"
+	      "for (i = 0; i < capa; ++i) {"
+	      "@@.v.vec.arr[i] = new_lv(LV_NIL);"
+	      "*(@@.v.vec.arr[i]) = @2;"
 	      "}"
 	      "}")))
 
@@ -3369,10 +3368,9 @@
 	    "wile_exception(\"vector-fill!\", \"@L\", \"first input is not a vector\");"
 	    "}"
 	    "capa = @1.v.vec.capa;"
-	    "lptr pv = new_lv(LV_NIL);"
-	    "*pv = @2;"
 	    "for (i = 0; i < capa; ++i) {"
-	    "@1.v.vec.arr[i] = pv;"
+	    "@1.v.vec.arr[i] = new_lv(LV_NIL);"
+	    "*(@1.v.vec.arr[i]) = @2;"
 	    "}"
 	    "@@ = @1;"
 	    "}")))
@@ -3457,7 +3455,12 @@
 	      "@@.v.vec.capa = capa;"
 	      "@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));"
 	      "for (i = 0; i < capa; ++i) {"
-	      "@@.v.vec.arr[i] = @1.v.vec.arr[i];"
+	      "if (@1.v.vec.arr[i]) {"
+	      "@@.v.vec.arr[i] = new_lv(LV_NIL);"
+	      "*(@@.v.vec.arr[i]) = *(@1.v.vec.arr[i]);"
+	      "} else {"
+	      "@@.v.vec.arr[i] = NULL;"
+	      "}"
 	      "}"
 	      "}"))
 	 2 (lambda (r aL a1 a2)
@@ -3474,7 +3477,12 @@
 	      "@@.v.vec.capa = capa;"
 	      "@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));"
 	      "for (i = 0; i < capa; ++i) {"
-	      "@@.v.vec.arr[i] = @1.v.vec.arr[i + @2.v.iv];"
+	      "if (@1.v.vec.arr[i + @2.v.iv]) {"
+	      "@@.v.vec.arr[i] = new_lv(LV_NIL);"
+	      "*(@@.v.vec.arr[i]) = *(@1.v.vec.arr[i + @2.v.iv]);"
+	      "} else {"
+	      "@@.v.vec.arr[i] = NULL;"
+	      "}"
 	      "}"
 	      "}"))
 	 3 (lambda (r aL a1 a2 a3)
@@ -3493,7 +3501,12 @@
 	      "@@.v.vec.capa = capa;"
 	      "@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));"
 	      "for (i = 0; i < capa; ++i) {"
-	      "@@.v.vec.arr[i] = @1.v.vec.arr[i + @2.v.iv];"
+	      "if (@1.v.vec.arr[i + @2.v.iv]) {"
+	      "@@.v.vec.arr[i] = new_lv(LV_NIL);"
+	      "*(@@.v.vec.arr[i]) = *(@1.v.vec.arr[i + @2.v.iv]);"
+	      "} else {"
+	      "@@.v.vec.arr[i] = NULL;"
+	      "}"
 	      "}"
 	      "}")))
 

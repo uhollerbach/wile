@@ -48,7 +48,6 @@ void wile_print_lisp_val(lptr vp, FILE* fp, const char* loc)
     LISP_ASSERT(fp != NULL);
     base = 10;
     prec = INT_MIN;
-    psign = false;
     if (vp) {
 	if (vp->vt == LV_VECTOR &&
 // comment this out, it should never be NULL by construction, and

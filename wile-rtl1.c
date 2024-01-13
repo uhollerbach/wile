@@ -131,6 +131,8 @@ int main(int argc, char** argv)
 	}
     }
 
+    cachalot = NULL;
+    wile_cont_stack_base = NULL;
     return ret;
 }
 
@@ -239,7 +241,7 @@ uint16_t wile_binfo(void)
 #elif defined(WILE_USES_BIGINT)
     ret |= (2 << shift);
 #endif
-    shift += 2;
+//    shift += 2;
 
     return ret;
 }
@@ -251,7 +253,6 @@ lval wile_os_name(void)
 #elif defined(__OpenBSD__)
     return LVI_STRING("OpenBSD");
 #elif defined(__CYGWIN__)
-    // TODO: what's the right thing here for cygwin?
     return LVI_STRING("Cygwin");
 #elif defined(__APPLE__)
     // TODO: what's the right thing here for Apple operating systems?
@@ -744,6 +745,7 @@ lval wile_gen_list(size_t nitems, lval* items, lval* tail)
 	*p1 = items[--nitems];
 	list = new_pair(p1, list);
     }
+    LISP_ASSERT(list != NULL);
     return *list;
 }
 
@@ -1922,6 +1924,9 @@ lval wile_cfft(lptr* clos, lptr args, const char* loc)
     arr = args[1].v.vec.arr;
     a1 = LISP_ALLOC(lisp_cmplx_t, n);
     for (i = 0; i < n; ++i) {
+	if (arr[i] == NULL) {
+	    goto def_lbl;
+	}
 	switch (arr[i]->vt) {
 	case LV_INT:
 	    a1[i] = CMPLX((lisp_real_t) arr[i]->v.iv, 0.0);
@@ -1936,6 +1941,7 @@ lval wile_cfft(lptr* clos, lptr args, const char* loc)
 	    a1[i] = arr[i]->v.cv;
 	    break;
 	default:
+	def_lbl:
 	    LISP_FREE(a1);
 	    wile_exception("vector-cfft!", loc,
 			   "input contains non-numeric value at index %zu", i);

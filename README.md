@@ -1,6 +1,6 @@
-Last update: 2024-1-12 17:00 PST
+Last update: 2024-2-3 13:30 PST
 
-# `wile` - the extremely stable scheming genius compiler - version 1.2.5
+# `wile` - the extremely stable scheming genius compiler - version 1.2.6
 
 `wile` is a small scheme-to-c compiler which I'm writing; it's by no
 means complete, but it's capable enough that writing programs with it
@@ -85,9 +85,10 @@ desire.
   should be a tail call, but I've been unable to persuade either `gcc`
   or `clang` to make that happen.
 
-* There are no bignums. Recent versions of gcc and clang support
-  128-bit integers, and I have support for that in `wile`, but no true
-  unlimited-size integers.
+* There are no built-in bignums yet. I have a modest bignum library,
+  see `library/bigint.scm`, and it seems to work pretty well, but it
+  is not yet integrated into the number tower. But calculating, say,
+  the factorial of 1000 is very straightforward.
 
 * A few special forms are still missing: `delay`, `force`.
 

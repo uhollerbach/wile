@@ -3,6 +3,15 @@ The following is an amalgamation of the isocline.[ch] code by Daan
 Leijen, with a couple of tiny edits. The original is available at
 https://github.com/daanx/isocline. The amalgamation here is included
 in wile with Daan's permission, for which many thanks!
+
+In the below, the "LICENSE" file has been renamed to LICENSE-MIT,
+since I already had a LICENSE file in the library.
+
+I have commented out a number of functions which never got used,
+search for "//zot// " at the beginnings of lines. I have also changed
+the names of a number of local variables from "help", which shadows a
+global, to "hllp". Also fixed a small number of issues flagged by
+coverity.
 */
 
 /* ----------------------------------------------------------------------------
@@ -13,11 +22,11 @@ in wile with Daan's permission, for which many thanks!
 -----------------------------------------------------------------------------*/
 
 //-------------------------------------------------------------
-// Usually we include all sources one file so no internal 
+// Usually we include all sources one file so no internal
 // symbols are public in the libray.
-// 
-// You can compile the entire library just as: 
-// $ gcc -c src/isocline.c 
+//
+// You can compile the entire library just as:
+// $ gcc -c src/isocline.c
 //-------------------------------------------------------------
 #if !defined(IC_SEPARATE_OBJS)
 # ifndef _CRT_NONSTDC_NO_WARNINGS
@@ -72,11 +81,11 @@ in wile with Daan's permission, for which many thanks!
 # endif
 
 #if defined(IC_SEPARATE_OBJS)
-#  define ic_public     ic_extern_c 
-# if defined(__GNUC__) // includes clang and icc      
+#  define ic_public     ic_extern_c
+# if defined(__GNUC__) // includes clang and icc
 #  define ic_private    __attribute__((visibility("hidden")))
 # else
-#  define ic_private  
+#  define ic_private
 # endif
 #else
 # define ic_private     static
@@ -100,11 +109,11 @@ static inline ssize_t to_ssize_t(size_t sz) { return (sz <= SIZE_MAX/2 ? (ssize_
 
 ic_private void    ic_memmove(void* dest, const void* src, ssize_t n);
 ic_private void    ic_memcpy(void* dest, const void* src, ssize_t n);
-ic_private void    ic_memset(void* dest, uint8_t value, ssize_t n);
-ic_private bool    ic_memnmove(void* dest, ssize_t dest_size, const void* src, ssize_t n);
+//zot// ic_private void    ic_memset(void* dest, uint8_t value, ssize_t n);
+//zot// ic_private bool    ic_memnmove(void* dest, ssize_t dest_size, const void* src, ssize_t n);
 
 ic_private ssize_t ic_strlen(const char* s);
-ic_private bool    ic_strcpy(char* dest, ssize_t dest_size /* including 0 */, const char* src);
+//zot// ic_private bool    ic_strcpy(char* dest, ssize_t dest_size /* including 0 */, const char* src);
 ic_private bool    ic_strncpy(char* dest, ssize_t dest_size /* including 0 */, const char* src, ssize_t n);
 
 ic_private bool    ic_contains(const char* big, const char* s);
@@ -119,7 +128,7 @@ ic_private int     ic_strnicmp(const char* s1, const char* s2, ssize_t n);
 //---------------------------------------------------------------------
 // Unicode
 //
-// We use "qutf-8" (quite like utf-8) encoding and decoding. 
+// We use "qutf-8" (quite like utf-8) encoding and decoding.
 // Internally we always use valid utf-8. If we encounter invalid
 // utf-8 bytes (or bytes >= 0x80 from any other encoding) we encode
 // these as special code points in the "raw plane" (0xEE000 - 0xEE0FF).
@@ -190,7 +199,7 @@ ic_private ic_color_t ic_rgbx(ssize_t r, ssize_t g, ssize_t b);
 // Debug
 //-------------------------------------------------------------
 
-#if defined(IC_NO_DEBUG_MSG) 
+#if defined(IC_NO_DEBUG_MSG)
 #define debug_msg(fmt,...)   (void)(0)
 #else
 ic_private void debug_msg( const char* fmt, ... );
@@ -245,7 +254,7 @@ ic_private char* mem_strndup( alloc_t* mem, const char* s, ssize_t n);
 
 //-------------------------------------------------------------
 // string buffer
-// in-place modified buffer with edit operations 
+// in-place modified buffer with edit operations
 // that grows on demand.
 //-------------------------------------------------------------
 
@@ -261,7 +270,7 @@ ic_private ssize_t sbuf_len(const stringbuf_t* s);
 ic_private const char* sbuf_string_at( stringbuf_t* sbuf, ssize_t pos );
 ic_private const char* sbuf_string( stringbuf_t* sbuf );
 ic_private char    sbuf_char_at(stringbuf_t* sbuf, ssize_t pos);
-ic_private char*   sbuf_strdup_at( stringbuf_t* sbuf, ssize_t pos );
+//zot// ic_private char*   sbuf_strdup_at( stringbuf_t* sbuf, ssize_t pos );
 ic_private char*   sbuf_strdup( stringbuf_t* sbuf );
 ic_private char*   sbuf_strdup_from_utf8(stringbuf_t* sbuf);  // decode to locale
 
@@ -269,7 +278,7 @@ ic_private char*   sbuf_strdup_from_utf8(stringbuf_t* sbuf);  // decode to local
 ic_private ssize_t sbuf_appendf(stringbuf_t* sb, const char* fmt, ...);
 ic_private ssize_t sbuf_append_vprintf(stringbuf_t* sb, const char* fmt, va_list args);
 
-ic_private stringbuf_t* sbuf_split_at( stringbuf_t* sb, ssize_t pos );
+//zot// ic_private stringbuf_t* sbuf_split_at( stringbuf_t* sb, ssize_t pos );
 
 // primitive edit operations (inserts return the new position)
 ic_private void    sbuf_clear(stringbuf_t* sbuf);
@@ -299,13 +308,13 @@ ic_private ssize_t sbuf_find_line_end( stringbuf_t* sbuf, ssize_t pos );
 ic_private ssize_t sbuf_find_word_start( stringbuf_t* sbuf, ssize_t pos );
 ic_private ssize_t sbuf_find_word_end( stringbuf_t* sbuf, ssize_t pos );
 ic_private ssize_t sbuf_find_ws_word_start( stringbuf_t* sbuf, ssize_t pos );
-ic_private ssize_t sbuf_find_ws_word_end( stringbuf_t* sbuf, ssize_t pos );
+//zot// ic_private ssize_t sbuf_find_ws_word_end( stringbuf_t* sbuf, ssize_t pos );
 
-// parse a decimal 
+// parse a decimal
 ic_private bool ic_atoz(const char* s, ssize_t* i);
 // parse two decimals separated by a semicolon
 ic_private bool ic_atoz2(const char* s, ssize_t* i, ssize_t* j);
-ic_private bool ic_atou32(const char* s, uint32_t* pu);
+//zot// ic_private bool ic_atou32(const char* s, uint32_t* pu);
 
 // row/column info
 typedef struct rowcol_s {
@@ -318,22 +327,22 @@ typedef struct rowcol_s {
 } rowcol_t;
 
 // find row/col position
-ic_private ssize_t sbuf_get_pos_at_rc( stringbuf_t* sbuf, ssize_t termw, ssize_t promptw, ssize_t cpromptw, 
+ic_private ssize_t sbuf_get_pos_at_rc( stringbuf_t* sbuf, ssize_t termw, ssize_t promptw, ssize_t cpromptw,
                                        ssize_t row, ssize_t col );
 // get row/col for a given position
-ic_private ssize_t sbuf_get_rc_at_pos( stringbuf_t* sbuf, ssize_t termw, ssize_t promptw, ssize_t cpromptw, 
+ic_private ssize_t sbuf_get_rc_at_pos( stringbuf_t* sbuf, ssize_t termw, ssize_t promptw, ssize_t cpromptw,
                                        ssize_t pos, rowcol_t* rc );
 
-ic_private ssize_t sbuf_get_wrapped_rc_at_pos( stringbuf_t* sbuf, ssize_t termw, ssize_t newtermw, ssize_t promptw, ssize_t cpromptw, 
+ic_private ssize_t sbuf_get_wrapped_rc_at_pos( stringbuf_t* sbuf, ssize_t termw, ssize_t newtermw, ssize_t promptw, ssize_t cpromptw,
                                        ssize_t pos, rowcol_t* rc );
-                                       
+
 // row iteration
 typedef bool (row_fun_t)(const char* s,
-                          ssize_t row, ssize_t row_start, ssize_t row_len, 
+                          ssize_t row, ssize_t row_start, ssize_t row_len,
                           ssize_t startw, // prompt width
                           bool is_wrap, const void* arg, void* res);
 
-ic_private ssize_t sbuf_for_each_row( stringbuf_t* sbuf, ssize_t termw, ssize_t promptw, ssize_t cpromptw, 
+ic_private ssize_t sbuf_for_each_row( stringbuf_t* sbuf, ssize_t termw, ssize_t promptw, ssize_t cpromptw,
                                       row_fun_t* fun, void* arg, void* res );
 
 
@@ -342,7 +351,7 @@ ic_private ssize_t sbuf_for_each_row( stringbuf_t* sbuf, ssize_t termw, ssize_t 
 //-------------------------------------------------------------
 
 // skip a single CSI sequence (ESC [ ...)
-ic_private bool    skip_csi_esc( const char* s, ssize_t len, ssize_t* esclen ); // used in term.c
+//zot// ic_private bool skip_csi_esc( const char* s, ssize_t len, ssize_t* esclen ); // used in term.c
 
 ic_private ssize_t str_column_width( const char* s );
 ic_private ssize_t str_prev_ofs( const char* s, ssize_t pos, ssize_t* cwidth );
@@ -373,7 +382,7 @@ ic_private ssize_t str_take_while_fit( const char* s, ssize_t max_width);  // pr
 #define IC_OFF  (-1)
 #define IC_NONE (0)
 
-// try to fit in 64 bits 
+// try to fit in 64 bits
 // note: order is important for some compilers
 // note: each color can actually be 25 bits
 typedef union attr_s {
@@ -390,9 +399,9 @@ typedef union attr_s {
 
 ic_private attr_t attr_none(void);
 ic_private attr_t attr_default(void);
-ic_private attr_t attr_from_color( ic_color_t color );
+//zot// ic_private attr_t attr_from_color( ic_color_t color );
 
-ic_private bool attr_is_none(attr_t attr);
+//zot// ic_private bool attr_is_none(attr_t attr);
 ic_private bool attr_is_eq(attr_t attr1, attr_t attr2);
 
 ic_private attr_t attr_update_with( attr_t attr, attr_t newattr );
@@ -418,7 +427,7 @@ ic_private void           attrbuf_set_at( attrbuf_t* ab, ssize_t pos, ssize_t co
 ic_private void           attrbuf_update_at( attrbuf_t* ab, ssize_t pos, ssize_t count, attr_t attr );
 ic_private void           attrbuf_insert_at( attrbuf_t* ab, ssize_t pos, ssize_t count, attr_t attr );
 
-ic_private attr_t         attrbuf_attr_at( attrbuf_t* ab, ssize_t pos );   
+ic_private attr_t         attrbuf_attr_at( attrbuf_t* ab, ssize_t pos );
 ic_private void           attrbuf_delete_at( attrbuf_t* ab, ssize_t pos, ssize_t count );
 
 #endif // IC_ATTR_H
@@ -448,7 +457,7 @@ ic_private void           attrbuf_delete_at( attrbuf_t* ab, ssize_t pos, ssize_t
 // skipping dup #include "common.h"
 
 //-------------------------------------------------------------
-// TTY/Keyboard input 
+// TTY/Keyboard input
 //-------------------------------------------------------------
 
 // Key code
@@ -484,13 +493,13 @@ ic_private bool   tty_readc_noblock(tty_t* tty, uint8_t* c, long timeout_ms);
 ic_private code_t tty_read_esc(tty_t* tty, long esc_initial_timeout, long esc_timeout); // in tty_esc.c
 
 // used by term.c to read back ANSI escape responses
-ic_private bool   tty_read_esc_response(tty_t* tty, char esc_start, bool final_st, char* buf, ssize_t buflen ); 
+ic_private bool   tty_read_esc_response(tty_t* tty, char esc_start, bool final_st, char* buf, ssize_t buflen );
 
 
 //-------------------------------------------------------------
 // Key codes: a code_t is 32 bits.
 // we use the bottom 24 (nah, 21) bits for unicode (up to x0010FFFF)
-// The codes after x01000000 are for virtual keys 
+// The codes after x01000000 are for virtual keys
 // and events use  x02000000.
 // The top 4 bits are used for modifiers.
 //-------------------------------------------------------------
@@ -549,7 +558,7 @@ static inline code_t key_unicode( unicode_t u ) {
 #define KEY_UNICODE_MAX   (0x0010FFFFU)
 
 
-#define KEY_VIRT          (0x01000000U)  
+#define KEY_VIRT          (0x01000000U)
 #define KEY_UP            (KEY_VIRT+0)
 #define KEY_DOWN          (KEY_VIRT+1)
 #define KEY_LEFT          (KEY_VIRT+2)
@@ -624,7 +633,7 @@ ic_private buffer_mode_t term_set_buffer_mode(term_t* term, buffer_mode_t mode);
 ic_private void term_write_n(term_t* term, const char* s, ssize_t n);
 ic_private void term_write(term_t* term, const char* s);
 ic_private void term_writeln(term_t* term, const char* s);
-ic_private void term_write_char(term_t* term, char c);
+//zot// ic_private void term_write_char(term_t* term, char c);
 
 ic_private void term_write_repeat(term_t* term, const char* s, ssize_t count );
 ic_private void term_beep(term_t* term);
@@ -639,10 +648,10 @@ ic_private int  term_get_color_bits(term_t* term);
 ic_private void term_writef(term_t* term, const char* fmt, ...);
 ic_private void term_vwritef(term_t* term, const char* fmt, va_list args);
 
-ic_private void term_left(term_t* term, ssize_t n);
+//zot// ic_private void term_left(term_t* term, ssize_t n);
 ic_private void term_right(term_t* term, ssize_t n);
 ic_private void term_up(term_t* term, ssize_t n);
-ic_private void term_down(term_t* term, ssize_t n);
+//zot// ic_private void term_down(term_t* term, ssize_t n);
 ic_private void term_start_of_line(term_t* term );
 ic_private void term_clear_line(term_t* term);
 ic_private void term_clear_to_end_of_line(term_t* term);
@@ -684,25 +693,25 @@ ic_private attr_t attr_default(void) {
   attr.x.color = IC_ANSI_DEFAULT;
   attr.x.bgcolor = IC_ANSI_DEFAULT;
   attr.x.bold = IC_OFF;
-  attr.x.underline = IC_OFF; 
+  attr.x.underline = IC_OFF;
   attr.x.reverse = IC_OFF;
-  attr.x.italic = IC_OFF; 
+  attr.x.italic = IC_OFF;
   return attr;
 }
 
-ic_private bool attr_is_none(attr_t attr) {
-  return (attr.value == 0);
-}
+//zot// ic_private bool attr_is_none(attr_t attr) {
+//zot//   return (attr.value == 0);
+//zot// }
 
 ic_private bool attr_is_eq(attr_t attr1, attr_t attr2) {
   return (attr1.value == attr2.value);
 }
 
-ic_private attr_t attr_from_color( ic_color_t color ) {
-  attr_t attr = attr_none();
-  attr.x.color = color;
-  return attr;
-}
+//zot// ic_private attr_t attr_from_color( ic_color_t color ) {
+//zot//   attr_t attr = attr_none();
+//zot//   attr.x.color = color;
+//zot//   return attr;
+//zot// }
 
 
 ic_private attr_t attr_update_with( attr_t oldattr, attr_t newattr ) {
@@ -727,16 +736,16 @@ static bool sgr_is_sep( char c ) {
 static bool sgr_next_par(const char* s, ssize_t* pi, ssize_t* par) {
   const ssize_t i = *pi;
   ssize_t n = 0;
-  while( sgr_is_digit(s[i+n])) { 
-    n++; 
+  while( sgr_is_digit(s[i+n])) {
+    n++;
   }
-  if (n==0) { 
+  if (n==0) {
     *par = 0;
     return true;
   }
   else {
     *pi = i+n;
-    return ic_atoz(s+i, par);    
+    return ic_atoz(s+i, par);
   }
 }
 
@@ -787,7 +796,7 @@ ic_private attr_t attr_from_sgr( const char* s, ssize_t len) {
           attr.x.bgcolor = IC_ANSI_DARKGRAY + (unsigned)(cmd - 100);
         }
         else if ((cmd == 38 || cmd == 48) && sgr_is_sep(s[i])) {
-          // non-associative SGR :-(          
+          // non-associative SGR :-(
           ssize_t par = 0;
           i++;
           if (sgr_next_par(s, &i, &par)) {
@@ -881,10 +890,10 @@ ic_private ssize_t attrbuf_len( attrbuf_t* ab ) {
 ic_private const attr_t* attrbuf_attrs( attrbuf_t* ab, ssize_t expected_len ) {
   assert(expected_len <= ab->count );
   // expand if needed
-  if (ab->count < expected_len) {    
+  if (ab->count < expected_len) {
     if (!attrbuf_ensure_capacity(ab,expected_len)) return NULL;
     for(ssize_t i = ab->count; i < expected_len; i++) {
-      ab->attrs[i] = attr_none();  
+      ab->attrs[i] = attr_none();
     }
     ab->count = expected_len;
   }
@@ -900,14 +909,14 @@ static void attrbuf_update_set_at( attrbuf_t* ab, ssize_t pos, ssize_t count, at
   // initialize if end is beyond the count (todo: avoid duplicate init and set if update==false?)
   if (ab->count < end) {
     for(i = ab->count; i < end; i++) {
-      ab->attrs[i] = attr_none();  
+      ab->attrs[i] = attr_none();
     }
     ab->count = end;
   }
-  // fill pos to end with attr 
+  // fill pos to end with attr
   for(i = pos; i < end; i++) {
-    ab->attrs[i] = (update ? attr_update_with(ab->attrs[i],attr) : attr);    
-  }  
+    ab->attrs[i] = (update ? attr_update_with(ab->attrs[i],attr) : attr);
+  }
 }
 
 ic_private void attrbuf_set_at( attrbuf_t* ab, ssize_t pos, ssize_t count, attr_t attr ) {
@@ -915,12 +924,12 @@ ic_private void attrbuf_set_at( attrbuf_t* ab, ssize_t pos, ssize_t count, attr_
 }
 
 ic_private void attrbuf_update_at( attrbuf_t* ab, ssize_t pos, ssize_t count, attr_t attr ) {
-  attrbuf_update_set_at(ab, pos, count, attr, true);  
+  attrbuf_update_set_at(ab, pos, count, attr, true);
 }
 
 ic_private void attrbuf_insert_at( attrbuf_t* ab, ssize_t pos, ssize_t count, attr_t attr ) {
   if (pos < 0 || pos > ab->count || count <= 0) return;
-  if (!attrbuf_ensure_extra(ab,count)) return;  
+  if (!attrbuf_ensure_extra(ab,count)) return;
   ic_memmove( ab->attrs + pos + count, ab->attrs + pos, (ab->count - pos)*ssizeof(attr_t) );
   ab->count += count;
   attrbuf_set_at( ab, pos, count, attr );
@@ -960,12 +969,12 @@ ic_private void attrbuf_delete_at( attrbuf_t* ab, ssize_t pos, ssize_t count ) {
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
-#include <stdlib.h>  
+#include <stdlib.h>
 
 // skipping dup #include "common.h"
 // skipping dup #include "attr.h"
 // skipping dup #include "term.h"
-// #include "bbcode.h" 
+// #include "bbcode.h"
 /* ----------------------------------------------------------------------------
   Copyright (c) 2021, Daan Leijen
   This is free software; you can redistribute it and/or modify it
@@ -1202,7 +1211,7 @@ static style_color_t html_colors[IC_HTML_COLOR_COUNT+1] = {
   { "yellow", IC_RGB(0xffff00) },
   { "yellowgreen", IC_RGB(0x9acd32) },
   {NULL, 0}
-}; 
+};
 
 //-------------------------------------------------------------
 // Types
@@ -1226,7 +1235,7 @@ typedef struct width_s {
   char    fill;  // " "    (e.g. "hello      ")
 } width_t;
 
-typedef struct tag_s {  
+typedef struct tag_s {
   const char* name;   // tag open name
   attr_t  attr;       // the saved attribute before applying the style
   width_t width;      // start sequence of at most "width" columns
@@ -1235,13 +1244,13 @@ typedef struct tag_s {
 
 
 static void tag_init(tag_t* tag) {
-  memset(tag,0,sizeof(*tag));  
+  memset(tag,0,sizeof(*tag));
 }
 
 struct bbcode_s {
   tag_t*       tags;              // stack of tags; one entry for each open tag
   ssize_t      tags_capacity;
-  ssize_t      tags_nesting;   
+  ssize_t      tags_nesting;
   style_t*     styles;            // list of used defined styles
   ssize_t      styles_capacity;
   ssize_t      styles_count;
@@ -1250,7 +1259,7 @@ struct bbcode_s {
   // caches
   stringbuf_t*  out;              // print buffer
   attrbuf_t*    out_attrs;
-  stringbuf_t*  vout;             // vprintf buffer 
+  stringbuf_t*  vout;             // vprintf buffer
 };
 
 
@@ -1301,7 +1310,7 @@ static ssize_t bbcode_tag_push( bbcode_t* bb, const tag_t* tag ) {
     tag_t* p = mem_realloc_tp( bb->mem, tag_t, bb->tags, newcap );
     if (p == NULL) return -1;
     bb->tags = p;
-    bb->tags_capacity = newcap;    
+    bb->tags_capacity = newcap;
   }
   assert(bb->tags_nesting < bb->tags_capacity);
   bb->tags[bb->tags_nesting] = *tag;
@@ -1317,7 +1326,7 @@ static void bbcode_tag_pop( bbcode_t* bb, tag_t* tag ) {
     bb->tags_nesting--;
     if (tag != NULL) {
       *tag = bb->tags[bb->tags_nesting];
-    }    
+    }
   }
 }
 
@@ -1339,12 +1348,12 @@ static void bbcode_invalid(const char* fmt, ... ) {
 //-------------------------------------------------------------
 
 
-static attr_t bbcode_open( bbcode_t* bb, ssize_t out_pos, const tag_t* tag, attr_t current ) { 
+static attr_t bbcode_open( bbcode_t* bb, ssize_t out_pos, const tag_t* tag, attr_t current ) {
   // save current and set
   tag_t cur;
   tag_init(&cur);
   cur.name  = tag->name;
-  cur.attr  = current;  
+  cur.attr  = current;
   cur.width = tag->width;
   cur.pos   = out_pos;
   bbcode_tag_push(bb,&cur);
@@ -1372,7 +1381,7 @@ static bool bbcode_close( bbcode_t* bb, ssize_t base, const char* name, tag_t* p
           }
         }
       }
-      bbcode_invalid("bbcode: unbalanced tags: open [%s], close [/%s]\n", prev.name, name);            
+      bbcode_invalid("bbcode: unbalanced tags: open [%s], close [/%s]\n", prev.name, name);
       if (!has_open_tag) {
         bbcode_tag_push( bb, &prev ); // restore the tags and ignore this close tag
         break;
@@ -1391,10 +1400,10 @@ static bool bbcode_close( bbcode_t* bb, ssize_t base, const char* name, tag_t* p
 //-------------------------------------------------------------
 
 static const char* attr_update_bool( const char* fname, signed int* field, const char* value ) {
-  if (value == NULL || value[0] == 0 || strcmp(value,"on") || strcmp(value,"true") || strcmp(value,"1")) {
+  if (value == NULL || value[0] == 0 || strcmp(value,"on") == 0 || strcmp(value,"true") == 0 || strcmp(value,"1") == 0) {
     *field = IC_ON;
   }
-  else if (strcmp(value,"off") || strcmp(value,"false") || strcmp(value,"0")) {
+  else if (strcmp(value,"off") == 0 || strcmp(value,"false") == 0 || strcmp(value,"0") == 0) {
     *field = IC_OFF;
   }
   else {
@@ -1408,13 +1417,13 @@ static const char* attr_update_color( const char* fname, ic_color_t* field, cons
     *field = IC_COLOR_NONE;
     return fname;
   }
-  
+
   // hex value
   if (value[0] == '#') {
     uint32_t rgb = 0;
     if (sscanf(value,"#%x",&rgb) == 1) {
       *field = ic_rgb(rgb);
-    } 
+    }
     else {
       bbcode_invalid("bbcode: invalid color code: %s\n", value);
     }
@@ -1434,10 +1443,10 @@ static const char* attr_update_color( const char* fname, ic_color_t* field, cons
     else if (cmp > 0) {
       hi = mid-1;
     }
-    else { 
+    else {
       *field = info->color;
       return fname;
-    }    
+    }
   }
   bbcode_invalid("bbcode: unknown %s: %s\n", fname, value);
   *field = IC_COLOR_NONE;
@@ -1454,12 +1463,12 @@ static void attr_update_width( width_t* pwidth, char default_fill, const char* v
   width_t width;
   memset(&width, 0, sizeof(width));
   width.fill = default_fill;   // use 0 for no-fill (as for max-width)
-  if (ic_atoz(value, &width.w)) {     
+  if (ic_atoz(value, &width.w)) {
     ssize_t i = 0;
     while( value[i] != ';' && value[i] != 0 ) { i++; }
     if (value[i] == ';') {
       i++;
-      ssize_t len = 0;    
+      ssize_t len = 0;
       while( value[i+len] != ';' && value[i+len] != 0 ) { len++; }
       if (len == 4 && ic_istarts_with(value+i,"left")) {
         width.align = IC_ALIGN_LEFT;
@@ -1480,7 +1489,7 @@ static void attr_update_width( width_t* pwidth, char default_fill, const char* v
           i++; len = 0;
           while( value[i+len] != ';' && value[i+len] != 0 ) { len++; }
           if ((len == 2 && ic_istarts_with(value+i,"on")) || (len == 1 && value[i] == '1')) { width.dots = true; }
-          i += len;
+//zot//          i += len;
         }
       }
     }
@@ -1503,30 +1512,30 @@ static const char* attr_update_ansi_color( const char* fname, ic_color_t* color,
 static const char* attr_update_property( tag_t* tag, const char* attr_name, const char* value ) {
   const char* fname = NULL;
   fname = "bold";
-  if (strcmp(attr_name,fname) == 0) {    
-    signed int b = IC_NONE;    
-    attr_update_bool(fname,&b, value); 
+  if (strcmp(attr_name,fname) == 0) {
+    signed int b = IC_NONE;
+    attr_update_bool(fname,&b, value);
     if (b != IC_NONE) { tag->attr.x.bold = b; }
     return fname;
   }
   fname = "italic";
-  if (strcmp(attr_name,fname) == 0) {    
-    signed int b = IC_NONE;      
-    attr_update_bool(fname,&b, value); 
+  if (strcmp(attr_name,fname) == 0) {
+    signed int b = IC_NONE;
+    attr_update_bool(fname,&b, value);
     if (b != IC_NONE) { tag->attr.x.italic = b; }
     return fname;
   }
   fname = "underline";
-  if (strcmp(attr_name,fname) == 0) {  
-    signed int b = IC_NONE;        
-    attr_update_bool(fname,&b, value); 
+  if (strcmp(attr_name,fname) == 0) {
+    signed int b = IC_NONE;
+    attr_update_bool(fname,&b, value);
     if (b != IC_NONE) { tag->attr.x.underline = b; }
     return fname;
   }
   fname = "reverse";
   if (strcmp(attr_name,fname) == 0) {
-    signed int b = IC_NONE;          
-    attr_update_bool(fname,&b, value); 
+    signed int b = IC_NONE;
+    attr_update_bool(fname,&b, value);
     if (b != IC_NONE) { tag->attr.x.reverse = b; }
     return fname;
   }
@@ -1562,7 +1571,7 @@ static const char* attr_update_property( tag_t* tag, const char* attr_name, cons
     attr_update_ansi_color(fname, &color, value);
     if (color != IC_COLOR_NONE) { tag->attr.x.bgcolor = color; }
     return fname;
-  }  
+  }
   fname = "width";
   if (strcmp(attr_name,fname) == 0) {
     attr_update_width(&tag->width, ' ', value);
@@ -1572,7 +1581,7 @@ static const char* attr_update_property( tag_t* tag, const char* attr_name, cons
   if (strcmp(attr_name,fname) == 0) {
     attr_update_width(&tag->width, 0, value);
     return "width";
-  }    
+  }
   else {
     return NULL;
   }
@@ -1588,8 +1597,8 @@ static const style_t builtin_styles[] = {
   { NULL, { { IC_COLOR_NONE, IC_NONE, IC_NONE, IC_COLOR_NONE, IC_NONE, IC_NONE } } }
 };
 
-static void attr_update_with_styles( tag_t* tag, const char* attr_name, const char* value, 
-                                             bool usebgcolor, const style_t* styles, ssize_t count ) 
+static void attr_update_with_styles( tag_t* tag, const char* attr_name, const char* value,
+                                             bool usebgcolor, const style_t* styles, ssize_t count )
 {
   // direct hex color?
   if (attr_name[0] == '#' && (value == NULL || value[0]==0)) {
@@ -1609,7 +1618,7 @@ static void attr_update_with_styles( tag_t* tag, const char* attr_name, const ch
       tag->attr = attr_update_with(tag->attr,style->attr);
       if (tag->name != NULL) tag->name = style->name;
       return;
-    }    
+    }
   }
   // check builtin styles; todo: binary search?
   for( const style_t* style = builtin_styles; style->name != NULL; style++) {
@@ -1625,7 +1634,7 @@ static void attr_update_with_styles( tag_t* tag, const char* attr_name, const ch
   while( lo <= hi ) {
     ssize_t mid = (lo + hi) / 2;
     style_color_t* info = &html_colors[mid];
-    int cmp = strcmp(info->name,attr_name);    
+    int cmp = strcmp(info->name,attr_name);
     if (cmp < 0) {
       lo = mid+1;
     }
@@ -1642,7 +1651,7 @@ static void attr_update_with_styles( tag_t* tag, const char* attr_name, const ch
     }
   }
   // not found
-  bbcode_invalid("bbcode: unknown style: %s\n", attr_name);  
+  bbcode_invalid("bbcode: unknown style: %s\n", attr_name);
 }
 
 
@@ -1666,17 +1675,17 @@ ic_private const char* parse_skip_white(const char* s) {
 }
 
 ic_private const char* parse_skip_to_white(const char* s) {
-  while( *s != 0 && *s != ']') {  
+  while( *s != 0 && *s != ']') {
     if (*s == ' ' || *s == '\t' || *s == '\n' || *s == '\r') break;
     s++;
   }
   return parse_skip_white(s);
 }
 
-ic_private const char* parse_skip_to_end(const char* s) {
-  while( *s != 0 && *s != ']' ) { s++; }    
-  return s;
-}
+//zot// ic_private const char* parse_skip_to_end(const char* s) {
+//zot//   while( *s != 0 && *s != ']' ) { s++; }
+//zot//   return s;
+//zot// }
 
 ic_private const char* parse_attr_name(const char* s) {
   if (*s == '#') {
@@ -1688,11 +1697,11 @@ ic_private const char* parse_attr_name(const char* s) {
   }
   else {
     while( *s != 0 && *s != ']') {
-      if (!((*s >= 'a' && *s <= 'z') || (*s >= 'A' && *s <= 'Z') || 
+      if (!((*s >= 'a' && *s <= 'z') || (*s >= 'A' && *s <= 'Z') ||
             (*s >= '0' && *s <= '9') || *s == '_' || *s == '-')) break;
       s++;
     }
-  }    
+  }
   return s;
 }
 
@@ -1704,7 +1713,7 @@ ic_private const char* parse_value(const char* s, const char** start, const char
       if (*s == '"') break;
       s++;
     }
-    *end = s;      
+    *end = s;
     if (*s == '"') { s++; }
   }
   else if (*s == '#') {
@@ -1723,8 +1732,8 @@ ic_private const char* parse_value(const char* s, const char** start, const char
       s++;
     }
     *end = s;
-  }  
-  return s;  
+  }
+  return s;
 }
 
 ic_private const char* parse_tag_value( tag_t* tag, char* idbuf, const char* s, const style_t* styles, ssize_t scount ) {
@@ -1733,7 +1742,7 @@ ic_private const char* parse_tag_value( tag_t* tag, char* idbuf, const char* s, 
   const char* id = s;
   const char* idend = parse_attr_name(id);
   const char* val = NULL;
-  const char* valend = NULL;  
+  const char* valend = NULL;
   if (id == idend) {
     bbcode_invalid("bbcode: empty identifier? %.10s...\n", id );
     return parse_skip_to_white(id);
@@ -1748,7 +1757,7 @@ ic_private const char* parse_tag_value( tag_t* tag, char* idbuf, const char* s, 
       bbcode_invalid("bbcode: empty identifier follows 'on'? %.10s...\n", id );
       return parse_skip_to_white(id);
     }
-    s = parse_skip_white(idend);      
+    s = parse_skip_white(idend);
   }
   // value
   if (*s == '=') {
@@ -1756,19 +1765,19 @@ ic_private const char* parse_tag_value( tag_t* tag, char* idbuf, const char* s, 
     s = parse_skip_white(s);
     s = parse_value(s, &val, &valend);
     s = parse_skip_white(s);
-  }  
+  }
   // limit name and attr to 128 bytes
   char valbuf[128];
   ic_strncpy( idbuf, 128, id, idend - id);
   ic_strncpy( valbuf, 128, val, valend - val);
   ic_str_tolower(idbuf);
   ic_str_tolower(valbuf);
-  attr_update_with_styles( tag, idbuf, valbuf, usebgcolor, styles, scount );  
+  attr_update_with_styles( tag, idbuf, valbuf, usebgcolor, styles, scount );
   return s;
 }
 
 static const char* parse_tag_values( tag_t* tag, char* idbuf, const char* s, const style_t* styles, ssize_t scount ) {
-  s = parse_skip_white(s);  
+  s = parse_skip_white(s);
   idbuf[0] = 0;
   ssize_t count = 0;
   while( *s != 0 && *s != ']') {
@@ -1787,11 +1796,11 @@ static const char* parse_tag( tag_t* tag, char* idbuf, bool* open, bool* pre, co
   s = parse_skip_white(s+1);
   if (*s == '!') { // pre
     *pre = true;
-    s = parse_skip_white(s+1);  
-  }  
-  else if (*s == '/') { 
-    *open = false; 
-    s = parse_skip_white(s+1); 
+    s = parse_skip_white(s+1);
+  }
+  else if (*s == '/') {
+    *open = false;
+    s = parse_skip_white(s+1);
   };
   s = parse_tag_values( tag, idbuf, s, styles, scount);
   return s;
@@ -1804,7 +1813,7 @@ static const char* parse_tag( tag_t* tag, char* idbuf, bool* open, bool* pre, co
 
 static void bbcode_parse_tag_content( bbcode_t* bb, const char* s, tag_t* tag ) {
   tag_init(tag);
-  if (s != NULL) { 
+  if (s != NULL) {
     char idbuf[128];
     parse_tag_values(tag, idbuf, s, bb->styles, bb->styles_count);
   }
@@ -1825,7 +1834,7 @@ ic_private void bbcode_style_open( bbcode_t* bb, const char* fmt ) {
 ic_private void bbcode_style_close( bbcode_t* bb, const char* fmt ) {
   const ssize_t base = bb->tags_nesting - 1; // as we end a style
   tag_t tag;
-  bbcode_parse_tag_content(bb, fmt, &tag);  
+  bbcode_parse_tag_content(bb, fmt, &tag);
   tag_t prev;
   if (bbcode_close(bb, base, tag.name, &prev)) {
     term_set_attr( bb->term, prev.attr );
@@ -1887,10 +1896,10 @@ static void bbcode_restrict_width( ssize_t start, width_t width, stringbuf_t* ou
       const attr_t attr = attrbuf_attr_at(attr_out,sbuf_len(out) - 1);
       char buf[2];
       buf[0] = width.fill;
-      buf[1] = 0;        
+      buf[1] = 0;
       for( ssize_t i = 0; i < pad_right; i++) {  // todo: optimize
         attrbuf_append_n( out, attr_out, buf, 1, attr );
-      }      
+      }
     }
   }
 }
@@ -1899,11 +1908,11 @@ static void bbcode_restrict_width( ssize_t start, width_t width, stringbuf_t* ou
 // Print
 //---------------------------------------------------------
 
-ic_private ssize_t bbcode_process_tag( bbcode_t* bb, const char* s, const ssize_t nesting_base, 
+ic_private ssize_t bbcode_process_tag( bbcode_t* bb, const char* s, const ssize_t nesting_base,
                                         stringbuf_t* out, attrbuf_t* attr_out, attr_t* cur_attr ) {
   assert(*s == '[');
   tag_t tag;
-  tag_init(&tag);  
+  tag_init(&tag);
   bool open = true;
   bool ispre = false;
   char idbuf[128];
@@ -1942,7 +1951,7 @@ ic_private ssize_t bbcode_process_tag( bbcode_t* bb, const char* s, const ssize_
         bbcode_restrict_width( prev.pos, prev.width, out, attr_out);
       }
     }
-  }  
+  }
   return (end - s);
 }
 
@@ -1970,7 +1979,7 @@ ic_private void bbcode_append( bbcode_t* bb, const char* s, stringbuf_t* out, at
     }
     else if (s[i] == '\\') {
       if (s[i+1] == '\\' || s[i+1] == '[') {
-        attrbuf_append_n(out, attr_out, s+i+1, 1, attr); // escape '\[' and '\\' 
+        attrbuf_append_n(out, attr_out, s+i+1, 1, attr); // escape '\[' and '\\'
         i += 2;
       }
       else {
@@ -2018,7 +2027,7 @@ ic_private void bbcode_printf( bbcode_t* bb, const char* fmt, ... ) {
 ic_private ssize_t bbcode_column_width( bbcode_t* bb, const char* s ) {
   if (s==NULL || s[0] == 0) return 0;
   if (bb->vout == NULL) { return str_column_width(s); }
-  assert(sbuf_len(bb->vout) == 0); 
+  assert(sbuf_len(bb->vout) == 0);
   bbcode_append( bb, s, bb->vout, NULL);
   const ssize_t w = str_column_width(sbuf_string(bb->vout));
   sbuf_clear(bb->vout);
@@ -2171,7 +2180,7 @@ struct ic_env_s {
   bool            singleline_only;  // allow only single line editing?
   bool            complete_nopreview; // do not show completion preview for each selection in the completion menu?
   bool            complete_autotab; // try to keep completing after a completion?
-  bool            no_multiline_indent; // indent continuation lines to line up under the initial prompt 
+  bool            no_multiline_indent; // indent continuation lines to line up under the initial prompt
   bool            no_help;          // show short help line for history search etc.
   bool            no_hint;          // allow hinting?
   bool            no_highlight;     // enable highlighting?
@@ -2258,16 +2267,16 @@ typedef struct editor_s {
   ssize_t       cur_rows;     // current used rows to display our content (including extra content)
   ssize_t       cur_row;      // current row that has the cursor (0 based, relative to the prompt)
   ssize_t       termw;
-  bool          modified;     // has a modification happened? (used for history navigation for example)  
+  bool          modified;     // has a modification happened? (used for history navigation for example)
   bool          disable_undo; // temporarily disable auto undo (for history search)
-  ssize_t       history_idx;  // current index in the history 
-  editstate_t*  undo;         // undo buffer  
+  ssize_t       history_idx;  // current index in the history
+  editstate_t*  undo;         // undo buffer
   editstate_t*  redo;         // redo buffer
-  const char*   prompt_text;  // text of the prompt before the prompt marker    
+  const char*   prompt_text;  // text of the prompt before the prompt marker
   alloc_t*      mem;          // allocator
   // caches
-  attrbuf_t*    attrs;        // reuse attribute buffers 
-  attrbuf_t*    attrs_extra; 
+  attrbuf_t*    attrs;        // reuse attribute buffers
+  attrbuf_t*    attrs_extra;
 } editor_t;
 
 
@@ -2275,7 +2284,7 @@ typedef struct editor_s {
 
 
 //-------------------------------------------------------------
-// Main edit line 
+// Main edit line
 //-------------------------------------------------------------
 static char* edit_line( ic_env_t* env, const char* prompt_text );  // defined at bottom
 static void edit_refresh(ic_env_t* env, editor_t* eb);
@@ -2344,7 +2353,7 @@ static void editor_start_modify(editor_t* eb ) {
 
 
 static bool editor_pos_is_at_end(editor_t* eb ) {
-  return (eb->pos == sbuf_len(eb->input));  
+  return (eb->pos == sbuf_len(eb->input));
 }
 
 //-------------------------------------------------------------
@@ -2392,7 +2401,7 @@ static void edit_write_prompt( ic_env_t* env, editor_t* eb, ssize_t row, bool in
   if (in_extra) return;
   bbcode_style_open(env->bbcode, "ic-prompt");
   if (row==0) {
-    // regular prompt text    
+    // regular prompt text
     bbcode_print( env->bbcode, eb->prompt_text );
   }
   else if (!env->no_multiline_indent) {
@@ -2400,14 +2409,14 @@ static void edit_write_prompt( ic_env_t* env, editor_t* eb, ssize_t row, bool in
     // todo: cache prompt widths
     ssize_t textw = bbcode_column_width(env->bbcode, eb->prompt_text );
     ssize_t markerw = bbcode_column_width(env->bbcode, env->prompt_marker);
-    ssize_t cmarkerw = bbcode_column_width(env->bbcode, env->cprompt_marker);      
+    ssize_t cmarkerw = bbcode_column_width(env->bbcode, env->cprompt_marker);
     if (cmarkerw < markerw + textw) {
       term_write_repeat(env->term, " ", markerw + textw - cmarkerw );
     }
   }
   // the marker
-  bbcode_print(env->bbcode, (row == 0 ? env->prompt_marker : env->cprompt_marker ));   
-  bbcode_style_close(env->bbcode,NULL);    
+  bbcode_print(env->bbcode, (row == 0 ? env->prompt_marker : env->cprompt_marker ));
+  bbcode_style_close(env->bbcode,NULL);
 }
 
 //-------------------------------------------------------------
@@ -2425,7 +2434,7 @@ typedef struct refresh_info_s {
 
 static bool edit_refresh_rows_iter(
     const char* s,
-    ssize_t row, ssize_t row_start, ssize_t row_len, 
+    ssize_t row, ssize_t row_start, ssize_t row_len,
     ssize_t startw, bool is_wrap, const void* arg, void* res)
 {
   ic_unused(res); ic_unused(startw);
@@ -2435,7 +2444,7 @@ static bool edit_refresh_rows_iter(
   // debug_msg("edit: line refresh: row %zd, len: %zd\n", row, row_len);
   if (row < info->first_row) return false;
   if (row > info->last_row)  return true; // should not occur
-  
+
   // term_clear_line(term);
   edit_write_prompt(info->env, info->eb, row, info->in_extra);
 
@@ -2449,9 +2458,9 @@ static bool edit_refresh_rows_iter(
 
   // write line ending
   if (row < info->last_row) {
-    if (is_wrap && tty_is_utf8(info->env->tty)) {       
+    if (is_wrap && tty_is_utf8(info->env->tty)) {
       #ifndef __APPLE__
-      bbcode_print( info->env->bbcode, "[ic-dim]\xE2\x86\x90");  // left arrow 
+      bbcode_print( info->env->bbcode, "[ic-dim]\xE2\x86\x90");  // left arrow
       #else
       bbcode_print( info->env->bbcode, "[ic-dim]\xE2\x86\xB5" ); // return symbol
       #endif
@@ -2462,12 +2471,12 @@ static bool edit_refresh_rows_iter(
   else {
     term_clear_to_end_of_line(term);
   }
-  return (row >= info->last_row);  
+  return (row >= info->last_row);
 }
 
 static void edit_refresh_rows(ic_env_t* env, editor_t* eb, stringbuf_t* input, attrbuf_t* attrs,
-                               ssize_t promptw, ssize_t cpromptw, bool in_extra, 
-                                ssize_t first_row, ssize_t last_row) 
+                               ssize_t promptw, ssize_t cpromptw, bool in_extra,
+                                ssize_t first_row, ssize_t last_row)
 {
   if (input == NULL) return;
   refresh_info_t info;
@@ -2481,24 +2490,24 @@ static void edit_refresh_rows(ic_env_t* env, editor_t* eb, stringbuf_t* input, a
 }
 
 
-static void edit_refresh(ic_env_t* env, editor_t* eb) 
+static void edit_refresh(ic_env_t* env, editor_t* eb)
 {
   // calculate the new cursor row and total rows needed
   ssize_t promptw, cpromptw;
   edit_get_prompt_width( env, eb, false, &promptw, &cpromptw );
-  
+
   if (eb->attrs != NULL) {
-    highlight( env->mem, env->bbcode, sbuf_string(eb->input), eb->attrs, 
+    highlight( env->mem, env->bbcode, sbuf_string(eb->input), eb->attrs,
                  (env->no_highlight ? NULL : env->highlighter), env->highlighter_arg );
   }
 
   // highlight matching braces
   if (eb->attrs != NULL && !env->no_bracematch) {
-    highlight_match_braces(sbuf_string(eb->input), eb->attrs, eb->pos, ic_env_get_match_braces(env),  
+    highlight_match_braces(sbuf_string(eb->input), eb->attrs, eb->pos, ic_env_get_match_braces(env),
                               bbcode_style(env->bbcode,"ic-bracematch"), bbcode_style(env->bbcode,"ic-error"));
   }
 
-  // insert hint  
+  // insert hint
   if (sbuf_len(eb->hint) > 0) {
     if (eb->attrs != NULL) {
       attrbuf_insert_at( eb->attrs, eb->pos, sbuf_len(eb->hint), bbcode_style(env->bbcode, "ic-hint") );
@@ -2523,15 +2532,15 @@ static void edit_refresh(ic_env_t* env, editor_t* eb)
   const ssize_t rows_input = sbuf_get_rc_at_pos( eb->input, eb->termw, promptw, cpromptw, eb->pos, &rc );
   rowcol_t rc_extra = { 0 };
   ssize_t rows_extra = 0;
-  if (extra != NULL) { 
-    rows_extra = sbuf_get_rc_at_pos( extra, eb->termw, 0, 0, 0 /*pos*/, &rc_extra ); 
+  if (extra != NULL) {
+    rows_extra = sbuf_get_rc_at_pos( extra, eb->termw, 0, 0, 0 /*pos*/, &rc_extra );
   }
-  const ssize_t rows = rows_input + rows_extra; 
+  const ssize_t rows = rows_input + rows_extra;
   debug_msg("edit: refresh: rows %zd, cursor: %zd,%zd (previous rows %zd, cursor row %zd)\n", rows, rc.row, rc.col, eb->cur_rows, eb->cur_row);
-  
+
   // only render at most terminal height rows
   const ssize_t termh = term_get_height(env->term);
-  ssize_t first_row = 0;                 // first visible row 
+  ssize_t first_row = 0;                 // first visible row
   ssize_t last_row = rows - 1;           // last visible row
   if (rows > termh) {
     first_row = rc.row - termh + 1;      // ensure cursor is visible
@@ -2539,25 +2548,25 @@ static void edit_refresh(ic_env_t* env, editor_t* eb)
     last_row = first_row + termh - 1;
   }
   assert(last_row - first_row < termh);
-  
+
   // reduce flicker
-  buffer_mode_t bmode = term_set_buffer_mode(env->term, BUFFERED);        
+  buffer_mode_t bmode = term_set_buffer_mode(env->term, BUFFERED);
 
   // back up to the first line
   term_start_of_line(env->term);
   term_up(env->term, (eb->cur_row >= termh ? termh-1 : eb->cur_row) );
-  // term_clear_lines_to_end(env->term);  // gives flicker in old Windows cmd prompt 
+  // term_clear_lines_to_end(env->term);  // gives flicker in old Windows cmd prompt
 
   // render rows
-  edit_refresh_rows( env, eb, eb->input, eb->attrs, promptw, cpromptw, false, first_row, last_row );  
+  edit_refresh_rows( env, eb, eb->input, eb->attrs, promptw, cpromptw, false, first_row, last_row );
   if (rows_extra > 0) {
     assert(extra != NULL);
     const ssize_t first_rowx = (first_row > rows_input ? first_row - rows_input : 0);
     const ssize_t last_rowx = last_row - rows_input; assert(last_rowx >= 0);
     edit_refresh_rows(env, eb, extra, eb->attrs_extra, 0, 0, true, first_rowx, last_rowx);
   }
-    
-  // overwrite trailing rows we do not use anymore  
+
+  // overwrite trailing rows we do not use anymore
   ssize_t rrows = last_row - first_row + 1;  // rendered rows
   if (rrows < termh && rows < eb->cur_rows) {
     ssize_t clear = eb->cur_rows - rows;
@@ -2568,7 +2577,7 @@ static void edit_refresh(ic_env_t* env, editor_t* eb)
       term_clear_line(env->term);
     }
   }
-  
+
   // move cursor back to edit position
   term_start_of_line(env->term);
   term_up(env->term, first_row + rrows - 1 - rc.row );
@@ -2594,17 +2603,17 @@ static void edit_refresh(ic_env_t* env, editor_t* eb)
 
 // clear current output
 static void edit_clear(ic_env_t* env, editor_t* eb ) {
-  term_attr_reset(env->term);  
+  term_attr_reset(env->term);
   term_up(env->term, eb->cur_row);
-  
+
   // overwrite all rows
   for( ssize_t i = 0; i < eb->cur_rows; i++) {
     term_clear_line(env->term);
-    term_writeln(env->term, "");    
+    term_writeln(env->term, "");
   }
-  
-  // move cursor back 
-  term_up(env->term, eb->cur_rows - eb->cur_row );  
+
+  // move cursor back
+  term_up(env->term, eb->cur_rows - eb->cur_row );
 }
 
 
@@ -2624,12 +2633,12 @@ static bool edit_resize(ic_env_t* env, editor_t* eb ) {
   term_update_dim(env->term);
   ssize_t newtermw = term_get_width(env->term);
   if (eb->termw == newtermw) return false;
-  
+
   // recalculate the row layout assuming the hardwrapping for the new terminal width
   ssize_t promptw, cpromptw;
   edit_get_prompt_width( env, eb, false, &promptw, &cpromptw );
-  sbuf_insert_at(eb->input, sbuf_string(eb->hint), eb->pos); // insert used hint    
-  
+  sbuf_insert_at(eb->input, sbuf_string(eb->hint), eb->pos); // insert used hint
+
   // render extra (like a completion menu)
   stringbuf_t* extra = NULL;
   if (sbuf_len(eb->extra) > 0) {
@@ -2647,23 +2656,23 @@ static bool edit_resize(ic_env_t* env, editor_t* eb ) {
   ssize_t rows_extra = 0;
   if (extra != NULL) {
     rows_extra = sbuf_get_wrapped_rc_at_pos(extra, eb->termw, newtermw, 0, 0, 0 /*pos*/, &rc_extra);
-  }  
+  }
   ssize_t rows = rows_input + rows_extra;
   debug_msg("edit: resize: new rows: %zd, cursor row: %zd (previous: rows: %zd, cursor row %zd)\n", rows, rc.row, eb->cur_rows, eb->cur_row);
-  
+
   // update the newly calculated row and rows
   eb->cur_row = rc.row;
   if (rows > eb->cur_rows) {
     eb->cur_rows = rows;
   }
-  eb->termw = newtermw;     
-  edit_refresh(env,eb); 
+  eb->termw = newtermw;
+  edit_refresh(env,eb);
 
   // remove hint again
   sbuf_delete_at(eb->input, eb->pos, sbuf_len(eb->hint));
   sbuf_free(extra);
   return true;
-} 
+}
 
 static void editor_append_hint_help(editor_t* eb, const char* help) {
   sbuf_clear(eb->hint_help);
@@ -2681,20 +2690,20 @@ static void edit_refresh_hint(ic_env_t* env, editor_t* eb) {
     edit_refresh(env, eb);
     if (env->no_hint) return;
   }
-    
+
   // and see if we can construct a hint (displayed after a delay)
   ssize_t count = completions_generate(env, env->completions, sbuf_string(eb->input), eb->pos, 2);
   if (count == 1) {
     const char* help = NULL;
     const char* hint = completions_get_hint(env->completions, 0, &help);
     if (hint != NULL) {
-      sbuf_replace(eb->hint, hint); 
+      sbuf_replace(eb->hint, hint);
       editor_append_hint_help(eb, help);
       // do auto-tabbing?
       if (env->complete_autotab) {
         stringbuf_t* sb = sbuf_new(env->mem);  // temporary buffer for completion
-        if (sb != NULL) { 
-          sbuf_replace( sb, sbuf_string(eb->input) ); 
+        if (sb != NULL) {
+          sbuf_replace( sb, sbuf_string(eb->input) );
           ssize_t pos = eb->pos;
           const char* extra_hint = hint;
           do {
@@ -2711,10 +2720,10 @@ static void edit_refresh_hint(ic_env_t* env, editor_t* eb) {
               }
             }
           }
-          while(count == 1);       
+          while(count == 1);
           sbuf_free(sb);
-        }          
-      }      
+        }
+      }
     }
   }
 
@@ -2746,9 +2755,9 @@ static void edit_cursor_left(ic_env_t* env, editor_t* eb) {
   ssize_t prev = sbuf_prev(eb->input,eb->pos,&cwidth);
   if (prev < 0) return;
   rowcol_t rc;
-  edit_get_rowcol( env, eb, &rc);  
-  eb->pos = prev;  
-  edit_refresh(env,eb);  
+  edit_get_rowcol( env, eb, &rc);
+  eb->pos = prev;
+  edit_refresh(env,eb);
 }
 
 static void edit_cursor_right(ic_env_t* env, editor_t* eb) {
@@ -2756,15 +2765,15 @@ static void edit_cursor_right(ic_env_t* env, editor_t* eb) {
   ssize_t next = sbuf_next(eb->input,eb->pos,&cwidth);
   if (next < 0) return;
   rowcol_t rc;
-  edit_get_rowcol( env, eb, &rc);  
-  eb->pos = next;  
+  edit_get_rowcol( env, eb, &rc);
+  eb->pos = next;
   edit_refresh(env,eb);
 }
 
 static void edit_cursor_line_end(ic_env_t* env, editor_t* eb) {
   ssize_t end = sbuf_find_line_end(eb->input,eb->pos);
-  if (end < 0) return;  
-  eb->pos = end; 
+  if (end < 0) return;
+  eb->pos = end;
   edit_refresh(env,eb);
 }
 
@@ -2789,27 +2798,27 @@ static void edit_cursor_prev_word(ic_env_t* env, editor_t* eb) {
   edit_refresh(env,eb);
 }
 
-static void edit_cursor_next_ws_word(ic_env_t* env, editor_t* eb) {
-  ssize_t end = sbuf_find_ws_word_end(eb->input, eb->pos);
-  if (end < 0) return;
-  eb->pos = end;
-  edit_refresh(env, eb);
-}
+//zot// static void edit_cursor_next_ws_word(ic_env_t* env, editor_t* eb) {
+//zot//   ssize_t end = sbuf_find_ws_word_end(eb->input, eb->pos);
+//zot//   if (end < 0) return;
+//zot//   eb->pos = end;
+//zot//   edit_refresh(env, eb);
+//zot// }
 
-static void edit_cursor_prev_ws_word(ic_env_t* env, editor_t* eb) {
-  ssize_t start = sbuf_find_ws_word_start(eb->input, eb->pos);
-  if (start < 0) return;
-  eb->pos = start;
-  edit_refresh(env, eb);
-}
+//zot// static void edit_cursor_prev_ws_word(ic_env_t* env, editor_t* eb) {
+//zot//   ssize_t start = sbuf_find_ws_word_start(eb->input, eb->pos);
+//zot//   if (start < 0) return;
+//zot//   eb->pos = start;
+//zot//   edit_refresh(env, eb);
+//zot// }
 
 static void edit_cursor_to_start(ic_env_t* env, editor_t* eb) {
-  eb->pos = 0; 
+  eb->pos = 0;
   edit_refresh(env,eb);
 }
 
 static void edit_cursor_to_end(ic_env_t* env, editor_t* eb) {
-  eb->pos = sbuf_len(eb->input); 
+  eb->pos = sbuf_len(eb->input);
   edit_refresh(env,eb);
 }
 
@@ -2866,13 +2875,13 @@ static void edit_delete_all(ic_env_t* env, editor_t* eb) {
   edit_refresh(env,eb);
 }
 
-static void edit_delete_to_end_of_line(ic_env_t* env, editor_t* eb) { 
+static void edit_delete_to_end_of_line(ic_env_t* env, editor_t* eb) {
   ssize_t start = sbuf_find_line_start(eb->input,eb->pos);
   if (start < 0) return;
   ssize_t end = sbuf_find_line_end(eb->input,eb->pos);
   if (end < 0) return;
   editor_start_modify(eb);
-  // if on an empty line, remove it completely    
+  // if on an empty line, remove it completely
   if (start == end && sbuf_char_at(eb->input,end) == '\n') {
     end++;
   }
@@ -2899,32 +2908,32 @@ static void edit_delete_to_start_of_line(ic_env_t* env, editor_t* eb) {
   }
   sbuf_delete_from_to( eb->input, start, eb->pos );
   eb->pos = start;
-  if (goright) edit_cursor_right(env,eb); 
+  if (goright) edit_cursor_right(env,eb);
   edit_refresh(env,eb);
 }
 
-static void edit_delete_line(ic_env_t* env, editor_t* eb) {
-  ssize_t start = sbuf_find_line_start(eb->input,eb->pos);
-  if (start < 0) return;
-  ssize_t end   = sbuf_find_line_end(eb->input,eb->pos);
-  if (end < 0) return;
-  editor_start_modify(eb);
-  // delete newline as well so no empty line is left;
-  bool goright = false;
-  if (start > 0 && sbuf_char_at(eb->input,start-1) == '\n') {
-    start--;
-    // afterwards, move to start of next line if it exists (so the cursor stays on the same row)
-    goright = true;
-  }
-  else if (sbuf_char_at(eb->input,end) == '\n') {
-    end++;
-  }
-  sbuf_delete_from_to(eb->input,start,end);
-  eb->pos = start;
-  if (goright) edit_cursor_right(env,eb); 
-  edit_refresh(env,eb);
-}
- 
+//zot// static void edit_delete_line(ic_env_t* env, editor_t* eb) {
+//zot//   ssize_t start = sbuf_find_line_start(eb->input,eb->pos);
+//zot//   if (start < 0) return;
+//zot//   ssize_t end   = sbuf_find_line_end(eb->input,eb->pos);
+//zot//   if (end < 0) return;
+//zot//   editor_start_modify(eb);
+//zot//   // delete newline as well so no empty line is left;
+//zot//   bool goright = false;
+//zot//   if (start > 0 && sbuf_char_at(eb->input,start-1) == '\n') {
+//zot//     start--;
+//zot//     // afterwards, move to start of next line if it exists (so the cursor stays on the same row)
+//zot//     goright = true;
+//zot//   }
+//zot//   else if (sbuf_char_at(eb->input,end) == '\n') {
+//zot//     end++;
+//zot//   }
+//zot//   sbuf_delete_from_to(eb->input,start,end);
+//zot//   eb->pos = start;
+//zot//   if (goright) edit_cursor_right(env,eb);
+//zot//   edit_refresh(env,eb);
+//zot// }
+
 static void edit_delete_to_start_of_word(ic_env_t* env, editor_t* eb) {
    ssize_t start = sbuf_find_word_start(eb->input,eb->pos);
   if (start < 0) return;
@@ -2951,27 +2960,26 @@ static void edit_delete_to_start_of_ws_word(ic_env_t* env, editor_t* eb) {
   edit_refresh(env, eb);
 }
 
-static void edit_delete_to_end_of_ws_word(ic_env_t* env, editor_t* eb) {
-  ssize_t end = sbuf_find_ws_word_end(eb->input, eb->pos);
-  if (end < 0) return;
-  editor_start_modify(eb);
-  sbuf_delete_from_to(eb->input, eb->pos, end);
-  edit_refresh(env, eb);
-}
+//zot// static void edit_delete_to_end_of_ws_word(ic_env_t* env, editor_t* eb) {
+//zot//   ssize_t end = sbuf_find_ws_word_end(eb->input, eb->pos);
+//zot//   if (end < 0) return;
+//zot//   editor_start_modify(eb);
+//zot//   sbuf_delete_from_to(eb->input, eb->pos, end);
+//zot//   edit_refresh(env, eb);
+//zot// }
 
+//zot// static void edit_delete_word(ic_env_t* env, editor_t* eb) {
+//zot//   ssize_t start = sbuf_find_word_start(eb->input,eb->pos);
+//zot//   if (start < 0) return;
+//zot//   ssize_t end   = sbuf_find_word_end(eb->input,eb->pos);
+//zot//   if (end < 0) return;
+//zot//   editor_start_modify(eb);
+//zot//   sbuf_delete_from_to(eb->input,start,end);
+//zot//   eb->pos = start;
+//zot//   edit_refresh(env,eb);
+//zot// }
 
-static void edit_delete_word(ic_env_t* env, editor_t* eb) {
-  ssize_t start = sbuf_find_word_start(eb->input,eb->pos);
-  if (start < 0) return;
-  ssize_t end   = sbuf_find_word_end(eb->input,eb->pos);
-  if (end < 0) return;
-  editor_start_modify(eb);  
-  sbuf_delete_from_to(eb->input,start,end);
-  eb->pos = start;
-  edit_refresh(env,eb);
-}
-
-static void edit_swap_char( ic_env_t* env, editor_t* eb ) { 
+static void edit_swap_char( ic_env_t* env, editor_t* eb ) {
   if (eb->pos <= 0 || eb->pos == sbuf_len(eb->input)) return;
   editor_start_modify(eb);
   eb->pos = sbuf_swap_char(eb->input,eb->pos);
@@ -2984,14 +2992,14 @@ static void edit_multiline_eol(ic_env_t* env, editor_t* eb) {
   editor_start_modify(eb);
   // replace line continuation with a real newline
   sbuf_delete_at( eb->input, eb->pos-1, 1);
-  sbuf_insert_at( eb->input, "\n", eb->pos-1);  
+  sbuf_insert_at( eb->input, "\n", eb->pos-1);
   edit_refresh(env,eb);
 }
 
 static void edit_insert_unicode(ic_env_t* env, editor_t* eb, unicode_t u) {
   editor_start_modify(eb);
   ssize_t nextpos = sbuf_insert_unicode_at(eb->input, u, eb->pos);
-  if (nextpos >= 0) eb->pos = nextpos;  
+  if (nextpos >= 0) eb->pos = nextpos;
   edit_refresh_hint(env, eb);
 }
 
@@ -3042,7 +3050,7 @@ static void edit_insert_char(ic_env_t* env, editor_t* eb, char c) {
   if (c=='\n') {
     editor_auto_indent(eb, "{", "}");  // todo: custom auto indent tokens?
   }
-  edit_refresh_hint(env,eb);  
+  edit_refresh_hint(env,eb);
 }
 
 //-------------------------------------------------------------
@@ -3145,7 +3153,7 @@ static const char* help[] = {
   NULL, NULL
 };
 
-static const char* help_initial = 
+static const char* help_initial =
   "[ic-info]"
   "Isocline v1.0, copyright (c) 2021 Daan Leijen.\n"
   "This is free software; you can redistribute it and/or\n"
@@ -3178,7 +3186,7 @@ static void edit_show_help(ic_env_t* env, editor_t* eb) {
   edit_clear(env, eb);
   bbcode_println(env->bbcode, help_initial);
   for (ssize_t i = 0; help[i] != NULL && help[i+1] != NULL; i += 2) {
-    if (help[i][0] == 0) {  
+    if (help[i][0] == 0) {
       bbcode_printf(env->bbcode, "[ic-info]%s[/]\n", help[i+1]);
     }
     else {
@@ -3207,12 +3215,12 @@ static void edit_show_help(ic_env_t* env, editor_t* eb) {
 // History search: this file is included in editline.c
 //-------------------------------------------------------------
 
-static void edit_history_at(ic_env_t* env, editor_t* eb, int ofs ) 
+static void edit_history_at(ic_env_t* env, editor_t* eb, int ofs )
 {
-  if (eb->modified) { 
+  if (eb->modified) {
     history_update(env->history, sbuf_string(eb->input)); // update first entry if modified
-    eb->history_idx = 0;          // and start again 
-    eb->modified = false;    
+    eb->history_idx = 0;          // and start again
+    eb->modified = false;
   }
   const char* entry = history_get(env->history,eb->history_idx + ofs);
   // debug_msg( "edit: history: at: %d + %d, found: %s\n", eb->history_idx, ofs, entry);
@@ -3288,26 +3296,26 @@ static void edit_history_search(ic_env_t* env, editor_t* eb, char* initial ) {
   }
 
   // update history
-  if (eb->modified) { 
+  if (eb->modified) {
     history_update(env->history, sbuf_string(eb->input)); // update first entry if modified
-    eb->history_idx = 0;               // and start again 
+    eb->history_idx = 0;               // and start again
     eb->modified = false;
   }
 
   // set a search prompt and remember the previous state
   editor_undo_capture(eb);
   eb->disable_undo = true;
-  bool old_hint = ic_enable_hint(false);  
+  bool old_hint = ic_enable_hint(false);
   const char* prompt_text = eb->prompt_text;
   eb->prompt_text = "history search";
-  
+
   // search state
-  hsearch_t* hs = NULL;        // search undo 
+  hsearch_t* hs = NULL;        // search undo
   ssize_t hidx = 1;            // current history entry
   ssize_t match_pos = 0;       // current matched position
   ssize_t match_len = 0;       // length of the match
   const char* hentry = NULL;   // current history entry
-  
+
   // Simulate per character searches for each letter in `initial` (so backspace works)
   if (initial != NULL) {
     const ssize_t initial_len = ic_strlen(initial);
@@ -3320,7 +3328,7 @@ static void edit_history_search(ic_env_t* env, editor_t* eb, char* initial ) {
       initial[ipos + next] = 0;
       if (history_search( env->history, hidx, initial, true, &hidx, &match_pos )) {
         match_len = ipos + next;
-      }      
+      }
       else if (ipos + next >= initial_len) {
         term_beep(env->term);
       }
@@ -3340,10 +3348,10 @@ again:
   hentry = history_get(env->history,hidx);
   if (hentry != NULL) {
     sbuf_appendf(eb->extra, "[ic-info]%zd. [/][ic-diminish][!pre]", hidx);
-    sbuf_append_n( eb->extra, hentry, match_pos );      
-    sbuf_append(eb->extra, "[/pre][u ic-emphasis][!pre]" ); 
+    sbuf_append_n( eb->extra, hentry, match_pos );
+    sbuf_append(eb->extra, "[/pre][u ic-emphasis][!pre]" );
     sbuf_append_n( eb->extra, hentry + match_pos, match_len );
-    sbuf_append(eb->extra, "[/pre][/u][!pre]" ); 
+    sbuf_append(eb->extra, "[/pre][/u][!pre]" );
     sbuf_append(eb->extra, hentry + match_pos + match_len );
     sbuf_append(eb->extra, "[/pre][/ic-diminish]");
     if (!env->no_help) {
@@ -3360,20 +3368,25 @@ again:
   }
   sbuf_clear(eb->extra);
 
+  // inside all of these alternatives, either
+  // * at the end there is an unconditional "goto again"
+  // or
+  // * there is a "c = 0"
+  // therefore, at "done" below...
   // Process commands
   if (c == KEY_ESC || c == KEY_BELL /* ^G */ || c == KEY_CTRL_C) {
-    c = 0;  
+//zot//    c = 0;
     eb->disable_undo = false;
     editor_undo_restore(eb, false);
-  } 
+  }
   else if (c == KEY_ENTER) {
-    c = 0;
+//zot//    c = 0;
     editor_undo_forget(eb);
     sbuf_replace( eb->input, hentry );
     eb->pos = sbuf_len(eb->input);
     eb->modified = false;
     eb->history_idx = hidx;
-  }  
+  }
   else if (c == KEY_BACKSP || c == KEY_CTRL_Z) {
     // undo last search action
     bool cinsert;
@@ -3382,7 +3395,7 @@ again:
     }
     goto again;
   }
-  else if (c == KEY_CTRL_R || c == KEY_TAB || c == KEY_UP) {    
+  else if (c == KEY_CTRL_R || c == KEY_TAB || c == KEY_UP) {
     // search backward
     hsearch_push(env->mem, &hs, hidx, match_pos, match_len, false);
     if (!history_search( env->history, hidx+1, sbuf_string(eb->input), true, &hidx, &match_pos )) {
@@ -3390,8 +3403,8 @@ again:
       term_beep(env->term);
     };
     goto again;
-  }  
-  else if (c == KEY_CTRL_S || c == KEY_SHIFT_TAB || c == KEY_DOWN) {    
+  }
+  else if (c == KEY_CTRL_S || c == KEY_SHIFT_TAB || c == KEY_DOWN) {
     // search forward
     hsearch_push(env->mem, &hs, hidx, match_pos, match_len, false);
     if (!history_search( env->history, hidx-1, sbuf_string(eb->input), false, &hidx, &match_pos )) {
@@ -3410,7 +3423,7 @@ again:
     unicode_t uchr;
     if (code_is_ascii_char(c,&chr)) {
       hsearch_push(env->mem, &hs, hidx, match_pos, match_len, true);
-      edit_insert_char(env,eb,chr);      
+      edit_insert_char(env,eb,chr);
     }
     else if (code_is_unicode(c,&uchr)) {
       hsearch_push(env->mem, &hs, hidx, match_pos, match_len, true);
@@ -3431,23 +3444,26 @@ again:
     goto again;
   }
 
+  // if we arrive here, c = 0 always
+  // therefore the "tty_code_pushback" below can never be executed
+
   // done
   eb->disable_undo = false;
   hsearch_done(env->mem,hs);
   eb->prompt_text = prompt_text;
   ic_enable_hint(old_hint);
   edit_refresh(env,eb);
-  if (c != 0) tty_code_pushback(env->tty, c);
+//zot//   if (c != 0) tty_code_pushback(env->tty, c);
 }
 
-// Start an incremental search with the current word 
+// Start an incremental search with the current word
 static void edit_history_search_with_current_word(ic_env_t* env, editor_t* eb) {
   char* initial = NULL;
   ssize_t start = sbuf_find_word_start( eb->input, eb->pos );
   if (start >= 0) {
     const ssize_t next = sbuf_next(eb->input, start, NULL);
-    if (!ic_char_is_idletter(sbuf_string(eb->input) + start, (long)(next - start))) { 
-      start = next; 
+    if (!ic_char_is_idletter(sbuf_string(eb->input) + start, (long)(next - start))) {
+      start = next;
     }
     if (start >= 0 && start < eb->pos) {
       initial = mem_strndup(eb->mem, sbuf_string(eb->input) + start, eb->pos - start);
@@ -3482,7 +3498,7 @@ static bool edit_complete(ic_env_t* env, editor_t* eb, ssize_t idx) {
     return false;
   }
   eb->pos = newpos;
-  edit_refresh(env,eb);  
+  edit_refresh(env,eb);
   return true;
 }
 
@@ -3499,14 +3515,14 @@ static bool edit_complete_longest_prefix(ic_env_t* env, editor_t* eb ) {
 }
 
 ic_private void sbuf_append_tagged( stringbuf_t* sb, const char* tag, const char* content ) {
-  sbuf_appendf(sb, "[%s]", tag);  
+  sbuf_appendf(sb, "[%s]", tag);
   sbuf_append(sb,content);
   sbuf_append(sb,"[/]");
 }
 
 static void editor_append_completion(ic_env_t* env, editor_t* eb, ssize_t idx, ssize_t width, bool numbered, bool selected ) {
-  const char* help = NULL;
-  const char* display = completions_get_display(env->completions, idx, &help);
+  const char* hllp = NULL;
+  const char* display = completions_get_display(env->completions, idx, &hllp);
   if (display == NULL) return;
   if (numbered) {
     sbuf_appendf(eb->extra, "[ic-info]%s%zd [/]", (selected ? (tty_is_utf8(env->tty) ? "\xE2\x86\x92" : "*") : " "), 1 + idx);
@@ -3521,11 +3537,11 @@ static void editor_append_completion(ic_env_t* env, editor_t* eb, ssize_t idx, s
   }
   sbuf_append(eb->extra, display);
   if (selected) { sbuf_append(eb->extra,"[/ic-emphasis]"); }
-  if (help != NULL) {
+  if (hllp != NULL) {
     sbuf_append(eb->extra, "  ");
-    sbuf_append_tagged(eb->extra, "ic-info", help );      
+    sbuf_append_tagged(eb->extra, "ic-info", hllp );
   }
-  if (width > 0) { sbuf_append(eb->extra,"[/width]"); }  
+  if (width > 0) { sbuf_append(eb->extra,"[/width]"); }
 }
 
 // 2 and 3 column output up to 80 wide
@@ -3537,13 +3553,13 @@ static void editor_append_completion(ic_env_t* env, editor_t* eb, ssize_t idx, s
 #define IC_DISPLAY3_COL    (3+IC_DISPLAY3_MAX)
 #define IC_DISPLAY3_WIDTH  (3*IC_DISPLAY3_COL + 2*2)  // 76
 
-static void editor_append_completion2(ic_env_t* env, editor_t* eb, ssize_t col_width, ssize_t idx1, ssize_t idx2, ssize_t selected ) {  
+static void editor_append_completion2(ic_env_t* env, editor_t* eb, ssize_t col_width, ssize_t idx1, ssize_t idx2, ssize_t selected ) {
   editor_append_completion(env, eb, idx1, col_width, true, (idx1 == selected) );
   sbuf_append( eb->extra, "  ");
   editor_append_completion(env, eb, idx2, col_width, true, (idx2 == selected) );
 }
 
-static void editor_append_completion3(ic_env_t* env, editor_t* eb, ssize_t col_width, ssize_t idx1, ssize_t idx2, ssize_t idx3, ssize_t selected ) {  
+static void editor_append_completion3(ic_env_t* env, editor_t* eb, ssize_t col_width, ssize_t idx1, ssize_t idx2, ssize_t idx3, ssize_t selected ) {
   editor_append_completion(env, eb, idx1, col_width, true, (idx1 == selected) );
   sbuf_append( eb->extra, "  ");
   editor_append_completion(env, eb, idx2, col_width, true, (idx2 == selected));
@@ -3554,10 +3570,10 @@ static void editor_append_completion3(ic_env_t* env, editor_t* eb, ssize_t col_w
 static ssize_t edit_completions_max_width( ic_env_t* env, ssize_t count ) {
   ssize_t max_width = 0;
   for( ssize_t i = 0; i < count; i++) {
-    const char* help = NULL;
-    ssize_t w = bbcode_column_width(env->bbcode, completions_get_display(env->completions, i, &help));
-    if (help != NULL) {
-      w += 2 + bbcode_column_width(env->bbcode, help);
+    const char* hllp = NULL;
+    ssize_t w = bbcode_column_width(env->bbcode, completions_get_display(env->completions, i, &hllp));
+    if (hllp != NULL) {
+      w += 2 + bbcode_column_width(env->bbcode, hllp);
     }
     if (w > max_width) {
       max_width = w;
@@ -3568,10 +3584,10 @@ static ssize_t edit_completions_max_width( ic_env_t* env, ssize_t count ) {
 
 static void edit_completion_menu(ic_env_t* env, editor_t* eb, bool more_available) {
   ssize_t count = completions_count(env->completions);
-  ssize_t count_displayed = count;
+  ssize_t count_displayed;
   assert(count > 1);
   ssize_t selected = (env->complete_nopreview ? 0 : -1); // select first or none
-  ssize_t percolumn = count;
+  ssize_t percolumn;
 
 again:
   // show first 9 (or 8) completions
@@ -3599,7 +3615,6 @@ again:
   else {
     // display as a list
     count_displayed = (count > 9 ? 9 : count);
-    percolumn = count_displayed;
     for (ssize_t i = 0; i < count_displayed; i++) {
       if (i > 0) sbuf_append(eb->extra, "\n");
       editor_append_completion(env, eb, i, -1, true /* numbered */, selected == i);
@@ -3627,7 +3642,7 @@ again:
     edit_resize(env, eb);
   }
   sbuf_clear(eb->extra);
-  
+
   // direct selection?
   if (c >= '1' && c <= '9') {
     ssize_t i = (c - '1');
@@ -3663,19 +3678,19 @@ again:
     edit_refresh(env,eb);
     c = 0; // ignore and return
   }
-  else if (selected >= 0 && (c == KEY_ENTER || c == KEY_RIGHT || c == KEY_END)) /* || c == KEY_TAB*/ {  
+  else if (selected >= 0 && (c == KEY_ENTER || c == KEY_RIGHT || c == KEY_END)) /* || c == KEY_TAB*/ {
     // select the current entry
     assert(selected < count);
-    c = 0;      
-    edit_complete(env, eb, selected);    
+    c = 0;
+    edit_complete(env, eb, selected);
     if (env->complete_autotab) {
-      tty_code_pushback(env->tty,KEY_EVENT_AUTOTAB); // immediately try to complete again        
+      tty_code_pushback(env->tty,KEY_EVENT_AUTOTAB); // immediately try to complete again
     }
   }
   else if (!env->complete_nopreview && !code_is_virt_key(c)) {
     // if in preview mode, select the current entry and exit the menu
     assert(selected < count);
-    edit_complete(env, eb, selected); 
+    edit_complete(env, eb, selected);
   }
   else if ((c == KEY_PAGEDOWN || c == KEY_LINEFEED) && count > 9) {
     // show all completions
@@ -3705,13 +3720,13 @@ again:
       term_write(env->term, " \n");
     }
     eb->cur_rows = 0;
-    edit_refresh(env,eb);      
+    edit_refresh(env,eb);
   }
   else {
     edit_refresh(env,eb);
   }
   // done
-  completions_clear(env->completions);      
+  completions_clear(env->completions);
   if (c != 0) tty_code_pushback(env->tty,c);
 }
 
@@ -3725,18 +3740,18 @@ static void edit_generate_completions(ic_env_t* env, editor_t* eb, bool autotab)
     if (!autotab) { term_beep(env->term); }
   }
   else if (count == 1) {
-    // complete if only one match    
+    // complete if only one match
     if (edit_complete(env,eb,0 /*idx*/) && env->complete_autotab) {
       tty_code_pushback(env->tty,KEY_EVENT_AUTOTAB);
-    }    
+    }
   }
   else {
-    //term_beep(env->term); 
-    if (!more_available) { 
+    //term_beep(env->term);
+    if (!more_available) {
       edit_complete_longest_prefix(env,eb);
-    }    
+    }
     completions_sort(env->completions);
-    edit_completion_menu( env, eb, more_available);    
+    edit_completion_menu( env, eb, more_available);
   }
 }
 
@@ -3755,13 +3770,13 @@ static char* edit_line( ic_env_t* env, const char* prompt_text )
   eb.extra    = sbuf_new(env->mem);
   eb.hint     = sbuf_new(env->mem);
   eb.hint_help= sbuf_new(env->mem);
-  eb.termw    = term_get_width(env->term);  
+  eb.termw    = term_get_width(env->term);
   eb.pos      = 0;
-  eb.cur_rows = 1; 
-  eb.cur_row  = 0; 
-  eb.modified = false;  
+  eb.cur_rows = 1;
+  eb.cur_row  = 0;
+  eb.modified = false;
   eb.prompt_text   = (prompt_text != NULL ? prompt_text : "");
-  eb.history_idx   = 0;  
+  eb.history_idx   = 0;
   editstate_init(&eb.undo);
   editstate_init(&eb.redo);
   if (eb.input==NULL || eb.extra==NULL || eb.hint==NULL || eb.hint_help==NULL) {
@@ -3773,16 +3788,16 @@ static char* edit_line( ic_env_t* env, const char* prompt_text )
     eb.attrs = attrbuf_new(env->mem);
     eb.attrs_extra = attrbuf_new(env->mem);
   }
-  
+
   // show prompt
-  edit_write_prompt(env, &eb, 0, false);   
+  edit_write_prompt(env, &eb, 0, false);
 
   // always a history entry for the current input
   history_push(env->history, "");
 
   // process keys
   code_t c;          // current key code
-  while(true) {    
+  while(true) {
     // read a character
     term_flush(env->term);
     if (env->hint_delay <= 0 || sbuf_len(eb.hint) == 0) {
@@ -3805,10 +3820,10 @@ static char* edit_line( ic_env_t* env, const char* prompt_text )
         sbuf_clear(eb.hint_help);
       }
     }
-    
+
     // update terminal in case of a resize
     if (tty_term_resize_event(env->tty)) {
-      edit_resize(env,&eb);            
+      edit_resize(env,&eb);
     }
 
     // clear hint only after a potential resize (so resize row calculations are correct)
@@ -3819,27 +3834,27 @@ static char* edit_line( ic_env_t* env, const char* prompt_text )
     // if the user tries to move into a hint with left-cursor or end, we complete it first
     if ((c == KEY_RIGHT || c == KEY_END) && had_hint) {
       edit_generate_completions(env, &eb, true);
-      c = KEY_NONE;      
+      c = KEY_NONE;
     }
 
     // Operations that may return
     if (c == KEY_ENTER) {
-      if (!env->singleline_only && eb.pos > 0 && 
-           sbuf_string(eb.input)[eb.pos-1] == env->multiline_eol && 
-            edit_pos_is_at_row_end(env,&eb)) 
+      if (!env->singleline_only && eb.pos > 0 &&
+           sbuf_string(eb.input)[eb.pos-1] == env->multiline_eol &&
+            edit_pos_is_at_row_end(env,&eb))
       {
         // replace line-continuation with newline
-        edit_multiline_eol(env,&eb);        
+        edit_multiline_eol(env,&eb);
       }
       else {
         // otherwise done
         break;
       }
-    } 
+    }
     else if (c == KEY_CTRL_D) {
       if (eb.pos == 0 && editor_pos_is_at_end(&eb)) break; // ctrl+D on empty quits with NULL
       edit_delete_char(env,&eb);     // otherwise it is like delete
-    } 
+    }
     else if (c == KEY_CTRL_C || c == KEY_EVENT_STOP) {
       break; // ctrl+C or STOP event quits with NULL
     }
@@ -3899,7 +3914,7 @@ static char* edit_line( ic_env_t* env, const char* prompt_text )
         break;
       case KEY_RIGHT:
       case KEY_CTRL_F:
-        if (eb.pos == sbuf_len(eb.input)) { 
+        if (eb.pos == sbuf_len(eb.input)) {
           edit_generate_completions( env, &eb, false );
         }
         else {
@@ -3911,7 +3926,7 @@ static char* edit_line( ic_env_t* env, const char* prompt_text )
         break;
       case KEY_DOWN:
         edit_cursor_row_down(env,&eb);
-        break;                 
+        break;
       case KEY_HOME:
       case KEY_CTRL_A:
         edit_cursor_line_start(env,&eb);
@@ -3921,28 +3936,28 @@ static char* edit_line( ic_env_t* env, const char* prompt_text )
         edit_cursor_line_end(env,&eb);
         break;
       case KEY_CTRL_LEFT:
-      case WITH_SHIFT(KEY_LEFT):    
+      case WITH_SHIFT(KEY_LEFT):
       case WITH_ALT('b'):
         edit_cursor_prev_word(env,&eb);
         break;
       case KEY_CTRL_RIGHT:
-      case WITH_SHIFT(KEY_RIGHT):      
+      case WITH_SHIFT(KEY_RIGHT):
       case WITH_ALT('f'):
-        if (eb.pos == sbuf_len(eb.input)) { 
+        if (eb.pos == sbuf_len(eb.input)) {
           edit_generate_completions( env, &eb, false );
         }
         else {
           edit_cursor_next_word(env,&eb);
         }
-        break;      
+        break;
       case KEY_CTRL_HOME:
-      case WITH_SHIFT(KEY_HOME):      
+      case WITH_SHIFT(KEY_HOME):
       case KEY_PAGEUP:
       case WITH_ALT('<'):
         edit_cursor_to_start(env,&eb);
         break;
       case KEY_CTRL_END:
-      case WITH_SHIFT(KEY_END):      
+      case WITH_SHIFT(KEY_END):
       case KEY_PAGEDOWN:
       case WITH_ALT('>'):
         edit_cursor_to_end(env,&eb);
@@ -3967,7 +3982,7 @@ static char* edit_line( ic_env_t* env, const char* prompt_text )
       case WITH_ALT(KEY_DEL):
       case WITH_ALT(KEY_BACKSP):
         edit_delete_to_start_of_word(env,&eb);
-        break;      
+        break;
       case KEY_CTRL_U:
         edit_delete_to_start_of_line(env,&eb);
         break;
@@ -3981,8 +3996,8 @@ static char* edit_line( ic_env_t* env, const char* prompt_text )
       // Editing
       case KEY_SHIFT_TAB:
       case KEY_LINEFEED: // '\n' (ctrl+J, shift+enter)
-        if (!env->singleline_only) { 
-          edit_insert_char(env, &eb, '\n'); 
+        if (!env->singleline_only) {
+          edit_insert_char(env, &eb, '\n');
         }
         break;
       default: {
@@ -4011,9 +4026,9 @@ static char* edit_line( ic_env_t* env, const char* prompt_text )
   env->no_bracematch = true;
   edit_refresh(env,&eb);
   env->no_bracematch = bm;
-  
+
   // save result
-  char* res; 
+  char* res;
   if ((c == KEY_CTRL_D && sbuf_len(eb.input) == 0) || c == KEY_CTRL_C || c == KEY_EVENT_STOP) {
     res = NULL;
   }
@@ -4029,7 +4044,7 @@ static char* edit_line( ic_env_t* env, const char* prompt_text )
   if (res == NULL || sbuf_len(eb.input) <= 1) { ic_history_remove_last(); } // no empty or single-char entries
   history_save(env->history);
 
-  // free resources 
+  // free resources
   editstate_done(env->mem, &eb.undo);
   editstate_done(env->mem, &eb.redo);
   attrbuf_free(eb.attrs);
@@ -4063,8 +4078,8 @@ static char* edit_line( ic_env_t* env, const char* prompt_text )
 
 struct ic_highlight_env_s {
   attrbuf_t*    attrs;
-  const char*   input;   
-  ssize_t       input_len;     
+  const char*   input;
+  ssize_t       input_len;
   bbcode_t*     bbcode;
   alloc_t*      mem;
   ssize_t       cached_upos;  // cached unicode position
@@ -4079,13 +4094,13 @@ ic_private void highlight( alloc_t* mem, bbcode_t* bb, const char* s, attrbuf_t*
   if (highlighter != NULL) {
     ic_highlight_env_t henv;
     henv.attrs = attrs;
-    henv.input = s;     
+    henv.input = s;
     henv.input_len = len;
     henv.bbcode = bb;
     henv.mem = mem;
     henv.cached_cpos = 0;
     henv.cached_upos = 0;
-    (*highlighter)( &henv, s, arg );    
+    (*highlighter)( &henv, s, arg );
   }
 }
 
@@ -4125,20 +4140,20 @@ static void pos_adjust( ic_highlight_env_t* henv, ssize_t* ppos, ssize_t* plen )
     // negative `len` is used as a unicode character length
     len = -len;
     ssize_t ucount = 0;
-    ssize_t clen   = 0;    
+    ssize_t clen   = 0;
     while (ucount < len) {
       ssize_t next = str_next_ofs(henv->input, henv->input_len, pos + clen, NULL);
       if (next <= 0) return;
       ucount++;
       clen += next;
     }
-    *plen = len = clen;
+    *plen = clen;
     // and update cache if possible
     if (henv->cached_cpos == pos) {
       henv->cached_upos += ucount;
       henv->cached_cpos += clen;
     }
-  } 
+  }
 }
 
 static void highlight_attr(ic_highlight_env_t* henv, ssize_t pos, ssize_t count, attr_t attr ) {
@@ -4149,7 +4164,7 @@ static void highlight_attr(ic_highlight_env_t* henv, ssize_t pos, ssize_t count,
 }
 
 ic_public void ic_highlight(ic_highlight_env_t* henv, long pos, long count, const char* style ) {
-  if (henv == NULL || style==NULL || style[0]==0 || pos < 0) return;  
+  if (henv == NULL || style==NULL || style[0]==0 || pos < 0) return;
   highlight_attr(henv,pos,count,bbcode_style( henv->bbcode, style ));
 }
 
@@ -4182,7 +4197,7 @@ typedef struct brace_s {
   ssize_t pos;
 } brace_t;
 
-ic_private void highlight_match_braces(const char* s, attrbuf_t* attrs, ssize_t cursor_pos, const char* braces, attr_t match_attr, attr_t error_attr) 
+ic_private void highlight_match_braces(const char* s, attrbuf_t* attrs, ssize_t cursor_pos, const char* braces, attr_t match_attr, attr_t error_attr)
 {
   brace_t open[MAX_NESTING+1];
   ssize_t nesting = 0;
@@ -4230,7 +4245,7 @@ ic_private void highlight_match_braces(const char* s, attrbuf_t* attrs, ssize_t 
             if (i == cursor_pos - 1 || (open[nesting].at_cursor && open[nesting].pos != i - 1)) {
               // highlight matching brace
               attrbuf_update_at(attrs, open[nesting].pos, 1, match_attr);
-              attrbuf_update_at(attrs, i, 1, match_attr);              
+              attrbuf_update_at(attrs, i, 1, match_attr);
             }
           }
         }
@@ -4242,7 +4257,7 @@ ic_private void highlight_match_braces(const char* s, attrbuf_t* attrs, ssize_t 
 }
 
 
-ic_private ssize_t find_matching_brace(const char* s, ssize_t cursor_pos, const char* braces, bool* is_balanced) 
+ic_private ssize_t find_matching_brace(const char* s, ssize_t cursor_pos, const char* braces, bool* is_balanced)
 {
   if (is_balanced != NULL) { *is_balanced = false; }
   bool balanced = true;
@@ -4268,13 +4283,13 @@ ic_private ssize_t find_matching_brace(const char* s, ssize_t cursor_pos, const 
     }
     if (found_open) continue;
 
-    // pop to closing brace 
+    // pop to closing brace
     for (ssize_t b = 1; b < brace_len; b += 2) {
       if (c == braces[b]) {
         // close brace
         if (nesting <= 0) {
           // unmatched close brace
-          balanced = false;          
+          balanced = false;
         }
         else {
           if (open[nesting-1].close != c) {
@@ -4294,7 +4309,7 @@ ic_private ssize_t find_matching_brace(const char* s, ssize_t cursor_pos, const 
             }
           }
         }
-        break; 
+        break;
       }
     }
   }
@@ -4361,7 +4376,7 @@ ic_private void editstate_capture( alloc_t* mem, editstate_t** es, const char* i
 // caller should free *input
 ic_private bool editstate_restore( alloc_t* mem, editstate_t** es, const char** input, ssize_t* pos ) {
   if (*es == NULL) return false;
-  // pop 
+  // pop
   editstate_t* entry = *es;
   *es = entry->next;
   *input = entry->input;
@@ -4378,7 +4393,7 @@ ic_private bool editstate_restore( alloc_t* mem, editstate_t** es, const char** 
   found in the "LICENSE" file at the root of this distribution.
 -----------------------------------------------------------------------------*/
 #include <stdio.h>
-#include <string.h>  
+#include <string.h>
 #include <sys/stat.h>
 
 // skipping dup #include "../include/isocline.h"
@@ -4390,7 +4405,7 @@ ic_private bool editstate_restore( alloc_t* mem, editstate_t** es, const char** 
 
 struct history_s {
   ssize_t  count;              // current number of entries in use
-  ssize_t  len;                // size of elems 
+  ssize_t  len;                // size of elems
   const char** elems;         // history items (up to count)
   const char*  fname;         // history file
   alloc_t* mem;
@@ -4460,7 +4475,7 @@ ic_private bool history_push( history_t* h, const char* entry ) {
   // insert at front
   if (h->count == h->len) {
     // delete oldest entry
-    history_delete_at(h,0);    
+    history_delete_at(h,0);
   }
   assert(h->count < h->len);
   h->elems[h->count] = mem_strdup(h->mem,entry);
@@ -4476,7 +4491,7 @@ static void history_remove_last_n( history_t* h, ssize_t n ) {
     mem_free( h->mem, h->elems[i] );
   }
   h->count -= n;
-  assert(h->count >= 0);    
+  assert(h->count >= 0);
 }
 
 ic_private void history_remove_last(history_t* h) {
@@ -4514,7 +4529,7 @@ ic_private bool history_search( const history_t* h, ssize_t from /*including*/, 
 }
 
 //-------------------------------------------------------------
-// 
+//
 //-------------------------------------------------------------
 
 ic_private void history_load_from(history_t* h, const char* fname, long max_entries ) {
@@ -4567,7 +4582,7 @@ static bool history_read_entry( history_t* h, FILE* f, stringbuf_t* sbuf ) {
       else if (c == 't')  { sbuf_append(sbuf,"\t"); }
       else if (c == '\\') { sbuf_append(sbuf,"\\"); }
       else if (c == 'x') {
-        int c1 = fgetc(f);         
+        int c1 = fgetc(f);
         int c2 = fgetc(f);
         if (ic_isxdigit(c1) && ic_isxdigit(c2)) {
           char chr = from_xdigit(c1)*16 + from_xdigit(c2);
@@ -4595,14 +4610,14 @@ static bool history_write_entry( const char* entry, FILE* f, stringbuf_t* sbuf )
     else if (c < ' ' || c > '~' || c == '#') {
       char c1 = to_xdigit( (uint8_t)c / 16 );
       char c2 = to_xdigit( (uint8_t)c % 16 );
-      sbuf_append(sbuf,"\\x"); 
-      sbuf_append_char(sbuf,c1); 
-      sbuf_append_char(sbuf,c2);            
+      sbuf_append(sbuf,"\\x");
+      sbuf_append_char(sbuf,c1);
+      sbuf_append_char(sbuf,c2);
     }
     else sbuf_append_char(sbuf,c);
   }
   //debug_msg("history: write buf: %s\n", sbuf_string(sbuf));
-  
+
   if (sbuf_len(sbuf) > 0) {
     sbuf_append(sbuf,"\n");
     fputs(sbuf_string(sbuf),f);
@@ -4629,7 +4644,8 @@ ic_private void history_save( const history_t* h ) {
   FILE* f = fopen(h->fname, "w");
   if (f == NULL) return;
   #ifndef _WIN32
-  chmod(h->fname,S_IRUSR|S_IWUSR);
+  // best-effort kind of thing; if it fails, still continue
+  (void) chmod(h->fname,S_IRUSR|S_IWUSR);
   #endif
   stringbuf_t* sbuf = sbuf_new(h->mem);
   if (sbuf != NULL) {
@@ -4638,7 +4654,7 @@ ic_private void history_save( const history_t* h ) {
     }
     sbuf_free(sbuf);
   }
-  fclose(f);  
+  fclose(f);
 }
 // # include "completers.c"
 /* ----------------------------------------------------------------------------
@@ -4659,7 +4675,7 @@ ic_private void history_save( const history_t* h ) {
 
 
 //-------------------------------------------------------------
-// Word completion 
+// Word completion
 //-------------------------------------------------------------
 
 // free variables for word completion
@@ -4671,34 +4687,34 @@ typedef struct word_closure_s {
 
 
 // word completion callback
-static bool token_add_completion_ex(ic_env_t* env, void* closure, const char* replacement, const char* display, const char* help, long delete_before, long delete_after) {
+static bool token_add_completion_ex(ic_env_t* env, void* closure, const char* replacement, const char* display, const char* hllp, long delete_before, long delete_after) {
   word_closure_t* wenv = (word_closure_t*)(closure);
   // call the previous completer with an adjusted delete-before
-  return (*wenv->prev_complete)(env, wenv->prev_env, replacement, display, help, wenv->delete_before_adjust + delete_before, delete_after);
+  return (*wenv->prev_complete)(env, wenv->prev_env, replacement, display, hllp, wenv->delete_before_adjust + delete_before, delete_after);
 }
 
 
 ic_public void ic_complete_word(ic_completion_env_t* cenv, const char* prefix, ic_completer_fun_t* fun,
-                                    ic_is_char_class_fun_t* is_word_char) 
+                                    ic_is_char_class_fun_t* is_word_char)
 {
   if (is_word_char == NULL) is_word_char = &ic_char_is_nonseparator;
-  
+
   ssize_t len = ic_strlen(prefix);
   ssize_t pos = len; // will be start of the 'word' (excluding a potential start quote)
   while (pos > 0) {
     // go back one code point
     ssize_t ofs = str_prev_ofs(prefix, pos, NULL);
     if (ofs <= 0) break;
-    if (!(*is_word_char)(prefix + (pos - ofs), (long)ofs)) { 
+    if (!(*is_word_char)(prefix + (pos - ofs), (long)ofs)) {
       break;
     }
     pos -= ofs;
   }
   if (pos < 0) { pos = 0; }
-  
+
   // stop if empty word
   // if (len == pos) return;
-  
+
   // set up the closure
   word_closure_t wenv;
   wenv.delete_before_adjust = (long)(len - pos);
@@ -4733,10 +4749,10 @@ typedef struct qword_closure_s {
 
 
 // word completion callback
-static bool qword_add_completion_ex(ic_env_t* env, void* closure, const char* replacement, const char* display, const char* help, 
+static bool qword_add_completion_ex(ic_env_t* env, void* closure, const char* replacement, const char* display, const char* hllp,
                                        long delete_before, long delete_after) {
   qword_closure_t* wenv = (qword_closure_t*)(closure);
-  sbuf_replace( wenv->sbuf, replacement );   
+  sbuf_replace( wenv->sbuf, replacement );
   if (wenv->quote != 0) {
     // add end quote
     sbuf_append_char( wenv->sbuf, wenv->quote);
@@ -4745,7 +4761,7 @@ static bool qword_add_completion_ex(ic_env_t* env, void* closure, const char* re
     // escape non-word characters if it was not quoted
     ssize_t pos = 0;
     ssize_t next;
-    while ( (next = sbuf_next_ofs(wenv->sbuf, pos, NULL)) > 0 ) 
+    while ( (next = sbuf_next_ofs(wenv->sbuf, pos, NULL)) > 0 )
     {
       if (!(*wenv->is_word_char)(sbuf_string(wenv->sbuf) + pos, (long)next)) { // strchr(wenv->non_word_char, sbuf_char_at( wenv->sbuf, pos )) != NULL) {
         sbuf_insert_char_at( wenv->sbuf, wenv->escape_char, pos);
@@ -4755,7 +4771,7 @@ static bool qword_add_completion_ex(ic_env_t* env, void* closure, const char* re
     }
   }
   // and call the previous completion function
-  return (*wenv->prev_complete)( env, wenv->prev_env, sbuf_string(wenv->sbuf), display, help, wenv->delete_before_adjust + delete_before, delete_after );  
+  return (*wenv->prev_complete)( env, wenv->prev_env, sbuf_string(wenv->sbuf), display, hllp, wenv->delete_before_adjust + delete_before, delete_after );
 }
 
 
@@ -4764,31 +4780,31 @@ ic_public void ic_complete_qword( ic_completion_env_t* cenv, const char* prefix,
 }
 
 
-ic_public void ic_complete_qword_ex( ic_completion_env_t* cenv, const char* prefix, ic_completer_fun_t* fun, 
+ic_public void ic_complete_qword_ex( ic_completion_env_t* cenv, const char* prefix, ic_completer_fun_t* fun,
                                         ic_is_char_class_fun_t* is_word_char, char escape_char, const char* quote_chars ) {
-  if (is_word_char == NULL) is_word_char = &ic_char_is_nonseparator ;  
+  if (is_word_char == NULL) is_word_char = &ic_char_is_nonseparator ;
   if (quote_chars == NULL) quote_chars = "'\"";
 
   ssize_t len = ic_strlen(prefix);
   ssize_t pos; // will be start of the 'word' (excluding a potential start quote)
   char quote = 0;
   ssize_t quote_len = 0;
-  
+
   // 1. look for a starting quote
   if (quote_chars[0] != 0) {
     // we go forward and count all quotes; if it is uneven, we need to complete quoted.
     ssize_t qpos_open = -1;
     ssize_t qpos_close = -1;
     ssize_t qcount = 0;
-    pos = 0; 
+    pos = 0;
     while(pos < len) {
-      if (prefix[pos] == escape_char && prefix[pos+1] != 0 && 
+      if (prefix[pos] == escape_char && prefix[pos+1] != 0 &&
            !(*is_word_char)(prefix + pos + 1, 1)) // strchr(non_word_char, prefix[pos+1]) != NULL
-      {       
+      {
         pos++; // skip escape and next char
       }
       else if (qcount % 2 == 0 && strchr(quote_chars, prefix[pos]) != NULL) {
-        // open quote 
+        // open quote
         qpos_open = pos;
         quote = prefix[pos];
         qcount++;
@@ -4804,7 +4820,7 @@ ic_public void ic_complete_qword_ex( ic_completion_env_t* cenv, const char* pref
       ssize_t ofs = str_next_ofs( prefix, len, pos, NULL );
       if (ofs <= 0) break;
       pos += ofs;
-    }    
+    }
     if ((qcount % 2 == 0 && qpos_close >= 0) || // if the last quote is only followed by word chars, we still complete it
         (qcount % 2 == 1))                     // opening quote found
     {
@@ -4825,7 +4841,7 @@ ic_public void ic_complete_qword_ex( ic_completion_env_t* cenv, const char* pref
       if (ofs <= 0) break;
       if (!(*is_word_char)(prefix + (pos - ofs), (long)ofs)) { // strchr(non_word_char, prefix[pos - ofs]) != NULL) {
         // non word char, break if it is not escaped
-        if (pos <= ofs || prefix[pos - ofs - 1] != escape_char) break; 
+        if (pos <= ofs || prefix[pos - ofs - 1] != escape_char) break;
         // otherwise go on
         pos--; // skip escaped char
       }
@@ -4893,7 +4909,7 @@ ic_public void ic_complete_qword_ex( ic_completion_env_t* cenv, const char* pref
   cenv->closure = wenv.prev_env;
 
   sbuf_free(wenv.sbuf);
-  mem_free(cenv->env->mem, word);  
+  mem_free(cenv->env->mem, word);
 }
 
 
@@ -4940,15 +4956,15 @@ static bool ls_colors_init(void) {
   s = getenv("LS_COLORS");
   if (s != NULL) { ls_colors = s;  }
   s = getenv("LSCOLORS");
-  if (s != NULL) { lscolors = s; }  
+  if (s != NULL) { lscolors = s; }
   return true;
 }
 
-static bool ls_valid_esc(ssize_t c) {
-  return ((c==0 || c==1 || c==4 || c==7 || c==22 || c==24  || c==27) ||
-    (c >= 30 && c <= 37) || (c >= 40 && c <= 47) ||
-    (c >= 90 && c <= 97) || (c >= 100 && c <= 107));
-}
+//zot// static bool ls_valid_esc(ssize_t c) {
+//zot//   return ((c==0 || c==1 || c==4 || c==7 || c==22 || c==24  || c==27) ||
+//zot//     (c >= 30 && c <= 37) || (c >= 40 && c <= 47) ||
+//zot//     (c >= 90 && c <= 97) || (c >= 100 && c <= 107));
+//zot// }
 
 static bool ls_colors_from_key(stringbuf_t* sb, const char* key) {
   // find key
@@ -4991,7 +5007,7 @@ static bool ls_colors_append(stringbuf_t* sb, file_type_t ft, const char* ext) {
       // then a filetype match
       const char* key = ls_colors_names[ft];
       if (ls_colors_from_key(sb, key)) return true;
-    }    
+    }
   }
   else if (lscolors != NULL) {
     // BSD style
@@ -5051,7 +5067,7 @@ static bool os_findfirst(alloc_t* mem, const char* path, dir_cursor* d, dir_entr
 }
 
 static bool os_findnext(dir_cursor d, dir_entry* entry) {
-  return (_findnexti64(d, entry) == 0);  
+  return (_findnexti64(d, entry) == 0);
 }
 
 static void os_findclose(dir_cursor d) {
@@ -5059,7 +5075,7 @@ static void os_findclose(dir_cursor d) {
 }
 
 static const char* os_direntry_name(dir_entry* entry) {
-  return entry->name;  
+  return entry->name;
 }
 
 static bool os_path_is_absolute( const char* path ) {
@@ -5083,14 +5099,15 @@ ic_private char ic_dirsep(void) {
 static bool os_is_dir(const char* cpath) {
   struct stat st;
   memset(&st, 0, sizeof(st));
-  stat(cpath, &st);
-  return (S_ISDIR(st.st_mode));
+  return (stat(cpath, &st) == 0) ? (S_ISDIR(st.st_mode)) : false;
 }
 
 static file_type_t os_get_filetype(const char* cpath) {
   struct stat st;
   memset(&st, 0, sizeof(st));
-  lstat(cpath, &st);
+  if (lstat(cpath, &st) < 0) {
+      return FT_DEFAULT;
+  }
   switch ((st.st_mode)&S_IFMT) {
     case S_IFSOCK: return FT_SOCK;
     case S_IFLNK: {
@@ -5112,7 +5129,7 @@ static file_type_t os_get_filetype(const char* cpath) {
       if ((st.st_mode & S_IXUSR) != 0) return FT_EXE;
       return FT_DEFAULT;
     }
-  }  
+  }
 }
 
 
@@ -5140,7 +5157,7 @@ static void os_findclose(dir_cursor d) {
 }
 
 static const char* os_direntry_name(dir_entry* entry) {
-  return (*entry)->d_name;  
+  return (*entry)->d_name;
 }
 
 static bool os_path_is_absolute( const char* path ) {
@@ -5155,7 +5172,7 @@ ic_private char ic_dirsep(void) {
 
 
 //-------------------------------------------------------------
-// File completion 
+// File completion
 //-------------------------------------------------------------
 
 static bool ends_with_n(const char* name, ssize_t name_len, const char* ending, ssize_t len) {
@@ -5178,7 +5195,7 @@ static bool match_extension(const char* name, const char* extensions) {
   if (name == NULL) return false;
   ssize_t name_len = ic_strlen(name);
   ssize_t len = ic_strlen(extensions);
-  ssize_t cur = 0;  
+  ssize_t cur = 0;
   //debug_msg("match extensions: %s ~ %s", name, extensions);
   for (ssize_t end = 0; end <= len; end++) {
     if (extensions[end] == ';' || extensions[end] == 0) {
@@ -5191,10 +5208,10 @@ static bool match_extension(const char* name, const char* extensions) {
   return false;
 }
 
-static bool filename_complete_indir( ic_completion_env_t* cenv, stringbuf_t* dir, 
+static bool filename_complete_indir( ic_completion_env_t* cenv, stringbuf_t* dir,
                                       stringbuf_t* dir_prefix, stringbuf_t* display,
-                                       const char* base_prefix, 
-                                        char dir_sep, const char* extensions ) 
+                                       const char* base_prefix,
+                                        char dir_sep, const char* extensions )
 {
   dir_cursor d = 0;
   dir_entry entry;
@@ -5202,7 +5219,7 @@ static bool filename_complete_indir( ic_completion_env_t* cenv, stringbuf_t* dir
   if (os_findfirst(cenv->env->mem, sbuf_string(dir), &d, &entry)) {
     do {
       const char* name = os_direntry_name(&entry);
-      if (name != NULL && strcmp(name, ".") != 0 && strcmp(name, "..") != 0 && 
+      if (name != NULL && strcmp(name, ".") != 0 && strcmp(name, "..") != 0 &&
           ic_istarts_with(name, base_prefix))
       {
         // possible match, first check if it is a directory
@@ -5217,7 +5234,7 @@ static bool filename_complete_indir( ic_completion_env_t* cenv, stringbuf_t* dir
           ft = os_get_filetype(sbuf_string(dir));
           isdir = os_is_dir(sbuf_string(dir));
           if (isdir && dir_sep != 0) {
-            sbuf_append_char(dir_prefix,dir_sep); 
+            sbuf_append_char(dir_prefix,dir_sep);
           }
           sbuf_delete_from(dir,dlen);  // restore dir
         }
@@ -5243,11 +5260,11 @@ typedef struct filename_closure_s {
 
 static void filename_completer( ic_completion_env_t* cenv, const char* prefix ) {
   if (prefix == NULL) return;
-  filename_closure_t* fclosure = (filename_closure_t*)cenv->arg;  
+  filename_closure_t* fclosure = (filename_closure_t*)cenv->arg;
   stringbuf_t* root_dir   = sbuf_new(cenv->env->mem);
   stringbuf_t* dir_prefix = sbuf_new(cenv->env->mem);
-  stringbuf_t* display    = sbuf_new(cenv->env->mem);  
-  if (root_dir!=NULL && dir_prefix != NULL && display != NULL) 
+  stringbuf_t* display    = sbuf_new(cenv->env->mem);
+  if (root_dir!=NULL && dir_prefix != NULL && display != NULL)
   {
     // split prefix in dir_prefix / base.
     const char* base = strrchr(prefix,'/');
@@ -5256,7 +5273,7 @@ static void filename_completer( ic_completion_env_t* cenv, const char* prefix ) 
     if (base == NULL || base2 > base) base = base2;
     #endif
     if (base != NULL) {
-      base++; 
+      base++;
       sbuf_append_n(dir_prefix, prefix, base - prefix ); // includes dir separator
     }
 
@@ -5266,9 +5283,9 @@ static void filename_completer( ic_completion_env_t* cenv, const char* prefix ) 
       if (base != NULL) {
         sbuf_append_n( root_dir, prefix, (base - prefix));  // include dir separator
       }
-      filename_complete_indir( cenv, root_dir, dir_prefix, display,  
-                                (base != NULL ? base : prefix), 
-                                 fclosure->dir_sep, fclosure->extensions );   
+      filename_complete_indir( cenv, root_dir, dir_prefix, display,
+                                (base != NULL ? base : prefix),
+                                 fclosure->dir_sep, fclosure->extensions );
     }
     else {
       // relative path, complete with respect to every root.
@@ -5285,17 +5302,17 @@ static void filename_completer( ic_completion_env_t* cenv, const char* prefix ) 
         else {
           sbuf_append_n( root_dir, root, next - root );
           root = next + 1;
-        }      
+        }
         sbuf_append_char( root_dir, ic_dirsep());
-          
+
         // add the dir_prefix to the root
         if (base != NULL) {
           sbuf_append_n( root_dir, prefix, (base - prefix) - 1);
         }
 
-        // and complete in this directory    
+        // and complete in this directory
         filename_complete_indir( cenv, root_dir, dir_prefix, display,
-                                  (base != NULL ? base : prefix), 
+                                  (base != NULL ? base : prefix),
                                    fclosure->dir_sep, fclosure->extensions);
       }
     }
@@ -5311,10 +5328,10 @@ ic_public void ic_complete_filename( ic_completion_env_t* cenv, const char* pref
   if (dir_sep == 0) dir_sep = ic_dirsep();
   filename_closure_t fclosure;
   fclosure.dir_sep = dir_sep;
-  fclosure.roots = roots; 
+  fclosure.roots = roots;
   fclosure.extensions = extensions;
   cenv->arg = &fclosure;
-  ic_complete_qword_ex( cenv, prefix, &filename_completer, &ic_char_is_filename_letter, '\\', "'\"");  
+  ic_complete_qword_ex( cenv, prefix, &filename_completer, &ic_char_is_filename_letter, '\\', "'\"");
 }
 // # include "completions.c"
 /* ----------------------------------------------------------------------------
@@ -5368,7 +5385,7 @@ ic_private completions_t* completions_new(alloc_t* mem) {
 
 ic_private void completions_free(completions_t* cms) {
   if (cms == NULL) return;
-  completions_clear(cms);  
+  completions_clear(cms);
   if (cms->elems != NULL) {
     mem_free(cms->mem, cms->elems);
     cms->elems = NULL;
@@ -5379,18 +5396,18 @@ ic_private void completions_free(completions_t* cms) {
 }
 
 
-ic_private void completions_clear(completions_t* cms) {  
+ic_private void completions_clear(completions_t* cms) {
   while (cms->count > 0) {
     completion_t* cm = cms->elems + cms->count - 1;
     mem_free( cms->mem, cm->display);
     mem_free( cms->mem, cm->replacement);
     mem_free( cms->mem, cm->help);
     memset(cm,0,sizeof(*cm));
-    cms->count--;    
+    cms->count--;
   }
 }
 
-static void completions_push(completions_t* cms, const char* replacement, const char* display, const char* help, ssize_t delete_before, ssize_t delete_after) 
+static void completions_push(completions_t* cms, const char* replacement, const char* display, const char* hllp, ssize_t delete_before, ssize_t delete_after)
 {
   if (cms->count >= cms->len) {
     ssize_t newlen = (cms->len <= 0 ? 32 : cms->len*2);
@@ -5403,7 +5420,7 @@ static void completions_push(completions_t* cms, const char* replacement, const 
   completion_t* cm  = cms->elems + cms->count;
   cm->replacement   = mem_strdup(cms->mem,replacement);
   cm->display       = mem_strdup(cms->mem,display);
-  cm->help          = mem_strdup(cms->mem,help);
+  cm->help          = mem_strdup(cms->mem,hllp);
   cm->delete_before = delete_before;
   cm->delete_after  = delete_after;
   cms->count++;
@@ -5419,14 +5436,14 @@ static bool completions_contains(completions_t* cms, const char* replacement) {
     if (strcmp(replacement,c->replacement) == 0) { return true; }
   }
   return false;
-} 
+}
 
-ic_private bool completions_add(completions_t* cms, const char* replacement, const char* display, const char* help, ssize_t delete_before, ssize_t delete_after) {
+ic_private bool completions_add(completions_t* cms, const char* replacement, const char* display, const char* hllp, ssize_t delete_before, ssize_t delete_after) {
   if (cms->completer_max <= 0) return false;
   cms->completer_max--;
   //debug_msg("completion: add: %d,%d, %s\n", delete_before, delete_after, replacement);
   if (!completions_contains(cms,replacement)) {
-    completions_push(cms, replacement, display, help, delete_before, delete_after);
+    completions_push(cms, replacement, display, hllp, delete_before, delete_after);
   }
   return true;
 }
@@ -5436,29 +5453,29 @@ static completion_t* completions_get(completions_t* cms, ssize_t index) {
   return &cms->elems[index];
 }
 
-ic_private const char* completions_get_display( completions_t* cms, ssize_t index, const char** help ) {
-  if (help != NULL) { *help = NULL;  }
+ic_private const char* completions_get_display( completions_t* cms, ssize_t index, const char** hllp ) {
+  if (hllp != NULL) { *hllp = NULL;  }
   completion_t* cm = completions_get(cms, index);
   if (cm == NULL) return NULL;
-  if (help != NULL) { *help = cm->help; }
+  if (hllp != NULL) { *hllp = cm->help; }
   return (cm->display != NULL ? cm->display : cm->replacement);
 }
 
-ic_private const char* completions_get_help( completions_t* cms, ssize_t index ) {
-  completion_t* cm = completions_get(cms, index);
-  if (cm == NULL) return NULL;
-  return cm->help;
-}
+//zot// ic_private const char* completions_get_help( completions_t* cms, ssize_t index ) {
+//zot//   completion_t* cm = completions_get(cms, index);
+//zot//   if (cm == NULL) return NULL;
+//zot//   return cm->help;
+//zot// }
 
-ic_private const char* completions_get_hint(completions_t* cms, ssize_t index, const char** help) {
-  if (help != NULL) { *help = NULL; }
+ic_private const char* completions_get_hint(completions_t* cms, ssize_t index, const char** hllp) {
+  if (hllp != NULL) { *hllp = NULL; }
   completion_t* cm = completions_get(cms, index);
   if (cm == NULL) return NULL;
   ssize_t len = ic_strlen(cm->replacement);
   if (len < cm->delete_before) return NULL;
   const char* hint = (cm->replacement + cm->delete_before);
   if (*hint == 0 || utf8_is_cont((uint8_t)(*hint))) return NULL;  // utf8 boundary?
-  if (help != NULL) { *help = cm->help; }
+  if (hllp != NULL) { *hllp = cm->help; }
   return hint;
 }
 
@@ -5487,7 +5504,7 @@ ic_public bool ic_stop_completing( const ic_completion_env_t* cenv) {
 
 
 static ssize_t completion_apply( completion_t* cm, stringbuf_t* sbuf, ssize_t pos ) {
-  if (cm == NULL) return -1;  
+  if (cm == NULL) return -1;
   debug_msg( "completion: apply: %s at %zd\n", cm->replacement, pos);
   ssize_t start = pos - cm->delete_before;
   if (start < 0) start = 0;
@@ -5498,7 +5515,7 @@ static ssize_t completion_apply( completion_t* cm, stringbuf_t* sbuf, ssize_t po
   }
   else {
     sbuf_delete_from_to( sbuf, start, pos + cm->delete_after );
-    return sbuf_insert_at(sbuf, cm->replacement, start); 
+    return sbuf_insert_at(sbuf, cm->replacement, start);
   }
 }
 
@@ -5511,7 +5528,7 @@ ic_private ssize_t completions_apply( completions_t* cms, ssize_t index, stringb
 static int completion_compare(const void* p1, const void* p2) {
   if (p1 == NULL || p2 == NULL) return 0;
   const completion_t* cm1 = (const completion_t*)p1;
-  const completion_t* cm2 = (const completion_t*)p2;  
+  const completion_t* cm2 = (const completion_t*)p2;
   return ic_stricmp(cm1->replacement, cm2->replacement);
 }
 
@@ -5536,7 +5553,7 @@ ic_private ssize_t completions_apply_longest_prefix(completions_t* cms, stringbu
   ssize_t delete_before = cm->delete_before;
   ic_strncpy( prefix, IC_MAX_PREFIX+1, cm->replacement, IC_MAX_PREFIX );
   prefix[IC_MAX_PREFIX] = 0;
-  
+
   // and visit all others to find the longest common prefix
   for(ssize_t i = 1; i < cms->count; i++) {
     cm = completions_get(cms,i);
@@ -5545,7 +5562,7 @@ ic_private ssize_t completions_apply_longest_prefix(completions_t* cms, stringbu
       break;
     }
     // check if it is still a prefix
-    const char* r = cm->replacement;    
+    const char* r = cm->replacement;
     ssize_t j;
     for(j = 0; prefix[j] != 0 && r[j] != 0; j++) {
       if (prefix[j] != r[j]) break;
@@ -5564,7 +5581,7 @@ ic_private ssize_t completions_apply_longest_prefix(completions_t* cms, stringbu
   cprefix.delete_before = delete_before;
   cprefix.replacement   = prefix;
   ssize_t newpos = completion_apply( &cprefix, sbuf, pos);
-  if (newpos < 0) return newpos;  
+  if (newpos < 0) return newpos;
 
   // adjust all delete_before for the new replacement
   for( ssize_t i = 0; i < cms->count; i++) {
@@ -5593,17 +5610,17 @@ ic_public bool ic_add_completion(ic_completion_env_t* cenv, const char* replacem
   return ic_add_completion_ex(cenv, replacement, NULL, NULL);
 }
 
-ic_public bool ic_add_completion_ex( ic_completion_env_t* cenv, const char* replacement, const char* display, const char* help ) {
-  return ic_add_completion_prim(cenv,replacement,display,help,0,0);
+ic_public bool ic_add_completion_ex( ic_completion_env_t* cenv, const char* replacement, const char* display, const char* hllp ) {
+  return ic_add_completion_prim(cenv,replacement,display,hllp,0,0);
 }
 
-ic_public bool ic_add_completion_prim(ic_completion_env_t* cenv, const char* replacement, const char* display, const char* help, long delete_before, long delete_after) {
-  return (*cenv->complete)(cenv->env, cenv->closure, replacement, display, help, delete_before, delete_after );
+ic_public bool ic_add_completion_prim(ic_completion_env_t* cenv, const char* replacement, const char* display, const char* hllp, long delete_before, long delete_after) {
+  return (*cenv->complete)(cenv->env, cenv->closure, replacement, display, hllp, delete_before, delete_after );
 }
 
-static bool prim_add_completion(ic_env_t* env, void* funenv, const char* replacement, const char* display, const char* help, long delete_before, long delete_after) {
+static bool prim_add_completion(ic_env_t* env, void* funenv, const char* replacement, const char* display, const char* hllp, long delete_before, long delete_after) {
   ic_unused(funenv);
-  return completions_add(env->completions, replacement, display, help, delete_before, delete_after);
+  return completions_add(env->completions, replacement, display, hllp, delete_before, delete_after);
 }
 
 ic_public void ic_set_default_completer(ic_completer_fun_t* completer, void* arg) {
@@ -5625,7 +5642,7 @@ ic_private ssize_t completions_generate(struct ic_env_s* env, completions_t* cms
   cenv.closure  = NULL;
   const char* prefix = mem_strndup(cms->mem, input, pos);
   cms->completer_max = max;
-  
+
   // and complete
   cms->completer(&cenv,prefix);
 
@@ -5731,13 +5748,13 @@ static void term_append_buf(term_t* term, const char* s, ssize_t n);
 // Standard ANSI palette for 256 colors
 //-------------------------------------------------------------
 
-static uint32_t ansi256[256] = {   
+static uint32_t ansi256[256] = {
   // not const as on some platforms (e.g. Windows, xterm) we update the first 16 entries with the actual used colors.
   // 0, standard ANSI
-  0x000000, 0x800000, 0x008000, 0x808000, 0x000080, 0x800080, 
+  0x000000, 0x800000, 0x008000, 0x808000, 0x000080, 0x800080,
   0x008080, 0xc0c0c0,
   // 8, bright ANSI
-  0x808080, 0xff0000, 0x00ff00, 0xffff00, 0x0000ff, 0xff00ff, 
+  0x808080, 0xff0000, 0x00ff00, 0xffff00, 0x0000ff, 0xff00ff,
   0x00ffff, 0xffffff,
   // 6x6x6 RGB colors
   // 16
@@ -5783,10 +5800,10 @@ static uint32_t ansi256[256] = {
   0xffd700, 0xffd75f, 0xffd787, 0xffd7af, 0xffd7d7, 0xffd7ff,
   0xffff00, 0xffff5f, 0xffff87, 0xffffaf, 0xffffd7, 0xffffff,
   // 232, gray scale
-  0x080808, 0x121212, 0x1c1c1c, 0x262626, 0x303030, 0x3a3a3a, 
-  0x444444, 0x4e4e4e, 0x585858, 0x626262, 0x6c6c6c, 0x767676, 
-  0x808080, 0x8a8a8a, 0x949494, 0x9e9e9e, 0xa8a8a8, 0xb2b2b2, 
-  0xbcbcbc, 0xc6c6c6, 0xd0d0d0, 0xdadada, 0xe4e4e4, 0xeeeeee   
+  0x080808, 0x121212, 0x1c1c1c, 0x262626, 0x303030, 0x3a3a3a,
+  0x444444, 0x4e4e4e, 0x585858, 0x626262, 0x6c6c6c, 0x767676,
+  0x808080, 0x8a8a8a, 0x949494, 0x9e9e9e, 0xa8a8a8, 0xb2b2b2,
+  0xbcbcbc, 0xc6c6c6, 0xd0d0d0, 0xdadada, 0xe4e4e4, 0xeeeeee
 };
 
 
@@ -5857,13 +5874,13 @@ static int_least32_t sqr(int_least32_t x) {
   return x*x;
 }
 
-// Approximation to delta-E CIE color distance using much 
+// Approximation to delta-E CIE color distance using much
 // simpler calculations. See <https://www.compuphase.com/cmetric.htm>.
 // This is essentialy weighted euclidean distance but the weight distribution
 // depends on how big the "red" component of the color is.
-// We do not take the square root as we only need to find 
+// We do not take the square root as we only need to find
 // the minimal distance (and multiply by 256 to increase precision).
-// Needs at least 28-bit signed integers to avoid overflow. 
+// Needs at least 28-bit signed integers to avoid overflow.
 static int_least32_t rgb_distance_rmean( uint32_t color, int r2, int g2, int b2 ) {
   int r1, g1, b1;
   color_to_rgb(IC_RGB(color),&r1,&g1,&b1);
@@ -5871,27 +5888,27 @@ static int_least32_t rgb_distance_rmean( uint32_t color, int r2, int g2, int b2 
   int_least32_t dr2 = sqr(r1 - r2);
   int_least32_t dg2 = sqr(g1 - g2);
   int_least32_t db2 = sqr(b1 - b2);
-  int_least32_t dist = ((512+rmean)*dr2) + 1024*dg2 + ((767-rmean)*db2);    
+  int_least32_t dist = ((512+rmean)*dr2) + 1024*dg2 + ((767-rmean)*db2);
   return dist;
 }
 
-// Another approximation to delta-E CIE color distance using
-// simpler calculations. Similar to `rmean` but adds an adjustment factor
-// based on the "red/blue" difference.
-static int_least32_t rgb_distance_rbmean( uint32_t color, int r2, int g2, int b2 ) {
-  int r1, g1, b1;
-  color_to_rgb(IC_RGB(color),&r1,&g1,&b1);
-  int_least32_t rmean = (r1 + r2) / 2;
-  int_least32_t dr2 = sqr(r1 - r2);
-  int_least32_t dg2 = sqr(g1 - g2);
-  int_least32_t db2 = sqr(b1 - b2);
-  int_least32_t dist = 2*dr2 + 4*dg2 + 3*db2 + ((rmean*(dr2 - db2))/256);  
-  return dist;
-}
+//zot// // Another approximation to delta-E CIE color distance using
+//zot// // simpler calculations. Similar to `rmean` but adds an adjustment factor
+//zot// // based on the "red/blue" difference.
+//zot// static int_least32_t rgb_distance_rbmean( uint32_t color, int r2, int g2, int b2 ) {
+//zot//   int r1, g1, b1;
+//zot//   color_to_rgb(IC_RGB(color),&r1,&g1,&b1);
+//zot//   int_least32_t rmean = (r1 + r2) / 2;
+//zot//   int_least32_t dr2 = sqr(r1 - r2);
+//zot//   int_least32_t dg2 = sqr(g1 - g2);
+//zot//   int_least32_t db2 = sqr(b1 - b2);
+//zot//   int_least32_t dist = 2*dr2 + 4*dg2 + 3*db2 + ((rmean*(dr2 - db2))/256);
+//zot//   return dist;
+//zot// }
 
 
 // Maintain a small cache of recently used colors. Should be short enough to be effectively constant time.
-// If we ever use a more expensive color distance method, we may increase the size a bit (64?) 
+// If we ever use a more expensive color distance method, we may increase the size a bit (64?)
 // (Initial zero initialized cache is valid.)
 #define RGB_CACHE_LEN (16)
 typedef struct rgb_cache_s {
@@ -5937,15 +5954,15 @@ static int rgb_match( uint32_t* palette, int start, int len, rgb_cache_t* cache,
   for(int i = start; i < len; i++) {
     //int_least32_t dist = rgb_distance_rbmean(palette[i],r,g,b);
     int_least32_t dist = rgb_distance_rmean(palette[i],r,g,b);
-    if (is_grayish_color(palette[i]) != is_grayish(r, g, b)) { 
+    if (is_grayish_color(palette[i]) != is_grayish(r, g, b)) {
       // with few colors, make it less eager to substitute a gray for a non-gray (or the other way around)
       if (len <= 16) {
         dist *= 4;
-      } 
+      }
       else {
         dist = (dist/4)*5;
       }
-    } 
+    }
     if (dist < mindist) {
       min = i;
       mindist = dist;
@@ -5959,7 +5976,7 @@ static int rgb_match( uint32_t* palette, int start, int len, rgb_cache_t* cache,
 // Match RGB to an index in the ANSI 256 color table
 static int rgb_to_ansi256(ic_color_t color) {
   static rgb_cache_t ansi256_cache;
-  int c = rgb_match(ansi256, 16, 256, &ansi256_cache, color); // not the first 16 ANSI colors as those may be different 
+  int c = rgb_match(ansi256, 16, 256, &ansi256_cache, color); // not the first 16 ANSI colors as those may be different
   //debug_msg("term: rgb %x -> ansi 256: %d\n", color, c );
   return c;
 }
@@ -5973,7 +5990,7 @@ static int color_to_ansi16(ic_color_t color) {
     static rgb_cache_t ansi16_cache;
     int c = rgb_match(ansi256, 0, 16, &ansi16_cache, color);
     //debug_msg("term: rgb %x -> ansi 16: %d\n", color, c );
-    return (c < 8 ? 30 + c : 90 + c - 8); 
+    return (c < 8 ? 30 + c : 90 + c - 8);
   }
 }
 
@@ -6004,15 +6021,15 @@ static int color_to_ansi8(ic_color_t color) {
 static void fmt_color_ansi8( char* buf, ssize_t len, ic_color_t color, bool bg ) {
   int c = color_to_ansi8(color) + (bg ? 10 : 0);
   if (c >= 90) {
-    snprintf(buf, to_size_t(len), IC_CSI "1;%dm", c - 60);    
+    snprintf(buf, to_size_t(len), IC_CSI "1;%dm", c - 60);
   }
   else {
-    snprintf(buf, to_size_t(len), IC_CSI "22;%dm", c );  
+    snprintf(buf, to_size_t(len), IC_CSI "22;%dm", c );
   }
 }
 
 static void fmt_color_ansi16( char* buf, ssize_t len, ic_color_t color, bool bg ) {
-  snprintf( buf, to_size_t(len), IC_CSI "%dm", color_to_ansi16(color) + (bg ? 10 : 0) );  
+  snprintf( buf, to_size_t(len), IC_CSI "%dm", color_to_ansi16(color) + (bg ? 10 : 0) );
 }
 
 static void fmt_color_ansi256( char* buf, ssize_t len,  ic_color_t color, bool bg ) {
@@ -6020,7 +6037,7 @@ static void fmt_color_ansi256( char* buf, ssize_t len,  ic_color_t color, bool b
     fmt_color_ansi16(buf,len,color,bg);
   }
   else {
-    snprintf( buf, to_size_t(len), IC_CSI "%d;5;%dm", (bg ? 48 : 38), rgb_to_ansi256(color) );  
+    snprintf( buf, to_size_t(len), IC_CSI "%d;5;%dm", (bg ? 48 : 38), rgb_to_ansi256(color) );
   }
 }
 
@@ -6031,7 +6048,7 @@ static void fmt_color_rgb( char* buf, ssize_t len, ic_color_t color, bool bg ) {
   else {
     int r,g,b;
     color_to_rgb(color, &r,&g,&b);
-    snprintf( buf, to_size_t(len), IC_CSI "%d;2;%d;%d;%dm", (bg ? 48 : 38), r, g, b );  
+    snprintf( buf, to_size_t(len), IC_CSI "%d;2;%d;%d;%dm", (bg ? 48 : 38), r, g, b );
   }
 }
 
@@ -6053,6 +6070,7 @@ static void fmt_color_ex(char* buf, ssize_t len, palette_t palette, ic_color_t c
 
 static void term_color_ex(term_t* term, ic_color_t color, bool bg) {
   char buf[128+1];
+  buf[0] = '\0';
   fmt_color_ex(buf,128,term->palette,color,bg);
   term_write(term,buf);
 }
@@ -6069,17 +6087,17 @@ ic_private void term_bgcolor(term_t* term, ic_color_t color) {
   term_color_ex(term,color,true);
 }
 
-ic_private void term_append_color(term_t* term, stringbuf_t* sbuf, ic_color_t color) {
-  char buf[128+1];
-  fmt_color_ex(buf,128,term->palette,color,false);
-  sbuf_append(sbuf,buf);
-}
+//zot// ic_private void term_append_color(term_t* term, stringbuf_t* sbuf, ic_color_t color) {
+//zot//   char buf[128+1];
+//zot//   fmt_color_ex(buf,128,term->palette,color,false);
+//zot//   sbuf_append(sbuf,buf);
+//zot// }
 
-ic_private void term_append_bgcolor(term_t* term, stringbuf_t* sbuf, ic_color_t color) {
-  char buf[128+1];
-  fmt_color_ex(buf, 128, term->palette, color, true);
-  sbuf_append(sbuf, buf);
-}
+//zot// ic_private void term_append_bgcolor(term_t* term, stringbuf_t* sbuf, ic_color_t color) {
+//zot//   char buf[128+1];
+//zot//   fmt_color_ex(buf, 128, term->palette, color, true);
+//zot//   sbuf_append(sbuf, buf);
+//zot// }
 
 ic_private int term_get_color_bits(term_t* term) {
   switch (term->palette) {
@@ -6096,10 +6114,10 @@ ic_private int term_get_color_bits(term_t* term) {
 // Helpers
 //-------------------------------------------------------------
 
-ic_private void term_left(term_t* term, ssize_t n) {
-  if (n <= 0) return;
-  term_writef( term, IC_CSI "%zdD", n );
-}
+//zot// ic_private void term_left(term_t* term, ssize_t n) {
+//zot//   if (n <= 0) return;
+//zot//   term_writef( term, IC_CSI "%zdD", n );
+//zot// }
 
 ic_private void term_right(term_t* term, ssize_t n) {
   if (n <= 0) return;
@@ -6111,10 +6129,10 @@ ic_private void term_up(term_t* term, ssize_t n) {
   term_writef( term, IC_CSI "%zdA", n );
 }
 
-ic_private void term_down(term_t* term, ssize_t n) {
-  if (n <= 0) return;
-  term_writef( term, IC_CSI "%zdB", n );
-}
+//zot// ic_private void term_down(term_t* term, ssize_t n) {
+//zot//   if (n <= 0) return;
+//zot//   term_writef( term, IC_CSI "%zdB", n );
+//zot// }
 
 ic_private void term_clear_line(term_t* term) {
   term_write( term, "\r" IC_CSI "K");
@@ -6161,12 +6179,12 @@ ic_private void term_writeln(term_t* term, const char* s) {
   term_write(term,"\n");
 }
 
-ic_private void term_write_char(term_t* term, char c) {
-  char buf[2];
-  buf[0] = c;
-  buf[1] = 0;
-  term_write_n(term, buf, 1 );
-}
+//zot// ic_private void term_write_char(term_t* term, char c) {
+//zot//   char buf[2];
+//zot//   buf[0] = c;
+//zot//   buf[1] = 0;
+//zot//   term_write_n(term, buf, 1 );
+//zot// }
 
 ic_private attr_t term_get_attr( const term_t* term ) {
   return term->attr;
@@ -6183,7 +6201,7 @@ ic_private void term_set_attr( term_t* term, attr_t attr ) {
   if (attr.x.bgcolor != term->attr.x.bgcolor && attr.x.bgcolor != IC_COLOR_NONE) {
     term_bgcolor(term,attr.x.bgcolor);
     if (term->palette < ANSIRGB && color_is_rgb(attr.x.bgcolor)) {
-      term->attr.x.bgcolor = attr.x.bgcolor; 
+      term->attr.x.bgcolor = attr.x.bgcolor;
     }
   }
   if (attr.x.bold != term->attr.x.bold && attr.x.bold != IC_NONE) {
@@ -6197,7 +6215,7 @@ ic_private void term_set_attr( term_t* term, attr_t attr ) {
   }
   if (attr.x.italic != term->attr.x.italic && attr.x.italic != IC_NONE) {
     term_italic(term,attr.x.italic == IC_ON);
-  }  
+  }
   assert(attr.x.color == term->attr.x.color || attr.x.color == IC_COLOR_NONE);
   assert(attr.x.bgcolor == term->attr.x.bgcolor || attr.x.bgcolor == IC_COLOR_NONE);
   assert(attr.x.bold == term->attr.x.bold || attr.x.bold == IC_NONE);
@@ -6225,7 +6243,7 @@ ic_private void term_writef(term_t* term, const char* fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   term_vwritef(term,fmt,ap);
-  va_end(ap);  
+  va_end(ap);
 }
 
 ic_private void term_vwritef(term_t* term, const char* fmt, va_list args ) {
@@ -6253,20 +6271,19 @@ ic_private void term_write_formatted_n( term_t* term, const char* s, const attr_
     ssize_t n = 0;
     while( i+n < len && s[i+n] != 0 ) {
       if (!attr_is_eq(attr,attrs[i+n])) {
-        if (n > 0) { 
+        if (n > 0) {
           term_write_n( term, s+i, n );
           i += n;
           n = 0;
         }
         attr = attrs[i];
         term_set_attr( term, attr_update_with(default_attr,attr) );
-      }  
-      n++;    
+      }
+      n++;
     }
     if (n > 0) {
       term_write_n( term, s+i, n );
       i += n;
-      n = 0;    
     }
     assert(s[i] != 0 || i == len);
     term_set_attr(term, default_attr);
@@ -6301,7 +6318,7 @@ ic_private void term_write(term_t* term, const char* s) {
 ic_private void term_write_n(term_t* term, const char* s, ssize_t n) {
   if (s == NULL || n <= 0) return;
   // write to buffer to reduce flicker and to process escape sequences (this may flush too)
-  term_append_buf(term, s, n);  
+  term_append_buf(term, s, n);
 }
 
 
@@ -6316,7 +6333,7 @@ ic_private void term_flush(term_t* term) {
     term_write_direct(term, sbuf_string(term->buf), sbuf_len(term->buf));
     //term_show_cursor(term,true);
     sbuf_clear(term->buf);
-  }  
+  }
 }
 
 ic_private buffer_mode_t term_set_buffer_mode(term_t* term, buffer_mode_t mode) {
@@ -6331,12 +6348,12 @@ ic_private buffer_mode_t term_set_buffer_mode(term_t* term, buffer_mode_t mode) 
 }
 
 static void term_check_flush(term_t* term, bool contains_nl) {
-  if (term->bufmode == UNBUFFERED || 
+  if (term->bufmode == UNBUFFERED ||
       sbuf_len(term->buf) > 4000 ||
-      (term->bufmode == LINEBUFFERED && contains_nl)) 
+      (term->bufmode == LINEBUFFERED && contains_nl))
   {
     term_flush(term);
-  }  
+  }
 }
 
 //-------------------------------------------------------------
@@ -6345,21 +6362,21 @@ static void term_check_flush(term_t* term, bool contains_nl) {
 
 static void term_init_raw(term_t* term);
 
-ic_private term_t* term_new(alloc_t* mem, tty_t* tty, bool nocolor, bool silent, int fd_out ) 
+ic_private term_t* term_new(alloc_t* mem, tty_t* tty, bool nocolor, bool silent, int fd_out )
 {
   term_t* term = mem_zalloc_tp(mem, term_t);
   if (term == NULL) return NULL;
 
   term->fd_out  = (fd_out < 0 ? STDOUT_FILENO : fd_out);
   term->nocolor = nocolor || (isatty(term->fd_out) == 0);
-  term->silent  = silent;  
+  term->silent  = silent;
   term->mem     = mem;
   term->tty     = tty;     // can be NULL
   term->width   = 80;
   term->height  = 25;
   term->is_utf8 = tty_is_utf8(tty);
   term->palette = ANSI16; // almost universally supported
-  term->buf     = sbuf_new(mem);  
+  term->buf     = sbuf_new(mem);
   term->bufmode = LINEBUFFERED;
   term->attr    = attr_default();
 
@@ -6370,16 +6387,16 @@ ic_private term_t* term_new(alloc_t* mem, tty_t* tty, bool nocolor, bool silent,
   if (!term->nocolor) {
     // detect color palette
     // COLORTERM takes precedence
-    const char* colorterm = getenv("COLORTERM");  
-    const char* eterm = getenv("TERM");    
-    if (ic_contains(colorterm,"24bit") || ic_contains(colorterm,"truecolor") || ic_contains(colorterm,"direct")) { 
-      term->palette = ANSIRGB; 
+    const char* colorterm = getenv("COLORTERM");
+    const char* eterm = getenv("TERM");
+    if (ic_contains(colorterm,"24bit") || ic_contains(colorterm,"truecolor") || ic_contains(colorterm,"direct")) {
+      term->palette = ANSIRGB;
     }
-    else if (ic_contains(colorterm,"8bit") || ic_contains(colorterm,"256color")) { term->palette = ANSI256; } 
+    else if (ic_contains(colorterm,"8bit") || ic_contains(colorterm,"256color")) { term->palette = ANSI256; }
     else if (ic_contains(colorterm,"4bit") || ic_contains(colorterm,"16color"))  { term->palette = ANSI16; }
     else if (ic_contains(colorterm,"3bit") || ic_contains(colorterm,"8color"))   { term->palette = ANSI8; }
-    else if (ic_contains(colorterm,"1bit") || ic_contains(colorterm,"nocolor") || ic_contains(colorterm,"monochrome")) { 
-      term->palette = MONOCHROME; 
+    else if (ic_contains(colorterm,"1bit") || ic_contains(colorterm,"nocolor") || ic_contains(colorterm,"monochrome")) {
+      term->palette = MONOCHROME;
     }
     // otherwise check for some specific terminals
     else if (getenv("WT_SESSION") != NULL) { term->palette = ANSIRGB; } // Windows terminal
@@ -6393,24 +6410,24 @@ ic_private term_t* term_new(alloc_t* mem, tty_t* tty, bool nocolor, bool silent,
       else if (ic_contains(eterm,"alacritty") || ic_contains(eterm,"kitty")) {
         term->palette = ANSIRGB;
       }
-      else if (ic_contains(eterm,"256color") || ic_contains(eterm,"gnome")) { 
+      else if (ic_contains(eterm,"256color") || ic_contains(eterm,"gnome")) {
         term->palette = ANSI256;
-      }  
+      }
       else if (ic_contains(eterm,"16color")){ term->palette = ANSI16; }
       else if (ic_contains(eterm,"8color")) { term->palette = ANSI8; }
-      else if (ic_contains(eterm,"monochrome") || ic_contains(eterm,"nocolor") || ic_contains(eterm,"dumb")) { 
-        term->palette = MONOCHROME; 
+      else if (ic_contains(eterm,"monochrome") || ic_contains(eterm,"nocolor") || ic_contains(eterm,"dumb")) {
+        term->palette = MONOCHROME;
       }
     }
     debug_msg("term: color-bits: %d (COLORTERM=%s, TERM=%s)\n", term_get_color_bits(term), colorterm, eterm);
   }
-  
+
   // read COLUMS/LINES from the environment for a better initial guess.
   const char* env_columns = getenv("COLUMNS");
   if (env_columns != NULL) { ic_atoz(env_columns, &term->width); }
   const char* env_lines = getenv("LINES");
   if (env_lines != NULL)   { ic_atoz(env_lines, &term->height); }
-  
+
   // initialize raw terminal output and terminal dimensions
   term_init_raw(term);
   term_update_dim(term);
@@ -6422,8 +6439,8 @@ ic_private term_t* term_new(alloc_t* mem, tty_t* tty, bool nocolor, bool silent,
 ic_private bool term_is_interactive(const term_t* term) {
   ic_unused(term);
   // check dimensions (0 is used for debuggers)
-  // if (term->width <= 0) return false; 
-  
+  // if (term->width <= 0) return false;
+
   // check editing support
   const char* eterm = getenv("TERM");
   debug_msg("term: TERM=%s\n", eterm);
@@ -6457,13 +6474,13 @@ ic_private void term_free(term_t* term) {
 
 //-------------------------------------------------------------
 // For best portability and applications inserting CSI SGR (ESC[ .. m)
-// codes themselves in strings, we interpret these at the 
+// codes themselves in strings, we interpret these at the
 // lowest level so we can have a `term_get_attr` function which
 // is needed for bracketed styles etc.
 //-------------------------------------------------------------
 
 static void term_append_esc(term_t* term, const char* const s, ssize_t len) {
-  if (s[1]=='[' && s[len-1] == 'm') {    
+  if (s[1]=='[' && s[len-1] == 'm') {
     // it is a CSI SGR sequence: ESC[ ... m
     if (term->nocolor) return;       // ignore escape sequences if nocolor is set
     term->attr = attr_update_with(term->attr, attr_from_esc_sgr(s,len));
@@ -6501,10 +6518,10 @@ static void term_append_buf( term_t* term, const char* s, ssize_t len ) {
     // handle ascii sequences in bulk
     ssize_t ascii = 0;
     ssize_t next;
-    while ((next = str_next_ofs(s, len, pos+ascii, NULL)) > 0 && 
-            (uint8_t)s[pos + ascii] > '\x1B' && (uint8_t)s[pos + ascii] <= 0x7F ) 
+    while ((next = str_next_ofs(s, len, pos+ascii, NULL)) > 0 &&
+            (uint8_t)s[pos + ascii] > '\x1B' && (uint8_t)s[pos + ascii] <= 0x7F )
     {
-      ascii += next;      
+      ascii += next;
     }
     if (ascii > 0) {
       sbuf_append_n(term->buf, s+pos, ascii);
@@ -6529,9 +6546,9 @@ static void term_append_buf( term_t* term, const char* s, ssize_t len ) {
       sbuf_append_n(term->buf, s+pos, next);
     }
     pos += next;
-  }  
+  }
   // possibly flush
-  term_check_flush(term, newline);  
+  term_check_flush(term, newline);
 }
 
 //-------------------------------------------------------------
@@ -6542,14 +6559,14 @@ static void term_append_buf( term_t* term, const char* s, ssize_t len ) {
 
 // write to the console without further processing
 static bool term_write_direct(term_t* term, const char* s, ssize_t n) {
-  ssize_t count = 0; 
+  ssize_t count = 0;
   while( count < n ) {
     ssize_t nwritten = write(term->fd_out, s + count, to_size_t(n - count));
     if (nwritten > 0) {
       count += nwritten;
     }
     else if (errno != EINTR && errno != EAGAIN) {
-      debug_msg("term: write failed: length %i, errno %i: \"%s\"\n", n, errno, s);
+      debug_msg("term: write failed: length %zi, errno %i: \"%s\"\n", n, errno, s);
       return false;
     }
   }
@@ -6632,7 +6649,7 @@ static void term_cursor_visible( term_t* term, bool visible ) {
   SetConsoleCursorInfo(term->hcon,&info);
 }
 
-static void term_erase_line( term_t* term, ssize_t mode ) {  
+static void term_erase_line( term_t* term, ssize_t mode ) {
   CONSOLE_SCREEN_BUFFER_INFO info;
   if (!GetConsoleScreenBufferInfo( term->hcon, &info )) return;
   DWORD written;
@@ -6651,7 +6668,7 @@ static void term_erase_line( term_t* term, ssize_t mode ) {
     length  = info.dwCursorPosition.X;
   }
   else {
-    // to end of line    
+    // to end of line
     length = (ssize_t)info.srWindow.Right - info.dwCursorPosition.X + 1;
     start = info.dwCursorPosition;
   }
@@ -6669,7 +6686,7 @@ static void term_clear_screen(term_t* term, ssize_t mode) {
   ssize_t width = (ssize_t)info.dwSize.X;
   if (mode == 2) {
     // entire screen
-    length = width * info.dwSize.Y;    
+    length = width * info.dwSize.Y;
   }
   else if (mode == 1) {
     // to cursor
@@ -6699,9 +6716,9 @@ static WORD attr_color[8] = {
 static void term_set_win_attr( term_t* term, attr_t ta ) {
   WORD def_attr = term->hcon_default_attr;
   CONSOLE_SCREEN_BUFFER_INFO info;
-  if (!GetConsoleScreenBufferInfo( term->hcon, &info )) return;  
+  if (!GetConsoleScreenBufferInfo( term->hcon, &info )) return;
   WORD cur_attr = info.wAttributes;
-  WORD attr = cur_attr; 
+  WORD attr = cur_attr;
   if (ta.x.color != IC_COLOR_NONE) {
     if (ta.x.color >= IC_ANSI_BLACK && ta.x.color <= IC_ANSI_SILVER) {
       attr = (attr & 0xFFF0) | attr_color[ta.x.color - IC_ANSI_BLACK];
@@ -6719,7 +6736,7 @@ static void term_set_win_attr( term_t* term, attr_t ta ) {
     }
     else if (ta.x.bgcolor >= IC_ANSI_GRAY && ta.x.bgcolor <= IC_ANSI_WHITE) {
       attr = (attr & 0xFF0F) | (WORD)(attr_color[ta.x.bgcolor - IC_ANSI_GRAY] << 4) | BACKGROUND_INTENSITY;
-    } 
+    }
     else if (ta.x.bgcolor == IC_ANSI_DEFAULT) {
       attr = (attr & 0xFF0F) | (def_attr & 0x00F0);
     }
@@ -6729,7 +6746,7 @@ static void term_set_win_attr( term_t* term, attr_t ta ) {
   }
   if (ta.x.reverse != IC_NONE) {
     attr = (attr & ~COMMON_LVB_REVERSE_VIDEO) | (ta.x.reverse == IC_ON ? COMMON_LVB_REVERSE_VIDEO : 0);
-  }  
+  }
   if (attr != cur_attr) {
     SetConsoleTextAttribute(term->hcon, attr);
   }
@@ -6743,10 +6760,10 @@ static ssize_t esc_param( const char* s, ssize_t def ) {
 }
 
 static void esc_param2( const char* s, ssize_t* p1, ssize_t* p2, ssize_t def ) {
-  if (*s == '?') s++; 
+  if (*s == '?') s++;
   *p1 = def;
   *p2 = def;
-  ic_atoz2(s, p1, p2);  
+  ic_atoz2(s, p1, p2);
 }
 
 // Emulate escape sequences on older windows.
@@ -6768,15 +6785,15 @@ static void term_write_esc( term_t* term, const char* s, ssize_t len ) {
     case 'D':
       term_move_cursor(term, 0, -1, esc_param(s+2, 1));
       break;
-    case 'H': 
+    case 'H':
       esc_param2(s+2, &row, &col, 1);
       term_move_cursor_to(term, row, col);
       break;
     case 'K':
       term_erase_line(term, esc_param(s+2, 0));
       break;
-    case 'm': 
-      term_set_win_attr( term, attr_from_esc_sgr(s,len) ); 
+    case 'm':
+      term_set_win_attr( term, attr_from_esc_sgr(s,len) );
       break;
 
     // support some less standard escape codes (currently not used by isocline)
@@ -6795,7 +6812,7 @@ static void term_write_esc( term_t* term, const char* s, ssize_t len ) {
       col = esc_param(s+2, 1);
       term_move_cursor_to(term, row, col);
       break;
-    case 'J': 
+    case 'J':
       term_clear_screen(term, esc_param(s+2, 0));
       break;
     case 'h':
@@ -6803,14 +6820,14 @@ static void term_write_esc( term_t* term, const char* s, ssize_t len ) {
         term_cursor_visible(term, true);
       }
       break;
-    case 'l': 
+    case 'l':
       if (strncmp(s+2, "?25l", 4) == 0) {
         term_cursor_visible(term, false);
       }
       break;
-    case 's': 
+    case 's':
       term_cursor_save(term);
-      break;    
+      break;
     case 'u':
       term_cursor_restore(term);
       break;
@@ -6830,10 +6847,10 @@ static void term_write_esc( term_t* term, const char* s, ssize_t len ) {
 
 static bool term_write_direct(term_t* term, const char* s, ssize_t len ) {
   term_cursor_visible(term,false); // reduce flicker
-  ssize_t pos = 0;    
+  ssize_t pos = 0;
   if ((term->hcon_mode & ENABLE_VIRTUAL_TERMINAL_PROCESSING) != 0) {
     // use the builtin virtual terminal processing. (enables truecolor for example)
-    term_write_console(term, s, len);   
+    term_write_console(term, s, len);
     pos = len;
   }
   else {
@@ -6843,21 +6860,21 @@ static bool term_write_direct(term_t* term, const char* s, ssize_t len ) {
       // (We don't need to handle utf-8 separately as we set the codepage to always be in utf-8 mode)
       ssize_t nonctrl = 0;
       ssize_t next;
-      while( (next = str_next_ofs( s, len, pos+nonctrl, NULL )) > 0 && 
+      while( (next = str_next_ofs( s, len, pos+nonctrl, NULL )) > 0 &&
               (uint8_t)s[pos + nonctrl] >= ' ' && (uint8_t)s[pos + nonctrl] <= 0x7F) {
         nonctrl += next;
       }
       if (nonctrl > 0) {
         term_write_console(term, s+pos, nonctrl);
         pos += nonctrl;
-      }    
+      }
       if (next <= 0) break;
 
       if ((uint8_t)s[pos] >= 0x80) {
         // utf8 is already processed
         term_write_console(term, s+pos, next);
       }
-      else if (next > 1 && s[pos] == '\x1B') {                                
+      else if (next > 1 && s[pos] == '\x1B') {
         // handle control (note: str_next_ofs considers whole CSI escape sequences at a time)
         term_write_esc(term, s+pos, next);
       }
@@ -6872,7 +6889,7 @@ static bool term_write_direct(term_t* term, const char* s, ssize_t len ) {
   }
   term_cursor_visible(term,true);
   assert(pos == len);
-  return (pos == len); 
+  return (pos == len);
 
 }
 #endif
@@ -6886,29 +6903,29 @@ static bool term_write_direct(term_t* term, const char* s, ssize_t len ) {
 #if !defined(_WIN32)
 
 // send escape query that may return a response on the tty
-static bool term_esc_query_raw( term_t* term, const char* query, char* buf, ssize_t buflen ) 
+static bool term_esc_query_raw( term_t* term, const char* query, char* buf, ssize_t buflen )
 {
   if (buf==NULL || buflen <= 0 || query[0] == 0) return false;
   bool osc = (query[1] == ']');
   if (!term_write_direct(term, query, ic_strlen(query))) return false;
-  debug_msg("term: read tty query response to: ESC %s\n", query + 1);  
+  debug_msg("term: read tty query response to: ESC %s\n", query + 1);
   return tty_read_esc_response( term->tty, query[1], osc, buf, buflen );
 }
 
-static bool term_esc_query( term_t* term, const char* query, char* buf, ssize_t buflen ) 
+static bool term_esc_query( term_t* term, const char* query, char* buf, ssize_t buflen )
 {
-  if (!tty_start_raw(term->tty)) return false;  
-  bool ok = term_esc_query_raw(term,query,buf,buflen);  
+  if (!tty_start_raw(term->tty)) return false;
+  bool ok = term_esc_query_raw(term,query,buf,buflen);
   tty_end_raw(term->tty);
   return ok;
 }
 
 // get the cursor position via an ESC[6n
-static bool term_get_cursor_pos( term_t* term, ssize_t* row, ssize_t* col) 
+static bool term_get_cursor_pos( term_t* term, ssize_t* row, ssize_t* col)
 {
   // send escape query
   char buf[128];
-  if (!term_esc_query(term,"\x1B[6n",buf,128)) return false; 
+  if (!term_esc_query(term,"\x1B[6n",buf,128)) return false;
   if (!ic_atoz2(buf,row,col)) return false;
   return true;
 }
@@ -6917,7 +6934,7 @@ static void term_set_cursor_pos( term_t* term, ssize_t row, ssize_t col ) {
   term_writef( term, IC_CSI "%zd;%zdH", row, col );
 }
 
-ic_private bool term_update_dim(term_t* term) {  
+ic_private bool term_update_dim(term_t* term) {
   ssize_t cols = 0;
   ssize_t rows = 0;
   struct winsize ws;
@@ -6949,12 +6966,12 @@ ic_private bool term_update_dim(term_t* term) {
 
   // update width and return whether it changed.
   bool changed = (term->width != cols || term->height != rows);
-  debug_msg("terminal dim: %zd,%zd: %s\n", rows, cols, changed ? "changed" : "unchanged");  
-  if (cols > 0) { 
+  debug_msg("terminal dim: %zd,%zd: %s\n", rows, cols, changed ? "changed" : "unchanged");
+  if (cols > 0) {
     term->width = cols;
     term->height = rows;
   }
-  return changed;  
+  return changed;
 }
 
 #else
@@ -6964,8 +6981,8 @@ ic_private bool term_update_dim(term_t* term) {
     term->hcon = GetConsoleWindow();
   }
   ssize_t rows = 0;
-  ssize_t cols = 0;  
-  CONSOLE_SCREEN_BUFFER_INFO sbinfo;  
+  ssize_t cols = 0;
+  CONSOLE_SCREEN_BUFFER_INFO sbinfo;
   if (GetConsoleScreenBufferInfo(term->hcon, &sbinfo)) {
      cols = (ssize_t)sbinfo.srWindow.Right - (ssize_t)sbinfo.srWindow.Left + 1;
      rows = (ssize_t)sbinfo.srWindow.Bottom - (ssize_t)sbinfo.srWindow.Top + 1;
@@ -7003,6 +7020,7 @@ ic_private void term_end_raw(term_t* term, bool force) {
   }
 }
 
+#if __APPLE__
 static bool term_esc_query_color_raw(term_t* term, int color_idx, uint32_t* color ) {
   char buf[128+1];
   snprintf(buf,128,"\x1B]4;%d;?\x1B\\", color_idx);
@@ -7016,15 +7034,16 @@ static bool term_esc_query_color_raw(term_t* term, int color_idx, uint32_t* colo
   rgb++; // skip ':'
   unsigned int r,g,b;
   if (sscanf(rgb,"%x/%x/%x",&r,&g,&b) != 3) return false;
-  if (rgb[2]!='/') { // 48-bit rgb, hexadecimal round to 24-bit     
+  if (rgb[2]!='/') { // 48-bit rgb, hexadecimal round to 24-bit
     r = (r+0x7F)/0x100;   // note: can "overflow", e.g. 0xFFFF -> 0x100. (and we need `ic_cap8` to convert.)
     g = (g+0x7F)/0x100;
-    b = (b+0x7F)/0x100; 
+    b = (b+0x7F)/0x100;
   }
   *color = (ic_cap8(r)<<16) | (ic_cap8(g)<<8) | ic_cap8(b);
-  debug_msg("color query: %02x,%02x,%02x: %06x\n", r, g, b, *color);  
+  debug_msg("color query: %02x,%02x,%02x: %06x\n", r, g, b, *color);
   return true;
 }
+#endif
 
 // update ansi 16 color palette for better color approximation
 static void term_update_ansi16(term_t* term) {
@@ -7037,7 +7056,7 @@ static void term_update_ansi16(term_t* term) {
     // success
     for(ssize_t i = 0; i < 48; i+=3) {
       uint32_t color = ((uint32_t)(cmap[i]) << 16) | ((uint32_t)(cmap[i+1]) << 8) | cmap[i+2];
-      debug_msg("term (ioctl) ansi color %d: 0x%06x\n", i, color);
+      debug_msg("term (ioctl) ansi color %zd: 0x%06x\n", i, color);
       ansi256[i] = color;
     }
     return;
@@ -7055,8 +7074,8 @@ static void term_update_ansi16(term_t* term) {
       if (!term_esc_query_color_raw(term, i, &color)) break;
       debug_msg("term ansi color %d: 0x%06x\n", i, color);
       ansi256[i] = color;
-    }  
-    tty_end_raw(term->tty);  
+    }
+    tty_end_raw(term->tty);
   }
   #endif
 }
@@ -7070,7 +7089,7 @@ static void term_init_raw(term_t* term) {
 #else
 
 ic_private void term_start_raw(term_t* term) {
-  if (term->raw_enabled++ > 0) return;  
+  if (term->raw_enabled++ > 0) return;
   CONSOLE_SCREEN_BUFFER_INFO info;
   if (GetConsoleScreenBufferInfo(term->hcon, &info)) {
     term->hcon_orig_attr = info.wAttributes;
@@ -7079,7 +7098,7 @@ ic_private void term_start_raw(term_t* term) {
   SetConsoleOutputCP(CP_UTF8);
   if (term->hcon_mode == 0) {
     // first time initialization
-    DWORD mode = ENABLE_PROCESSED_OUTPUT | ENABLE_WRAP_AT_EOL_OUTPUT | ENABLE_LVB_GRID_WORLDWIDE;   // for \r \n and \b    
+    DWORD mode = ENABLE_PROCESSED_OUTPUT | ENABLE_WRAP_AT_EOL_OUTPUT | ENABLE_LVB_GRID_WORLDWIDE;   // for \r \n and \b
     // use escape sequence handling if available and the terminal supports it (so we can use rgb colors in Windows terminal)
     // Unfortunately, in plain powershell, we can successfully enable terminal processing
     // but it still fails to render correctly; so we require the palette be large enough (like in Windows Terminal)
@@ -7097,7 +7116,7 @@ ic_private void term_start_raw(term_t* term) {
   }
   else {
     SetConsoleMode(term->hcon, term->hcon_mode);
-  }  
+  }
 }
 
 ic_private void term_end_raw(term_t* term, bool force) {
@@ -7122,15 +7141,15 @@ static void term_init_raw(term_t* term) {
   if (GetConsoleScreenBufferInfoEx(term->hcon, &info)) {
     // store default attributes
     term->hcon_default_attr = info.wAttributes;
-    // update our color table with the actual colors used.    
+    // update our color table with the actual colors used.
     for (unsigned i = 0; i < 16; i++) {
       COLORREF cr = info.ColorTable[i];
       uint32_t color = (ic_cap8(GetRValue(cr))<<16) | (ic_cap8(GetGValue(cr))<<8) | ic_cap8(GetBValue(cr)); // COLORREF = BGR
-      // index is also in reverse in the bits 0 and 2 
+      // index is also in reverse in the bits 0 and 2
       unsigned j = (i&0x08) | ((i&0x04)>>2) | (i&0x02) | (i&0x01)<<2;
       debug_msg("term: ansi color %d is 0x%06x\n", j, color);
       ansi256[j] = color;
-    }    
+    }
   }
   else {
     DWORD err = GetLastError();
@@ -7162,24 +7181,24 @@ This is a bit tricky there are many variants to encode keys as escape sequences,
 
 Generally, for our purposes we accept a subset of escape sequences as:
 
-  escseq ::= ESC 
+  escseq ::= ESC
           |  ESC char
           |  ESC start special? (number (';' modifiers)?)? final
 
 where:
   char         ::= [\x00-\xFF]               # any character
-  special      ::= [:<=>?]             
+  special      ::= [:<=>?]
   number       ::= [0-9+]
-  modifiers    ::= [1-9]      
+  modifiers    ::= [1-9]
   intermediate ::= [\x20-\x2F]               # !"#$%&'()*+,-./
   final        ::= [\x40-\x7F]               # @A–Z[\]^_`a–z{|}~
   ESC          ::= '\x1B'
   CSI          ::= ESC '['
   SS3          ::= ESC 'O'
 
-In ECMA48 `special? (number (';' modifiers)?)?` is the more liberal `[\x30-\x3F]*` 
-but that seems never used for key codes. If the number (vtcode or unicode) or the 
-modifiers are not given, we assume these are '1'. 
+In ECMA48 `special? (number (';' modifiers)?)?` is the more liberal `[\x30-\x3F]*`
+but that seems never used for key codes. If the number (vtcode or unicode) or the
+modifiers are not given, we assume these are '1'.
 We then accept the following key sequences:
 
   key ::= ESC                                              # lone ESC
@@ -7206,7 +7225,7 @@ And then translate the following special cases into a standard form:
   ESC 'O' [1-9] final ~>  ESC 'O' '1' ';' [1-9] final # modifiers as parameter 1 (like on Haiku)
   ESC '[' [1-9] [^~u] ~>  ESC 'O' '1' ';' [1-9] final # modifiers as parameter 1
 
-The modifier keys are encoded as "(modifiers-1) & mask" where the 
+The modifier keys are encoded as "(modifiers-1) & mask" where the
 shift mask is 0x01, alt 0x02 and ctrl 0x04. Therefore:
 ------------------------------------------------------------
   1:  -           5: ctrl            9: alt  (for minicom)
@@ -7229,37 +7248,37 @@ vt100:  ESC [ vtcode ';' modifiers '~'
 
 xterm: ESC [ 1 ';' modifiers [A-Z]
 -----------------------------------
-  A: Up          N: F2        
-  B: Down        O: F3       
-  C: Right       P: F4       
-  D: Left        Q: F5       
-  E: '5'         R: F6       
-  F: End         S: F7       
-  G:             T: F8       
-  H: Home        U: PageDn       
-  I: PageUp      V: PageUp       
-  J:             W: F11      
-  K:             X: F12      
-  L: Ins         Y: End      
+  A: Up          N: F2
+  B: Down        O: F3
+  C: Right       P: F4
+  D: Left        Q: F5
+  E: '5'         R: F6
+  F: End         S: F7
+  G:             T: F8
+  H: Home        U: PageDn
+  I: PageUp      V: PageUp
+  J:             W: F11
+  K:             X: F12
+  L: Ins         Y: End
   M: F1          Z: shift+Tab
 
 SS3:   ESC 'O' 1 ';' modifiers [A-Za-z]
 ---------------------------------------
   (normal)                       (numpad)
-  A: Up          N:              a: Up        n:           
-  B: Down        O:              b: Down      o: 
-  C: Right       P: F1           c: Right     p: Ins  
-  D: Left        Q: F2           d: Left      q: End  
-  E: '5'         R: F3           e:           r: Down 
+  A: Up          N:              a: Up        n:
+  B: Down        O:              b: Down      o:
+  C: Right       P: F1           c: Right     p: Ins
+  D: Left        Q: F2           d: Left      q: End
+  E: '5'         R: F3           e:           r: Down
   F: End         S: F4           f:           s: PageDn
-  G:             T: F5           g:           t: Left 
+  G:             T: F5           g:           t: Left
   H: Home        U: F6           h:           u: '5'
   I: Tab         V: F7           i:           v: Right
-  J:             W: F8           j: '*'       w: Home 
-  K:             X: F9           k: '+'       x: Up 
-  L:             Y: F10          l: ','       y: PageUp 
-  M: \x0A '\n'   Z: shift+Tab    m: '-'       z:  
-    
+  J:             W: F8           j: '*'       w: Home
+  K:             X: F9           k: '+'       x: Up
+  L:             Y: F10          l: ','       y: PageUp
+  M: \x0A '\n'   Z: shift+Tab    m: '-'       z:
+
 -------------------------------------------------------------*/
 
 //-------------------------------------------------------------
@@ -7268,15 +7287,15 @@ SS3:   ESC 'O' 1 ';' modifiers [A-Za-z]
 
 static code_t esc_decode_vt(uint32_t vt_code ) {
   switch(vt_code) {
-    case 1: return KEY_HOME; 
+    case 1: return KEY_HOME;
     case 2: return KEY_INS;
     case 3: return KEY_DEL;
-    case 4: return KEY_END;          
+    case 4: return KEY_END;
     case 5: return KEY_PAGEUP;
     case 6: return KEY_PAGEDOWN;
     case 7: return KEY_HOME;
-    case 8: return KEY_END;          
-    default: 
+    case 8: return KEY_END;
+    default:
       if (vt_code >= 10 && vt_code <= 15) return KEY_F(1  + (vt_code - 10));
       if (vt_code == 16) return KEY_F5; // minicom
       if (vt_code >= 17 && vt_code <= 21) return KEY_F(6  + (vt_code - 17));
@@ -7299,8 +7318,8 @@ static code_t esc_decode_xterm( uint8_t xcode ) {
     case 'H': return KEY_HOME;
     case 'Z': return KEY_TAB | KEY_MOD_SHIFT;
     // Freebsd:
-    case 'I': return KEY_PAGEUP;  
-    case 'L': return KEY_INS;   
+    case 'I': return KEY_PAGEUP;
+    case 'L': return KEY_INS;
     case 'M': return KEY_F1;
     case 'N': return KEY_F2;
     case 'O': return KEY_F3;
@@ -7312,14 +7331,14 @@ static code_t esc_decode_xterm( uint8_t xcode ) {
     case 'U': return KEY_PAGEDOWN; // Mach
     case 'V': return KEY_PAGEUP;   // Mach
     case 'W': return KEY_F11;
-    case 'X': return KEY_F12;    
-    case 'Y': return KEY_END;      // Mach       
+    case 'X': return KEY_F12;
+    case 'Y': return KEY_END;      // Mach
   }
   return KEY_NONE;
 }
 
 static code_t esc_decode_ss3( uint8_t ss3_code ) {
-  // ESC O 
+  // ESC O
   switch(ss3_code) {
     case 'A': return KEY_UP;
     case 'B': return KEY_DOWN;
@@ -7330,7 +7349,7 @@ static code_t esc_decode_ss3( uint8_t ss3_code ) {
     case 'H': return KEY_HOME;
     case 'I': return KEY_TAB;
     case 'Z': return KEY_TAB | KEY_MOD_SHIFT;
-    case 'M': return KEY_LINEFEED; 
+    case 'M': return KEY_LINEFEED;
     case 'P': return KEY_F1;
     case 'Q': return KEY_F2;
     case 'R': return KEY_F3;
@@ -7350,19 +7369,19 @@ static code_t esc_decode_ss3( uint8_t ss3_code ) {
     case 'j': return '*';
     case 'k': return '+';
     case 'l': return ',';
-    case 'm': return '-'; 
+    case 'm': return '-';
     case 'n': return KEY_DEL; // '.'
-    case 'o': return '/'; 
+    case 'o': return '/';
     case 'p': return KEY_INS;
-    case 'q': return KEY_END;  
-    case 'r': return KEY_DOWN; 
-    case 's': return KEY_PAGEDOWN; 
-    case 't': return KEY_LEFT; 
+    case 'q': return KEY_END;
+    case 'r': return KEY_DOWN;
+    case 's': return KEY_PAGEDOWN;
+    case 't': return KEY_LEFT;
     case 'u': return '5';
     case 'v': return KEY_RIGHT;
-    case 'w': return KEY_HOME;  
-    case 'x': return KEY_UP; 
-    case 'y': return KEY_PAGEUP;   
+    case 'w': return KEY_HOME;
+    case 'x': return KEY_UP;
+    case 'y': return KEY_PAGEUP;
   }
   return KEY_NONE;
 }
@@ -7371,18 +7390,18 @@ static void tty_read_csi_num(tty_t* tty, uint8_t* ppeek, uint32_t* num, long esc
   *num = 1; // default
   ssize_t count = 0;
   uint32_t i = 0;
-  while (*ppeek >= '0' && *ppeek <= '9' && count < 16) {    
+  while (*ppeek >= '0' && *ppeek <= '9' && count < 16) {
     uint8_t digit = *ppeek - '0';
-    if (!tty_readc_noblock(tty,ppeek,esc_timeout)) break;  // peek is not modified in this case 
+    if (!tty_readc_noblock(tty,ppeek,esc_timeout)) break;  // peek is not modified in this case
     count++;
-    i = 10*i + digit; 
+    i = 10*i + digit;
   }
   if (count > 0) *num = i;
 }
 
 static code_t tty_read_csi(tty_t* tty, uint8_t c1, uint8_t peek, code_t mods0, long esc_timeout) {
   // CSI starts with 0x9b (c1=='[') | ESC [ (c1=='[') | ESC [Oo?] (c1 == 'O')  /* = SS3 */
-  
+
   // check for extra starter '[' (Linux sends ESC [ [ 15 ~  for F5 for example)
   if (c1 == '[' && strchr("[Oo", (char)peek) != NULL) {
     uint8_t cx = peek;
@@ -7393,9 +7412,9 @@ static code_t tty_read_csi(tty_t* tty, uint8_t c1, uint8_t peek, code_t mods0, l
 
   // "special" characters ('?' is used for private sequences)
   uint8_t special = 0;
-  if (strchr(":<=>?",(char)peek) != NULL) { 
+  if (strchr(":<=>?",(char)peek) != NULL) {
     special = peek;
-    if (!tty_readc_noblock(tty,&peek,esc_timeout)) {  
+    if (!tty_readc_noblock(tty,&peek,esc_timeout)) {
       tty_cpush_char(tty,special); // recover
       return (key_unicode(c1) | KEY_MOD_ALT);       // Alt+<anychar>
     }
@@ -7415,16 +7434,16 @@ static code_t tty_read_csi(tty_t* tty, uint8_t c1, uint8_t peek, code_t mods0, l
   code_t  modifiers = mods0;
 
   debug_msg("tty: escape sequence: ESC %c %c %d;%d %c\n", c1, (special == 0 ? '_' : special), num1, num2, final);
-  
+
   // Adjust special cases into standard ones.
   if ((final == '@' || final == '9') && c1 == '[' && num1 == 1) {
     // ESC [ @, ESC [ 9  : on Mach
     if (final == '@')      num1 = 3; // DEL
-    else if (final == '9') num1 = 2; // INS 
+    else if (final == '9') num1 = 2; // INS
     final = '~';
   }
-  else if (final == '^' || final == '$' || final == '@') {  
-    // Eterm/rxvt/urxt  
+  else if (final == '^' || final == '$' || final == '@') {
+    // Eterm/rxvt/urxt
     if (final=='^') modifiers |= KEY_MOD_CTRL;
     if (final=='$') modifiers |= KEY_MOD_SHIFT;
     if (final=='@') modifiers |= KEY_MOD_SHIFT | KEY_MOD_CTRL;
@@ -7435,9 +7454,9 @@ static code_t tty_read_csi(tty_t* tty, uint8_t c1, uint8_t peek, code_t mods0, l
     modifiers |= KEY_MOD_SHIFT;
     final = 'A' + (final - 'a');
   }
-  
+
   if (((c1 == 'O') || (c1=='[' && final != '~' && final != 'u')) &&
-      (num2 == 1 && num1 > 1 && num1 <= 8)) 
+      (num2 == 1 && num1 > 1 && num1 <= 8))
   {
     // on haiku the modifier can be parameter 1, make it parameter 2 instead
     num2 = num1;
@@ -7468,16 +7487,16 @@ static code_t tty_read_csi(tty_t* tty, uint8_t c1, uint8_t peek, code_t mods0, l
     code = esc_decode_ss3(final);
   }
   else if (num1 == 1 && final >= 'A' && final <= 'Z') {
-    // xterm 
+    // xterm
     code = esc_decode_xterm(final);
   }
   else if (c1 == '[' && final == 'R') {
     // cursor position
     code = KEY_NONE;
-  }  
+  }
 
-  if (code == KEY_NONE && final != 'R') { 
-    debug_msg("tty: ignore escape sequence: ESC %c %zu;%zu %c\n", c1, num1, num2, final); 
+  if (code == KEY_NONE && final != 'R') {
+      debug_msg("tty: ignore escape sequence: ESC %c %zu;%zu %c\n", c1, (size_t) num1, (size_t) num2, final);
   }
   return (code != KEY_NONE ? (code | modifiers) : KEY_NONE);
 }
@@ -7505,7 +7524,7 @@ static code_t tty_read_osc( tty_t* tty, uint8_t* ppeek, long esc_timeout ) {
 ic_private code_t tty_read_esc(tty_t* tty, long esc_initial_timeout, long esc_timeout) {
   code_t  mods = 0;
   uint8_t peek = 0;
-  
+
   // lone ESC?
   if (!tty_readc_noblock(tty, &peek, esc_initial_timeout)) return KEY_ESC;
 
@@ -7525,7 +7544,7 @@ ic_private code_t tty_read_esc(tty_t* tty, long esc_initial_timeout, long esc_ti
   if (peek == 'O' || peek == 'o' || peek == '?' /*vt52*/) {
     uint8_t c1 = peek;
     if (!tty_readc_noblock(tty, &peek, esc_timeout)) goto alt;
-    if (c1 == 'o') { 
+    if (c1 == 'o') {
       // ETerm uses this for ctrl+<cursor>
       mods |= KEY_MOD_CTRL;
     }
@@ -7539,7 +7558,7 @@ ic_private code_t tty_read_esc(tty_t* tty, long esc_initial_timeout, long esc_ti
     return tty_read_osc(tty, &peek, esc_timeout);  // ESC ] ...
   }
 
-alt:  
+alt:
   // Alt+<char>
   return (key_unicode(peek) | KEY_MOD_ALT);  // ESC <anychar>
 }
@@ -7588,13 +7607,13 @@ struct tty_s {
   bool      has_term_resize_event;  // are resize events generated?
   bool      term_resize_event;      // did a term resize happen?
   alloc_t*  mem;                    // memory allocator
-  code_t    pushbuf[TTY_PUSH_MAX];  // push back buffer for full key codes  
-  ssize_t   push_count;               
+  code_t    pushbuf[TTY_PUSH_MAX];  // push back buffer for full key codes
+  ssize_t   push_count;
   uint8_t   cpushbuf[TTY_PUSH_MAX]; // low level push back buffer for bytes
   ssize_t   cpush_count;
   long      esc_initial_timeout;    // initial ms wait to see if ESC starts an escape sequence
   long      esc_timeout;            // follow up delay for characters in an escape sequence
-  #if defined(_WIN32)               
+  #if defined(_WIN32)
   HANDLE    hcon;                   // console input handle
   DWORD     hcon_orig_mode;         // original console mode
   #else
@@ -7668,7 +7687,7 @@ static code_t tty_read_utf8( tty_t* tty, uint8_t c0 ) {
       }
     }
   }
-  
+
   buf[count] = 0;
   debug_msg("tty: read utf8: count: %zd: %02x,%02x,%02x,%02x", count, buf[0], buf[1], buf[2], buf[3]);
 
@@ -7690,8 +7709,8 @@ static code_t tty_read_utf8( tty_t* tty, uint8_t c0 ) {
 static bool tty_code_pop(tty_t* tty, code_t* code);
 
 
-// read a single char/key 
-ic_private bool tty_read_timeout(tty_t* tty, long timeout_ms, code_t* code) 
+// read a single char/key
+ic_private bool tty_read_timeout(tty_t* tty, long timeout_ms, code_t* code)
 {
   // is there a push_count back code?
   if (tty_code_pop(tty,code)) {
@@ -7701,7 +7720,7 @@ ic_private bool tty_read_timeout(tty_t* tty, long timeout_ms, code_t* code)
   // read a single char/byte from a character stream
   uint8_t c;
   if (!tty_readc_noblock(tty, &c, timeout_ms)) return false;
-  
+
   if (c == KEY_ESC) {
     // escape sequence?
     *code = tty_read_esc(tty, tty->esc_initial_timeout, tty->esc_timeout);
@@ -7727,7 +7746,7 @@ ic_private bool tty_read_timeout(tty_t* tty, long timeout_ms, code_t* code)
 static code_t modify_code( code_t code ) {
   code_t key  = KEY_NO_MODS(code);
   code_t mods = KEY_MODS(code);
-  debug_msg( "tty: readc %s%s%s 0x%03x ('%c')\n", 
+  debug_msg( "tty: readc %s%s%s 0x%03x ('%c')\n",
               mods&KEY_MOD_SHIFT ? "shift+" : "",  mods&KEY_MOD_CTRL  ? "ctrl+" : "", mods&KEY_MOD_ALT   ? "alt+" : "",
               key, (key >= ' ' && key <= '~' ? key : ' '));
 
@@ -7735,7 +7754,7 @@ static code_t modify_code( code_t code ) {
   if (key == KEY_RUBOUT) {
     code = KEY_BACKSP | mods;
   }
-  // ctrl+'_' is translated to '\x1F' on Linux, translate it back 
+  // ctrl+'_' is translated to '\x1F' on Linux, translate it back
   else if (key == key_char('\x1F') && (mods & KEY_MOD_ALT) == 0) {
     key = '_';
     code = WITH_CTRL(key_char('_'));
@@ -7755,17 +7774,17 @@ static code_t modify_code( code_t code ) {
   else if (code == WITH_ALT(KEY_UP) || code == WITH_ALT('<') || code == WITH_CTRL(KEY_HOME)) {
     code = KEY_PAGEUP;
   }
-  
+
   // treat C0 codes without KEY_MOD_CTRL
   if (key < ' ' && (mods&KEY_MOD_CTRL) != 0) {
-    code &= ~KEY_MOD_CTRL; 
+    code &= ~KEY_MOD_CTRL;
   }
-  
+
   return code;
 }
 
 
-// read a single char/key 
+// read a single char/key
 ic_private code_t tty_read(tty_t* tty)
 {
   code_t code;
@@ -7777,7 +7796,7 @@ ic_private code_t tty_read(tty_t* tty)
 // Read back an ANSI query response
 //-------------------------------------------------------------
 
-ic_private bool tty_read_esc_response(tty_t* tty, char esc_start, bool final_st, char* buf, ssize_t buflen ) 
+ic_private bool tty_read_esc_response(tty_t* tty, char esc_start, bool final_st, char* buf, ssize_t buflen )
 {
   buf[0] = 0;
   ssize_t len = 0;
@@ -7810,7 +7829,7 @@ ic_private bool tty_read_esc_response(tty_t* tty, char esc_start, bool final_st,
         break;
       }
     }
-    buf[len++] = (char)c; 
+    buf[len++] = (char)c;
   }
   buf[len] = 0;
   debug_msg("tty: escape query response: %s\n", buf);
@@ -7828,7 +7847,7 @@ static bool tty_code_pop( tty_t* tty, code_t* code ) {
   return true;
 }
 
-ic_private void tty_code_pushback( tty_t* tty, code_t c ) {   
+ic_private void tty_code_pushback( tty_t* tty, code_t c ) {
   // note: must be signal safe
   if (tty->push_count >= TTY_PUSH_MAX) return;
   tty->pushbuf[tty->push_count] = c;
@@ -7840,7 +7859,7 @@ ic_private void tty_code_pushback( tty_t* tty, code_t c ) {
 // low-level character pushback (for escape sequences and windows)
 //-------------------------------------------------------------
 
-ic_private bool tty_cpop(tty_t* tty, uint8_t* c) {  
+ic_private bool tty_cpop(tty_t* tty, uint8_t* c) {
   if (tty->cpush_count <= 0) {  // do not modify c on failure (see `tty_decode_unicode`)
     return false;
   }
@@ -7877,7 +7896,7 @@ static void tty_cpushf(tty_t* tty, const char* fmt, ...) {
   return;
 }
 
-ic_private void tty_cpush_char(tty_t* tty, uint8_t c) {  
+ic_private void tty_cpush_char(tty_t* tty, uint8_t c) {
   uint8_t buf[2];
   buf[0] = c;
   buf[1] = 0;
@@ -7909,8 +7928,8 @@ static void tty_cpush_csi_xterm( tty_t* tty, code_t mods, char xcode ) {
 
 // push ESC [ <unicode> ; <mods> u
 static void tty_cpush_csi_unicode( tty_t* tty, code_t mods, uint32_t unicode ) {
-  if ((unicode < 0x80 && mods == 0) || 
-      (mods == KEY_MOD_CTRL && unicode < ' ' && unicode != KEY_TAB && unicode != KEY_ENTER 
+  if ((unicode < 0x80 && mods == 0) ||
+      (mods == KEY_MOD_CTRL && unicode < ' ' && unicode != KEY_TAB && unicode != KEY_ENTER
                         && unicode != KEY_LINEFEED && unicode != KEY_BACKSP) ||
       (mods == KEY_MOD_SHIFT && unicode >= ' ' && unicode <= KEY_RUBOUT)) {
     tty_cpush_char(tty,(uint8_t)unicode);
@@ -7938,7 +7957,7 @@ static bool tty_init_utf8(tty_t* tty) {
   return true;
 }
 
-ic_private tty_t* tty_new(alloc_t* mem, int fd_in) 
+ic_private tty_t* tty_new(alloc_t* mem, int fd_in)
 {
   tty_t* tty = mem_zalloc_tp(mem, tty_t);
   tty->mem = mem;
@@ -7946,7 +7965,7 @@ ic_private tty_t* tty_new(alloc_t* mem, int fd_in)
   #if defined(__APPLE__)
   tty->esc_initial_timeout = 200;  // apple use ESC+<key> for alt-<key>
   #else
-  tty->esc_initial_timeout = 100; 
+  tty->esc_initial_timeout = 100;
   #endif
   tty->esc_timeout = 10;
   if (!(isatty(tty->fd_in) && tty_init_raw(tty) && tty_init_utf8(tty))) {
@@ -7972,7 +7991,7 @@ ic_private bool tty_term_resize_event(tty_t* tty) {
   if (tty == NULL) return true;
   if (tty->has_term_resize_event) {
     if (!tty->term_resize_event) return false;
-    tty->term_resize_event = false;  // reset.   
+    tty->term_resize_event = false;  // reset.
   }
   return true;  // always return true on systems without a resize event (more expensive but still ok)
 }
@@ -7999,7 +8018,7 @@ static bool tty_readc_blocking(tty_t* tty, uint8_t* c) {
 
 
 // non blocking read -- with a small timeout used for reading escape sequences.
-ic_private bool tty_readc_noblock(tty_t* tty, uint8_t* c, long timeout_ms) 
+ic_private bool tty_readc_noblock(tty_t* tty, uint8_t* c, long timeout_ms)
 {
   // in our pushback buffer?
   if (tty_cpop(tty, c)) return true;
@@ -8024,18 +8043,18 @@ ic_private bool tty_readc_noblock(tty_t* tty, uint8_t* c, long timeout_ms)
   #endif
 
   // otherwise block for at most timeout milliseconds
-  #if defined(FD_SET)   
+  #if defined(FD_SET)
     // we can use select to detect when input becomes available
     fd_set readset;
     struct timeval time;
     FD_ZERO(&readset);
     FD_SET(tty->fd_in, &readset);
     time.tv_sec  = (timeout_ms > 0 ? timeout_ms / 1000 : 0);
-    time.tv_usec = (timeout_ms > 0 ? 1000*(timeout_ms % 1000) : 0);      
+    time.tv_usec = (timeout_ms > 0 ? 1000*(timeout_ms % 1000) : 0);
     if (select(tty->fd_in + 1, &readset, NULL, NULL, &time) == 1) {
       // input available
       return tty_readc_blocking(tty, c);
-    }    
+    }
   #else
     // no select, we cannot timeout; use usleeps :-(
     // todo: this seems very rare nowadays; should be even support this?
@@ -8068,14 +8087,14 @@ ic_private bool tty_readc_noblock(tty_t* tty, uint8_t* c, long timeout_ms)
         usleep(50*1000L); // sleep at most 0.05s at a time
         timeout_ms -= 100;
         if (timeout_ms < 0) { timeout_ms = 0; }
-      }      
-    } 
+      }
+    }
     while (timeout_ms > 0);
-  #endif  
+  #endif
   return false;
 }
 
-#if defined(TIOCSTI) 
+#if defined(TIOCSTI)
 ic_private bool tty_async_stop(const tty_t* tty) {
   // insert ^C in the input stream
   char c = KEY_CTRL_C;
@@ -8089,7 +8108,7 @@ ic_private bool tty_async_stop(const tty_t* tty) {
 
 // We install various signal handlers to restore the terminal settings
 // in case of a terminating signal. This is also used to catch terminal window resizes.
-// This is not strictly needed so this can be disabled on 
+// This is not strictly needed so this can be disabled on
 // (older) platforms that do not support signal handling well.
 #if defined(SIGWINCH) && defined(SA_RESTART)  // ensure basic signal functionality is defined
 
@@ -8107,15 +8126,15 @@ typedef struct signal_handler_s {
 
 static signal_handler_t sighandlers[] = {
   { SIGWINCH, {0} },
-  { SIGTERM , {0} }, 
-  { SIGINT  , {0} }, 
-  { SIGQUIT , {0} }, 
+  { SIGTERM , {0} },
+  { SIGINT  , {0} },
+  { SIGQUIT , {0} },
   { SIGHUP  , {0} },
-  { SIGSEGV , {0} }, 
-  { SIGTRAP , {0} }, 
-  { SIGBUS  , {0} }, 
+  { SIGSEGV , {0} },
+  { SIGTRAP , {0} },
+  { SIGBUS  , {0} },
   { SIGTSTP , {0} },
-  { SIGTTIN , {0} }, 
+  { SIGTTIN , {0} },
   { SIGTTOU , {0} },
   { 0       , {0} }
 };
@@ -8154,7 +8173,7 @@ static void signals_install(tty_t* tty) {
   struct sigaction handler;
   memset(&handler,0,sizeof(handler));
   sigemptyset(&handler.sa_mask);
-  handler.sa_sigaction = &sig_handler; 
+  handler.sa_sigaction = &sig_handler;
   handler.sa_flags = SA_RESTART;
   // install for all signals
   for( signal_handler_t* sh = sighandlers; sh->signum != 0; sh++ ) {
@@ -8167,7 +8186,7 @@ static void signals_install(tty_t* tty) {
           sig_tty->has_term_resize_event = true;
         };
       }
-    }    
+    }
   }
 }
 
@@ -8195,7 +8214,7 @@ static void signals_restore(void) {
 ic_private bool tty_start_raw(tty_t* tty) {
   if (tty == NULL) return false;
   if (tty->raw_enabled) return true;
-  if (tcsetattr(tty->fd_in,TCSAFLUSH,&tty->raw_ios) < 0) return false;  
+  if (tcsetattr(tty->fd_in,TCSAFLUSH,&tty->raw_ios) < 0) return false;
   tty->raw_enabled = true;
   return true;
 }
@@ -8208,15 +8227,15 @@ ic_private void tty_end_raw(tty_t* tty) {
   tty->raw_enabled = false;
 }
 
-static bool tty_init_raw(tty_t* tty) 
-{  
+static bool tty_init_raw(tty_t* tty)
+{
   // Set input to raw mode. See <https://man7.org/linux/man-pages/man3/termios.3.html>.
   if (tcgetattr(tty->fd_in,&tty->orig_ios) == -1) return false;
-  tty->raw_ios = tty->orig_ios; 
+  tty->raw_ios = tty->orig_ios;
   // input: no break signal, no \r to \n, no parity check, no 8-bit to 7-bit, no flow control
   tty->raw_ios.c_iflag &= ~(unsigned long)(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
   // control: allow 8-bit
-  tty->raw_ios.c_cflag |= CS8;  
+  tty->raw_ios.c_cflag |= CS8;
   // local: no echo, no line-by-line (canonical), no extended input processing, no signals for ^z,^c
   tty->raw_ios.c_lflag &= ~(unsigned long)(ECHO | ICANON | IEXTEN | ISIG);
   // 1 byte at a time, no delay
@@ -8225,7 +8244,7 @@ static bool tty_init_raw(tty_t* tty)
 
   // store in global so our signal handlers can restore the terminal mode
   signals_install(tty);
-  
+
   return true;
 }
 
@@ -8254,7 +8273,7 @@ ic_private bool tty_readc_noblock(tty_t* tty, uint8_t* c, long timeout_ms) {  //
 }
 
 // Read from the console input events and push escape codes into the tty cbuffer.
-static void tty_waitc_console(tty_t* tty, long timeout_ms) 
+static void tty_waitc_console(tty_t* tty, long timeout_ms)
 {
   //  wait for a key down event
   INPUT_RECORD inp;
@@ -8264,7 +8283,7 @@ static void tty_waitc_console(tty_t* tty, long timeout_ms)
     // check if there are events if in non-blocking timeout mode
     if (timeout_ms >= 0) {
       // first peek ahead
-      if (!GetNumberOfConsoleInputEvents(tty->hcon, &count)) return;  
+      if (!GetNumberOfConsoleInputEvents(tty->hcon, &count)) return;
       if (count == 0) {
         if (timeout_ms == 0) {
           // out of time
@@ -8287,7 +8306,7 @@ static void tty_waitc_console(tty_t* tty, long timeout_ms)
             case WAIT_TIMEOUT:
             case WAIT_ABANDONED:
             case WAIT_FAILED:
-            default: 
+            default:
               return;
           }
         }
@@ -8304,12 +8323,12 @@ static void tty_waitc_console(tty_t* tty, long timeout_ms)
       continue;
     }
 
-    // wait for key down events 
+    // wait for key down events
     if (inp.EventType != KEY_EVENT) continue;
 
     // the modifier state
     DWORD modstate = inp.Event.KeyEvent.dwControlKeyState;
-    
+
     // we need to handle shift up events separately
     if (!inp.Event.KeyEvent.bKeyDown && inp.Event.KeyEvent.wVirtualKeyCode == VK_SHIFT) {
       modstate &= (DWORD)~SHIFT_PRESSED;
@@ -8319,7 +8338,7 @@ static void tty_waitc_console(tty_t* tty, long timeout_ms)
     DWORD altgr = LEFT_CTRL_PRESSED | RIGHT_ALT_PRESSED;
     if ((modstate & altgr) == altgr) { modstate &= ~altgr; }
 
-    
+
     // get modifiers
     code_t mods = 0;
     if ((modstate & ( RIGHT_CTRL_PRESSED | LEFT_CTRL_PRESSED )) != 0) mods |= KEY_MOD_CTRL;
@@ -8335,19 +8354,19 @@ static void tty_waitc_console(tty_t* tty, long timeout_ms)
     if (!inp.Event.KeyEvent.bKeyDown && virt != VK_MENU) {
 			continue;
 		}
-    
-    if (chr == 0) { 
+
+    if (chr == 0) {
       switch (virt) {
         case VK_UP:     tty_cpush_csi_xterm(tty, mods, 'A'); return;
         case VK_DOWN:   tty_cpush_csi_xterm(tty, mods, 'B'); return;
         case VK_RIGHT:  tty_cpush_csi_xterm(tty, mods, 'C'); return;
         case VK_LEFT:   tty_cpush_csi_xterm(tty, mods, 'D'); return;
-        case VK_END:    tty_cpush_csi_xterm(tty, mods, 'F'); return; 
+        case VK_END:    tty_cpush_csi_xterm(tty, mods, 'F'); return;
         case VK_HOME:   tty_cpush_csi_xterm(tty, mods, 'H'); return;
         case VK_DELETE: tty_cpush_csi_vt(tty,mods,3); return;
         case VK_PRIOR:  tty_cpush_csi_vt(tty,mods,5); return;   //page up
         case VK_NEXT:   tty_cpush_csi_vt(tty,mods,6); return;   //page down
-        case VK_TAB:    tty_cpush_csi_unicode(tty,mods,9);  return; 
+        case VK_TAB:    tty_cpush_csi_unicode(tty,mods,9);  return;
         case VK_RETURN: tty_cpush_csi_unicode(tty,mods,13); return;
         default: {
           uint32_t vtcode = 0;
@@ -8365,12 +8384,12 @@ static void tty_waitc_console(tty_t* tty, long timeout_ms)
             return;
           }
         }
-      }    
+      }
       // ignore other control keys (shift etc).
     }
     // high surrogate pair
     else if (chr >= 0xD800 && chr <= 0xDBFF) {
-			surrogate_hi = (chr - 0xD800);			
+			surrogate_hi = (chr - 0xD800);
     }
     // low surrogate pair
     else if (chr >= 0xDC00 && chr <= 0xDFFF) {
@@ -8385,7 +8404,7 @@ static void tty_waitc_console(tty_t* tty, long timeout_ms)
 			return;
     }
   }
-}  
+}
 
 ic_private bool tty_async_stop(const tty_t* tty) {
   // send ^c
@@ -8404,14 +8423,14 @@ ic_private bool tty_async_stop(const tty_t* tty) {
 ic_private bool tty_start_raw(tty_t* tty) {
   if (tty->raw_enabled) return true;
   GetConsoleMode(tty->hcon,&tty->hcon_orig_mode);
-  DWORD mode = ENABLE_QUICK_EDIT_MODE   // cut&paste allowed 
-             | ENABLE_WINDOW_INPUT      // to catch resize events 
-             // | ENABLE_VIRTUAL_TERMINAL_INPUT 
+  DWORD mode = ENABLE_QUICK_EDIT_MODE   // cut&paste allowed
+             | ENABLE_WINDOW_INPUT      // to catch resize events
+             // | ENABLE_VIRTUAL_TERMINAL_INPUT
              // | ENABLE_PROCESSED_INPUT
              ;
   SetConsoleMode(tty->hcon, mode );
-  tty->raw_enabled = true; 
-  return true; 
+  tty->raw_enabled = true;
+  return true;
 }
 
 ic_private void tty_end_raw(tty_t* tty) {
@@ -8421,7 +8440,7 @@ ic_private void tty_end_raw(tty_t* tty) {
 }
 
 static bool tty_init_raw(tty_t* tty) {
-  tty->hcon = GetStdHandle( STD_INPUT_HANDLE );  
+  tty->hcon = GetStdHandle( STD_INPUT_HANDLE );
   tty->has_term_resize_event = true;
   return true;
 }
@@ -8442,9 +8461,9 @@ static void tty_done_raw(tty_t* tty) {
 -----------------------------------------------------------------------------*/
 
 // get `wcwidth` for the column width of unicode characters
-// note: for now the OS provided one is unused as we see quite a bit of variation 
+// note: for now the OS provided one is unused as we see quite a bit of variation
 // among platforms and including our own seems more reliable.
-/* 
+/*
 #if defined(__linux__) || defined(__freebsd__)
 // use the system supplied one
 #if !defined(_XOPEN_SOURCE)
@@ -8764,7 +8783,7 @@ static int mk_wcwidth(int32_t ucs) {
 struct stringbuf_s {
   char*     buf;
   ssize_t   buflen;
-  ssize_t   count;  
+  ssize_t   count;
   alloc_t*  mem;
 };
 
@@ -8794,11 +8813,11 @@ static ssize_t utf8_char_width( const char* s, ssize_t n ) {
     int w = wcwidth(c);
     return w;
   }
-  else if (b <= 0xEF && n >= 3) { // b >= 0xE0  // 3 bytes 
+  else if (b <= 0xEF && n >= 3) { // b >= 0xE0  // 3 bytes
     c = (((b & 0x0F) << 12) | ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
-    return wcwidth(c);    
+    return wcwidth(c);
   }
-  else if (b <= 0xF4 && n >= 4) { // b >= 0xF0  // 4 bytes 
+  else if (b <= 0xF4 && n >= 4) { // b >= 0xF0  // 4 bytes
     c = (((b & 0x07) << 18) | ((s[1] & 0x3F) << 12) | ((s[2] & 0x3F) << 6) | (s[3] & 0x3F));
     return wcwidth(c);
   }
@@ -8832,7 +8851,7 @@ static ssize_t str_column_width_n( const char* s, ssize_t len ) {
   while (s[pos] != 0 && (ofs = str_next_ofs(s, len, pos, &cw)) > 0) {
     cwidth += cw;
     pos += ofs;
-  }  
+  }
   return cwidth;
 }
 
@@ -8871,7 +8890,7 @@ ic_private ssize_t str_take_while_fit( const char* s, ssize_t max_width) {
 
 
 //-------------------------------------------------------------
-// String navigation 
+// String navigation
 //-------------------------------------------------------------
 
 // get offset of the previous codepoint. does not skip back over CSI sequences.
@@ -8891,7 +8910,7 @@ ic_private ssize_t str_prev_ofs( const char* s, ssize_t pos, ssize_t* width ) {
 
 // skip an escape sequence
 // <https://www.xfree86.org/current/ctlseqs.html>
-ic_private bool skip_esc( const char* s, ssize_t len, ssize_t* esclen ) {  
+ic_private bool skip_esc( const char* s, ssize_t len, ssize_t* esclen ) {
   if (s == NULL || len <= 1 || s[0] != '\x1B') return false;
   if (esclen != NULL) *esclen = 0;
   if (strchr("[PX^_]",s[1]) != NULL) {
@@ -8914,6 +8933,13 @@ ic_private bool skip_esc( const char* s, ssize_t len, ssize_t* esclen ) {
       }
     }
   }
+
+  // replace the code below, this is equivalent
+  if (esclen != NULL) *esclen = 2;
+  return true;
+
+#ifdef COVERITY_FLAGS
+  // the code inside both branches of this is identical
   if (strchr(" #%()*+",s[1]) != NULL) {
     // assume escape sequence of length 3 (like ESC % G)
     if (esclen != NULL) *esclen = 2;
@@ -8925,6 +8951,7 @@ ic_private bool skip_esc( const char* s, ssize_t len, ssize_t* esclen ) {
     return true;
   }
   return false;
+#endif // COVERITY_FLAGS
 }
 
 // Offset to the next codepoint, treats CSI escape sequences as a single code point.
@@ -8932,7 +8959,7 @@ ic_private ssize_t str_next_ofs( const char* s, ssize_t len, ssize_t pos, ssize_
   ssize_t ofs = 0;
   if (s != NULL && len > pos) {
     if (skip_esc(s+pos,len-pos,&ofs)) {
-      // skip escape sequence      
+      // skip escape sequence
     }
     else {
       ofs = 1;
@@ -8941,8 +8968,8 @@ ic_private ssize_t str_next_ofs( const char* s, ssize_t len, ssize_t pos, ssize_
         uint8_t u = (uint8_t)s[pos + ofs];
         if (u < 0x80 || u > 0xBF) break;  // break if not a follower
         ofs++;
-      }      
-    } 
+      }
+    }
   }
   if (cwidth != NULL) *cwidth = char_column_width( s+pos, ofs );
   return ofs;
@@ -8967,16 +8994,16 @@ static ssize_t str_find_backward( const char* s, ssize_t len, ssize_t pos, ic_is
   // skip matching first (say, whitespace in case of the previous start-of-word)
   if (skip_immediate_matches) {
     do {
-      ssize_t prev = str_prev_ofs(s, i, NULL); 
+      ssize_t prev = str_prev_ofs(s, i, NULL);
       if (prev <= 0) break;
       assert(i - prev >= 0);
       if (!match(s + i - prev, (long)prev)) break;
       i -= prev;
-    } while (i > 0);  
+    } while (i > 0);
   }
   // find match
   do {
-    ssize_t prev = str_prev_ofs(s, i, NULL); 
+    ssize_t prev = str_prev_ofs(s, i, NULL);
     if (prev <= 0) break;
     assert(i - prev >= 0);
     if (match(s + i - prev, (long)prev)) {
@@ -8990,22 +9017,22 @@ static ssize_t str_find_backward( const char* s, ssize_t len, ssize_t pos, ic_is
 static ssize_t str_find_forward( const char* s, ssize_t len, ssize_t pos, ic_is_char_class_fun_t* match, bool skip_immediate_matches ) {
   if (s == NULL || len < 0) return -1;
   if (pos > len) pos = len;
-  if (pos < 0) pos = 0;  
+  if (pos < 0) pos = 0;
   ssize_t i = pos;
   ssize_t next;
   // skip matching first (say, whitespace in case of the next end-of-word)
   if (skip_immediate_matches) {
     do {
-      next = str_next_ofs(s, len, i, NULL); 
+      next = str_next_ofs(s, len, i, NULL);
       if (next <= 0) break;
       assert( i + next <= len);
       if (!match(s + i, (long)next)) break;
       i += next;
-    } while (i < len);  
+    } while (i < len);
   }
   // and then look
   do {
-    next = str_next_ofs(s, len, i, NULL); 
+    next = str_next_ofs(s, len, i, NULL);
     if (next <= 0) break;
     assert( i + next <= len);
     if (match(s + i, (long)next)) {
@@ -9014,15 +9041,15 @@ static ssize_t str_find_forward( const char* s, ssize_t len, ssize_t pos, ic_is_
     i += next;
   } while (i < len);
   return -1;
-} 
+}
 
-static bool char_is_linefeed( const char* s, long n ) {  
+static bool char_is_linefeed( const char* s, long n ) {
   return (n == 1 && (*s == '\n' || *s == 0));
 }
 
 static ssize_t str_find_line_start( const char* s, ssize_t len, ssize_t pos) {
   ssize_t start = str_find_backward(s,len,pos,&char_is_linefeed,false /* don't skip immediate matches */);
-  return (start < 0 ? 0 : start); 
+  return (start < 0 ? 0 : start);
 }
 
 static ssize_t str_find_line_end( const char* s, ssize_t len, ssize_t pos) {
@@ -9032,23 +9059,23 @@ static ssize_t str_find_line_end( const char* s, ssize_t len, ssize_t pos) {
 
 static ssize_t str_find_word_start( const char* s, ssize_t len, ssize_t pos) {
   ssize_t start = str_find_backward(s,len,pos, &ic_char_is_idletter,true /* skip immediate matches */);
-  return (start < 0 ? 0 : start); 
+  return (start < 0 ? 0 : start);
 }
 
 static ssize_t str_find_word_end( const char* s, ssize_t len, ssize_t pos) {
   ssize_t end = str_find_forward(s,len,pos,&ic_char_is_idletter,true /* skip immediate matches */);
-  return (end < 0 ? len : end); 
+  return (end < 0 ? len : end);
 }
 
 static ssize_t str_find_ws_word_start( const char* s, ssize_t len, ssize_t pos) {
   ssize_t start = str_find_backward(s,len,pos,&ic_char_is_white,true /* skip immediate matches */);
-  return (start < 0 ? 0 : start); 
+  return (start < 0 ? 0 : start);
 }
 
-static ssize_t str_find_ws_word_end( const char* s, ssize_t len, ssize_t pos) {
-  ssize_t end = str_find_forward(s,len,pos,&ic_char_is_white,true /* skip immediate matches */);
-  return (end < 0 ? len : end); 
-}
+//zot// static ssize_t str_find_ws_word_end( const char* s, ssize_t len, ssize_t pos) {
+//zot//   ssize_t end = str_find_forward(s,len,pos,&ic_char_is_white,true /* skip immediate matches */);
+//zot//   return (end < 0 ? len : end);
+//zot// }
 
 
 //-------------------------------------------------------------
@@ -9057,17 +9084,17 @@ static ssize_t str_find_ws_word_end( const char* s, ssize_t len, ssize_t pos) {
 
 // invoke a function for each terminal row; returns total row count.
 static ssize_t str_for_each_row( const char* s, ssize_t len, ssize_t termw, ssize_t promptw, ssize_t cpromptw,
-                                 row_fun_t* fun, const void* arg, void* res ) 
+                                 row_fun_t* fun, const void* arg, void* res )
 {
   if (s == NULL) s = "";
   ssize_t i;
   ssize_t rcount = 0;
   ssize_t rcol = 0;
-  ssize_t rstart = 0;  
-  ssize_t startw  = promptw; 
+  ssize_t rstart = 0;
+  ssize_t startw  = promptw;
   for(i = 0; i < len; ) {
     ssize_t w;
-    ssize_t next = str_next_ofs(s, len, i, &w);    
+    ssize_t next = str_next_ofs(s, len, i, &w);
     if (next <= 0) {
       debug_msg("str: foreach row: next<=0: len %zd, i %zd, w %zd, buf %s\n", len, i, w, s );
       assert(false);
@@ -9075,7 +9102,7 @@ static ssize_t str_for_each_row( const char* s, ssize_t len, ssize_t termw, ssiz
     }
     startw = (rcount == 0 ? promptw : cpromptw);
     ssize_t termcol = rcol + w + startw + 1 /* for the cursor */;
-    if (termw != 0 && i != 0 && termcol >= termw) {  
+    if (termw != 0 && i != 0 && termcol >= termw) {
       // wrap
       if (fun != NULL) {
         if (fun(s,rcount,rstart,i - rstart,startw,true,arg,res)) return rcount;
@@ -9110,7 +9137,7 @@ static ssize_t str_for_each_row( const char* s, ssize_t len, ssize_t termw, ssiz
 
 static bool str_get_current_pos_iter(
     const char* s,
-    ssize_t row, ssize_t row_start, ssize_t row_len, 
+    ssize_t row, ssize_t row_start, ssize_t row_len,
     ssize_t startw, bool is_wrap, const void* arg, void* res)
 {
   ic_unused(is_wrap); ic_unused(startw);
@@ -9131,10 +9158,10 @@ static bool str_get_current_pos_iter(
     }
     else {
       // normal last position is right after the last character
-      rc->last_on_row = (pos >= row_start + row_len); 
+      rc->last_on_row = (pos >= row_start + row_len);
     }
-    // debug_msg("edit; pos iter: pos: %zd (%c), row_start: %zd, rowlen: %zd\n", pos, s[pos], row_start, row_len);    
-  }  
+    // debug_msg("edit; pos iter: pos: %zd (%c), row_start: %zd, rowlen: %zd\n", pos, s[pos], row_start, row_len);
+  }
   return false; // always continue to count all rows
 }
 
@@ -9163,7 +9190,7 @@ typedef struct wrowcol_s {
 
 static bool str_get_current_wrapped_pos_iter(
     const char* s,
-    ssize_t row, ssize_t row_start, ssize_t row_len, 
+    ssize_t row, ssize_t row_start, ssize_t row_len,
     ssize_t startw, bool is_wrap, const void* arg, void* res)
 {
   ic_unused(is_wrap);
@@ -9193,27 +9220,27 @@ static bool str_get_current_wrapped_pos_iter(
         // hardwrap
         hwidth = 0;
         wrc->hrows++;
-        debug_msg("str: found hardwrap: row: %zd, hrows: %zd\n", row, wrc->hrows);      
+        debug_msg("str: found hardwrap: row: %zd, hrows: %zd\n", row, wrc->hrows);
       }
-    }    
+    }
     else {
-      next++; // ensure we terminate (as we go up to rowlen)      
+      next++; // ensure we terminate (as we go up to rowlen)
     }
 
     // did we find our position?
     if (is_cursor) {
       debug_msg("str: found position: row: %zd, hrows: %zd\n", row, wrc->hrows);
       wrc->rc.row_start = row_start;
-      wrc->rc.row_len   = row_len;      
+      wrc->rc.row_len   = row_len;
       wrc->rc.row       = wrc->hrows + row;
-      wrc->rc.col       = hwidth;      
+      wrc->rc.col       = hwidth;
       wrc->rc.first_on_row = (i==0);
-      wrc->rc.last_on_row  = (i+next >= row_len - (is_wrap ? 1 : 0)); 
+      wrc->rc.last_on_row  = (i+next >= row_len - (is_wrap ? 1 : 0));
     }
 
     // advance
     hwidth += cw;
-    i += next;    
+    i += next;
   }
   return false; // always continue to count all rows
 }
@@ -9238,14 +9265,14 @@ static ssize_t str_get_wrapped_rc_at_pos(const char* s, ssize_t len, ssize_t ter
 
 static bool str_set_pos_iter(
     const char* s,
-    ssize_t row, ssize_t row_start, ssize_t row_len, 
+    ssize_t row, ssize_t row_start, ssize_t row_len,
     ssize_t startw, bool is_wrap, const void* arg, void* res)
 {
   ic_unused(arg); ic_unused(is_wrap); ic_unused(startw);
   rowcol_t* rc = (rowcol_t*)arg;
   if (rc->row != row) return false; // keep searching
   // we found our row
-  ssize_t col = 0; 
+  ssize_t col = 0;
   ssize_t i   = row_start;
   ssize_t end = row_start + row_len;
   while (col < rc->col && i < end) {
@@ -9265,7 +9292,7 @@ static ssize_t str_get_pos_at_rc(const char* s, ssize_t len, ssize_t termw, ssiz
   rc.row = row;
   rc.col = col;
   ssize_t pos = -1;
-  str_for_each_row(s,len,termw,promptw,cpromptw,&str_set_pos_iter,&rc,&pos);  
+  str_for_each_row(s,len,termw,promptw,cpromptw,&str_set_pos_iter,&rc,&pos);
   return pos;
 }
 
@@ -9273,9 +9300,9 @@ static ssize_t str_get_pos_at_rc(const char* s, ssize_t len, ssize_t termw, ssiz
 //-------------------------------------------------------------
 // String buffer
 //-------------------------------------------------------------
-static bool sbuf_ensure_extra(stringbuf_t* s, ssize_t extra) 
+static bool sbuf_ensure_extra(stringbuf_t* s, ssize_t extra)
 {
-  if (s->buflen >= s->count + extra) return true;   
+  if (s->buflen >= s->count + extra) return true;
   // reallocate; pick good initial size and multiples to increase reuse on allocation
   ssize_t newlen = (s->buflen <= 0 ? 120 : (s->buflen > 1000 ? s->buflen + 1000 : 2*s->buflen));
   if (newlen < s->count + extra) newlen = s->count + extra;
@@ -9353,9 +9380,9 @@ ic_private char sbuf_char_at(stringbuf_t* sbuf, ssize_t pos) {
   return sbuf->buf[pos];
 }
 
-ic_private char* sbuf_strdup_at( stringbuf_t* sbuf, ssize_t pos ) {
-  return mem_strdup(sbuf->mem, sbuf_string_at(sbuf,pos));
-}
+//zot// ic_private char* sbuf_strdup_at( stringbuf_t* sbuf, ssize_t pos ) {
+//zot//   return mem_strdup(sbuf->mem, sbuf_string_at(sbuf,pos));
+//zot// }
 
 ic_private char* sbuf_strdup( stringbuf_t* sbuf ) {
   return mem_strdup(sbuf->mem, sbuf_string(sbuf));
@@ -9383,6 +9410,7 @@ ic_private ssize_t sbuf_append_vprintf(stringbuf_t* sb, const char* fmt, va_list
   sb->count += (needed > avail ? avail : (needed >= 0 ? needed : 0));
   assert(sb->count <= sb->buflen);
   sb->buf[sb->count] = 0;
+  va_end(args0);
   return sb->count;
 }
 
@@ -9406,15 +9434,15 @@ ic_private ssize_t sbuf_insert_at_n(stringbuf_t* sbuf, const char* s, ssize_t n,
   return (pos + n);
 }
 
-ic_private stringbuf_t* sbuf_split_at( stringbuf_t* sb, ssize_t pos ) {
-  stringbuf_t* res = sbuf_new(sb->mem);
-  if (res==NULL || pos < 0) return NULL;
-  if (pos < sb->count) {
-    sbuf_append_n(res, sb->buf + pos, sb->count - pos);
-    sb->count = pos;
-  }
-  return res;
-}
+//zot// ic_private stringbuf_t* sbuf_split_at( stringbuf_t* sb, ssize_t pos ) {
+//zot//   stringbuf_t* res = sbuf_new(sb->mem);
+//zot//   if (res==NULL || pos < 0) return NULL;
+//zot//   if (pos < sb->count) {
+//zot//     sbuf_append_n(res, sb->buf + pos, sb->count - pos);
+//zot//     sb->count = pos;
+//zot//   }
+//zot//   return res;
+//zot// }
 
 ic_private ssize_t sbuf_insert_at(stringbuf_t* sbuf, const char* s, ssize_t pos ) {
   return sbuf_insert_at_n( sbuf, s, ic_strlen(s), pos );
@@ -9489,7 +9517,7 @@ ic_private ssize_t sbuf_next( stringbuf_t* sbuf, ssize_t pos, ssize_t* cwidth) {
   ssize_t ofs = sbuf_next_ofs(sbuf,pos,cwidth);
   if (ofs <= 0) return -1;
   assert(pos + ofs <= sbuf->count);
-  return pos + ofs; 
+  return pos + ofs;
 }
 
 ic_private ssize_t sbuf_prev( stringbuf_t* sbuf, ssize_t pos, ssize_t* cwidth) {
@@ -9501,7 +9529,7 @@ ic_private ssize_t sbuf_prev( stringbuf_t* sbuf, ssize_t pos, ssize_t* cwidth) {
 
 ic_private ssize_t sbuf_delete_char_before( stringbuf_t* sbuf, ssize_t pos ) {
   ssize_t n = sbuf_prev_ofs(sbuf, pos, NULL);
-  if (n <= 0) return 0;  
+  if (n <= 0) return 0;
   assert( pos - n >= 0 );
   sbuf_delete_at(sbuf, pos - n, n);
   return pos - n;
@@ -9509,7 +9537,7 @@ ic_private ssize_t sbuf_delete_char_before( stringbuf_t* sbuf, ssize_t pos ) {
 
 ic_private void sbuf_delete_char_at( stringbuf_t* sbuf, ssize_t pos ) {
   ssize_t n = sbuf_next_ofs(sbuf, pos, NULL);
-  if (n <= 0) return;  
+  if (n <= 0) return;
   assert( pos + n <= sbuf->count );
   sbuf_delete_at(sbuf, pos, n);
   return;
@@ -9517,9 +9545,9 @@ ic_private void sbuf_delete_char_at( stringbuf_t* sbuf, ssize_t pos ) {
 
 ic_private ssize_t sbuf_swap_char( stringbuf_t* sbuf, ssize_t pos ) {
   ssize_t next = sbuf_next_ofs(sbuf, pos, NULL);
-  if (next <= 0) return 0;  
+  if (next <= 0) return 0;
   ssize_t prev = sbuf_prev_ofs(sbuf, pos, NULL);
-  if (prev <= 0) return 0;  
+  if (prev <= 0) return 0;
   char buf[64];
   if (prev >= 63) return 0;
   ic_memcpy(buf, sbuf->buf + pos - prev, prev );
@@ -9548,9 +9576,9 @@ ic_private ssize_t sbuf_find_ws_word_start( stringbuf_t* sbuf, ssize_t pos ) {
   return str_find_ws_word_start( sbuf->buf, sbuf->count, pos);
 }
 
-ic_private ssize_t sbuf_find_ws_word_end( stringbuf_t* sbuf, ssize_t pos ) {
-  return str_find_ws_word_end( sbuf->buf, sbuf->count, pos);
-}
+//zot// ic_private ssize_t sbuf_find_ws_word_end( stringbuf_t* sbuf, ssize_t pos ) {
+//zot//   return str_find_ws_word_end( sbuf->buf, sbuf->count, pos);
+//zot// }
 
 // find row/col position
 ic_private ssize_t sbuf_get_pos_at_rc( stringbuf_t* sbuf, ssize_t termw, ssize_t promptw, ssize_t cpromptw, ssize_t row, ssize_t col ) {
@@ -9643,15 +9671,15 @@ ic_private bool ic_atoz(const char* s, ssize_t* pi) {
   return (sscanf(s, "%zd", pi) == 1);
 }
 
-// parse two decimals separated by a semicolon 
+// parse two decimals separated by a semicolon
 ic_private bool ic_atoz2(const char* s, ssize_t* pi, ssize_t* pj) {
   return (sscanf(s, "%zd;%zd", pi, pj) == 2);
 }
 
-// parse unsigned 32-bit (leave pu unchanged on error)
-ic_private bool ic_atou32(const char* s, uint32_t* pu) {
-  return (sscanf(s, "%" SCNu32, pu) == 1);
-}
+//zot// // parse unsigned 32-bit (leave pu unchanged on error)
+//zot// ic_private bool ic_atou32(const char* s, uint32_t* pu) {
+//zot//   return (sscanf(s, "%" SCNu32, pu) == 1);
+//zot// }
 
 
 // Convenience: character class for whitespace `[ \t\r\n]`.
@@ -9735,7 +9763,7 @@ static int ic_strncmp(const char* s1, const char* s2, ssize_t n) {
   return strncmp(s1, s2, to_size_t(n));
 }
 
-// Convenience: Does this match the specified token? 
+// Convenience: Does this match the specified token?
 // Ensures not to match prefixes or suffixes, and returns the length of the match (in bytes).
 // E.g. `ic_match_token("function",0,&ic_char_is_letter,"fun")` returns 0.
 ic_public long ic_match_token(const char* s, long pos, ic_is_char_class_fun_t* is_token_char, const char* token) {
@@ -9749,9 +9777,9 @@ ic_public long ic_match_token(const char* s, long pos, ic_is_char_class_fun_t* i
 }
 
 
-// Convenience: Do any of the specified tokens match? 
+// Convenience: Do any of the specified tokens match?
 // Ensures not to match prefixes or suffixes, and returns the length of the match (in bytes).
-// Ensures not to match prefixes or suffixes. 
+// Ensures not to match prefixes or suffixes.
 // E.g. `ic_match_any_token("function",0,&ic_char_is_letter,{"fun","func",NULL})` returns 0.
 ic_public long ic_match_any_token(const char* s, long pos, ic_is_char_class_fun_t* is_token_char, const char** tokens) {
   long n = ic_is_token(s, pos, is_token_char);
@@ -9801,29 +9829,29 @@ ic_private void ic_memcpy( void* dest, const void* src, ssize_t n ) {
   memcpy(dest,src,to_size_t(n));
 }
 
-ic_private void ic_memset(void* dest, uint8_t value, ssize_t n) {
-  assert(dest!=NULL);
-  if (dest == NULL || n <= 0) return;
-  memset(dest,(int8_t)value,to_size_t(n));
-}
+//zot// ic_private void ic_memset(void* dest, uint8_t value, ssize_t n) {
+//zot//   assert(dest!=NULL);
+//zot//   if (dest == NULL || n <= 0) return;
+//zot//   memset(dest,(int8_t)value,to_size_t(n));
+//zot// }
 
-ic_private bool ic_memnmove( void* dest, ssize_t dest_size, const void* src, ssize_t n ) {
-  assert(dest!=NULL && src != NULL);
-  if (n <= 0) return true;
-  if (dest_size < n) { assert(false); return false; }
-  memmove(dest,src,to_size_t(n));
-  return true;
-}
+//zot// ic_private bool ic_memnmove( void* dest, ssize_t dest_size, const void* src, ssize_t n ) {
+//zot//   assert(dest!=NULL && src != NULL);
+//zot//   if (n <= 0) return true;
+//zot//   if (dest_size < n) { assert(false); return false; }
+//zot//   memmove(dest,src,to_size_t(n));
+//zot//   return true;
+//zot// }
 
-ic_private bool ic_strcpy( char* dest, ssize_t dest_size /* including 0 */, const char* src) {
-  assert(dest!=NULL && src != NULL);
-  if (dest == NULL || dest_size <= 0) return false;
-  ssize_t slen = ic_strlen(src);
-  if (slen >= dest_size) return false;
-  strcpy(dest,src);
-  assert(dest[slen] == 0);
-  return true;
-}
+//zot// ic_private bool ic_strcpy( char* dest, ssize_t dest_size /* including 0 */, const char* src) {
+//zot//   assert(dest!=NULL && src != NULL);
+//zot//   if (dest == NULL || dest_size <= 0) return false;
+//zot//   ssize_t slen = ic_strlen(src);
+//zot//   if (slen >= dest_size) return false;
+//zot//   strcpy(dest,src);
+//zot//   assert(dest[slen] == 0);
+//zot//   return true;
+//zot// }
 
 
 ic_private bool ic_strncpy( char* dest, ssize_t dest_size /* including 0 */, const char* src, ssize_t n) {
@@ -9835,7 +9863,7 @@ ic_private bool ic_strncpy( char* dest, ssize_t dest_size /* including 0 */, con
   }
   else {
     strncpy(dest,src,to_size_t(n));
-    dest[n] = 0;  
+    dest[n] = 0;
   }
   return true;
 }
@@ -9988,38 +10016,44 @@ ic_private unicode_t unicode_from_qutf8(const uint8_t* s, ssize_t len, ssize_t* 
   c0 = s[0];
   if (c0 <= 0x7F && len >= 1) {
     if (count != NULL) *count = 1;
-    return c0; 
+    return c0;
   }
   else if (c0 <= 0xC1) { // invalid continuation byte or invalid 0xC0, 0xC1
     goto fail;
   }
   // 2 bytes
-  else if (c0 <= 0xDF && len >= 2 && utf8_is_cont(s[1])) { 
+  else if (c0 <= 0xDF && len >= 2 && utf8_is_cont(s[1])) {
     if (count != NULL) *count = 2;
     return (((c0 & 0x1F) << 6) | (s[1] & 0x3F));
   }
   // 3 bytes: reject overlong and surrogate halves
-  else if (len >= 3 && 
+  else if (len >= 3 &&
            ((c0 == 0xE0 && s[1] >= 0xA0 && s[1] <= 0xBF && utf8_is_cont(s[2])) ||
-            (c0 >= 0xE1 && c0 <= 0xEC && utf8_is_cont(s[1]) && utf8_is_cont(s[2])) 
+            (c0 >= 0xE1 && c0 <= 0xEC && utf8_is_cont(s[1]) && utf8_is_cont(s[2]))
           ))
   {
     if (count != NULL) *count = 3;
     return (((c0 & 0x0F) << 12) | ((unicode_t)(s[1] & 0x3F) << 6) | (s[2] & 0x3F));
   }
   // 4 bytes: reject overlong
-  else if (len >= 4 && 
+  else if (len >= 4 &&
            (((c0 == 0xF0 && s[1] >= 0x90 && s[1] <= 0xBF && utf8_is_cont(s[2]) && utf8_is_cont(s[3])) ||
             (c0 >= 0xF1 && c0 <= 0xF3 && utf8_is_cont(s[1]) && utf8_is_cont(s[2]) && utf8_is_cont(s[3])) ||
-            (c0 == 0xF4 && s[1] >= 0x80 && s[1] <= 0x8F && utf8_is_cont(s[2]) && utf8_is_cont(s[3]))) 
-          )) 
+            (c0 == 0xF4 && s[1] >= 0x80 && s[1] <= 0x8F && utf8_is_cont(s[2]) && utf8_is_cont(s[3])))
+          ))
   {
     if (count != NULL) *count = 4;
     return (((c0 & 0x07) << 18) | ((unicode_t)(s[1] & 0x3F) << 12) | ((unicode_t)(s[2] & 0x3F) << 6) | (s[3] & 0x3F));
-  }  
+  }
 fail:
   if (count != NULL) *count = 1;
+
+  // replace the flagged with
+  return unicode_from_raw(s ? s[0] : 0);
+#ifdef COVERITY_FLAGS
+  // if s is NULL above, code jumps to here
   return unicode_from_raw(s[0]);
+#endif // COVERITY_FLAGS
 }
 
 
@@ -10027,7 +10061,7 @@ fail:
 // Debug
 //-------------------------------------------------------------
 
-#if defined(IC_NO_DEBUG_MSG) 
+#if defined(IC_NO_DEBUG_MSG)
 // nothing
 #elif !defined(IC_DEBUG_TO_FILE)
 ic_private void debug_msg(const char* fmt, ...) {
@@ -10133,14 +10167,14 @@ ic_private char* mem_strndup(alloc_t* mem, const char* s, ssize_t n) {
 
 static char*  ic_getline( alloc_t* mem );
 
-ic_public char* ic_readline(const char* prompt_text) 
+ic_public char* ic_readline(const char* prompt_text)
 {
   ic_env_t* env = ic_get_env();
   if (env == NULL) return NULL;
   if (!env->noedit) {
     // terminal editing enabled
     return ic_editline(env, prompt_text);   // in editline.c
-  } 
+  }
   else {
     // no editing capability (pipe, dumb terminal, etc)
     if (env->tty != NULL && env->term != NULL) {
@@ -10149,7 +10183,7 @@ ic_public char* ic_readline(const char* prompt_text)
       if (prompt_text != NULL) {
         term_write(env->term, prompt_text);
       }
-      term_write(env->term, env->prompt_marker);    
+      term_write(env->term, env->prompt_marker);
       term_end_raw(env->term, false);
     }
     // read directly from stdin
@@ -10159,12 +10193,12 @@ ic_public char* ic_readline(const char* prompt_text)
 
 
 //-------------------------------------------------------------
-// Read a line from the stdin stream if there is no editing 
+// Read a line from the stdin stream if there is no editing
 // support (like from a pipe, file, or dumb terminal).
 //-------------------------------------------------------------
 
 static char* ic_getline(alloc_t* mem)
-{  
+{
   // read until eof or newline
   stringbuf_t* sb = sbuf_new(mem);
   int c;
@@ -10388,7 +10422,7 @@ ic_public void ic_set_insertion_braces(const char* brace_pairs) {
   env->auto_braces = NULL;
   if (brace_pairs != NULL) {
     ssize_t len = ic_strlen(brace_pairs);
-    if (len > 0 && (len % 2) == 0) { 
+    if (len > 0 && (len % 2) == 0) {
       env->auto_braces = mem_strdup(env->mem, brace_pairs);
     }
   }
@@ -10490,8 +10524,8 @@ ic_public void ic_term_style( const char* style ) {
 }
 
 ic_public int ic_term_get_color_bits(void) {
-  ic_env_t* env = ic_get_env(); 
-  if (env==NULL || env->term==NULL) return 4;  
+  ic_env_t* env = ic_get_env();
+  if (env==NULL || env->term==NULL) return 4;
   return term_get_color_bits(env->term);
 }
 
@@ -10575,9 +10609,9 @@ static void ic_env_free(ic_env_t* env) {
   mem_free(env->mem, env->match_braces);
   mem_free(env->mem, env->auto_braces);
   env->prompt_marker = NULL;
-  
+
   // and deallocate ourselves
-  alloc_t* mem = env->mem;  
+  alloc_t* mem = env->mem;
   mem_free(mem, env);
 
   // and finally the custom memory allocation structure
@@ -10585,7 +10619,7 @@ static void ic_env_free(ic_env_t* env) {
 }
 
 
-static ic_env_t* ic_env_create( ic_malloc_fun_t* _malloc, ic_realloc_fun_t* _realloc, ic_free_fun_t* _free )  
+static ic_env_t* ic_env_create( ic_malloc_fun_t* _malloc, ic_realloc_fun_t* _realloc, ic_free_fun_t* _free )
 {
   if (_malloc == NULL)  _malloc = &malloc;
   if (_realloc == NULL) _realloc = &realloc;
@@ -10605,20 +10639,20 @@ static ic_env_t* ic_env_create( ic_malloc_fun_t* _malloc, ic_realloc_fun_t* _rea
 
   // Initialize
   env->tty         = tty_new(env->mem, -1);  // can return NULL
-  env->term        = term_new(env->mem, env->tty, false, false, -1 );  
+  env->term        = term_new(env->mem, env->tty, false, false, -1 );
   env->history     = history_new(env->mem);
   env->completions = completions_new(env->mem);
   env->bbcode      = bbcode_new(env->mem, env->term);
-  env->hint_delay  = 400;   
-  
+  env->hint_delay  = 400;
+
   if (env->tty == NULL || env->term==NULL ||
       env->completions == NULL || env->history == NULL || env->bbcode == NULL ||
-      !term_is_interactive(env->term)) 
+      !term_is_interactive(env->term))
   {
     env->noedit = true;
   }
   env->multiline_eol = '\\';
-  
+
   bbcode_style_def(env->bbcode, "ic-prompt",    "ansi-green" );
   bbcode_style_def(env->bbcode, "ic-info",      "ansi-darkgray" );
   bbcode_style_def(env->bbcode, "ic-diminish",  "ansi-lightgray" );
@@ -10648,7 +10682,7 @@ static void ic_atexit(void) {
   }
 }
 
-ic_private ic_env_t* ic_get_env(void) {  
+ic_private ic_env_t* ic_get_env(void) {
   if (rpenv==NULL) {
     rpenv = ic_env_create( NULL, NULL, NULL );
     if (rpenv != NULL) { atexit( &ic_atexit ); }
@@ -10659,11 +10693,11 @@ ic_private ic_env_t* ic_get_env(void) {
 ic_public void ic_init_custom_malloc( ic_malloc_fun_t* _malloc, ic_realloc_fun_t* _realloc, ic_free_fun_t* _free ) {
   assert(rpenv == NULL);
   if (rpenv != NULL) {
-    ic_env_free(rpenv);    
-    rpenv = ic_env_create( _malloc, _realloc, _free ); 
+    ic_env_free(rpenv);
+    rpenv = ic_env_create( _malloc, _realloc, _free );
   }
   else {
-    rpenv = ic_env_create( _malloc, _realloc, _free ); 
+    rpenv = ic_env_create( _malloc, _realloc, _free );
     if (rpenv != NULL) {
       atexit( &ic_atexit );
     }

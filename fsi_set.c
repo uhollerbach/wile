@@ -286,9 +286,7 @@ void fsi_set_andnot(struct fsi_set* set1, struct fsi_set* set2)
 	nb1 = set1->n_ints/CHAR_BIT;
 	nb2 = set2->n_ints/CHAR_BIT;
 	if (nb2 < nb1) {
-	    i = nb1;
 	    nb1 = nb2;
-	    nb2 = i;
 	}
 	for (i = 0; i < nb1; ++i) {
 	    set1->bits[i] &= ~set2->bits[i];
