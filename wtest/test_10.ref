@@ -23,12 +23,12 @@ list-drop-while
 list-take-while
 (3 1)
 (1 2 3 2 1 4 1)
-".....foo"
-"foo....."
-"..foo..."
-"......foo"
-"foo......"
-"...foo..."
-"foo   "
-"   foo"
-"foo"
+.....foo
+foo.....
+..foo...
+......foo
+foo......
+...foo...
+foo   
+   foo
+foo

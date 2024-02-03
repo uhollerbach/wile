@@ -101,9 +101,9 @@ void wile_print_lisp_val(lptr vp, FILE* fp, const char* loc)
 	    break;
 
 	case LV_STRING:
-	    PUTC('"');
+//	    PUTC('"');
 	    PUTS(vp->v.str);
-	    PUTC('"');
+//	    PUTC('"');
 	    break;
 
 	case LV_INT:

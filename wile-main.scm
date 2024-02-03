@@ -81,7 +81,8 @@
 	 (gc? (cadr (assv 'garbage-collector-version conf1)))
 	 (sqlite? (cadr (assv 'sqlite-version conf1)))
 	 (libs ())
-	 (conf2 ()))
+	 (conf2 ())
+	 (add-quotes (lambda (s) (string-append "\"" s "\""))))
     ;;; don't mess with the order of these, gc has to come last in libs
     ;;; which means it has to get processed first
     (when gc?
@@ -101,6 +102,8 @@
     (when sqlite?
       (set! libs (cons "sqlite3" libs))
       (set! conf2 (cons "-DWILE_USES_SQLITE" conf2)))
+    (set! libs (map add-quotes libs))
+    (set! conf2 (map add-quotes conf2))
     (printf "(c-link-libraries %v)\n(wile-config %v)\n" libs conf2)))
 
 ;;; Check for config files in the order command-line, env-var, baked-in, cwd;

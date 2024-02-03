@@ -1,6 +1,6 @@
-Last update: 2024-2-3 13:30 PST
+Last update: 2024-2-19 15:00 PST
 
-# `wile` - the extremely stable scheming genius compiler - version 1.2.6
+# `wile` - the extremely stable scheming genius compiler - version 1.2.7
 
 `wile` is a small scheme-to-c compiler which I'm writing; it's by no
 means complete, but it's capable enough that writing programs with it
@@ -272,10 +272,12 @@ desire.
 * A number of other libraries, in the `library/` subdirectory:
 
 - `arg-parse.scm`
+- `bigint.scm`
 - `deque.scm`
 - `gthread.scm`
 - `hash.scm`
 - `monad.scm` and `monad-list.scm`
+- `queue.scm`
 - `stack.scm`
 - `stats.scm`
 - `struct.scm`
@@ -287,10 +289,18 @@ desire.
 
 * A couple of example programs in `examples/`:
 
+- `amaze.scm` is a silly toy, a small maze generator.
+
 - `cal.scm` is a re-implementation of part of the standard unix command
   `cal` to display the current calendar. I needed that at one point
   and had not installed it on my laptop, so rather than get it from
   the distro I took it as a challenge to re-implement the bits I wanted.
+
+- `gc-test.scm` is a small test of the garbage collector: with
+  different command-line arguments it is supposed to run in constant
+  or linearly growing (slow) or quadratically growing (very fast)
+  memory. If the GC is not working, it will always consume memory very
+  quickly.
 
 - `net-server.scm` is a teeny-tiny very cheesy way to serve up the
   system's notion of the current time across the network - a
@@ -403,7 +413,7 @@ The rest of the runtime library lives in a number of C and scheme files:
   routines that implement large parts of the runtime library. Many
   of these are written in a fairly low-level style; that's because they
   came into existence before some of the fancier stuff in the compiler
-  got written.
+  got written (and sometimes they are faster than the fancier versions).
 
 - `math-funcs.c` contains a number of special mathematical functions.
 

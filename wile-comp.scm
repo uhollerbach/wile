@@ -683,31 +683,44 @@
 	   (set! new-env (cons (cons ,pub (cdr ,pval)) new-env))
 	   (ERR "symbol '%s' is not defined in namespace" ,pri)))))
 
+;;; This is a teeny-tiny-trivial "environment" that's just for
+;;; features in cond-expand: want to test for just 'wile instead of
+;;; (string=? (implementation-name) "wile") for example
+
+(def-struct bbox name value)
+
+(define (wile-feature-environment)
+  (map (lambda (p) (make-bbox (car p) (cdr p)))
+       (list
+	(cons 'wile #t))))
+
+(define (do-cond-expand clauses)
+  (let loop ((cs clauses))
+    (cond ((null? cs)
+	   '(#f))
+	  ((guard (err (#t #f)) (eval (wile-feature-environment) (caar cs)))
+	   (cdar cs))
+	  (else
+	   (loop (cdr cs))))))
+
 ;;; TODO: this needs to return the last value
 
 (define (compile-special-begin-new cur-env tcall exprs)
   (debug-trace 'compile-special-begin-new cur-env tcall exprs)
-
   (if (null? exprs)
       (compile-immediate cur-env ())
       (let loop ((exprs exprs)
-		 (cur-env cur-env))
-;;; (unless (null? exprs)
-;;;   (printf "begin expr %v\n" (car exprs))
-;;;   (flush-port))
+		 (cur-env cur-env)
+		 (res #f))
 	(cond ((null? exprs)
-	       (write-string "\n;;; final environment\n")
-	       (for-each (lambda (ev) (display ev) (newline))
-			 (list-head cur-env 16))
 ;;; TODO: include last value
-	       cur-env)
+;;;	       cur-env)
+	       res)
 	      ((not (pair? (car exprs)))
 	       ;;; something?
 	       )
-
 	      ((eqv? 'begin (caar exprs))
-	       (loop (list-append (cdar exprs) (cdr exprs)) cur-env))
-
+	       (loop (list-append (cdar exprs) (cdr exprs)) cur-env res))
 	      ((eqv? 'define (caar exprs))
 	       (let* ((ec (cdar exprs))
 		      (_ (check-dup-def (car ec) cur-env))
@@ -720,9 +733,8 @@
 					c-fn "NULL")
 				  (list (car ec) 'c-var (new-svar))))
 		      (new-env (cons new-ee cur-env)))
-		 ;;; TODO: actually compile! - with new-env
-		 (loop (cdr exprs) new-env)))
-
+		 (loop (cdr exprs) new-env
+		       (compile-deffish new-env (car exprs)))))
 	      ((eqv? 'define-primitive (caar exprs))
 	       (let* ((ec (cdar exprs))
 		      (_ (check-dup-def (caddr ec) cur-env))
@@ -735,32 +747,28 @@
 					c-fn "NULL")
 				  (list (caddr ec) 'c-var c-fn)))
 		      (new-env (cons new-ee cur-env)))
-		 ;;; TODO: actually compile! - with new-env
-		 (loop (cdr exprs) new-env)))
-
+		 (loop (cdr exprs) new-env
+		       (compile-deffish new-env (car exprs)))))
 	      ((eqv? 'define-alias (caar exprs))
 	       (check-dup-def (cdar exprs) cur-env)
 	       (let* ((new-ee (list (cadar exprs) 'alias (caddar exprs)))
 		      (new-env (cons new-ee cur-env)))
-		 (loop (cdr exprs) new-env)))
-
+		 (loop (cdr exprs) new-env res)))
 	      ((eqv? 'defmacro (caar exprs))
 	       (let ((ec (cdar exprs)))
 		 (check-dup-def (car ec) cur-env)
 		 (if (symbol? (car ec))
 		     (ERR "illegal macro symbol %s" (car ec))
 		     (loop (cdr exprs)
-			   (cons (declare-macro ec) cur-env)))))
-
+			   (cons (declare-macro ec) cur-env) res))))
 	      ((eqv? 'load (caar exprs))
 	       (loop (list-append (parse-file (cadar exprs)) (cdr exprs))
-		     cur-env))
-
+		     cur-env res))
 	      ((eqv? 'load-library (caar exprs))
 	       (let* ((fname (cadar exprs))
 		      (paths (get-config-val 'scheme-include-directories))
 		      (filepath
-		       (let loop ((ps paths))
+		       (let loop2 ((ps paths))
 			 (if (null? ps)
 			     #f
 			     (let* ((dir (car ps))
@@ -769,19 +777,18 @@
 					    (string-join-by "/" dir fname))))
 			       (if (file-exists? fp)
 				   fp
-				   (loop (cdr ps))))))))
+				   (loop2 (cdr ps))))))))
 		 (if filepath
 		     (loop (list-append (parse-file filepath) (cdr exprs))
-			   cur-env)
+			   cur-env res)
 		     (ERR "cannot find file %s" fname))))
-
 	      ((eqv? 'namespace (caar exprs))
 	       (let* ((fsym (gensym))
 		      (frame (list fsym 'namespace))
 		      (wk-env (list-take-while
 			       (lambda (v)
 				 (not (eqv? (car v) fsym)))
-			       (loop (cddar exprs) (cons frame cur-env))))
+			       (loop (cddar exprs) (cons frame cur-env) res)))
 		      (new-env cur-env))
 		 (for-each (lambda (es)
 			     (cond ((symbol? es)
@@ -794,30 +801,21 @@
 				   (else
 				    (ERR "bad namespace interface %v" es))))
 			   (cadar exprs))
-		 (loop (cdr exprs) new-env)))
-
+		 (loop (cdr exprs) new-env res)))
+	      ((eqv? 'cond-expand (caar exprs))
+	       (loop (list-append (do-cond-expand (cdar exprs)) (cdr exprs))
+		     cur-env res))
 	      (else
-	       (let ((ator (lookup-symbol cur-env (caar exprs))))
-		 (if (eqv? 'macro (cadr ator))
+	       (let ((ator (lookup-symbol-nofail cur-env (caar exprs))))
+		 (if (and ator (eqv? 'macro (cadr ator)))
 		     (let ((mex (apply-macro
 				 (caar exprs) (cddr ator) (cdar exprs))))
-		       (loop (cons mex (cdr exprs)) cur-env))
-		     (loop (cdr exprs) cur-env))))
+		       (loop (cons mex (cdr exprs)) cur-env res))
+		     (loop (cdr exprs) cur-env
+			   (maybe-compile-expr cur-env #f (car exprs))))))))))
 
-;;; (some-macro args ...) is a macro usage: the function corresponding
-;;; to some-macro gets looked up and applied, and there is a new
-;;; result: this gets added back to the front of the list of items
-;;; to be processed. no environment change, nothing gets compiled
-
-;;; codelets, (let ...) and (do ...) and all the other stuff, get
-;;; compiled in the current top-level compilation frame: scheme_main
-;;; for the true top-level, the body of whatever function we're in at
-;;; the moment. this is basically the "else" part of a big cond
-
-	      ))))
-
-(define (compile-special-begin cur-env tcall exprs)
-  (debug-trace 'compile-special-begin cur-env tcall exprs)
+(define (compile-special-begin-old cur-env tcall exprs)
+  (debug-trace 'compile-special-begin-old cur-env tcall exprs)
   (if (null? exprs)
       (compile-immediate cur-env ())
       (let* ((tmp1 (expand-toplevel cur-env exprs))
@@ -833,6 +831,14 @@
 	(for-each (lambda (d) (compile-deffish wk-env d)) defs)
 	(list-last (map (lambda (e t) (maybe-compile-expr wk-env t e))
 			exprs (make-tail-flags exprs tcall))))))
+
+;;; begin-new is still experimental and does not work
+;;; completely correctly: DO NOT USE
+
+(define (compile-special-begin cur-env tcall exprs)
+  ((if (get-environment-variable "WILE_DO_NOT_USE_BEGIN_NEW")
+       compile-special-begin-new
+       compile-special-begin-old) cur-env tcall exprs))
 
 (define (compile-special-if cur-env tcall exprs)
   (debug-trace 'compile-special-if cur-env tcall exprs)
@@ -1162,7 +1168,6 @@
    (reset-mirrors global-mirrors))
   (emit-fstr "break;\n}\n"))
 
-
 (define (do-one-case1 res to-int cur-env tcall val clause)
   (debug-trace 'do-one-case1 cur-env tcall clause)
   ;;; do not merge these emit-fstr; sequencing and scoping depends
@@ -1390,6 +1395,10 @@
       (compile-qq 1 cur-env (car expr))
       (ERR "malformed 'quasiquote' expression '%v'" expr)))
 
+(define (compile-special-cond-expand cur-env tcall clauses)
+  (debug-trace 'compile-special-cond-expand cur-env tcall clauses)
+  (compile-special-begin cur-env tcall (do-cond-expand clauses)))
+
 (define (compile-special cur-env tcall expr)
   (debug-trace 'compile-special cur-env tcall expr)
   (cond ((symbol=? (car expr) 'and)
@@ -1437,6 +1446,8 @@
 	 (ERR "naked 'unquote' form '%v'" expr))
 	((symbol=? (car expr) 'unquote-splicing)
 	 (ERR "naked 'unquote-splicing' form '%v'" expr))
+	((symbol=? (car expr) 'cond-expand)
+	 (compile-special-cond-expand cur-env tcall (cdr expr)))
 	(else (ERR "special form '%v' is not implemented yet" expr))))
 
 (define (is-special-form? val)
@@ -1446,6 +1457,7 @@
    (symbol=? val 'begin-new)
 	   (symbol=? val 'case)
 	   (symbol=? val 'cond)
+	   (symbol=? val 'cond-expand)
 ;;; these get handled differently, they are special specials
 ;;;	   (symbol=? val 'define)
 ;;;	   (symbol=? val 'define-primitive)
@@ -1465,9 +1477,7 @@
 	   (symbol=? val 'unquote-splicing)
 ;;; this gets handled differently now
 ;;;	   (symbol=? val 'quote)
-	   (symbol=? val 'set!)
-
-	   )))
+	   (symbol=? val 'set!))))
 
 (define (build-regular-prim res nargs arity c-fn args call-loc)
   (cond ((negative? arity)
@@ -2259,7 +2269,8 @@
 	       (unless global-library
 		 (with-output
 		  global-code
-		  (emit-function-tail (compile-special-begin top-env #f exprs))))
+		  (emit-function-tail
+		   (compile-special-begin top-env #f exprs))))
 	       (emit-fstr "\n// definitions\n")
 	       (transfer-all-lines global-func global-out)
 	       (unless global-library

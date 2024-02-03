@@ -1,6 +1,6 @@
-;;; Monads in Scheme
+;;; Wile -- the extremely stable scheming genius compiler
 ;;; Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
-;;; License: 2clause BSD
+;;; License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
 
 ;;; monad laws - scheme notation
 ;;;     (>>= (return v) f)			=	(f v)

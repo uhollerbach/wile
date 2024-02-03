@@ -17,20 +17,24 @@
 ;;; various routines which take a smallint: bigint-from-string will
 ;;; croak for base-10 numbers if bigint-base-bits is 3.
 
-;;; TODO: prime test, next-prime, prev-prime
-
 (define bigint-base-bits 60)
-(define bigint-neg-base-bits (- bigint-base-bits))
+(define bigint-neg-base-bits (negative bigint-base-bits))
 (define bigint-mask (- (expt 2 bigint-base-bits) 1))
+
+;;; smallest base-bits that we allow is 4, which corresponds
+;;; to base size 16; so all of these fit into one digit
 
 (define bigint-const-0 ())
 (define bigint-const-1 '(1))
+(define bigint-const-2 '(2))
+(define bigint-const-3 '(3))
+(define bigint-const-4 '(4))
 
 (define (bigint-set-base-bits! n)
   (if (and (> n 3) (< n 64))
       (begin
 	(set! bigint-base-bits n)
-	(set! bigint-neg-base-bits (- bigint-base-bits))
+	(set! bigint-neg-base-bits (negative bigint-base-bits))
 	(set! bigint-mask (- (expt 2 bigint-base-bits) 1)))
       (raise (list "bigint-set-base-bits!: bad nbits" n))))
 
@@ -77,7 +81,7 @@
 		 ds
 		 (loop (cons 0 ds) (i- q 1))))))
 	((negative? nb)
-	 (bigint-right-shift num (- nb)))
+	 (bigint-right-shift num (negative nb)))
 	((zero? nb)
 	 num)
 	(else (raise (list "bigint-left-shift: bad shift" nb)))))
@@ -87,7 +91,7 @@
 	 (let* ((qr (quot-rem nb bigint-base-bits))
 		(q (car qr))
 		(r (cadr qr))
-		(rn (- r))
+		(rn (negative r))
 		(rc (i- bigint-base-bits r))
 		(num1 (list-tail num q)))
 	   (let loop ((ds (list-reverse num1))
@@ -101,7 +105,7 @@
 				      bigint-mask)))
 		   (loop (cdr ds) d (cons dn acc)))))))
 	((negative? nb)
-	 (bigint-left-shift num (- nb)))
+	 (bigint-left-shift num (negative nb)))
 	((zero? nb)
 	 num)
 	(else (raise (list "bigint-right-shift: bad shift" nb)))))
@@ -335,16 +339,28 @@
 ;;; convert a bigint into its string representation in bases 2, 4, 8, 16
 ;;; TODO: also implement base 10
 
-(define (bigint-to-string num base)
-  (if (bigint-zero? num)
-      "0"
-      (let ((bits (apply list-append (map num2bits num))))
-	(case base
-	  ((2) (make-big-string "#b" bits))
-	  ((4) (make-big-string "#{4}" (map-bin2tet bits)))
-	  ((8) (make-big-string "#o" (map-bin2oct bits)))
-	  ((16) (make-big-string "#x" (map-bin2hex bits)))
-	  (else (raise (list "bigint-to-string: bad base" base)))))))
+(define (pnum-to-decimal-string n)
+  (let loop ((n n)
+	     (acc ()))
+    (if (bigint-zero? n)
+	(apply string-append acc)
+	(let ((qr (bigint-quot-rem-small n 10)))
+	  (loop (car qr) (cons (num2str (cadr qr)) acc))))))
+
+(define (bigint-to-string num . base)
+  (set! base (if (null? base) 10 (car base)))
+  (cond ((bigint-zero? num)
+	 "0")
+	((= base 10)
+	 (pnum-to-decimal-string num))
+	(else
+	 (let ((bits (apply list-append (map num2bits num))))
+	   (case base
+	     ((2) (make-big-string "#b" bits))
+	     ((4) (make-big-string "#{4}" (map-bin2tet bits)))
+	     ((8) (make-big-string "#o" (map-bin2oct bits)))
+	     ((16) (make-big-string "#x" (map-bin2hex bits)))
+	     (else (raise (list "bigint-to-string: bad base" base))))))))
 
 ;;; return the sum of two bigints
 
@@ -445,6 +461,36 @@
 
 ;;; TODO: first implement slow bit-by-bit division, later we can make it faster
 
+;;; divide N by D returning Q and R: N = Q*D + R with R in [0, D-1],
+;;; with D less than half of bigint-base-bits in size
+
+(define (bigint-quot-rem-small num smallden)
+  (let* ((nlo-bits (quotient bigint-base-bits 2))
+	 (nhi-bits (- bigint-base-bits nlo-bits))
+	 (lo-mask (- (expt 2 nlo-bits) 1))
+	 (d (bits-and smallden lo-mask))
+	 (nlb (negative nlo-bits))
+	 (hi-mask (- (expt 2 nhi-bits) 1)))
+    (if (zero? d)
+	(raise "bigint-quot-rem-small: division by zero")
+	(let ((qr (let loop ((n (bigint-canonical num)))
+		    (if (null? n)
+			'(0)
+			(let* ((pr (loop (cdr n)))
+			       (nc (car n))
+			       (r (car pr))
+			       (l (bits-and nc lo-mask))
+			       (h (bits-and (bits-shift nc nlb) hi-mask))
+			       (r1 (bits-or h (bits-shift r nhi-bits)))
+			       (h1 (quotient r d))
+			       (r2 (i- r1 (i* h1 d)))
+			       (r3 (bits-or l (bits-shift r2 nlo-bits)))
+			       (l1 (quotient r3 d))
+			       (r4 (i- r3 (i* l1 d)))
+			       (nn (bits-or l1 (bits-shift h1 nlo-bits))))
+			  (cons r4 (cons nn (cdr pr))))))))
+	  (list (bigint-canonical (cdr qr)) (car qr))))))
+
 ;;; divide N by D returning Q and R: N = Q*D + R with R in [0, D-1]
 
 (define (bigint-quot-rem num den)
@@ -459,7 +505,7 @@
 		       (b (bigint-left-shift bigint-const-1 nd))
 		       (nd nd))
 	      (if (negative? nd)
-		  (list q r)
+		  (list (bigint-canonical q) r)
 		  (let ((dn (bigint-right-shift d 1))
 			(bn (bigint-right-shift b 1))
 			(ndn (i- nd 1)))
@@ -560,6 +606,78 @@
 (define (bigint-lcm num1 num2)
   (bigint-quotient (bigint-prod num1 num2) (bigint-gcd num1 num2)))
 
+;;; return a random bigint in the range [0,n)
+;;; WARNING: this is not cryptographically secure!
+
+(define (bigint-random n)
+  (let ((r1 (map (lambda (_)
+		   (truncate
+		    (random-uniform 0.0 (+ 1.0 bigint-mask))))
+		 (fromto 0 (quotient (list-length n) bigint-base-bits)))))
+    (bigint-remainder r1 n)))
+
+;;; Miller-Rabin primality test
+
+(define (bigint-is-prime? n . k)
+  (set! k (if (null? k) 50 (car k)))
+  (cond ((bigint<? n bigint-const-2) #f)	;;; 0 or 1 not prime
+	((bigint<? n bigint-const-4) #t)	;;; 2 or 3 yes prime
+	((bigint-even? n) #f)			;;; not prime
+	(else
+	 (letrec* ((nm (bigint-diff n bigint-const-1))
+		   (factor-2 (lambda (d s)
+			       (if (bigint-even? d)
+				   (factor-2 (bigint-right-shift d 1) (i+ s 1))
+				   (list d s))))
+		   (sd (factor-2 nm 0))
+		   (d (car sd))
+		   (s (i- (cadr sd) 1))
+		   (wloop (lambda (kk)
+			    (if (zero? kk)
+				#t
+				(let* ((a (bigint-sum
+					   (bigint-random
+					    (bigint-diff n bigint-const-4))
+					   bigint-const-2))
+				       (x (bigint-exp-mod a d n)))
+				  (if (or (bigint=? x bigint-const-1)
+					  (bigint=? x nm))
+				      (wloop (i- kk 1))
+				      (sloop s x kk))))))
+		   (sloop (lambda (ss x kk)
+			    (if (zero? ss)
+				#f
+				(let ((x2 (bigint-exp-mod x bigint-const-2 n)))
+				  (cond ((bigint=? x2 bigint-const-1) #f)
+					((bigint=? x2 nm) (wloop (i- kk 1)))
+					(else (sloop (i- ss 1) x2 kk))))))))
+	   (wloop k)))))
+
+;; return the next-bigger prime
+
+(define (bigint-next-prime n)
+  (if (bigint<? n bigint-const-2)
+      bigint-const-2
+      (let loop ((n (bigint-sum n (if (bigint-even? n)
+				      bigint-const-1
+				      bigint-const-2))))
+	(if (bigint-is-prime? n)
+	    n
+	    (loop (bigint-sum n bigint-const-2))))))
+
+;; return the next-smaller prime, or #f if there isn't one
+
+(define (bigint-prev-prime n)
+  (cond ((bigint<? n bigint-const-3) #f)
+	((bigint=? n bigint-const-3) bigint-const-2)
+	(else
+	 (let loop ((n (bigint-diff n (if (bigint-even? n)
+					  bigint-const-1
+					  bigint-const-2))))
+	   (if (bigint-is-prime? n)
+	       n
+	       (loop (bigint-diff n bigint-const-2)))))))
+
 ;;; TODO: this needs some cleanup - better test for done-ness, remove print
 
 (define (bigint-sqrt num)
@@ -576,7 +694,7 @@
 
 ;;; compute the factorial of a non-negative smallint, returning a bigint
 
-(define factorial-cache '((1)))
+(define factorial-cache (list bigint-const-1))
 
 (define (bigint-factorial snum)
   (let ((cc (list-length factorial-cache)))
@@ -591,20 +709,63 @@
 	      (loop (cons (bigint-prod-small (car facts) i) facts)
 		    (i+ i 1)))))))
 
-;;; compute a row of binomial coefficients, returning a list of bigints
+;;; compute the nth fibonacci number for non-negative smallint snum = n
 
-(define (binomial-summer bs)
-  (let loop ((p bigint-const-0)
-	     (c (car bs))
-	     (rs (cdr bs)))
-    (let ((s (bigint-sum p c)))
-      (if (null? rs)
-	  (list s c)
-	  (cons s (loop c (car rs) (cdr rs)))))))
+(define (bigint-fibonacci snum)
+  (define (pf m e)
+    (define (sf m)
+      (let* ((a (car m))
+	     (b (cadr m))
+	     (c (caddr m))
+	     (d (cadddr m))
+	     (ad (bigint-sum a d))
+	     (bc (bigint-prod b c))
+	     (as (bigint-sum (bigint-prod a a) bc))
+	     (bs (bigint-prod ad b))
+	     (cs (bigint-prod c ad))
+	     (ds (bigint-sum bc (bigint-prod d d))))
+	(list as bs cs ds)))
+    (define (mf m1 m2)
+      (let* ((a1 (car m1))
+	     (b1 (cadr m1))
+	     (c1 (caddr m1))
+	     (d1 (cadddr m1))
+	     (a2 (car m2))
+	     (b2 (cadr m2))
+	     (c2 (caddr m2))
+	     (d2 (cadddr m2))
+	     (a3 (bigint-sum (bigint-prod a1 a2) (bigint-prod b1 c2)))
+	     (b3 (bigint-sum (bigint-prod a1 b2) (bigint-prod b1 d2)))
+	     (c3 (bigint-sum (bigint-prod c1 a2) (bigint-prod d1 c2)))
+	     (d3 (bigint-sum (bigint-prod c1 b2) (bigint-prod d1 d2))))
+	(list a3 b3 c3 d3)))
+    (cond ((zero? e)
+	   (list bigint-const-1 bigint-const-0 bigint-const-0 bigint-const-1))
+	  ((= e 1)
+	   m)
+	  ((even? e)
+	   (pf (sf m) (quotient e 2)))
+	  (else
+	   (mf m (pf m (- e 1))))))
+  (if (zero? snum)
+      bigint-const-0
+      (car (pf (list bigint-const-1 bigint-const-1
+		     bigint-const-1 bigint-const-0)
+	       (- snum 1)))))
+
+;;; compute a row of binomial coefficients, returning a list of bigints
 
 (define binomial-cache (list (list bigint-const-1)))
 
 (define (bigint-binomial-coeffs snum)
+  (define (summer bs)
+    (let loop ((p bigint-const-0)
+	       (c (car bs))
+	       (rs (cdr bs)))
+      (let ((s (bigint-sum p c)))
+	(if (null? rs)
+	    (list s c)
+	    (cons s (loop c (car rs) (cdr rs)))))))
   (let ((cc (list-length binomial-cache)))
     (if (< snum cc)
 	(list-ref binomial-cache (i-- cc snum 1))
@@ -614,23 +775,22 @@
 	      (begin
 		(set! binomial-cache bincos)
 		(car bincos))
-	      (loop (cons (binomial-summer (car bincos)) bincos) (i+ i 1)))))))
+	      (loop (cons (summer (car bincos)) bincos) (i+ i 1)))))))
 
 ;;; compute a row of unsigned Stirling coefficients of the first kind,
 ;;; returning a list of bigints
 
-(define (stirling1-summer n bs)
-  (let loop ((p bigint-const-0)
-	     (c (car bs))
-	     (rs (cdr bs)))
-    (let ((s (bigint-sum p (bigint-prod-small c n))))
-      (if (null? rs)
-	  (list s c)
-	  (cons s (loop c (car rs) (cdr rs)))))))
-
 (define stirling1-cache (list (list bigint-const-1)))
 
 (define (bigint-stirling1-coeffs snum)
+  (define (summer n bs)
+    (let loop ((p bigint-const-0)
+	       (c (car bs))
+	       (rs (cdr bs)))
+      (let ((s (bigint-sum p (bigint-prod-small c n))))
+	(if (null? rs)
+	    (list s c)
+	    (cons s (loop c (car rs) (cdr rs)))))))
   (let ((cc (list-length stirling1-cache)))
     (if (< snum cc)
 	(list-ref stirling1-cache (i-- cc snum 1))
@@ -640,25 +800,24 @@
 	      (begin
 		(set! stirling1-cache stirls)
 		(car stirls))
-	      (loop (cons (stirling1-summer (i- i 1) (car stirls)) stirls)
+	      (loop (cons (summer (i- i 1) (car stirls)) stirls)
 		    (i+ i 1)))))))
 
 ;;; compute a row of unsigned Stirling coefficients of the second kind,
 ;;; returning a list of bigints
 
-(define (stirling2-summer bs)
-  (let loop ((k 0)
-	     (p bigint-const-0)
-	     (c (car bs))
-	     (rs (cdr bs)))
-    (let ((s (bigint-sum p (bigint-prod-small c k))))
-      (if (null? rs)
-	  (list s c)
-	  (cons s (loop (i+ k 1) c (car rs) (cdr rs)))))))
-
 (define stirling2-cache (list (list bigint-const-1)))
 
 (define (bigint-stirling2-coeffs snum)
+  (define (summer bs)
+    (let loop ((k 0)
+	       (p bigint-const-0)
+	       (c (car bs))
+	       (rs (cdr bs)))
+      (let ((s (bigint-sum p (bigint-prod-small c k))))
+	(if (null? rs)
+	    (list s c)
+	    (cons s (loop (i+ k 1) c (car rs) (cdr rs)))))))
   (let ((cc (list-length stirling2-cache)))
     (if (< snum cc)
 	(list-ref stirling2-cache (i-- cc snum 1))
@@ -668,12 +827,12 @@
 	      (begin
 		(set! stirling2-cache stirls)
 		(car stirls))
-	      (loop (cons (stirling2-summer (car stirls)) stirls)
+	      (loop (cons (summer (car stirls)) stirls)
 		    (i+ i 1)))))))
 
 ;;; compute the Catalan number of a non-negative smallint, returning a bigint
 
-(define catalan-cache '((1)))
+(define catalan-cache (list bigint-const-1))
 
 (define (bigint-catalan snum)
   (let ((cc (list-length catalan-cache)))
@@ -689,6 +848,79 @@
 				  (map (lambda (n1 n2) (bigint-prod n1 n2))
 				       cats (list-reverse cats)))
 			  cats) (i+ i 1)))))))
+
+;;; compute the Motzkin number of a non-negative smallint, returning a bigint
+
+(define motzkin-cache (list bigint-const-1 bigint-const-1))
+
+(define (bigint-motzkin snum)
+  (define (calc n mc mp)
+    (bigint-canonical
+     (bigint-quotient
+      (bigint-sum
+       (bigint-prod mc (bigint-from-integer (i+ 3 (i* 2 n))))
+       (bigint-prod mp (bigint-from-integer (i* 3 n))))
+      (bigint-from-integer (i+ n 3)))))
+  (let ((cc (i- (list-length motzkin-cache) 1)))
+    (if (<= snum cc)
+	(list-ref motzkin-cache (i- cc snum))
+	(let loop ((mots motzkin-cache)
+		   (i cc))
+	  (if (>= i snum)
+	      (begin
+		(set! motzkin-cache mots)
+		(car mots))
+	      (loop (cons (calc i (car mots) (cadr mots)) mots) (i+ i 1)))))))
+
+;;; compute the Schroeder-Hipparchus number of a non-negative smallint,
+;;; returning a bigint
+
+(define schroeder-hipparchus-cache (list bigint-const-1 bigint-const-1))
+
+(define (bigint-schroeder-hipparchus snum)
+  (define (calc n mc mp)
+    (bigint-canonical
+     (bigint-quotient
+      (bigint-diff
+       (bigint-prod mc (bigint-from-integer (i- (i* 6 n) 9)))
+       (bigint-prod mp (bigint-from-integer (i- n 3))))
+      (bigint-from-integer n))))
+  (set! snum (i+ snum 2))
+  (let ((cc (i+ (list-length schroeder-hipparchus-cache) 1)))
+    (if (<= snum cc)
+	(list-ref schroeder-hipparchus-cache (i- cc snum))
+	(let loop ((shs schroeder-hipparchus-cache)
+		   (i cc))
+	  (if (>= i snum)
+	      (begin
+		(set! schroeder-hipparchus-cache shs)
+		(car shs))
+	      (loop (cons (calc i (car shs) (cadr shs)) shs) (i+ i 1)))))))
+
+;;; compute the (central) Delannoy number of a non-negative smallint,
+;;; returning a bigint
+
+(define delannoy-cache (list bigint-const-3 bigint-const-1))
+
+(define (bigint-delannoy snum)
+  (define (calc n mc mp)
+    (bigint-canonical
+     (bigint-quotient
+      (bigint-diff
+       (bigint-prod mc (bigint-from-integer (i- (i* 6 n) 3)))
+       (bigint-prod mp (bigint-from-integer (i- n 1))))
+      (bigint-from-integer n))))
+  (set! snum (i+ snum 1))
+  (let ((cc (list-length delannoy-cache)))
+    (if (<= snum cc)
+	(list-ref delannoy-cache (i- cc snum))
+	(let loop ((shs delannoy-cache)
+		   (i cc))
+	  (if (>= i snum)
+	      (begin
+		(set! delannoy-cache shs)
+		(car shs))
+	      (loop (cons (calc i (car shs) (cadr shs)) shs) (i+ i 1)))))))
 
 ;;; see wikipedia about Jacobi symbol
 

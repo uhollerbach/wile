@@ -202,7 +202,7 @@
 (test "1.000000000000000e+00+1.000000000000000e+00i"
       (doco '(make-polar (sqrt 2.0) (atan 1.0 1.0))))
 
-(test "\"Now hear this!\"" (doco "Now hear this!"))
+(test "Now hear this!" (doco "Now hear this!"))
 (test "iamsymbolhearmeroar" (doco '(quote iamsymbolhearmeroar)))
 
 (unless (test-mode? 'off)
@@ -238,15 +238,15 @@
 (unless (test-mode? 'off)
   (write-string
    "\n######## possible failures: outputs are system-dependent\n"))
-(test "\"/home/uwe/github/wile\"" (doco '(get-current-directory)))
+(test "/home/uwe/github/wile" (doco '(get-current-directory)))
 
-(test "\"/home/uwe/github\""
+(test "/home/uwe/github"
       (doco '(begin (set-current-directory "..") (get-current-directory))))
 
-(test "\"sleipnir\"" (doco '(get-host-name)))
-(test "\"(none)\"" (doco '(get-domain-name)))
+(test "sleipnir" (doco '(get-host-name)))
+(test "(none)" (doco '(get-domain-name)))
 
-(test "(\"uwe\" \"x\" 1000 1000 \"Uwe Hollerbach,,,\" \"/home/uwe\" \"/bin/bash\")"
+(test "(uwe x 1000 1000 Uwe Hollerbach,,, /home/uwe /bin/bash)"
       (doco '(get-user-information "uwe")))
 
 (unless (test-mode? 'off)
@@ -271,7 +271,7 @@
 (test " symbol.1" (doco '(gensym)))
 
 (run-command "echo yowza > yow.dat")
-(test "\"yowza\"" (doco '(read-line (open-file "yow.dat" "r"))))
+(test "yowza" (doco '(read-line (open-file "yow.dat" "r"))))
 (test "#\\y" (doco '(read-char (open-file "yow.dat" "r"))))
 
 (test "\n#t" (doco '(newline)))
@@ -553,7 +553,7 @@
 
 ;;; specific to quadmath
 
-(test "\"1.681051571556047e-4932\""
+(test "1.681051571556047e-4932"
       (doco '(number->string
 	      (reciprocal 5.94865747678615882543e+4931) 10 -15)))
 
@@ -1686,16 +1686,16 @@
 (test "#\\G" (doco '(char-upcase #\g)))
 (test "#\\!" (doco '(char-upcase #\!)))
 
-(test "\"g\"" (doco '(string-downcase "G")))
-(test "\"g\"" (doco '(string-downcase "g")))
-(test "\"!\"" (doco '(string-downcase "!")))
-(test "\"G\"" (doco '(string-upcase "G")))
-(test "\"G\"" (doco '(string-upcase "g")))
-(test "\"!\"" (doco '(string-upcase "!")))
+(test "g" (doco '(string-downcase "G")))
+(test "g" (doco '(string-downcase "g")))
+(test "!" (doco '(string-downcase "!")))
+(test "G" (doco '(string-upcase "G")))
+(test "G" (doco '(string-upcase "g")))
+(test "!" (doco '(string-upcase "!")))
 
 (test "65" (doco '(char->integer #\A)))
 (test "#\\A" (doco '(integer->char 65)))
-(test "\"iamasymbol\"" (doco '(symbol->string 'iamasymbol)))
+(test "iamasymbol" (doco '(symbol->string 'iamasymbol)))
 (test "#t" (doco '(symbol=? 'a 'a)))
 (test "#f" (doco '(symbol=? 'a 'b)))
 (test "iamastring" (doco '(string->symbol "iamastring")))
@@ -1859,7 +1859,7 @@
 (test "#f" (doco '(file-writable? "/etc/shadow")))
 (test "#f" (doco '(file-executable? "/etc/shadow")))
 
-(test "\"Bad address\"" (doco '(describe-system-error 14)))
+(test "Bad address" (doco '(describe-system-error 14)))
 
 (test "now\nis\nthe\ntime\nfor\nall\ngood\nmen\n#t"
       (doco '(begin (write-string "now") (newline)
@@ -1884,25 +1884,25 @@
 (test "hello world\n0" (doco '(run-command "echo hello world")))
 (test "#t" (doco '(remove-file "wile-out.c")))
 
-(test "\"13\"" (doco '(number->string 13)))
-(test "\"#{11}12\"" (doco '(number->string 13 11)))
-(test "\"#o15\"" (doco '(number->string 13 8)))
-(test "\"#xd\"" (doco '(number->string 13 16)))
+(test "13" (doco '(number->string 13)))
+(test "#{11}12" (doco '(number->string 13 11)))
+(test "#o15" (doco '(number->string 13 8)))
+(test "#xd" (doco '(number->string 13 16)))
 
-(test "\"#o3.11037552421026427572206706570256367e0\""
+(test "#o3.11037552421026427572206706570256367e0"
       (doco '(number->string 3.141592653589793 8)))
 
-(test "\"#x3.243f6a8885a2f7a4371af0ae7bca0000000x0\""
+(test "#x3.243f6a8885a2f7a4371af0ae7bca0000000x0"
       (doco '(number->string 3.141592653589793 16)))
 
-(test "\"#o3.1103755242102642\""
+(test "#o3.1103755242102642"
       (doco '(number->string 3.141592653589793 8 16)))
-(test "\"#x3.243f6a8885a2f7a4\""
+(test "#x3.243f6a8885a2f7a4"
       (doco '(number->string 3.141592653589793 16 16)))
 
-(test "\"#o3.1103755242102642e0\""
+(test "#o3.1103755242102642e0"
       (doco '(number->string 3.141592653589793 8 -16)))
-(test "\"#x3.243f6a8885a2f7a4x0\""
+(test "#x3.243f6a8885a2f7a4x0"
       (doco '(number->string 3.141592653589793 16 -16)))
 
 (test "4" (doco '(list-length (cons 'a (cons 'b (cons 'c (cons 'd ())))))))
@@ -2357,19 +2357,19 @@
 			(display (get-file-position fp))
 			(newline))))
 
-(test "\"world\"\n#t" (doco '(let ((fp (open-file "foobly.txt" "w+")))
+(test "world\n#t" (doco '(let ((fp (open-file "foobly.txt" "w+")))
 			(write-string fp "hello" #\space "world" #\newline)
 			(set-file-position fp 6)
 			(display (read-line fp))
 			(newline))))
 
-(test "\"rld\"\n#t" (doco '(let ((fp (open-file "foobly.txt" "w+")))
+(test "rld\n#t" (doco '(let ((fp (open-file "foobly.txt" "w+")))
 			(write-string fp "hello world\n")
 			(set-file-position fp -4 'end)
 			(display (read-line fp))
 			(newline))))
 
-(test "\"hello world\""
+(test "hello world"
       (doco '(read-line (run-read-command "echo hello world"))))
 
 (test "dlrow olleh11"
@@ -2424,19 +2424,19 @@
 (test "((a) ())"
       (doco '(cddr (list (list 'a 'b 'c) (list 1 2) (list 'a) (list)))))
 
-(test "\"hello world\"\n#t"
+(test "hello world\n#t"
       (doco '(begin (display (char->string #\h #\e #\l #\l #\o #\space #\w #\o #\r #\l #\d))
 		    (newline))))
 
 (test "#\\w" (doco '(string-ref "hello world" 6)))
 
-(test "\"XXXXXXXXXXXXXXXX\"" (doco '(make-string 16)))
-(test "\"XXXXXXXXXXXXXXXX\"" (doco '(string-create 16)))
+(test "XXXXXXXXXXXXXXXX" (doco '(make-string 16)))
+(test "XXXXXXXXXXXXXXXX" (doco '(string-create 16)))
 
-(test "\"tttttttttttttttt\"" (doco '(make-string 16 #\t)))
-(test "\"tttttttttttttttt\"" (doco '(string-create 16 #\t)))
+(test "tttttttttttttttt" (doco '(make-string 16 #\t)))
+(test "tttttttttttttttt" (doco '(string-create 16 #\t)))
 
-(test "\"hello world XXXX\""
+(test "hello world XXXX"
       (doco '(let ((s (string-create 16)))
 	       (string-set! s 0 #\h)
 	       (string-set! s 1 #\e)
@@ -2463,7 +2463,7 @@
 			 (sum 0 (+ sum (+ monkey (car x)))))
 			((null? x) sum)))))
 
-(test "\"coyote\" ()\n#t"
+(test "coyote ()\n#t"
       (doco '(begin (display command-name) (write-string #\space)
 		    (display command-line-arguments) (newline))))
 
@@ -2518,12 +2518,12 @@
 (test "6.568408355712891e+02" (doco '(expt 3/2 16.0)))
 (test "7.825422900366437e-01+7.825422900366437e-01i" (doco '(expt -3/2 1/4)))
 
-(test "\"meh\"" (doco '(string-copy "meh")))
-(test "\"ooh\"" (doco '(string-copy "fooh" 1)))
+(test "meh" (doco '(string-copy "meh")))
+(test "ooh" (doco '(string-copy "fooh" 1)))
 (test "caught exception from /home/uwe/github/wile/test-wile.scm:2524\n    'string-copy' start index is out of range"
       (doco '(string-copy "fooh" 13)))
 
-(test "\"oobi\"" (doco '(string-copy "fooboobish's son's sea" 4 8)))
+(test "oobi" (doco '(string-copy "fooboobish's son's sea" 4 8)))
 (test "caught exception from /home/uwe/github/wile/test-wile.scm:2528\n    'string-copy' end index is out of range"
       (doco '(string-copy "fooboobish's son's sea" 8 4)))
 
@@ -2598,16 +2598,16 @@
 (test "(1 2 3 #f 4.500000000000000e+00 quux)"
       (doco '(vector->list (vector 1 2 3 #f 4.5 'quux))))
 
-(test "\"foobarbiezonkeratorblippit\""
+(test "foobarbiezonkeratorblippit"
       (doco '(string-append "foo" "barbie" "zonkerator" "blippit")))
 
-(test "\"foobar\"" (doco '(string-append "foo" "" "bar")))
+(test "foobar" (doco '(string-append "foo" "" "bar")))
 
-(test "\"foo\"" (doco '(string-append "foo")))
-(test "\"\"" (doco '(string-append)))
+(test "foo" (doco '(string-append "foo")))
+(test "" (doco '(string-append)))
 
-(test "\"(now 4 (is 2) 'the \"time\" 4 'ALL)\"\n((now 4 (is 2) (quote the) \"time\" 4 (quote ALL)))\n\"(now 4 (is 2) 'the \"time\" 4 'ALL)\"\n#t"
-      (doco '(let ((s "(now 4 (is 2) 'the \"time\" 4 'ALL)"))
+(test "(now 4 (is 2) 'the time 4 'ALL)\n((now 4 (is 2) (quote the) time 4 (quote ALL)))\n(now 4 (is 2) 'the time 4 'ALL)\n#t"
+      (doco '(let ((s "(now 4 (is 2) 'the time 4 'ALL)"))
 	       (display s)
 	       (newline)
 	       (let ((p (parse-string s)))
@@ -2618,28 +2618,28 @@
 
 (test "180" (doco '(expmod 43 1234567 419)))
 
-(test "\"\"" (doco '(string-join-by "")))
-(test "\"foo\"" (doco '(string-join-by "" "foo")))
-(test "\"foobarbazquux\""
+(test "" (doco '(string-join-by "")))
+(test "foo" (doco '(string-join-by "" "foo")))
+(test "foobarbazquux"
       (doco '(string-join-by "" "foo" "bar" "baz" "quux")))
 
-(test "\"\"" (doco '(string-join-by ",")))
-(test "\"foo\"" (doco '(string-join-by "," "foo")))
-(test "\"foo,bar,baz,quux\""
+(test "" (doco '(string-join-by ",")))
+(test "foo" (doco '(string-join-by "," "foo")))
+(test "foo,bar,baz,quux"
       (doco '(string-join-by "," "foo" "bar" "baz" "quux")))
 
-(test "\"\"" (doco '(string-join-by "" ())))
-(test "\"foo\"" (doco '(string-join-by "" (list "foo"))))
-(test "\"foobarbazquux\""
+(test "" (doco '(string-join-by "" ())))
+(test "foo" (doco '(string-join-by "" (list "foo"))))
+(test "foobarbazquux"
       (doco '(string-join-by "" (list "foo" "bar" "baz" "quux"))))
 
-(test "\"\"" (doco '(string-join-by "," ())))
-(test "\"foo\"" (doco '(string-join-by "," (list "foo"))))
-(test "\"foo,bar,baz,quux\""
+(test "" (doco '(string-join-by "," ())))
+(test "foo" (doco '(string-join-by "," (list "foo"))))
+(test "foo,bar,baz,quux"
       (doco '(string-join-by "," (list "foo" "bar" "baz" "quux"))))
 
 ;;; really it returns a list, but it's a separate program
-(test "(\"now\" \"is\" \"the\" \"time\")"
+(test "(now is the time)"
       (doco '(string-split-by-whitespace "now is the time")))
 
 ;;; we can't test apply <prim> directly, because it needs to write
@@ -2772,11 +2772,11 @@
 (test "1.350000000000000e+01" (doco '(max 13.5)))
 (test "1.550000000000000e+01" (doco '(max 3 4.5 5/2 13 15.5 1/2)))
 
-(test "\"\"" (doco '(string-reverse "")))
-(test "\"a\"" (doco '(string-reverse "a")))
-(test "\"ba\"" (doco '(string-reverse "ab")))
-(test "\"cba\"" (doco '(string-reverse "abc")))
-(test "\"neelf\"" (doco '(string-reverse "fleen")))
+(test "" (doco '(string-reverse "")))
+(test "a" (doco '(string-reverse "a")))
+(test "ba" (doco '(string-reverse "ab")))
+(test "cba" (doco '(string-reverse "abc")))
+(test "neelf" (doco '(string-reverse "fleen")))
 
 (test "#u8(#x0 #x0 #x0 #x0 #x0)" (doco '(bytevector-create 5)))
 (test "#u8(#x51 #x51 #x51 #x51 #x51)" (doco '(bytevector-create 5 #\Q)))
@@ -2784,9 +2784,9 @@
 (test "#u8(#x0 #x0 #x0 #x0 #x0)" (doco '(make-bytevector 5)))
 (test "#u8(#x51 #x51 #x51 #x51 #x51)" (doco '(make-bytevector 5 #\Q)))
 
-(test "\"QQQQQ\"" (doco '(bytevector->string (make-bytevector 5 #\Q))))
+(test "QQQQQ" (doco '(bytevector->string (make-bytevector 5 #\Q))))
 
-(test "\"squicky\"" (doco '(let ((bv (bytevector-create 7)))
+(test "squicky" (doco '(let ((bv (bytevector-create 7)))
 			     (bytevector-set! bv 0 #\s)
 			     (bytevector-set! bv 1 #\q)
 			     (bytevector-set! bv 2 #\u)
@@ -2807,7 +2807,7 @@
 			 (list (bytevector-length bv)
 			       (bytevector-ref bv 5)))))
 
-(test "\"kquicsy\"" (doco '(let ((bv (bytevector-create 7)))
+(test "kquicsy" (doco '(let ((bv (bytevector-create 7)))
 			     (bytevector-set! bv 0 #\s)
 			     (bytevector-set! bv 1 #\q)
 			     (bytevector-set! bv 2 #\u)

@@ -17,7 +17,7 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval var_1 = LVI_STRING_NOCPY("1.2.6");
+static lval var_1 = LVI_STRING_NOCPY("1.2.7");
 
 // definitions
 

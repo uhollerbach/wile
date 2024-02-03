@@ -1,6 +1,30 @@
-Last update: 2024-2-3 13:30 PST
+Last update: 2024-2-19 15:00 PST
 
 # Changelog for `wile`
+
+## Current version `wile` "1.2.7" 2024-2-19 15:00 PST
+
+- add several more functions to bigint library, more number-theoretic
+  stuff: is-prime?, next-prime, prev-prime, plus calculation of Fibonacci,
+  Motzkin, Schroeder-Hipparchus, and central Delannoy numbers.
+  add divide-by-small (half-digit) function and ability to print numbers
+  in base 10.
+
+- change (display) to not add quotes around strings;
+  I had this wrong, R7RS says no quotes
+
+- start working on cond-expand - it can pass some simple tests already,
+  but cannot handle (define) inside: that doesn't escape that inner
+  environment. note that there's one new test, #116, that is known to fail
+
+- add "." to c include and link directories in config file
+
+- add '|' and '#' as legal characters in symbol names;
+  note that this is an extension of R^NRS
+
+- add a bunch of continuations tests to official tests
+
+- improve error messages produced by *printf
 
 ## Current version `wile` "1.2.6" 2024-2-3 13:30 PST
 
@@ -15,7 +39,7 @@ Last update: 2024-2-3 13:30 PST
   add, subtract, multiply, divide; left & right shift; and, or, xor;
   compare; ilog; min, max; exp-mod; convert to & from strings in
   several bases; a number of special functions: factorial, binomial
-  coefficients, Stirling numbers, Catalan numbers.  
+  coefficients, Stirling numbers, Catalan numbers.
 
 - add remove-unused-function functionality, so far only at first level:
   functions that become unused due to no longer being called from

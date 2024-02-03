@@ -1166,12 +1166,15 @@
 ;;; integer or rational numbers		"%[lrm]?[ +]?[0-9]*[bodx]"
 ;;; floating-point numbers		"%[lrm]?[ +]?[0-9]*(\.[0-9]*)?[fe]"
 
-(define (type-mismatch v c)
-  (string-append "*printf type/value mismatch: got "
-		 (symbol->string (type-of v))
-		 " object for %"
-		 (char->string c)
-		 " specifier"))
+(define (type-mismatch v c fmt)
+  (raise
+   (string-append "*printf type/value mismatch: got "
+		  (symbol->string (type-of v))
+		  " object for %"
+		  (char->string c)
+		  " specifier in format string '"
+		  fmt
+		  "'")))
 
 (define r-chr "%c")
 (define r-obj "%v")
@@ -1201,7 +1204,8 @@
 	(prec #f))
     (if (char=? (car cs) #\%)
 	(set! cs (cdr cs))
-	(raise (string-append "*printf error: malformed format string " fstr)))
+	(raise (string-append
+		"*printf error: malformed format string '" fstr "'")))
     (when (or (char=? (car cs) #\l)
 	      (char=? (car cs) #\r)
 	      (char=? (car cs) #\m))
@@ -1231,7 +1235,8 @@
 		     (char=? (car cs) #\x)
 		     (char=? (car cs) #\f)
 		     (char=? (car cs) #\e)))
-      (raise (string-append "*printf error: malformed format string " fstr)))
+      (raise (string-append
+	      "*printf error: malformed format string '" fstr "'")))
     (when (and (string=? spref "+")
 	       (or (char=? (car cs) #\b)
 		   (char=? (car cs) #\o)
@@ -1239,12 +1244,14 @@
       (set! spref " "))
     (list (car cs) width align spref prec zpad)))
 
-(define (align-str width align str)
+(define (align-str width align str fmt)
   ((case align
      ((#\l) string-pad-right)
      ((#\m) string-pad-center)
      ((#\r) string-pad-left)
-     (else (raise "*printf error: malformed alignment")))
+     (else (raise (string-append
+		   "*printf error: malformed alignment in format string '"
+		   fmt "'"))))
    str #\space width))
 
 ;;; TODO: slight infelicity here: generic values printed with the %v
@@ -1275,12 +1282,12 @@
 ;;; numbers get represented as +#b1100, when it should be #b+1100.
 ;;; -> convert plus prefix to space prefix for types #\b #\o #\x.
 
-(define (printf-helper fstr . vals)
+(define (printf-helper fstr-init . vals)
   (unless regex-all
     (set! regex-all
 	  (string-join-by "|" (list r-pct r-chr r-obj r-str r-exact r-float))))
   (let loop ((acc ())
-	     (fstr fstr)
+	     (fstr fstr-init)
 	     (vs vals))
     (let ((rr (regex-match regex-all fstr)))
       (if rr
@@ -1296,78 +1303,85 @@
 	    (set! acc (cons (car rr) acc))
 	    (if (char=? type #\%)
 		(loop (cons (string-create (max width 1) #\%) acc) rest vs)
-		(begin (when (null? vs)
-			 (raise "*printf error: not enough arguments"))
-		       (let ((cur-v (car vs)))
-			 (cond
-			  ((char=? type #\c)
-			   (cond ((char? cur-v)
-				  (loop (cons cur-v acc) rest (cdr vs)))
-				 (else (raise (type-mismatch cur-v #\c)))))
-			  ((char=? type #\v)
-			   (loop (cons
-				  (if (or (string? cur-v) (char? cur-v))
-				      cur-v
-				      (disp-obj cur-v))
-				  acc)
-				 rest (cdr vs)))
-			  ((char=? type #\s)
-			   (cond ((string? cur-v)
-				  (loop (cons (align-str width align cur-v)
-					      acc)
-					rest (cdr vs)))
-				 ((char? cur-v)
-				  (loop (cons (align-str
-					       width align
-					       (char->string cur-v))
-					      acc)
+		(begin
+		  (when (null? vs)
+		    (raise (string-append
+			    "*printf error: not enough arguments for format string'"
+			    fstr-init "'")))
+		  (let ((cur-v (car vs)))
+		    (cond
+		     ((char=? type #\c)
+		      (cond ((char? cur-v)
+			     (loop (cons cur-v acc) rest (cdr vs)))
+			    (else (type-mismatch cur-v #\c fstr-init))))
+		     ((char=? type #\v)
+		      (loop (cons
+			     (if (or (string? cur-v) (char? cur-v))
+				 cur-v
+				 (disp-obj cur-v))
+			     acc)
+			    rest (cdr vs)))
+		     ((char=? type #\s)
+		      (cond ((string? cur-v)
+			     (loop (cons (align-str
+					  width align cur-v fstr-init)
+					 acc)
+				   rest (cdr vs)))
+			    ((char? cur-v)
+			     (loop (cons (align-str
+					  width align
+					  (char->string cur-v) fstr-init)
+					 acc)
 
-					rest (cdr vs)))
-				 ((symbol? cur-v)
-				  (loop (cons (align-str
-					       width align
-					       (symbol->string cur-v))
-					      acc)
-					rest (cdr vs)))
-				 (else (raise (type-mismatch cur-v #\s)))))
-			  ((or (char=? type #\b)
-			       (char=? type #\o)
-			       (char=? type #\d)
-			       (char=? type #\x))
-			   (unless (rational? cur-v)
-			     (raise (type-mismatch cur-v type)))
-			   (let* ((base (case type
-					  ((#\b) 2) ((#\o) 8)
-					  ((#\d) 10) ((#\x) 16)))
-				  (str1 (number->string cur-v base))
-				  (str2 (if (negative? cur-v)
-					    str1
-					    (string-append spref str1))))
+				   rest (cdr vs)))
+			    ((symbol? cur-v)
+			     (loop (cons (align-str
+					  width align
+					  (symbol->string cur-v) fstr-init)
+					 acc)
+				   rest (cdr vs)))
+			    (else (type-mismatch cur-v #\s fstr-init))))
+		     ((or (char=? type #\b)
+			  (char=? type #\o)
+			  (char=? type #\d)
+			  (char=? type #\x))
+		      (unless (rational? cur-v)
+			(type-mismatch cur-v type fstr-init))
+		      (let* ((base (case type
+				     ((#\b) 2) ((#\o) 8)
+				     ((#\d) 10) ((#\x) 16)))
+			     (str1 (number->string cur-v base))
+			     (str2 (if (negative? cur-v)
+				       str1
+				       (string-append spref str1))))
 			     ;;; TODO: somewhere in here, do zero-padding
 			     ;;; if requested. it's a bit tricky... need
 			     ;;; to handle minus sign and base prefix
-			     (loop (cons (align-str width align str2) acc)
-				   rest (cdr vs))))
-			  ((or (char=? type #\f)
-			       (char=? type #\e))
-			   (unless (number? cur-v)
-			     (raise (type-mismatch cur-v type)))
-			   (let* ((pr1 ((if (char=? type #\f) + -)
-					(if prec prec 12)))
-				  (str1 (number->string cur-v 10 pr1))
-				  (str2 (if (negative? cur-v)
-					    str1
-					    (string-append spref str1))))
-			     (loop (cons (align-str width align str2) acc)
-				   rest (cdr vs)))))))))
+			(loop (cons (align-str width align str2 fstr-init) acc)
+			      rest (cdr vs))))
+		     ((or (char=? type #\f)
+			  (char=? type #\e))
+		      (unless (number? cur-v)
+			(type-mismatch cur-v type fstr-init))
+		      (let* ((pr1 ((if (char=? type #\f) + -)
+				   (if prec prec 12)))
+			     (str1 (number->string cur-v 10 pr1))
+			     (str2 (if (negative? cur-v)
+				       str1
+				       (string-append spref str1))))
+			(loop (cons (align-str width align str2 fstr-init) acc)
+			      rest (cdr vs)))))))))
 	  (begin
 	    (let ((pix (string-find-first-char fstr #\%)))
 	      (when pix
 		(raise (string-append
-			"*printf error: unknown format directive "
-			(string-copy fstr pix)))))
+			"*printf error: unknown directive "
+			(string-copy fstr pix) " in format string '"
+			fstr-init "'"))))
 	    (unless (null? vs)
-	      (raise "*printf error: excess arguments"))
+	      (raise (string-append
+		      "*printf error: excess arguments for format string '"
+		      fstr-init "'")))
 	    (cons fstr acc))))))
 
 ;;; given an implementation of printf-helper, the rest is pretty trivial
@@ -1375,8 +1389,15 @@
 (define-primitive "wile_printf"
   "expects a format string and any number of additional arguments, and writes the formatted output to stdout"
   (printf fstr . vals)
-  (for-each (lambda (s) (write-1str s))
-	    (list-reverse (apply printf-helper fstr vals))))
+  (let ((port stdout))
+    (when (or (file-port? fstr)
+	      (pipe-port? fstr)
+	      (socket-port? fstr))
+      (set! port fstr)
+      (set! fstr (car vals))
+      (set! vals (cdr vals)))
+    (for-each (lambda (s) (write-1str port s))
+	      (list-reverse (apply printf-helper fstr vals)))))
 
 (define-primitive "wile_fprintf"
   "expects an output port, a format string and any number of additional arguments, and writes the formatted output to the specified output port"

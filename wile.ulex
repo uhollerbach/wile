@@ -300,10 +300,10 @@ IMAG16	{SGO}{UREAL16}{I}
 %# A quoted-string
 QS	\"([^\"\\]|\\.)*\"
 
-%# Components of symbols
+%# Components of symbols - note that allowing | and # here is an extension!
 
-INIT	[a-zA-Z!$%&*/:<=>?^_~]
-SUB	[a-zA-Z!$%&*/:<=>?^_~0-9.@+-]
+INIT	[a-zA-Z!$%&*/:<=>?^_~|#]
+SUB	[a-zA-Z!$%&*/:<=>?^_~|#0-9.@+-]
 
 %# HERE-DOC prefix; the length of this prefix = 3 is used in the code below
 HEREPRE	@<<

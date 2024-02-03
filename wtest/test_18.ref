@@ -1,6 +1,6 @@
-"3.37.2"
-("cars")
-"CREATE TABLE cars (id integer, name text, price integer)"
+3.37.2
+(cars)
+CREATE TABLE cars (id integer, name text, price integer)
 DROP TABLE IF EXISTS cars;
 
 CREATE TABLE cars (id INTEGER, name TEXT, price INTEGER);
@@ -30,10 +30,10 @@ INSERT INTO cars VALUES (20,'Lego',20);
 
 COMMIT;
 -- No such table '; bobby tables'
-(("19" "Hot Wheels" "4"))
-(("99000"))
-(("Toyota") ("VW") ("Cadillac") ("Mustang") ("Honda") ("Subaru") ("Audi") ("Lexus"))
-("?1" "?2")
-(("name") ("Toyota") ("VW") ("Mustang") ("Honda") ("Subaru"))
-(("name") ("Tonka") ("Hot Wheels") ("Lego"))
-(("name") ("Ferrari") ("Tesla") ("Lamborghini") ("Maclaren"))
+((19 Hot Wheels 4))
+((99000))
+((Toyota) (VW) (Cadillac) (Mustang) (Honda) (Subaru) (Audi) (Lexus))
+(?1 ?2)
+((name) (Toyota) (VW) (Mustang) (Honda) (Subaru))
+((name) (Tonka) (Hot Wheels) (Lego))
+((name) (Ferrari) (Tesla) (Lamborghini) (Maclaren))
