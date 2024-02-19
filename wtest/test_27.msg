@@ -1,1 +1,0 @@
-namespace issue - escaping closures

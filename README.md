@@ -1,6 +1,6 @@
-Last update: 2024-2-19 15:00 PST
+Last update: 2024-2-26 10:00 PST
 
-# `wile` - the extremely stable scheming genius compiler - version 1.2.7
+# `wile` - the extremely stable scheming genius compiler - version 1.2.8
 
 `wile` is a small scheme-to-c compiler which I'm writing; it's by no
 means complete, but it's capable enough that writing programs with it
@@ -289,7 +289,8 @@ desire.
 
 * A couple of example programs in `examples/`:
 
-- `amaze.scm` is a silly toy, a small maze generator.
+- `amaze.scm` is a silly toy, a small maze generator. It prints line
+  segments to stdout, use your preferred graphics package to draw them.
 
 - `cal.scm` is a re-implementation of part of the standard unix command
   `cal` to display the current calendar. I needed that at one point

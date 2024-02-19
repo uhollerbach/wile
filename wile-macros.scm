@@ -39,7 +39,7 @@
   (let ((kv (assv key global-config)))
     (if kv
 	(cadr kv)
-	(ERR "key '%s' was not found in config!" key))))
+	(ERR #f "key '%s' was not found in config!" key))))
 
 ;;; the first group of macros are somewhat generic
 
@@ -81,7 +81,7 @@
 				    '(else (raise "case-lambic exhausted all cases, no match found!"))))
 			       ((all-true? (map integer? n))
 				`(,n (apply ,l ,args)))
-			       (else (ERR "bad n-args spec %v" n)))))
+			       (else (ERR (TSL lam) "bad n-args spec %v" n)))))
 		     group)))
     `(lambda ,args
        (case (list-length ,args)

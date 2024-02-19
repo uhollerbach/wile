@@ -43,14 +43,12 @@ uint16_t wile_binfo(void)
 #endif
     shift += 2;
 
-    // bits 5-6: 0 = plain old long int, 1 = int128, 2 = bigint
+    // bit 5: 0 = plain old long int, 1 = int128
 
 #if defined(WILE_USES_INT128)
     ret |= (1 << shift);
-#elif defined(WILE_USES_BIGINT)
-    ret |= (2 << shift);
 #endif
-//    shift += 2;
+//    shift += 1;
 
     return ret;
 }

@@ -1,6 +1,19 @@
-Last update: 2024-2-19 15:00 PST
+Last update: 2024-2-26 10:00 PST
 
 # Changelog for `wile`
+
+## Current version `wile` "1.2.8" 2024-2-26 10:00 PST
+
+- remove printf infelicity that %v values were getting shoved into a temp file
+
+- improve a number of error messages: better identification
+  of where error occurs
+
+- restore TCO in the new version of the sequence expansion code "begin-new"
+  that I've been working on; this now fully handles cond-expand
+
+- remove thenremove-unused-function functionality that I had added in 1.2.6;
+  it is causing crashes that I haven't tracked down yet
 
 ## Current version `wile` "1.2.7" 2024-2-19 15:00 PST
 

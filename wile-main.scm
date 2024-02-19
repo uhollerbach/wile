@@ -30,7 +30,7 @@
   (let ((kv (assv key global-config)))
     (if kv
 	(cadr kv)
-	(ERR "key '%s' was not found in config!" key))))
+	(ERR #f "key '%s' was not found in config!" key))))
 
 (load-library "hash.scm")
 ;;; comment this out for closing the self-hosting loop
@@ -59,7 +59,7 @@
 	(check-item (lambda (key test)
 		      (let ((cv (get-config-val key)))
 			(unless (and cv (test cv))
-			  (ERR "bad config entry '%s' -> %v" key cv))))))
+			  (ERR #f "bad config entry '%s' -> %v" key cv))))))
     (set! global-config data)
     (check-item 'c-compiler string?)
     (check-item 'c-compiler-flags string?)

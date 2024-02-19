@@ -63,7 +63,7 @@
 #endif // HAVE_QUADMATH_H
 #endif // !defined(double stuff) etc
 
-#if !defined(WILE_USES_LONG_INT) && !defined(WILE_USES_INT128) && !defined(WILE_USES_BIGINT)
+#if !defined(WILE_USES_LONG_INT) && !defined(WILE_USES_INT128)
 #if HAVE_INT128
 #define WILE_USES_INT128
 #else
@@ -153,21 +153,6 @@ typedef __int128 lisp_int_t;
 typedef unsigned __int128 lisp_uint_t;
 
 #endif // WILE_USES_INT128
-
-//////////////// ginormous int ////////////////
-
-#ifdef WILE_USES_BIGINT
-
-#ifdef WILE_GOT_INT
-#error "wile int format was already specified!"
-#endif
-#define WILE_GOT_INT
-
-typedef struct bigint {
-    uint64_t bdits[16];
-} lisp_int_t;
-
-#endif // WILE_USES_BIGINT
 
 #ifndef WILE_GOT_INT
 #error "wile int format was not specified!"
@@ -1192,8 +1177,6 @@ struct wile_profile_t {
 #define WILE_INT_SYM		int_LI
 #elif  defined(WILE_USES_INT128)
 #define WILE_INT_SYM		int_I128
-#elif  defined(WILE_USES_BIGINT)
-#define WILE_INT_SYM		int_BI
 #else
 #error "wile int format was not specified!"
 #endif // WILE_USES_LONG_INT

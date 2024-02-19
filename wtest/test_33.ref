@@ -1,12 +1,12 @@
 # tail-recursion tests -- this will take a few seconds
-lambda	50001 finished!
-and	50001 finished!
-or	50001 finished!
-when	50001 finished!
-unless	50001 finished!
-cond	50001 finished!
-let	50001 finished!
-let*	50001 finished!
-case	50001 finished!
-do	50001 finished!
+lambda	2500001 finished!
+and	2500001 finished!
+or	2500001 finished!
+when	2500001 finished!
+unless	2500001 finished!
+cond	2500002 finished!
+let	2500001 finished!
+let*	2500001 finished!
+case	2500001 finished!
+do	2500001 finished!
 # all done! success!

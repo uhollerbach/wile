@@ -1,4 +1,4 @@
-Last update: 2023-11-23 18:00 PST
+Last update: 2024-2-19 15:00 PST
 
 ## Known bugs/limitations in `wile`
 
@@ -6,8 +6,6 @@ Last update: 2023-11-23 18:00 PST
 
 * Tail-calls are working except through (apply); can't get c compilers
   to do that one. Might not be able to fix this.
-
-* No true bignums
 
 * Need to work on macro expansion, interaction with (load) is not
   quite the way it should be

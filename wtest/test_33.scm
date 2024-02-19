@@ -3,7 +3,7 @@
 
 ;;; this needs to be deep enough that the stack will be exhausted if
 ;;; tail recursion is not working
-(define deep-n 50000)
+(define deep-n 2500000)
 
 (define verbose? #f)
 

@@ -491,11 +491,11 @@
 ;;; 				   (lambda (,sa) (cond ,@s2))))))
 ;;; 		       ,@s3)))))
 
-   (list 'namespace
-	 "expects a list of symbols which are functions to make visible, then any number of function definitions, which will be private except for those listed as public. CURRENTLY BROKEN"
-	 'macro -2
-	 (lambda (syms . defs)
-	   `(begin ,@defs)))
+;;;   (list 'namespace
+;;;	 "expects a list of symbols which are functions to make visible, then any number of function definitions, which will be private except for those listed as public. CURRENTLY BROKEN"
+;;;	 'macro -2
+;;;	 (lambda (syms . defs)
+;;;	   `(begin ,@defs)))
 
    (list 'cons "expects two values A and B and returns the newly-allocated pair (A B)"
 	 'prim 2
@@ -682,6 +682,9 @@
 
    (list 'cadddddddr "expects one nested list object and returns the appropriate composition of car and cdr"
 	 'macro 1 (lambda (a1) `(cxr "cadddddddr" ,a1)))
+
+   (list 'cadddar "expects one nested list object and returns the appropriate composition of car and cdr"
+	 'macro 1 (lambda (a1) `(cxr "cadddar" ,a1)))
 
    (list 'pair?
 	 "expects one argument and returns #t if that value is a pair, #f otherwise"

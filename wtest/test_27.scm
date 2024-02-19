@@ -54,23 +54,28 @@
 (printf "access pub data %v\n" pub-val)
 (supervisor)
 
-;;; In both skeem and wile, attempting to access the private parts is,
-;;; correctly, a failure
+;;; In both skeem and old-wile, attempting to access the private
+;;; parts is, correctly, a failure.
+;;; In new-wile, it seems to work... why? perhaps because we are
+;;; not fully using the real namespace utility, but rather the
+;;; crippled fully-public version?
 
 ;;; (supervisor)
 ;;; (printf "access pri data %v\n" pri-val)
-;;; (display (pri-change 172))
+;;; (display (pri-change 97))
 ;;; (newline)
 ;;; (printf "access pri data %v\n" pri-val)
 ;;; (supervisor)
 
 (super-access 172 "protean")
 
-;;; In both skeem and wile, these two direct accesses to pub-val don't
-;;; work: they return the old obsolete value that was active at the
-;;; time the namespace macro finished. This is because there are two
-;;; different scopes in which there is a variable named pub-val, and
-;;; this accesses the one outside the namespace.
+;;; In both skeem and old-wile, these two direct accesses to pub-val
+;;; don't work: they return the old obsolete value that was active at
+;;; the time the namespace macro finished. This is because there are
+;;; two different scopes in which there is a variable named pub-val,
+;;; and this accesses the one outside the namespace.
+;;; In new-wile, it all comes out correctly: there is only one pub-val
+;;; variable.
 
 (printf "access pub data %v\n" pub-val)
 (supervisor)
