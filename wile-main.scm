@@ -4,24 +4,6 @@
 ;;; Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
 ;;; License: GPLv3 or later, see file 'LICENSE' for details
 
-;;; comment this out for closing the self-hosting loop
-;;; (defmacro (load-library fname)
-;;;   (letrec* ((paths (get-config-val 'scheme-include-directories))
-;;; 	    (find (lambda (ps)
-;;; 		    (if (null? ps)
-;;; 			#f
-;;; 			(let* ((dir (car ps))
-;;; 			       (fp (if (string=? dir ".")
-;;; 				       fname
-;;; 				       (string-join-by "/" dir fname))))
-;;; 			  (if (file-exists? fp)
-;;; 			      fp
-;;; 			      (find (cdr ps)))))))
-;;; 	    (filepath (find paths)))
-;;; 	   (if filepath
-;;; 	       `(load ,filepath)
-;;; 	       `(write-string "unable to find file '" ,fname "'\n"))))
-
 (define string-hash string-hash-64)
 
 (define global-config ())
@@ -33,8 +15,6 @@
 	(ERR #f "key '%s' was not found in config!" key))))
 
 (load-library "hash.scm")
-;;; comment this out for closing the self-hosting loop
-;;; (load-library "struct.scm")
 (load-library "arg-parse.scm")
 (load-library "wile-comp.scm")
 
@@ -50,7 +30,7 @@
 
 ;;; Process the specified config file
 
-(define (setup-config-from file)
+(define (setup-config-from file paths)
   (when (positive? global-verbose)
     (write-string "#### config is " file "\n"))
   (let ((data (read-all file))
@@ -60,7 +40,14 @@
 		      (let ((cv (get-config-val key)))
 			(unless (and cv (test cv))
 			  (ERR #f "bad config entry '%s' -> %v" key cv))))))
-    (set! global-config data)
+    (set! global-config
+	  (map (lambda (kv)
+		 (if (and (pair? kv)
+			  (symbol? (car kv))
+			  (symbol=? (car kv) 'scheme-include-directories))
+		     (list (car kv) (list-append paths (cadr kv)))
+		     kv))
+	       data))
     (check-item 'c-compiler string?)
     (check-item 'c-compiler-flags string?)
     (check-item 'c-include-directories multi-string?)
@@ -109,18 +96,18 @@
 ;;; Check for config files in the order command-line, env-var, baked-in, cwd;
 ;;; use the first one that's found
 
-(define (setup-configuration cmd-line-file)
+(define (setup-configuration cmd-line-file paths)
   (let ((baked-in-file (wile-config-file))
 	(env-file (get-environment-variable "WILE_CONFIG_FILE"))
 	(local-file "wile-config.dat"))
     (cond ((and cmd-line-file (file-exists? cmd-line-file))
-	   (setup-config-from cmd-line-file))
+	   (setup-config-from cmd-line-file paths))
 	  ((and env-file (file-exists? env-file))
-	   (setup-config-from env-file))
+	   (setup-config-from env-file paths))
 	  ((and baked-in-file (file-exists? baked-in-file))
-	   (setup-config-from baked-in-file))
+	   (setup-config-from baked-in-file paths))
 	  ((file-exists? local-file)
-	   (setup-config-from local-file))
+	   (setup-config-from local-file paths))
 	  (else (write-string stderr "no compiler configuration file found!\n")
 		(exit 1)))))
 
@@ -193,7 +180,8 @@
 	       '("-Q" strings "show doc-strings for specified primitives")
 	       '("-V" flag "show compiler version and configuration")
 	       '("-CF" string "specify compiler configuration file")
-	       '("-write-config" flag "initialize default config file")
+	       '("-L" strings "specify more scheme source search directories")
+	       '("-wr-conf" flag "initialize default config file")
 	       '("-c" flag "compile to c")
 	       '("-o" flag "compile to object")
 	       '("-p" flag "do profiling: count function invocations")
@@ -219,6 +207,7 @@
        (compile-to-c (hash-table-ref fvals "-c" #f))
        (compile-to-o (hash-table-ref fvals "-o" #f))
        (compile-to-x (hash-table-ref fvals "-x" #f))
+       (more-paths (hash-table-ref fvals "-L" ()))
        (doc-prims (hash-table-ref fvals "-Q" ()))
        (keep-int (hash-table-ref fvals "-k" #f))
        (opt-level (hash-table-ref fvals "-O" #f))
@@ -229,7 +218,7 @@
        (input-prefix #f)
        (output-file #f)
        (output-type #f))
-  (when (hash-table-ref fvals "-write-config" #f)
+  (when (hash-table-ref fvals "-wr-conf" #f)
     (write-build-info)
     (exit 0))
   (when (hash-table-ref fvals "-V" #f)
@@ -246,7 +235,7 @@
 ;;;    (newline)
     (exit 0))
   (set! global-verbose (hash-table-ref fvals "-v" 0))
-  (setup-configuration (hash-table-ref fvals "-CF" #f))
+  (setup-configuration (hash-table-ref fvals "-CF" #f) more-paths)
   (when (hash-table-ref fvals "-P" #f)
     (show-prims-table)
     (exit 0))

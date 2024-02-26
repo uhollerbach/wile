@@ -320,6 +320,7 @@ p2 = new_lv(LV_NIL);
 }
 var_84 = LVI_PAIR(p1, p2);
 }
+lval var_85;
 lval var_87[8];
 var_87[0] = var_80;
 var_87[1] = var_83;
@@ -328,6 +329,7 @@ var_64[0] = var_87[0];
 var_64[1] = var_87[1];
 var_64[2] = var_87[2];
 goto lbl_65;
+var_66 = var_85;
 } else {
 lval var_88;
 {

@@ -1,9 +1,8 @@
 Stuff TODO
 
-* begin-new stuff is looking pretty good, except that wile can't
-  compile itself with that active yet; need to figure out why
+* begin-new stuff is looking pretty good
 
-* begin-new stuff is NOT TAIL-CALL CLEAN yet!
+* remove-unused-functions is broken, why? (but it needs to be better anyway)
 
 * coverity flag: deal with uninitialized "origin" field in lots of places
 

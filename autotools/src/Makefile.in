@@ -289,7 +289,7 @@ wile_CPPFLAGS = -I$(top_srcdir)/include -DWILE_CONFIG_FILE=$(sysconfdir)/wile-co
 wile_LDADD = ../libwrtl/libwrtl.a
 sysconf_DATA = wile-config.dat
 my_datadir = $(datadir)/wile
-dist_my_data_DATA = arg-parse.scm bigint.scm deque.scm gthread.scm hash.scm monad-list.scm monad.scm queue.scm stack.scm stats.scm struct.scm test.scm
+dist_my_data_DATA = arg-parse.scm bigint.scm deque.scm gthread.scm hash.scm monad-list.scm monad.scm quaternions.scm queue.scm stack.scm stats.scm struct.scm test.scm
 all: all-am
 
 .SUFFIXES:
@@ -678,7 +678,7 @@ wile-config.dat:	wile
 	echo "(c-include-directories (\".\" \"$(includedir)\"))" >> wile-config.dat
 	echo "(c-link-directories (\".\" \"$(libdir)\"))" >> wile-config.dat
 	echo "(scheme-include-directories (\".\" \"$(datadir)/wile\"))" >> wile-config.dat
-	./wile -write-config >> wile-config.dat
+	./wile -wr-conf >> wile-config.dat
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

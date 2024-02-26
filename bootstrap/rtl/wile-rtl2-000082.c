@@ -54,12 +54,14 @@ if (var_13[1].vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000082.scm:20", "input is not a pair!");
 }
 var_22 = (var_13[1].v.pair.cdr ? *(var_13[1].v.pair.cdr) : LVI_NIL());
+lval var_23;
 lval var_25[8];
 var_25[0] = var_20;
 var_25[1] = var_22;
 var_13[0] = var_25[0];
 var_13[1] = var_25[1];
 goto lbl_14;
+var_15 = var_23;
 } else {
 var_15 = var_13[0];
 }

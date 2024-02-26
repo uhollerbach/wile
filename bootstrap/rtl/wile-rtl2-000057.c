@@ -36,14 +36,14 @@ char* cp = strchr(var_26.v.str, 'r');
 var_27 = var_24[0];
 while (*(--cp) != 'c') {
 if (var_27.vt != LV_PAIR) {
-wile_exception("cxr", "/home/uwe/github/wile/wile-config.dat:0", "input does not have the right structure!");
+wile_exception("cxr", "/home/uwe/tools/etc/wile-config.dat:0", "input does not have the right structure!");
 }
 if (*cp == 'a') {
 var_27 = (var_27.v.pair.car ? *(var_27.v.pair.car) : LVI_NIL());
 } else if (*cp == 'd') {
 var_27 = (var_27.v.pair.cdr ? *(var_27.v.pair.cdr) : LVI_NIL());
 } else {
-wile_exception("cxr", "/home/uwe/github/wile/wile-config.dat:0", "got malformed control string '%s'", var_26.v.str);
+wile_exception("cxr", "/home/uwe/tools/etc/wile-config.dat:0", "got malformed control string '%s'", var_26.v.str);
 }
 }
 }
@@ -62,14 +62,14 @@ char* cp = strchr(var_35.v.str, 'r');
 var_36 = var_33[0];
 while (*(--cp) != 'c') {
 if (var_36.vt != LV_PAIR) {
-wile_exception("cxr", "/home/uwe/github/wile/wile-config.dat:0", "input does not have the right structure!");
+wile_exception("cxr", "/home/uwe/tools/etc/wile-config.dat:0", "input does not have the right structure!");
 }
 if (*cp == 'a') {
 var_36 = (var_36.v.pair.car ? *(var_36.v.pair.car) : LVI_NIL());
 } else if (*cp == 'd') {
 var_36 = (var_36.v.pair.cdr ? *(var_36.v.pair.cdr) : LVI_NIL());
 } else {
-wile_exception("cxr", "/home/uwe/github/wile/wile-config.dat:0", "got malformed control string '%s'", var_35.v.str);
+wile_exception("cxr", "/home/uwe/tools/etc/wile-config.dat:0", "got malformed control string '%s'", var_35.v.str);
 }
 }
 }

@@ -84,12 +84,14 @@ var_26[1] = var_6[1];
 var_26[2] = var_25;
 var_25 = wile_map(NULL, var_26, "bld-rtl-dir/wile-rtl2-000030.scm:18");
 }
+lval var_27;
 lval var_29[8];
 var_29[0] = var_6[0];
 var_29[1] = var_25;
 var_6[0] = var_29[0];
 var_6[1] = var_29[1];
 goto lbl_7;
+var_8 = var_27;
 } else {
 lval var_30;
 var_30 = LVI_BOOL(true);
@@ -208,12 +210,14 @@ wile_exception("!=", "bld-rtl-dir/wile-rtl2-000030.scm:21", "inputs are not real
 break;
 }
 if (LV_IS_FALSE(var_57)) {
+lval var_58;
 lval var_60[8];
 var_60[0] = var_2[0];
 var_60[1] = var_31;
 var_2[0] = var_60[0];
 var_2[1] = var_60[1];
 TAIL_CALL fn_4(NULL, var_2, "bld-rtl-dir/wile-rtl2-000030.scm:23");
+var_42 = var_58;
 } else {
 lval var_61;
 var_61 = LVI_STRING("for-each got lists of different lengths");

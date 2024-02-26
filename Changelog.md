@@ -1,6 +1,16 @@
-Last update: 2024-2-26 10:00 PST
+Last update: 2024-3-18 21:00 PST
 
 # Changelog for `wile`
+
+## Current version `wile` "1.2.9" 2024-3-18 21:00 PST
+
+- switch from using "do { ... } while (XXX)" in generated C code to
+  lower-level gotos; this avoids scoping issues in the C code which
+  were causing some programs to fail to compile
+
+- add -L option to specify additional search paths for (load-library)
+
+- add a quaternions module... a slight air of nineteenth century decay :-)
 
 ## Current version `wile` "1.2.8" 2024-2-26 10:00 PST
 
@@ -12,7 +22,7 @@ Last update: 2024-2-26 10:00 PST
 - restore TCO in the new version of the sequence expansion code "begin-new"
   that I've been working on; this now fully handles cond-expand
 
-- remove thenremove-unused-function functionality that I had added in 1.2.6;
+- remove remove-unused-function functionality that I had added in 1.2.6;
   it is causing crashes that I haven't tracked down yet
 
 ## Current version `wile` "1.2.7" 2024-2-19 15:00 PST

@@ -1,6 +1,6 @@
-Last update: 2024-2-26 10:00 PST
+Last update: 2024-3-18 21:00 PST
 
-# `wile` - the extremely stable scheming genius compiler - version 1.2.8
+# `wile` - the extremely stable scheming genius compiler - version 1.2.9
 
 `wile` is a small scheme-to-c compiler which I'm writing; it's by no
 means complete, but it's capable enough that writing programs with it
@@ -277,6 +277,7 @@ desire.
 - `gthread.scm`
 - `hash.scm`
 - `monad.scm` and `monad-list.scm`
+- `quaternions.scm`
 - `queue.scm`
 - `stack.scm`
 - `stats.scm`

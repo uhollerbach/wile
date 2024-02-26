@@ -91,64 +91,67 @@ var_24 = var_1.v.vec.arr[var_23.v.iv] ? *(var_1.v.vec.arr[var_23.v.iv]) : LVI_NI
 lval var_25;
 lval var_26;
 var_26 = LVI_BOOL(true);
-do {
-lval var_27;
-var_27 = LVI_INT(2);
 lval var_28;
-switch (TYPE_COMBO(var_3[1].vt,var_27.vt)) {
+var_28 = LVI_INT(2);
+lval var_29;
+switch (TYPE_COMBO(var_3[1].vt,var_28.vt)) {
 case TYPE_COMBO(LV_INT,LV_INT):
-var_28 = LVI_BOOL(var_3[1].v.iv > var_27.v.iv);
+var_29 = LVI_BOOL(var_3[1].v.iv > var_28.v.iv);
 break;
 case TYPE_COMBO(LV_INT,LV_RAT):
-var_28 = LVI_BOOL(var_3[1].v.iv * var_27.v.irv.den > var_27.v.irv.num);
+var_29 = LVI_BOOL(var_3[1].v.iv * var_28.v.irv.den > var_28.v.irv.num);
 break;
 case TYPE_COMBO(LV_INT,LV_REAL):
-var_28 = LVI_BOOL(var_3[1].v.iv > var_27.v.rv);
+var_29 = LVI_BOOL(var_3[1].v.iv > var_28.v.rv);
 break;
 case TYPE_COMBO(LV_RAT,LV_INT):
-var_28 = LVI_BOOL(var_3[1].v.irv.num > var_27.v.iv * var_3[1].v.irv.den);
+var_29 = LVI_BOOL(var_3[1].v.irv.num > var_28.v.iv * var_3[1].v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_RAT):
-var_28 = LVI_BOOL(var_3[1].v.irv.num * var_27.v.irv.den > var_27.v.irv.num * var_3[1].v.irv.den);
+var_29 = LVI_BOOL(var_3[1].v.irv.num * var_28.v.irv.den > var_28.v.irv.num * var_3[1].v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_REAL):
-var_28 = LVI_BOOL(var_3[1].v.irv.num > var_27.v.rv * var_3[1].v.irv.den);
+var_29 = LVI_BOOL(var_3[1].v.irv.num > var_28.v.rv * var_3[1].v.irv.den);
 break;
 case TYPE_COMBO(LV_REAL,LV_INT):
-var_28 = LVI_BOOL(var_3[1].v.rv > var_27.v.iv);
+var_29 = LVI_BOOL(var_3[1].v.rv > var_28.v.iv);
 break;
 case TYPE_COMBO(LV_REAL,LV_RAT):
-var_28 = LVI_BOOL(var_3[1].v.rv * var_27.v.irv.den > var_27.v.irv.num);
+var_29 = LVI_BOOL(var_3[1].v.rv * var_28.v.irv.den > var_28.v.irv.num);
 break;
 case TYPE_COMBO(LV_REAL,LV_REAL):
-var_28 = LVI_BOOL(var_3[1].v.rv > var_27.v.rv);
+var_29 = LVI_BOOL(var_3[1].v.rv > var_28.v.rv);
 break;
 default:
 wile_exception(">", "bld-rtl-dir/wile-rtl2-000064.scm:22", "inputs are not real-valued numbers");
 break;
 }
-var_26 = var_28;
-if (LV_IS_FALSE(var_26)) { break; }
-lval var_29;
-{
-lval var_30[8];
-var_30[0] = var_3[0];
-var_29 = wile_is_leap_year(NULL, var_30, "bld-rtl-dir/wile-rtl2-000064.scm:22");
-}
 var_26 = var_29;
-if (LV_IS_FALSE(var_26)) { break; }
-} while (0);
 if (LV_IS_FALSE(var_26)) {
-lval var_31;
-var_31 = LVI_INT(0);
-var_25 = var_31;
-} else {
-lval var_32;
-var_32 = LVI_INT(1);
-var_25 = var_32;
+goto lbl_27;
 }
+lval var_30;
+{
+lval var_31[8];
+var_31[0] = var_3[0];
+var_30 = wile_is_leap_year(NULL, var_31, "bld-rtl-dir/wile-rtl2-000064.scm:22");
+}
+var_26 = var_30;
+if (LV_IS_FALSE(var_26)) {
+goto lbl_27;
+}
+lbl_27:;
+if (LV_IS_FALSE(var_26)) {
+lval var_32;
+var_32 = LVI_INT(0);
+var_25 = var_32;
+} else {
 lval var_33;
-var_33 = LVI_INT(var_24.v.iv + var_3[2].v.iv + var_25.v.iv);
-return var_33;
+var_33 = LVI_INT(1);
+var_25 = var_33;
+}
+lval var_34;
+var_34 = LVI_INT(var_24.v.iv + var_3[2].v.iv + var_25.v.iv);
+return var_34;
 }
 // end of function wile_day_of_year

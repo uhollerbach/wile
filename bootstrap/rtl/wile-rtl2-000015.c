@@ -29,77 +29,78 @@ var_5 = LVI_NIL();
 var_4 = var_5;
 lval var_6;
 var_6 = var_2[1];
-lval var_8;
-lval var_9;
 lval var_10;
-var_10 = LVI_INT(0);
-var_8 = var_10;
-lptr var_11 = new_lv(VT_UNINIT);
-var_11->v.pair.car = &(var_8);
-do {
+lval var_11;
 lval var_12;
-var_12 = LVI_BOOL(var_6.vt == LV_NIL);
-if (!LV_IS_FALSE(var_12)) {
-break;
-}
-lval var_13;
+var_12 = LVI_INT(0);
+var_10 = var_12;
+lptr var_13 = new_lv(VT_UNINIT);
+var_13->v.pair.car = &(var_10);
+lbl_8:
 lval var_14;
+var_14 = LVI_BOOL(var_6.vt == LV_NIL);
+if (!LV_IS_FALSE(var_14)) {
+goto lbl_9;
+}
+lval var_15;
+lval var_16;
 if (var_6.vt != LV_PAIR) {
 wile_exception("car", "bld-rtl-dir/wile-rtl2-000015.scm:19", "input is not a pair!");
 }
-var_14 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
-var_13 = var_14;
-lval var_16;
-{
-lval var_17[1];
-var_17[0] = var_13;
-var_16 = wile_gen_list(1, var_17, NULL);
-}
+var_16 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
+var_15 = var_16;
 lval var_18;
 {
-lval var_19[2];
-var_19[0] = var_2[0];
-var_19[1] = var_16;
-var_18 = wile_gen_list(2, var_19, NULL);
+lval var_19[1];
+var_19[0] = var_15;
+var_18 = wile_gen_list(1, var_19, NULL);
 }
-var_18 = wile_apply_function(&(var_18), "bld-rtl-dir/wile-rtl2-000015.scm:20");
-if (LV_IS_FALSE(var_18)) {
+lval var_20;
+{
+lval var_21[2];
+var_21[0] = var_2[0];
+var_21[1] = var_18;
+var_20 = wile_gen_list(2, var_21, NULL);
+}
+var_20 = wile_apply_function(&(var_20), "bld-rtl-dir/wile-rtl2-000015.scm:20");
+if (LV_IS_FALSE(var_20)) {
 } else {
-lval var_21;
+lval var_23;
 {
 lptr p1 = NULL, p2 = NULL;
-if (var_13.vt != LV_NIL) {
+if (var_15.vt != LV_NIL) {
 p1 = new_lv(LV_NIL);
-*p1 = var_13;
+*p1 = var_15;
 }
 if (var_4.vt != LV_NIL) {
 p2 = new_lv(LV_NIL);
 *p2 = var_4;
 }
-var_21 = LVI_PAIR(p1, p2);
+var_23 = LVI_PAIR(p1, p2);
 }
-var_4 = var_21;
+var_4 = var_23;
 }
-lval var_22;
+lval var_24;
 if (var_6.vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000015.scm:22", "input is not a pair!");
 }
-var_22 = (var_6.v.pair.cdr ? *(var_6.v.pair.cdr) : LVI_NIL());
-var_6 = var_22;
-lval var_23;
-var_23 = LVI_INT(1);
-lval var_24;
-var_24 = LVI_INT(var_8.v.iv + var_23.v.iv);
-var_9 = var_24;
-var_8 = var_9;
-} while (1);
-*var_11 = var_8;
+var_24 = (var_6.v.pair.cdr ? *(var_6.v.pair.cdr) : LVI_NIL());
+var_6 = var_24;
 lval var_25;
+var_25 = LVI_INT(1);
+lval var_26;
+var_26 = LVI_INT(var_10.v.iv + var_25.v.iv);
+var_11 = var_26;
+var_10 = var_11;
+goto lbl_8;
+lbl_9:;
+*var_13 = var_10;
+lval var_27;
 {
-lval var_26[8];
-var_26[0] = var_4;
-var_25 = wile_list_reverse(NULL, var_26, "bld-rtl-dir/wile-rtl2-000015.scm:23");
+lval var_28[8];
+var_28[0] = var_4;
+var_27 = wile_list_reverse(NULL, var_28, "bld-rtl-dir/wile-rtl2-000015.scm:23");
 }
-return var_25;
+return var_27;
 }
 // end of function wile_list_filter

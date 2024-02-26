@@ -48,88 +48,89 @@ var_8.v.vec.arr[i] = NULL;
 }
 }
 var_7 = var_8;
-lval var_10;
 lval var_12;
 lval var_14;
-var_14 = LVI_INT(0);
-var_10 = var_14;
-lval var_11;
+lval var_16;
+var_16 = LVI_INT(0);
+var_12 = var_16;
 lval var_13;
-var_11 = var_2[0];
+lval var_15;
+var_13 = var_2[0];
 lval var_9;
-lptr var_15 = new_lv(VT_UNINIT);
-var_15->v.pair.car = &(var_10);
-lptr var_16 = new_lv(VT_UNINIT);
-var_16->v.pair.car = &(var_11);
-do {
-lval var_17;
-switch (TYPE_COMBO(var_10.vt,var_4.vt)) {
+lptr var_17 = new_lv(VT_UNINIT);
+var_17->v.pair.car = &(var_12);
+lptr var_18 = new_lv(VT_UNINIT);
+var_18->v.pair.car = &(var_13);
+lbl_10:
+lval var_19;
+switch (TYPE_COMBO(var_12.vt,var_4.vt)) {
 case TYPE_COMBO(LV_INT,LV_INT):
-var_17 = LVI_BOOL(var_10.v.iv == var_4.v.iv);
+var_19 = LVI_BOOL(var_12.v.iv == var_4.v.iv);
 break;
 case TYPE_COMBO(LV_INT,LV_RAT):
-var_17 = LVI_BOOL(var_10.v.iv * var_4.v.irv.den == var_4.v.irv.num);
+var_19 = LVI_BOOL(var_12.v.iv * var_4.v.irv.den == var_4.v.irv.num);
 break;
 case TYPE_COMBO(LV_INT,LV_REAL):
-var_17 = LVI_BOOL(var_10.v.iv == var_4.v.rv);
+var_19 = LVI_BOOL(var_12.v.iv == var_4.v.rv);
 break;
 case TYPE_COMBO(LV_RAT,LV_INT):
-var_17 = LVI_BOOL(var_10.v.irv.num == var_4.v.iv * var_10.v.irv.den);
+var_19 = LVI_BOOL(var_12.v.irv.num == var_4.v.iv * var_12.v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_RAT):
-var_17 = LVI_BOOL(var_10.v.irv.num * var_4.v.irv.den == var_4.v.irv.num * var_10.v.irv.den);
+var_19 = LVI_BOOL(var_12.v.irv.num * var_4.v.irv.den == var_4.v.irv.num * var_12.v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_REAL):
-var_17 = LVI_BOOL(var_10.v.irv.num == var_4.v.rv * var_10.v.irv.den);
+var_19 = LVI_BOOL(var_12.v.irv.num == var_4.v.rv * var_12.v.irv.den);
 break;
 case TYPE_COMBO(LV_REAL,LV_INT):
-var_17 = LVI_BOOL(var_10.v.rv == var_4.v.iv);
+var_19 = LVI_BOOL(var_12.v.rv == var_4.v.iv);
 break;
 case TYPE_COMBO(LV_REAL,LV_RAT):
-var_17 = LVI_BOOL(var_10.v.rv * var_4.v.irv.den == var_4.v.irv.num);
+var_19 = LVI_BOOL(var_12.v.rv * var_4.v.irv.den == var_4.v.irv.num);
 break;
 case TYPE_COMBO(LV_REAL,LV_REAL):
-var_17 = LVI_BOOL(var_10.v.rv == var_4.v.rv);
+var_19 = LVI_BOOL(var_12.v.rv == var_4.v.rv);
 break;
 default:
 wile_exception("==", "bld-rtl-dir/wile-rtl2-000017.scm:18", "inputs are not real-valued numbers");
 break;
 }
-if (!LV_IS_FALSE(var_17)) {
+if (!LV_IS_FALSE(var_19)) {
 var_9 = var_7;
-break;
+goto lbl_11;
 }
-lval var_18;
-if (var_11.vt != LV_PAIR) {
+lval var_20;
+if (var_13.vt != LV_PAIR) {
 wile_exception("car", "bld-rtl-dir/wile-rtl2-000017.scm:19", "input is not a pair!");
 }
-var_18 = (var_11.v.pair.car ? *(var_11.v.pair.car) : LVI_NIL());
+var_20 = (var_13.v.pair.car ? *(var_13.v.pair.car) : LVI_NIL());
 {
 if (var_7.vt != LV_VECTOR) {
 wile_exception("vector-set!", "bld-rtl-dir/wile-rtl2-000017.scm:19", "input is not a vector");
 }
-if (var_10.vt != LV_INT || var_10.v.iv < 0 || (size_t) var_10.v.iv >= var_7.v.vec.capa) {
+if (var_12.vt != LV_INT || var_12.v.iv < 0 || (size_t) var_12.v.iv >= var_7.v.vec.capa) {
 wile_exception("vector-set!", "bld-rtl-dir/wile-rtl2-000017.scm:19", "got bad index value");
 }
-var_7.v.vec.arr[var_10.v.iv] = new_lv(LV_NIL);
-*(var_7.v.vec.arr[var_10.v.iv]) = var_18;
+var_7.v.vec.arr[var_12.v.iv] = new_lv(LV_NIL);
+*(var_7.v.vec.arr[var_12.v.iv]) = var_20;
 }
-lval var_20;
-var_20 = LVI_INT(1);
-lval var_21;
-var_21 = LVI_INT(var_10.v.iv + var_20.v.iv);
-var_12 = var_21;
 lval var_22;
-if (var_11.vt != LV_PAIR) {
+var_22 = LVI_INT(1);
+lval var_23;
+var_23 = LVI_INT(var_12.v.iv + var_22.v.iv);
+var_14 = var_23;
+lval var_24;
+if (var_13.vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000017.scm:17", "input is not a pair!");
 }
-var_22 = (var_11.v.pair.cdr ? *(var_11.v.pair.cdr) : LVI_NIL());
-var_13 = var_22;
-var_10 = var_12;
-var_11 = var_13;
-} while (1);
-*var_15 = var_10;
-*var_16 = var_11;
+var_24 = (var_13.v.pair.cdr ? *(var_13.v.pair.cdr) : LVI_NIL());
+var_15 = var_24;
+var_12 = var_14;
+var_13 = var_15;
+goto lbl_10;
+lbl_11:;
+*var_17 = var_12;
+*var_18 = var_13;
 return var_9;
 }
 // end of function wile_list2vector

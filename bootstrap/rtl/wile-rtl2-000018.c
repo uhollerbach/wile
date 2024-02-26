@@ -48,170 +48,178 @@ var_8.v.bvec.arr[i] = 0;
 }
 }
 var_7 = var_8;
-lval var_10;
 lval var_12;
 lval var_14;
-var_14 = LVI_INT(0);
-var_10 = var_14;
-lval var_11;
+lval var_16;
+var_16 = LVI_INT(0);
+var_12 = var_16;
 lval var_13;
-var_11 = var_2[0];
+lval var_15;
+var_13 = var_2[0];
 lval var_9;
-lptr var_15 = new_lv(VT_UNINIT);
-var_15->v.pair.car = &(var_10);
-lptr var_16 = new_lv(VT_UNINIT);
-var_16->v.pair.car = &(var_11);
-do {
-lval var_17;
-switch (TYPE_COMBO(var_10.vt,var_4.vt)) {
+lptr var_17 = new_lv(VT_UNINIT);
+var_17->v.pair.car = &(var_12);
+lptr var_18 = new_lv(VT_UNINIT);
+var_18->v.pair.car = &(var_13);
+lbl_10:
+lval var_19;
+switch (TYPE_COMBO(var_12.vt,var_4.vt)) {
 case TYPE_COMBO(LV_INT,LV_INT):
-var_17 = LVI_BOOL(var_10.v.iv == var_4.v.iv);
+var_19 = LVI_BOOL(var_12.v.iv == var_4.v.iv);
 break;
 case TYPE_COMBO(LV_INT,LV_RAT):
-var_17 = LVI_BOOL(var_10.v.iv * var_4.v.irv.den == var_4.v.irv.num);
+var_19 = LVI_BOOL(var_12.v.iv * var_4.v.irv.den == var_4.v.irv.num);
 break;
 case TYPE_COMBO(LV_INT,LV_REAL):
-var_17 = LVI_BOOL(var_10.v.iv == var_4.v.rv);
+var_19 = LVI_BOOL(var_12.v.iv == var_4.v.rv);
 break;
 case TYPE_COMBO(LV_RAT,LV_INT):
-var_17 = LVI_BOOL(var_10.v.irv.num == var_4.v.iv * var_10.v.irv.den);
+var_19 = LVI_BOOL(var_12.v.irv.num == var_4.v.iv * var_12.v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_RAT):
-var_17 = LVI_BOOL(var_10.v.irv.num * var_4.v.irv.den == var_4.v.irv.num * var_10.v.irv.den);
+var_19 = LVI_BOOL(var_12.v.irv.num * var_4.v.irv.den == var_4.v.irv.num * var_12.v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_REAL):
-var_17 = LVI_BOOL(var_10.v.irv.num == var_4.v.rv * var_10.v.irv.den);
+var_19 = LVI_BOOL(var_12.v.irv.num == var_4.v.rv * var_12.v.irv.den);
 break;
 case TYPE_COMBO(LV_REAL,LV_INT):
-var_17 = LVI_BOOL(var_10.v.rv == var_4.v.iv);
+var_19 = LVI_BOOL(var_12.v.rv == var_4.v.iv);
 break;
 case TYPE_COMBO(LV_REAL,LV_RAT):
-var_17 = LVI_BOOL(var_10.v.rv * var_4.v.irv.den == var_4.v.irv.num);
+var_19 = LVI_BOOL(var_12.v.rv * var_4.v.irv.den == var_4.v.irv.num);
 break;
 case TYPE_COMBO(LV_REAL,LV_REAL):
-var_17 = LVI_BOOL(var_10.v.rv == var_4.v.rv);
+var_19 = LVI_BOOL(var_12.v.rv == var_4.v.rv);
 break;
 default:
 wile_exception("==", "bld-rtl-dir/wile-rtl2-000018.scm:18", "inputs are not real-valued numbers");
 break;
 }
-if (!LV_IS_FALSE(var_17)) {
+if (!LV_IS_FALSE(var_19)) {
 var_9 = var_7;
-break;
+goto lbl_11;
 }
-lval var_18;
-lval var_19;
-if (var_11.vt != LV_PAIR) {
+lval var_20;
+lval var_21;
+if (var_13.vt != LV_PAIR) {
 wile_exception("car", "bld-rtl-dir/wile-rtl2-000018.scm:19", "input is not a pair!");
 }
-var_19 = (var_11.v.pair.car ? *(var_11.v.pair.car) : LVI_NIL());
-var_18 = var_19;
-lval var_21;
-var_21 = LVI_BOOL(false);
-do {
-lval var_22;
-var_22 = LVI_BOOL(var_18.vt == LV_CHAR);
-var_21 = var_22;
-if (!LV_IS_FALSE(var_21)) { break; }
+var_21 = (var_13.v.pair.car ? *(var_13.v.pair.car) : LVI_NIL());
+var_20 = var_21;
 lval var_23;
-var_23 = LVI_BOOL(true);
-do {
-lval var_24;
-var_24 = LVI_BOOL(var_18.vt == LV_INT);
-var_23 = var_24;
-if (LV_IS_FALSE(var_23)) { break; }
+var_23 = LVI_BOOL(false);
 lval var_25;
-var_25 = LVI_INT(0);
+var_25 = LVI_BOOL(var_20.vt == LV_CHAR);
+var_23 = var_25;
+if (!LV_IS_FALSE(var_23)) {
+goto lbl_24;
+}
 lval var_26;
-switch (TYPE_COMBO(var_18.vt,var_25.vt)) {
+var_26 = LVI_BOOL(true);
+lval var_28;
+var_28 = LVI_BOOL(var_20.vt == LV_INT);
+var_26 = var_28;
+if (LV_IS_FALSE(var_26)) {
+goto lbl_27;
+}
+lval var_29;
+var_29 = LVI_INT(0);
+lval var_30;
+switch (TYPE_COMBO(var_20.vt,var_29.vt)) {
 case TYPE_COMBO(LV_INT,LV_INT):
-var_26 = LVI_BOOL(var_18.v.iv >= var_25.v.iv);
+var_30 = LVI_BOOL(var_20.v.iv >= var_29.v.iv);
 break;
 case TYPE_COMBO(LV_INT,LV_RAT):
-var_26 = LVI_BOOL(var_18.v.iv * var_25.v.irv.den >= var_25.v.irv.num);
+var_30 = LVI_BOOL(var_20.v.iv * var_29.v.irv.den >= var_29.v.irv.num);
 break;
 case TYPE_COMBO(LV_INT,LV_REAL):
-var_26 = LVI_BOOL(var_18.v.iv >= var_25.v.rv);
+var_30 = LVI_BOOL(var_20.v.iv >= var_29.v.rv);
 break;
 case TYPE_COMBO(LV_RAT,LV_INT):
-var_26 = LVI_BOOL(var_18.v.irv.num >= var_25.v.iv * var_18.v.irv.den);
+var_30 = LVI_BOOL(var_20.v.irv.num >= var_29.v.iv * var_20.v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_RAT):
-var_26 = LVI_BOOL(var_18.v.irv.num * var_25.v.irv.den >= var_25.v.irv.num * var_18.v.irv.den);
+var_30 = LVI_BOOL(var_20.v.irv.num * var_29.v.irv.den >= var_29.v.irv.num * var_20.v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_REAL):
-var_26 = LVI_BOOL(var_18.v.irv.num >= var_25.v.rv * var_18.v.irv.den);
+var_30 = LVI_BOOL(var_20.v.irv.num >= var_29.v.rv * var_20.v.irv.den);
 break;
 case TYPE_COMBO(LV_REAL,LV_INT):
-var_26 = LVI_BOOL(var_18.v.rv >= var_25.v.iv);
+var_30 = LVI_BOOL(var_20.v.rv >= var_29.v.iv);
 break;
 case TYPE_COMBO(LV_REAL,LV_RAT):
-var_26 = LVI_BOOL(var_18.v.rv * var_25.v.irv.den >= var_25.v.irv.num);
+var_30 = LVI_BOOL(var_20.v.rv * var_29.v.irv.den >= var_29.v.irv.num);
 break;
 case TYPE_COMBO(LV_REAL,LV_REAL):
-var_26 = LVI_BOOL(var_18.v.rv >= var_25.v.rv);
+var_30 = LVI_BOOL(var_20.v.rv >= var_29.v.rv);
 break;
 default:
 wile_exception(">=", "bld-rtl-dir/wile-rtl2-000018.scm:21", "inputs are not real-valued numbers");
 break;
 }
-var_23 = var_26;
-if (LV_IS_FALSE(var_23)) { break; }
-lval var_27;
-var_27 = LVI_INT(256);
-lval var_28;
-switch (TYPE_COMBO(var_18.vt,var_27.vt)) {
+var_26 = var_30;
+if (LV_IS_FALSE(var_26)) {
+goto lbl_27;
+}
+lval var_31;
+var_31 = LVI_INT(256);
+lval var_32;
+switch (TYPE_COMBO(var_20.vt,var_31.vt)) {
 case TYPE_COMBO(LV_INT,LV_INT):
-var_28 = LVI_BOOL(var_18.v.iv < var_27.v.iv);
+var_32 = LVI_BOOL(var_20.v.iv < var_31.v.iv);
 break;
 case TYPE_COMBO(LV_INT,LV_RAT):
-var_28 = LVI_BOOL(var_18.v.iv * var_27.v.irv.den < var_27.v.irv.num);
+var_32 = LVI_BOOL(var_20.v.iv * var_31.v.irv.den < var_31.v.irv.num);
 break;
 case TYPE_COMBO(LV_INT,LV_REAL):
-var_28 = LVI_BOOL(var_18.v.iv < var_27.v.rv);
+var_32 = LVI_BOOL(var_20.v.iv < var_31.v.rv);
 break;
 case TYPE_COMBO(LV_RAT,LV_INT):
-var_28 = LVI_BOOL(var_18.v.irv.num < var_27.v.iv * var_18.v.irv.den);
+var_32 = LVI_BOOL(var_20.v.irv.num < var_31.v.iv * var_20.v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_RAT):
-var_28 = LVI_BOOL(var_18.v.irv.num * var_27.v.irv.den < var_27.v.irv.num * var_18.v.irv.den);
+var_32 = LVI_BOOL(var_20.v.irv.num * var_31.v.irv.den < var_31.v.irv.num * var_20.v.irv.den);
 break;
 case TYPE_COMBO(LV_RAT,LV_REAL):
-var_28 = LVI_BOOL(var_18.v.irv.num < var_27.v.rv * var_18.v.irv.den);
+var_32 = LVI_BOOL(var_20.v.irv.num < var_31.v.rv * var_20.v.irv.den);
 break;
 case TYPE_COMBO(LV_REAL,LV_INT):
-var_28 = LVI_BOOL(var_18.v.rv < var_27.v.iv);
+var_32 = LVI_BOOL(var_20.v.rv < var_31.v.iv);
 break;
 case TYPE_COMBO(LV_REAL,LV_RAT):
-var_28 = LVI_BOOL(var_18.v.rv * var_27.v.irv.den < var_27.v.irv.num);
+var_32 = LVI_BOOL(var_20.v.rv * var_31.v.irv.den < var_31.v.irv.num);
 break;
 case TYPE_COMBO(LV_REAL,LV_REAL):
-var_28 = LVI_BOOL(var_18.v.rv < var_27.v.rv);
+var_32 = LVI_BOOL(var_20.v.rv < var_31.v.rv);
 break;
 default:
 wile_exception("<", "bld-rtl-dir/wile-rtl2-000018.scm:21", "inputs are not real-valued numbers");
 break;
 }
-var_23 = var_28;
-if (LV_IS_FALSE(var_23)) { break; }
-} while (0);
-var_21 = var_23;
-if (!LV_IS_FALSE(var_21)) { break; }
-} while (0);
-if (LV_IS_FALSE(var_21)) {
-lval var_29;
-var_29 = LVI_STRING("list->bytevector got a bad value");
-lval var_30;
-{
-lval var_31[1];
-var_31[0] = var_29;
-var_30 = wile_gen_list(1, var_31, NULL);
+var_26 = var_32;
+if (LV_IS_FALSE(var_26)) {
+goto lbl_27;
 }
-if (var_30.vt == LV_PAIR && (var_30.v.pair.cdr == NULL || var_30.v.pair.cdr->vt == LV_NIL)) {
-var_30 = (var_30.v.pair.car ? *(var_30.v.pair.car) : LVI_NIL());
+lbl_27:;
+var_23 = var_26;
+if (!LV_IS_FALSE(var_23)) {
+goto lbl_24;
+}
+lbl_24:;
+if (LV_IS_FALSE(var_23)) {
+lval var_33;
+var_33 = LVI_STRING("list->bytevector got a bad value");
+lval var_34;
+{
+lval var_35[1];
+var_35[0] = var_33;
+var_34 = wile_gen_list(1, var_35, NULL);
+}
+if (var_34.vt == LV_PAIR && (var_34.v.pair.cdr == NULL || var_34.v.pair.cdr->vt == LV_NIL)) {
+var_34 = (var_34.v.pair.car ? *(var_34.v.pair.car) : LVI_NIL());
 }
 cachalot->errval = new_lv(LV_NIL);
-*(cachalot->errval) = var_30;
+*(cachalot->errval) = var_34;
 cachalot->whence = "bld-rtl-dir/wile-rtl2-000018.scm:23";
 longjmp(cachalot->cenv, 1);
 } else {
@@ -219,31 +227,32 @@ longjmp(cachalot->cenv, 1);
 if (var_7.vt != LV_BVECTOR) {
 wile_exception("bytevector-set!", "bld-rtl-dir/wile-rtl2-000018.scm:22", "input is not a bytevector");
 }
-if (var_10.vt != LV_INT || var_10.v.iv < 0 || (size_t) var_10.v.iv >= var_7.v.bvec.capa) {
+if (var_12.vt != LV_INT || var_12.v.iv < 0 || (size_t) var_12.v.iv >= var_7.v.bvec.capa) {
 wile_exception("bytevector-set!", "bld-rtl-dir/wile-rtl2-000018.scm:22", "got bad index value");
 }
-if (!(var_18.vt == LV_CHAR || (var_18.vt == LV_INT && var_18.v.iv >= 0 && var_18.v.iv < 256))) {
+if (!(var_20.vt == LV_CHAR || (var_20.vt == LV_INT && var_20.v.iv >= 0 && var_20.v.iv < 256))) {
 wile_exception("bytevector-set!", "bld-rtl-dir/wile-rtl2-000018.scm:22", "got bad input value");
 }
-var_7.v.bvec.arr[var_10.v.iv] = (var_18.vt == LV_CHAR) ? var_18.v.chr : (unsigned char) var_18.v.iv;
+var_7.v.bvec.arr[var_12.v.iv] = (var_20.vt == LV_CHAR) ? var_20.v.chr : (unsigned char) var_20.v.iv;
 }
 }
-lval var_33;
-var_33 = LVI_INT(1);
-lval var_34;
-var_34 = LVI_INT(var_10.v.iv + var_33.v.iv);
-var_12 = var_34;
-lval var_35;
-if (var_11.vt != LV_PAIR) {
+lval var_37;
+var_37 = LVI_INT(1);
+lval var_38;
+var_38 = LVI_INT(var_12.v.iv + var_37.v.iv);
+var_14 = var_38;
+lval var_39;
+if (var_13.vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000018.scm:17", "input is not a pair!");
 }
-var_35 = (var_11.v.pair.cdr ? *(var_11.v.pair.cdr) : LVI_NIL());
-var_13 = var_35;
-var_10 = var_12;
-var_11 = var_13;
-} while (1);
-*var_15 = var_10;
-*var_16 = var_11;
+var_39 = (var_13.v.pair.cdr ? *(var_13.v.pair.cdr) : LVI_NIL());
+var_15 = var_39;
+var_12 = var_14;
+var_13 = var_15;
+goto lbl_10;
+lbl_11:;
+*var_17 = var_12;
+*var_18 = var_13;
 return var_9;
 }
 // end of function wile_list2bytevector

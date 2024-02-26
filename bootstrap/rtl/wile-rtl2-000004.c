@@ -25,66 +25,67 @@ lval wile_list_length_gt(lptr* var_1, lptr var_2, const char* cloc)
 {
 lbl_3:;
 lval var_4;
-do {
-lval var_5;
+lval var_6;
 switch (var_2[0].vt) {
 case LV_REAL:
-var_5 = LVI_BOOL(var_2[0].v.rv == 0.0);
+var_6 = LVI_BOOL(var_2[0].v.rv == 0.0);
 break;
 case LV_RAT:
-var_5 = LVI_BOOL((var_2[0].v.irv.num == 0 && var_2[0].v.irv.den != 0));
+var_6 = LVI_BOOL((var_2[0].v.irv.num == 0 && var_2[0].v.irv.den != 0));
 break;
 case LV_INT:
-var_5 = LVI_BOOL(var_2[0].v.iv == 0);
+var_6 = LVI_BOOL(var_2[0].v.iv == 0);
 break;
 case LV_CMPLX:
-var_5 = LVI_BOOL(CREAL(var_2[0].v.cv) == 0.0 && CIMAG(var_2[0].v.cv) == 0.0);
+var_6 = LVI_BOOL(CREAL(var_2[0].v.cv) == 0.0 && CIMAG(var_2[0].v.cv) == 0.0);
 break;
 default:
 wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000004.scm:14", "expects a real-valued number");
 }
-if (!LV_IS_FALSE(var_5)) {
-lval var_6;
-var_6 = LVI_BOOL(var_2[1].vt == LV_NIL);
+if (!LV_IS_FALSE(var_6)) {
 lval var_7;
-var_7 = LVI_BOOL(LV_IS_FALSE(var_6));
-var_4 = var_7;
-break;
-}
+var_7 = LVI_BOOL(var_2[1].vt == LV_NIL);
 lval var_8;
-var_8 = LVI_BOOL(var_2[1].vt == LV_NIL);
-if (!LV_IS_FALSE(var_8)) {
+var_8 = LVI_BOOL(LV_IS_FALSE(var_7));
+var_4 = var_8;
+goto lbl_5;
+}
 lval var_9;
-var_9 = LVI_BOOL(false);
-var_4 = var_9;
-break;
-}
+var_9 = LVI_BOOL(var_2[1].vt == LV_NIL);
+if (!LV_IS_FALSE(var_9)) {
 lval var_10;
-var_10 = LVI_INT(1);
+var_10 = LVI_BOOL(false);
+var_4 = var_10;
+goto lbl_5;
+}
 lval var_11;
+var_11 = LVI_INT(1);
+lval var_12;
 {
-lval var_13[2];
-var_13[0] = var_2[0];
-var_13[1] = var_10;
-var_11 = wile_gen_list(2, var_13, NULL);
+lval var_14[2];
+var_14[0] = var_2[0];
+var_14[1] = var_11;
+var_12 = wile_gen_list(2, var_14, NULL);
 }
 {
-lval var_12[8];
-var_12[0] = var_11;
-var_11 = wile_subtract(NULL, var_12, "bld-rtl-dir/wile-rtl2-000004.scm:16");
+lval var_13[8];
+var_13[0] = var_12;
+var_12 = wile_subtract(NULL, var_13, "bld-rtl-dir/wile-rtl2-000004.scm:16");
 }
-lval var_14;
+lval var_15;
 if (var_2[1].vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000004.scm:16", "input is not a pair!");
 }
-var_14 = (var_2[1].v.pair.cdr ? *(var_2[1].v.pair.cdr) : LVI_NIL());
-lval var_17[8];
-var_17[0] = var_11;
-var_17[1] = var_14;
-var_2[0] = var_17[0];
-var_2[1] = var_17[1];
+var_15 = (var_2[1].v.pair.cdr ? *(var_2[1].v.pair.cdr) : LVI_NIL());
+lval var_16;
+lval var_18[8];
+var_18[0] = var_12;
+var_18[1] = var_15;
+var_2[0] = var_18[0];
+var_2[1] = var_18[1];
 goto lbl_3;
-} while (0);
+var_4 = var_16;
+lbl_5:;
 return var_4;
 }
 // end of function wile_list_length_gt

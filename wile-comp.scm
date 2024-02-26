@@ -879,6 +879,8 @@
 (define (compile-special-do cur-env tcall exprs)
   (debug-trace 'compile-special-do cur-env tcall exprs)
   (let* ((res (new-svar))
+	 (top-label (new-svar 'lbl))
+	 (bot-label (new-svar 'lbl))
 	 (var-stuff (car exprs))
 	 (vs (map car var-stuff))
 	 (ups (map (lambda (v) (not (null? (cddr v)))) var-stuff))
@@ -903,11 +905,11 @@
 			      "@1->v.pair.car = &(@2);")
 		   (hash-table-set! global-mirrors v a1)))
 	       cs1 vs)
-     (emit-fstr "do {\n")
+     (emit-fstr "%s:\n" top-label)
      (let ((tst (maybe-compile-expr cur-env #f (caadr exprs))))
        (emit-fstr "if (!LV_IS_FALSE(%s)) {\n" tst)
        (let ((tmp (compile-special-begin cur-env tcall (cdadr exprs))))
-	 (emit-fstr "%s = %s;\nbreak;\n}\n" res tmp)))
+	 (emit-fstr "%s = %s;\ngoto %s;\n}\n" res tmp bot-label)))
      (let ((body (cddr exprs)))
        (unless (null? body)
 	 (compile-special-begin cur-env #f body)))
@@ -919,21 +921,23 @@
      (for-each (lambda (c1 c2 f)
 		 (when f (emit-fstr "%s = %s;\n" c1 c2)))
 	       cs1 cs2 ups)
-     (emit-fstr "} while (1);\n")
+     (emit-fstr "goto %s;\n%s:;\n" top-label bot-label)
      (reset-mirrors global-mirrors))
     res))
 
 (define (compile-special-andor init cur-env tcall exprs)
   (debug-trace 'compile-special-andor cur-env tcall exprs)
   (let ((res (new-svar))
+	(bot-label (new-svar 'lbl))
 	(flag (if (symbol=? init 'true) "" "!")))
     (emit-decl res)
-    (emit-fstr "%s = LVI_BOOL(%s);\ndo {\n" res init)
+    (emit-fstr "%s = LVI_BOOL(%s);\n" res init)
     (for-each (lambda (e t)
 		(emit-fstr "%s = %s;\n" res (maybe-compile-expr cur-env t e))
-		(emit-fstr "if (%sLV_IS_FALSE(%s)) { break; }\n" flag res))
+		(emit-fstr "if (%sLV_IS_FALSE(%s)) {\ngoto %s;\n}\n"
+			   flag res bot-label))
 	      exprs (make-tail-flags exprs tcall))
-    (emit-fstr "} while (0);\n")
+    (emit-fstr "%s:;\n" bot-label)
     res))
 
 (define (cond-fail-or-raise res raze loc)
@@ -961,6 +965,7 @@
 	     (last-t (car all-ts))
 	     (rest-t (cdr all-ts))
 	     (res (new-svar))
+	     (bot-label (new-svar 'lbl))
 	     (doit (lambda (clause)
 		     ;;; do not optimize these by combining them;
 		     ;;; they sequence the operations properly
@@ -971,9 +976,8 @@
 				 res (compile-special-begin cur-env tcall
 							    (cdr clause)))
 		      (reset-mirrors global-mirrors))
-		     (emit-fstr "break;\n}\n"))))
+		     (emit-fstr "goto %s;\n}\n" bot-label))))
 	(emit-decl res)
-	(emit-fstr "do {\n")
 	(cond ((any-true? (map is-else? rest-t))
 	       (ERR () "malformed 'cond' expression '%v'" clauses))
 	      ((is-else? last-t)
@@ -986,7 +990,7 @@
 	      (else
 	       (for-each doit clauses)
 	       (cond-fail-or-raise res imp-raise loc)))
-	(emit-fstr "} while (0);\n")
+	(emit-fstr "%s:;\n" bot-label)
 	res)))
 
 (define (check-let-bindings type llist)
@@ -1164,7 +1168,7 @@
       (string-append "LVI_PROC(" tmp-fn "," c-name ","
 		     (number->string arity) ")"))))
 
-(define (finish-one-case res cur-env tcall val clause)
+(define (finish-one-case res cur-env tcall val bot-label clause)
   ;;; do not merge these emit-fstr; sequencing and scoping depends
   ;;; on them being separate
   (emit-fstr "{\n")
@@ -1181,7 +1185,9 @@
 	   (new-svar) (token-source-line clause) proc tmp))
 	(compile-special-begin cur-env tcall (cdr clause))))
    (reset-mirrors global-mirrors))
-  (emit-fstr "break;\n}\n"))
+  (if bot-label
+      (emit-fstr "goto %s;\n}\n" bot-label)
+      (emit-fstr "break;\n}\n")))
 
 (define (do-one-case1 res to-int cur-env tcall val clause)
   (debug-trace 'do-one-case1 cur-env tcall clause)
@@ -1191,7 +1197,7 @@
       (emit-fstr "default:\n")
       (for-each (lambda (c) (emit-fstr "case %d:\n" (to-int c)))
 		(car clause)))
-  (finish-one-case res cur-env tcall val clause))
+  (finish-one-case res cur-env tcall val #f clause))
 
 (define (do-compile-case1 type member to-int def? cur-env tcall clauses)
   (debug-trace 'do-compile-case1 cur-env tcall clauses)
@@ -1207,7 +1213,7 @@
     (emit-fstr "}\n")
     res))
 
-(define (do-one-case2 res to-str cur-env tcall val vm clause)
+(define (do-one-case2 res to-str cur-env tcall val vm bot-label clause)
   (debug-trace 'do-one-case2 cur-env tcall clause)
   ;;; do not merge these emit-fstr; sequencing and scoping depends
   ;;; on them being separate
@@ -1219,21 +1225,23 @@
 		       (string-append
 			"(strcmp(" vm ", \"" (to-str s) "\") == 0)"))
 		     (car clause)))))
-  (finish-one-case res cur-env tcall val clause))
+  (finish-one-case res cur-env tcall val bot-label clause))
 
 (define (do-compile-case2 type member to-str def? cur-env tcall clauses)
   (debug-trace 'do-compile-case2 cur-env tcall clauses)
   (let* ((loc (token-source-line (car clauses)))
 	 (val (maybe-compile-expr cur-env #f (car clauses)))
 	 (vm (string-append val member))
+	 (bot-label (new-svar 'lbl))
 	 (res (new-svar)))
     (emit-decl res)
-    (emit-fstr "if (%s.vt != %s) {\nwile_exception(\"case\", \"%s\", \"case-value type does not match case type\");\n}\ndo {\n" val type loc)
-    (for-each (lambda (c) (do-one-case2 res to-str cur-env tcall val vm c))
+    (emit-fstr "if (%s.vt != %s) {\nwile_exception(\"case\", \"%s\", \"case-value type does not match case type\");\n}\n" val type loc)
+    (for-each (lambda (c)
+		(do-one-case2 res to-str cur-env tcall val vm bot-label c))
 	      (cdr clauses))
     (unless def?
       (emit-fstr "%s = LVI_BOOL(false);\n" res))
-    (emit-fstr "} while (0);\n")
+    (emit-fstr "%s:;\n" bot-label)
     res))
 
 (define (symbol<? a b)
@@ -2014,7 +2022,7 @@
 				  (loop cur-env rest (cons cur acc) cflag))))))
 	      (loop cur-env rest (cons cur acc) cflag))))))
 
-;;; remove stuff between a return or goto or TAIL_CALL statement
+;;; remove stuff between a return or TAIL_CALL statement
 ;;; and the next closing brace
 
 (define (remove-dead-code lines)
@@ -2026,7 +2034,7 @@
 	(let ((l1 (car ls)))
 	  (cond (out
 		 (loop (cdr ls)
-		       (not (regex-match "^(return|goto|TAIL_CALL)" l1))
+		       (not (regex-match "^(return|TAIL_CALL)" l1))
 		       (cons l1 acc)))
 		((regex-match "^}" l1)
 		 (loop (cdr ls) #t (cons l1 acc)))
@@ -2326,10 +2334,10 @@
 	       (when (and (positive? opt-level) (not global-errors))
 		 (let ((lines (read-all-lines out-port))
 		       (nvars (+ new-svar-index 5)))
-		   (when rm-dc
-		     (when (> global-verbose 0)
-		       (fprintf stderr "removing dead code\n"))
-		     (set! lines (remove-dead-code lines)))
+;;;		   (when rm-dc
+;;;		     (when (> global-verbose 0)
+;;;		       (fprintf stderr "removing dead code\n"))
+;;;		     (set! lines (remove-dead-code lines)))
 ;;; TODO: fix this; somehow it is not working with begin-new
 ;;;		   (when rm-uf
 ;;;		     (when (> global-verbose 0)

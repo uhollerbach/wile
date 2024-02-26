@@ -4,7 +4,7 @@
 
 SHELL = /bin/sh
 
-ALL = ttest strtest aptest dqtest htest stktest statest qtest
+ALL = ttest strtest aptest dqtest htest stktest statest qtest quatest
 
 all:	$(ALL)
 
@@ -17,6 +17,7 @@ test:	$(ALL)
 	stktest
 	statest
 	qtest
+	quatest
 
 clean:
 	rm -f $(ALL)
@@ -44,3 +45,6 @@ statest:	stats-test.scm stats.scm test.scm
 
 qtest:		queue-test.scm queue.scm test.scm
 	wile -x queue-test.scm qtest
+
+quatest:	quaternions-test.scm quaternions.scm test.scm
+	wile -x quaternions-test.scm quatest
