@@ -1,6 +1,6 @@
-Last update: 2024-3-18 21:00 PST
+Last update: 2025-5-17 22:00 PDT
 
-# `wile` - the extremely stable scheming genius compiler - version 1.2.9
+# `wile` - the extremely stable scheming genius compiler - version 1.2.10
 
 `wile` is a small scheme-to-c compiler which I'm writing; it's by no
 means complete, but it's capable enough that writing programs with it
@@ -313,6 +313,8 @@ desire.
 
 - `n-queens.scm` solves the N-queens problem, using the `monad` code
   in the library.
+
+- `quine.scm` prints itself, of course.
 
 - In the `wtest/` directory, not in `examples/`, `test_53.scm` is a
   Runge-Kutta-based solver for the Volterra equations; in addition

@@ -30,15 +30,6 @@ Stuff TODO
 
     --> probably need to tie it all in together with (begin-new)
 
-* investigate difference in behavior among mit-scheme, (ha)skeem, repl,
-  wile: mit-scheme, (ha)skeem and repl agree that the following is a
-  quine (this is good):
-
-    ((lambda (x) (display `(,x ',x))) '(lambda (x) (display `(,x ',x))))
-
-  wile is slightly defective, it misses retaining one inner quote which
-  then after one iteration causes the whole thing to collapse
-
 * stack traces: working pretty well for starters - try getting better
   location info? not sure yet how, the backtrace and addr2line stuff
   knows only about c
@@ -78,8 +69,6 @@ Stuff TODO
 
 * Implement more special forms: delay, force, fully general mixed version
   of case
-
-  > test => syntax for (case)
 
 * code cleanup optimizations -> get a proper intermediate instruction language
 

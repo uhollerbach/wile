@@ -32,9 +32,6 @@ lisp_escape_t cachalot;
 int wile_cont_stack_grow_dir = -1;
 unsigned char* wile_cont_stack_base = NULL;
 
-extern struct wile_profile_t* wile_profile;
-extern int wile_profile_size;
-
 int main(int argc, char** argv)
 {
     int ret;
@@ -112,22 +109,6 @@ int main(int argc, char** argv)
 		    errno, strerror(errno));
 	}
 	ret = EXIT_FAILURE;
-    }
-
-    if (wile_profile) {
-	int i;
-	FILE* fp = fopen("wile-profile.out", "w");
-	if (fp == NULL) {
-	    fputs("wile error: unable to open wile-profile.out\n", stderr);
-	    fp = stderr;
-	}
-	for (i = 0; i < wile_profile_size; ++i) {
-	    fprintf(fp, "%"PRIu64"\t%s\n",
-		    wile_profile[i].count, wile_profile[i].name);
-	}
-	if (fp != stderr) {
-	    fclose(fp);
-	}
     }
 
     cachalot = NULL;

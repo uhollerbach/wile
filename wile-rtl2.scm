@@ -834,7 +834,7 @@
   (string-pad-left str pch lmin)
   (let ((sl (string-length str)))
     (if (< sl lmin)
-	(string-join-by "" (string-create (i- lmin sl) pch) str)
+	(string-append (string-create (i- lmin sl) pch) str)
 	str)))
 
 ;;; --8><----8><----8><--
@@ -844,7 +844,7 @@
   (string-pad-right str pch lmin)
   (let ((sl (string-length str)))
     (if (< sl lmin)
-	(string-join-by "" str (string-create (i- lmin sl) pch))
+	(string-append str (string-create (i- lmin sl) pch))
 	str)))
 
 ;;; --8><----8><----8><--
@@ -857,8 +857,7 @@
 	(let* ((pt (i- lmin sl))
 	       (lpl (quotient pt 2))
 	       (lpr (i- pt lpl)))
-	  (string-join-by "" (string-create lpl pch)
-			  str (string-create lpr pch)))
+	  (string-append (string-create lpl pch) str (string-create lpr pch)))
 	str)))
 
 ;;; --8><----8><----8><--
@@ -927,27 +926,6 @@
 
 ;;; --8><----8><----8><--
 
-(define-alias write-char write-string)
-
-(define-primitive "wile_write_string"
-  "expects any number of arguments, which must all be strings or characters, except that optionally the first may be an output port. if the first argument is not an output port, the default port is stdout. writes all string/char arguments to the output port"
-  (write-string . strs)
-  (let ((port #f)
-	(ss strs))
-    (when (and (not (null? ss))
-	       (port? (car ss)))
-      (set! port (car ss))
-      (set! ss (cdr ss)))
-    (if port
-	(until (null? ss)
-	       (write-1str port (car ss))
-	       (set! ss (cdr ss)))
-	(until (null? ss)
-	       (write-1str (car ss))
-	       (set! ss (cdr ss))))))
-
-;;; --8><----8><----8><--
-
 (define-primitive "wile_sql_meta_tables"
   "expects one sqlite port and returns a list of the names of all tables in the database"
   (sqlite-meta-tables port)
@@ -985,7 +963,7 @@
 	     (squo (lambda (s)
 		     (if (regex-match "^[-+]?[0-9]+$" s)
 			 s
-			 (string-join-by "" "'" s "'")))))
+			 (string-append "'" s "'")))))
 	(write-string oport "DROP TABLE IF EXISTS " tbl
 		      ";\n\nCREATE TABLE " tbl " ("
 		      (string-join-by ", "
@@ -1663,8 +1641,10 @@
 (load-library "wile-version.scm")
 
 (define-primitive "wile_build_info"
-  "expects a flag and returns a list of various build configuration items"
-  (wile-build-info add-ctime?)
+;;;  "expects a flag and returns a list of various build configuration items"
+;;;  (wile-build-info add-ctime?)
+  "expects no arguments and returns a list of various build configuration items"
+  (wile-build-info)
   (let* ((binfo (wile-basic-build-info))
 	 (info1 `((operating-system ,(wile-os-name))
 		  (machine-architecture ,(wile-architecture-name))
@@ -1715,8 +1695,12 @@
     (let loop ()
       (let ((line (read-line pport)))
 	(if line
-	    (begin (write-string port line #\newline)
-		   (loop))
+	    (let* ((mat (regex-match "fn_[0-9]+(\\.constprop\\.[0-9]+)?" line))
+		   (xlat (if mat (wile-xlat-fn-name (cadr mat)) ())))
+	      (write-string port (if (null? xlat)
+				     line
+				     (string-append (car mat) xlat)) #\newline)
+	      (loop))
 	    (close-port pport))))
     (write-string port "wile stack trace end\n")))
 
@@ -1739,7 +1723,7 @@
 		  (let ((line (read-line tport)))
 		    (if line
 			(loop (cons line acc))
-			(list-reverse acc)))))
+			acc))))
     (close-port tport)
     (display-stack-trace data1 port)))
 
@@ -1870,20 +1854,21 @@
 
 ;;; --8><----8><----8><--
 
-(define (span pred lst)
-  (cond ((null? lst) (list () ()))
-	((pred (car lst))
-	 (let ((st (span pred (cdr lst))))
-	   (list (cons (car lst) (car st)) (cadr st))))
-	(else (list () lst))))
-
 (define-primitive "wile_list_group_by"
-  "expects a comparison function and a list and returns a list of lists of adjacent items which compare equal"
+  "expects a comparison function and a list and returns a list of lists of adjacent items which compare true"
   (list-group-by cmp lst)
   (if (null? lst)
       ()
-      (let ((st (span (curry cmp (car lst)) (cdr lst))))
-	(cons (cons (car lst) (car st)) (list-group-by cmp (cadr st))))))
+      (let loop ((lst (cdr lst))
+		 (ac1 (list (car lst)))
+		 (ac2 ()))
+	(cond ((null? lst)
+	       (list-reverse (cons (list-reverse ac1) ac2)))
+	      ((cmp (car ac1) (car lst))
+	       (loop (cdr lst) (cons (car lst) ac1) ac2))
+	      (else
+	       (loop (cdr lst) (list (car lst))
+		     (cons (list-reverse ac1) ac2)))))))
 
 ;;; --8><----8><----8><--
 
@@ -1930,6 +1915,58 @@
   (if (is-prime? n)
       n
       (next-prime (+ n (if (even? n) 1 2)))))
+
+;;; --8><----8><----8><--
+
+;;; Print a matrix semi-prettily: generate a list of strings, all of
+;;; equal length, that are individual rows. It's possible to assemble
+;;; multiple such matrices into quite pretty matrix equations. For
+;;; extra niceness, null entries in the matrix are interpreted as 0
+;;; but are not printed; so the output is a lot less cluttered than it
+;;; might be. For example:
+
+;;; [  0 -3       ] [ 14/3 ] = [   -20 ]   .   [ 0 ]
+;;; [    -2       ] [ 20/3 ] = [ -40/3 ]   .   [ 0 ]
+;;; [    -1  2    ] [ 26/3 ] = [  32/3 ]   .   [ 0 ]
+;;; [     0     3 ] [ 32/3 ] = [    32 ]   .   [ 0 ]
+
+;;; TODO: support logical matrix in larger physical storage? explicit format?
+
+;;; Convert (row,column) index into 1D index
+
+;;; row-major version, aka C storage order
+
+(defmacro (ix-full ir ic nr nc)
+  `(i+ ,ic (i* ,ir ,nc)))
+
+;;; column-major version, aka Fortran storage order, aka transposed
+
+(defmacro (ix-full-tr ir ic nr nc)
+  `(i+ ,ir (i* ,ic ,nr)))
+
+(define-primitive "wile_matrix_print"
+  "expects a vector, two integers, and a boolean, interprets this as a matrix of n1 rows by n2 columns stored in row-major storage order if boolean is false, column-major order if true, and returns a list of strings of equal length, suitable for stacking, showing the rows in order"
+  (matrix-print mat n-rows n-cols tr)
+  (let* ((mp (vector-map (lambda (n) (if (null? n) "" (number->string n)))
+			 mat))
+	 (ml (foldl max/i 0 (map string-length (vector->list mp))))
+	 (spl (lambda (s) (string-pad-left s #\space ml))))
+    (let loop-r ((ir 0)
+		(acc-r ()))
+      (if (>= ir n-rows)
+	  (list-reverse acc-r)
+	  (loop-r (i+ ir 1)
+		 (cons (let loop-c ((ic 0)
+				   (acc-c ()))
+			 (if (>= ic n-cols)
+			     (apply string-join-by " " (list-reverse acc-c))
+			     (let ((ix1 (if tr
+					    (ix-full-tr ir ic n-rows n-cols)
+					    (ix-full ir ic n-rows n-cols))))
+			       (loop-c (i+ ic 1)
+				       (cons (spl (vector-ref mp ix1))
+					     acc-c)))))
+		       acc-r))))))
 
 ;;; --8><----8><----8><--
 
@@ -2087,6 +2124,7 @@
 	(cons 'bytevector bytevector)
 	(cons 'bytevector->string bytevector->string)
 	(cons 'bytevector->list bytevector->list)
+	(cons 'bytevector-and! bytevector-and!)
 	(cons 'bytevector-create
 	      (case-lambic 1 (lambda (a1)
 			       (bytevector-create a1))
@@ -2099,7 +2137,10 @@
 			       (bytevector-copy a1 a2))
 			   3 (lambda (a1 a2 a3)
 			       (bytevector-copy a1 a2 a3))))
+	(cons 'bytevector-for-each bytevector-for-each)
+	(cons 'bytevector-hash-64 bytevector-hash-64)
 	(cons 'bytevector-length bytevector-length)
+	(cons 'bytevector-or! bytevector-or!)
 	(cons 'bytevector-ref bytevector-ref)
 	(cons 'bytevector-set! bytevector-set!)
 	(cons 'bytevector-fill! bytevector-fill!)
@@ -2107,8 +2148,8 @@
 	(cons 'bytevector-map bytevector-map)
 	(cons 'bytevector-map! bytevector-map!)
 	(cons 'bytevector-sort! bytevector-sort!)
+	(cons 'bytevector-xor! bytevector-xor!)
 	(cons 'bytevector? bytevector?)
-	(cons 'bytevector-for-each bytevector-for-each)
 	(cons 'c* c*)
 	(cons 'c+ c+)
 	(cons 'c- c-)
@@ -2355,7 +2396,7 @@
 	(cons 'make-polar make-polar)
 	(cons 'make-rational make-rational)
 	(cons 'map map)
-	(cons 'map map)
+	(cons 'matrix-matrix-multiply matrix-matrix-multiply)
 	(cons 'max max)
 	(cons 'max/i max/i)
 	(cons 'max/q max/q)
@@ -2522,6 +2563,7 @@
 	(cons 'string->list string->list)
 	(cons 'string->number string->number)
 	(cons 'string->symbol string->symbol)
+	(cons 'string-and! string-and!)
 	(cons 'string-append string-append)
 	(cons 'string-ci-hash-32 string-ci-hash-32)
 	(cons 'string-ci-hash-64 string-ci-hash-64)
@@ -2550,6 +2592,7 @@
 	(cons 'string-hash-64 string-hash-64)
 	(cons 'string-join-by string-join-by)
 	(cons 'string-length string-length)
+	(cons 'string-or! string-or!)
 	(cons 'string-pad-center string-pad-center)
 	(cons 'string-pad-left string-pad-left)
 	(cons 'string-pad-right string-pad-right)
@@ -2563,6 +2606,7 @@
 	(cons 'string-trim-left string-trim-left)
 	(cons 'string-trim-right string-trim-right)
 	(cons 'string-upcase string-upcase)
+	(cons 'string-xor! string-xor!)
 	(cons 'string/=? string/=?)
 	(cons 'string<=? string<=?)
 	(cons 'string<? string<?)
@@ -2725,45 +2769,81 @@
 ;;;		      std-env1)
 		     (make-macro
 		      'def-struct '(name field . fields)
-		      '((let* ((fs (cons field fields))
-			       (lfs (list-length fs))
-			       (nfs (+ 1 lfs))
-			       (J0 (lambda strs
-				     (apply string-append strs)))
-			       (J1 (lambda (pre main)
-				     (string->symbol (J0 pre main))))
-			       (J2 (lambda (pre main post)
-				     (string->symbol (J0 pre main post))))
-			       (nstr (symbol->string name))
-			       (mstr (J1 "make-" nstr))
-			       (msym (gensym))
-			       (istr (J2 "isa-" nstr "?"))
-			       (gpre (J0 "get-" nstr "-"))
-			       (spre (J0 "set-" nstr "-"))
-			       (istrs (map (lambda (f i)
-					     `(vector-set! ,msym ,i ,f))
-					   fs (fromto 1 lfs)))
-			       (gstrs (map (lambda (f i)
-					     (let ((gfn (J1 gpre (symbol->string f))))
-					       `(define (,gfn it)
-						  (vector-ref it ,i))))
-					   fs (fromto 1 lfs)))
-			       (sstrs (map (lambda (f i)
-					     (let ((sfn (J2 spre (symbol->string f) "!")))
-					       `(define (,sfn it val)
-						  (vector-set! it ,i val))))
-					   fs (fromto 1 lfs)))
-			       (defs `(begin
-					(define (,mstr ,@fs)
-					  (let ((,msym (vector-create ,nfs)))
-					    (vector-set! ,msym 0 ',name)
-					    ,@istrs
-					    ,msym))
-					(define (,istr it)
-					  (and (vector? it)
-					       (eqv? (vector-ref it 0) ',name)))
-					,@gstrs ,@sstrs)))
-			  defs))
+		      '(let* ((info (let loop ((ss (cons field fields))
+					       (ix 0)
+					       (acc ()))
+				      (if (null? ss)
+					  (list-reverse acc)
+					  (let* ((sc (car ss))
+						 (lc (if (symbol? sc)
+							 1 (cadr sc)))
+						 (nc (if (symbol? sc)
+							 sc (car sc))))
+					    (loop (cdr ss) (+ ix lc)
+						  (cons (list nc (+ ix 1) lc)
+							acc))))))
+			      (fs (map car info))
+			      (ss (map cadr info))
+			      (ls (map caddr info))
+			      (lfs (list-length fs))
+			      (len (let ((lf (list-last info)))
+				     (+ (cadr lf) (caddr lf))))
+			      (J0 (lambda strs (apply string-append strs)))
+			      (J1 (lambda (pre main)
+				    (string->symbol (J0 pre main))))
+			      (J2 (lambda (pre main post)
+				    (string->symbol (J0 pre main post))))
+			      (nstr (symbol->string name))
+			      (mstr (J1 "make-" nstr))
+			      (istr (J2 "isa-" nstr "?"))
+			      (gpre (J0 "get-" nstr "-"))
+			      (spre (J0 "set-" nstr "-"))
+			      (msym (gensym))
+			      (istrs (map (lambda (f i l)
+					    (if (= l 1)
+						`(vector-set! ,msym ,i ,f)
+						(let* ((ixs (fromto 0 (- l 1)))
+						       (jxs (fromto i (+ l i -1)))
+						       (vss (map (lambda (jx ix)
+								   `(vector-set!
+								     ,msym ,jx (list-ref ,f ,ix)))
+								 jxs ixs)))
+						  `(begin ,@ vss))))
+					  fs ss ls))
+			      (gstrs (map (lambda (f i l)
+					    (let* ((gfn (J1 gpre (symbol->string f)))
+						   (err (string-append (symbol->string gfn)
+								       " index out of bounds")))
+					      (if (= l 1)
+						  `(define (,gfn it)
+						     (vector-ref it ,i))
+						  `(define (,gfn it ix)
+						     (if (and (>= ix 0) (< ix ,l))
+							 (vector-ref it (+ ix ,i))
+							 (raise ,err))))))
+					  fs ss ls))
+			      (sstrs (map (lambda (f i l)
+					    (let* ((sfn (J2 spre (symbol->string f) "!"))
+						   (err (string-append (symbol->string sfn)
+								       " index out of bounds")))
+					      (if (= l 1)
+						  `(define (,sfn it val)
+						     (vector-set! it ,i val))
+						  `(define (,sfn it ix val)
+						     (if (and (>= ix 0) (< ix ,l))
+							 (vector-set! it (+ ix ,i) val)
+							 (raise ,err))))))
+					  fs ss ls))
+			      (defs `(begin
+				       (define (,mstr ,@fs)
+					 (let ((,msym (vector-create ,len)))
+					   (vector-set! ,msym 0 ',name)
+					   ,@istrs
+					   ,msym))
+				       (define (,istr it)
+					 (and (vector? it) (eqv? (vector-ref it 0) ',name)))
+				       ,@gstrs ,@sstrs)))
+			 defs)
 		      std-env1))
 		    std-env1)))
     (set! standard-env std-env2)

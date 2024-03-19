@@ -9,6 +9,18 @@
 extern lisp_escape_t cachalot;
 
 
-void WILE_CONFIG_SYM4(void)
+lval wile_waitpid(int pid, int opts)
 {
+    int status;
+
+    pid = waitpid(pid, &status, opts);
+    if (pid < 0) {
+	return LVI_BOOL(false);
+    } else {
+	lval vs[2];
+	vs[0] = LVI_INT(pid);
+	vs[1] = LVI_INT(status);
+	return wile_gen_list(2, vs, NULL);
+    }
 }
+

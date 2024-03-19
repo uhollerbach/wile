@@ -23,6 +23,9 @@
     (fprintf stderr "symlink %s -> wile failed!\n" file)
     (exit 1)))
 
+(define (run-wile args)
+  (run-cmd-or-die (string-append "./wile -CF ./wile-config.dat " args)))
+
 (define (make-stage n)
   (let* ((scur (string-append "stage" (number->string n)))
 	 (name1-exe (string-append "wilec." scur))
@@ -35,10 +38,11 @@
 ;;;	 (name2-exe (string-append "wilec-dbg." scur))
 	 (name-c (string-append "wilec." scur ".c"))
 	 (name1-lib (string-append "libwrtl." scur ".a"))
-	 (name2-lib (string-append "libwrtl-dbg." scur ".a")))
+	 (name2-lib (string-append "libwrtl-dbg." scur ".a"))
+	 (name3-lib (string-append "libwrtl-pg." scur ".a")))
     (write-string "######## make " scur "\n")
     (run-cmd-or-die "make realclean")
-    (run-cmd-or-die "./wile -c wile-rtl2.scm wile-rtl2.c")
+    (run-wile "-c wile-rtl2.scm wile-rtl2.c")
     (run-cmd-or-die "rm -rf bld-rtl-dir")
     (run-cmd-or-die (string-join-by " " "build-rtl libwrtl.a" rtl-flist))
     (run-cmd-or-die "nm -a libwrtl.a | grep wile_config")
@@ -48,9 +52,14 @@
 		     " " "build-rtl -g libwrtl-dbg.a" rtl-flist))
     (run-cmd-or-die "nm -a libwrtl-dbg.a | grep wile_config")
 
-    (run-cmd-or-die "./wile -c wile-main.scm wilec.c")
-    (run-cmd-or-die "./wile -x wilec.c wilec")
-;;;    (run-cmd-or-die "./wile -x -g wilec.c wilec-dbg")
+    (run-cmd-or-die "rm -rf bld-rtl-dir")
+    (run-cmd-or-die (string-join-by
+		     " " "build-rtl -p libwrtl-pg.a" rtl-flist))
+    (run-cmd-or-die "nm -a libwrtl-pg.a | grep wile_config")
+
+    (run-wile "-c wile-main.scm wilec.c")
+    (run-wile "-x wilec.c wilec")
+;;;    (run-wile "-x -g wilec.c wilec-dbg")
     (rm-file-or-chirp "wile")
     (rm-file-or-chirp name1-exe)
     (rm-file-or-chirp name-c)
@@ -59,6 +68,7 @@
 ;;;    (rename-file-or-die "wilec-dbg" name2-exe)
     (rename-file-or-die "libwrtl.a" name1-lib)
     (rename-file-or-die "libwrtl-dbg.a" name2-lib)
+    (rename-file-or-die "libwrtl-pg.a" name3-lib)
     (symlink-or-die name1-exe)))
 
 (define (get-hash file)
@@ -91,7 +101,8 @@
 
 (define files (list "wilec.stage%.c" "wilec.stage%"
 ;;;		    "wilec-dbg.stage%"
-		    "libwrtl.stage%.a" "libwrtl-dbg.stage%.a"))
+		    "libwrtl.stage%.a" "libwrtl-dbg.stage%.a"
+		    "libwrtl-pg.stage%.a"))
 
 (write-string "######## setup\n")
 
@@ -118,15 +129,18 @@
       (print-hash files '(1 2))
       (create-symbolic-link "libwrtl.stage2.a" "libwrtl.a")
       (create-symbolic-link "libwrtl-dbg.stage2.a" "libwrtl-dbg.a")
+      (create-symbolic-link "libwrtl-pg.stage2.a" "libwrtl-pg.a")
       (write-string "## clean up redundant stage1\n")
       (rm-file-or-chirp "wilec.stage1.c")
       (rm-file-or-chirp "wilec.stage1")
 ;;;      (rm-file-or-chirp "wilec-dbg.stage1")
       (rm-file-or-chirp "libwrtl.stage1.a")
-      (rm-file-or-chirp "libwrtl-dbg.stage1.a"))
+      (rm-file-or-chirp "libwrtl-dbg.stage1.a")
+      (rm-file-or-chirp "libwrtl-pg.stage1.a"))
     (begin
       (make-stage 3)
       (write-string "######## compare\n")
       (print-hash files '(1 2 3))
       (create-symbolic-link "libwrtl.stage3.a" "libwrtl.a")
-      (create-symbolic-link "libwrtl-dbg.stage3.a" "libwrtl-dbg.a")))
+      (create-symbolic-link "libwrtl-dbg.stage3.a" "libwrtl-dbg.a")
+      (create-symbolic-link "libwrtl-pg.stage3.a" "libwrtl-pg.a")))

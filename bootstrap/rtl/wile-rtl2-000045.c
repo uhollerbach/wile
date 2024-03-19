@@ -65,35 +65,32 @@ if (LV_IS_FALSE(var_7)) {
 var_6 = var_2[0];
 } else {
 lval var_8;
-var_8 = LVI_STRING("");
+var_8 = LVI_INT(var_2[2].v.iv - var_4.v.iv);
 lval var_9;
-var_9 = LVI_INT(var_2[2].v.iv - var_4.v.iv);
-lval var_10;
-if (var_9.vt != LV_INT || var_9.v.iv < 0) {
+if (var_8.vt != LV_INT || var_8.v.iv < 0) {
 wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000045.scm:16", "first input is not a non-negative integer");
 }
 if (var_2[1].vt != LV_CHAR || var_2[1].v.chr == '\0') {
 wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000045.scm:16", "second input is not a valid character");
 }
-var_10.vt = LV_STRING;
-var_10.origin = var_9.origin;
-var_10.v.str = LISP_ALLOC(char, 1 + var_9.v.iv);
-memset(var_10.v.str, var_2[1].v.chr, var_9.v.iv);
-var_10.v.str[var_9.v.iv] = '\0';
-lval var_11;
+var_9.vt = LV_STRING;
+var_9.origin = var_8.origin;
+var_9.v.str = LISP_ALLOC(char, 1 + var_8.v.iv);
+memset(var_9.v.str, var_2[1].v.chr, var_8.v.iv);
+var_9.v.str[var_8.v.iv] = '\0';
+lval var_10;
 {
-lval var_13[2];
-var_13[0] = var_2[0];
-var_13[1] = var_10;
-var_11 = wile_gen_list(2, var_13, NULL);
+lval var_12[2];
+var_12[0] = var_2[0];
+var_12[1] = var_9;
+var_10 = wile_gen_list(2, var_12, NULL);
 }
 {
-lval var_12[8];
-var_12[0] = var_8;
-var_12[1] = var_11;
-var_11 = wile_string_join_by(NULL, var_12, "bld-rtl-dir/wile-rtl2-000045.scm:16");
+lval var_11[8];
+var_11[0] = var_10;
+var_10 = wile_string_append(NULL, var_11, "bld-rtl-dir/wile-rtl2-000045.scm:16");
 }
-var_6 = var_11;
+var_6 = var_10;
 }
 return var_6;
 }

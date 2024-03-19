@@ -9,57 +9,81 @@
 extern lisp_escape_t cachalot;
 
 
-// lower-level SHA functions
-
-#include "sha256.h"
-
-lval wile_sha256_init(bool is_256)
+lval wile_cfft_good_n(lptr* clos, lptr args, const char* loc)
 {
-    lval ret;
-
-    ret.vt = LV_SHA256_DATA;
-    // TODO: get a better origin than this - decode loc?
-    ret.origin = 0;
-    ret.v.sha256_info = LISP_ALLOC(SHA256_info, 1);
-    sha256_init(ret.v.sha256_info, is_256);
-
-    return ret;
+    if (args[0].vt != LV_INT) {
+	wile_exception("cfft-good-n?", loc, "expects an integer argument");
+    }
+    return LVI_BOOL(wilec_cfft_good_n(args[0].v.iv));
 }
 
-lval wile_sha256_update(lptr* clos, lptr args, const char* loc)
+lval wile_cfft(lptr* clos, lptr args, const char* loc)
 {
-    if (args[0].vt != LV_SHA256_DATA ||
-	(args[1].vt != LV_STRING && args[1].vt != LV_BVECTOR)) {
-	wile_exception("sha-2XX-update", loc,
-		       "expects a SHA-256 data structure and a string or bytevector");
+    if (args[0].vt != LV_INT || args[1].vt != LV_VECTOR) {
+	wile_exception("vector-cfft!", loc,
+		       "expects an integer transform direction and a vector of complex values");
     }
-    if (args[1].vt == LV_STRING) {
-	sha256_update(args[0].v.sha256_info, (uint8_t*) args[1].v.str,
-		      strlen(args[1].v.str));
+
+    lptr *arr;
+    int si;
+    size_t n = 0, i;
+    lisp_cmplx_t *a1, *a2, *ap;
+
+    wilec_cfft_init();
+
+    if (args[0].v.iv > 0) {
+	si = 1;
+    } else if (args[0].v.iv < 0) {
+	si = -1;
     } else {
-	sha256_update(args[0].v.sha256_info, args[1].v.bvec.arr,
-		      args[1].v.bvec.capa);
+	wile_exception("vector-cfft!", loc,
+		       "transform direction was not specified");
     }
 
-    return LVI_BOOL(true);
-}
-
-lval wile_sha256_finish(lptr* clos, lptr args, const char* loc)
-{
-    int i, lim;
-    unsigned char digest[32];
-    char hdig[65];
-
-    if (args[0].vt != LV_SHA256_DATA) {
-	wile_exception("sha-2XX-finish", loc,
-		       "expects a SHA-256 data structure");
+    n = args[1].v.vec.capa;
+    if (!wilec_cfft_good_n(n)) {
+	wile_exception("vector-cfft!", loc,
+		       "%zu is not a multiple of (2,3,5,7,11)", n);
     }
-    sha256_final(digest, args[0].v.sha256_info);
-    lim = args[0].v.sha256_info->is_256 ? 32 : 28;
-    for (i = 0; i < lim; ++i) {
-	snprintf(hdig + 2*i, 3, "%02x", digest[i]);
+    arr = args[1].v.vec.arr;
+    a1 = LISP_ALLOC(lisp_cmplx_t, n);
+    for (i = 0; i < n; ++i) {
+	if (arr[i] == NULL) {
+	    goto def_lbl;
+	}
+	switch (arr[i]->vt) {
+	case LV_INT:
+	    a1[i] = CMPLX((lisp_real_t) arr[i]->v.iv, 0.0);
+	    break;
+	case LV_RAT:
+	    a1[i] = CMPLX(LV_RAT2REAL(*(arr[i])), 0.0);
+	    break;
+	case LV_REAL:
+	    a1[i] = CMPLX(arr[i]->v.rv, 0.0);
+	    break;
+	case LV_CMPLX:
+	    a1[i] = arr[i]->v.cv;
+	    break;
+	default:
+	def_lbl:
+	    LISP_FREE(a1);
+	    wile_exception("vector-cfft!", loc,
+			   "input contains non-numeric value at index %zu", i);
+	    break;
+	}
     }
-    hdig[2*lim] = '\0';	// should be taken care of by snprintf, but make sure
-    return LVI_STRING(hdig);
+    a2 = LISP_ALLOC(lisp_cmplx_t, n);
+
+    ap = wilec_cfft(si, n, n, a1, a2);
+
+    for (i = 0; i < n; ++i) {
+	arr[i]->vt = LV_CMPLX;
+	arr[i]->v.cv = ap[i];
+    }
+
+    LISP_FREE(a1);
+    LISP_FREE(a2);
+
+    return args[1];
 }
 

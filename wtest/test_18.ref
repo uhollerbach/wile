@@ -1,4 +1,4 @@
-3.37.2
+3.45.1
 (cars)
 CREATE TABLE cars (id integer, name text, price integer)
 DROP TABLE IF EXISTS cars;

@@ -32,7 +32,7 @@ WRSRC1 = wile-sql.c alloc.c print.c location.c wile-parse.c wile-lex.c \
 WRSRC2 = wile-rtl1.c wile-rtl2.scm math-funcs.c
 
 wrtl.sch:	wile-rtl2.scm
-	wile -v -c wile-rtl2.scm wile-rtl2.c
+	./wile -CF wile-config.dat -v -c wile-rtl2.scm wile-rtl2.c
 
 # in an emergency, it also can work to build wile-rtl2.[co] as one unified
 # object file; that does mean that every link pulls in everything
@@ -47,6 +47,11 @@ libwrtl-dbg.a:	wrtl.sch $(WRSRC1) $(WRSRC2)
 	build-rtl -g libwrtl-dbg.a $(WRSRC1) -s $(WRSRC2)
 	nm -a libwrtl-dbg.a | grep wile_config
 
+libwrtl-pg.a:	wrtl.sch $(WRSRC1) $(WRSRC2)
+	rm -rf bld-rtl-dir
+	build-rtl -p libwrtl-pg.a $(WRSRC1) -s $(WRSRC2)
+	nm -a libwrtl-pg.a | grep wile_config
+
 boot-files:	wrtl.sch $(WRSRC1) $(WRSRC2)
 	rm -rf bld-rtl-dir
 	build-rtl libfake.a $(WRSRC1) -s $(WRSRC2) -k
@@ -54,28 +59,28 @@ boot-files:	wrtl.sch $(WRSRC1) $(WRSRC2)
 	cp bld-rtl-dir/*.c bootstrap/rtl/
 	cp wrtl.sch wile-rtl2.h bootstrap/
 	rm -rf bld-rtl-dir
-	wile -c wile-main.scm bootstrap/wilec.c
+	./wile -CF wile-config.dat -c wile-main.scm bootstrap/wilec.c
 
 wilec:	wile-main.scm wile-comp.scm wile-prims.scm libwrtl.a
-	wile -x -v wile-main.scm wilec
+	./wile -CF wile-config.dat -x -v wile-main.scm wilec
 
 repl:	repl.scm libwrtl.a
-	wile -x -v repl.scm repl
+	./wile -CF wile-config.dat -x -v repl.scm repl
 
 repl-dbg:	repl.scm libwrtl-dbg.a
-	wile -x -v -g repl.scm repl-dbg
+	./wile -CF wile-config.dat -x -v -g repl.scm repl-dbg
 
 twp:	test-wile-progs.scm
-	wile -x -v test-wile-progs.scm twp
+	./wile -CF wile-config.dat -x -v test-wile-progs.scm twp
 
 build-rtl:	build-rtl.scm
-	wile -x -v build-rtl.scm build-rtl
+	./wile -CF wile-config.dat -x -v build-rtl.scm build-rtl
 
 build-stages:	build-stages.scm
-	wile -x -v build-stages.scm build-stages
+	./wile -CF wile-config.dat -x -v build-stages.scm build-stages
 
 build-update:	build-update.scm
-	wile -x -v build-update.scm build-update
+	./wile -CF wile-config.dat -x -v build-update.scm build-update
 
 test:	libwrtl.a twp
 	test-wile.scm
@@ -135,4 +140,4 @@ wile-rtl2.h:	wile-rtl2.c
 ## 	ulex wile.ulex
 
 .c.o:
-	wile -o -v $< $@
+	./wile -CF wile-config.dat -o -v $< $@

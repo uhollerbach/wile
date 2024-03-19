@@ -9,40 +9,21 @@
 extern lisp_escape_t cachalot;
 
 
-// compute the SHA digest of a string or FILE* stream
-
-#include "sha256.h"
-
-#define BLOCK_SIZE	8192
-
-lval wile_sha256_wrap(bool is_256, lval input, const char* loc)
+lval wile_bytevector_hash_64(lptr* clos, lptr args, const char* loc)
 {
-    int i, lim;
-    uint8_t data[BLOCK_SIZE];
-    unsigned char digest[32];
-    char hdig[65];
-    SHA256_info sha_info;
+    uint64_t hash;
+    size_t i;
 
-    sha256_init(&sha_info, is_256);
-    if (input.vt == LV_STRING) {
-	sha256_update(&sha_info, (uint8_t*) input.v.str, strlen(input.v.str));
-    } else if (input.vt == LV_FILE_PORT ||
-	       input.vt == LV_PIPE_PORT ||
-	       input.vt == LV_SOCK_PORT) {
-	while ((i = fread(data, 1, BLOCK_SIZE, input.v.fp)) > 0) {
-	    sha256_update(&sha_info, (uint8_t*) data, i);
-	}
-    } else {
-	wile_exception(is_256 ? "sha-256" : "sha-224", loc,
-		       "expects a string or port argument");
+    if (args[0].vt != LV_BVECTOR) {
+	wile_exception("bytevector-hash-64",
+		       loc, "expects a bytevector argument");
     }
-    sha256_final(digest, &sha_info);
-    lim = is_256 ? 32 : 28;
-    for (i = 0; i < lim; ++i) {
-	snprintf(hdig + 2*i, 3, "%02x", digest[i]);
-    }
-    hdig[2*lim] = '\0';	// should be taken care of by snprintf, but make sure
 
-    return LVI_STRING(hdig);
+    hash = 14695981039346656037UL;
+    for (i = 0; i < args[0].v.bvec.capa; ++i) {
+	hash ^= args[0].v.bvec.arr[i];
+	hash *= 1099511628211UL;
+    }
+    return LVI_INT(hash);
 }
 

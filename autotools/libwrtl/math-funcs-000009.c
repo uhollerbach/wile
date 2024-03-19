@@ -1,0 +1,1 @@
+../../bootstrap/rtl/math-funcs-000009.c

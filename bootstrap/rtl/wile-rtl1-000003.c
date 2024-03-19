@@ -9,21 +9,34 @@
 extern lisp_escape_t cachalot;
 
 
-void wile_exception(const char* func_name, const char* loc,
-		    const char* fmt, ...)
+extern const unsigned int wile_nnames;
+extern const struct wile_name_map wile_names[];
+
+lval wile_translate_fn_name(const char* c_fn, lisp_loc_t origin)
 {
-    char buf1[1024], buf2[1280];
-    va_list ap;
+    unsigned int i;
+    lval ret;
+    char buf[16];	// space for 12 digits... should be enough
 
-    fflush(NULL);
-    wile_stack_trace_minimal(fileno(stderr));
-    va_start(ap, fmt);
-    vsnprintf(buf1, sizeof(buf1), fmt, ap);
-    va_end(ap);
-    snprintf(buf2, sizeof(buf2), "'%s' %s", func_name, buf1);
+    // remove the ".constprop.N" that gcc adds in some cases
+    for (i = 0; i < sizeof(buf); ++i) {
+	if (c_fn[i] == '\0' || c_fn[i] == '.') {
+	    buf[i] = '\0';
+	    break;
+	}
+	buf[i] = c_fn[i];
+    }
+    buf[sizeof(buf)-1] = '\0';
 
-    cachalot->errval = new_string(buf2);
-    cachalot->whence = LISP_STRDUP(loc);
-    longjmp(cachalot->cenv, 1);
+    for (i = 0; i < wile_nnames; ++i) {
+	if (strcmp(buf, wile_names[i].c_name) == 0) {
+	    ret.vt = LV_STRING;
+	    ret.origin = origin;
+	    ret.v.str = LISP_STRDUP(wile_names[i].s_name);
+	    return ret;
+	}
+    }
+    ret.vt = LV_NIL;
+    return ret;
 }
 

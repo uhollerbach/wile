@@ -81,7 +81,7 @@ lval var_33;
 {
 size_t i, capa;
 if (var_32.vt != LV_INT || var_32.v.iv < 0) {
-wile_exception("vector-create", "/home/uwe/tools/etc/wile-config.dat:0", "expects a non-negative integer");
+wile_exception("vector-create", "./wile-config.dat:0", "expects a non-negative integer");
 }
 var_33.vt = LV_VECTOR;
 var_33.origin = var_32.origin;
@@ -151,10 +151,10 @@ var_47 = LVI_INT(0);
 lval var_48;
 {
 if (var_42[0].vt != LV_VECTOR) {
-wile_exception("vector-ref", "/home/uwe/tools/etc/wile-config.dat:0", "input is not a vector");
+wile_exception("vector-ref", "./wile-config.dat:0", "input is not a vector");
 }
 if (var_47.vt != LV_INT || var_47.v.iv < 0 || (size_t) var_47.v.iv >= var_42[0].v.vec.capa) {
-wile_exception("vector-ref", "/home/uwe/tools/etc/wile-config.dat:0", "got bad index value");
+wile_exception("vector-ref", "./wile-config.dat:0", "got bad index value");
 }
 var_48 = var_42[0].v.vec.arr[var_47.v.iv] ? *(var_42[0].v.vec.arr[var_47.v.iv]) : LVI_NIL();
 }
@@ -171,7 +171,7 @@ return var_44;
 }
 // end of function fn_2
 
-// @@@ (get-bbox-name it) @@@ /home/uwe/tools/etc/wile-config.dat:0 @@@ fn_3 @@@
+// @@@ (get-bbox-name it) @@@ ./wile-config.dat:0 @@@ fn_3 @@@
 static lval fn_3(lptr* var_51, lptr var_52, const char* cloc)
 {
 lval var_54;
@@ -179,10 +179,10 @@ var_54 = LVI_INT(1);
 lval var_55;
 {
 if (var_52[0].vt != LV_VECTOR) {
-wile_exception("vector-ref", "/home/uwe/tools/etc/wile-config.dat:0", "input is not a vector");
+wile_exception("vector-ref", "./wile-config.dat:0", "input is not a vector");
 }
 if (var_54.vt != LV_INT || var_54.v.iv < 0 || (size_t) var_54.v.iv >= var_52[0].v.vec.capa) {
-wile_exception("vector-ref", "/home/uwe/tools/etc/wile-config.dat:0", "got bad index value");
+wile_exception("vector-ref", "./wile-config.dat:0", "got bad index value");
 }
 var_55 = var_52[0].v.vec.arr[var_54.v.iv] ? *(var_52[0].v.vec.arr[var_54.v.iv]) : LVI_NIL();
 }
@@ -190,7 +190,7 @@ return var_55;
 }
 // end of function fn_3
 
-// @@@ (get-bbox-value it) @@@ /home/uwe/tools/etc/wile-config.dat:0 @@@ fn_4 @@@
+// @@@ (get-bbox-value it) @@@ ./wile-config.dat:0 @@@ fn_4 @@@
 static lval fn_4(lptr* var_56, lptr var_57, const char* cloc)
 {
 lval var_59;
@@ -198,10 +198,10 @@ var_59 = LVI_INT(2);
 lval var_60;
 {
 if (var_57[0].vt != LV_VECTOR) {
-wile_exception("vector-ref", "/home/uwe/tools/etc/wile-config.dat:0", "input is not a vector");
+wile_exception("vector-ref", "./wile-config.dat:0", "input is not a vector");
 }
 if (var_59.vt != LV_INT || var_59.v.iv < 0 || (size_t) var_59.v.iv >= var_57[0].v.vec.capa) {
-wile_exception("vector-ref", "/home/uwe/tools/etc/wile-config.dat:0", "got bad index value");
+wile_exception("vector-ref", "./wile-config.dat:0", "got bad index value");
 }
 var_60 = var_57[0].v.vec.arr[var_59.v.iv] ? *(var_57[0].v.vec.arr[var_59.v.iv]) : LVI_NIL();
 }
@@ -209,7 +209,7 @@ return var_60;
 }
 // end of function fn_4
 
-// @@@ (set-bbox-name! it val) @@@ /home/uwe/tools/etc/wile-config.dat:0 @@@ fn_5 @@@
+// @@@ (set-bbox-name! it val) @@@ ./wile-config.dat:0 @@@ fn_5 @@@
 static lval fn_5(lptr* var_61, lptr var_62, const char* cloc)
 {
 lval var_64;
@@ -217,10 +217,10 @@ var_64 = LVI_INT(1);
 lval var_65;
 {
 if (var_62[0].vt != LV_VECTOR) {
-wile_exception("vector-set!", "/home/uwe/tools/etc/wile-config.dat:0", "input is not a vector");
+wile_exception("vector-set!", "./wile-config.dat:0", "input is not a vector");
 }
 if (var_64.vt != LV_INT || var_64.v.iv < 0 || (size_t) var_64.v.iv >= var_62[0].v.vec.capa) {
-wile_exception("vector-set!", "/home/uwe/tools/etc/wile-config.dat:0", "got bad index value");
+wile_exception("vector-set!", "./wile-config.dat:0", "got bad index value");
 }
 var_62[0].v.vec.arr[var_64.v.iv] = new_lv(LV_NIL);
 *(var_62[0].v.vec.arr[var_64.v.iv]) = var_62[1];
@@ -230,7 +230,7 @@ return var_65;
 }
 // end of function fn_5
 
-// @@@ (set-bbox-value! it val) @@@ /home/uwe/tools/etc/wile-config.dat:0 @@@ fn_6 @@@
+// @@@ (set-bbox-value! it val) @@@ ./wile-config.dat:0 @@@ fn_6 @@@
 static lval fn_6(lptr* var_66, lptr var_67, const char* cloc)
 {
 lval var_69;
@@ -238,10 +238,10 @@ var_69 = LVI_INT(2);
 lval var_70;
 {
 if (var_67[0].vt != LV_VECTOR) {
-wile_exception("vector-set!", "/home/uwe/tools/etc/wile-config.dat:0", "input is not a vector");
+wile_exception("vector-set!", "./wile-config.dat:0", "input is not a vector");
 }
 if (var_69.vt != LV_INT || var_69.v.iv < 0 || (size_t) var_69.v.iv >= var_67[0].v.vec.capa) {
-wile_exception("vector-set!", "/home/uwe/tools/etc/wile-config.dat:0", "got bad index value");
+wile_exception("vector-set!", "./wile-config.dat:0", "got bad index value");
 }
 var_67[0].v.vec.arr[var_69.v.iv] = new_lv(LV_NIL);
 *(var_67[0].v.vec.arr[var_69.v.iv]) = var_67[1];
@@ -1618,14 +1618,14 @@ char* cp = strchr(var_482.v.str, 'r');
 var_483 = var_480[0];
 while (*(--cp) != 'c') {
 if (var_483.vt != LV_PAIR) {
-wile_exception("cxr", "/home/uwe/tools/etc/wile-config.dat:0", "input does not have the right structure!");
+wile_exception("cxr", "./wile-config.dat:0", "input does not have the right structure!");
 }
 if (*cp == 'a') {
 var_483 = (var_483.v.pair.car ? *(var_483.v.pair.car) : LVI_NIL());
 } else if (*cp == 'd') {
 var_483 = (var_483.v.pair.cdr ? *(var_483.v.pair.cdr) : LVI_NIL());
 } else {
-wile_exception("cxr", "/home/uwe/tools/etc/wile-config.dat:0", "got malformed control string '%s'", var_482.v.str);
+wile_exception("cxr", "./wile-config.dat:0", "got malformed control string '%s'", var_482.v.str);
 }
 }
 }
@@ -1644,14 +1644,14 @@ char* cp = strchr(var_488.v.str, 'r');
 var_489 = var_486[0];
 while (*(--cp) != 'c') {
 if (var_489.vt != LV_PAIR) {
-wile_exception("cxr", "/home/uwe/tools/etc/wile-config.dat:0", "input does not have the right structure!");
+wile_exception("cxr", "./wile-config.dat:0", "input does not have the right structure!");
 }
 if (*cp == 'a') {
 var_489 = (var_489.v.pair.car ? *(var_489.v.pair.car) : LVI_NIL());
 } else if (*cp == 'd') {
 var_489 = (var_489.v.pair.cdr ? *(var_489.v.pair.cdr) : LVI_NIL());
 } else {
-wile_exception("cxr", "/home/uwe/tools/etc/wile-config.dat:0", "got malformed control string '%s'", var_488.v.str);
+wile_exception("cxr", "./wile-config.dat:0", "got malformed control string '%s'", var_488.v.str);
 }
 }
 }

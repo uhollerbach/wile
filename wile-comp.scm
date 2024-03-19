@@ -47,12 +47,6 @@
    (for-each (lambda (s) (write-string port s))
 	     (list-reverse (get-string-bag-bag p)))))
 
-;;; if doing profiling, this gets re-initialized to (), and then a list
-;;; of function labels gets generated, each of which will correspond to
-;;; a slot in a counts table.
-
-(define global-profile #f)
-
 ;;; make every array of arguments be at least this big, so that we can
 ;;; re-use them for tail calls. 4 is the minimum needed to make the
 ;;; library compile without tail call generation failures, and compiling
@@ -244,6 +238,8 @@
 ;;; 	    (emit-str #\newline)
 ;;; 	    r)))
 
+(define global-name-map ())
+
 (define (emit-function-head fn-name top-label visible?
 			    clos-name args-name info1 info2)
   ;;; emit a trailing ';' after the label because clang expects
@@ -252,13 +248,9 @@
    "\n// @@@ %v @@@ %s @@@ %s @@@\n%slval %s(lptr* %s, lptr %s, const char* cloc)\n{\n%s:;\n"
    info1 info2 fn-name (if visible? "" "static ")
    fn-name clos-name args-name top-label)
+  (set! global-name-map (cons (list fn-name info1 info2) global-name-map))
   (unless (hash-table-contains? global-funcs-used fn-name)
-    (hash-table-set! global-funcs-used fn-name 0))
-  (when global-profile
-    (emit-fstr "wile_profile[%d].count += 1;\n" (list-length global-profile))
-    (set! global-profile
-	  (cons (sprintf "%v\\t%v" info2 info1)
-		global-profile))))
+    (hash-table-set! global-funcs-used fn-name 0)))
 
 (define (emit-function-call res fn closure args tcall frame call-loc)
   (when (and closure (not (null? global-closures)))
@@ -520,8 +512,7 @@
       (string? val)
       (symbol? val)
       (vector? val)
-      (bytevector? val)
-      (and (pair? val) (symbol? (car val)) (symbol=? (car val) 'quote))))
+      (bytevector? val)))
 
 ;;; Compile such immediate values
 
@@ -595,13 +586,15 @@
 	      (a4 (if is-bv? "unsigned char" "lptr"))
 	      (a5 (string-upcase a3)))
 	 (emit-code
-	  "{"
-	  "@1.vt = LV_@5TOR;"
-	  ;;; TODO: find better origin than this
-	  "@1.origin = 0;"
-	  "@1.v.@3.capa = @2;"
-	  "@1.v.@3.arr = LISP_ALLOC(@4, @2);"
-	  ""))
+	  #<< HEREDOC
+	  >{
+	  >@1.vt = LV_@5TOR;
+	  >// TODO: find better origin than this
+	  >@1.origin = 0;
+	  >@1.v.@3.capa = @2;
+	  >@1.v.@3.arr = LISP_ALLOC(@4, @2);
+	  >HEREDOC
+	  ))
        (for-each (lambda (i v)
 		   (let ((r #f)
 			 (a1 vname)
@@ -609,8 +602,12 @@
 			 (a3 (compile-immediate cur-env v)))
 		     (if is-bv?
 			 (emit-code "@1.v.bvec.arr[@2] = @3.v.iv;")
-			 (emit-code "@1.v.vec.arr[@2] = new_lv(LV_NIL);"
-				    "*(@1.v.vec.arr[@2]) = @3;"))))
+			 (emit-code
+			  #<< HEREDOC
+			  >@1.v.vec.arr[@2] = new_lv(LV_NIL);
+			  >*(@1.v.vec.arr[@2]) = @3;
+			  >HEREDOC
+			  ))))
 		 (upfrom 0 vlen)
 		 ((if is-bv? bytevector->list vector->list) expr))
        (when global-library
@@ -620,8 +617,6 @@
 
 (define (compile-immediate cur-env expr)
   (debug-trace 'compile-immediate cur-env #f expr)
-  (when (and (pair? expr) (symbol? (car expr)) (symbol=? (car expr) 'quote))
-    (set! expr (cadr expr)))
   (let ((r (new-svar)))
     (cond
      ((null? expr)
@@ -639,11 +634,14 @@
       (let ((a1 (number->string (numerator expr)))
 	    (a2 (number->string (denominator expr))))
 	(emit-code
-	 "@@.vt = LV_RAT;"
-	 ;;; TODO: find better origin than this
-	 "@@.origin = 0;"
-	 "@@.v.irv.num = @1;"
-	 "@@.v.irv.den = @2;")))
+	 #<< HEREDOC
+	 >@@.vt = LV_RAT;
+	 >// TODO: find better origin than this
+	 >@@.origin = 0;
+	 >@@.v.irv.num = @1;
+	 >@@.v.irv.den = @2;
+	 >HEREDOC
+	 )))
      ((real? expr)
       (let ((a1 (format-real expr)))
 	(emit-code "@@ = LVI_REAL(@1);")))
@@ -651,10 +649,13 @@
       (let ((a1 (format-real (creal expr)))
 	    (a2 (format-real (cimag expr))))
 	(emit-code
-	 "@@.vt = LV_CMPLX;"
-	 ;;; TODO: find better origin than this
-	 "@@.origin = 0;"
-	 "@@.v.cv = (@1) + (@2)*I;")))
+	 #<< HEREDOC
+	 >@@.vt = LV_CMPLX;
+	 >// TODO: find better origin than this
+	 >@@.origin = 0;
+	 >@@.v.cv = (@1) + (@2)*I;
+	 >HEREDOC
+	 )))
      ((string? expr)
       (let ((a1 (escapify expr)))
 	(emit-code "@@ = LVI_STRING(\"@1\");")))
@@ -901,8 +902,12 @@
 		 (let ((r #f)
 		       (a1 (new-svar))
 		       (a2 v))
-		   (emit-code "lptr @1 = new_lv(VT_UNINIT);"
-			      "@1->v.pair.car = &(@2);")
+		   (emit-code
+		    #<< HEREDOC
+		    >lptr @1 = new_lv(VT_UNINIT);
+		    >@1->v.pair.car = &(@2);
+		    >HEREDOC
+		    )
 		   (hash-table-set! global-mirrors v a1)))
 	       cs1 vs)
      (emit-fstr "%s:\n" top-label)
@@ -946,11 +951,14 @@
 	    (a1 raze)
 	    (aL loc))
 	(emit-code
-	 "cachalot = @1.next;"
-	 "cachalot->errval = @1.errval;"
-	 "cachalot->whence = \"@L\";"
-	 "fflush(NULL);"
-	 "longjmp(cachalot->cenv, 1);"))
+	 #<< HEREDOC
+	 >cachalot = @1.next;
+	 >cachalot->errval = @1.errval;
+	 >cachalot->whence = "@L";
+	 >fflush(NULL);
+	 >longjmp(cachalot->cenv, 1);
+	 >HEREDOC
+	 ))
       (emit-fstr "%s = LVI_BOOL(false);\n" res)))
 
 (define (compile-special-cond imp-raise cur-env tcall clauses loc)
@@ -1114,9 +1122,13 @@
 				  (a1 (new-svar))
 				  (a2 name2)
 				  (a3 (string-copy name1 1) a1))
-			      (emit-code "lptr @1 = new_lv(VT_UNINIT);"
-					 "@1->v.pair.car = &(@2);"
-					 "P@3 = @1;")
+			      (emit-code
+			       #<< HEREDOC
+			       >lptr @1 = new_lv(VT_UNINIT);
+			       >@1->v.pair.car = &(@2);
+			       >P@3 = @1;
+			       >HEREDOC
+			       )
 			      (hash-table-set! global-mirrors name2 a1)))
 			(emit-fstr "P%s = &(%s);\n"
 				   (string-copy name1 1) name2))))
@@ -1320,12 +1332,15 @@
 	(let ((r res)
 	      (a1 ecv))
 	  (emit-code
-	   "{"
-	   "struct lisp_escape_info @1;"
-	   "@1.errval = NULL;"
-	   "@1.next = cachalot;"
-	   "cachalot = &@1;"
-	   "if (setjmp(@1.cenv) == 0) {"))
+	   #<< HEREDOC
+	   >{
+	   >struct lisp_escape_info @1;
+	   >@1.errval = NULL;
+	   >@1.next = cachalot;
+	   >cachalot = &@1;
+	   >if (setjmp(@1.cenv) == 0) {
+	   >HEREDOC
+	   ))
 	(emit-fstr "%s = %s;\ncachalot = %s.next;\n} else {\n"
 		   res (compile-special-begin cur-env #f (cdr clauses)) ecv)
 	(emit-decl errv)
@@ -1424,6 +1439,44 @@
   (debug-trace 'compile-special-cond-expand cur-env tcall clauses)
   (compile-special-begin cur-env tcall (do-cond-expand clauses)))
 
+(define (compile-special-c-code cur-env clauses)
+  (debug-trace 'compile-special-c-code cur-env #f clauses)
+  (when (list-length=? 0 clauses)
+    (ERR () "empty 'wile-c' expression"))
+  (let ((vars (cdr clauses)))
+    (let loop ((cs (string->list (car clauses))))
+      (cond ((null? cs)
+	     (emit-str "\n")
+	     #t)
+	    ((char=? (car cs) #\@)
+	     (cond ((null? (cdr cs))
+		    (raise "special-c error: trailing '@'"))
+		   ((char=? (cadr cs) #\@)
+		    (emit-str #\@)
+		    (loop (cddr cs)))
+		   ((char-numeric? (cadr cs))
+		    (when (char=? (cadr cs) #\0)
+		      (raise "special-c error: illegal @-index 0"))
+		    (let* ((svar (list-ref vars (- (char->integer (cadr cs))
+						    (char->integer #\1))))
+			   (cvar (assv svar cur-env)))
+		      (unless cvar
+			(raise
+			 (sprintf
+			  "special-c error: unbound variable '%v'" svar)))
+		      (unless (symbol=? (cadr cvar) 'c-var)
+			(raise
+			 (sprintf
+			  "special-c error: '%v' is not a variable" svar)))
+		      (emit-str (symbol->string (caddr cvar)))
+		      (loop (cddr cs))))
+		   (else
+		    (emit-str (cadr cs))
+		    (loop (cddr cs)))))
+	    (else
+	     (emit-str (car cs))
+	     (loop (cdr cs)))))))
+
 (define (compile-special cur-env tcall expr)
   (debug-trace 'compile-special cur-env tcall expr)
   (cond ((symbol=? (car expr) 'and)
@@ -1465,6 +1518,8 @@
 	 (compile-special-case cur-env tcall (cdr expr)))
 	((symbol=? (car expr) 'guard)
 	 (compile-special-guard cur-env tcall (cdr expr)))
+	((symbol=? (car expr) 'quote)
+	 (compile-immediate cur-env (cadr expr)))
 	((symbol=? (car expr) 'quasiquote)
 	 (compile-special-qq cur-env tcall (cdr expr)))
 	((symbol=? (car expr) 'unquote)
@@ -1473,6 +1528,8 @@
 	 (ERR () "naked 'unquote-splicing' form '%v'" expr))
 	((symbol=? (car expr) 'cond-expand)
 	 (compile-special-cond-expand cur-env tcall (cdr expr)))
+	((symbol=? (car expr) 'wile-c)
+	 (compile-special-c-code cur-env (cdr expr)))
 	(else (ERR () "special form '%v' is not implemented yet" expr))))
 
 (define (is-special-form? val)
@@ -1500,9 +1557,9 @@
 	   (symbol=? val 'quasiquote)
 	   (symbol=? val 'unquote)
 	   (symbol=? val 'unquote-splicing)
-;;; this gets handled differently now
-;;;	   (symbol=? val 'quote)
-	   (symbol=? val 'set!))))
+	   (symbol=? val 'quote)
+	   (symbol=? val 'set!)
+	   (symbol=? val 'wile-c))))
 
 (define (build-regular-prim res nargs arity c-fn args call-loc)
   (cond ((negative? arity)
@@ -1882,6 +1939,9 @@
 	(let ((res (compile-special-begin cur-env a-name (cdr def))))
 	  (reset-mirrors global-mirrors)
 	  (emit-function-tail res))
+;;; (emit-fstr "\n/* **************** end function %s\n" tmp-fn)
+;;; (for-each (lambda (ct) (emit-fstr "    %v\n" ct)) global-closures)
+;;; (emit-fstr "**************** */\n")
 	(emit-fstr "// end of function %s\n" tmp-fn))))))
 
 (define (declare-deffish cur-env def c-port s-port)
@@ -1962,7 +2022,7 @@
 	       (write-string stderr "include file " inc-file #\linefeed))
 	     (let loop2 ((cp cur-path))
 	       (if (null? cp)
-		   (ERR () "cannot find file %s  in search path!" inc-file)
+		   (ERR () "cannot find file %s in search path!" inc-file)
 		   (let ((pfile (if (string=? (car cp) "")
 				    inc-file
 				    (string-append (car cp) "/" inc-file))))
@@ -2276,18 +2336,12 @@
 	     (rm-dc (not (hash-table-ref fvals "-rm-dc" #f)))
 	     (rm-uf (not (hash-table-ref fvals "-rm-uf" #f)))
 	     (rm-ul (not (hash-table-ref fvals "-rm-ul" #f)))
-	     (rm-uv (not (hash-table-ref fvals "-rm-uv" #f)))
-	     (do-prof (hash-table-ref fvals "-p" #f)))
-	;;; TODO: implement profiling of library function
-	(when (and (not global-library) do-prof)
-	  (set! global-profile ()))
+	     (rm-uv (not (hash-table-ref fvals "-rm-uv" #f))))
 	(when hport
 	  (write-string hport
 			"#ifndef " mname #\newline
 			"#define " mname #\newline #\newline)
 	  (emit-fstr "#include \"%s\"\n" hname))
-	(unless global-library
-	  (emit-fstr "\nstruct wile_profile_t* wile_profile;\nint wile_profile_size;\n\n"))
 	(for-each do-decl defs)
 	(set! top-env (cons (list global-sym) top-env))
 	(for-each (lambda (d) (compile-deffish top-env d)) defs)
@@ -2304,32 +2358,23 @@
 	       (emit-fstr "\n// definitions\n")
 	       (transfer-all-lines global-func global-out)
 	       (unless global-library
-		 (when global-profile
-		   (emit-fstr "static struct wile_profile_t wile_profile_array[%d];\n"
-			      (list-length global-profile)))
 		 (emit-fstr "\nconst int wile_tc_min_args = %d;\n\nlval wile_main(int argc, char** argv)\n{\n" global-tc-min-args)
-		 (if global-profile
-		     (let* ((names (list-reverse global-profile))
-			    (count (list-length names))
-			    (r #f)
-			    (a1 (number->string count)))
-		       (emit-code
-			"{"
-			"int i;"
-			"wile_profile = wile_profile_array;"
-			"wile_profile_size = @1;"
-			"for (i = 0; i < wile_profile_size; ++i) {"
-			"wile_profile[i].count = 0;"
-			"}")
-		       (for-each (lambda (i n)
-				   (emit-fstr
-				    "wile_profile[%d].name = \"%s\";\n" i n))
-				 (upfrom 0 count) names)
-		       (emit-code "}"))
-		     (let ((r #f))
-		       (emit-code "wile_profile = NULL;"
-				  "wile_profile_size = 0;")))
-		 (transfer-all-lines global-code global-out))
+		 (transfer-all-lines global-code global-out)
+		 (emit-fstr #<<MAP_DOC
+			    >
+			    >const unsigned int wile_nnames = %d;
+			    >
+			    >const struct wile_name_map wile_names[] = %c
+			    >
+			    >MAP_DOC
+			    ;;; left-brace is handled here because otherwise
+			    ;;; it screws up emacs indentation/nesting code
+			    (list-length global-name-map) #\{)
+		 (for-each (lambda (e)
+			     (emit-fstr "{ \"%s\", \"%v at %s\" },\n"
+					(car e) (cadr e) (caddr e)))
+			   global-name-map)
+		 (emit-str "};\n"))
 	       (display global-out out-port)
 	       (when (and (positive? opt-level) (not global-errors))
 		 (let ((lines (read-all-lines out-port))

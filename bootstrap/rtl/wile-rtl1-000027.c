@@ -9,54 +9,31 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_char2string(lptr* clos, lptr args, const char* loc)
+lval wile_read_directory(lptr* clos, lptr args, const char* loc)
 {
-    lval lv, ac;
-    lisp_int_t i, len;
+    DIR* dp;
+    struct dirent* de;
+    lptr res;
 
     if (args == NULL || args->vt == LV_NIL) {
-	return LVI_STRING("");
+	dp = opendir(".");
+    } else if (args->vt == LV_STRING) {
+	dp = opendir(args->v.str);
+    } else {
+	wile_exception("read-directory", loc, "expects one string argument");
     }
-    lv = wile_list_length(NULL, args, loc);
-    if (lv.vt != LV_INT || lv.v.iv < 0) {
-	wile_exception("char->string", loc, "got a bad list length!?!");
+    if (dp == NULL) {
+	return LVI_BOOL(false);
     }
-    len = lv.v.iv;
-
-    if (len == 1) {
-	ac = CAR(args) ? *(CAR(args)) : LVI_NIL();
-	if (ac.vt == LV_PAIR || ac.vt == LV_NIL) {
-	    args = CAR(args);
-	    if (args == NULL) {
-		len = 0;
-	    } else {
-		lv = wile_list_length(NULL, args, loc);
-		if (lv.vt != LV_INT || lv.v.iv < 0) {
-		    wile_exception("char->string", loc,
-				   "got a bad list length!?!");
-		}
-		len = lv.v.iv;
-	    }
-	}
+    res = NULL;
+    while ((de = readdir(dp)) != NULL) {
+	res = new_pair(new_pair(new_string(de->d_name),
+				new_pair(new_int(de->d_ino),
+					 NULL)),
+		       res);
     }
-
-    LISP_ASSERT(len >= 0);
-
-    lv.vt = LV_STRING;
-    lv.v.str = LISP_ALLOC(char, len + 1);
-
-    for (i = 0; i < len; ++i) {
-	LISP_ASSERT(args != NULL && args->vt == LV_PAIR);
-	ac = CAR(args) ? *(CAR(args)) : LVI_NIL();
-	if (ac.vt != LV_CHAR) {
-	    wile_exception("char->string", loc,
-			   "got a non-character argument");
-	}
-	lv.v.str[i] = ac.v.chr;
-	args = CDR(args);
+    if (closedir(dp)) {
     }
-    LISP_ASSERT(args == NULL || args->vt == LV_NIL);
-    lv.v.str[len] = '\0';
-    return lv;
+    return (res ? *res : LVI_NIL());
 }
 

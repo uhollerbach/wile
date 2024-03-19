@@ -7,6 +7,14 @@
     ((b c d f g h j k l m n p q r s t v x z ch sh th) 'consonant)
     ((cucumber) 'vegetable-you-idiot!)))
 
+(define (LETTER-TYPE val)
+  (case val
+    ((a e i o u) 'vowel)
+    ((y w) 'semivowel)
+    ((b c d f g h j k l m n p q r s t v x z ch sh th) 'consonant)
+    ((cucumber) 'vegetable-you-idiot!)
+    (else => (lambda (x) (string-upcase (symbol->string x))))))
+
 (define (dn v)
   (display v)
   (newline))
@@ -17,3 +25,4 @@
 (dn (letter-type 'th))
 (dn (letter-type 'splut))
 (dn (letter-type 'cucumber))
+(dn (LETTER-TYPE 'splut))

@@ -964,6 +964,15 @@ void wile_exception(const char* func_name, const char* loc,
 		    const char* fmt, ...)
     WILE_ATTR((noreturn,format(printf,3,4)));
 
+// this is for translating between c and scheme names+locations
+
+struct wile_name_map {
+    char* c_name;
+    char* s_name;
+};
+
+lval wile_translate_fn_name(const char* c_fn, lisp_loc_t origin);
+
 lval wile_register_display_proc(const char* sym, lval proc, const char* loc);
 lval wile_get_gensym(lisp_loc_t);
 lval wile_run_system_command(lval cmd, const char* loc);
@@ -1034,6 +1043,7 @@ lval wile_string_hash_32(lptr*, lptr, const char* loc);
 lval wile_string_hash_64(lptr*, lptr, const char* loc);
 lval wile_string_ci_hash_32(lptr*, lptr, const char* loc);
 lval wile_string_ci_hash_64(lptr*, lptr, const char* loc);
+lval wile_bytevector_hash_64(lptr*, lptr, const char* loc);
 
 // Log of Gamma function
 
@@ -1120,6 +1130,12 @@ lval wile_rand_normal_pair(lisp_real_t m, lisp_real_t s);
 lval wile_cfft_good_n(lptr* clos, lptr args, const char* loc);
 lval wile_cfft(lptr* clos, lptr args, const char* loc);
 
+lval wile_mat_mat_mul(lval mat1, lval nr1, lval nc1, lval tr1,
+		      lval mat2, lval nr2, lval nc2, lval tr2,
+		      lval tr3, const char* loc);
+
+lval wile_gauss_elim(lval* a, lval* rhs, lval* tr, const char* loc);
+
 lval wile_sha256_wrap(bool is_256, lval input, const char* loc);
 lval wile_sha256_init(bool is_256);
 lval wile_sha256_update(lptr*, lptr, const char*);
@@ -1146,11 +1162,6 @@ lval wile_sql_stmt_run(lptr* clos, lptr args, const char* loc);
 lval wile_call_cc(lptr* clos, lptr args, const char* loc);
 
 lval wile_main(int argc, char** argv);
-
-struct wile_profile_t {
-    uint64_t count;
-    char* name;
-};
 
 // This stuff is for checking that the configuration of the library is
 // the same as the configuration of the main program: the library will

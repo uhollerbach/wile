@@ -48,6 +48,8 @@
     (for-each (lambda (v) (dn v stderr)) data1)
     (exit 1))
   (set! config-file (cadr config-file))
+  (when (symbol? config-file)
+    (set! config-file (symbol->string config-file)))
   (let ((data2 (read-all config-file))
 	(port2 (open-file "local-config.dat" "w")))
     (dn (assv 'c-compiler data2) port2)

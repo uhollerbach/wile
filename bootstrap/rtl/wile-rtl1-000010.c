@@ -9,25 +9,18 @@
 extern lisp_escape_t cachalot;
 
 
-lisp_real_t pcheby1(int n, lisp_real_t x)
+lisp_int_t powi(lisp_int_t a, lisp_int_t b)
 {
-    int k;
-    lisp_real_t pm, pc, pp;
+    lisp_int_t p;
 
-    if (n == 0) {
-	return 1.0;
-    } else if (n == 1) {
-	return x;
-    } else {
-	pm = 1.0;
-	pc = x;
-	x *= 2.0;
-	for (k = 1; k < n; ++k) {
-	    pp = x*pc - pm;
-	    pm = pc;
-	    pc = pp;
+    p = 1;
+    while (b) {
+	if (b%2) {
+	    p *= a;
 	}
-	return pc;
+	b /= 2;
+	a = a*a;
     }
+    return p;
 }
 

@@ -9,14 +9,12 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_cputime(lptr* clos, lptr args, const char* loc)
+lval wile_getcwd(lptr* clos, lptr args, const char* loc)
 {
-    struct rusage usage;
-    if (getrusage(RUSAGE_SELF, &usage) == 0) {
-	lval vs[2];
-	vs[0] = LVI_REAL(usage.ru_utime.tv_sec + 1.0e-6*usage.ru_utime.tv_usec);
-	vs[1] = LVI_REAL(usage.ru_stime.tv_sec + 1.0e-6*usage.ru_stime.tv_usec);
-	return wile_gen_list(2, vs, NULL);
+    char str[1+PATH_MAX], *sp;
+    sp = getcwd(str, sizeof(str));
+    if (sp) {
+	return LVI_STRING(sp);
     } else {
 	return LVI_BOOL(false);
     }

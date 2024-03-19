@@ -33,9 +33,6 @@ lisp_escape_t cachalot;
 int wile_cont_stack_grow_dir = -1;
 unsigned char* wile_cont_stack_base = NULL;
 
-extern struct wile_profile_t* wile_profile;
-extern int wile_profile_size;
-
 int main(int argc, char** argv)
 {
     int ret;
@@ -113,22 +110,6 @@ int main(int argc, char** argv)
 		    errno, strerror(errno));
 	}
 	ret = EXIT_FAILURE;
-    }
-
-    if (wile_profile) {
-	int i;
-	FILE* fp = fopen("wile-profile.out", "w");
-	if (fp == NULL) {
-	    fputs("wile error: unable to open wile-profile.out\n", stderr);
-	    fp = stderr;
-	}
-	for (i = 0; i < wile_profile_size; ++i) {
-	    fprintf(fp, "%"PRIu64"\t%s\n",
-		    wile_profile[i].count, wile_profile[i].name);
-	}
-	if (fp != stderr) {
-	    fclose(fp);
-	}
     }
 
     cachalot = NULL;
@@ -339,11 +320,44 @@ void wile_stack_trace_minimal(int fd)
 #if !(defined(__OpenBSD__) || defined(__CYGWIN__))
     // for some reason, backtrace is not showing up on openbsd,
     // even though the manpages claim it ought(?) to be there
-    void* buff[64];
+    void* buff[1024];
     int bsize = backtrace(buff, sizeof(buff)/sizeof(buff[0]));
     backtrace_symbols_fd(buff, bsize, fd);
 #endif // __OpenBSD__ || __CYGWIN__
     (void) !write(fd, "wile stack trace end\n", 21);
+}
+
+// --8><----8><----8><--
+
+extern const unsigned int wile_nnames;
+extern const struct wile_name_map wile_names[];
+
+lval wile_translate_fn_name(const char* c_fn, lisp_loc_t origin)
+{
+    unsigned int i;
+    lval ret;
+    char buf[16];	// space for 12 digits... should be enough
+
+    // remove the ".constprop.N" that gcc adds in some cases
+    for (i = 0; i < sizeof(buf); ++i) {
+	if (c_fn[i] == '\0' || c_fn[i] == '.') {
+	    buf[i] = '\0';
+	    break;
+	}
+	buf[i] = c_fn[i];
+    }
+    buf[sizeof(buf)-1] = '\0';
+
+    for (i = 0; i < wile_nnames; ++i) {
+	if (strcmp(buf, wile_names[i].c_name) == 0) {
+	    ret.vt = LV_STRING;
+	    ret.origin = origin;
+	    ret.v.str = LISP_STRDUP(wile_names[i].s_name);
+	    return ret;
+	}
+    }
+    ret.vt = LV_NIL;
+    return ret;
 }
 
 // --8><----8><----8><--
@@ -355,7 +369,11 @@ void wile_exception(const char* func_name, const char* loc,
     va_list ap;
 
     fflush(NULL);
-    wile_stack_trace_minimal(fileno(stderr));
+////    wile_stack_trace_minimal(fileno(stderr));
+    lval args[8];
+    args[0] = LVI_FPORT(stderr);
+    (void) wile_stack_trace(NULL, args, loc);
+    fflush(NULL);
     va_start(ap, fmt);
     vsnprintf(buf1, sizeof(buf1), fmt, ap);
     va_end(ap);
@@ -1876,6 +1894,26 @@ lval wile_string_ci_hash_64(lptr* clos, lptr args, const char* loc)
     hash = 14695981039346656037UL;
     for (i = 0; i < n_os; ++i) {
 	hash ^= (unsigned char) tolower(args[0].v.str[i]);
+	hash *= 1099511628211UL;
+    }
+    return LVI_INT(hash);
+}
+
+// --8><----8><----8><--
+
+lval wile_bytevector_hash_64(lptr* clos, lptr args, const char* loc)
+{
+    uint64_t hash;
+    size_t i;
+
+    if (args[0].vt != LV_BVECTOR) {
+	wile_exception("bytevector-hash-64",
+		       loc, "expects a bytevector argument");
+    }
+
+    hash = 14695981039346656037UL;
+    for (i = 0; i < args[0].v.bvec.capa; ++i) {
+	hash ^= args[0].v.bvec.arr[i];
 	hash *= 1099511628211UL;
     }
     return LVI_INT(hash);

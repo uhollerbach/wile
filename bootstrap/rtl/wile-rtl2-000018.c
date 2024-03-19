@@ -223,7 +223,6 @@ cachalot->errval = new_lv(LV_NIL);
 cachalot->whence = "bld-rtl-dir/wile-rtl2-000018.scm:23";
 longjmp(cachalot->cenv, 1);
 } else {
-{
 if (var_7.vt != LV_BVECTOR) {
 wile_exception("bytevector-set!", "bld-rtl-dir/wile-rtl2-000018.scm:22", "input is not a bytevector");
 }
@@ -234,7 +233,6 @@ if (!(var_20.vt == LV_CHAR || (var_20.vt == LV_INT && var_20.v.iv >= 0 && var_20
 wile_exception("bytevector-set!", "bld-rtl-dir/wile-rtl2-000018.scm:22", "got bad input value");
 }
 var_7.v.bvec.arr[var_12.v.iv] = (var_20.vt == LV_CHAR) ? var_20.v.chr : (unsigned char) var_20.v.iv;
-}
 }
 lval var_37;
 var_37 = LVI_INT(1);

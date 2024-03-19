@@ -144,7 +144,9 @@ am_libwrtl_a_OBJECTS = libwrtl_a-alloc.$(OBJEXT) \
 	libwrtl_a-math-funcs-000004.$(OBJEXT) \
 	libwrtl_a-math-funcs-000005.$(OBJEXT) \
 	libwrtl_a-math-funcs-000006.$(OBJEXT) \
-	libwrtl_a-math-funcs-000007.$(OBJEXT) libwrtl_a-nfa.$(OBJEXT) \
+	libwrtl_a-math-funcs-000007.$(OBJEXT) \
+	libwrtl_a-math-funcs-000008.$(OBJEXT) \
+	libwrtl_a-math-funcs-000009.$(OBJEXT) libwrtl_a-nfa.$(OBJEXT) \
 	libwrtl_a-print.$(OBJEXT) libwrtl_a-regex.$(OBJEXT) \
 	libwrtl_a-sha256.$(OBJEXT) libwrtl_a-swll-cfft.$(OBJEXT) \
 	libwrtl_a-ulexlib.$(OBJEXT) libwrtl_a-wile-lex.$(OBJEXT) \
@@ -208,6 +210,8 @@ am_libwrtl_a_OBJECTS = libwrtl_a-alloc.$(OBJEXT) \
 	libwrtl_a-wile-rtl1-000056.$(OBJEXT) \
 	libwrtl_a-wile-rtl1-000057.$(OBJEXT) \
 	libwrtl_a-wile-rtl1-000058.$(OBJEXT) \
+	libwrtl_a-wile-rtl1-000059.$(OBJEXT) \
+	libwrtl_a-wile-rtl1-000060.$(OBJEXT) \
 	libwrtl_a-wile-rtl2-000000.$(OBJEXT) \
 	libwrtl_a-wile-rtl2-000001.$(OBJEXT) \
 	libwrtl_a-wile-rtl2-000002.$(OBJEXT) \
@@ -325,6 +329,8 @@ am__depfiles_remade = ./$(DEPDIR)/libwrtl_a-alloc.Po \
 	./$(DEPDIR)/libwrtl_a-math-funcs-000005.Po \
 	./$(DEPDIR)/libwrtl_a-math-funcs-000006.Po \
 	./$(DEPDIR)/libwrtl_a-math-funcs-000007.Po \
+	./$(DEPDIR)/libwrtl_a-math-funcs-000008.Po \
+	./$(DEPDIR)/libwrtl_a-math-funcs-000009.Po \
 	./$(DEPDIR)/libwrtl_a-nfa.Po ./$(DEPDIR)/libwrtl_a-print.Po \
 	./$(DEPDIR)/libwrtl_a-regex.Po ./$(DEPDIR)/libwrtl_a-sha256.Po \
 	./$(DEPDIR)/libwrtl_a-swll-cfft.Po \
@@ -390,6 +396,8 @@ am__depfiles_remade = ./$(DEPDIR)/libwrtl_a-alloc.Po \
 	./$(DEPDIR)/libwrtl_a-wile-rtl1-000056.Po \
 	./$(DEPDIR)/libwrtl_a-wile-rtl1-000057.Po \
 	./$(DEPDIR)/libwrtl_a-wile-rtl1-000058.Po \
+	./$(DEPDIR)/libwrtl_a-wile-rtl1-000059.Po \
+	./$(DEPDIR)/libwrtl_a-wile-rtl1-000060.Po \
 	./$(DEPDIR)/libwrtl_a-wile-rtl2-000000.Po \
 	./$(DEPDIR)/libwrtl_a-wile-rtl2-000001.Po \
 	./$(DEPDIR)/libwrtl_a-wile-rtl2-000002.Po \
@@ -623,57 +631,58 @@ libwrtl_a_SOURCES = alloc.c continuations.c fsi_set.c isocline.c \
 	location.c math-funcs-000000.c math-funcs-000001.c \
 	math-funcs-000002.c math-funcs-000003.c math-funcs-000004.c \
 	math-funcs-000005.c math-funcs-000006.c math-funcs-000007.c \
-	nfa.c print.c regex.c sha256.c swll-cfft.c ulexlib.c \
-	wile-lex.c wile-parse.c wile-rtl1-000000.c wile-rtl1-000001.c \
-	wile-rtl1-000002.c wile-rtl1-000003.c wile-rtl1-000004.c \
-	wile-rtl1-000005.c wile-rtl1-000006.c wile-rtl1-000007.c \
-	wile-rtl1-000008.c wile-rtl1-000009.c wile-rtl1-000010.c \
-	wile-rtl1-000011.c wile-rtl1-000012.c wile-rtl1-000013.c \
-	wile-rtl1-000014.c wile-rtl1-000015.c wile-rtl1-000016.c \
-	wile-rtl1-000017.c wile-rtl1-000018.c wile-rtl1-000019.c \
-	wile-rtl1-000020.c wile-rtl1-000021.c wile-rtl1-000022.c \
-	wile-rtl1-000023.c wile-rtl1-000024.c wile-rtl1-000025.c \
-	wile-rtl1-000026.c wile-rtl1-000027.c wile-rtl1-000028.c \
-	wile-rtl1-000029.c wile-rtl1-000030.c wile-rtl1-000031.c \
-	wile-rtl1-000032.c wile-rtl1-000033.c wile-rtl1-000034.c \
-	wile-rtl1-000035.c wile-rtl1-000036.c wile-rtl1-000037.c \
-	wile-rtl1-000038.c wile-rtl1-000039.c wile-rtl1-000040.c \
-	wile-rtl1-000041.c wile-rtl1-000042.c wile-rtl1-000043.c \
-	wile-rtl1-000044.c wile-rtl1-000045.c wile-rtl1-000046.c \
-	wile-rtl1-000047.c wile-rtl1-000048.c wile-rtl1-000049.c \
-	wile-rtl1-000050.c wile-rtl1-000051.c wile-rtl1-000052.c \
-	wile-rtl1-000053.c wile-rtl1-000054.c wile-rtl1-000055.c \
-	wile-rtl1-000056.c wile-rtl1-000057.c wile-rtl1-000058.c \
-	wile-rtl2-000000.c wile-rtl2-000001.c wile-rtl2-000002.c \
-	wile-rtl2-000003.c wile-rtl2-000004.c wile-rtl2-000005.c \
-	wile-rtl2-000006.c wile-rtl2-000007.c wile-rtl2-000008.c \
-	wile-rtl2-000009.c wile-rtl2-000010.c wile-rtl2-000011.c \
-	wile-rtl2-000012.c wile-rtl2-000013.c wile-rtl2-000014.c \
-	wile-rtl2-000015.c wile-rtl2-000016.c wile-rtl2-000017.c \
-	wile-rtl2-000018.c wile-rtl2-000019.c wile-rtl2-000020.c \
-	wile-rtl2-000021.c wile-rtl2-000022.c wile-rtl2-000023.c \
-	wile-rtl2-000024.c wile-rtl2-000025.c wile-rtl2-000026.c \
-	wile-rtl2-000027.c wile-rtl2-000028.c wile-rtl2-000029.c \
-	wile-rtl2-000030.c wile-rtl2-000031.c wile-rtl2-000032.c \
-	wile-rtl2-000033.c wile-rtl2-000034.c wile-rtl2-000035.c \
-	wile-rtl2-000036.c wile-rtl2-000037.c wile-rtl2-000038.c \
-	wile-rtl2-000039.c wile-rtl2-000040.c wile-rtl2-000041.c \
-	wile-rtl2-000042.c wile-rtl2-000043.c wile-rtl2-000044.c \
-	wile-rtl2-000045.c wile-rtl2-000046.c wile-rtl2-000047.c \
-	wile-rtl2-000048.c wile-rtl2-000049.c wile-rtl2-000050.c \
-	wile-rtl2-000051.c wile-rtl2-000052.c wile-rtl2-000053.c \
-	wile-rtl2-000054.c wile-rtl2-000055.c wile-rtl2-000056.c \
-	wile-rtl2-000057.c wile-rtl2-000058.c wile-rtl2-000059.c \
-	wile-rtl2-000060.c wile-rtl2-000061.c wile-rtl2-000062.c \
-	wile-rtl2-000063.c wile-rtl2-000064.c wile-rtl2-000065.c \
-	wile-rtl2-000066.c wile-rtl2-000067.c wile-rtl2-000068.c \
-	wile-rtl2-000069.c wile-rtl2-000070.c wile-rtl2-000071.c \
-	wile-rtl2-000072.c wile-rtl2-000073.c wile-rtl2-000074.c \
-	wile-rtl2-000075.c wile-rtl2-000076.c wile-rtl2-000077.c \
-	wile-rtl2-000078.c wile-rtl2-000079.c wile-rtl2-000080.c \
-	wile-rtl2-000081.c wile-rtl2-000082.c wile-rtl2-000083.c \
-	wile-rtl2-000084.c wile-rtl2-000085.c wile-rtl2-000086.c \
-	wile-sql.c
+	math-funcs-000008.c math-funcs-000009.c nfa.c print.c regex.c \
+	sha256.c swll-cfft.c ulexlib.c wile-lex.c wile-parse.c \
+	wile-rtl1-000000.c wile-rtl1-000001.c wile-rtl1-000002.c \
+	wile-rtl1-000003.c wile-rtl1-000004.c wile-rtl1-000005.c \
+	wile-rtl1-000006.c wile-rtl1-000007.c wile-rtl1-000008.c \
+	wile-rtl1-000009.c wile-rtl1-000010.c wile-rtl1-000011.c \
+	wile-rtl1-000012.c wile-rtl1-000013.c wile-rtl1-000014.c \
+	wile-rtl1-000015.c wile-rtl1-000016.c wile-rtl1-000017.c \
+	wile-rtl1-000018.c wile-rtl1-000019.c wile-rtl1-000020.c \
+	wile-rtl1-000021.c wile-rtl1-000022.c wile-rtl1-000023.c \
+	wile-rtl1-000024.c wile-rtl1-000025.c wile-rtl1-000026.c \
+	wile-rtl1-000027.c wile-rtl1-000028.c wile-rtl1-000029.c \
+	wile-rtl1-000030.c wile-rtl1-000031.c wile-rtl1-000032.c \
+	wile-rtl1-000033.c wile-rtl1-000034.c wile-rtl1-000035.c \
+	wile-rtl1-000036.c wile-rtl1-000037.c wile-rtl1-000038.c \
+	wile-rtl1-000039.c wile-rtl1-000040.c wile-rtl1-000041.c \
+	wile-rtl1-000042.c wile-rtl1-000043.c wile-rtl1-000044.c \
+	wile-rtl1-000045.c wile-rtl1-000046.c wile-rtl1-000047.c \
+	wile-rtl1-000048.c wile-rtl1-000049.c wile-rtl1-000050.c \
+	wile-rtl1-000051.c wile-rtl1-000052.c wile-rtl1-000053.c \
+	wile-rtl1-000054.c wile-rtl1-000055.c wile-rtl1-000056.c \
+	wile-rtl1-000057.c wile-rtl1-000058.c wile-rtl1-000059.c \
+	wile-rtl1-000060.c wile-rtl2-000000.c wile-rtl2-000001.c \
+	wile-rtl2-000002.c wile-rtl2-000003.c wile-rtl2-000004.c \
+	wile-rtl2-000005.c wile-rtl2-000006.c wile-rtl2-000007.c \
+	wile-rtl2-000008.c wile-rtl2-000009.c wile-rtl2-000010.c \
+	wile-rtl2-000011.c wile-rtl2-000012.c wile-rtl2-000013.c \
+	wile-rtl2-000014.c wile-rtl2-000015.c wile-rtl2-000016.c \
+	wile-rtl2-000017.c wile-rtl2-000018.c wile-rtl2-000019.c \
+	wile-rtl2-000020.c wile-rtl2-000021.c wile-rtl2-000022.c \
+	wile-rtl2-000023.c wile-rtl2-000024.c wile-rtl2-000025.c \
+	wile-rtl2-000026.c wile-rtl2-000027.c wile-rtl2-000028.c \
+	wile-rtl2-000029.c wile-rtl2-000030.c wile-rtl2-000031.c \
+	wile-rtl2-000032.c wile-rtl2-000033.c wile-rtl2-000034.c \
+	wile-rtl2-000035.c wile-rtl2-000036.c wile-rtl2-000037.c \
+	wile-rtl2-000038.c wile-rtl2-000039.c wile-rtl2-000040.c \
+	wile-rtl2-000041.c wile-rtl2-000042.c wile-rtl2-000043.c \
+	wile-rtl2-000044.c wile-rtl2-000045.c wile-rtl2-000046.c \
+	wile-rtl2-000047.c wile-rtl2-000048.c wile-rtl2-000049.c \
+	wile-rtl2-000050.c wile-rtl2-000051.c wile-rtl2-000052.c \
+	wile-rtl2-000053.c wile-rtl2-000054.c wile-rtl2-000055.c \
+	wile-rtl2-000056.c wile-rtl2-000057.c wile-rtl2-000058.c \
+	wile-rtl2-000059.c wile-rtl2-000060.c wile-rtl2-000061.c \
+	wile-rtl2-000062.c wile-rtl2-000063.c wile-rtl2-000064.c \
+	wile-rtl2-000065.c wile-rtl2-000066.c wile-rtl2-000067.c \
+	wile-rtl2-000068.c wile-rtl2-000069.c wile-rtl2-000070.c \
+	wile-rtl2-000071.c wile-rtl2-000072.c wile-rtl2-000073.c \
+	wile-rtl2-000074.c wile-rtl2-000075.c wile-rtl2-000076.c \
+	wile-rtl2-000077.c wile-rtl2-000078.c wile-rtl2-000079.c \
+	wile-rtl2-000080.c wile-rtl2-000081.c wile-rtl2-000082.c \
+	wile-rtl2-000083.c wile-rtl2-000084.c wile-rtl2-000085.c \
+	wile-rtl2-000086.c wile-sql.c
 libwrtl_a_CPPFLAGS = -I$(top_srcdir)/include -DWILE_CONFIG_FILE=$(sysconfdir)/wile-config.dat
 all: all-am
 
@@ -764,6 +773,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-math-funcs-000005.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-math-funcs-000006.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-math-funcs-000007.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-math-funcs-000008.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-math-funcs-000009.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-nfa.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-print.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-regex.Po@am__quote@ # am--include-marker
@@ -831,6 +842,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-wile-rtl1-000056.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-wile-rtl1-000057.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-wile-rtl1-000058.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-wile-rtl1-000059.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-wile-rtl1-000060.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-wile-rtl2-000000.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-wile-rtl2-000001.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libwrtl_a-wile-rtl2-000002.Po@am__quote@ # am--include-marker
@@ -1121,6 +1134,34 @@ libwrtl_a-math-funcs-000007.obj: math-funcs-000007.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='math-funcs-000007.c' object='libwrtl_a-math-funcs-000007.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libwrtl_a-math-funcs-000007.obj `if test -f 'math-funcs-000007.c'; then $(CYGPATH_W) 'math-funcs-000007.c'; else $(CYGPATH_W) '$(srcdir)/math-funcs-000007.c'; fi`
+
+libwrtl_a-math-funcs-000008.o: math-funcs-000008.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libwrtl_a-math-funcs-000008.o -MD -MP -MF $(DEPDIR)/libwrtl_a-math-funcs-000008.Tpo -c -o libwrtl_a-math-funcs-000008.o `test -f 'math-funcs-000008.c' || echo '$(srcdir)/'`math-funcs-000008.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libwrtl_a-math-funcs-000008.Tpo $(DEPDIR)/libwrtl_a-math-funcs-000008.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='math-funcs-000008.c' object='libwrtl_a-math-funcs-000008.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libwrtl_a-math-funcs-000008.o `test -f 'math-funcs-000008.c' || echo '$(srcdir)/'`math-funcs-000008.c
+
+libwrtl_a-math-funcs-000008.obj: math-funcs-000008.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libwrtl_a-math-funcs-000008.obj -MD -MP -MF $(DEPDIR)/libwrtl_a-math-funcs-000008.Tpo -c -o libwrtl_a-math-funcs-000008.obj `if test -f 'math-funcs-000008.c'; then $(CYGPATH_W) 'math-funcs-000008.c'; else $(CYGPATH_W) '$(srcdir)/math-funcs-000008.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libwrtl_a-math-funcs-000008.Tpo $(DEPDIR)/libwrtl_a-math-funcs-000008.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='math-funcs-000008.c' object='libwrtl_a-math-funcs-000008.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libwrtl_a-math-funcs-000008.obj `if test -f 'math-funcs-000008.c'; then $(CYGPATH_W) 'math-funcs-000008.c'; else $(CYGPATH_W) '$(srcdir)/math-funcs-000008.c'; fi`
+
+libwrtl_a-math-funcs-000009.o: math-funcs-000009.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libwrtl_a-math-funcs-000009.o -MD -MP -MF $(DEPDIR)/libwrtl_a-math-funcs-000009.Tpo -c -o libwrtl_a-math-funcs-000009.o `test -f 'math-funcs-000009.c' || echo '$(srcdir)/'`math-funcs-000009.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libwrtl_a-math-funcs-000009.Tpo $(DEPDIR)/libwrtl_a-math-funcs-000009.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='math-funcs-000009.c' object='libwrtl_a-math-funcs-000009.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libwrtl_a-math-funcs-000009.o `test -f 'math-funcs-000009.c' || echo '$(srcdir)/'`math-funcs-000009.c
+
+libwrtl_a-math-funcs-000009.obj: math-funcs-000009.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libwrtl_a-math-funcs-000009.obj -MD -MP -MF $(DEPDIR)/libwrtl_a-math-funcs-000009.Tpo -c -o libwrtl_a-math-funcs-000009.obj `if test -f 'math-funcs-000009.c'; then $(CYGPATH_W) 'math-funcs-000009.c'; else $(CYGPATH_W) '$(srcdir)/math-funcs-000009.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libwrtl_a-math-funcs-000009.Tpo $(DEPDIR)/libwrtl_a-math-funcs-000009.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='math-funcs-000009.c' object='libwrtl_a-math-funcs-000009.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libwrtl_a-math-funcs-000009.obj `if test -f 'math-funcs-000009.c'; then $(CYGPATH_W) 'math-funcs-000009.c'; else $(CYGPATH_W) '$(srcdir)/math-funcs-000009.c'; fi`
 
 libwrtl_a-nfa.o: nfa.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libwrtl_a-nfa.o -MD -MP -MF $(DEPDIR)/libwrtl_a-nfa.Tpo -c -o libwrtl_a-nfa.o `test -f 'nfa.c' || echo '$(srcdir)/'`nfa.c
@@ -2059,6 +2100,34 @@ libwrtl_a-wile-rtl1-000058.obj: wile-rtl1-000058.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='wile-rtl1-000058.c' object='libwrtl_a-wile-rtl1-000058.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libwrtl_a-wile-rtl1-000058.obj `if test -f 'wile-rtl1-000058.c'; then $(CYGPATH_W) 'wile-rtl1-000058.c'; else $(CYGPATH_W) '$(srcdir)/wile-rtl1-000058.c'; fi`
+
+libwrtl_a-wile-rtl1-000059.o: wile-rtl1-000059.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libwrtl_a-wile-rtl1-000059.o -MD -MP -MF $(DEPDIR)/libwrtl_a-wile-rtl1-000059.Tpo -c -o libwrtl_a-wile-rtl1-000059.o `test -f 'wile-rtl1-000059.c' || echo '$(srcdir)/'`wile-rtl1-000059.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libwrtl_a-wile-rtl1-000059.Tpo $(DEPDIR)/libwrtl_a-wile-rtl1-000059.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='wile-rtl1-000059.c' object='libwrtl_a-wile-rtl1-000059.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libwrtl_a-wile-rtl1-000059.o `test -f 'wile-rtl1-000059.c' || echo '$(srcdir)/'`wile-rtl1-000059.c
+
+libwrtl_a-wile-rtl1-000059.obj: wile-rtl1-000059.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libwrtl_a-wile-rtl1-000059.obj -MD -MP -MF $(DEPDIR)/libwrtl_a-wile-rtl1-000059.Tpo -c -o libwrtl_a-wile-rtl1-000059.obj `if test -f 'wile-rtl1-000059.c'; then $(CYGPATH_W) 'wile-rtl1-000059.c'; else $(CYGPATH_W) '$(srcdir)/wile-rtl1-000059.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libwrtl_a-wile-rtl1-000059.Tpo $(DEPDIR)/libwrtl_a-wile-rtl1-000059.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='wile-rtl1-000059.c' object='libwrtl_a-wile-rtl1-000059.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libwrtl_a-wile-rtl1-000059.obj `if test -f 'wile-rtl1-000059.c'; then $(CYGPATH_W) 'wile-rtl1-000059.c'; else $(CYGPATH_W) '$(srcdir)/wile-rtl1-000059.c'; fi`
+
+libwrtl_a-wile-rtl1-000060.o: wile-rtl1-000060.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libwrtl_a-wile-rtl1-000060.o -MD -MP -MF $(DEPDIR)/libwrtl_a-wile-rtl1-000060.Tpo -c -o libwrtl_a-wile-rtl1-000060.o `test -f 'wile-rtl1-000060.c' || echo '$(srcdir)/'`wile-rtl1-000060.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libwrtl_a-wile-rtl1-000060.Tpo $(DEPDIR)/libwrtl_a-wile-rtl1-000060.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='wile-rtl1-000060.c' object='libwrtl_a-wile-rtl1-000060.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libwrtl_a-wile-rtl1-000060.o `test -f 'wile-rtl1-000060.c' || echo '$(srcdir)/'`wile-rtl1-000060.c
+
+libwrtl_a-wile-rtl1-000060.obj: wile-rtl1-000060.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libwrtl_a-wile-rtl1-000060.obj -MD -MP -MF $(DEPDIR)/libwrtl_a-wile-rtl1-000060.Tpo -c -o libwrtl_a-wile-rtl1-000060.obj `if test -f 'wile-rtl1-000060.c'; then $(CYGPATH_W) 'wile-rtl1-000060.c'; else $(CYGPATH_W) '$(srcdir)/wile-rtl1-000060.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libwrtl_a-wile-rtl1-000060.Tpo $(DEPDIR)/libwrtl_a-wile-rtl1-000060.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='wile-rtl1-000060.c' object='libwrtl_a-wile-rtl1-000060.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libwrtl_a-wile-rtl1-000060.obj `if test -f 'wile-rtl1-000060.c'; then $(CYGPATH_W) 'wile-rtl1-000060.c'; else $(CYGPATH_W) '$(srcdir)/wile-rtl1-000060.c'; fi`
 
 libwrtl_a-wile-rtl2-000000.o: wile-rtl2-000000.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libwrtl_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libwrtl_a-wile-rtl2-000000.o -MD -MP -MF $(DEPDIR)/libwrtl_a-wile-rtl2-000000.Tpo -c -o libwrtl_a-wile-rtl2-000000.o `test -f 'wile-rtl2-000000.c' || echo '$(srcdir)/'`wile-rtl2-000000.c
@@ -3452,6 +3521,8 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/libwrtl_a-math-funcs-000005.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-math-funcs-000006.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-math-funcs-000007.Po
+	-rm -f ./$(DEPDIR)/libwrtl_a-math-funcs-000008.Po
+	-rm -f ./$(DEPDIR)/libwrtl_a-math-funcs-000009.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-nfa.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-print.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-regex.Po
@@ -3519,6 +3590,8 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl1-000056.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl1-000057.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl1-000058.Po
+	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl1-000059.Po
+	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl1-000060.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl2-000000.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl2-000001.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl2-000002.Po
@@ -3665,6 +3738,8 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/libwrtl_a-math-funcs-000005.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-math-funcs-000006.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-math-funcs-000007.Po
+	-rm -f ./$(DEPDIR)/libwrtl_a-math-funcs-000008.Po
+	-rm -f ./$(DEPDIR)/libwrtl_a-math-funcs-000009.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-nfa.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-print.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-regex.Po
@@ -3732,6 +3807,8 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl1-000056.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl1-000057.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl1-000058.Po
+	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl1-000059.Po
+	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl1-000060.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl2-000000.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl2-000001.Po
 	-rm -f ./$(DEPDIR)/libwrtl_a-wile-rtl2-000002.Po

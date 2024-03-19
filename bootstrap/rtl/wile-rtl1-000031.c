@@ -13,10 +13,10 @@ extern lisp_escape_t cachalot;
 #define HOST_NAME_MAX		1024
 #endif // HOST_NAME_MAX
 
-lval wile_getdomainname(lptr* clos, lptr args, const char* loc)
+lval wile_gethostname(lptr* clos, lptr args, const char* loc)
 {
     char buf[HOST_NAME_MAX+1];
-    if (getdomainname(buf, sizeof(buf)) < 0) {
+    if (gethostname(buf, sizeof(buf)) < 0) {
 	return LVI_BOOL(false);
     } else {
 	return LVI_STRING(buf);

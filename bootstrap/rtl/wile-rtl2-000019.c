@@ -65,11 +65,11 @@ lval var_17;
 var_17 = LVI_INT(var_4.v.iv - var_16.v.iv);
 var_4 = var_17;
 lval var_18;
-if (var_2[0].vt != LV_STRING) {
+if (var_2[0].vt != LV_STRING || var_4.vt != LV_INT) {
 wile_exception("string-ref", "bld-rtl-dir/wile-rtl2-000019.scm:20", "expects a string input");
 }
 if (var_4.v.iv < 0 || (size_t) var_4.v.iv >= strlen(var_2[0].v.str)) {
-wile_exception("string-ref", "bld-rtl-dir/wile-rtl2-000019.scm:20", "index is out of range");
+wile_exception("string-ref", "bld-rtl-dir/wile-rtl2-000019.scm:20", "got bad index value");
 }
 var_18 = LVI_CHAR(var_2[0].v.str[var_4.v.iv]);
 lval var_19;

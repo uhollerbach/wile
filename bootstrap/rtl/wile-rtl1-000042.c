@@ -9,21 +9,32 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_closeport(lptr* clos, lptr args, const char* loc)
+lval wile_gmtime(lptr* clos, lptr args, const char* loc)
 {
-    if (args[0].vt == LV_FILE_PORT ||
-	args[0].vt == LV_SOCK_PORT) {
-	return LVI_BOOL(fclose(args[0].v.fp) == 0);
-    } else if (args[0].vt == LV_PIPE_PORT) {
-	return LVI_BOOL(pclose(args[0].v.fp) == 0);
-    } else if (args[0].vt == LV_STR_PORT) {
-	return LVI_BOOL(false);
-#ifdef WILE_USES_SQLITE
-    } else if (args[0].vt == LV_SQLITE_PORT) {
-	return LVI_BOOL(sqlite3_close_v2(args[0].v.sqlite_conn) == SQLITE_OK);
-#endif // WILE_USES_SQLITE
+    time_t now;
+    if (args == NULL) {
+	now = time(NULL);
+    } else if (args[0].vt != LV_INT) {
+	wile_exception("UTCtime", loc,
+		       "expects no argument or one integer argument");
     } else {
-	wile_exception("close-port", loc, "expects one port argument");
+	now = (time_t) args[0].v.iv;
+    }
+    struct tm tval;
+    if (gmtime_r(&now, &tval)) {
+	lval vs[9];
+	vs[0] = LVI_INT(tval.tm_year + 1900);
+	vs[1] = LVI_INT(tval.tm_mon + 1);
+	vs[2] = LVI_INT(tval.tm_mday);
+	vs[3] = LVI_INT(tval.tm_hour);
+	vs[4] = LVI_INT(tval.tm_min);
+	vs[5] = LVI_INT(tval.tm_sec);
+	vs[6] = LVI_INT(tval.tm_wday);
+	vs[7] = LVI_INT(tval.tm_yday);
+	vs[8] = LVI_INT(tval.tm_isdst);
+	return wile_gen_list(9, vs, NULL);
+    } else {
+	return LVI_BOOL(false);
     }
 }
-	   
+

@@ -9,19 +9,19 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_string_ci_hash_64(lptr* clos, lptr args, const char* loc)
+lval wile_string_ci_hash_32(lptr* clos, lptr args, const char* loc)
 {
-    uint64_t hash;
+    uint32_t hash;
     size_t i, n_os;
 
     if (args[0].vt != LV_STRING) {
-	wile_exception("string-ci-hash-64", loc, "expects a string argument");
+	wile_exception("string-ci-hash-32", loc, "expects a string argument");
     }
     n_os = strlen(args[0].v.str);
-    hash = 14695981039346656037UL;
+    hash = 2166136261U;
     for (i = 0; i < n_os; ++i) {
 	hash ^= (unsigned char) tolower(args[0].v.str[i]);
-	hash *= 1099511628211UL;
+	hash *= 16777619U;
     }
     return LVI_INT(hash);
 }

@@ -9,21 +9,25 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_string_reverse(lptr* clos, lptr args, const char* loc)
+lval wile_setfilepos3(lptr* clos, lptr args, const char* loc)
 {
-    size_t i, j;
-    char c;
-    if (args[0].vt != LV_STRING) {
-	wile_exception("string-reverse", loc, "expects a string argument");
+    if (args[0].vt != LV_FILE_PORT ||
+	args[1].vt != LV_INT ||
+	args[2].vt != LV_SYMBOL) {
+	wile_exception("set-file-position", loc,
+		       "expects a file port, an offset, and a location symbol");
     }
-    lval ret = LVI_STRING(args[0].v.str);
-    i = 0;
-    j = strlen(ret.v.str);
-    while (i < j) {
-	c = ret.v.str[--j];
-	ret.v.str[j] = ret.v.str[i];
-	ret.v.str[i++] = c;
+    int whence;
+    if (strcmp(args[2].v.str, "start") == 0) {
+	whence = SEEK_SET;
+    } else if (strcmp(args[2].v.str, "cur") == 0) {
+	whence = SEEK_CUR;
+    } else if (strcmp(args[2].v.str, "end") == 0) {
+	whence = SEEK_END;
+    } else {
+	wile_exception("set-file-position", loc,
+		       "got an unknown location symbol");
     }
-    return ret;
+    return LVI_BOOL(fseek(args[0].v.fp, args[1].v.iv, whence) == 0);
 }
 

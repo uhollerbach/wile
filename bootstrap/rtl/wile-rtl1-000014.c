@@ -9,20 +9,21 @@
 extern lisp_escape_t cachalot;
 
 
-lisp_real_t phermite1(int n, lisp_real_t x)
+lisp_real_t plaguerre(int n, lisp_real_t x)
 {
     int k;
-    lisp_real_t pm, pc, pp;
+    lisp_real_t a, pm, pc, pp;
 
     if (n == 0) {
 	return 1.0;
     } else if (n == 1) {
-	return 2.0*x;
+	return 1.0 - x;
     } else {
 	pm = 1.0;
-	pc = 2.0*x;
+	pc = 1.0 - x;
 	for (k = 1; k < n; ++k) {
-	    pp = 2.0*x*pc - 2.0*k*pm;
+	    a = ((lisp_real_t) k)/((lisp_real_t) (k + 1));
+	    pp = (1.0 + a - x/(k + 1))*pc - a*pm;
 	    pm = pc;
 	    pc = pp;
 	}

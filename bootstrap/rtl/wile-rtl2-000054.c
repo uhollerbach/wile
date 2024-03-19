@@ -20,154 +20,42 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (write-string . strs) @@@ bld-rtl-dir/wile-rtl2-000054.scm:15 @@@ wile_write_string @@@
-lval wile_write_string(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ car @@@ bld-rtl-dir/wile-rtl2-000054.scm:14 @@@ fn_4 @@@
+static lval fn_4(lptr* var_5, lptr var_6, const char* cloc)
 {
-lval var_4;
-lval var_5;
-var_5 = LVI_BOOL(false);
-var_4 = var_5;
-lval var_6;
-var_6 = var_2[0];
 lval var_8;
-var_8 = LVI_BOOL(true);
-lval var_10;
-var_10 = LVI_BOOL(var_6.vt == LV_NIL);
-lval var_11;
-var_11 = LVI_BOOL(LV_IS_FALSE(var_10));
-var_8 = var_11;
-if (LV_IS_FALSE(var_8)) {
-goto lbl_9;
+if (var_6[0].vt != LV_PAIR) {
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000054.scm:14", "input is not a pair!");
 }
-lval var_12;
-if (var_6.vt != LV_PAIR) {
-wile_exception("car", "bld-rtl-dir/wile-rtl2-000054.scm:19", "input is not a pair!");
+var_8 = (var_6[0].v.pair.car ? *(var_6[0].v.pair.car) : LVI_NIL());
+return var_8;
 }
-var_12 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
-lval var_13;
-var_13 = LVI_BOOL(var_12.vt == LV_FILE_PORT || var_12.vt == LV_PIPE_PORT || var_12.vt == LV_SOCK_PORT);
-var_8 = var_13;
-if (LV_IS_FALSE(var_8)) {
-goto lbl_9;
-}
-lbl_9:;
-if (LV_IS_FALSE(var_8)) {
-} else {
-lval var_15;
-if (var_6.vt != LV_PAIR) {
-wile_exception("car", "bld-rtl-dir/wile-rtl2-000054.scm:20", "input is not a pair!");
-}
-var_15 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
-var_4 = var_15;
-lval var_16;
-if (var_6.vt != LV_PAIR) {
-wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000054.scm:21", "input is not a pair!");
-}
-var_16 = (var_6.v.pair.cdr ? *(var_6.v.pair.cdr) : LVI_NIL());
-var_6 = var_16;
-}
-lval var_17;
-if (LV_IS_FALSE(var_4)) {
-lval var_21;
-lval var_22;
-lval var_23;
-var_23 = LVI_INT(0);
-var_21 = var_23;
-lval var_18;
-lptr var_24 = new_lv(VT_UNINIT);
-var_24->v.pair.car = &(var_21);
-lbl_19:
-lval var_25;
-var_25 = LVI_BOOL(var_6.vt == LV_NIL);
-if (!LV_IS_FALSE(var_25)) {
-var_18 = var_21;
-goto lbl_20;
-}
-lval var_26;
-if (var_6.vt != LV_PAIR) {
-wile_exception("car", "bld-rtl-dir/wile-rtl2-000054.scm:27", "input is not a pair!");
-}
-var_26 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
-if (var_26.vt == LV_CHAR) {
-fputc(var_26.v.chr, stdout);
-} else if (var_26.vt == LV_STRING) {
-fputs(var_26.v.str, stdout);
-} else {
-wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000054.scm:27", "input is not a string or char!");
-}
-(void)
- LVI_BOOL(true);
-lval var_28;
-if (var_6.vt != LV_PAIR) {
-wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000054.scm:28", "input is not a pair!");
-}
-var_28 = (var_6.v.pair.cdr ? *(var_6.v.pair.cdr) : LVI_NIL());
-var_6 = var_28;
-lval var_29;
-var_29 = LVI_INT(1);
-lval var_30;
-var_30 = LVI_INT(var_21.v.iv + var_29.v.iv);
-var_22 = var_30;
-var_21 = var_22;
-goto lbl_19;
-lbl_20:;
-*var_24 = var_21;
-var_17 = var_18;
-} else {
-lval var_34;
-lval var_35;
-lval var_36;
-var_36 = LVI_INT(0);
-var_34 = var_36;
-lval var_31;
-lptr var_37 = new_lv(VT_UNINIT);
-var_37->v.pair.car = &(var_34);
-lbl_32:
-lval var_38;
-var_38 = LVI_BOOL(var_6.vt == LV_NIL);
-if (!LV_IS_FALSE(var_38)) {
-var_31 = var_34;
-goto lbl_33;
-}
-lval var_39;
-if (var_6.vt != LV_PAIR) {
-wile_exception("car", "bld-rtl-dir/wile-rtl2-000054.scm:24", "input is not a pair!");
-}
-var_39 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
+// end of prim fn_4
+
+// @@@ (sqlite-meta-tables port) @@@ bld-rtl-dir/wile-rtl2-000054.scm:13 @@@ wile_sql_meta_tables @@@
+lval wile_sql_meta_tables(lptr* var_1, lptr var_2, const char* cloc)
 {
-FILE* fp;
-if (var_4.vt == LV_FILE_PORT || var_4.vt == LV_PIPE_PORT || var_4.vt == LV_SOCK_PORT) {
-fp = var_4.v.fp;
+lval var_9;
+var_9 = LVI_STRING("select name from sqlite_schema");
+lval var_10;
+#ifdef WILE_USES_SQLITE
+if (var_2[0].vt == LV_SQLITE_PORT && var_9.vt == LV_STRING) {
+var_10 = wile_sql_run(var_2[0].v.sqlite_conn, var_9.v.str, "bld-rtl-dir/wile-rtl2-000054.scm:14");
 } else {
-wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000054.scm:24", "first input is not a port!");
+wile_exception("sqlite-run", "bld-rtl-dir/wile-rtl2-000054.scm:14", "expects one sqlite-port and one string");
 }
-if (var_39.vt == LV_CHAR) {
-fputc(var_39.v.chr, fp);
-} else if (var_39.vt == LV_STRING) {
-fputs(var_39.v.str, fp);
-} else {
-wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000054.scm:24", "second input is not a string or char!");
+#else
+var_10 = LVI_BOOL(false);
+#endif // WILE_USES_SQLITE
+lval var_11;
+var_11 = LVI_NIL();
+{
+lval var_12[8];
+var_12[0] = LVI_PROC(fn_4,NULL,1);
+var_12[1] = var_10;
+var_12[2] = var_11;
+var_11 = wile_map(NULL, var_12, "bld-rtl-dir/wile-rtl2-000054.scm:14");
 }
-(void)
- LVI_BOOL(true);
+return var_11;
 }
-lval var_41;
-if (var_6.vt != LV_PAIR) {
-wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000054.scm:25", "input is not a pair!");
-}
-var_41 = (var_6.v.pair.cdr ? *(var_6.v.pair.cdr) : LVI_NIL());
-var_6 = var_41;
-lval var_42;
-var_42 = LVI_INT(1);
-lval var_43;
-var_43 = LVI_INT(var_34.v.iv + var_42.v.iv);
-var_35 = var_43;
-var_34 = var_35;
-goto lbl_32;
-lbl_33:;
-*var_37 = var_34;
-var_17 = var_31;
-}
-return var_17;
-}
-// end of function wile_write_string
+// end of function wile_sql_meta_tables

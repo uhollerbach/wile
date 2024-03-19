@@ -9,53 +9,22 @@
 extern lisp_escape_t cachalot;
 
 
-#include <sys/types.h>
-#include <sys/stat.h>
-
-lval wile_temp_file(lptr* clos, lptr args, const char* loc)
+lval wile_run_pipe_command(lval cmd, const char* rw, const char* loc)
 {
-    char *template, *tp;
-    size_t tlen;
-    int i, nt;
-    FILE* fp;
-
-    if (args->vt != LV_STRING) {
-	wile_exception("open-temporary-file", loc,
-		       "expects one string argument");
+    if (cmd.vt != LV_STRING ||
+	(strcmp(rw, "r") != 0 && strcmp(rw, "w") != 0)) {
+	wile_exception("run-read/write-command", loc,
+		       "got bad input type!");
     }
-    tlen = strlen(args->v.str);
-    template = LISP_ALLOC(char, tlen + 8);
-    strcpy(template, args->v.str);
-    tp = template + tlen;
-    nt = (tlen < 6) ? tlen : 6;
-    for (i = 0; i < nt; ++i) {
-	if (*(--tp) != 'X') {
-	    break;
-	}
+    if (strcmp(rw, "r") != 0 && strcmp(rw, "w") != 0) {
+	wile_exception("run-read/write-command", loc,
+		       "got bad read/write mode %s", rw);
     }
-    tp = template + tlen;
-    while (i++ < 6) {
-	*tp++ = 'X';
+    FILE* fp = popen(cmd.v.str, rw);
+    if (fp) {
+	return LVI_PPORT(fp);
+    } else {
+	return LVI_BOOL(false);
     }
-    *tp++ = '\0';
-    mode_t mask = umask(0);
-    umask(077);
-    nt = mkstemp(template);
-    umask(mask);
-    if (nt < 0) {
-	LISP_FREE(template);
-	wile_exception("open-temporary-file", loc,
-		       "could not create temporary file");
-    }
-    lval vs[2];
-    vs[1] = LVI_STRING(template);
-    LISP_FREE(template);
-    fp = fdopen(nt, "w+");
-    if (fp == NULL) {
-	wile_exception("open-temporary-file", loc,
-		       "could not create temporary file");
-    }
-    vs[0] = LVI_FPORT(fp);
-    return wile_gen_list(2, vs, NULL);
 }
 

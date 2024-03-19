@@ -9,21 +9,21 @@
 extern lisp_escape_t cachalot;
 
 
-lval wile_flushport(lptr* clos, lptr args, const char* loc)
+lval wile_closeport(lptr* clos, lptr args, const char* loc)
 {
     if (args[0].vt == LV_FILE_PORT ||
-	args[0].vt == LV_PIPE_PORT ||
 	args[0].vt == LV_SOCK_PORT) {
-	return LVI_BOOL(fflush(args[0].v.fp) == 0);
+	return LVI_BOOL(fclose(args[0].v.fp) == 0);
+    } else if (args[0].vt == LV_PIPE_PORT) {
+	return LVI_BOOL(pclose(args[0].v.fp) == 0);
     } else if (args[0].vt == LV_STR_PORT) {
-	return LVI_BOOL(true);
+	return LVI_BOOL(false);
 #ifdef WILE_USES_SQLITE
     } else if (args[0].vt == LV_SQLITE_PORT) {
-	// TODO: issue some kind of commit command?
-	return LVI_BOOL(false);
+	return LVI_BOOL(sqlite3_close_v2(args[0].v.sqlite_conn) == SQLITE_OK);
 #endif // WILE_USES_SQLITE
     } else {
-	wile_exception("flush-port", loc, "expects one port argument");
+	wile_exception("close-port", loc, "expects one port argument");
     }
 }
-
+	   

@@ -64,10 +64,11 @@
 	(set! msg ""))
     (if compile-only?
 	(begin
-	  (run-command (string-append "wile -c " (if cla cla "") " " scm))
+	  (run-command (string-append "./wile -CF ./wile-config.dat -c "
+				      (if cla cla "") " " scm))
 	  (status #t file "compiled"))
-	(if (run-command (string-append "wile " (if cla cla "")
-					" " scm " " tname))
+	(if (run-command (string-append "./wile -CF ./wile-config.dat "
+					(if cla cla "") " " scm " " tname))
 	    (if (run-command
 		 (if (file-exists? inp)
 		     (string-append tname " < " inp " > " tst)
@@ -105,16 +106,24 @@
    (if (is-directory? tl)
        (let* ((dir1 (filter f-pred (map car (read-directory tl))))
 	      (dir2 (list-sort s-pred dir1))
-	      (nr (vector-create 2 0)))
+	      (nr (vector-create 2 0))
+	      (rs (map (lambda (f) (do-one-test tl f)) dir2)))
 	 (for-each
 	  (lambda (r)
   	    (write-string (apply string-join-by " " (cdr r)))
 	    (if (car r)
 		(begin (write-string " succeeded\n") (vinc nr 0))
 		(begin (write-string " failed\n") (vinc nr 1))))
-	  (map (lambda (f) (do-one-test tl f)) dir2))
+	  rs)
 	 (printf "\n%d tests passed\n%d tests failed\n"
-		 (vector-ref nr 0) (vector-ref nr 1)))
+		 (vector-ref nr 0) (vector-ref nr 1))
+	 (when (positive? (vector-ref nr 1))
+	   (write-string "\nfailing tests:\n")
+	   (for-each
+	    (lambda (r)
+	      (unless (car r)
+  		(write-string (apply string-join-by " " (cdr r)) #\newline)))
+	    rs)))
        (let ((st (do-one-test "" tl)))
 	 (write-string (apply string-join-by " " (cdr st)))
 	 (write-string (if (car st) " succeeded\n" " failed\n")))))

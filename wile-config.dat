@@ -1,0 +1,35 @@
+;;; -*- mode: scheme; -*-
+
+;;; how to invoke the c compiler
+
+(c-compiler "gcc")
+
+;;; flags to pass to the c compiler
+
+(c-compiler-flags "-ansi -std=c11 -Wall -Wstrict-prototypes -Wmissing-prototypes -Winline -Wpointer-arith -Wshadow -Wnested-externs -Wformat-security -Wunused -Wsign-compare -D_DEFAULT_SOURCE -DWILE_CONFIG_FILE=/home/uwe/tools/etc/wile-config.dat")
+
+;;; directories in which to look for additional required headers
+;;; these get added to compile line with "-Ifoo" directives
+
+(c-include-directories ("." "/home/uwe/github/wile"))
+
+;;; directories in which to look for additional required libraries
+;;; these get added to link line with "-Lfoo" directives
+
+(c-link-directories ("." "/home/uwe/github/wile"))
+
+;;; libraries to add to link line
+;;; these get added to link line with "-lfoo" directives
+
+(c-link-libraries ("sqlite3" "quadmath" "gc"))
+
+;;; list of paths in which to search for files from (load-library) macro
+
+(scheme-include-directories
+ ("." "/home/uwe/github/wile" "/home/uwe/github/wile/library"))
+
+;;; configuration switches for the various options
+
+(wile-config
+ ("-DWILE_USES_SQLITE" "-DWILE_USES_INT128"
+  "-DWILE_USES_QUAD_DOUBLE" "-DWILE_USES_GC"))

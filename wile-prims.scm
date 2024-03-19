@@ -55,13 +55,16 @@
 
 (define (promote/real r a1)
   (emit-code
-   "if (@1.vt == LV_INT) {"
-   "@@ = LVI_REAL((lisp_real_t) @1.v.iv);"
-   "} else if (@1.vt == LV_RAT) {"
-   "@@ = LVI_REAL(LV_RAT2REAL(@1));"
-   "} else {"
-   "@@ = @1;"
-   "}"))
+   #<< HEREDOC
+   >if (@1.vt == LV_INT) {
+   >@@ = LVI_REAL((lisp_real_t) @1.v.iv);
+   >} else if (@1.vt == LV_RAT) {
+   >@@ = LVI_REAL(LV_RAT2REAL(@1));
+   >} else {
+   >@@ = @1;
+   >}
+   >HEREDOC
+   ))
 
 ;;; Promote a number to real type, failing if the input is not real-valued
 
@@ -70,145 +73,160 @@
 
 (define (promote/real+check aA r aL a1)
   (emit-code
-   "if (@1.vt == LV_INT) {"
-   "@@ = LVI_REAL((lisp_real_t) @1.v.iv);"
-   "} else if (@1.vt == LV_RAT) {"
-   "@@ = LVI_REAL(LV_RAT2REAL(@1));"
-   "} else if (@1.vt == LV_REAL) {"
-   "@@ = @1;"
-   "} else {"
-   "wile_exception(\"@A\", \"@L\", \"expects a real-valued input\");"
-   "}"))
+   #<< HEREDOC
+   >if (@1.vt == LV_INT) {
+   >@@ = LVI_REAL((lisp_real_t) @1.v.iv);
+   >} else if (@1.vt == LV_RAT) {
+   >@@ = LVI_REAL(LV_RAT2REAL(@1));
+   >} else if (@1.vt == LV_REAL) {
+   >@@ = @1;
+   >} else {
+   >wile_exception("@A", "@L", "expects a real-valued input");
+   >}
+   >HEREDOC
+   ))
 
 (define (build-special-math-real s-name c-name r aL a1)
   (let ((aa c-name)
 	(ab s-name))
     (emit-code
-     "{"
-     "lisp_real_t r;"
-     "switch (@1.vt) {"
-     "case LV_INT:"
-     "r = @1.v.iv;"
-     "break;"
-     "case LV_RAT:"
-     "r = LV_RAT2REAL(@1);"
-     "break;"
-     "case LV_REAL:"
-     "r = @1.v.rv;"
-     "break;"
-     "case LV_CMPLX:"
-     "wile_exception(\"@b\", \"@L\", \"is not implemented for complex values\");"
-     "default:"
-     "wile_exception(\"@b\", \"@L\", \"got a non-numeric argument\");"
-     "}"
-     "@@ = LVI_REAL(@a(r));"
-     "}")))
+     #<< HEREDOC
+     >{
+     >lisp_real_t r;
+     >switch (@1.vt) {
+     >case LV_INT:
+     >r = @1.v.iv;
+     >break;
+     >case LV_RAT:
+     >r = LV_RAT2REAL(@1);
+     >break;
+     >case LV_REAL:
+     >r = @1.v.rv;
+     >break;
+     >case LV_CMPLX:
+     >wile_exception("@b", "@L", "is not implemented for complex values");
+     >default:
+     >wile_exception("@b", "@L", "got a non-numeric argument");
+     >}
+     >@@ = LVI_REAL(@a(r));
+     >}
+     >HEREDOC
+     )))
 
 (define (build-special-math-cmplx s-name c-name r aL a1)
   (let ((aa c-name)
 	(ab s-name))
     (emit-code
-     "{"
-     "lisp_cmplx_t z;"
-     "switch (@1.vt) {"
-     "case LV_INT:"
-     "z = @1.v.iv;"
-     "break;"
-     "case LV_RAT:"
-     "z = LV_RAT2REAL(@1);"
-     "break;"
-     "case LV_REAL:"
-     "z = @1.v.rv;"
-     "break;"
-     "case LV_CMPLX:"
-     "z = @1.v.cv;"
-     "break;"
-     "default:"
-     "wile_exception(\"@b\", \"@L\", \"got a non-numeric argument\");"
-     "}"
-     "z = @a(z);"
-     "if (CIMAG(z) == 0.0) {"
-     "@@ = LVI_REAL(CREAL(z));"
-     "} else {"
-     "@@ = LVI_CMPLX1(z);"
-     "}"
-     "}")))
+     #<< HEREDOC
+     >{
+     >lisp_cmplx_t z;
+     >switch (@1.vt) {
+     >case LV_INT:
+     >z = @1.v.iv;
+     >break;
+     >case LV_RAT:
+     >z = LV_RAT2REAL(@1);
+     >break;
+     >case LV_REAL:
+     >z = @1.v.rv;
+     >break;
+     >case LV_CMPLX:
+     >z = @1.v.cv;
+     >break;
+     >default:
+     >wile_exception("@b", "@L", "got a non-numeric argument");
+     >}
+     >z = @a(z);
+     >if (CIMAG(z) == 0.0) {
+     >@@ = LVI_REAL(CREAL(z));
+     >} else {
+     >@@ = LVI_CMPLX1(z);
+     >}
+     >}
+     >HEREDOC
+     )))
 
 (define (build-special-math-rc s-name cr-name cc-name r aL a1)
   (let ((aa cr-name)
 	(ab cc-name)
 	(ac s-name))
     (emit-code
-     "{"
-     "lisp_real_t r;"
-     "lisp_cmplx_t z;"
-     "bool isr;"
-     "switch (@1.vt) {"
-     "case LV_INT:"
-     "r = @1.v.iv;"
-     "isr = true;"
-     "break;"
-     "case LV_RAT:"
-     "r = LV_RAT2REAL(@1);"
-     "isr = true;"
-     "break;"
-     "case LV_REAL:"
-     "r = @1.v.rv;"
-     "isr = true;"
-     "break;"
-     "case LV_CMPLX:"
-     "z = @1.v.cv;"
-     "isr = false;"
-     "break;"
-     "default:"
-     "wile_exception(\"@c\", \"@L\", \"got a non-numeric argument\");"
-     "}"
-     "if (isr) {"
-     "@@ = LVI_REAL(@a(r));"
-     "} else {"
-     "z = @b(z);"
-     "if (CIMAG(z) == 0.0) {"
-     "@@ = LVI_REAL(CREAL(z));"
-     "} else {"
-     "@@ = LVI_CMPLX1(z);"
-     "}"
-     "}"
-     "}")))
+     #<< HEREDOC
+     >{
+     >lisp_real_t r;
+     >lisp_cmplx_t z;
+     >bool isr;
+     >switch (@1.vt) {
+     >case LV_INT:
+     >r = @1.v.iv;
+     >isr = true;
+     >break;
+     >case LV_RAT:
+     >r = LV_RAT2REAL(@1);
+     >isr = true;
+     >break;
+     >case LV_REAL:
+     >r = @1.v.rv;
+     >isr = true;
+     >break;
+     >case LV_CMPLX:
+     >z = @1.v.cv;
+     >isr = false;
+     >break;
+     >default:
+     >wile_exception("@c", "@L", "got a non-numeric argument");
+     >}
+     >if (isr) {
+     >@@ = LVI_REAL(@a(r));
+     >} else {
+     >z = @b(z);
+     >if (CIMAG(z) == 0.0) {
+     >@@ = LVI_REAL(CREAL(z));
+     >} else {
+     >@@ = LVI_CMPLX1(z);
+     >}
+     >}
+     >}
+     >HEREDOC
+     )))
 
 (define (build-real-cmp aa r aL a1 a2)
   (emit-code
-   "switch (TYPE_COMBO(@1.vt,@2.vt)) {"
-   "case TYPE_COMBO(LV_INT,LV_INT):"
-   "@@ = LVI_BOOL(@1.v.iv @a @2.v.iv);"
-   "break;"
-   "case TYPE_COMBO(LV_INT,LV_RAT):"
-   "@@ = LVI_BOOL(@1.v.iv * @2.v.irv.den @a @2.v.irv.num);"
-   "break;"
-   "case TYPE_COMBO(LV_INT,LV_REAL):"
-   "@@ = LVI_BOOL(@1.v.iv @a @2.v.rv);"
-   "break;"
-   "case TYPE_COMBO(LV_RAT,LV_INT):"
-   "@@ = LVI_BOOL(@1.v.irv.num @a @2.v.iv * @1.v.irv.den);"
-   "break;"
-   "case TYPE_COMBO(LV_RAT,LV_RAT):"
-   "@@ = LVI_BOOL(@1.v.irv.num * @2.v.irv.den @a @2.v.irv.num * @1.v.irv.den);"
-   "break;"
-   "case TYPE_COMBO(LV_RAT,LV_REAL):"
-   "@@ = LVI_BOOL(@1.v.irv.num @a @2.v.rv * @1.v.irv.den);"
-   "break;"
-   "case TYPE_COMBO(LV_REAL,LV_INT):"
-   "@@ = LVI_BOOL(@1.v.rv @a @2.v.iv);"
-   "break;"
-   "case TYPE_COMBO(LV_REAL,LV_RAT):"
-   "@@ = LVI_BOOL(@1.v.rv * @2.v.irv.den @a @2.v.irv.num);"
-   "break;"
-   "case TYPE_COMBO(LV_REAL,LV_REAL):"
-   "@@ = LVI_BOOL(@1.v.rv @a @2.v.rv);"
-   "break;"
-   "default:"
-   "wile_exception(\"@a\", \"@L\", \"inputs are not real-valued numbers\");"
-   "break;"
-   "}"))
+   #<< HEREDOC
+   >switch (TYPE_COMBO(@1.vt,@2.vt)) {
+   >case TYPE_COMBO(LV_INT,LV_INT):
+   >@@ = LVI_BOOL(@1.v.iv @a @2.v.iv);
+   >break;
+   >case TYPE_COMBO(LV_INT,LV_RAT):
+   >@@ = LVI_BOOL(@1.v.iv * @2.v.irv.den @a @2.v.irv.num);
+   >break;
+   >case TYPE_COMBO(LV_INT,LV_REAL):
+   >@@ = LVI_BOOL(@1.v.iv @a @2.v.rv);
+   >break;
+   >case TYPE_COMBO(LV_RAT,LV_INT):
+   >@@ = LVI_BOOL(@1.v.irv.num @a @2.v.iv * @1.v.irv.den);
+   >break;
+   >case TYPE_COMBO(LV_RAT,LV_RAT):
+   >@@ = LVI_BOOL(@1.v.irv.num * @2.v.irv.den @a @2.v.irv.num * @1.v.irv.den);
+   >break;
+   >case TYPE_COMBO(LV_RAT,LV_REAL):
+   >@@ = LVI_BOOL(@1.v.irv.num @a @2.v.rv * @1.v.irv.den);
+   >break;
+   >case TYPE_COMBO(LV_REAL,LV_INT):
+   >@@ = LVI_BOOL(@1.v.rv @a @2.v.iv);
+   >break;
+   >case TYPE_COMBO(LV_REAL,LV_RAT):
+   >@@ = LVI_BOOL(@1.v.rv * @2.v.irv.den @a @2.v.irv.num);
+   >break;
+   >case TYPE_COMBO(LV_REAL,LV_REAL):
+   >@@ = LVI_BOOL(@1.v.rv @a @2.v.rv);
+   >break;
+   >default:
+   >wile_exception("@a", "@L", "inputs are not real-valued numbers");
+   >break;
+   >}
+   >HEREDOC
+   ))
 
 ;;; arity meaning:
 ;;; 0 or more	-> a function which accepts exactly that many arguments
@@ -257,6 +275,9 @@
 
    '(sha-224-update alias sha-256-update)
    '(sha-224-finish alias sha-256-finish)
+
+   '(write-1str alias write-string)
+   '(write-char alias write-string)
 
    (list 'when "expects a predicate and any number of actions; if the predicate is true, the actions are evaluated"
 	 'macro -2
@@ -379,11 +400,10 @@
 
    (list 'emit-code
 	 "this macro is used inside wile; do not use"
-	 'macro -1
-	 (lambda strs
+	 'macro 1
+	 (lambda (str)
 	   (let ((xform
-		  (let loop ((cs (string->list
-				  (apply string-join-by "\n" strs)))
+		  (let loop ((cs (string->list str))
 			     (accs ())
 			     (acca ()))
 		    (cond ((null? cs)
@@ -501,91 +521,109 @@
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
-	    "{"
-	    "lptr p1 = NULL, p2 = NULL;"
-	    "if (@1.vt != LV_NIL) {"
-	    "p1 = new_lv(LV_NIL);"
-	    "*p1 = @1;"
-	    "}"
-	    "if (@2.vt != LV_NIL) {"
-	    "p2 = new_lv(LV_NIL);"
-	    "*p2 = @2;"
-	    "}"
-	    "@@ = LVI_PAIR(p1, p2);"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >lptr p1 = NULL, p2 = NULL;
+	    >if (@1.vt != LV_NIL) {
+	    >p1 = new_lv(LV_NIL);
+	    >*p1 = @1;
+	    >}
+	    >if (@2.vt != LV_NIL) {
+	    >p2 = new_lv(LV_NIL);
+	    >*p2 = @2;
+	    >}
+	    >@@ = LVI_PAIR(p1, p2);
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'car "expects a pair (A B) and returns its first element A"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt != LV_PAIR) {"
-	    "wile_exception(\"car\", \"@L\", \"input is not a pair!\");"
-	    "}"
-	    "@@ = (@1.v.pair.car ? *(@1.v.pair.car) : LVI_NIL());")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_PAIR) {
+	    >wile_exception("car", "@L", "input is not a pair!");
+	    >}
+	    >@@ = (@1.v.pair.car ? *(@1.v.pair.car) : LVI_NIL());
+	    >HEREDOC
+	    )))
 
    (list 'cdr "expects a pair (A B) and returns its second element B"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt != LV_PAIR) {"
-	    "wile_exception(\"cdr\", \"@L\", \"input is not a pair!\");"
-	    "}"
-	    "@@ = (@1.v.pair.cdr ? *(@1.v.pair.cdr) : LVI_NIL());")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_PAIR) {
+	    >wile_exception("cdr", "@L", "input is not a pair!");
+	    >}
+	    >@@ = (@1.v.pair.cdr ? *(@1.v.pair.cdr) : LVI_NIL());
+	    >HEREDOC
+	    )))
 
    (list 'set-car! "expects one pair and one general value, and sets the pair's CAR to the specified general value. WARNING: THIS IS CURRENTLY BROKEN!"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "{"
-	    "if (@1.vt != LV_PAIR) {"
-	    "wile_exception(\"set-car!\", \"@L\", \"input is not a pair!\");"
-	    "}"
-	    "lptr p2 = NULL;"
-	    "if (@2.vt != LV_NIL) {"
-	    "p2 = new_lv(LV_NIL);"
-	    "*p2 = @2;"
-	    "}"
-	    "@1.v.pair.car = p2;"
-	    "@@ = @1;"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >if (@1.vt != LV_PAIR) {
+	    >wile_exception("set-car!", "@L", "input is not a pair!");
+	    >}
+	    >lptr p2 = NULL;
+	    >if (@2.vt != LV_NIL) {
+	    >p2 = new_lv(LV_NIL);
+	    >*p2 = @2;
+	    >}
+	    >@1.v.pair.car = p2;
+	    >@@ = @1;
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'set-cdr! "expects one pair and one general value, and sets the pair's CDR to the specified general value. WARNING: THIS IS CURRENTLY BROKEN!"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "{"
-	    "if (@1.vt != LV_PAIR) {"
-	    "wile_exception(\"set-cdr!\", \"@L\", \"input is not a pair!\");"
-	    "}"
-	    "lptr p2 = NULL;"
-	    "if (@2.vt != LV_NIL) {"
-	    "p2 = new_lv(LV_NIL);"
-	    "*p2 = @2;"
-	    "}"
-	    "@1.v.pair.cdr = p2;"
-	    "@@ = @1;"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >if (@1.vt != LV_PAIR) {
+	    >wile_exception("set-cdr!", "@L", "input is not a pair!");
+	    >}
+	    >lptr p2 = NULL;
+	    >if (@2.vt != LV_NIL) {
+	    >p2 = new_lv(LV_NIL);
+	    >*p2 = @2;
+	    >}
+	    >@1.v.pair.cdr = p2;
+	    >@@ = @1;
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'cxr "expects one control string and one nested list object and returns the appropriate composition of car and cdr as encoded by the control string"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "{"
-	    "char* cp = strchr(@1.v.str, 'r');"
-	    "@@ = @2;"
-	    "while (*(--cp) != 'c') {"
-	    "if (@@.vt != LV_PAIR) {"
-	    "wile_exception(\"cxr\", \"@L\", \"input does not have the right structure!\");"
-	    "}"
-	    "if (*cp == 'a') {"
-	    "@@ = (@@.v.pair.car ? *(@@.v.pair.car) : LVI_NIL());"
-	    "} else if (*cp == 'd') {"
-	    "@@ = (@@.v.pair.cdr ? *(@@.v.pair.cdr) : LVI_NIL());"
-	    "} else {"
-	    "wile_exception(\"cxr\", \"@L\", \"got malformed control string '%%s'\", @1.v.str);"
-	    "}"
-	    "}"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >char* cp = strchr(@1.v.str, 'r');
+	    >@@ = @2;
+	    >while (*(--cp) != 'c') {
+	    >if (@@.vt != LV_PAIR) {
+	    >wile_exception("cxr", "@L", "input does not have the right structure!");
+	    >}
+	    >if (*cp == 'a') {
+	    >@@ = (@@.v.pair.car ? *(@@.v.pair.car) : LVI_NIL());
+	    >} else if (*cp == 'd') {
+	    >@@ = (@@.v.pair.cdr ? *(@@.v.pair.cdr) : LVI_NIL());
+	    >} else {
+	    >wile_exception("cxr", "@L", "got malformed control string '%%s'", @1.v.str);
+	    >}
+	    >}
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'caar "expects one nested list object and returns the appropriate composition of car and cdr"
 	 'macro 1 (lambda (a1) `(cxr "caar" ,a1)))
@@ -701,13 +739,16 @@
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "{"
-	    "@@ = @1;"
-	    "while (@@.vt == LV_PAIR) {"
-	    "@@ = (@@.v.pair.cdr ? *(@@.v.pair.cdr) : LVI_NIL());"
-	    "}"
-	    "@@ = LVI_BOOL(@@.vt == LV_NIL);"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >@@ = @1;
+	    >while (@@.vt == LV_PAIR) {
+	    >@@ = (@@.v.pair.cdr ? *(@@.v.pair.cdr) : LVI_NIL());
+	    >}
+	    >@@ = LVI_BOOL(@@.vt == LV_NIL);
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'vector
 	 "expects any number of values and returns a vector containing those values"
@@ -769,14 +810,23 @@
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
-	    "{"
-	    "FILE* fp = fopen(@1.v.str, @2.v.str);"
-	    "if (fp) {"
-	    "@@ = LVI_FPORT(fp);"
-	    "} else {"
-	    "@@ = LVI_BOOL(false);"
-	    "}"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >FILE* fp = fopen(@1.v.str, @2.v.str);
+	    >if (fp) {
+	    >@@ = LVI_FPORT(fp);
+	    >} else {
+	    >@@ = LVI_BOOL(false);
+	    >}
+	    >}
+	    >HEREDOC
+	    )))
+
+   ;;; syntactic sugar, but I expect to find this all the time
+   ;;; and get annoyed when it's not there
+
+   (list 'open-input-file "expects one string argument, the name of a file to open for reading. if successful, return a file-port; otherwise return #f"
+	 'macro 1 (lambda (a1) `(open-file ,a1 "r")))
 
    (list 'open-temporary-file "expects one string argument which should be a filename template containing at least six 'X' characters (if it does not, they get appended to a copy of the input string); returns a two-list containing a file port opened in 'w+' mode and the actual name of the file that got opened"
 	 'prim 1 "wile_temp_file")
@@ -788,19 +838,25 @@
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "if (@1.vt != LV_STRING || @2.vt != LV_STRING) {"
-	    "wile_exception(\"create-link\", \"@L\", \"inputs are not strings\");"
-	    "}"
-	    "@@ = LVI_BOOL(link(@1.v.str, @2.v.str) == 0);")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_STRING || @2.vt != LV_STRING) {
+	    >wile_exception("create-link", "@L", "inputs are not strings");
+	    >}
+	    >@@ = LVI_BOOL(link(@1.v.str, @2.v.str) == 0);
+	    >HEREDOC
+	    )))
 
    (list 'create-symbolic-link "expects two string arguments, the first one of which should be the name of an existing file, and creates a new symbolic link under the second name"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "if (@1.vt != LV_STRING || @2.vt != LV_STRING) {"
-	    "wile_exception(\"create-symbolic-link\", \"@L\", \"inputs are not strings\");"
-	    "}"
-	    "@@ = LVI_BOOL(symlink(@1.v.str, @2.v.str) == 0);")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_STRING || @2.vt != LV_STRING) {
+	    >wile_exception("create-symbolic-link", "@L", "inputs are not strings");
+	    >}
+	    >@@ = LVI_BOOL(symlink(@1.v.str, @2.v.str) == 0);
+	    >HEREDOC
+	    )))
 
    (list 'eqv?
 	 "expects two general values, and returns whether or not they are equivalent"
@@ -917,14 +973,17 @@
 	 'prim 0
 	 (lambda (r)
 	   (emit-code
-	    "{"
-	    "pid_t si = setsid();"
-	    "if (si >= 0) {"
-	    "@@ = LVI_INT(si);"
-	    "} else {"
-	    "@@ = LVI_BOOL(false);"
-	    "}"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >pid_t si = setsid();
+	    >if (si >= 0) {
+	    >@@ = LVI_INT(si);
+	    >} else {
+	    >@@ = LVI_BOOL(false);
+	    >}
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'epochtime
 	 "expects no arguments, returns the number of seconds since the epoch, 1970-01-01 00:00:00 UTC" 'prim 0
@@ -964,14 +1023,17 @@
 	 'prim 0
 	 (lambda (r)
 	   (emit-code
-	    "{"
-	    "int si = fork();"
-	    "if (si >= 0) {"
-	    "@@ = LVI_INT(si);"
-	    "} else {"
-	    "@@ = LVI_BOOL(false);"
-	    "}"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >int si = fork();
+	    >if (si >= 0) {
+	    >@@ = LVI_INT(si);
+	    >} else {
+	    >@@ = LVI_BOOL(false);
+	    >}
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'wait-process
 	 "expects 0, 1, or 2 arguments: the first argument, if present, is an integer process id on which to wait, and the second argument, if present, is an integer representing an OR of possible options. if no arguments are given, waits for any child process. returns a list of two integers, the process id of the terminated child, and its exit status, or #f"
@@ -980,18 +1042,24 @@
 	     (emit-code "@@ = wile_waitpid(-1, 0);"))
 	 1 (lambda (r aL a1)
 	     (emit-code
-	      "if (@1.vt == LV_INT) {"
-	      "@@ = wile_waitpid(@1.v.iv, 0);"
-	      "} else {"
-	      "wile_exception(\"wait-process\", \"@L\", \"input is not an integer\");"
-	      "}"))
+	      #<< HEREDOC
+	      >if (@1.vt == LV_INT) {
+	      >@@ = wile_waitpid(@1.v.iv, 0);
+	      >} else {
+	      >wile_exception("wait-process", "@L", "input is not an integer");
+	      >}
+	      >HEREDOC
+	      ))
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
-	      "if (@1.vt == LV_INT && @2.vt == LV_INT) {"
-	      "@@ = wile_waitpid(@1.v.iv, @2.v.iv);"
-	      "} else {"
-	      "wile_exception(\"wait-process\", \"@L\", \"inputs are not both integers\");"
-	      "}")))
+	      #<< HEREDOC
+	      >if (@1.vt == LV_INT && @2.vt == LV_INT) {
+	      >@@ = wile_waitpid(@1.v.iv, @2.v.iv);
+	      >} else {
+	      >wile_exception("wait-process", "@L", "inputs are not both integers");
+	      >}
+	      >HEREDOC
+	      )))
 
    (list 'get-current-directory
 	 "expects no arguments and returns a string which is the name of the current working directory" 'prim 0 "wile_getcwd")
@@ -1007,16 +1075,19 @@
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt == LV_FILE_PORT) {"
-	    "long int offset = ftell(@1.v.fp);"
-	    "if (offset < 0) {"
-	    "@@ = LVI_BOOL(false);"
-	    "} else {"
-	    "@@ = LVI_INT(offset);"
-	    "}"
-	    "} else {"
-	    "wile_exception(\"get-file-position\", \"@L\", \"input is not a file port\");"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt == LV_FILE_PORT) {
+	    >long int offset = ftell(@1.v.fp);
+	    >if (offset < 0) {
+	    >@@ = LVI_BOOL(false);
+	    >} else {
+	    >@@ = LVI_INT(offset);
+	    >}
+	    >} else {
+	    >wile_exception("get-file-position", "@L", "input is not a file port");
+	    >}
+	    >HEREDOC
+	    )))
 
    ;;; offset relative to start for 2-arg
    (list 'set-file-position
@@ -1051,80 +1122,119 @@
 	 'priml
 	 0 (lambda (r aL)
 	     (emit-code
-	      "{"
-	      "int c = fgetc(stdin);"
-	      "@@ = ((c == EOF) ? LVI_BOOL(false) : LVI_CHAR(c));"
-	      "}"))
+	      #<< HEREDOC
+	      >{
+	      >int c = fgetc(stdin);
+	      >@@ = ((c == EOF) ? LVI_BOOL(false) : LVI_CHAR(c));
+	      >}
+	      >HEREDOC
+	      ))
 	 1 (lambda (r aL a1)
 	     (emit-code
-	      "if (@1.vt == LV_FILE_PORT || @1.vt == LV_PIPE_PORT || @1.vt == LV_SOCK_PORT) {"
-	      "int c = fgetc(@1.v.fp);"
-	      "@@ = ((c == EOF) ? LVI_BOOL(false) : LVI_CHAR(c));"
-	      "} else {"
-	      "wile_exception(\"read-char\", \"@L\", \"input is not a port\");"
-	      "}")))
+	      #<< HEREDOC
+	      >if (@1.vt == LV_FILE_PORT || @1.vt == LV_PIPE_PORT || @1.vt == LV_SOCK_PORT) {
+	      >int c = fgetc(@1.v.fp);
+	      >@@ = ((c == EOF) ? LVI_BOOL(false) : LVI_CHAR(c));
+	      >} else {
+	      >wile_exception("read-char", "@L", "input is not a port");
+	      >}
+	      >HEREDOC
+	      )))
 
    (list 'newline "expects one optional argument which is an output port, and writes a newline character to that port; the default port if no argument is given is stdout"
 	 'priml
 	 0 (lambda (r aL)
 	     (emit-code
-	      "@@ = LVI_BOOL(true);"
-	      "putchar('\\n');"))
+	      #<< HEREDOC
+	      >@@ = LVI_BOOL(true);
+	      >putchar('\n');
+	      >HEREDOC
+	      ))
 	 1 (lambda (r aL a1)
 	     (emit-code
-	      "if (@1.vt == LV_FILE_PORT || @1.vt == LV_PIPE_PORT || @1.vt == LV_SOCK_PORT) {"
-	      "fputc('\\n', @1.v.fp);"
-	      "@@ = LVI_BOOL(true);"
-	      "} else {"
-	      "wile_exception(\"newline\", \"@L\", \"input is not a port\");"
-	      "}")))
+	      #<< HEREDOC
+	      >if (@1.vt == LV_FILE_PORT || @1.vt == LV_PIPE_PORT || @1.vt == LV_SOCK_PORT) {
+	      >fputc('\n', @1.v.fp);
+	      >@@ = LVI_BOOL(true);
+	      >} else {
+	      >wile_exception("newline", "@L", "input is not a port");
+	      >}
+	      >HEREDOC
+	      )))
 
-   (list 'write-1str "expects one or two arguments: either just a string or char, in which case the output port defaults to stdout, or an output port and a string or char, and writes the string or char to the output port; returns #t"
-	 'priml
-	 1 (lambda (r aL a1)
-	     (emit-code
-	      "if (@1.vt == LV_CHAR) {"
-	      "fputc(@1.v.chr, stdout);"
-	      "} else if (@1.vt == LV_STRING) {"
-	      "fputs(@1.v.str, stdout);"
-	      "} else {"
-	      "wile_exception(\"write-string\", \"@L\", \"input is not a string or char!\");"
-	      "}"
-	      "@@ = LVI_BOOL(true);"))
-	 2 (lambda (r aL a1 a2)
-	     (emit-code
-	      "{"
-	      "FILE* fp;"
-	      "if (@1.vt == LV_FILE_PORT || @1.vt == LV_PIPE_PORT || @1.vt == LV_SOCK_PORT) {"
-	      "fp = @1.v.fp;"
-	      "} else {"
-	      "wile_exception(\"write-string\", \"@L\", \"first input is not a port!\");"
-	      "}"
-	      "if (@2.vt == LV_CHAR) {"
-	      "fputc(@2.v.chr, fp);"
-	      "} else if (@2.vt == LV_STRING) {"
-	      "fputs(@2.v.str, fp);"
-	      "} else {"
-	      "wile_exception(\"write-string\", \"@L\", \"second input is not a string or char!\");"
-	      "}"
-	      "@@ = LVI_BOOL(true);"
-	      "}")))
+   (list 'write-string "expects one or more arguments: a number of strings or characters (optionally the first argument may be an output port); all string or character arguments are written to the output port, which defaults to stdout if not specified; returns #t"
+	 'priml -2
+	 (lambda (r aL a1 . as)
+	   (fluid-let ((r #f))
+	     (if (null? as)
+		 (emit-code
+		  #<< HEREDOC
+		  >if (@1.vt == LV_CHAR) {
+		  >fputc(@1.v.chr, stdout);
+		  >} else if (@1.vt == LV_STRING) {
+		  >fputs(@1.v.str, stdout);
+		  >} else {
+		  >wile_exception("write-string", "@L", "input is not a string or char!");
+		  >}
+		  >HEREDOC
+		  )
+		 (begin
+		   (emit-fstr "{\n")
+		   (emit-code
+		    #<< HEREDOC
+		    >FILE* fp;
+		    >if (@1.vt == LV_FILE_PORT || @1.vt == LV_PIPE_PORT || @1.vt == LV_SOCK_PORT) {
+		    >fp = @1.v.fp;
+		    >} else if (@1.vt == LV_CHAR) {
+		    >fp = stdout;
+		    >fputc(@1.v.chr, fp);
+		    >} else if (@1.vt == LV_STRING) {
+		    >fp = stdout;
+		    >fputs(@1.v.str, fp);
+		    >} else {
+		    >wile_exception("write-string", "@L", "first input is not a string or char or port!");
+		    >}
+		    >HEREDOC
+		    )
+		   (for-each
+		    (lambda (aA)
+		      (emit-code
+		       #<< HEREDOC
+		       >if (@A.vt == LV_CHAR) {
+		       >fputc(@A.v.chr, fp);
+		       >} else if (@A.vt == LV_STRING) {
+		       >fputs(@A.v.str, fp);
+		       >} else {
+		       >wile_exception("write-string", "@L", "input is not a string or char!");
+		       >}
+		       >HEREDOC
+		       ))
+		    as)
+		   (emit-fstr "}\n"))))
+	   (emit-code "@@ = LVI_BOOL(true);")))
 
    (list 'display
 	 "expects one lisp value and optionally one output port (defaults to stdout if not given) and writes some representation of the value to the port; returns nothing useful. warning: this does NOT YET do cycle detection; if given a cyclic datastructure, it will loop indefinitely"
 	 'priml
 	 1 (lambda (r aL a1)
 	     (emit-code
-	      "wile_print_lisp_val(&(@1), stdout, \"@L\");"
-	      "@@ = @1;"))
+	      #<< HEREDOC
+	      >wile_print_lisp_val(&(@1), stdout, "@L");
+	      >@@ = @1;
+	      >
+	      >HEREDOC
+	      ))
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
-	      "if (@2.vt == LV_FILE_PORT || @2.vt == LV_PIPE_PORT || @2.vt == LV_SOCK_PORT) {"
-	      "wile_print_lisp_val(&(@1), @2.v.fp, \"@L\");"
-	      "@@ = @1;"
-	      "} else {"
-	      "wile_exception(\"display\", \"@L\", \"expects a scheme value and a port\");"
-	      "}")))
+	      #<< HEREDOC
+	      >if (@2.vt == LV_FILE_PORT || @2.vt == LV_PIPE_PORT || @2.vt == LV_SOCK_PORT) {
+	      >wile_print_lisp_val(&(@1), @2.v.fp, "@L");
+	      >@@ = @1;
+	      >} else {
+	      >wile_exception("display", "@L", "expects a scheme value and a port");
+	      >}
+	      >HEREDOC
+	      )))
 
    (list 'string->number "expects one string, parses it as a number, and returns the number"
 	 'priml 1
@@ -1141,19 +1251,25 @@
 	 ;;; number base
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
-	      "if (@2.vt == LV_INT) {"
-	      "@@ = wile_num2string(@1, @2.v.iv, INT_MIN, \"@L\");"
-	      "} else {"
-	      "wile_exception(\"number->string\", \"@L\", \"base is not numeric\");"
-	      "}"))
+	      #<< HEREDOC
+	      >if (@2.vt == LV_INT) {
+	      >@@ = wile_num2string(@1, @2.v.iv, INT_MIN, "@L");
+	      >} else {
+	      >wile_exception("number->string", "@L", "base is not numeric");
+	      >}
+	      >HEREDOC
+	      ))
 	 ;;; number base precision
 	 3 (lambda (r aL a1 a2 a3)
 	     (emit-code
-	      "if (@2.vt == LV_INT && @3.vt == LV_INT) {"
-	      "@@ = wile_num2string(@1, @2.v.iv, @3.v.iv, \"@L\");"
-	      "} else {"
-	      "wile_exception(\"number->string\", \"@L\", \"base or precision is not numeric\");"
-	      "}")))
+	      #<< HEREDOC
+	      >if (@2.vt == LV_INT && @3.vt == LV_INT) {
+	      >@@ = wile_num2string(@1, @2.v.iv, @3.v.iv, "@L");
+	      >} else {
+	      >wile_exception("number->string", "@L", "base or precision is not numeric");
+	      >}
+	      >HEREDOC
+	      )))
 
    (list 'cmplx
 	 "expects two real-valued arguments X and Y and returns the complex number X+I*Y"
@@ -1201,58 +1317,67 @@
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "switch (@1.vt) {"
-	    "case LV_REAL:"
-	    "@@ = LVI_BOOL(@1.v.rv == 0.0);"
-	    "break;"
-	    "case LV_RAT:"
-	    "@@ = LVI_BOOL((@1.v.irv.num == 0 && @1.v.irv.den != 0));"
-	    "break;"
-	    "case LV_INT:"
-	    "@@ = LVI_BOOL(@1.v.iv == 0);"
-	    "break;"
-	    "case LV_CMPLX:"
-	    "@@ = LVI_BOOL(CREAL(@1.v.cv) == 0.0 && CIMAG(@1.v.cv) == 0.0);"
-	    "break;"
-	    "default:"
-	    "wile_exception(\"zero?\", \"@L\", \"expects a real-valued number\");"
-	    "}")))
+	    #<< HEREDOC
+	    >switch (@1.vt) {
+	    >case LV_REAL:
+	    >@@ = LVI_BOOL(@1.v.rv == 0.0);
+	    >break;
+	    >case LV_RAT:
+	    >@@ = LVI_BOOL((@1.v.irv.num == 0 && @1.v.irv.den != 0));
+	    >break;
+	    >case LV_INT:
+	    >@@ = LVI_BOOL(@1.v.iv == 0);
+	    >break;
+	    >case LV_CMPLX:
+	    >@@ = LVI_BOOL(CREAL(@1.v.cv) == 0.0 && CIMAG(@1.v.cv) == 0.0);
+	    >break;
+	    >default:
+	    >wile_exception("zero?", "@L", "expects a real-valued number");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'positive? "expects one real-valued number and returns #t if that number is positive. the number may be of any type except complex"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "switch (@1.vt) {"
-	    "case LV_REAL:"
-	    "@@ = LVI_BOOL(@1.v.rv > 0.0);"
-	    "break;"
-	    "case LV_RAT:"
-	    "@@ = LVI_BOOL((@1.v.irv.num > 0 && @1.v.irv.den >= 0) || (@1.v.irv.num < 0 && @1.v.irv.den < 0));"
-	    "break;"
-	    "case LV_INT:"
-	    "@@ = LVI_BOOL(@1.v.iv > 0);"
-	    "break;"
-	    "default:"
-	    "wile_exception(\"positive?\", \"@L\", \"expects a real-valued number\");"
-	    "}")))
+	    #<< HEREDOC
+	    >switch (@1.vt) {
+	    >case LV_REAL:
+	    >@@ = LVI_BOOL(@1.v.rv > 0.0);
+	    >break;
+	    >case LV_RAT:
+	    >@@ = LVI_BOOL((@1.v.irv.num > 0 && @1.v.irv.den >= 0) || (@1.v.irv.num < 0 && @1.v.irv.den < 0));
+	    >break;
+	    >case LV_INT:
+	    >@@ = LVI_BOOL(@1.v.iv > 0);
+	    >break;
+	    >default:
+	    >wile_exception("positive?", "@L", "expects a real-valued number");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'negative? "expects one real-valued number and returns #t if that number is negative. the number may be of any type except complex"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "switch (@1.vt) {"
-	    "case LV_REAL:"
-	    "@@ = LVI_BOOL(@1.v.rv < 0.0);"
-	    "break;"
-	    "case LV_RAT:"
-	    "@@ = LVI_BOOL((@1.v.irv.num < 0 && @1.v.irv.den >= 0) || (@1.v.irv.num > 0 && @1.v.irv.den < 0));"
-	    "break;"
-	    "case LV_INT:"
-	    "@@ = LVI_BOOL(@1.v.iv < 0);"
-	    "break;"
-	    "default:"
-	    "wile_exception(\"negative?\", \"@L\", \"expects a real-valued number\");"
-	    "}")))
+	    #<< HEREDOC
+	    >switch (@1.vt) {
+	    >case LV_REAL:
+	    >@@ = LVI_BOOL(@1.v.rv < 0.0);
+	    >break;
+	    >case LV_RAT:
+	    >@@ = LVI_BOOL((@1.v.irv.num < 0 && @1.v.irv.den >= 0) || (@1.v.irv.num > 0 && @1.v.irv.den < 0));
+	    >break;
+	    >case LV_INT:
+	    >@@ = LVI_BOOL(@1.v.iv < 0);
+	    >break;
+	    >default:
+	    >wile_exception("negative?", "@L", "expects a real-valued number");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'null? "expects one argument and returns #t if that value is (), #f otherwise"
 	 'prim 1
@@ -1303,39 +1428,45 @@
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "switch (@1.vt) {"
-	    "case LV_CMPLX:"
-	    "@@ = LVI_BOOL(ISNAN(CREAL(@1.v.cv)) || ISNAN(CIMAG(@1.v.cv)));"
-	    "break;"
-	    "case LV_REAL:"
-	    "@@ = LVI_BOOL(ISNAN(@1.v.rv));"
-	    "break;"
-	    "case LV_RAT:"
-	    "@@ = LVI_BOOL(@1.v.irv.num == 0 && @1.v.irv.den == 0);"
-	    "break;"
-	    "default:"
-	    "@@ = LVI_BOOL(false);"
-	    "break;"
-	    "}")))
+	    #<< HEREDOC
+	    >switch (@1.vt) {
+	    >case LV_CMPLX:
+	    >@@ = LVI_BOOL(ISNAN(CREAL(@1.v.cv)) || ISNAN(CIMAG(@1.v.cv)));
+	    >break;
+	    >case LV_REAL:
+	    >@@ = LVI_BOOL(ISNAN(@1.v.rv));
+	    >break;
+	    >case LV_RAT:
+	    >@@ = LVI_BOOL(@1.v.irv.num == 0 && @1.v.irv.den == 0);
+	    >break;
+	    >default:
+	    >@@ = LVI_BOOL(false);
+	    >break;
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'infinite? "expects one numeric argument and returns #t if it is infinite, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "switch (@1.vt) {"
-	    "case LV_CMPLX:"
-	    "@@ = LVI_BOOL(ISINF(CREAL(@1.v.cv)) || ISINF(CIMAG(@1.v.cv)));"
-	    "break;"
-	    "case LV_REAL:"
-	    "@@ = LVI_BOOL(ISINF(@1.v.rv));"
-	    "break;"
-	    "case LV_RAT:"
-	    "@@ = LVI_BOOL(@1.v.irv.num != 0 && @1.v.irv.den == 0);"
-	    "break;"
-	    "default:"
-	    "@@ = LVI_BOOL(false);"
-	    "break;"
-	    "}")))
+	    #<< HEREDOC
+	    >switch (@1.vt) {
+	    >case LV_CMPLX:
+	    >@@ = LVI_BOOL(ISINF(CREAL(@1.v.cv)) || ISINF(CIMAG(@1.v.cv)));
+	    >break;
+	    >case LV_REAL:
+	    >@@ = LVI_BOOL(ISINF(@1.v.rv));
+	    >break;
+	    >case LV_RAT:
+	    >@@ = LVI_BOOL(@1.v.irv.num != 0 && @1.v.irv.den == 0);
+	    >break;
+	    >default:
+	    >@@ = LVI_BOOL(false);
+	    >break;
+	    >}
+	    >HEREDOC
+	    )))
 
    ;;; everything is #t except #f so only #f becomes #t,
    ;;; everything else becomes #f
@@ -1349,62 +1480,71 @@
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "switch (@1.vt) {"
-	    "case LV_CMPLX:"
-	    "@@ = LVI_BOOL(ISFINITE(CREAL(@1.v.cv)) && ISFINITE(CIMAG(@1.v.cv)));"
-	    "break;"
-	    "case LV_REAL:"
-	    "@@ = LVI_BOOL(ISFINITE(@1.v.rv));"
-	    "break;"
-	    "case LV_RAT:"
-	    "@@ = LVI_BOOL(@1.v.irv.den != 0);"
-	    "break;"
-	    "default:"
-	    "@@ = LVI_BOOL(true);"
-	    "break;"
-	    "}")))
+	    #<< HEREDOC
+	    >switch (@1.vt) {
+	    >case LV_CMPLX:
+	    >@@ = LVI_BOOL(ISFINITE(CREAL(@1.v.cv)) && ISFINITE(CIMAG(@1.v.cv)));
+	    >break;
+	    >case LV_REAL:
+	    >@@ = LVI_BOOL(ISFINITE(@1.v.rv));
+	    >break;
+	    >case LV_RAT:
+	    >@@ = LVI_BOOL(@1.v.irv.den != 0);
+	    >break;
+	    >default:
+	    >@@ = LVI_BOOL(true);
+	    >break;
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'abs "expects one numeric argument and returns its absolute value"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "switch (@1.vt) {"
-	    "case LV_INT:"
-	    "@@ = LVI_INT(WILE_ABS(@1.v.iv));"
-	    "break;"
-	    "case LV_RAT:"
-	    "@@ = LVI_RAT(WILE_ABS(@1.v.irv.num), WILE_ABS(@1.v.irv.den));"
-	    "break;"
-	    "case LV_REAL:"
-	    "@@ = LVI_REAL(WILE_ABS(@1.v.rv));"
-	    "break;"
-	    "case LV_CMPLX:"
-	    "@@ = LVI_REAL(CABS(@1.v.cv));"
-	    "break;"
-	    "default:"
-	    "wile_exception(\"abs\", \"@L\", \"got a non-numeric argument\");"
-	    "}")))
+	    #<< HEREDOC
+	    >switch (@1.vt) {
+	    >case LV_INT:
+	    >@@ = LVI_INT(WILE_ABS(@1.v.iv));
+	    >break;
+	    >case LV_RAT:
+	    >@@ = LVI_RAT(WILE_ABS(@1.v.irv.num), WILE_ABS(@1.v.irv.den));
+	    >break;
+	    >case LV_REAL:
+	    >@@ = LVI_REAL(WILE_ABS(@1.v.rv));
+	    >break;
+	    >case LV_CMPLX:
+	    >@@ = LVI_REAL(CABS(@1.v.cv));
+	    >break;
+	    >default:
+	    >wile_exception("abs", "@L", "got a non-numeric argument");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'sign "expects one real-valued argument and returns its sign, -1,0,+1 according to whether the value is negative, zero, or positive"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "switch (@1.vt) {"
-	    "case LV_INT:"
-	    "@@ = LVI_INT(WILE_SIGN(@1.v.iv));"
-	    "break;"
-	    "case LV_RAT:"
-	    "@@ = LVI_INT(WILE_SIGN(@1.v.irv.num));"
-	    "if (@1.v.irv.den < 0) {"
-	    "@@.v.iv = -@@.v.iv;"
-	    "}"
-	    "break;"
-	    "case LV_REAL:"
-	    "@@ = LVI_INT(WILE_SIGN(@1.v.rv));"
-	    "break;"
-	    "default:"
-	    "wile_exception(\"sign\", \"@L\", \"got a non-real-valued argument\");"
-	    "}")))
+	    #<< HEREDOC
+	    >switch (@1.vt) {
+	    >case LV_INT:
+	    >@@ = LVI_INT(WILE_SIGN(@1.v.iv));
+	    >break;
+	    >case LV_RAT:
+	    >@@ = LVI_INT(WILE_SIGN(@1.v.irv.num));
+	    >if (@1.v.irv.den < 0) {
+	    >@@.v.iv = -@@.v.iv;
+	    >}
+	    >break;
+	    >case LV_REAL:
+	    >@@ = LVI_INT(WILE_SIGN(@1.v.rv));
+	    >break;
+	    >default:
+	    >wile_exception("sign", "@L", "got a non-real-valued argument");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'numerator "expects one rational value and returns its numerator"
 	 'prim 1
@@ -1430,55 +1570,61 @@
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "switch (@1.vt) {"
-	    "case LV_INT:"
-	    "@@ = LVI_INT(-@1.v.iv);"
-	    "break;"
-	    "case LV_RAT:"
-	    "if (@1.v.irv.den >= 0) {"
-	    "@@ = LVI_RAT(-@1.v.irv.num, @1.v.irv.den);"
-	    "} else {"
-	    "@@ = LVI_RAT(@1.v.irv.num, -@1.v.irv.den);"
-	    "}"
-	    "break;"
-	    "case LV_REAL:"
-	    "@@ = LVI_REAL(-@1.v.rv);"
-	    "break;"
-	    "case LV_CMPLX:"
-	    "@@ = LVI_CMPLX2(-CREAL(@1.v.cv), -CIMAG(@1.v.cv));"
-	    "break;"
-	    "default:"
-	    "wile_exception(\"negative\", \"@L\", \"got a non-numeric argument\");"
-	    "}")))
+	    #<< HEREDOC
+	    >switch (@1.vt) {
+	    >case LV_INT:
+	    >@@ = LVI_INT(-@1.v.iv);
+	    >break;
+	    >case LV_RAT:
+	    >if (@1.v.irv.den >= 0) {
+	    >@@ = LVI_RAT(-@1.v.irv.num, @1.v.irv.den);
+	    >} else {
+	    >@@ = LVI_RAT(@1.v.irv.num, -@1.v.irv.den);
+	    >}
+	    >break;
+	    >case LV_REAL:
+	    >@@ = LVI_REAL(-@1.v.rv);
+	    >break;
+	    >case LV_CMPLX:
+	    >@@ = LVI_CMPLX2(-CREAL(@1.v.cv), -CIMAG(@1.v.cv));
+	    >break;
+	    >default:
+	    >wile_exception("negative", "@L", "got a non-numeric argument");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'reciprocal  "expects one number and returns its reciprocal"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "switch (@1.vt) {"
-	    "case LV_INT:"
-	    "if (@1.v.iv < 0) {"
-	    "@@ = LVI_RAT(-1, -@1.v.iv);"
-	    "} else {"
-	    "@@ = LVI_RAT(1, @1.v.iv);"
-	    "}"
-	    "break;"
-	    "case LV_RAT:"
-	    "if (@1.v.irv.num < 0) {"
-	    "@@ = LVI_RAT(-@1.v.irv.den, -@1.v.irv.num);"
-	    "} else {"
-	    "@@ = LVI_RAT(@1.v.irv.den, @1.v.irv.num);"
-	    "}"
-	    "break;"
-	    "case LV_REAL:"
-	    "@@ = LVI_REAL(1.0/@1.v.rv);"
-	    "break;"
-	    "case LV_CMPLX:"
-	    "@@ = LVI_CMPLX1(1.0/@1.v.cv);"
-	    "break;"
-	    "default:"
-	    "wile_exception(\"reciprocal\", \"@L\", \"got a non-numeric argument\");"
-	    "}")))
+	    #<< HEREDOC
+	    >switch (@1.vt) {
+	    >case LV_INT:
+	    >if (@1.v.iv < 0) {
+	    >@@ = LVI_RAT(-1, -@1.v.iv);
+	    >} else {
+	    >@@ = LVI_RAT(1, @1.v.iv);
+	    >}
+	    >break;
+	    >case LV_RAT:
+	    >if (@1.v.irv.num < 0) {
+	    >@@ = LVI_RAT(-@1.v.irv.den, -@1.v.irv.num);
+	    >} else {
+	    >@@ = LVI_RAT(@1.v.irv.den, @1.v.irv.num);
+	    >}
+	    >break;
+	    >case LV_REAL:
+	    >@@ = LVI_REAL(1.0/@1.v.rv);
+	    >break;
+	    >case LV_CMPLX:
+	    >@@ = LVI_CMPLX1(1.0/@1.v.cv);
+	    >break;
+	    >default:
+	    >wile_exception("reciprocal", "@L", "got a non-numeric argument");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'i+ "expects two integer-typed numbers and returns their sum, also as an integer-typed number"
 	 'prim 2
@@ -1520,70 +1666,85 @@
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
-	    "if (@2.v.iv < 0) {"
-	    "@@ = LVI_RAT(-@1.v.iv, -@2.v.iv);"
-	    "} else {"
-	    "@@ = LVI_RAT(@1.v.iv, @2.v.iv);"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@2.v.iv < 0) {
+	    >@@ = LVI_RAT(-@1.v.iv, -@2.v.iv);
+	    >} else {
+	    >@@ = LVI_RAT(@1.v.iv, @2.v.iv);
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'q+ "expects two rational-typed numbers and returns their sum, also as a rational-typed number"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
-	    "{"
-	    "lisp_int_t n, d, g;"
-	    "n = @1.v.irv.num * @2.v.irv.den + @2.v.irv.num * @1.v.irv.den;"
-	    "d = @1.v.irv.den * @2.v.irv.den;"
-	    "g = lgcd(n, d);"
-	    "n /= g;"
-	    "d /= g;"
-	    "@@ = LVI_RAT(n, d);"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >lisp_int_t n, d, g;
+	    >n = @1.v.irv.num * @2.v.irv.den + @2.v.irv.num * @1.v.irv.den;
+	    >d = @1.v.irv.den * @2.v.irv.den;
+	    >g = lgcd(n, d);
+	    >n /= g;
+	    >d /= g;
+	    >@@ = LVI_RAT(n, d);
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'q- "expects two rational-typed numbers and returns their difference, also as a rational-typed number"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
-	    "{"
-	    "lisp_int_t n, d, g;"
-	    "n = @1.v.irv.num * @2.v.irv.den - @2.v.irv.num * @1.v.irv.den;"
-	    "d = @1.v.irv.den * @2.v.irv.den;"
-	    "g = lgcd(n, d);"
-	    "n /= g;"
-	    "d /= g;"
-	    "@@ = LVI_RAT(n, d);"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >lisp_int_t n, d, g;
+	    >n = @1.v.irv.num * @2.v.irv.den - @2.v.irv.num * @1.v.irv.den;
+	    >d = @1.v.irv.den * @2.v.irv.den;
+	    >g = lgcd(n, d);
+	    >n /= g;
+	    >d /= g;
+	    >@@ = LVI_RAT(n, d);
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'q* "expects two rational-typed numbers and returns their product, also as a rational-typed number"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
-	    "{"
-	    "lisp_int_t n, d, g;"
-	    "n = @1.v.irv.num * @2.v.irv.num;"
-	    "d = @1.v.irv.den * @2.v.irv.den;"
-	    "g = lgcd(n, d);"
-	    "n /= g;"
-	    "d /= g;"
-	    "@@ = LVI_RAT(n, d);"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >lisp_int_t n, d, g;
+	    >n = @1.v.irv.num * @2.v.irv.num;
+	    >d = @1.v.irv.den * @2.v.irv.den;
+	    >g = lgcd(n, d);
+	    >n /= g;
+	    >d /= g;
+	    >@@ = LVI_RAT(n, d);
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'q/ "expects two rational-typed numbers and returns their ratio, also as a rational-typed number"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
-	    "{"
-	    "lisp_int_t n, d, g;"
-	    "n = @1.v.irv.num * @2.v.irv.den;"
-	    "d = @1.v.irv.den * @2.v.irv.num;"
-	    "g = lgcd(n, d);"
-	    "if (d < 0) {"
-	    "g = -g;"
-	    "}"
-	    "n /= g;"
-	    "d /= g;"
-	    "@@ = LVI_RAT(n, d);"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >lisp_int_t n, d, g;
+	    >n = @1.v.irv.num * @2.v.irv.den;
+	    >d = @1.v.irv.den * @2.v.irv.num;
+	    >g = lgcd(n, d);
+	    >if (d < 0) {
+	    >g = -g;
+	    >}
+	    >n /= g;
+	    >d /= g;
+	    >@@ = LVI_RAT(n, d);
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'r+ "expects two real-typed numbers and returns their sum, also as a real-typed number"
 	 'prim 2
@@ -1644,22 +1805,28 @@
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
-	    "if (@1.v.irv.num * @2.v.irv.den < @2.v.irv.num * @1.v.irv.den) {"
-	    "@@ = @1;"
-	    "} else {"
-	    "@@ = @2;"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.v.irv.num * @2.v.irv.den < @2.v.irv.num * @1.v.irv.den) {
+	    >@@ = @1;
+	    >} else {
+	    >@@ = @2;
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'max/q
 	 "expects two rational-typed values, and returns the larger of the two"
 	 'prim 2
 	 (lambda (r a1 a2)
 	   (emit-code
-	    "if (@1.v.irv.num * @2.v.irv.den > @2.v.irv.num * @1.v.irv.den) {"
-	    "@@ = @1;"
-	    "} else {"
-	    "@@ = @2;"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.v.irv.num * @2.v.irv.den > @2.v.irv.num * @1.v.irv.den) {
+	    >@@ = @1;
+	    >} else {
+	    >@@ = @2;
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'min/r
 	 "expects two real-typed values, and returns the smaller of the two"
@@ -1683,23 +1850,26 @@
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "switch (@1.vt) {"
-	    "case LV_INT:"
-	    "@@ = LVI_INT(0);"
-	    "break;"
-	    "case LV_RAT:"
-	    "@@ = LVI_INT(1);"
-	    "break;"
-	    "case LV_REAL:"
-	    "@@ = LVI_INT(2);"
-	    "break;"
-	    "case LV_CMPLX:"
-	    "@@ = LVI_INT(3);"
-	    "break;"
-	    "default:"
-	    "@@ = LVI_INT(4);"
-	    "break;"
-	    "}")))
+	    #<< HEREDOC
+	    >switch (@1.vt) {
+	    >case LV_INT:
+	    >@@ = LVI_INT(0);
+	    >break;
+	    >case LV_RAT:
+	    >@@ = LVI_INT(1);
+	    >break;
+	    >case LV_REAL:
+	    >@@ = LVI_INT(2);
+	    >break;
+	    >case LV_CMPLX:
+	    >@@ = LVI_INT(3);
+	    >break;
+	    >default:
+	    >@@ = LVI_INT(4);
+	    >break;
+	    >}
+	    >HEREDOC
+	    )))
 
    ;;; ditto for vector
 
@@ -1709,44 +1879,47 @@
 	 (lambda (r aL a1)
 	   (let ((aa (new-svar 'lbl)))
 	     (emit-code
-	      "{"
-	      "if (@1.vt != LV_VECTOR) {"
-	      "wile_exception(\"vector-number/type\", \"@L\", \"input is not a vector\");"
-	      "}"
-	      "int ty = 0;"
-	      "size_t i;"
-	      "for (i = 0; i < @1.v.vec.capa; ++i) {"
-	      "if (@1.v.vec.arr[i]) {"
-	      "switch (@1.v.vec.arr[i]->vt) {"
-	      "case LV_INT:"
-	      "break;"
-	      "case LV_RAT:"
-	      "if (ty < 1) {"
-	      "ty = 1;"
-	      "}"
-	      "break;"
-	      "case LV_REAL:"
-	      "if (ty < 2) {"
-	      "ty = 2;"
-	      "}"
-	      "break;"
-	      "case LV_CMPLX:"
-	      "if (ty < 3) {"
-	      "ty = 3;"
-	      "}"
-	      "break;"
-	      "default:"
-	      "ty = 4;"
-	      "goto @a;"
-	      "}"
-	      "} else {"
-	      "ty = 4;"
-	      "goto @a;"
-	      "}"
-	      "}"
-	      "@a:"
-	      "@@ = LVI_INT(ty);"
-	      "}"))))
+	      #<< HEREDOC
+	      >{
+	      >if (@1.vt != LV_VECTOR) {
+	      >wile_exception("vector-number/type", "@L", "input is not a vector");
+	      >}
+	      >int ty = 0;
+	      >size_t i;
+	      >for (i = 0; i < @1.v.vec.capa; ++i) {
+	      >if (@1.v.vec.arr[i]) {
+	      >switch (@1.v.vec.arr[i]->vt) {
+	      >case LV_INT:
+	      >break;
+	      >case LV_RAT:
+	      >if (ty < 1) {
+	      >ty = 1;
+	      >}
+	      >break;
+	      >case LV_REAL:
+	      >if (ty < 2) {
+	      >ty = 2;
+	      >}
+	      >break;
+	      >case LV_CMPLX:
+	      >if (ty < 3) {
+	      >ty = 3;
+	      >}
+	      >break;
+	      >default:
+	      >ty = 4;
+	      >goto @a;
+	      >}
+	      >} else {
+	      >ty = 4;
+	      >goto @a;
+	      >}
+	      >}
+	      >@a:
+	      >@@ = LVI_INT(ty);
+	      >}
+	      >HEREDOC
+	      ))))
 
    ;;; promote ints to rationals, leave all else untouched
 
@@ -1755,11 +1928,14 @@
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "if (@1.vt == LV_INT) {"
-	    "@@ = LVI_RAT(@1.v.iv, 1);"
-	    "} else {"
-	    "@@ = @1;"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt == LV_INT) {
+	    >@@ = LVI_RAT(@1.v.iv, 1);
+	    >} else {
+	    >@@ = @1;
+	    >}
+	    >HEREDOC
+	    )))
 
    ;;; ditto for vector
 
@@ -1768,18 +1944,21 @@
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "{"
-	    "if (@1.vt != LV_VECTOR) {"
-	    "wile_exception(\"vector-promote/rat!\", \"@L\", \"input is not a vector\");"
-	    "}"
-	    "size_t i;"
-	    "for (i = 0; i < @1.v.vec.capa; ++i) {"
-	    "if (@1.v.vec.arr[i] && @1.v.vec.arr[i]->vt == LV_INT) {"
-	    "*(@1.v.vec.arr[i]) = LVI_RAT(@1.v.vec.arr[i]->v.iv, 1);"
-	    "}"
-	    "}"
-	    "@@ = @1;"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >if (@1.vt != LV_VECTOR) {
+	    >wile_exception("vector-promote/rat!", "@L", "input is not a vector");
+	    >}
+	    >size_t i;
+	    >for (i = 0; i < @1.v.vec.capa; ++i) {
+	    >if (@1.v.vec.arr[i] && @1.v.vec.arr[i]->vt == LV_INT) {
+	    >*(@1.v.vec.arr[i]) = LVI_RAT(@1.v.vec.arr[i]->v.iv, 1);
+	    >}
+	    >}
+	    >@@ = @1;
+	    >}
+	    >HEREDOC
+	    )))
 
    ;;; promote ints and rationals to reals, leave all else untouched
 
@@ -1794,22 +1973,25 @@
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "{"
-	    "if (@1.vt != LV_VECTOR) {"
-	    "wile_exception(\"vector-promote/real!\", \"@L\", \"input is not a vector\");"
-	    "}"
-	    "size_t i;"
-	    "for (i = 0; i < @1.v.vec.capa; ++i) {"
-	    "if (@1.v.vec.arr[i]) {"
-	    "if (@1.v.vec.arr[i]->vt == LV_INT) {"
-	    "*(@1.v.vec.arr[i]) = LVI_REAL((lisp_real_t) (@1.v.vec.arr[i]->v.iv));"
-	    "} else if (@1.v.vec.arr[i]->vt == LV_RAT) {"
-	    "*(@1.v.vec.arr[i]) = LVI_REAL(LV_RAT2REAL(*(@1.v.vec.arr[i])));"
-	    "}"
-	    "}"
-	    "@@ = @1;"
-	    "}"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >if (@1.vt != LV_VECTOR) {
+	    >wile_exception("vector-promote/real!", "@L", "input is not a vector");
+	    >}
+	    >size_t i;
+	    >for (i = 0; i < @1.v.vec.capa; ++i) {
+	    >if (@1.v.vec.arr[i]) {
+	    >if (@1.v.vec.arr[i]->vt == LV_INT) {
+	    >*(@1.v.vec.arr[i]) = LVI_REAL((lisp_real_t) (@1.v.vec.arr[i]->v.iv));
+	    >} else if (@1.v.vec.arr[i]->vt == LV_RAT) {
+	    >*(@1.v.vec.arr[i]) = LVI_REAL(LV_RAT2REAL(*(@1.v.vec.arr[i])));
+	    >}
+	    >}
+	    >}
+	    >@@ = @1;
+	    >}
+	    >HEREDOC
+	    )))
 
    ;;; promote ints rationals and reals to complex, leave all else untouched
 
@@ -1817,20 +1999,23 @@
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "switch (@1.vt) {"
-	    "case LV_INT:"
-	    "@@ = LVI_CMPLX2((lisp_real_t) @1.v.iv, 0);"
-	    "break;"
-	    "case LV_RAT:"
-	    "@@ = LVI_CMPLX2(LV_RAT2REAL(@1), 0);"
-	    "break;"
-	    "case LV_REAL:"
-	    "@@ = LVI_CMPLX2(@1.v.rv, 0);"
-	    "break;"
-	    "default:"
-	    "@@ = @1;"
-	    "break;"
-	    "}")))
+	    #<< HEREDOC
+	    >switch (@1.vt) {
+	    >case LV_INT:
+	    >@@ = LVI_CMPLX2((lisp_real_t) @1.v.iv, 0);
+	    >break;
+	    >case LV_RAT:
+	    >@@ = LVI_CMPLX2(LV_RAT2REAL(@1), 0);
+	    >break;
+	    >case LV_REAL:
+	    >@@ = LVI_CMPLX2(@1.v.rv, 0);
+	    >break;
+	    >default:
+	    >@@ = @1;
+	    >break;
+	    >}
+	    >HEREDOC
+	    )))
 
    ;;; ditto for vector
 
@@ -1839,24 +2024,27 @@
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "{"
-	    "if (@1.vt != LV_VECTOR) {"
-	    "wile_exception(\"vector-promote/cmplx!\", \"@L\", \"input is not a vector\");"
-	    "}"
-	    "size_t i;"
-	    "for (i = 0; i < @1.v.vec.capa; ++i) {"
-	    "if (@1.v.vec.arr[i]) {"
-	    "if (@1.v.vec.arr[i]->vt == LV_INT) {"
-	    "*(@1.v.vec.arr[i]) = LVI_CMPLX2((lisp_real_t) (@1.v.vec.arr[i]->v.iv), 0.0);"
-	    "} else if (@1.v.vec.arr[i]->vt == LV_RAT) {"
-	    "*(@1.v.vec.arr[i]) = LVI_CMPLX2(LV_RAT2REAL(*(@1.v.vec.arr[i])), 0.0);"
-	    "} else if (@1.v.vec.arr[i]->vt == LV_REAL) {"
-	    "*(@1.v.vec.arr[i]) = LVI_CMPLX2(@1.v.vec.arr[i]->v.rv, 0.0);"
-	    "}"
-	    "}"
-	    "@@ = @1;"
-	    "}"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >if (@1.vt != LV_VECTOR) {
+	    >wile_exception("vector-promote/cmplx!", "@L", "input is not a vector");
+	    >}
+	    >size_t i;
+	    >for (i = 0; i < @1.v.vec.capa; ++i) {
+	    >if (@1.v.vec.arr[i]) {
+	    >if (@1.v.vec.arr[i]->vt == LV_INT) {
+	    >*(@1.v.vec.arr[i]) = LVI_CMPLX2((lisp_real_t) (@1.v.vec.arr[i]->v.iv), 0.0);
+	    >} else if (@1.v.vec.arr[i]->vt == LV_RAT) {
+	    >*(@1.v.vec.arr[i]) = LVI_CMPLX2(LV_RAT2REAL(*(@1.v.vec.arr[i])), 0.0);
+	    >} else if (@1.v.vec.arr[i]->vt == LV_REAL) {
+	    >*(@1.v.vec.arr[i]) = LVI_CMPLX2(@1.v.vec.arr[i]->v.rv, 0.0);
+	    >}
+	    >}
+	    >}
+	    >@@ = @1;
+	    >}
+	    >HEREDOC
+	    )))
 
    ;;; constructor to make numbers in rational format; it is UNSAFE!
    ;;; it can create numbers in non-canonical formats, 3/6, and also
@@ -1888,23 +2076,26 @@
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "{"
-	    "lisp_int_t v, c;"
-	    "v = @1.v.iv;"
-	    "if (v < 0) {"
-	    "v = -v;"
-	    "}"
-	    "if (v == 0) {"
-	    "c = 0;"
-	    "} else {"
-	    "c = -1;"
-	    "while (v > 0) {"
-	    "v /= 2;"
-	    "++c;"
-	    "}"
-	    "}"
-	    "@@ = LVI_INT(c);"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >lisp_int_t v, c;
+	    >v = @1.v.iv;
+	    >if (v < 0) {
+	    >v = -v;
+	    >}
+	    >if (v == 0) {
+	    >c = 0;
+	    >} else {
+	    >c = -1;
+	    >while (v > 0) {
+	    >v /= 2;
+	    >++c;
+	    >}
+	    >}
+	    >@@ = LVI_INT(c);
+	    >}
+	    >HEREDOC
+	    )))
 
    (list '< "expects two real-valued numbers and returns #t if the first is less than the second, #f otherwise"
 	 'priml 2
@@ -2115,94 +2306,115 @@
 	 'priml
 	 1 (lambda (r aL a1)
 	     (emit-code
-	      "if (@1.vt != LV_INT || @1.v.iv < 0) {"
-	      "wile_exception(\"string-create\", \"@L\", \"input is not a non-negative integer\");"
-	      "}"
-	      "@@.vt = LV_STRING;"
-	      "@@.origin = @1.origin;"
-	      "@@.v.str = LISP_ALLOC(char, 1 + @1.v.iv);"
-	      "memset(@@.v.str, 'X', @1.v.iv);"
-	      "@@.v.str[@1.v.iv] = '\\0';"))
+	      #<< HEREDOC
+	      >if (@1.vt != LV_INT || @1.v.iv < 0) {
+	      >wile_exception("string-create", "@L", "input is not a non-negative integer");
+	      >}
+	      >@@.vt = LV_STRING;
+	      >@@.origin = @1.origin;
+	      >@@.v.str = LISP_ALLOC(char, 1 + @1.v.iv);
+	      >memset(@@.v.str, 'X', @1.v.iv);
+	      >@@.v.str[@1.v.iv] = '\0';
+	      >HEREDOC
+	      ))
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
-	      "if (@1.vt != LV_INT || @1.v.iv < 0) {"
-	      "wile_exception(\"string-create\", \"@L\", \"first input is not a non-negative integer\");"
-	      "}"
-	      "if (@2.vt != LV_CHAR || @2.v.chr == '\\0') {"
-	      "wile_exception(\"string-create\", \"@L\", \"second input is not a valid character\");"
-	      "}"
-	      "@@.vt = LV_STRING;"
-	      "@@.origin = @1.origin;"
-	      "@@.v.str = LISP_ALLOC(char, 1 + @1.v.iv);"
-	      "memset(@@.v.str, @2.v.chr, @1.v.iv);"
-	      "@@.v.str[@1.v.iv] = '\\0';")))
+	      #<< HEREDOC
+	      >if (@1.vt != LV_INT || @1.v.iv < 0) {
+	      >wile_exception("string-create", "@L", "first input is not a non-negative integer");
+	      >}
+	      >if (@2.vt != LV_CHAR || @2.v.chr == '\0') {
+	      >wile_exception("string-create", "@L", "second input is not a valid character");
+	      >}
+	      >@@.vt = LV_STRING;
+	      >@@.origin = @1.origin;
+	      >@@.v.str = LISP_ALLOC(char, 1 + @1.v.iv);
+	      >memset(@@.v.str, @2.v.chr, @1.v.iv);
+	      >@@.v.str[@1.v.iv] = '\0';
+	      >HEREDOC
+	      )))
 
    (list 'string-downcase "expects one string argument and returns a newly-allocated lower-cased version of the input"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "@@ = LVI_STRING(@1.v.str);"
-	    "{"
-	    "char* sp = @@.v.str;"
-	    "while (*sp) {"
-	    "*sp = tolower(*sp);"
-	    "++sp;"
-	    "}"
-	    "}")))
+	    #<< HEREDOC
+	    >@@ = LVI_STRING(@1.v.str);
+	    >{
+	    >char* sp = @@.v.str;
+	    >while (*sp) {
+	    >*sp = tolower(*sp);
+	    >++sp;
+	    >}
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'string-upcase "expects one string argument and returns a newly-allocated upper-cased version of the input"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "@@ = LVI_STRING(@1.v.str);"
-	    "{"
-	    "char* sp = @@.v.str;"
-	    "while (*sp) {"
-	    "*sp = toupper(*sp);"
-	    "++sp;"
-	    "}"
-	    "}")))
+	    #<< HEREDOC
+	    >@@ = LVI_STRING(@1.v.str);
+	    >{
+	    >char* sp = @@.v.str;
+	    >while (*sp) {
+	    >*sp = toupper(*sp);
+	    >++sp;
+	    >}
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'string-copy
 	 "expects a string, an optional start index, and an optional end index, and returns a newly-allocated copy of the substring from the start to but not including the end index; if the end index is not specified, it defaults to the end of the string, and if the start index is also not specified, it defaults to the beginning of the string"
 	 'priml
 	 1 (lambda (r aL a1)
 	     (emit-code
-	      "if (@1.vt != LV_STRING) {"
-	      "wile_exception(\"string-copy\", \"@L\", \"expects a string input\");"
-	      "}"
-	      "@@ = LVI_STRING(@1.v.str);"))
+	      #<< HEREDOC
+	      >if (@1.vt != LV_STRING) {
+	      >wile_exception("string-copy", "@L", "expects a string input");
+	      >}
+	      >@@ = LVI_STRING(@1.v.str);
+	      >HEREDOC
+	      ))
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
-	      "if (@1.vt != LV_STRING || @2.vt != LV_INT) {"
-	      "wile_exception(\"string-copy\", \"@L\", \"expects a string and an integer input\");"
-	      "}"
-	      "{"
-	      "size_t len = strlen(@1.v.str);"
-	      "if (@2.v.iv < 0 || (size_t) @2.v.iv >= len) {"
-	      "wile_exception(\"string-copy\", \"@L\", \"start index is out of range\");"
-	      "}"
-	      "@@ = LVI_STRING(@1.v.str + @2.v.iv);"
-	      "}"))
+	      #<< HEREDOC
+	      >if (@1.vt != LV_STRING || @2.vt != LV_INT) {
+	      >wile_exception("string-copy", "@L", "expects a string and an integer input");
+	      >}
+	      >{
+	      >size_t len = strlen(@1.v.str);
+	      >if (@2.v.iv < 0 || (size_t) @2.v.iv >= len) {
+	      >wile_exception("string-copy", "@L", "start index is out of range");
+	      >}
+	      >@@ = LVI_STRING(@1.v.str + @2.v.iv);
+	      >}
+	      >HEREDOC
+	      ))
 	 3 (lambda (r aL a1 a2 a3)
 	     (emit-code
-	      "if (@1.vt != LV_STRING || @2.vt != LV_INT || @3.vt != LV_INT) {"
-	      "wile_exception(\"string-copy\", \"@L\", \"expects a string and two integer inputs\");"
-	      "}"
-	      "{"
-	      "size_t len = strlen(@1.v.str);"
-	      "if (@2.v.iv < 0 || (size_t) @2.v.iv >= len) {"
-	      "wile_exception(\"string-copy\", \"@L\", \"start index is out of range\");"
-	      "}"
-	      "if (@3.v.iv < @2.v.iv || (size_t) @3.v.iv >= len) {"
-	      "wile_exception(\"string-copy\", \"@L\", \"end index is out of range\");"
-	      "}"
-	      "@@.vt = LV_STRING;"
-	      "@@.origin = @1.origin;"
-	      "@@.v.str = LISP_ALLOC(char, 1 + @3.v.iv - @2.v.iv);"
-	      "memcpy(@@.v.str, @1.v.str + @2.v.iv, @3.v.iv - @2.v.iv);"
-	      "@@.v.str[@3.v.iv - @2.v.iv] = '\\0';"
-	      "}")))
+	      #<< HEREDOC
+	      >if (@1.vt != LV_STRING || @2.vt != LV_INT || @3.vt != LV_INT) {
+	      >wile_exception("string-copy", "@L", "expects a string and two integer inputs");
+	      >}
+	      >{
+	      >size_t len = strlen(@1.v.str);
+	      >if (@2.v.iv < 0 || (size_t) @2.v.iv >= len) {
+	      >wile_exception("string-copy", "@L", "start index is out of range");
+	      >}
+	      >if (@3.v.iv < @2.v.iv || (size_t) @3.v.iv > len) {
+	      >wile_exception("string-copy", "@L", "end index is out of range");
+	      >}
+	      >@@.vt = LV_STRING;
+	      >@@.origin = @1.origin;
+	      >@@.v.str = LISP_ALLOC(char, 1 + @3.v.iv - @2.v.iv);
+	      >memcpy(@@.v.str, @1.v.str + @2.v.iv, @3.v.iv - @2.v.iv);
+	      >@@.v.str[@3.v.iv - @2.v.iv] = '\0';
+	      >}
+	      >HEREDOC
+	      )))
 
    (list 'string-length "expects one string argument and returns its length"
 	 'prim 1
@@ -2213,61 +2425,73 @@
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "if (@1.vt != LV_STRING) {"
-	    "wile_exception(\"string-ref\", \"@L\", \"expects a string input\");"
-	    "}"
-	    "if (@2.v.iv < 0 || (size_t) @2.v.iv >= strlen(@1.v.str)) {"
-	    "wile_exception(\"string-ref\", \"@L\", \"index is out of range\");"
-	    "}"
-	    "@@ = LVI_CHAR(@1.v.str[@2.v.iv]);")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_STRING || @2.vt != LV_INT) {
+	    >wile_exception("string-ref", "@L", "expects a string input");
+	    >}
+	    >if (@2.v.iv < 0 || (size_t) @2.v.iv >= strlen(@1.v.str)) {
+	    >wile_exception("string-ref", "@L", "got bad index value");
+	    >}
+	    >@@ = LVI_CHAR(@1.v.str[@2.v.iv]);
+	    >HEREDOC
+	    )))
 
    (list 'string-find-first-char
 	 "expects one string and one character, and returns the index of the left-most occurrence of that character in the string, or #f if the character does not occur in the string"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "if (@1.vt != LV_STRING || @2.vt != LV_CHAR) {"
-	    "wile_exception(\"string-find-first-char\", \"@L\", \"expects a string and a character input\");"
-	    "}"
-	    "{"
-	    "char* pos = strchr(@1.v.str, @2.v.chr);"
-	    "if (pos) {"
-	    "@@ = LVI_INT(pos - @1.v.str);"
-	    "} else {"
-	    "@@ = LVI_BOOL(false);"
-	    "}"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_STRING || @2.vt != LV_CHAR) {
+	    >wile_exception("string-find-first-char", "@L", "expects a string and a character input");
+	    >}
+	    >{
+	    >char* pos = strchr(@1.v.str, @2.v.chr);
+	    >if (pos) {
+	    >@@ = LVI_INT(pos - @1.v.str);
+	    >} else {
+	    >@@ = LVI_BOOL(false);
+	    >}
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'string-find-last-char
 	 "expects one string and one character, and returns the index of the right-most occurrence of that character in the string, or #f if the character does not occur in the string"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "if (@1.vt != LV_STRING || @2.vt != LV_CHAR) {"
-	    "wile_exception(\"string-find-last-char\", \"@L\", \"expects a string and a character input\");"
-	    "}"
-	    "{"
-	    "char* pos = strrchr(@1.v.str, @2.v.chr);"
-	    "if (pos) {"
-	    "@@ = LVI_INT(pos - @1.v.str);"
-	    "} else {"
-	    "@@ = LVI_BOOL(false);"
-	    "}"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_STRING || @2.vt != LV_CHAR) {
+	    >wile_exception("string-find-last-char", "@L", "expects a string and a character input");
+	    >}
+	    >{
+	    >char* pos = strrchr(@1.v.str, @2.v.chr);
+	    >if (pos) {
+	    >@@ = LVI_INT(pos - @1.v.str);
+	    >} else {
+	    >@@ = LVI_BOOL(false);
+	    >}
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'string-set!
 	 "expects a string, an index, and a character, and sets that position of the string to the specified character"
 	 'priml 3
 	 (lambda (r aL a1 a2 a3)
 	   (emit-code
-	    "if (@1.vt != LV_STRING || @2.vt != LV_INT || @3.vt != LV_CHAR) {"
-	    "wile_exception(\"string-set!\", \"@L\", \"expects a string, an integer, and a character\");"
-	    "}"
-	    "if (@2.v.iv < 0 || (size_t) @2.v.iv >= strlen(@1.v.str)) {"
-	    "wile_exception(\"string-set!\", \"@L\", \"index is out of range\");"
-	    "}"
-	    "@1.v.str[@2.v.iv] = @3.v.chr;"
-	    "@@ = @1;")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_STRING || @2.vt != LV_INT || @3.vt != LV_CHAR) {
+	    >wile_exception("string-set!", "@L", "expects a string, an integer, and a character");
+	    >}
+	    >if (@2.v.iv < 0 || (size_t) @2.v.iv >= strlen(@1.v.str)) {
+	    >wile_exception("string-set!", "@L", "index is out of range");
+	    >}
+	    >@1.v.str[@2.v.iv] = @3.v.chr;
+	    >@@ = @1;
+	    >HEREDOC
+	    )))
 
    (list 'string-reverse
 	 "expects one string and returns the front-to-back reverse of it"
@@ -2285,6 +2509,9 @@
    (list 'string-ci-hash-64
 	 "expects one string and returns the 64-bit FNV hash of the lowercase version of it it"
 	 'prim 1 "wile_string_ci_hash_64")
+   (list 'bytevector-hash-64
+	 "expects one bytevector and returns the 64-bit FNV hash of it"
+	 'prim 1 "wile_bytevector_hash_64")
 
    (list 'char->integer
 	 "expects one character and returns its integer code equivalent"
@@ -2398,48 +2625,57 @@
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt == LV_REAL) {"
-	    "@@ = LVI_REAL(FLOOR(@1.v.rv));"
-	    "} else if (@1.vt == LV_RAT) {"
-	    ;;; TODO: keep this as an integer division & return quotient?
-	    "@@ = LVI_INT(FLOOR(LV_RAT2REAL(@1)));"
-	    "} else if (@1.vt == LV_INT) {"
-	    "@@ = LVI_INT(@1.v.iv);"
-	    "} else {"
-	    "wile_exception(\"floor\", \"@L\", \"expects one real-valued argument\");"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt == LV_REAL) {
+	    >@@ = LVI_REAL(FLOOR(@1.v.rv));
+	    >} else if (@1.vt == LV_RAT) {
+	    >// TODO: keep this as an integer division & return quotient?
+	    >@@ = LVI_INT(FLOOR(LV_RAT2REAL(@1)));
+	    >} else if (@1.vt == LV_INT) {
+	    >@@ = LVI_INT(@1.v.iv);
+	    >} else {
+	    >wile_exception("floor", "@L", "expects one real-valued argument");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'ceiling
 	 "expects one real-valued number and returns its ceiling. if the input is integer- or rational-typed, the output is integer-typed; otherwise, it is real"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt == LV_REAL) {"
-	    "@@ = LVI_REAL(CEIL(@1.v.rv));"
-	    "} else if (@1.vt == LV_RAT) {"
-	    ;;; TODO: keep this as an integer division & return quotient?
-	    "@@ = LVI_INT(CEIL(LV_RAT2REAL(@1)));"
-	    "} else if (@1.vt == LV_INT) {"
-	    "@@ = LVI_INT(@1.v.iv);"
-	    "} else {"
-	    "wile_exception(\"ceiling\", \"@L\", \"expects one real-valued argument\");"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt == LV_REAL) {
+	    >@@ = LVI_REAL(CEIL(@1.v.rv));
+	    >} else if (@1.vt == LV_RAT) {
+	    >// TODO: keep this as an integer division & return quotient?
+	    >@@ = LVI_INT(CEIL(LV_RAT2REAL(@1)));
+	    >} else if (@1.vt == LV_INT) {
+	    >@@ = LVI_INT(@1.v.iv);
+	    >} else {
+	    >wile_exception("ceiling", "@L", "expects one real-valued argument");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'round
 	 "expects one real-valued number and returns its value rounded to the nearest integer"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt == LV_REAL) {"
-	    "@@ = LVI_REAL(FLOOR(0.5 + @1.v.rv));"
-	    "} else if (@1.vt == LV_RAT) {"
-	    ;;; TODO: keep this as an integer division & return quotient?
-	    "@@ = LVI_INT(FLOOR(0.5 + LV_RAT2REAL(@1)));"
-	    "} else if (@1.vt == LV_INT) {"
-	    "@@ = LVI_INT(@1.v.iv);"
-	    "} else {"
-	    "wile_exception(\"round\", \"@L\", \"expects one real-valued argument\");"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt == LV_REAL) {
+	    >@@ = LVI_REAL(FLOOR(0.5 + @1.v.rv));
+	    >} else if (@1.vt == LV_RAT) {
+	    >// TODO: keep this as an integer division & return quotient?
+	    >@@ = LVI_INT(FLOOR(0.5 + LV_RAT2REAL(@1)));
+	    >} else if (@1.vt == LV_INT) {
+	    >@@ = LVI_INT(@1.v.iv);
+	    >} else {
+	    >wile_exception("round", "@L", "expects one real-valued argument");
+	    >}
+	    >HEREDOC
+	    )))
 
    ;;; TODO: deal with other types of inputs
    (list 'truncate
@@ -2456,17 +2692,20 @@
 	   (let ((aa (new-svar)))
 	     (promote/real aa a1)
 	     (emit-code
-	      "if (@a.vt == LV_REAL) {"
-	      "if (@a.v.rv < 0.0) {"
-	      "@@ = LVI_CMPLX2(0.0, SQRT(-@a.v.rv));"
-	      "} else {"
-	      "@@ = LVI_REAL(SQRT(@a.v.rv));"
-	      "}"
-	      "} else if (@a.vt == LV_CMPLX) {"
-	      "@@ = LVI_CMPLX1(CSQRT(@a.v.cv));"
-	      "} else {"
-	      "wile_exception(\"sqrt\", \"@L\", \"expects one numeric argument\");"
-	      "}"))))
+	      #<< HEREDOC
+	      >if (@a.vt == LV_REAL) {
+	      >if (@a.v.rv < 0.0) {
+	      >@@ = LVI_CMPLX2(0.0, SQRT(-@a.v.rv));
+	      >} else {
+	      >@@ = LVI_REAL(SQRT(@a.v.rv));
+	      >}
+	      >} else if (@a.vt == LV_CMPLX) {
+	      >@@ = LVI_CMPLX1(CSQRT(@a.v.cv));
+	      >} else {
+	      >wile_exception("sqrt", "@L", "expects one numeric argument");
+	      >}
+	      >HEREDOC
+	      ))))
 
    (list 'cbrt
 	 "expects one numeric argument and returns its cube root; real-valued inputs return real-valued results, and complex-valued inputs return complex-valued results"
@@ -2475,13 +2714,16 @@
 	   (let ((aa (new-svar)))
 	     (promote/real aa a1)
 	     (emit-code
-	      "if (@a.vt == LV_REAL) {"
-	      "@@ = LVI_REAL(CBRT(@a.v.rv));"
-	      "} else if (@a.vt == LV_CMPLX) {"
-	      "@@ = LVI_CMPLX1(CPOW(@a.v.cv, 1.0/3.0));"
-	      "} else {"
-	      "wile_exception(\"cbrt\", \"@L\", \"expects one numeric argument\");"
-	      "}"))))
+	      #<< HEREDOC
+	      >if (@a.vt == LV_REAL) {
+	      >@@ = LVI_REAL(CBRT(@a.v.rv));
+	      >} else if (@a.vt == LV_CMPLX) {
+	      >@@ = LVI_CMPLX1(CPOW(@a.v.cv, 1.0/3.0));
+	      >} else {
+	      >wile_exception("cbrt", "@L", "expects one numeric argument");
+	      >}
+	      >HEREDOC
+	      ))))
 
    (list 'exp
 	 "expects one numeric argument and returns its exponential; real-valued results are return as real-typed, and complex-valued results are complex-typed"
@@ -2496,17 +2738,20 @@
 	   (let ((aa (new-svar)))
 	     (promote/real aa a1)
 	     (emit-code
-	      "if (@a.vt == LV_REAL) {"
-	      "if (@a.v.rv >= 0.0) {"
-	      "@@ = LVI_REAL(LOG(@a.v.rv));"
-	      "} else {"
-	      "@@ = LVI_CMPLX2(LOG(-@a.v.rv), PI_L);"
-	      "}"
-	      "} else if (@a.vt == LV_CMPLX) {"
-	      "@@ = LVI_CMPLX1(CLOG(@a.v.cv));"
-	      "} else {"
-	      "wile_exception(\"log\", \"@L\", \"expects one numeric argument\");"
-	      "}"))))
+	      #<< HEREDOC
+	      >if (@a.vt == LV_REAL) {
+	      >if (@a.v.rv >= 0.0) {
+	      >@@ = LVI_REAL(LOG(@a.v.rv));
+	      >} else {
+	      >@@ = LVI_CMPLX2(LOG(-@a.v.rv), PI_L);
+	      >}
+	      >} else if (@a.vt == LV_CMPLX) {
+	      >@@ = LVI_CMPLX1(CLOG(@a.v.cv));
+	      >} else {
+	      >wile_exception("log", "@L", "expects one numeric argument");
+	      >}
+	      >HEREDOC
+	      ))))
 
    (list 'sin
 	 "expects one number and returns the sine of that number. real-valued inputs return real-typed results, complex inputs return complex results"
@@ -2605,18 +2850,21 @@
 	 (lambda (r a1)
 	   (let ((aa (new-svar)))
 	     (emit-code
-	      "{"
-	      "lval @a[2];"
-	      "int ex;"
-	      "if (ISFINITE(@1.v.rv)) {"
-	      "@a[0] = LVI_REAL(FREXP(@1.v.rv, &ex));"
-	      "} else {"
-	      "@a[0] = LVI_REAL(@1.v.rv);"
-	      "ex = 0;"
-	      "}"
-	      "@a[1] = LVI_INT(ex);"
-	      "@@ = wile_gen_list(2, @a, NULL);"
-	      "}"))))
+	      #<< HEREDOC
+	      >{
+	      >lval @a[2];
+	      >int ex;
+	      >if (ISFINITE(@1.v.rv)) {
+	      >@a[0] = LVI_REAL(FREXP(@1.v.rv, &ex));
+	      >} else {
+	      >@a[0] = LVI_REAL(@1.v.rv);
+	      >ex = 0;
+	      >}
+	      >@a[1] = LVI_INT(ex);
+	      >@@ = wile_gen_list(2, @a, NULL);
+	      >}
+	      >HEREDOC
+	      ))))
 
    (list 'fmod
 	 "expects two real-valued arguments X and Y and returns M = X - N*Y for some integer N such that M has the same sign as X and magnitude less than the magnitude of Y"
@@ -2689,17 +2937,20 @@
 	   (let ((aa (new-svar)))
 	     (promote/real+check "bessel-j" aa aL a2)
 	     (emit-code
-	      "{"
-	      "int s, n;"
-	      "n = @1.v.iv;"
-	      "if (n >= 0) {"
-	      "s = 1;"
-	      "} else {"
-	      "n = -n;"
-	      "s = (n%%2 == 0) ? 1 : -1;"
-	      "}"
-	      "@@ = LVI_REAL(s*JN(n, @a.v.rv));"
-	      "}"))))
+	      #<< HEREDOC
+	      >{
+	      >int s, n;
+	      >n = @1.v.iv;
+	      >if (n >= 0) {
+	      >s = 1;
+	      >} else {
+	      >n = -n;
+	      >s = (n%%2 == 0) ? 1 : -1;
+	      >}
+	      >@@ = LVI_REAL(s*JN(n, @a.v.rv));
+	      >}
+	      >HEREDOC
+	      ))))
 
    (list 'bessel-y
 	 "expects one integer N and one positive real-valued argument X and returns the value of the Nth-order Bessel function of the second kind at X"
@@ -2708,17 +2959,20 @@
 	   (let ((aa (new-svar)))
 	     (promote/real+check "bessel-j" aa aL a2)
 	     (emit-code
-	      "{"
-	      "int s, n;"
-	      "n = @1.v.iv;"
-	      "if (n >= 0) {"
-	      "s = 1;"
-	      "} else {"
-	      "n = -n;"
-	      "s = (n%%2 == 0) ? 1 : -1;"
-	      "}"
-	      "@@ = LVI_REAL((@a.v.rv >= 0.0) ? s*YN(n, @a.v.rv) : REAL_NAN);"
-	      "}"))))
+	      #<< HEREDOC
+	      >{
+	      >int s, n;
+	      >n = @1.v.iv;
+	      >if (n >= 0) {
+	      >s = 1;
+	      >} else {
+	      >n = -n;
+	      >s = (n%%2 == 0) ? 1 : -1;
+	      >}
+	      >@@ = LVI_REAL((@a.v.rv >= 0.0) ? s*YN(n, @a.v.rv) : REAL_NAN);
+	      >}
+	      >HEREDOC
+	      ))))
 
    ;;; TODO: maybe stick this into a function, which already exists?
    ;;; This might be a bit too big to inline. On the other hand, it's
@@ -2734,48 +2988,54 @@
 	     (promote/real aa a1)
 	     (promote/real ab a2)
 	     (emit-code
-	      "{"
-	      "lisp_cmplx_t a, g, an;"
-	      "if (@a.vt == LV_REAL) {"
-	      "a = @a.v.rv;"
-	      "} else if (@a.vt == LV_CMPLX) {"
-	      "a = @a.v.cv;"
-	      "} else {"
-	      "wile_exception(\"arithmetic-geometric-mean\", \"@L\", \"expects numeric arguments\");"
-	      "}"
-	      "if (@b.vt == LV_REAL) {"
-	      "g = @b.v.rv;"
-	      "} else if (@b.vt == LV_CMPLX) {"
-	      "g = @b.v.cv;"
-	      "} else {"
-	      "wile_exception(\"arithmetic-geometric-mean\", \"@L\", \"expects numeric arguments\");"
-	      "}"
-	      "while (CABS(a - g) > REAL_EPSILON*(CABS(a) + CABS(g))*0.5) {"
-	      "an = (a + g)*0.5;"
-	      "g = CSQRT(a*g);"
-	      "a = an;"
-	      "}"
-	      "if (CIMAG(a) == 0.0) {"
-	      "@@ = LVI_REAL(CREAL(a));"
-	      "} else {"
-	      "@@ = LVI_CMPLX1(a);"
-	      "}"
-	      "}"))))
+	      #<< HEREDOC
+	      >{
+	      >lisp_cmplx_t a, g, an;
+	      >if (@a.vt == LV_REAL) {
+	      >a = @a.v.rv;
+	      >} else if (@a.vt == LV_CMPLX) {
+	      >a = @a.v.cv;
+	      >} else {
+	      >wile_exception("arithmetic-geometric-mean", "@L", "expects numeric arguments");
+	      >}
+	      >if (@b.vt == LV_REAL) {
+	      >g = @b.v.rv;
+	      >} else if (@b.vt == LV_CMPLX) {
+	      >g = @b.v.cv;
+	      >} else {
+	      >wile_exception("arithmetic-geometric-mean", "@L", "expects numeric arguments");
+	      >}
+	      >while (CABS(a - g) > REAL_EPSILON*(CABS(a) + CABS(g))*0.5) {
+	      >an = (a + g)*0.5;
+	      >g = CSQRT(a*g);
+	      >a = an;
+	      >}
+	      >if (CIMAG(a) == 0.0) {
+	      >@@ = LVI_REAL(CREAL(a));
+	      >} else {
+	      >@@ = LVI_CMPLX1(a);
+	      >}
+	      >}
+	      >HEREDOC
+	      ))))
 
    (list 'integer
 	 "expects one real-valued number and returns its integer part as an integer-typed value"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt == LV_INT) {"
-	    "@@ = @1;"
-	    "} else if (@1.vt == LV_RAT) {"
-	    "@@ = LVI_INT(@1.v.irv.num/@1.v.irv.den);"
-	    "} else if (@1.vt == LV_REAL) {"
-	    "@@ = LVI_INT((@1.v.rv >= 0.0) ? FLOOR(@1.v.rv) : CEIL(@1.v.rv));"
-	    "} else {"
-	    "wile_exception(\"integer\", \"@L\", \"expects one real-valued argument\");"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt == LV_INT) {
+	    >@@ = @1;
+	    >} else if (@1.vt == LV_RAT) {
+	    >@@ = LVI_INT(@1.v.irv.num/@1.v.irv.den);
+	    >} else if (@1.vt == LV_REAL) {
+	    >@@ = LVI_INT((@1.v.rv >= 0.0) ? FLOOR(@1.v.rv) : CEIL(@1.v.rv));
+	    >} else {
+	    >wile_exception("integer", "@L", "expects one real-valued argument");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'float
 	 "expects one real-valued argument and returns it as a floating-point value"
@@ -2794,12 +3054,18 @@
 	 'prim
 	 0 (lambda (r)
 	     (emit-code
-	      "wile_rand_seed((time(NULL)) ^ (getpid() << 4));"
-	      "@@ = LVI_BOOL(true);"))
+	      #<< HEREDOC
+	      >wile_rand_seed((time(NULL)) ^ (getpid() << 4));
+	      >@@ = LVI_BOOL(true);
+	      >HEREDOC
+	      ))
 	 1 (lambda (r a1)
 	     (emit-code
-	      "wile_rand_seed(@1.v.iv);"
-	      "@@ = LVI_BOOL(true);")))
+	      #<< HEREDOC
+	      >wile_rand_seed(@1.v.iv);
+	      >@@ = LVI_BOOL(true);
+	      >HEREDOC
+	      )))
 
    (list 'random-uniform
 	 "expects 0 or 2 real-valued arguments L1 and L2 and returns a uniformly distributed random variable in the range [L1,L2); if no arguments are given, L1 and L2 are assumed to be 0 and 1 respectively"
@@ -2823,10 +3089,13 @@
 	     (let ((aa (new-svar)))
 	       (promote/real+check "random-exponential" aa aL a1)
 	       (emit-code
-		"if (@a.v.rv <= 0.0) {"
-		"wile_exception(\"random-exponential\", \"@L\", \"expects a positive rate\");"
-		"}"
-		"@@ = LVI_REAL(-LOG(1.0 - wile_rand_dbl())/@a.v.rv);"))))
+		#<< HEREDOC
+		>if (@a.v.rv <= 0.0) {
+		>wile_exception("random-exponential", "@L", "expects a positive rate");
+		>}
+		>@@ = LVI_REAL(-LOG(1.0 - wile_rand_dbl())/@a.v.rv);
+		>HEREDOC
+		))))
 
    (list 'random-poisson
 	 "expects one positive real-valued argument and returns a Poisson-distributed random variable"
@@ -2835,18 +3104,21 @@
 	   (let ((aa (new-svar)))
 	     (promote/real+check "random-poisson" aa aL a1)
 	     (emit-code
-	      "if (@a.v.rv <= 0.0) {"
-	      "wile_exception(\"random-poisson\", \"@L\", \"expects a positive rate\");"
-	      "}"
-	      "{"
-	      "lisp_int_t k = 0;"
-	      "lisp_real_t l = EXP(-@a.v.rv), p = 1.0;"
-	      "do {"
-	      "++k;"
-	      "p *= wile_rand_dbl();"
-	      "} while (p > l);"
-	      "@@ = LVI_INT(k - 1);"
-	      "}"))))
+	      #<< HEREDOC
+	      >if (@a.v.rv <= 0.0) {
+	      >wile_exception("random-poisson", "@L", "expects a positive rate");
+	      >}
+	      >{
+	      >lisp_int_t k = 0;
+	      >lisp_real_t l = EXP(-@a.v.rv), p = 1.0;
+	      >do {
+	      >++k;
+	      >p *= wile_rand_dbl();
+	      >} while (p > l);
+	      >@@ = LVI_INT(k - 1);
+	      >}
+	      >HEREDOC
+	      ))))
 
    (list 'random-normal-pair
 	 "expects either 0 or 2 numeric arguments M and S, and returns a pair of random numbers drawn from a normal distribution with mean M and standard deviation S; if no arguments are given, M is assumed to be 0 and S is assumed to be 1"
@@ -2879,82 +3151,103 @@
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.v.iv < 0) {"
-	    "wile_exception(\"factorial\", \"@L\", \"expects a non-negative input\");"
-	    "}"
-	    "{"
-	    "lisp_int_t i, f = 1;"
-	    "for (i = 1; i <= @1.v.iv; ++i) {"
-	    "f *= i;"
-	    "}"
-	    "@@ = LVI_INT(f);"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.v.iv < 0) {
+	    >wile_exception("factorial", "@L", "expects a non-negative input");
+	    >}
+	    >{
+	    >lisp_int_t i, f = 1;
+	    >for (i = 1; i <= @1.v.iv; ++i) {
+	    >f *= i;
+	    >}
+	    >@@ = LVI_INT(f);
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'floor-quotient
 	 "expects two integers N1 and N2 and returns their quotient Q_f = floor(N1/N2)"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "{"
-	    "lisp_int_t nq, nr;"
-	    "floor_qr(@1.v.iv, @2.v.iv, &nq, &nr, \"@L\");"
-	    "@@ = LVI_INT(nq);"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >lisp_int_t nq, nr;
+	    >floor_qr(@1.v.iv, @2.v.iv, &nq, &nr, "@L");
+	    >@@ = LVI_INT(nq);
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'floor-remainder
 	 "expects two integers N1 and N2 and returns the remainder R_f = N1 - N2*Q_f; see floor-quotient"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "{"
-	    "lisp_int_t nq, nr;"
-	    "floor_qr(@1.v.iv, @2.v.iv, &nq, &nr, \"@L\");"
-	    "@@ = LVI_INT(nr);"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >lisp_int_t nq, nr;
+	    >floor_qr(@1.v.iv, @2.v.iv, &nq, &nr, "@L");
+	    >@@ = LVI_INT(nr);
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'truncate-quotient
 	 "expects two integers N1 and N2 and returns their quotient Q_t = truncate(N1/N2)"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "{"
-	    "lisp_int_t nq, nr;"
-	    "trunc_qr(@1.v.iv, @2.v.iv, &nq, &nr, \"@L\");"
-	    "@@ = LVI_INT(nq);"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >lisp_int_t nq, nr;
+	    >trunc_qr(@1.v.iv, @2.v.iv, &nq, &nr, "@L");
+	    >@@ = LVI_INT(nq);
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'truncate-remainder
 	 "expects two integers N1 and N2 and returns the remainder R_f = N1 - N2*Q_t; see truncate-quotient"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "{"
-	    "lisp_int_t nq, nr;"
-	    "trunc_qr(@1.v.iv, @2.v.iv, &nq, &nr, \"@L\");"
-	    "@@ = LVI_INT(nr);"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >lisp_int_t nq, nr;
+	    >trunc_qr(@1.v.iv, @2.v.iv, &nq, &nr, "@L");
+	    >@@ = LVI_INT(nr);
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'ceiling-quotient
 	 "expects two integers N1 and N2 and returns their quotient Q_c = ceiling(N1/N2)"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "{"
-	    "lisp_int_t nq, nr;"
-	    "ceil_qr(@1.v.iv, @2.v.iv, &nq, &nr, \"@L\");"
-	    "@@ = LVI_INT(nq);"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >lisp_int_t nq, nr;
+	    >ceil_qr(@1.v.iv, @2.v.iv, &nq, &nr, "@L");
+	    >@@ = LVI_INT(nq);
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'ceiling-remainder
 	 "expects two integers N1 and N2 and returns the remainder R_c = N1 - N2*Q_c; see ceiling-quotient"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "{"
-	    "lisp_int_t nq, nr;"
-	    "ceil_qr(@1.v.iv, @2.v.iv, &nq, &nr, \"@L\");"
-	    "@@ = LVI_INT(nr);"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >lisp_int_t nq, nr;
+	    >ceil_qr(@1.v.iv, @2.v.iv, &nq, &nr, "@L");
+	    >@@ = LVI_INT(nr);
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'floor/
 	 "expects two integers N1 and N2 and returns a two-element list containing their floor-quotient and floor-remainder"
@@ -2962,14 +3255,17 @@
 	 (lambda (r aL a1 a2)
 	   (let ((aa (new-svar)))
 	     (emit-code
-	      "{"
-	      "lval @a[2];"
-	      "lisp_int_t nq, nr;"
-	      "floor_qr(@1.v.iv, @2.v.iv, &nq, &nr, \"@L\");"
-	      "@a[0] = LVI_INT(nq);"
-	      "@a[1] = LVI_INT(nr);"
-	      "@@ = wile_gen_list(2, @a, NULL);"
-	      "}"))))
+	      #<< HEREDOC
+	      >{
+	      >lval @a[2];
+	      >lisp_int_t nq, nr;
+	      >floor_qr(@1.v.iv, @2.v.iv, &nq, &nr, "@L");
+	      >@a[0] = LVI_INT(nq);
+	      >@a[1] = LVI_INT(nr);
+	      >@@ = wile_gen_list(2, @a, NULL);
+	      >}
+	      >HEREDOC
+	      ))))
 
    (list 'truncate/
 	 "expects two integers N1 and N2 and returns a two-element list containing their truncate-quotient and truncate-remainder"
@@ -2977,14 +3273,17 @@
 	 (lambda (r aL a1 a2)
 	   (let ((aa (new-svar)))
 	     (emit-code
-	      "{"
-	      "lval @a[2];"
-	      "lisp_int_t nq, nr;"
-	      "trunc_qr(@1.v.iv, @2.v.iv, &nq, &nr, \"@L\");"
-	      "@a[0] = LVI_INT(nq);"
-	      "@a[1] = LVI_INT(nr);"
-	      "@@ = wile_gen_list(2, @a, NULL);"
-	      "}"))))
+	      #<< HEREDOC
+	      >{
+	      >lval @a[2];
+	      >lisp_int_t nq, nr;
+	      >trunc_qr(@1.v.iv, @2.v.iv, &nq, &nr, "@L");
+	      >@a[0] = LVI_INT(nq);
+	      >@a[1] = LVI_INT(nr);
+	      >@@ = wile_gen_list(2, @a, NULL);
+	      >}
+	      >HEREDOC
+	      ))))
 
    (list 'ceiling/
 	 "expects two integers N1 and N2 and returns a two-element list containing their ceiling-quotient and ceiling-remainder"
@@ -2992,14 +3291,17 @@
 	 (lambda (r aL a1 a2)
 	   (let ((aa (new-svar)))
 	     (emit-code
-	      "{"
-	      "lval @a[2];"
-	      "lisp_int_t nq, nr;"
-	      "ceil_qr(@1.v.iv, @2.v.iv, &nq, &nr, \"@L\");"
-	      "@a[0] = LVI_INT(nq);"
-	      "@a[1] = LVI_INT(nr);"
-	      "@@ = wile_gen_list(2, @a, NULL);"
-	      "}"))))
+	      #<< HEREDOC
+	      >{
+	      >lval @a[2];
+	      >lisp_int_t nq, nr;
+	      >ceil_qr(@1.v.iv, @2.v.iv, &nq, &nr, "@L");
+	      >@a[0] = LVI_INT(nq);
+	      >@a[1] = LVI_INT(nr);
+	      >@@ = wile_gen_list(2, @a, NULL);
+	      >}
+	      >HEREDOC
+	      ))))
 
    ;;; A few internal type-check and -conversion functions,
    ;;; to help with implementing numeric tower
@@ -3076,70 +3378,91 @@
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "{"
-	    "struct stat sb;"
-	    "@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISREG(sb.st_mode));"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >struct stat sb;
+	    >@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISREG(sb.st_mode));
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'is-directory?
 	 "expects one string and returns #t if that is the name of a directory, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "{"
-	    "struct stat sb;"
-	    "@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISDIR(sb.st_mode));"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >struct stat sb;
+	    >@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISDIR(sb.st_mode));
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'is-char-device?
 	 "expects one string and returns #t if that is the name of a character device, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "{"
-	    "struct stat sb;"
-	    "@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISCHR(sb.st_mode));"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >struct stat sb;
+	    >@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISCHR(sb.st_mode));
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'is-block-device?
 	 "expects one string and returns #t if that is the name of a block device, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "{"
-	    "struct stat sb;"
-	    "@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISBLK(sb.st_mode));"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >struct stat sb;
+	    >@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISBLK(sb.st_mode));
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'is-named-pipe?
 	 "expects one string and returns #t if that is the name of a named pipe, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "{"
-	    "struct stat sb;"
-	    "@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISFIFO(sb.st_mode));"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >struct stat sb;
+	    >@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISFIFO(sb.st_mode));
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'is-symbolic-link?
 	 "expects one string and returns #t if that is the name of a symbolic link, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "{"
-	    "struct stat sb;"
-	    "@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISLNK(sb.st_mode));"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >struct stat sb;
+	    >@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISLNK(sb.st_mode));
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'is-socket?
 	 "expects one string and returns #t if that is the name of a socket, #f otherwise"
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "{"
-	    "struct stat sb;"
-	    "@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISSOCK(sb.st_mode));"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >struct stat sb;
+	    >@@ = LVI_BOOL(stat(@1.v.str, &sb) == 0 && S_ISSOCK(sb.st_mode));
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'file-exists?
 	 "expects one string and returns #t if that is the name of an existing file, #f otherwise"
@@ -3208,60 +3531,66 @@
 	 'priml 3
 	 (lambda (r aL a1 a2 a3)
 	   (emit-code
-	    "{"
-	    "uid_t uid;"
-	    "gid_t gid;"
-	    "if (@2.vt == LV_INT) {"
-	    "uid = @2.v.iv;"
-	    "} else if (@2.vt == LV_BOOL && @2.v.bv == false) {"
-	    "uid = -1;"
-	    "} else {"
-	    "wile_exception(\"change-file-owner\", \"@L\", \"expects a file name or port, a user id or #f, and a group id or #f\");"
-	    "}"
-	    "if (@3.vt == LV_INT) {"
-	    "gid = @3.v.iv;"
-	    "} else if (@3.vt == LV_BOOL && @3.v.bv == false) {"
-	    "gid = -1;"
-	    "} else {"
-	    "wile_exception(\"change-file-owner\", \"@L\", \"expects a file name or port, a user id or #f, and a group id or #f\");"
-	    "}"
-	    "if (@1.vt == LV_STRING) {"
-	    "@@ = LVI_BOOL(chown(@1.v.str, uid, gid) == 0);"
-	    "} else if (@1.vt == LV_FILE_PORT) {"
-	    "@@ = LVI_BOOL(fchown(fileno(@1.v.fp), uid, gid) == 0);"
-	    "} else {"
-	    "wile_exception(\"change-file-owner\", \"@L\", \"expects a file name or port, a user id or #f, and a group id or #f\");"
-	    "}"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >uid_t uid;
+	    >gid_t gid;
+	    >if (@2.vt == LV_INT) {
+	    >uid = @2.v.iv;
+	    >} else if (@2.vt == LV_BOOL && @2.v.bv == false) {
+	    >uid = -1;
+	    >} else {
+	    >wile_exception("change-file-owner", "@L", "expects a file name or port, a user id or #f, and a group id or #f");
+	    >}
+	    >if (@3.vt == LV_INT) {
+	    >gid = @3.v.iv;
+	    >} else if (@3.vt == LV_BOOL && @3.v.bv == false) {
+	    >gid = -1;
+	    >} else {
+	    >wile_exception("change-file-owner", "@L", "expects a file name or port, a user id or #f, and a group id or #f");
+	    >}
+	    >if (@1.vt == LV_STRING) {
+	    >@@ = LVI_BOOL(chown(@1.v.str, uid, gid) == 0);
+	    >} else if (@1.vt == LV_FILE_PORT) {
+	    >@@ = LVI_BOOL(fchown(fileno(@1.v.fp), uid, gid) == 0);
+	    >} else {
+	    >wile_exception("change-file-owner", "@L", "expects a file name or port, a user id or #f, and a group id or #f");
+	    >}
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'change-symbolic-link-owner
 	 "expects one string and two integers or #f and changes the ownership or default group associated with that symbolic link or file name"
 	 'priml 3
 	 (lambda (r aL a1 a2 a3)
 	   (emit-code
-	    "{"
-	    "uid_t uid;"
-	    "gid_t gid;"
-	    "if (@2.vt == LV_INT) {"
-	    "uid = @2.v.iv;"
-	    "} else if (@2.vt == LV_BOOL && @2.v.bv == false) {"
-	    "uid = -1;"
-	    "} else {"
-	    "wile_exception(\"change-symbolic-link-owner\", \"@L\", \"expects a file name, a user id or #f, and a group id or #f\");"
-	    "}"
-	    "if (@3.vt == LV_INT) {"
-	    "gid = @3.v.iv;"
-	    "} else if (@3.vt == LV_BOOL && @3.v.bv == false) {"
-	    "gid = -1;"
-	    "} else {"
-	    "wile_exception(\"change-symbolic-link-owner\", \"@L\", \"expects a file name, a user id or #f, and a group id or #f\");"
-	    "}"
-	    "if (@1.vt == LV_STRING) {"
-	    "@@ = LVI_BOOL(lchown(@1.v.str, uid, gid) == 0);"
-	    "} else {"
-	    "wile_exception(\"change-symbolic-link-owner\", \"@L\", \"expects a file name, a user id or #f, and a group id or #f\");"
-	    "}"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >uid_t uid;
+	    >gid_t gid;
+	    >if (@2.vt == LV_INT) {
+	    >uid = @2.v.iv;
+	    >} else if (@2.vt == LV_BOOL && @2.v.bv == false) {
+	    >uid = -1;
+	    >} else {
+	    >wile_exception("change-symbolic-link-owner", "@L", "expects a file name, a user id or #f, and a group id or #f");
+	    >}
+	    >if (@3.vt == LV_INT) {
+	    >gid = @3.v.iv;
+	    >} else if (@3.vt == LV_BOOL && @3.v.bv == false) {
+	    >gid = -1;
+	    >} else {
+	    >wile_exception("change-symbolic-link-owner", "@L", "expects a file name, a user id or #f, and a group id or #f");
+	    >}
+	    >if (@1.vt == LV_STRING) {
+	    >@@ = LVI_BOOL(lchown(@1.v.str, uid, gid) == 0);
+	    >} else {
+	    >wile_exception("change-symbolic-link-owner", "@L", "expects a file name, a user id or #f, and a group id or #f");
+	    >}
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'describe-system-error "expects one integer, a system error code, and returns the corresponding description using strerror"
 	 'prim 1
@@ -3284,10 +3613,13 @@
 	 'prim 1
 	 (lambda (r a1)
 	   (emit-code
-	    "{"
-	    "char* ev = getenv(@1.v.str);"
-	    "@@ = (ev ? LVI_STRING(ev) : LVI_BOOL(false));"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >char* ev = getenv(@1.v.str);
+	    >@@ = (ev ? LVI_STRING(ev) : LVI_BOOL(false));
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'send-signal "expects two integers which are a process id and a signal number respectively, and sends the specified signal to the specified process. returns #t if the call succeeded, #f otherwise"
 	 'prim 2
@@ -3300,27 +3632,31 @@
 	 'priml
 	 1 (lambda (r aL a1)
 	     (emit-code
-	      "{"
-	      "if (@1.vt != LV_FILE_PORT) {"
-	      "wile_exception(\"truncate-file\", \"@L\", \"expects a file port\");"
-	      "}"
-	      "long int pos = ftell(@1.v.fp);"
-	      "int fd = fileno(@1.v.fp);"
-	      "@@ = LVI_BOOL(pos >= 0 && fd >= 0 && ftruncate(fd, pos) == 0);"
-	      "}"))
+	      #<< HEREDOC
+	      >{
+	      >if (@1.vt != LV_FILE_PORT) {
+	      >wile_exception("truncate-file", "@L", "expects a file port");
+	      >}
+	      >long int pos = ftell(@1.v.fp);
+	      >int fd = fileno(@1.v.fp);
+	      >@@ = LVI_BOOL(pos >= 0 && fd >= 0 && ftruncate(fd, pos) == 0);
+	      >}
+	      >HEREDOC
+	      ))
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
-	      "{"
-	      "if ((@1.vt != LV_FILE_PORT && @1.vt != LV_STRING) || @2.vt != LV_INT) {"
-	      "wile_exception(\"truncate-file\", \"@L\", \"expects a file name or port and an integer\");"
-	      "}"
-	      "if (@1.vt == LV_FILE_PORT) {"
-	      "int fd = fileno(@1.v.fp);"
-	      "@@ = LVI_BOOL(@2.v.iv >= 0 && fd >= 0 && ftruncate(fd, @2.v.iv) == 0);"
-	      "} else {"
-	      "@@ = LVI_BOOL(@2.v.iv >= 0 && truncate(@1.v.str, @2.v.iv) == 0);"
-	      "}"
-	      "}")))
+	      #<< HEREDOC
+	      >if ((@1.vt != LV_FILE_PORT && @1.vt != LV_STRING) || @2.vt != LV_INT) {
+	      >wile_exception("truncate-file", "@L", "expects a file name or port and an integer");
+	      >}
+	      >if (@1.vt == LV_FILE_PORT) {
+	      >int fd = fileno(@1.v.fp);
+	      >@@ = LVI_BOOL(@2.v.iv >= 0 && fd >= 0 && ftruncate(fd, @2.v.iv) == 0);
+	      >} else {
+	      >@@ = LVI_BOOL(@2.v.iv >= 0 && truncate(@1.v.str, @2.v.iv) == 0);
+	      >}
+	      >HEREDOC
+	      )))
 
    (list 'cputime "returns a list containing two floating-point numbers which are the process user and system times, respectively, in seconds" 'prim 0 "wile_cputime")
 
@@ -3328,388 +3664,445 @@
 	 'priml
 	 1 (lambda (r aL a1)
 	     (emit-code
-	      "{"
-	      "size_t i, capa;"
-	      "if (@1.vt != LV_INT || @1.v.iv < 0) {"
-	      "wile_exception(\"vector-create\", \"@L\", \"expects a non-negative integer\");"
-	      "}"
-	      "@@.vt = LV_VECTOR;"
-	      "@@.origin = @1.origin;"
-	      "capa = @1.v.iv;"
-	      "@@.v.vec.capa = capa;"
-	      "@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));"
-	      "for (i = 0; i < capa; ++i) {"
-	      "@@.v.vec.arr[i] = NULL;"
-	      "}"
-	      "}"))
+	      #<< HEREDOC
+	      >{
+	      >size_t i, capa;
+	      >if (@1.vt != LV_INT || @1.v.iv < 0) {
+	      >wile_exception("vector-create", "@L", "expects a non-negative integer");
+	      >}
+	      >@@.vt = LV_VECTOR;
+	      >@@.origin = @1.origin;
+	      >capa = @1.v.iv;
+	      >@@.v.vec.capa = capa;
+	      >@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
+	      >for (i = 0; i < capa; ++i) {
+	      >@@.v.vec.arr[i] = NULL;
+	      >}
+	      >}
+	      >HEREDOC
+	      ))
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
-	      "{"
-	      "size_t i, capa;"
-	      "if (@1.vt != LV_INT || @1.v.iv < 0) {"
-	      "wile_exception(\"vector-create\", \"@L\", \"expects a non-negative integer\");"
-	      "}"
-	      "@@.vt = LV_VECTOR;"
-	      "@@.origin = @1.origin;"
-	      "capa = @1.v.iv;"
-	      "@@.v.vec.capa = capa;"
-	      "@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));"
-	      "for (i = 0; i < capa; ++i) {"
-	      "@@.v.vec.arr[i] = new_lv(LV_NIL);"
-	      "*(@@.v.vec.arr[i]) = @2;"
-	      "}"
-	      "}")))
+	      #<< HEREDOC
+	      >{
+	      >size_t i, capa;
+	      >if (@1.vt != LV_INT || @1.v.iv < 0) {
+	      >wile_exception("vector-create", "@L", "expects a non-negative integer");
+	      >}
+	      >@@.vt = LV_VECTOR;
+	      >@@.origin = @1.origin;
+	      >capa = @1.v.iv;
+	      >@@.v.vec.capa = capa;
+	      >@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
+	      >for (i = 0; i < capa; ++i) {
+	      >@@.v.vec.arr[i] = new_lv(LV_NIL);
+	      >*(@@.v.vec.arr[i]) = @2;
+	      >}
+	      >}
+	      >HEREDOC
+	      )))
 
    (list 'vector-fill!
 	 "expects one vector and one general value and fills all slots of the vector with that value"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "{"
-	    "size_t i, capa;"
-	    "if (@1.vt != LV_VECTOR) {"
-	    "wile_exception(\"vector-fill!\", \"@L\", \"first input is not a vector\");"
-	    "}"
-	    "capa = @1.v.vec.capa;"
-	    "for (i = 0; i < capa; ++i) {"
-	    "@1.v.vec.arr[i] = new_lv(LV_NIL);"
-	    "*(@1.v.vec.arr[i]) = @2;"
-	    "}"
-	    "@@ = @1;"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >size_t i, capa;
+	    >if (@1.vt != LV_VECTOR) {
+	    >wile_exception("vector-fill!", "@L", "first input is not a vector");
+	    >}
+	    >capa = @1.v.vec.capa;
+	    >for (i = 0; i < capa; ++i) {
+	    >@1.v.vec.arr[i] = new_lv(LV_NIL);
+	    >*(@1.v.vec.arr[i]) = @2;
+	    >}
+	    >@@ = @1;
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'vector-length
 	 "expects one vector and returns its length"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "{"
-	    "if (@1.vt == LV_VECTOR) {"
-	    "@@ = LVI_INT(@1.v.vec.capa);"
-	    "} else if (@1.vt == LV_BVECTOR) {"
-	    "@@ = LVI_INT(@1.v.bvec.capa);"
-	    "} else {"
-	    "wile_exception(\"vector-length\", \"@L\", \"input is not a vector\");"
-	    "}"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >if (@1.vt == LV_VECTOR) {
+	    >@@ = LVI_INT(@1.v.vec.capa);
+	    >} else if (@1.vt == LV_BVECTOR) {
+	    >@@ = LVI_INT(@1.v.bvec.capa);
+	    >} else {
+	    >wile_exception("vector-length", "@L", "input is not a vector");
+	    >}
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'vector-ref
 	 "expects one vector and one index, bounds-checks the index, and returns the value stored in the vector at that index"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "{"
-	    "if (@1.vt != LV_VECTOR) {"
-	    "wile_exception(\"vector-ref\", \"@L\", \"input is not a vector\");"
-	    "}"
-	    "if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa) {"
-	    "wile_exception(\"vector-ref\", \"@L\", \"got bad index value\");"
-	    "}"
-	    "@@ = @1.v.vec.arr[@2.v.iv] ? *(@1.v.vec.arr[@2.v.iv]) : LVI_NIL();"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >if (@1.vt != LV_VECTOR) {
+	    >wile_exception("vector-ref", "@L", "input is not a vector");
+	    >}
+	    >if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa) {
+	    >wile_exception("vector-ref", "@L", "got bad index value");
+	    >}
+	    >@@ = @1.v.vec.arr[@2.v.iv] ? *(@1.v.vec.arr[@2.v.iv]) : LVI_NIL();
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'vector-set!
 	 "expects a vector, an index, and a value, bounds-checks the index, and saves the value in the vector at that index; modifies the vector in-place"
 	 'priml 3
 	 (lambda (r aL a1 a2 a3)
 	   (emit-code
-	    "{"
-	    "if (@1.vt != LV_VECTOR) {"
-	    "wile_exception(\"vector-set!\", \"@L\", \"input is not a vector\");"
-	    "}"
-	    "if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa) {"
-	    "wile_exception(\"vector-set!\", \"@L\", \"got bad index value\");"
-	    "}"
-	    "@1.v.vec.arr[@2.v.iv] = new_lv(LV_NIL);"
-	    "*(@1.v.vec.arr[@2.v.iv]) = @3;"
-	    "@@ = @1;"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >if (@1.vt != LV_VECTOR) {
+	    >wile_exception("vector-set!", "@L", "input is not a vector");
+	    >}
+	    >if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa) {
+	    >wile_exception("vector-set!", "@L", "got bad index value");
+	    >}
+	    >@1.v.vec.arr[@2.v.iv] = new_lv(LV_NIL);
+	    >*(@1.v.vec.arr[@2.v.iv]) = @3;
+	    >@@ = @1;
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'vector-swap!
 	 "expects one vector and two indices, bounds-checks the indices, and swaps the values stored in the vector at those two indices"
 	 'priml 3
 	 (lambda (r aL a1 a2 a3)
 	   (emit-code
-	    "{"
-	    "if (@1.vt != LV_VECTOR) {"
-	    "wile_exception(\"vector-swap!\", \"@L\", \"input is not a vector\");"
-	    "}"
-	    "if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa || @3.vt != LV_INT || @3.v.iv < 0 || (size_t) @3.v.iv >= @1.v.vec.capa) {"
-	    "wile_exception(\"vector-swap!\", \"@L\", \"got bad index value\");"
-	    "}"
-	    "lptr tmp = @1.v.vec.arr[@2.v.iv];"
-	    "@1.v.vec.arr[@2.v.iv] = @1.v.vec.arr[@3.v.iv];"
-	    "@1.v.vec.arr[@3.v.iv] = tmp;"
-	    "@@ = @1;"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >if (@1.vt != LV_VECTOR) {
+	    >wile_exception("vector-swap!", "@L", "input is not a vector");
+	    >}
+	    >if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa || @3.vt != LV_INT || @3.v.iv < 0 || (size_t) @3.v.iv >= @1.v.vec.capa) {
+	    >wile_exception("vector-swap!", "@L", "got bad index value");
+	    >}
+	    >lptr tmp = @1.v.vec.arr[@2.v.iv];
+	    >@1.v.vec.arr[@2.v.iv] = @1.v.vec.arr[@3.v.iv];
+	    >@1.v.vec.arr[@3.v.iv] = tmp;
+	    >@@ = @1;
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'vector-copy
 	 "expects a vector, an optional start index, and an optional end index, and returns a newly-allocated copy of the subvector from the start to but not including the end index; if the end index is not specified, it defaults to the end of the vector, and if the start index is also not specified, it defaults to the beginning of the vector"
 	 'priml
 	 1 (lambda (r aL a1)
 	     (emit-code
-	      "if (@1.vt != LV_VECTOR) {"
-	      "wile_exception(\"vector-copy\", \"@L\", \"expects a vector input\");"
-	      "} else {"
-	      "size_t i, capa;"
-	      "@@.vt = LV_VECTOR;"
-	      "@@.origin = @1.origin;"
-	      "capa = @1.v.vec.capa;"
-	      "@@.v.vec.capa = capa;"
-	      "@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));"
-	      "for (i = 0; i < capa; ++i) {"
-	      "if (@1.v.vec.arr[i]) {"
-	      "@@.v.vec.arr[i] = new_lv(LV_NIL);"
-	      "*(@@.v.vec.arr[i]) = *(@1.v.vec.arr[i]);"
-	      "} else {"
-	      "@@.v.vec.arr[i] = NULL;"
-	      "}"
-	      "}"
-	      "}"))
+	      #<< HEREDOC
+	      >if (@1.vt != LV_VECTOR) {
+	      >wile_exception("vector-copy", "@L", "expects a vector input");
+	      >} else {
+	      >size_t i, capa;
+	      >@@.vt = LV_VECTOR;
+	      >@@.origin = @1.origin;
+	      >capa = @1.v.vec.capa;
+	      >@@.v.vec.capa = capa;
+	      >@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
+	      >for (i = 0; i < capa; ++i) {
+	      >if (@1.v.vec.arr[i]) {
+	      >@@.v.vec.arr[i] = new_lv(LV_NIL);
+	      >*(@@.v.vec.arr[i]) = *(@1.v.vec.arr[i]);
+	      >} else {
+	      >@@.v.vec.arr[i] = NULL;
+	      >}
+	      >}
+	      >}
+	      >HEREDOC
+	      ))
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
-	      "if (@1.vt != LV_VECTOR || @2.vt != LV_INT) {"
-	      "wile_exception(\"vector-copy\", \"@L\", \"expects a vector and an integer input\");"
-	      "} else if (@2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa) {"
-	      "wile_exception(\"vector-copy\", \"@L\", \"start index is out of range\");"
-	      "} else {"
-	      "size_t i, capa;"
-	      "@@.vt = LV_VECTOR;"
-	      "@@.origin = @1.origin;"
-	      "capa = @1.v.vec.capa - @2.v.iv;"
-	      "@@.v.vec.capa = capa;"
-	      "@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));"
-	      "for (i = 0; i < capa; ++i) {"
-	      "if (@1.v.vec.arr[i + @2.v.iv]) {"
-	      "@@.v.vec.arr[i] = new_lv(LV_NIL);"
-	      "*(@@.v.vec.arr[i]) = *(@1.v.vec.arr[i + @2.v.iv]);"
-	      "} else {"
-	      "@@.v.vec.arr[i] = NULL;"
-	      "}"
-	      "}"
-	      "}"))
+	      #<< HEREDOC
+	      >if (@1.vt != LV_VECTOR || @2.vt != LV_INT) {
+	      >wile_exception("vector-copy", "@L", "expects a vector and an integer input");
+	      >} else if (@2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa) {
+	      >wile_exception("vector-copy", "@L", "start index is out of range");
+	      >} else {
+	      >size_t i, capa;
+	      >@@.vt = LV_VECTOR;
+	      >@@.origin = @1.origin;
+	      >capa = @1.v.vec.capa - @2.v.iv;
+	      >@@.v.vec.capa = capa;
+	      >@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
+	      >for (i = 0; i < capa; ++i) {
+	      >if (@1.v.vec.arr[i + @2.v.iv]) {
+	      >@@.v.vec.arr[i] = new_lv(LV_NIL);
+	      >*(@@.v.vec.arr[i]) = *(@1.v.vec.arr[i + @2.v.iv]);
+	      >} else {
+	      >@@.v.vec.arr[i] = NULL;
+	      >}
+	      >}
+	      >}
+	      >HEREDOC
+	      ))
 	 3 (lambda (r aL a1 a2 a3)
 	     (emit-code
-	      "if (@1.vt != LV_VECTOR || @2.vt != LV_INT || @3.vt != LV_INT) {"
-	      "wile_exception(\"vector-copy\", \"@L\", \"expects a vector and two integer inputs\");"
-	      "} else if (@2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa) {"
-	      "wile_exception(\"vector-copy\", \"@L\", \"start index is out of range\");"
-	      "} else if (@3.v.iv < @2.v.iv || (size_t) @3.v.iv >= @1.v.vec.capa) {"
-	      "wile_exception(\"vector-copy\", \"@L\", \"end index is out of range\");"
-	      "} else {"
-	      "size_t i, capa;"
-	      "@@.vt = LV_VECTOR;"
-	      "@@.origin = @1.origin;"
-	      "capa = @3.v.iv - @2.v.iv;"
-	      "@@.v.vec.capa = capa;"
-	      "@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));"
-	      "for (i = 0; i < capa; ++i) {"
-	      "if (@1.v.vec.arr[i + @2.v.iv]) {"
-	      "@@.v.vec.arr[i] = new_lv(LV_NIL);"
-	      "*(@@.v.vec.arr[i]) = *(@1.v.vec.arr[i + @2.v.iv]);"
-	      "} else {"
-	      "@@.v.vec.arr[i] = NULL;"
-	      "}"
-	      "}"
-	      "}")))
+	      #<< HEREDOC
+	      >if (@1.vt != LV_VECTOR || @2.vt != LV_INT || @3.vt != LV_INT) {
+	      >wile_exception("vector-copy", "@L", "expects a vector and two integer inputs");
+	      >} else if (@2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa) {
+	      >wile_exception("vector-copy", "@L", "start index is out of range");
+	      >} else if (@3.v.iv < @2.v.iv || (size_t) @3.v.iv >= @1.v.vec.capa) {
+	      >wile_exception("vector-copy", "@L", "end index is out of range");
+	      >} else {
+	      >size_t i, capa;
+	      >@@.vt = LV_VECTOR;
+	      >@@.origin = @1.origin;
+	      >capa = @3.v.iv - @2.v.iv;
+	      >@@.v.vec.capa = capa;
+	      >@@.v.vec.arr = LISP_ALLOC(lptr, (capa > 0 ? capa : 1));
+	      >for (i = 0; i < capa; ++i) {
+	      >if (@1.v.vec.arr[i + @2.v.iv]) {
+	      >@@.v.vec.arr[i] = new_lv(LV_NIL);
+	      >*(@@.v.vec.arr[i]) = *(@1.v.vec.arr[i + @2.v.iv]);
+	      >} else {
+	      >@@.v.vec.arr[i] = NULL;
+	      >}
+	      >}
+	      >}
+	      >HEREDOC
+	      )))
 
    (list 'bytevector-create
 	 "expects one integer, the size of the bytevector to be created, and optionally a second argument, a char or small integer, which is used to fill all slots of the new bytevector; returns a new bytevector of the given size"
 	 'priml
 	 1 (lambda (r aL a1)
 	     (emit-code
-	      "{"
-	      "size_t i, capa;"
-	      "if (@1.vt != LV_INT || @1.v.iv < 0) {"
-	      "wile_exception(\"bytevector-create\", \"@L\", \"expects a non-negative integer\");"
-	      "}"
-	      "@@.vt = LV_BVECTOR;"
-	      "@@.origin = @1.origin;"
-	      "capa = @1.v.iv;"
-	      "@@.v.bvec.capa = capa;"
-	      "@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));"
-	      "for (i = 0; i < capa; ++i) {"
-	      "@@.v.bvec.arr[i] = 0;"
-	      "}"
-	      "}"))
+	      #<< HEREDOC
+	      >{
+	      >size_t i, capa;
+	      >if (@1.vt != LV_INT || @1.v.iv < 0) {
+	      >wile_exception("bytevector-create", "@L", "expects a non-negative integer");
+	      >}
+	      >@@.vt = LV_BVECTOR;
+	      >@@.origin = @1.origin;
+	      >capa = @1.v.iv;
+	      >@@.v.bvec.capa = capa;
+	      >@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));
+	      >for (i = 0; i < capa; ++i) {
+	      >@@.v.bvec.arr[i] = 0;
+	      >}
+	      >}
+	      >HEREDOC
+	      ))
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
-	      "{"
-	      "size_t i, capa;"
-	      "if (@1.vt != LV_INT || @1.v.iv < 0) {"
-	      "wile_exception(\"bytevector-create\", \"@L\", \"expects a non-negative integer\");"
-	      "}"
-	      "@@.vt = LV_BVECTOR;"
-	      "@@.origin = @1.origin;"
-	      "capa = @1.v.iv;"
-	      "@@.v.bvec.capa = capa;"
-	      "@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));"
-	      "if (@2.vt == LV_CHAR) {"
-	      "@@.v.bvec.arr[0] = @2.v.chr;"
-	      "} else if (@2.vt == LV_INT && @2.v.iv >= 0 && @2.v.iv < 256) {"
-	      "@@.v.bvec.arr[0] = @2.v.iv & 0xff;"
-	      "} else {"
-	      "wile_exception(\"bytevector-create\", \"@L\", \"got bad initializer\");"
-	      "}"
-	      "for (i = 1; i < capa; ++i) {"
-	      "@@.v.bvec.arr[i] = @@.v.bvec.arr[0];"
-	      "}"
-	      "}")))
+	      #<< HEREDOC
+	      >{
+	      >size_t i, capa;
+	      >if (@1.vt != LV_INT || @1.v.iv < 0) {
+	      >wile_exception("bytevector-create", "@L", "expects a non-negative integer");
+	      >}
+	      >@@.vt = LV_BVECTOR;
+	      >@@.origin = @1.origin;
+	      >capa = @1.v.iv;
+	      >@@.v.bvec.capa = capa;
+	      >@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));
+	      >if (@2.vt == LV_CHAR) {
+	      >@@.v.bvec.arr[0] = @2.v.chr;
+	      >} else if (@2.vt == LV_INT && @2.v.iv >= 0 && @2.v.iv < 256) {
+	      >@@.v.bvec.arr[0] = @2.v.iv & 0xff;
+	      >} else {
+	      >wile_exception("bytevector-create", "@L", "got bad initializer");
+	      >}
+	      >for (i = 1; i < capa; ++i) {
+	      >@@.v.bvec.arr[i] = @@.v.bvec.arr[0];
+	      >}
+	      >}
+	      >HEREDOC
+	      )))
 
    (list 'bytevector-length
 	 "expects one bytevector and returns its length"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "{"
-	    "if (@1.vt != LV_BVECTOR) {"
-	    "wile_exception(\"bytevector-length\", \"@L\", \"input is not a bytevector\");"
-	    "}"
-	    "@@ = LVI_INT(@1.v.bvec.capa);"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_BVECTOR) {
+	    >wile_exception("bytevector-length", "@L", "input is not a bytevector");
+	    >}
+	    >@@ = LVI_INT(@1.v.bvec.capa);
+	    >HEREDOC
+	    )))
 
    (list 'bytevector-ref
 	 "expects one bytevector and one index, bounds-checks the index, and returns the value stored in the bytevector at that index"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "{"
-	    "if (@1.vt != LV_BVECTOR) {"
-	    "wile_exception(\"bytevector-ref\", \"@L\", \"input is not a bytevector\");"
-	    "}"
-	    "if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.bvec.capa) {"
-	    "wile_exception(\"bytevector-ref\", \"@L\", \"got bad index value\");"
-	    "}"
-	    "@@ = LVI_INT(@1.v.bvec.arr[@2.v.iv]);"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_BVECTOR) {
+	    >wile_exception("bytevector-ref", "@L", "input is not a bytevector");
+	    >}
+	    >if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.bvec.capa) {
+	    >wile_exception("bytevector-ref", "@L", "got bad index value");
+	    >}
+	    >@@ = LVI_INT(@1.v.bvec.arr[@2.v.iv]);
+	    >HEREDOC
+	    )))
 
    (list 'bytevector-set!
 	 "expects a bytevector, an index, and a char or small integer, bounds-checks the index, and saves the char/int in the bytevector at that index; modifies the bytevector in-place"
 	 'priml 3
 	 (lambda (r aL a1 a2 a3)
 	   (emit-code
-	    "{"
-	    "if (@1.vt != LV_BVECTOR) {"
-	    "wile_exception(\"bytevector-set!\", \"@L\", \"input is not a bytevector\");"
-	    "}"
-	    "if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.bvec.capa) {"
-	    "wile_exception(\"bytevector-set!\", \"@L\", \"got bad index value\");"
-	    "}"
-	    "if (!(@3.vt == LV_CHAR || (@3.vt == LV_INT && @3.v.iv >= 0 && @3.v.iv < 256))) {"
-	    "wile_exception(\"bytevector-set!\", \"@L\", \"got bad input value\");"
-	    "}"
-	    "@1.v.bvec.arr[@2.v.iv] = (@3.vt == LV_CHAR) ? @3.v.chr : (unsigned char) @3.v.iv;"
-	    "@@ = @1;"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_BVECTOR) {
+	    >wile_exception("bytevector-set!", "@L", "input is not a bytevector");
+	    >}
+	    >if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.bvec.capa) {
+	    >wile_exception("bytevector-set!", "@L", "got bad index value");
+	    >}
+	    >if (!(@3.vt == LV_CHAR || (@3.vt == LV_INT && @3.v.iv >= 0 && @3.v.iv < 256))) {
+	    >wile_exception("bytevector-set!", "@L", "got bad input value");
+	    >}
+	    >@1.v.bvec.arr[@2.v.iv] = (@3.vt == LV_CHAR) ? @3.v.chr : (unsigned char) @3.v.iv;
+	    >@@ = @1;
+	    >HEREDOC
+	    )))
 
    (list 'bytevector-swap!
 	 "expects one bytevector and two indices, bounds-checks the indices, and swaps the values stored in the bytevector at those two indices"
 	 'priml 3
 	 (lambda (r aL a1 a2 a3)
 	   (emit-code
-	    "{"
-	    "if (@1.vt != LV_BVECTOR) {"
-	    "wile_exception(\"bytevector-swap!\", \"@L\", \"input is not a bytevector\");"
-	    "}"
-	    "if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.bvec.capa ||"
-	    "    @3.vt != LV_INT || @3.v.iv < 0 || (size_t) @3.v.iv >= @1.v.bvec.capa) {"
-	    "wile_exception(\"bytevector-swap!\", \"@L\", \"got bad index value\");"
-	    "}"
-	    "unsigned char tmp = @1.v.bvec.arr[@2.v.iv];"
-	    "@1.v.bvec.arr[@2.v.iv] = @1.v.bvec.arr[@3.v.iv];"
-	    "@1.v.bvec.arr[@3.v.iv] = tmp;"
-	    "@@ = @1;"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_BVECTOR) {
+	    >wile_exception("bytevector-swap!", "@L", "input is not a bytevector");
+	    >}
+	    >if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.bvec.capa ||
+	    >@3.vt != LV_INT || @3.v.iv < 0 || (size_t) @3.v.iv >= @1.v.bvec.capa) {
+	    >wile_exception("bytevector-swap!", "@L", "got bad index value");
+	    >}
+	    >{
+	    >unsigned char tmp = @1.v.bvec.arr[@2.v.iv];
+	    >@1.v.bvec.arr[@2.v.iv] = @1.v.bvec.arr[@3.v.iv];
+	    >@1.v.bvec.arr[@3.v.iv] = tmp;
+	    >@@ = @1;
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'bytevector->string
 	 "expects one bytevector and returns a string containing the bytes stored in the bytevector. note that if any bytes are zero, it is not possible to access any part of the string that is located after the zero bytes"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt != LV_BVECTOR) {"
-	    "wile_exception(\"bytevector->string\", \"@L\", \"expects one bytevector argument\");"
-	    "}"
-	    "@@.vt = LV_STRING;"
-	    "@@.origin = @1.origin;"
-	    "@@.v.str = LISP_ALLOC(char, 1 + @1.v.bvec.capa);"
-	    "memcpy(@@.v.str, @1.v.bvec.arr, @1.v.bvec.capa);"
-	    "@@.v.str[@1.v.bvec.capa] = 0;")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_BVECTOR) {
+	    >wile_exception("bytevector->string", "@L", "expects one bytevector argument");
+	    >}
+	    >@@.vt = LV_STRING;
+	    >@@.origin = @1.origin;
+	    >@@.v.str = LISP_ALLOC(char, 1 + @1.v.bvec.capa);
+	    >memcpy(@@.v.str, @1.v.bvec.arr, @1.v.bvec.capa);
+	    >@@.v.str[@1.v.bvec.capa] = 0;
+	    >HEREDOC
+	    )))
 
    (list 'bytevector-fill!
 	 "expects one bytevector and one character or small integer and fills all slots of the bytevector with that value"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "{"
-	    "size_t i, capa;"
-	    "if (@1.vt != LV_BVECTOR) {"
-	    "wile_exception(\"bytevector-fill!\", \"@L\", \"first input is not a bytevector\");"
-	    "}"
-	    "if (!(@2.vt == LV_CHAR || (@2.vt == LV_INT && @2.v.iv >= 0 && @2.v.iv < 256))) {"
-	    "wile_exception(\"bytevector-fill!\", \"@L\", \"got bad input value\");"
-	    "}"
-	    "unsigned char pv = (@2.vt == LV_CHAR) ? @2.v.chr : (unsigned char) @2.v.iv;"
-	    "capa = @1.v.vec.capa;"
-	    "for (i = 0; i < capa; ++i) {"
-	    "@1.v.bvec.arr[i] = pv;"
-	    "}"
-	    "@@ = @1;"
-	    "}")))
+	    #<< HEREDOC
+	    >{
+	    >size_t i, capa;
+	    >if (@1.vt != LV_BVECTOR) {
+	    >wile_exception("bytevector-fill!", "@L", "first input is not a bytevector");
+	    >}
+	    >if (!(@2.vt == LV_CHAR || (@2.vt == LV_INT && @2.v.iv >= 0 && @2.v.iv < 256))) {
+	    >wile_exception("bytevector-fill!", "@L", "got bad input value");
+	    >}
+	    >unsigned char pv = (@2.vt == LV_CHAR) ? @2.v.chr : (unsigned char) @2.v.iv;
+	    >capa = @1.v.vec.capa;
+	    >for (i = 0; i < capa; ++i) {
+	    >@1.v.bvec.arr[i] = pv;
+	    >}
+	    >@@ = @1;
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'bytevector-copy
 	 "expects a bytevector, an optional start index, and an optional end index, and returns a newly-allocated copy of the sub-bytevector from the start to but not including the end index; if the end index is not specified, it defaults to the end of the bytevector, and if the start index is also not specified, it defaults to the beginning of the bytevector"
 	 'priml
 	 1 (lambda (r aL a1)
 	     (emit-code
-	      "if (@1.vt != LV_BVECTOR) {"
-	      "wile_exception(\"bytevector-copy\", \"@L\", \"expects a bytevector input\");"
-	      "} else {"
-	      "size_t i, capa;"
-	      "@@.vt = LV_BVECTOR;"
-	      "@@.origin = @1.origin;"
-	      "capa = @1.v.bvec.capa;"
-	      "@@.v.bvec.capa = capa;"
-	      "@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));"
-	      "for (i = 0; i < capa; ++i) {"
-	      "@@.v.bvec.arr[i] = @1.v.bvec.arr[i];"
-	      "}"
-	      "}"))
+	      #<< HEREDOC
+	      >if (@1.vt != LV_BVECTOR) {
+	      >wile_exception("bytevector-copy", "@L", "expects a bytevector input");
+	      >} else {
+	      >size_t i, capa;
+	      >@@.vt = LV_BVECTOR;
+	      >@@.origin = @1.origin;
+	      >capa = @1.v.bvec.capa;
+	      >@@.v.bvec.capa = capa;
+	      >@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));
+	      >for (i = 0; i < capa; ++i) {
+	      >@@.v.bvec.arr[i] = @1.v.bvec.arr[i];
+	      >}
+	      >}
+	      >HEREDOC
+	      ))
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
-	      "if (@1.vt != LV_BVECTOR || @2.vt != LV_INT) {"
-	      "wile_exception(\"bytevector-copy\", \"@L\", \"expects a bytevector and an integer input\");"
-	      "} else if (@2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.bvec.capa) {"
-	      "wile_exception(\"bytevector-copy\", \"@L\", \"start index is out of range\");"
-	      "} else {"
-	      "size_t i, capa;"
-	      "@@.vt = LV_BVECTOR;"
-	      "@@.origin = @1.origin;"
-	      "capa = @1.v.bvec.capa - @2.v.iv;"
-	      "@@.v.bvec.capa = capa;"
-	      "@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));"
-	      "for (i = 0; i < capa; ++i) {"
-	      "@@.v.bvec.arr[i] = @1.v.bvec.arr[i + @2.v.iv];"
-	      "}"
-	      "}"))
+	      #<< HEREDOC
+	      >if (@1.vt != LV_BVECTOR || @2.vt != LV_INT) {
+	      >wile_exception("bytevector-copy", "@L", "expects a bytevector and an integer input");
+	      >} else if (@2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.bvec.capa) {
+	      >wile_exception("bytevector-copy", "@L", "start index is out of range");
+	      >} else {
+	      >size_t i, capa;
+	      >@@.vt = LV_BVECTOR;
+	      >@@.origin = @1.origin;
+	      >capa = @1.v.bvec.capa - @2.v.iv;
+	      >@@.v.bvec.capa = capa;
+	      >@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));
+	      >for (i = 0; i < capa; ++i) {
+	      >@@.v.bvec.arr[i] = @1.v.bvec.arr[i + @2.v.iv];
+	      >}
+	      >}
+	      >HEREDOC
+	      ))
 	 3 (lambda (r aL a1 a2 a3)
 	     (emit-code
-	      "if (@1.vt != LV_BVECTOR || @2.vt != LV_INT || @3.vt != LV_INT) {"
-	      "wile_exception(\"bytevector-copy\", \"@L\", \"expects a bytevector and two integer inputs\");"
-	      "} else if (@2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.bvec.capa) {"
-	      "wile_exception(\"bytevector-copy\", \"@L\", \"start index is out of range\");"
-	      "} else if (@3.v.iv < @2.v.iv || (size_t) @3.v.iv >= @1.v.bvec.capa) {"
-	      "wile_exception(\"bytevector-copy\", \"@L\", \"end index is out of range\");"
-	      "} else {"
-	      "size_t i, capa;"
-	      "@@.vt = LV_BVECTOR;"
-	      "@@.origin = @1.origin;"
-	      "capa = @3.v.iv - @2.v.iv;"
-	      "@@.v.bvec.capa = capa;"
-	      "@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));"
-	      "for (i = 0; i < capa; ++i) {"
-	      "@@.v.bvec.arr[i] = @1.v.bvec.arr[i + @2.v.iv];"
-	      "}"
-	      "}")))
+	      #<< HEREDOC
+	      >if (@1.vt != LV_BVECTOR || @2.vt != LV_INT || @3.vt != LV_INT) {
+	      >wile_exception("bytevector-copy", "@L", "expects a bytevector and two integer inputs");
+	      >} else if (@2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.bvec.capa) {
+	      >wile_exception("bytevector-copy", "@L", "start index is out of range");
+	      >} else if (@3.v.iv < @2.v.iv || (size_t) @3.v.iv >= @1.v.bvec.capa) {
+	      >wile_exception("bytevector-copy", "@L", "end index is out of range");
+	      >} else {
+	      >size_t i, capa;
+	      >@@.vt = LV_BVECTOR;
+	      >@@.origin = @1.origin;
+	      >capa = @3.v.iv - @2.v.iv;
+	      >@@.v.bvec.capa = capa;
+	      >@@.v.bvec.arr = LISP_ALLOC(unsigned char, (capa > 0 ? capa : 1));
+	      >for (i = 0; i < capa; ++i) {
+	      >@@.v.bvec.arr[i] = @1.v.bvec.arr[i + @2.v.iv];
+	      >}
+	      >}
+	      >HEREDOC
+	      )))
 
    ;;; TODO: make a general version that allows for a comparison test
 
@@ -3718,28 +4111,31 @@
 	 'priml
 	 1 (lambda (r aL a1)
 	     (emit-code
-	      "if (@1.vt != LV_BVECTOR) {"
-	      "wile_exception(\"bytevector-sort!\", \"@L\", \"expects a bytevector input\");"
-	      "} else {"
-	      "size_t i, j, k, capa, hist[256];"
-	      "capa = @1.v.bvec.capa;"
-	      "for (i = 0; i < 256; ++i) {"
-	      "hist[i] = 0;"
-	      "}"
-	      "for (i = 0; i < capa; ++i) {"
-	      "hist[@1.v.bvec.arr[i]] += 1;"
-	      "}"
-	      "i = 0;"
-	      "for (j = 0; j < 256; ++j) {"
-	      "for (k = 0; k < hist[j]; ++k) {"
-	      "@1.v.bvec.arr[i++] = j;"
-	      "}"
-	      "}"
-	      "if (i != capa) {"
-	      "wile_exception(\"bytevector-sort!\", \"@L\", \"internal failure! size mismatch %%zu vs %%zu\", i, capa);"
-	      "}"
-	      "@@ = @1;"
-	      "}")))
+	      #<< HEREDOC
+	      >if (@1.vt != LV_BVECTOR) {
+	      >wile_exception("bytevector-sort!", "@L", "expects a bytevector input");
+	      >} else {
+	      >size_t i, j, k, capa, hist[256];
+	      >capa = @1.v.bvec.capa;
+	      >for (i = 0; i < 256; ++i) {
+	      >hist[i] = 0;
+	      >}
+	      >for (i = 0; i < capa; ++i) {
+	      >hist[@1.v.bvec.arr[i]] += 1;
+	      >}
+	      >i = 0;
+	      >for (j = 0; j < 256; ++j) {
+	      >for (k = 0; k < hist[j]; ++k) {
+	      >@1.v.bvec.arr[i++] = j;
+	      >}
+	      >}
+	      >if (i != capa) {
+	      >wile_exception("bytevector-sort!", "@L", "internal failure! size mismatch %%zu vs %%zu", i, capa);
+	      >}
+	      >@@ = @1;
+	      >}
+	      >HEREDOC
+	      )))
 
    (list 'UTCtime
 	 "returns a 9-element list (Y M D h m s dow doy dst?) corresponding to UTC time 'now'"
@@ -3799,13 +4195,16 @@
 	   (let ((a1 r)
 		 (r #f))
 	     (emit-code
-	      "if (@1.vt == LV_PAIR && (@1.v.pair.cdr == NULL || @1.v.pair.cdr->vt == LV_NIL)) {"
-	      "@1 = (@1.v.pair.car ? *(@1.v.pair.car) : LVI_NIL());"
-	      "}"
-	      "cachalot->errval = new_lv(LV_NIL);"
-	      "*(cachalot->errval) = @1;"
-	      "cachalot->whence = \"@L\";"
-	      "longjmp(cachalot->cenv, 1);"))))
+	      #<< HEREDOC
+	      >if (@1.vt == LV_PAIR && (@1.v.pair.cdr == NULL || @1.v.pair.cdr->vt == LV_NIL)) {
+	      >@1 = (@1.v.pair.car ? *(@1.v.pair.car) : LVI_NIL());
+	      >}
+	      >cachalot->errval = new_lv(LV_NIL);
+	      >*(cachalot->errval) = @1;
+	      >cachalot->whence = "@L";
+	      >longjmp(cachalot->cenv, 1);
+	      >HEREDOC
+	      ))))
 
    (list 'log-gamma "expects one complex-valued argument and returns the complex-valued log of the gamma function of that argument"
 	 'priml 1
@@ -3854,24 +4253,27 @@
 	   (let ((aa (new-svar)))
 	     (promote/real aa a2)
 	     (emit-code
-	      "{"
-	      "if (@1.vt != LV_INT) {"
-	      "wile_exception(\"lambert-W\", \"@L\", \"expects an integer and a complex number\");"
-	      "}"
-	      "lisp_cmplx_t z;"
-	      "if (@a.vt == LV_REAL) {"
-	      "z = lambert_wc_fn(@1.v.iv, @a.v.rv);"
-	      "} else if (@a.vt == LV_CMPLX) {"
-	      "z = lambert_wc_fn(@1.v.iv, @a.v.cv);"
-	      "} else {"
-	      "wile_exception(\"lambert-W\", \"@L\", \"expects an integer and a complex number\");"
-	      "}"
-	      "if (CIMAG(z) == 0.0) {"
-	      "@@ = LVI_REAL(CREAL(z));"
-	      "} else {"
-	      "@@ = LVI_CMPLX1(z);"
-	      "}"
-	      "}"))))
+	      #<< HEREDOC
+	      >{
+	      >if (@1.vt != LV_INT) {
+	      >wile_exception("lambert-W", "@L", "expects an integer and a complex number");
+	      >}
+	      >lisp_cmplx_t z;
+	      >if (@a.vt == LV_REAL) {
+	      >z = lambert_wc_fn(@1.v.iv, @a.v.rv);
+	      >} else if (@a.vt == LV_CMPLX) {
+	      >z = lambert_wc_fn(@1.v.iv, @a.v.cv);
+	      >} else {
+	      >wile_exception("lambert-W", "@L", "expects an integer and a complex number");
+	      >}
+	      >if (CIMAG(z) == 0.0) {
+	      >@@ = LVI_REAL(CREAL(z));
+	      >} else {
+	      >@@ = LVI_CMPLX1(z);
+	      >}
+	      >}
+	      >HEREDOC
+	      ))))
 
    (list 'sqlite-version "returns the version of sqlite against which the program is linked" 'prim 0 "wile_sql_version")
    (list 'gc-version "returns the version of the Boehm GC against which the program is linked" 'prim 0 "wile_gc_version")
@@ -3883,43 +4285,52 @@
 	     (emit-code "@@ = wile_sql_open(NULL, 1, \"@L\");"))
 	 1 (lambda (r aL a1)
 	     (emit-code
-	      "if (@1.vt == LV_STRING) {"
-	      "@@ = wile_sql_open(@1.v.str, 0, \"@L\");"
-	      "} else {"
-	      "wile_exception(\"sqlite-open\", \"@L\", \"expects a filename\");"
-	      "}"))
+	      #<< HEREDOC
+	      >if (@1.vt == LV_STRING) {
+	      >@@ = wile_sql_open(@1.v.str, 0, "@L");
+	      >} else {
+	      >wile_exception("sqlite-open", "@L", "expects a filename");
+	      >}
+	      >HEREDOC
+	      ))
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
-	      "if (@1.vt == LV_STRING && @2.vt == LV_SYMBOL) {"
-	      "int mode;"
-	      "if (strcmp(@2.v.str, \"read-only\") == 0) {"
-	      "mode = 0;"
-	      "} else if (strcmp(@2.v.str, \"read-write\") == 0) {"
-	      "mode = 1;"
-	      "} else if (strcmp(@2.v.str, \"create\") == 0) {"
-	      "mode = 2;"
-	      "} else {"
-	      "wile_exception(\"sqlite-open\", \"@L\", \"unknown mode %%s\", @2.v.str);"
-	      "}"
-	      "@@ = wile_sql_open(@1.v.str, mode, \"@L\");"
-	      "} else {"
-	      "wile_exception(\"sqlite-open\", \"@L\", \"expects a filename\");"
-	      "}")))
+	      #<< HEREDOC
+	      >if (@1.vt == LV_STRING && @2.vt == LV_SYMBOL) {
+	      >int mode;
+	      >if (strcmp(@2.v.str, "read-only") == 0) {
+	      >mode = 0;
+	      >} else if (strcmp(@2.v.str, "read-write") == 0) {
+	      >mode = 1;
+	      >} else if (strcmp(@2.v.str, "create") == 0) {
+	      >mode = 2;
+	      >} else {
+	      >wile_exception("sqlite-open", "@L", "unknown mode %%s", @2.v.str);
+	      >}
+	      >@@ = wile_sql_open(@1.v.str, mode, "@L");
+	      >} else {
+	      >wile_exception("sqlite-open", "@L", "expects a filename");
+	      >}
+	      >HEREDOC
+	      )))
 
    (list 'sqlite-run
 	 "expects an sqlite port and a string, and runs the string as a command. warning! do not use this with user-supplied strings, this is a security hole"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "#ifdef WILE_USES_SQLITE"
-	    "if (@1.vt == LV_SQLITE_PORT && @2.vt == LV_STRING) {"
-	    "@@ = wile_sql_run(@1.v.sqlite_conn, @2.v.str, \"@L\");"
-	    "} else {"
-	    "wile_exception(\"sqlite-run\", \"@L\", \"expects one sqlite-port and one string\");"
-	    "}"
-	    "#else"
-	    "@@ = LVI_BOOL(false);"
-	    "#endif // WILE_USES_SQLITE")))
+	    #<< HEREDOC
+	    >#ifdef WILE_USES_SQLITE
+	    >if (@1.vt == LV_SQLITE_PORT && @2.vt == LV_STRING) {
+	    >@@ = wile_sql_run(@1.v.sqlite_conn, @2.v.str, "@L");
+	    >} else {
+	    >wile_exception("sqlite-run", "@L", "expects one sqlite-port and one string");
+	    >}
+	    >#else
+	    >@@ = LVI_BOOL(false);
+	    >#endif // WILE_USES_SQLITE
+	    >HEREDOC
+	    )))
    
    (list 'sqlite-statement-cleanup
 	 "expects one sqlite-statement object and performs any necessary cleanup, rendering it no longer usable"
@@ -3982,36 +4393,54 @@
 	 'prim 0
 	 (lambda (r)
 	   (emit-code
-	    "#ifdef WILE_CONFIG_FILE"
-	    "@@ = LVI_STRING(LISP_STRING(WILE_CONFIG_FILE));"
-	    "#else"
-	    "@@ = LVI_BOOL(false);"
-	    "#endif //  WILE_LIBDIR")))
+	    #<< HEREDOC
+	    >#ifdef WILE_CONFIG_FILE
+	    >@@ = LVI_STRING(LISP_STRING(WILE_CONFIG_FILE));
+	    >#else
+	    >@@ = LVI_BOOL(false);
+	    >#endif //  WILE_LIBDIR
+	    >HEREDOC
+	    )))
 
    (list 'stack-trace-minimal
 	 "expects one optional output file port to which the stack trace is written; the default is stderr. returns nothing useful"
 	 'prim
 	 0 (lambda (r)
 	     (emit-code
-	      "wile_stack_trace_minimal(fileno(stderr));"
-	      "@@ = LVI_NIL();"))
+	      #<< HEREDOC
+	      >wile_stack_trace_minimal(fileno(stderr));
+	      >@@ = LVI_NIL();
+	      >HEREDOC
+	      ))
 	 1 (lambda (r a1)
 	     (emit-code
-	      "wile_stack_trace_minimal(fileno((@1.vt == LV_FILE_PORT) ? @1.v.fp : stderr));"
-	      "@@ = LVI_NIL();")))
+	      #<< HEREDOC
+	      >wile_stack_trace_minimal(fileno((@1.vt == LV_FILE_PORT) ? @1.v.fp : stderr));
+	      >@@ = LVI_NIL();
+	      >HEREDOC
+	      )))
+
+   (list 'wile-xlat-fn-name
+	 "for wile internal use only"
+	 'prim 1
+	 (lambda (r a1)
+	   (emit-code "@@ = wile_translate_fn_name(@1.v.str, 0);")))
 
    (list 'display-object-hook
 	 "expects one symbol and one procedure of two arguments and records that procedure as the display method for objects of that type. this allows displaying objects with cycles"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "if (@1.vt == LV_SYMBOL &&"
-	    "((@2.vt == LV_CLAMBDA && @2.v.clambda.arity == 2) ||"
-	    "(@2.vt == LV_ILAMBDA && @2.v.ilambda->arity == 2))) {"
-	    "@@ = wile_register_display_proc(@1.v.str, @2, \"@L\");"
-	    "} else {"
-	    "wile_exception(\"display-object-hook\", \"@L\", \"expects one symbol and one procedure of two arguments\");"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt == LV_SYMBOL &&
+	    >((@2.vt == LV_CLAMBDA && @2.v.clambda.arity == 2) ||
+	    >(@2.vt == LV_ILAMBDA && @2.v.ilambda->arity == 2))) {
+	    >@@ = wile_register_display_proc(@1.v.str, @2, "@L");
+	    >} else {
+	    >wile_exception("display-object-hook", "@L", "expects one symbol and one procedure of two arguments");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'get-errno
 	 "expects no arguments and returns the current value of errno"
@@ -4024,12 +4453,15 @@
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt == LV_INT) {"
-	    "errno = @1.v.iv;"
-	    "@@ = LVI_BOOL(true);"
-	    "} else {"
-	    "wile_exception(\"set-errno!\", \"@L\", \"expects one integer\");"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt == LV_INT) {
+	    >errno = @1.v.iv;
+	    >@@ = LVI_BOOL(true);
+	    >} else {
+	    >wile_exception("set-errno!", "@L", "expects one integer");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'token-source-line
 	 "expects one argument and returns its location in source code"
@@ -4042,152 +4474,191 @@
 	 'priml 5
 	 (lambda (r aL a1 a2 a3 a4 a5)
 	   (emit-code
-	    "if ((@1.vt == LV_PAIR || @1.vt == LV_NIL) && @2.vt == LV_INT &&(@3.vt == LV_PAIR || @3.vt == LV_NIL) &&(@4.vt == LV_PAIR || @4.vt == LV_NIL) && @5.vt == LV_BOOL) {"
-	    "@@.vt = LV_ILAMBDA;"
-	    "@@.origin = @1.origin;"
-	    "@@.v.ilambda = LISP_ALLOC(lisp_ifunc_t, 1);"
-	    "@@.v.ilambda->args = @1;"
-	    "@@.v.ilambda->arity = @2.v.iv;"
-	    "@@.v.ilambda->body = @3;"
-	    "@@.v.ilambda->env = @4;"
-	    "@@.v.ilambda->macro = @5.v.bv;"
-	    "} else {"
-	    "wile_exception(\"make-interpreted-procedure\", \"@L\", \"expects a list of arguments, an integer arity, a list of body expressions, an environment list, and a macro boolean\");"
-	    "}")))
+	    #<< HEREDOC
+	    >if ((@1.vt == LV_PAIR || @1.vt == LV_NIL) && @2.vt == LV_INT &&(@3.vt == LV_PAIR || @3.vt == LV_NIL) &&(@4.vt == LV_PAIR || @4.vt == LV_NIL) && @5.vt == LV_BOOL) {
+	    >@@.vt = LV_ILAMBDA;
+	    >@@.origin = @1.origin;
+	    >@@.v.ilambda = LISP_ALLOC(lisp_ifunc_t, 1);
+	    >@@.v.ilambda->args = @1;
+	    >@@.v.ilambda->arity = @2.v.iv;
+	    >@@.v.ilambda->body = @3;
+	    >@@.v.ilambda->env = @4;
+	    >@@.v.ilambda->macro = @5.v.bv;
+	    >} else {
+	    >wile_exception("make-interpreted-procedure", "@L", "expects a list of arguments, an integer arity, a list of body expressions, an environment list, and a macro boolean");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'set-interpreted-procedure-environment!
 	 "expects an interpreted procedure and an environment list"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "if (@1.vt == LV_ILAMBDA && @2.vt == LV_PAIR) {"
-	    "@1.v.ilambda->env = @2;"
-	    "@@ = @1;"
-	    "} else {"
-	    "wile_exception(\"set-interpreted-procedure-environment!\", \"@L\", \"expects an interpreted procedure and an environment list\");"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt == LV_ILAMBDA && @2.vt == LV_PAIR) {
+	    >@1.v.ilambda->env = @2;
+	    >@@ = @1;
+	    >} else {
+	    >wile_exception("set-interpreted-procedure-environment!", "@L", "expects an interpreted procedure and an environment list");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'set-interpreted-procedure-macro!
 	 "expects an interpreted procedure and a boolean"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "if (@1.vt == LV_ILAMBDA && @2.vt == LV_BOOL) {"
-	    "@1.v.ilambda->macro = @2.v.bv;"
-	    "@@ = @1;"
-	    "} else {"
-	    "wile_exception(\"set-interpreted-procedure-macro!\", \"@L\", \"expects an interpreted procedure and a boolean\");"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt == LV_ILAMBDA && @2.vt == LV_BOOL) {
+	    >@1.v.ilambda->macro = @2.v.bv;
+	    >@@ = @1;
+	    >} else {
+	    >wile_exception("set-interpreted-procedure-macro!", "@L", "expects an interpreted procedure and a boolean");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'get-interpreted-procedure-arguments
 	 "expects an interpreted procedure and returns its arguments list"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt == LV_ILAMBDA) {"
-	    "@@ = @1.v.ilambda->args;"
-	    "} else {"
-	    "wile_exception(\"get-interpreted-procedure-arguments\", \"@L\", \"expects an interpreted procedure\");"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt == LV_ILAMBDA) {
+	    >@@ = @1.v.ilambda->args;
+	    >} else {
+	    >wile_exception("get-interpreted-procedure-arguments", "@L", "expects an interpreted procedure");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'get-interpreted-procedure-arity
 	 "expects an interpreted procedure and returns its arity"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt == LV_ILAMBDA) {"
-	    "@@ = LVI_INT(@1.v.ilambda->arity);"
-	    "} else {"
-	    "wile_exception(\"get-interpreted-procedure-arity\", \"@L\", \"expects an interpreted procedure\");"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt == LV_ILAMBDA) {
+	    >@@ = LVI_INT(@1.v.ilambda->arity);
+	    >} else {
+	    >wile_exception("get-interpreted-procedure-arity", "@L", "expects an interpreted procedure");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'get-interpreted-procedure-environment
 	 "expects an interpreted procedure and returns its environment"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt == LV_ILAMBDA) {"
-	    "@@ = @1.v.ilambda->env;"
-	    "} else {"
-	    "wile_exception(\"get-interpreted-procedure-environment\", \"@L\", \"expects an interpreted procedure\");"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt == LV_ILAMBDA) {
+	    >@@ = @1.v.ilambda->env;
+	    >} else {
+	    >wile_exception("get-interpreted-procedure-environment", "@L", "expects an interpreted procedure");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'get-interpreted-procedure-body
 	 "expects an interpreted procedure and returns its body"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt == LV_ILAMBDA) {"
-	    "@@ = @1.v.ilambda->body;"
-	    "} else {"
-	    "wile_exception(\"get-interpreted-procedure-body\", \"@L\", \"expects an interpreted procedure\");"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt == LV_ILAMBDA) {
+	    >@@ = @1.v.ilambda->body;
+	    >} else {
+	    >wile_exception("get-interpreted-procedure-body", "@L", "expects an interpreted procedure");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'get-interpreted-procedure-macro
 	 "expects an interpreted procedure and returns its macro-flag"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt == LV_ILAMBDA) {"
-	    "@@ = LVI_BOOL(@1.v.ilambda->macro);"
-	    "} else {"
-	    "wile_exception(\"get-interpreted-procedure-macro\", \"@L\", \"expects an interpreted procedure\");"
-	    "}")))
+	    #<< HEREDOC
+	    >if (@1.vt == LV_ILAMBDA) {
+	    >@@ = LVI_BOOL(@1.v.ilambda->macro);
+	    >} else {
+	    >wile_exception("get-interpreted-procedure-macro", "@L", "expects an interpreted procedure");
+	    >}
+	    >HEREDOC
+	    )))
 
    (list 'get-file-eof
 	 "expects one file port and returns #t if its EOF indicator is set, #f otherwise"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt != LV_FILE_PORT) {"
-	    "wile_exception(\"get-file-eof\", \"@L\", \"expects a file port\");"
-	    "}"
-	    "@@ = LVI_BOOL(feof(@1.v.fp) != 0);")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_FILE_PORT) {
+	    >wile_exception("get-file-eof", "@L", "expects a file port");
+	    >}
+	    >@@ = LVI_BOOL(feof(@1.v.fp) != 0);
+	    >HEREDOC
+	    )))
 
    (list 'get-file-error
 	 "expects one file port and returns #t if its error indicator is set, #f otherwise"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt != LV_FILE_PORT) {"
-	    "wile_exception(\"get-file-error\", \"@L\", \"expects a file port\");"
-	    "}"
-	    "@@ = LVI_BOOL(ferror(@1.v.fp) != 0);")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_FILE_PORT) {
+	    >wile_exception("get-file-error", "@L", "expects a file port");
+	    >}
+	    >@@ = LVI_BOOL(ferror(@1.v.fp) != 0);
+	    >HEREDOC
+	    )))
 
    (list 'clear-file-error
 	 "expects one file port and clears its EOF and error indicators; returns nothing useful"
 	 'priml 1
 	 (lambda (r aL a1)
 	   (emit-code
-	    "if (@1.vt != LV_FILE_PORT) {"
-	    "wile_exception(\"get-file-error\", \"@L\", \"expects a file port\");"
-	    "}"
-	    "clearerr(@1.v.fp);"
-	    "@@ = LVI_BOOL(true);")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_FILE_PORT) {
+	    >wile_exception("get-file-error", "@L", "expects a file port");
+	    >}
+	    >clearerr(@1.v.fp);
+	    >@@ = LVI_BOOL(true);
+	    >HEREDOC
+	    )))
 
    (list 'read-bytes
 	 "expects a file port and a number of bytes to read and returns a bytevector containing the bytes read"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "if (@1.vt != LV_FILE_PORT || @2.vt != LV_INT || @2.v.iv <= 0) {"
-	    "wile_exception(\"read-bytes\", \"@L\", \"expects a file port and number of bytes to read\");"
-	    "}"
-	    "@@.vt = LV_BVECTOR;"
-	    "@@.origin = @1.origin;"
-	    "@@.v.bvec.capa = @2.v.iv;"
-	    "@@.v.bvec.arr = LISP_ALLOC(unsigned char, @2.v.iv);"
-	    "@@.v.bvec.capa = fread(@@.v.bvec.arr, 1, @2.v.iv, @1.v.fp);")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_FILE_PORT || @2.vt != LV_INT || @2.v.iv <= 0) {
+	    >wile_exception("read-bytes", "@L", "expects a file port and number of bytes to read");
+	    >}
+	    >@@.vt = LV_BVECTOR;
+	    >@@.origin = @1.origin;
+	    >@@.v.bvec.capa = @2.v.iv;
+	    >@@.v.bvec.arr = LISP_ALLOC(unsigned char, @2.v.iv);
+	    >@@.v.bvec.capa = fread(@@.v.bvec.arr, 1, @2.v.iv, @1.v.fp);
+	    >HEREDOC
+	    )))
 
    (list 'write-bytes
 	 "expects a file port and a bytevector to write and returns the number of bytes written"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
-	    "if (@1.vt != LV_FILE_PORT || @2.vt != LV_BVECTOR) {"
-	    "wile_exception(\"write-bytes\", \"@L\", \"expects a file port and a bytevector to write\");"
-	    "}"
-	    "@@ = LVI_INT(fwrite(@2.v.bvec.arr, 1, @2.v.bvec.capa, @1.v.fp));")))
+	    #<< HEREDOC
+	    >if (@1.vt != LV_FILE_PORT || @2.vt != LV_BVECTOR) {
+	    >wile_exception("write-bytes", "@L", "expects a file port and a bytevector to write");
+	    >}
+	    >@@ = LVI_INT(fwrite(@2.v.bvec.arr, 1, @2.v.bvec.capa, @1.v.fp));
+	    >HEREDOC
+	    )))
 
    (list 'sha-256-data?
 	 "expects one argument and returns #t if that value is a SHA-256 data structure, #f otherwise"
@@ -4235,6 +4706,129 @@
 	   (emit-code
 	    "@@ = wile_sha256_init(false);")))
 
+   (list 'matrix-matrix-multiply
+	 "expects vector mat1, integer nr1, integer nc1, bool tr1, vector mat2, integer nr2, integer nc2, bool tr2, and bool tr3, and returns vector mat3 of size nr1*nc2 stored either transposed or not depending on tr3"
+	 'priml 9
+	 (lambda (r aL a1 a2 a3 a4 a5 a6 a7 a8 a9)
+	   (emit-code "@@ = wile_mat_mat_mul(@1, @2, @3, @4, @5, @6, @7, @8, @9, \"@L\");")))
+
+   ;;; experimental, for regexp.scm to speed up DFA generation
+   (list 'string-or! "expects two string inputs and ORs the characters of the second into the first"
+	 'priml 2
+	 (lambda (r aL a1 a2)
+	   (emit-code
+	    #<< HEREDOC
+	    >if (@1.vt != LV_STRING || @2.vt != LV_STRING) {
+	    >wile_exception("string-or!", "@L", "expects two strings");
+	    >}
+	    >{
+	    >char *s1 = @1.v.str, *s2 = @2.v.str;
+	    >while (*s1 && *s2) {
+	    >*s1 |= *s2;
+	    >++s1;
+	    >++s2;
+	    >}
+	    >}
+	    >@@ = @1;
+	    >HEREDOC
+	    )))
+
+   (list 'string-and! "expects two string inputs and ANDs the characters of the second into the first"
+	 'priml 2
+	 (lambda (r aL a1 a2)
+	   (emit-code
+	    #<< HEREDOC
+	    >if (@1.vt != LV_STRING || @2.vt != LV_STRING) {
+	    >wile_exception("string-and!", "@L", "expects two strings");
+	    >}
+	    >{
+	    >char *s1 = @1.v.str, *s2 = @2.v.str;
+	    >while (*s1 && *s2) {
+	    >*s1 &= *s2;
+	    >++s1;
+	    >++s2;
+	    >}
+	    >}
+	    >@@ = @1;
+	    >HEREDOC
+	    )))
+
+   (list 'string-xor! "expects two string inputs and XORs the characters of the second into the first"
+	 'priml 2
+	 (lambda (r aL a1 a2)
+	   (emit-code
+	    #<< HEREDOC
+	    >if (@1.vt != LV_STRING || @2.vt != LV_STRING) {
+	    >wile_exception("string-xor!", "@L", "expects two strings");
+	    >}
+	    >{
+	    >char *s1 = @1.v.str, *s2 = @2.v.str;
+	    >while (*s1 && *s2) {
+	    >*s1 ^= *s2;
+	    >++s1;
+	    >++s2;
+	    >}
+	    >}
+	    >@@ = @1;
+	    >HEREDOC
+	    )))
+
+   (list 'bytevector-or! "expects two bytevector inputs and ORs the characters of the second into the first"
+	 'priml 2
+	 (lambda (r aL a1 a2)
+	   (emit-code
+	    #<< HEREDOC
+	    >if (@1.vt != LV_BVECTOR || @2.vt != LV_BVECTOR) {
+	    >wile_exception("bytevector-or!", "@L", "expects two bytevectors");
+	    >}
+	    >{
+	    >size_t i, capa;
+	    >capa = (@1.v.bvec.capa < @2.v.bvec.capa) ? @1.v.bvec.capa : @2.v.bvec.capa;
+	    >for (i = 0; i < capa; ++i) {
+	    >@1.v.bvec.arr[i] |= @2.v.bvec.arr[i];
+	    >}
+	    >}
+	    >@@ = @1;
+	    >HEREDOC
+	    )))
+
+   (list 'bytevector-and! "expects two bytevector inputs and ANDs the characters of the second into the first"
+	 'priml 2
+	 (lambda (r aL a1 a2)
+	   (emit-code
+	    #<< HEREDOC
+	    >if (@1.vt != LV_BVECTOR || @2.vt != LV_BVECTOR) {
+	    >wile_exception("bytevector-and!", "@L", "expects two bytevectors");
+	    >}
+	    >{
+	    >size_t i, capa;
+	    >capa = (@1.v.bvec.capa < @2.v.bvec.capa) ? @1.v.bvec.capa : @2.v.bvec.capa;
+	    >for (i = 0; i < capa; ++i) {
+	    >@1.v.bvec.arr[i] &= @2.v.bvec.arr[i];
+	    >}
+	    >}
+	    >@@ = @1;
+	    >HEREDOC
+	    )))
+
+   (list 'bytevector-xor! "expects two bytevector inputs and XORs the characters of the second into the first"
+	 'priml 2
+	 (lambda (r aL a1 a2)
+	   (emit-code
+	    #<< HEREDOC
+	    >if (@1.vt != LV_BVECTOR || @2.vt != LV_BVECTOR) {
+	    >wile_exception("bytevector-xor!", "@L", "expects two bytevectors");
+	    >}
+	    >{
+	    >size_t i, capa;
+	    >capa = (@1.v.bvec.capa < @2.v.bvec.capa) ? @1.v.bvec.capa : @2.v.bvec.capa;
+	    >for (i = 0; i < capa; ++i) {
+	    >@1.v.bvec.arr[i] ^= @2.v.bvec.arr[i];
+	    >}
+	    >}
+	    >@@ = @1;
+	    >HEREDOC
+	    )))
    ))
 
 ;;; Add the stuff in wile-rtl2.scm to the primitives list
@@ -4253,8 +4847,6 @@
 	(begin
 	  (fprintf stderr "cannot find interface file 'wrtl.sch', skipping\n")
 	  prim-table-internal))))
-
-;;; (define-as "wile_day_of_week" (day-of-week v . vs)
 
 (define (show-prims-table)
   (for-each (lambda (pe)

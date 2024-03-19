@@ -306,10 +306,11 @@ INIT	[a-zA-Z!$%&*/:<=>?^_~|#]
 SUB	[a-zA-Z!$%&*/:<=>?^_~|#0-9.@+-]
 
 %# HERE-DOC prefix; the length of this prefix = 3 is used in the code below
-HEREPRE	@<<
+HPRE	[@#]<<
 
 %# HERE-DOC id string -- very restricted character set
-HERESAY	[A-Z_]
+HSAY1	[a-zA-Z]
+HSAY2	[a-zA-Z_:.]
 
 %%
 %################################################################
@@ -320,12 +321,19 @@ HERESAY	[A-Z_]
     lexval->vt = VT_UNINIT;
     // TODO: DANGER WILL ROBINSON! This is not thread-safe!
     static char* here_delim;
+    static int here_indent;
     static ab_char astr;
 %}
 
 %# Hashbang for making scripts executable
 
 <S_MAIN>^#!.*			return HASHBANG;
+
+<S_MAIN>^<<<<<<<+		|
+<S_MAIN>^=======+		|
+<S_MAIN>^>>>>>>>+		%{
+				    fprintf(stderr, "error! merge conflict marker at line %zu\n", ulex_lineno(yyl_context));
+				%}
 
 
 %# vectors and bytevectors
@@ -546,8 +554,13 @@ HERESAY	[A-Z_]
 
 %# Here-docs
 
-<S_MAIN>{HEREPRE}{HERESAY}+\n	%{
-				    here_delim = LISP_STRDUP((char*) yytext + 3);
+<S_MAIN>{HPRE}\s*{HSAY1}{HSAY2}*\n	%{
+				    here_delim = (char*) yytext + 3;
+				    while (isspace(*here_delim)) {
+					++here_delim;
+				    }
+				    here_delim = LISP_STRDUP(here_delim);
+				    here_indent = (*yytext == '#');
 				    astr = ab_char_setup(32);
 				    BEGIN(S_HEREDOC);
 				%}
@@ -555,9 +568,25 @@ HERESAY	[A-Z_]
 <S_HEREDOC>[^\n]*\n		%{
 				    // static analyzer has trouble seeing this
 				    LISP_ASSERT(here_delim != NULL);
-				    if (strcmp(here_delim, (char*) yytext)) {
+				    unsigned char* ytp = yytext;
+				    size_t st = 0;
+				    if (here_indent) {
+					while (isspace(*ytp) && st < yyleng) {
+					    ++ytp;
+					    ++st;
+					}
+					if (*ytp == '>') {
+					    ++ytp;
+					    ++st;
+					} else {
+					    ytp = yytext;
+					    st = 0;
+					}
+				    }
+				    if (strcmp(here_delim, (char*) yytext) &&
+					strcmp(here_delim, (char*) ytp)) {
 					size_t i;
-					for (i = 0; i < yyleng; ++i) {
+					for (i = st; i < yyleng; ++i) {
 					    ab_char_append(&astr, yytext[i]);
 					}
 				    } else {
@@ -566,7 +595,13 @@ HERESAY	[A-Z_]
 					} else {
 					    ab_char_append(&astr, '\0');
 					    lexval->v.str =
-						LISP_STRDUP(ab_char_get_array(&astr));
+						ab_char_get_array(&astr);
+					    ytp = (unsigned char*) strrchr(lexval->v.str, '\n');
+					    if (ytp) {
+						*ytp = '\0';
+					    }
+					    lexval->v.str =
+						LISP_STRDUP(lexval->v.str);
 					}
 					ab_char_destroy(&astr);
 					LISP_FREE(here_delim);

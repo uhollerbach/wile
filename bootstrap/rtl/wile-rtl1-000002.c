@@ -24,7 +24,7 @@ void wile_stack_trace_minimal(int fd)
 #if !(defined(__OpenBSD__) || defined(__CYGWIN__))
     // for some reason, backtrace is not showing up on openbsd,
     // even though the manpages claim it ought(?) to be there
-    void* buff[64];
+    void* buff[1024];
     int bsize = backtrace(buff, sizeof(buff)/sizeof(buff[0]));
     backtrace_symbols_fd(buff, bsize, fd);
 #endif // __OpenBSD__ || __CYGWIN__

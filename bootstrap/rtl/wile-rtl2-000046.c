@@ -83,46 +83,43 @@ lval var_14;
 var_14 = LVI_INT(var_8.v.iv - var_10.v.iv);
 var_13 = var_14;
 lval var_15;
-var_15 = LVI_STRING("");
-lval var_16;
 if (var_10.vt != LV_INT || var_10.v.iv < 0) {
 wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000046.scm:19", "first input is not a non-negative integer");
 }
 if (var_2[1].vt != LV_CHAR || var_2[1].v.chr == '\0') {
 wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000046.scm:19", "second input is not a valid character");
 }
-var_16.vt = LV_STRING;
-var_16.origin = var_10.origin;
-var_16.v.str = LISP_ALLOC(char, 1 + var_10.v.iv);
-memset(var_16.v.str, var_2[1].v.chr, var_10.v.iv);
-var_16.v.str[var_10.v.iv] = '\0';
-lval var_17;
+var_15.vt = LV_STRING;
+var_15.origin = var_10.origin;
+var_15.v.str = LISP_ALLOC(char, 1 + var_10.v.iv);
+memset(var_15.v.str, var_2[1].v.chr, var_10.v.iv);
+var_15.v.str[var_10.v.iv] = '\0';
+lval var_16;
 if (var_13.vt != LV_INT || var_13.v.iv < 0) {
-wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000046.scm:20", "first input is not a non-negative integer");
+wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000046.scm:19", "first input is not a non-negative integer");
 }
 if (var_2[1].vt != LV_CHAR || var_2[1].v.chr == '\0') {
-wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000046.scm:20", "second input is not a valid character");
+wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000046.scm:19", "second input is not a valid character");
 }
-var_17.vt = LV_STRING;
-var_17.origin = var_13.origin;
-var_17.v.str = LISP_ALLOC(char, 1 + var_13.v.iv);
-memset(var_17.v.str, var_2[1].v.chr, var_13.v.iv);
-var_17.v.str[var_13.v.iv] = '\0';
-lval var_18;
+var_16.vt = LV_STRING;
+var_16.origin = var_13.origin;
+var_16.v.str = LISP_ALLOC(char, 1 + var_13.v.iv);
+memset(var_16.v.str, var_2[1].v.chr, var_13.v.iv);
+var_16.v.str[var_13.v.iv] = '\0';
+lval var_17;
 {
-lval var_20[3];
-var_20[0] = var_16;
-var_20[1] = var_2[0];
-var_20[2] = var_17;
-var_18 = wile_gen_list(3, var_20, NULL);
-}
-{
-lval var_19[8];
+lval var_19[3];
 var_19[0] = var_15;
-var_19[1] = var_18;
-var_18 = wile_string_join_by(NULL, var_19, "bld-rtl-dir/wile-rtl2-000046.scm:19");
+var_19[1] = var_2[0];
+var_19[2] = var_16;
+var_17 = wile_gen_list(3, var_19, NULL);
 }
-var_6 = var_18;
+{
+lval var_18[8];
+var_18[0] = var_17;
+var_17 = wile_string_append(NULL, var_18, "bld-rtl-dir/wile-rtl2-000046.scm:19");
+}
+var_6 = var_17;
 }
 return var_6;
 }

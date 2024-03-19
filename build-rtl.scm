@@ -1,11 +1,11 @@
 #!/home/uwe/tools/skeem
 ;;; -*- mode: scheme; -*-
 
-;;; Usage: <prog> [-g] archive [-k] file1 file2 ... [-s] fileN ...
+;;; Usage: <prog> [-g|-p] archive [-k] file1 file2 ... [-s] fileN ...
 ;;;
-;;; If -g option is given, build debug version, otherwise non-debug;
-;;; -g option must come first, this is not a general-purpose tool.
-;;; If -k option is given, keep intermediate files, otherwise clean up.
+;;; If {-g|-p} option is given, build {debug|gprof} version, otherwise
+;;; non-debug; {-g|-p} option must come first, this is not a general-purpose
+;;; tool. If -k option is given, keep intermediate files, otherwise clean up.
 ;;; All files before a -s option are built in one compile, all files
 ;;; after are built split.
 
@@ -33,11 +33,12 @@
       (fprintf stderr "command '%s' failed with status %d\n" cmd status)
       (exit 1))))
 
-(define (compile-single file dflag)
+(define (compile-single file dflag gflag)
   (let* ((dix (string-find-last-char file #\.))
 	 (prefix (if dix (string-copy file 0 dix) file))
 	 (suffix (if dix (string-copy file dix) "")))
-    (run-cmd-or-die "wile -o" (if dflag "-g " "") file)
+    (run-cmd-or-die "./wile -CF ./wile-config.dat -o"
+		    (if dflag "-g " "") (if gflag "-p " "") file)
     (string-append prefix ".o")))
 
 (define (take-section cut-pattern lines)
@@ -49,7 +50,7 @@
 	   (list (list-reverse acc) (cdr ls)))
 	  (else (loop (cdr ls) (cons (car ls) acc))))))
 
-(define (compile-split file bld-dir dflag)
+(define (compile-split file bld-dir dflag gflag)
   (let* ((port (open-file file "r"))
 	 (data1 (read-all-lines port))
 	 (dix (string-find-last-char file #\.))
@@ -83,22 +84,28 @@
 	    (flush-port oport)
 	    (close-port oport)
 	    (when (string=? suffix ".scm")
-	      (run-cmd-or-die "wile -c " (if dflag "-g" "") " "
-		       prefix2 ".scm " prefix2 ".c"))
+	      (run-cmd-or-die "./wile -CF ./wile-config.dat -c "
+			      (if dflag "-g" "") (if gflag "-p" "") " "
+			      prefix2 ".scm " prefix2 ".c"))
 	    (run-cmd-or-die "rm -f" bld-dir "/*.h")
-	    (run-cmd-or-die "wile -o " (if dflag "-g" "") " "
-		     prefix2 ".c " prefix2 ".o")
+	    (run-cmd-or-die "./wile -CF ./wile-config.dat -o "
+			    (if dflag "-g" "") (if gflag "-p" "") " "
+			    prefix2 ".c " prefix2 ".o")
 	    (loop (cadr sd) (+ ix 1)))))))
 
 (let ((debug? #f)
+      (gprof? #f)
       (split? #f)
       (clean? #t)
       (bld-dir "bld-rtl-dir")
       (archive #f)
       (objects #f))
   (when (and (not (null? command-line-arguments))
-	     (string=? (car command-line-arguments) "-g"))
-    (set! debug? #t)
+	     (or (string=? (car command-line-arguments) "-g")
+		 (string=? (car command-line-arguments) "-p")))
+    (if (string=? (car command-line-arguments) "-g")
+	(set! debug? #t)
+	(set! gprof? #t))
     (set! command-line-arguments (cdr command-line-arguments)))
   (when (null? command-line-arguments)
     (ERR "error: no output archive file specified!\n"))
@@ -122,11 +129,11 @@
 		 (set! clean? #f)
 		 (loop (cdr fs) acc))
 		(split?
-		 (compile-split (car fs) bld-dir debug?)
+		 (compile-split (car fs) bld-dir debug? gprof?)
 		 (loop (cdr fs) acc))
 		(else
 		 (loop (cdr fs)
-		       (cons (compile-single (car fs) debug?) acc))))))
+		       (cons (compile-single (car fs) debug? gprof?) acc))))))
   (let ((cmd (apply string-join-by " " "ar rcs" archive objects)))
     (when split?
       (set! cmd (string-append cmd " " bld-dir "/*.o")))

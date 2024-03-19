@@ -20,108 +20,178 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (julian-day year month day) @@@ bld-rtl-dir/wile-rtl2-000058.scm:22 @@@ wile_julian_day @@@
-lval wile_julian_day(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ (gregorian-date jday) @@@ bld-rtl-dir/wile-rtl2-000058.scm:18 @@@ wile_gregorian_date @@@
+lval wile_gregorian_date(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
-var_5 = LVI_INT(14);
+var_5 = LVI_INT(68569);
 lval var_6;
-var_6 = LVI_INT(var_5.v.iv - var_2[1].v.iv);
+var_6 = LVI_INT(var_2[0].v.iv + var_5.v.iv);
+var_4 = var_6;
 lval var_7;
-var_7 = LVI_INT(12);
 lval var_8;
+var_8 = LVI_INT(4);
+lval var_9;
+var_9 = LVI_INT(var_8.v.iv * var_4.v.iv);
+lval var_10;
+var_10 = LVI_INT(146097);
+lval var_11;
 {
 lisp_int_t nq, nr;
-trunc_qr(var_6.v.iv, var_7.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:23");
-var_8 = LVI_INT(nq);
+trunc_qr(var_9.v.iv, var_10.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:20");
+var_11 = LVI_INT(nq);
 }
-var_4 = var_8;
-lval var_9;
-lval var_10;
-var_10 = LVI_INT(4800);
-lval var_11;
-switch (var_4.vt) {
+var_7 = var_11;
+lval var_12;
+lval var_13;
+var_13 = LVI_INT(146097);
+lval var_14;
+var_14 = LVI_INT(var_13.v.iv * var_7.v.iv);
+lval var_15;
+var_15 = LVI_INT(3);
+lval var_16;
+var_16 = LVI_INT(var_14.v.iv + var_15.v.iv);
+lval var_17;
+var_17 = LVI_INT(4);
+lval var_18;
+{
+lisp_int_t nq, nr;
+trunc_qr(var_16.v.iv, var_17.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:21");
+var_18 = LVI_INT(nq);
+}
+lval var_19;
+var_19 = LVI_INT(var_4.v.iv - var_18.v.iv);
+var_12 = var_19;
+lval var_20;
+lval var_21;
+var_21 = LVI_INT(4000);
+lval var_22;
+var_22 = LVI_INT(1);
+lval var_23;
+var_23 = LVI_INT(var_12.v.iv + var_22.v.iv);
+lval var_24;
+var_24 = LVI_INT(var_21.v.iv * var_23.v.iv);
+lval var_25;
+var_25 = LVI_INT(1461001);
+lval var_26;
+{
+lisp_int_t nq, nr;
+trunc_qr(var_24.v.iv, var_25.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:22");
+var_26 = LVI_INT(nq);
+}
+var_20 = var_26;
+lval var_27;
+lval var_28;
+var_28 = LVI_INT(31);
+lval var_29;
+var_29 = LVI_INT(1461);
+lval var_30;
+var_30 = LVI_INT(var_29.v.iv * var_20.v.iv);
+lval var_31;
+var_31 = LVI_INT(4);
+lval var_32;
+{
+lisp_int_t nq, nr;
+trunc_qr(var_30.v.iv, var_31.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:23");
+var_32 = LVI_INT(nq);
+}
+lval var_33;
+var_33 = LVI_INT(var_28.v.iv - var_32.v.iv);
+lval var_34;
+var_34 = LVI_INT(var_12.v.iv + var_33.v.iv);
+var_27 = var_34;
+lval var_35;
+lval var_36;
+var_36 = LVI_INT(80);
+lval var_37;
+var_37 = LVI_INT(var_36.v.iv * var_27.v.iv);
+lval var_38;
+var_38 = LVI_INT(2447);
+lval var_39;
+{
+lisp_int_t nq, nr;
+trunc_qr(var_37.v.iv, var_38.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:24");
+var_39 = LVI_INT(nq);
+}
+var_35 = var_39;
+lval var_40;
+lval var_41;
+var_41 = LVI_INT(2447);
+lval var_42;
+var_42 = LVI_INT(var_41.v.iv * var_35.v.iv);
+lval var_43;
+var_43 = LVI_INT(80);
+lval var_44;
+{
+lisp_int_t nq, nr;
+trunc_qr(var_42.v.iv, var_43.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:25");
+var_44 = LVI_INT(nq);
+}
+lval var_45;
+var_45 = LVI_INT(var_27.v.iv - var_44.v.iv);
+var_40 = var_45;
+lval var_46;
+lval var_47;
+var_47 = LVI_INT(11);
+lval var_48;
+{
+lisp_int_t nq, nr;
+trunc_qr(var_35.v.iv, var_47.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:26");
+var_48 = LVI_INT(nq);
+}
+var_46 = var_48;
+lval var_49;
+lval var_50;
+var_50 = LVI_INT(2);
+lval var_51;
+var_51 = LVI_INT(12);
+lval var_52;
+var_52 = LVI_INT(var_51.v.iv * var_46.v.iv);
+lval var_53;
+switch (var_52.vt) {
 case LV_INT:
-var_11 = LVI_INT(-var_4.v.iv);
+var_53 = LVI_INT(-var_52.v.iv);
 break;
 case LV_RAT:
-if (var_4.v.irv.den >= 0) {
-var_11 = LVI_RAT(-var_4.v.irv.num, var_4.v.irv.den);
+if (var_52.v.irv.den >= 0) {
+var_53 = LVI_RAT(-var_52.v.irv.num, var_52.v.irv.den);
 } else {
-var_11 = LVI_RAT(var_4.v.irv.num, -var_4.v.irv.den);
+var_53 = LVI_RAT(var_52.v.irv.num, -var_52.v.irv.den);
 }
 break;
 case LV_REAL:
-var_11 = LVI_REAL(-var_4.v.rv);
+var_53 = LVI_REAL(-var_52.v.rv);
 break;
 case LV_CMPLX:
-var_11 = LVI_CMPLX2(-CREAL(var_4.v.cv), -CIMAG(var_4.v.cv));
+var_53 = LVI_CMPLX2(-CREAL(var_52.v.cv), -CIMAG(var_52.v.cv));
 break;
 default:
-wile_exception("negative", "bld-rtl-dir/wile-rtl2-000058.scm:24", "got a non-numeric argument");
+wile_exception("negative", "bld-rtl-dir/wile-rtl2-000058.scm:27", "got a non-numeric argument");
 }
-lval var_12;
-var_12 = LVI_INT(var_2[0].v.iv + var_10.v.iv + var_11.v.iv);
-var_9 = var_12;
-lval var_13;
-lval var_14;
-var_14 = LVI_INT(12);
-lval var_15;
-var_15 = LVI_INT(var_14.v.iv * var_4.v.iv);
-lval var_16;
-var_16 = LVI_INT(-3);
-lval var_17;
-var_17 = LVI_INT(var_2[1].v.iv + var_15.v.iv + var_16.v.iv);
-var_13 = var_17;
-lval var_18;
-var_18 = LVI_INT(153);
-lval var_19;
-var_19 = LVI_INT(var_18.v.iv * var_13.v.iv);
-lval var_20;
-var_20 = LVI_INT(2);
-lval var_21;
-var_21 = LVI_INT(var_19.v.iv + var_20.v.iv);
-lval var_22;
-var_22 = LVI_INT(5);
-lval var_23;
+lval var_54;
+var_54 = LVI_INT(var_35.v.iv + var_50.v.iv + var_53.v.iv);
+var_49 = var_54;
+lval var_55;
+lval var_56;
+var_56 = LVI_INT(100);
+lval var_57;
+var_57 = LVI_INT(49);
+lval var_58;
+var_58 = LVI_INT(var_7.v.iv - var_57.v.iv);
+lval var_59;
+var_59 = LVI_INT(var_56.v.iv * var_58.v.iv);
+lval var_60;
+var_60 = LVI_INT(var_59.v.iv + var_20.v.iv + var_46.v.iv);
+var_55 = var_60;
+lval var_61;
 {
-lisp_int_t nq, nr;
-trunc_qr(var_21.v.iv, var_22.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:26");
-var_23 = LVI_INT(nq);
+lval var_62[3];
+var_62[0] = var_55;
+var_62[1] = var_49;
+var_62[2] = var_40;
+var_61 = wile_gen_list(3, var_62, NULL);
 }
-lval var_24;
-var_24 = LVI_INT(365);
-lval var_25;
-var_25 = LVI_INT(var_24.v.iv * var_9.v.iv);
-lval var_26;
-var_26 = LVI_INT(4);
-lval var_27;
-{
-lisp_int_t nq, nr;
-trunc_qr(var_9.v.iv, var_26.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:27");
-var_27 = LVI_INT(nq);
+return var_61;
 }
-lval var_28;
-var_28 = LVI_INT(-100);
-lval var_29;
-{
-lisp_int_t nq, nr;
-trunc_qr(var_9.v.iv, var_28.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:27");
-var_29 = LVI_INT(nq);
-}
-lval var_30;
-var_30 = LVI_INT(400);
-lval var_31;
-{
-lisp_int_t nq, nr;
-trunc_qr(var_9.v.iv, var_30.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000058.scm:27");
-var_31 = LVI_INT(nq);
-}
-lval var_32;
-var_32 = LVI_INT(-32045);
-lval var_33;
-var_33 = LVI_INT(var_2[2].v.iv + var_23.v.iv + var_25.v.iv + var_27.v.iv + var_29.v.iv + var_31.v.iv + var_32.v.iv);
-return var_33;
-}
-// end of function wile_julian_day
+// end of function wile_gregorian_date

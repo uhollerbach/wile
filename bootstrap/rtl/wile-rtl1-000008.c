@@ -9,45 +9,53 @@
 extern lisp_escape_t cachalot;
 
 
-// need to protect this as if it were a header file because we need it
-// in several places; if this file gets split, it needs to be included
-// more than once
+#include <sys/types.h>
+#include <sys/stat.h>
 
-#ifndef WILE_NEEDS_ULEX
-#define WILE_NEEDS_ULEX
-#include "wile-parse.h"
-#include "wile-lex.h"
-
-void set_start_state(struct ulex_context* context);
-#endif // WILE_NEEDS_ULEX
-
-lval wile_string2num(lval str, const char* loc)
+lval wile_temp_file(lptr* clos, lptr args, const char* loc)
 {
-    lval val1, val2;
-    unsigned char* text;
+    char *template, *tp;
+    size_t tlen;
+    int i, nt;
+    FILE* fp;
 
-    wile_set_lisp_loc_file(NULL);
-    struct ulex_context* context = ulex_init(ulex_TEXT, str.v.str);
-    if (context == NULL) {
-	wile_exception("string->number", loc, "was unable to set up lexer");
+    if (args->vt != LV_STRING) {
+	wile_exception("open-temporary-file", loc,
+		       "expects one string argument");
     }
-    set_start_state(context);
-    (void) wile_lex(context, &val1, NULL, &text);
-
-    if (IS_NUMERIC(&val1) && wile_lex(context, &val2, NULL, &text) == 0) {
-	if (val1.vt == LV_INT ||
-	    val1.vt == LV_RAT ||
-	    val1.vt == LV_REAL || val1.vt == LV_CMPLX) {
-	    return val1;
-	} else {
-	    wile_exception("string->number", loc,
-			   "got bad type %d!", val1.vt);
+    tlen = strlen(args->v.str);
+    template = LISP_ALLOC(char, tlen + 8);
+    strcpy(template, args->v.str);
+    tp = template + tlen;
+    nt = (tlen < 6) ? tlen : 6;
+    for (i = 0; i < nt; ++i) {
+	if (*(--tp) != 'X') {
+	    break;
 	}
-	ulex_cleanup(context);
-    } else {
-	ulex_cleanup(context);
-	wile_exception("string->number", loc,
-		       "got bad input string '%s'", str.v.str);
     }
+    tp = template + tlen;
+    while (i++ < 6) {
+	*tp++ = 'X';
+    }
+    *tp++ = '\0';
+    mode_t mask = umask(0);
+    umask(077);
+    nt = mkstemp(template);
+    umask(mask);
+    if (nt < 0) {
+	LISP_FREE(template);
+	wile_exception("open-temporary-file", loc,
+		       "could not create temporary file");
+    }
+    lval vs[2];
+    vs[1] = LVI_STRING(template);
+    LISP_FREE(template);
+    fp = fdopen(nt, "w+");
+    if (fp == NULL) {
+	wile_exception("open-temporary-file", loc,
+		       "could not create temporary file");
+    }
+    vs[0] = LVI_FPORT(fp);
+    return wile_gen_list(2, vs, NULL);
 }
 

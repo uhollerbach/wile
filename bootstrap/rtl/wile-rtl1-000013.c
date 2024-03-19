@@ -9,7 +9,7 @@
 extern lisp_escape_t cachalot;
 
 
-lisp_real_t plaguerre(int n, lisp_real_t x)
+lisp_real_t plegendre(int n, lisp_real_t x)
 {
     int k;
     lisp_real_t a, pm, pc, pp;
@@ -17,13 +17,13 @@ lisp_real_t plaguerre(int n, lisp_real_t x)
     if (n == 0) {
 	return 1.0;
     } else if (n == 1) {
-	return 1.0 - x;
+	return x;
     } else {
 	pm = 1.0;
-	pc = 1.0 - x;
+	pc = x;
 	for (k = 1; k < n; ++k) {
 	    a = ((lisp_real_t) k)/((lisp_real_t) (k + 1));
-	    pp = (1.0 + a - x/(k + 1))*pc - a*pm;
+	    pp = (1.0 + a)*x*pc - a*pm;
 	    pm = pc;
 	    pc = pp;
 	}
