@@ -20,73 +20,27 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (day-of-week v . vs) @@@ bld-rtl-dir/wile-rtl2-000061.scm:13 @@@ wile_day_of_week @@@
-lval wile_day_of_week(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ (delta-dates y1 m1 d1 y2 m2 d2) @@@ bld-rtl-dir/wile-rtl2-000061.scm:15 @@@ wile_delta_dates @@@
+lval wile_delta_dates(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
-lval var_5;
-var_5 = LVI_BOOL(var_2[1].vt == LV_NIL);
-if (LV_IS_FALSE(var_5)) {
+{
+lval var_5[8];
+var_5[0] = var_2[3];
+var_5[1] = var_2[4];
+var_5[2] = var_2[5];
+var_4 = wile_julian_day(NULL, var_5, "bld-rtl-dir/wile-rtl2-000061.scm:16");
+}
 lval var_6;
-var_6 = LVI_INT(1);
-lval var_7;
-if (var_2[1].vt != LV_PAIR) {
-wile_exception("car", "bld-rtl-dir/wile-rtl2-000061.scm:16", "input is not a pair!");
+{
+lval var_7[8];
+var_7[0] = var_2[0];
+var_7[1] = var_2[1];
+var_7[2] = var_2[2];
+var_6 = wile_julian_day(NULL, var_7, "bld-rtl-dir/wile-rtl2-000061.scm:16");
 }
-var_7 = (var_2[1].v.pair.car ? *(var_2[1].v.pair.car) : LVI_NIL());
 lval var_8;
-var_8 = LVI_STRING("cadr");
-lval var_9;
-{
-char* cp = strchr(var_8.v.str, 'r');
-var_9 = var_2[1];
-while (*(--cp) != 'c') {
-if (var_9.vt != LV_PAIR) {
-wile_exception("cxr", "bld-rtl-dir/wile-rtl2-000061.scm:16", "input does not have the right structure!");
+var_8 = LVI_INT(var_4.v.iv - var_6.v.iv);
+return var_8;
 }
-if (*cp == 'a') {
-var_9 = (var_9.v.pair.car ? *(var_9.v.pair.car) : LVI_NIL());
-} else if (*cp == 'd') {
-var_9 = (var_9.v.pair.cdr ? *(var_9.v.pair.cdr) : LVI_NIL());
-} else {
-wile_exception("cxr", "bld-rtl-dir/wile-rtl2-000061.scm:16", "got malformed control string '%s'", var_8.v.str);
-}
-}
-}
-lval var_10;
-{
-lval var_11[8];
-var_11[0] = var_2[0];
-var_11[1] = var_7;
-var_11[2] = var_9;
-var_10 = wile_julian_day(NULL, var_11, "bld-rtl-dir/wile-rtl2-000061.scm:16");
-}
-lval var_12;
-var_12 = LVI_INT(var_6.v.iv + var_10.v.iv);
-lval var_13;
-var_13 = LVI_INT(7);
-lval var_14;
-{
-lisp_int_t nq, nr;
-floor_qr(var_12.v.iv, var_13.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000061.scm:16");
-var_14 = LVI_INT(nr);
-}
-var_4 = var_14;
-} else {
-lval var_15;
-var_15 = LVI_INT(1);
-lval var_16;
-var_16 = LVI_INT(var_15.v.iv + var_2[0].v.iv);
-lval var_17;
-var_17 = LVI_INT(7);
-lval var_18;
-{
-lisp_int_t nq, nr;
-floor_qr(var_16.v.iv, var_17.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000061.scm:15");
-var_18 = LVI_INT(nr);
-}
-var_4 = var_18;
-}
-return var_4;
-}
-// end of function wile_day_of_week
+// end of function wile_delta_dates

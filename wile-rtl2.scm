@@ -1,5 +1,5 @@
 ;;; Wile -- the extremely stable scheming genius compiler
-;;; Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+;;; Copyright 2023 - 2025, Uwe Hollerbach <uhollerbach@gmail.com>
 ;;; License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
 
 (pragma library "wile-rtl2.h" "wrtl.sch")
@@ -899,12 +899,22 @@
 (define-primitive "wile_upfrom"
   "expects two integers, a start and a count, and returns a list of numbers counting up from the start: 4 3 -> (4 5 6)"
   (upfrom s n0)
-  (let loop ((s s)
-	     (n (i- (i+ s n0) 1))
+  (let loop ((n (i- (i+ s n0) 1))
 	     (acc ()))
     (if (< n s)
 	acc
-	(loop s (i- n 1) (cons n acc)))))
+	(loop (i- n 1) (cons n acc)))))
+
+;;; --8><----8><----8><--
+
+(define-primitive "wile_downfrom"
+  "expects two integers, a start and a count, and returns a list of numbers counting down from the start: 4 3 -> (4 3 2)"
+  (downfrom s n0)
+  (let loop ((n (i+ (i- s n0) 1))
+	     (acc ()))
+    (if (> n s)
+	acc
+	(loop (i+ n 1) (cons n acc)))))
 
 ;;; --8><----8><----8><--
 
@@ -1451,7 +1461,7 @@
 ;;; --8><----8><----8><--
 
 (define-primitive "wile_random_permutation"
-  "expects one positive integer N as input and returns a list which is a random permutation of the numbers (1 .. N)"
+  "expects one positive integer N as input and returns a vector which is a random permutation of the numbers (1 .. N)"
   (random-permutation n)
   (let ((vec (vector-create n)))
     (do ((i 0 (i+ i 1)))
@@ -1947,7 +1957,16 @@
 (define-primitive "wile_matrix_print"
   "expects a vector, two integers, and a boolean, interprets this as a matrix of n1 rows by n2 columns stored in row-major storage order if boolean is false, column-major order if true, and returns a list of strings of equal length, suitable for stacking, showing the rows in order"
   (matrix-print mat n-rows n-cols tr)
-  (let* ((mp (vector-map (lambda (n) (if (null? n) "" (number->string n)))
+  (unless (>= (vector-length mat) (i* n-rows n-cols))
+    (raise (list "matrix-print: matrix is not big enough!"
+		 (vector-length mat) n-rows n-cols)))
+  (let* ((mp (vector-map (lambda (n)
+			   (cond ((null? n) "")
+				 ((string? n) n)
+				 ((symbol? n) (symbol->string n))
+				 ((boolean? n) (if n "#t" "#f"))
+				 ((number? n) (number->string n))
+				 (else (sprintf "%v" n))))
 			 mat))
 	 (ml (foldl max/i 0 (map string-length (vector->list mp))))
 	 (spl (lambda (s) (string-pad-left s #\space ml))))
@@ -1967,6 +1986,68 @@
 				       (cons (spl (vector-ref mp ix1))
 					     acc-c)))))
 		       acc-r))))))
+
+;;; --8><----8><----8><--
+
+;;; (nearly) pretty-print a banded matrix, analogous to the previous routine.
+
+;;; storage is LAPACK-style column-by-diagonal: the linear vector
+;;;
+;;;	#(() a11 a21 a31 a12 a22 a32 a42 a23 a33
+;;;	  a43 a53 a34 a44 a54 () a45 a55 () ())
+;;;
+;;; represents the banded matrix
+;;;
+;;;	[ a11 a12             ]
+;;;	[ a21 a22 a23         ]
+;;;	[ a31 a32 a33 a34     ]
+;;;	[     a42 a43 a44 a45 ]
+;;;	[         a53 a54 a55 ]
+
+(define-primitive "wile_matrix_print_banded"
+  "expects a vector and three integers, interprets this as a banded square matrix of n1 rows by n1 columns with lower bandwidth n2 and upper bandwidth n3, and returns a list of strings of equal length, suitable for stacking, showing the rows in order"
+  (matrix-print-banded mat n-rc kl ku)
+  (unless (vector? mat)
+    (raise "matrix-print-banded: input is not a vector!"))
+  (unless (and (> n-rc 0) (>= kl 0) (< kl n-rc) (>= ku 0) (< ku n-rc))
+    (raise (list "matrix-print-banded: bad matrix dimensions!" n-rc kl ku)))
+  (unless (>= (vector-length mat) (i* (+ kl ku 1) n-rc))
+    (raise (list "matrix-print-banded: matrix is not big enough!"
+		 (vector-length mat) kl ku n-rc)))
+  (let* ((mp (vector-map (lambda (n)
+			   (cond ((null? n) "")
+				 ((string? n) n)
+				 ((symbol? n) (symbol->string n))
+				 ((boolean? n) (if n "#t" "#f"))
+				 ((number? n) (number->string n))
+				 (else (sprintf "%v" n))))
+			 mat))
+	 (klu (i+ kl ku))
+	 (nr1 (i+ klu 1))
+	 (nrcm (i- (i* nr1 n-rc) 1))
+	 (_1 (do ((ir 0 (i+ ir 1)))
+		 ((>= ir ku) #t)
+	       (do ((ic 0 (i+ ic 1)))
+		   ((>= ic (i- ku ir)) #t)
+		 (vector-set! mp (i+ ic (i* ir nr1)) ""))))
+	 (_2 (do ((ir 0 (i+ ir 1)))
+		 ((>= ir kl) #t)
+	       (do ((ic 0 (i+ ic 1)))
+		   ((>= ic (i- kl ir)) #t)
+		 (vector-set! mp (i- nrcm (i+ ic (i* ir nr1))) ""))))
+	 (ml (foldl max/i 0 (map string-length (vector->list mp))))
+	 (spl (lambda (s) (string-pad-left s #\space ml)))
+	 (acc ()))
+    (do ((ir 0 (i+ ir 1)))
+	((>= ir n-rc) (list-reverse acc))
+      (let ((row (vector-create n-rc ""))
+	    (icl (max 0 (i- ir kl)))
+	    (icu (min (i+ ir ku) (i- n-rc 1))))
+	(do ((ic icl (i+ ic 1)))
+	    ((> ic icu) #t)
+	  (vector-set! row ic (vector-ref mp (i+ ku (i+ ir (i* ic klu))))))
+	(vector-map! spl row)
+	(set! acc (cons (apply string-join-by " " (vector->list row)) acc))))))
 
 ;;; --8><----8><----8><--
 

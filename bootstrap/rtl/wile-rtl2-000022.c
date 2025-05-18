@@ -47,19 +47,28 @@ if (!LV_IS_FALSE(var_16)) {
 goto lbl_11;
 }
 lval var_17;
+#ifdef WILE_DO_CHECK
 if (var_6.vt != LV_PAIR) {
 wile_exception("car", "bld-rtl-dir/wile-rtl2-000022.scm:18", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_17 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
 lval var_18;
+#ifdef WILE_DO_CHECK
+if (var_17.vt != LV_STRING) {
+wile_exception("string-length", "bld-rtl-dir/wile-rtl2-000022.scm:18", "input is not a string");
+}
+#endif // WILE_DO_CHECK
 var_18 = LVI_INT(strlen(var_17.v.str));
 lval var_19;
 var_19 = LVI_INT(var_4.v.iv + var_18.v.iv);
 var_4 = var_19;
 lval var_20;
+#ifdef WILE_DO_CHECK
 if (var_6.vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000022.scm:19", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_20 = (var_6.v.pair.cdr ? *(var_6.v.pair.cdr) : LVI_NIL());
 var_6 = var_20;
 lval var_21;
@@ -72,9 +81,11 @@ goto lbl_10;
 lbl_11:;
 *var_15 = var_12;
 lval var_23;
+#ifdef WILE_DO_CHECK
 if (var_4.vt != LV_INT || var_4.v.iv < 0) {
 wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000022.scm:20", "input is not a non-negative integer");
 }
+#endif // WILE_DO_CHECK
 var_23.vt = LV_STRING;
 var_23.origin = var_4.origin;
 var_23.v.str = LISP_ALLOC(char, 1 + var_4.v.iv);
@@ -100,13 +111,20 @@ goto lbl_27;
 }
 lval var_33;
 lval var_34;
+#ifdef WILE_DO_CHECK
 if (var_6.vt != LV_PAIR) {
 wile_exception("car", "bld-rtl-dir/wile-rtl2-000022.scm:24", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_34 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
 var_33 = var_34;
 lval var_35;
 lval var_36;
+#ifdef WILE_DO_CHECK
+if (var_33.vt != LV_STRING) {
+wile_exception("string-length", "bld-rtl-dir/wile-rtl2-000022.scm:25", "input is not a string");
+}
+#endif // WILE_DO_CHECK
 var_36 = LVI_INT(strlen(var_33.v.str));
 var_35 = var_36;
 lval var_40;
@@ -158,19 +176,23 @@ goto lbl_39;
 lval var_46;
 var_46 = LVI_INT(var_4.v.iv + var_40.v.iv);
 lval var_47;
+#ifdef WILE_DO_CHECK
 if (var_33.vt != LV_STRING || var_40.vt != LV_INT) {
 wile_exception("string-ref", "bld-rtl-dir/wile-rtl2-000022.scm:28", "expects a string input");
 }
 if (var_40.v.iv < 0 || (size_t) var_40.v.iv >= strlen(var_33.v.str)) {
 wile_exception("string-ref", "bld-rtl-dir/wile-rtl2-000022.scm:28", "got bad index value");
 }
+#endif // WILE_DO_CHECK
 var_47 = LVI_CHAR(var_33.v.str[var_40.v.iv]);
+#ifdef WILE_DO_CHECK
 if (var_7.vt != LV_STRING || var_46.vt != LV_INT || var_47.vt != LV_CHAR) {
 wile_exception("string-set!", "bld-rtl-dir/wile-rtl2-000022.scm:28", "expects a string, an integer, and a character");
 }
 if (var_46.v.iv < 0 || (size_t) var_46.v.iv >= strlen(var_7.v.str)) {
 wile_exception("string-set!", "bld-rtl-dir/wile-rtl2-000022.scm:28", "index is out of range");
 }
+#endif // WILE_DO_CHECK
 var_7.v.str[var_46.v.iv] = var_47.v.chr;
 lval var_49;
 var_49 = LVI_INT(1);
@@ -185,9 +207,11 @@ lval var_51;
 var_51 = LVI_INT(var_4.v.iv + var_35.v.iv);
 var_4 = var_51;
 lval var_52;
+#ifdef WILE_DO_CHECK
 if (var_6.vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000022.scm:30", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_52 = (var_6.v.pair.cdr ? *(var_6.v.pair.cdr) : LVI_NIL());
 var_6 = var_52;
 lval var_53;

@@ -3,7 +3,7 @@
 ;;; to write a replacement. It seems to work pretty well. (I'm aware
 ;;; that "sudo apt install <some-package>" would have been simpler.)
 
-;;; Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+;;; Copyright 2023 - 2025, Uwe Hollerbach <uhollerbach@gmail.com>
 ;;; License: 2clause BSD
 
 ;;; generate a calendar, assuming (proleptic) Gregorian system

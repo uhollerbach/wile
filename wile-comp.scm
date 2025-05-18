@@ -1,7 +1,7 @@
 ;;; -*- mode: scheme; -*-
 
 ;;; Wile -- the extremely stable scheming genius compiler
-;;; Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+;;; Copyright 2023 - 2025, Uwe Hollerbach <uhollerbach@gmail.com>
 ;;; License: GPLv3 or later, see file 'LICENSE' for details
 
 (define global-verbose 0)		;;; how chirpy are we?
@@ -12,13 +12,9 @@
 
 (define (ERR src fmt . args)
   (when (null? src)
-    (set! src (car args)))
+    (set! src (token-source-line fmt)))
   (flush-port stderr)
-  (raise (apply sprintf
-		(if src (string-append fmt " at "
-				       (token-source-line src))
-		    fmt)
-		args)))
+  (raise (apply sprintf (if src (string-append fmt " at " src) fmt) args)))
 
 ;;; several output ports for various bits of code wrangling
 ;;; these are no longer real file ports, but rather string-bag structs
@@ -855,7 +851,7 @@
        compile-special-begin-old
        compile-special-begin-new) cur-env tcall exprs))
 
-(define (compile-special-if cur-env tcall exprs)
+(define (compile-special-if cur-env tcall exprs loc)
   (debug-trace 'compile-special-if cur-env tcall exprs)
   (if (list-length=? 3 exprs)
       (let ((res (new-svar)))
@@ -875,7 +871,7 @@
 	   (emit-fstr "%s = %s;\n" res r2)))
 	(emit-fstr "}\n")
 	res)
-      (ERR () "malformed 'if' expression '%v'" exprs)))
+      (ERR loc "malformed 'if' expression '%v'" exprs)))
 
 (define (compile-special-do cur-env tcall exprs)
   (debug-trace 'compile-special-do cur-env tcall exprs)
@@ -987,7 +983,7 @@
 		     (emit-fstr "goto %s;\n}\n" bot-label))))
 	(emit-decl res)
 	(cond ((any-true? (map is-else? rest-t))
-	       (ERR () "malformed 'cond' expression '%v'" clauses))
+	       (ERR loc "malformed 'cond' expression '%v'" clauses))
 	      ((is-else? last-t)
 	       (for-each doit (list-untail clauses 1))
 	       (with-mirrors
@@ -1017,10 +1013,10 @@
 	    (ERR llist "malformed '%s' bindings list '%v'" type vs))))
       (ERR llist "malformed '%s' expression '%v'" llist)))
 
-(define (compile-special-lettish advance-in-place cur-env tcall clauses)
+(define (compile-special-lettish advance-in-place cur-env tcall clauses loc)
   (debug-trace 'compile-special-lettish cur-env tcall clauses)
   (cond ((or (null? clauses) (null? (cdr clauses)))
-	 (ERR () "malformed 'let' '%v'" clauses))
+	 (ERR loc "malformed 'let' '%v'" clauses))
 	((and (list? clauses) (symbol? (car clauses)))		;;; named let
 	 (check-let-bindings "named-let" (cdr clauses))
 	 (let* ((s-name (car clauses))
@@ -1034,7 +1030,7 @@
 		(lambda-clauses (cons formals (cddr clauses))))
 	   ;;; TODO: what about tail calls here?
 	   (compile-special-lambda c-fn-name c-cl-name
-				   lambda-env #f lambda-clauses)
+				   lambda-env #f lambda-clauses loc)
 	   (compile-expr lambda-env #f (cons s-name args))))
 	(else					;;; let or let*
 	 (check-let-bindings (if advance-in-place "let*" "let") clauses)
@@ -1054,7 +1050,7 @@
 	     (for-each (lambda (d) (set! cur-env (cons d cur-env))) ndefs))
 	   (compile-special-begin cur-env tcall (cdr clauses))))))
 
-(define (compile-special-letrec cur-env tcall clauses)
+(define (compile-special-letrec cur-env tcall clauses loc)
   (debug-trace 'compile-special-letrec cur-env tcall clauses)
   (check-let-bindings "letrec" clauses)
   (let ((vars
@@ -1066,20 +1062,20 @@
 		      (with-output global-func (emit-decl tmp))
 		      (set! cur-env (cons d cur-env))
 		      tmp)
-		    (ERR () "malformed 'letrec' definition '%s'" def)))
+		    (ERR loc "malformed 'letrec' definition '%s'" def)))
 	      (car clauses))))
     (for-each (lambda (var def)
 		(if (symbol? (car def))
 		    (emit-fstr "%s = %s;\n" var
 			       (maybe-compile-expr cur-env #f (cadr def)))
-		    (ERR () "malformed 'letrec' definition '%s'" def)))
+		    (ERR loc "malformed 'letrec' definition '%s'" def)))
 	      vars (car clauses))
     (compile-special-begin cur-env tcall (cdr clauses))))
 
-(define (compile-special-set! cur-env tcall clauses)
+(define (compile-special-set! cur-env tcall clauses loc)
   (debug-trace 'compile-special-set! cur-env tcall clauses)
   (if (not (and (list-length=? 2 clauses) (symbol? (car clauses))))
-      (ERR () "malformed 'set!' expression '%v'" clauses)
+      (ERR loc "malformed 'set!' expression '%v'" clauses)
 
       ;;; TODO: here, if we get a proc or prim, that means redefinition of
       ;;; said proc or prim. That would mean modifying the current environment
@@ -1093,7 +1089,7 @@
 	    (emit-fstr "%s = %s;\n"
 		       (cadr si) (maybe-compile-expr
 				  cur-env #f (cadr clauses)))
-	    (ERR () "malformed 'set!' symbol '%s' does not resolve to a c-var"
+	    (ERR loc "malformed 'set!' symbol '%s' does not resolve to a c-var"
 		 (car clauses)))
 	(cadr si))))
 
@@ -1142,14 +1138,14 @@
 		    (emit-fstr "%s = (lptr) (%s);\n" name1 name2)))
 		clist1))))
 
-(define (compile-special-lambda c-fn-name c-cl-name cur-env tcall def)
+(define (compile-special-lambda c-fn-name c-cl-name cur-env tcall def loc)
   (debug-trace 'compile-special-lambda cur-env tcall def)
   (let* ((args (car def))
 	 (argies (args-list (car def)))
 	 (arity (car argies))
 	 (sas (cadr argies))
 	 (_ (unless (unique-symbols? sas)
-	      (ERR () "malformed 'lambda' args list '%v'" args)))
+	      (ERR loc "malformed 'lambda' args list '%v'" args)))
 	 (tmp-fn (if c-fn-name c-fn-name (new-svar 'fn)))
 	 (c-name (if c-cl-name c-cl-name (new-svar)))
 	 (a-name (new-svar))
@@ -1259,7 +1255,7 @@
 (define (symbol<? a b)
   (string<? (symbol->string a) (symbol->string b)))
 
-(define (compile-special-case cur-env tcall clauses)
+(define (compile-special-case cur-env tcall clauses loc)
   (debug-trace 'compile-special-case cur-env tcall clauses)
   (let* ((is-else? (lambda (t) (and (symbol? t) (symbol=? t 'else))))
 	 (all-cs (map car (cdr clauses)))
@@ -1273,29 +1269,29 @@
 				 ((eq? (car vs) (cadr vs)) #f)
 				 (else (loop (cdr vs))))))))
     (when (any-true? (map is-else? rest-cs))
-      (ERR () "malformed 'case' expression '%v'" clauses))
+      (ERR loc "malformed 'case' expression '%v'" clauses))
     (cond ((all-true? (map char? typed-cs))
 	   (if (check-unique char<? char=? typed-cs)
 	       (do-compile-case1 "LV_CHAR" ".v.chr" char->integer
 				 default? cur-env tcall clauses)
-	       (ERR () "duplicated cases in 'case' expression '%v'" clauses)))
+	       (ERR loc "duplicated cases in 'case' expression '%v'" clauses)))
 	  ((all-true? (map integer? typed-cs))
 	   (if (check-unique < = typed-cs)
 	       (do-compile-case1 "LV_INT" ".v.iv" (lambda (x) x)
 				 default? cur-env tcall clauses)
-	       (ERR () "duplicated cases in 'case' expression '%v'" clauses)))
+	       (ERR loc "duplicated cases in 'case' expression '%v'" clauses)))
 	  ((all-true? (map string? typed-cs))
 	   (if (check-unique string<? string=? typed-cs)
 	       (do-compile-case2 "LV_STRING" ".v.str" (lambda (x) x)
 				 default? cur-env tcall clauses)
-	       (ERR () "duplicated cases in 'case' expression '%v'" clauses)))
+	       (ERR loc "duplicated cases in 'case' expression '%v'" clauses)))
 	  ((all-true? (map symbol? typed-cs))
 	   (if (check-unique symbol<? symbol=? typed-cs)
 	       (do-compile-case2 "LV_SYMBOL" ".v.str" symbol->string
 				 default? cur-env tcall clauses)
-	       (ERR () "duplicated cases in 'case' expression '%v'" clauses)))
+	       (ERR loc "duplicated cases in 'case' expression '%v'" clauses)))
 	  ;;; TODO: possibly also support boolean
-	  (else (ERR ()
+	  (else (ERR loc
 		     "mixed types are not supported in 'case' expression '%v'"
 		     clauses)))))
 
@@ -1312,7 +1308,7 @@
 ;;;   (guard (err loc (#t (printf "cotted exception %v from %v\n" err loc)))
 ;;;          (raise "Imma throw something now"))
 
-(define (compile-special-guard cur-env tcall clauses)
+(define (compile-special-guard cur-env tcall clauses loc)
   (debug-trace 'compile-special-guard cur-env tcall clauses)
   (if (and (pair? clauses)
 	   (pair? (car clauses))
@@ -1362,7 +1358,7 @@
 			    ((if provide-loc cddar cdar) clauses)
 			    (token-source-line clauses)))
 	res)
-      (ERR () "malformed 'guard' expression '%v'" clauses)))
+      (ERR loc "malformed 'guard' expression '%v'" clauses)))
 
 (define (compile-qq-ordinary-list level cur-env expr)
   (let* ((lt (compile-qq level cur-env (cdr expr)))
@@ -1429,20 +1425,20 @@
 	(else				;;; unimplemented or impossible cases
 	 (ERR () "malformed 'quasiquote' expression '%v'" expr))))
 
-(define (compile-special-qq cur-env tcall expr)
+(define (compile-special-qq cur-env tcall expr loc)
   (debug-trace 'compile-special-qq cur-env tcall expr)
   (if (list-length=? 1 expr)
       (compile-qq 1 cur-env (car expr))
-      (ERR () "malformed 'quasiquote' expression '%v'" expr)))
+      (ERR loc "malformed 'quasiquote' expression '%v'" expr)))
 
 (define (compile-special-cond-expand cur-env tcall clauses)
   (debug-trace 'compile-special-cond-expand cur-env tcall clauses)
   (compile-special-begin cur-env tcall (do-cond-expand clauses)))
 
-(define (compile-special-c-code cur-env clauses)
+(define (compile-special-c-code cur-env clauses loc)
   (debug-trace 'compile-special-c-code cur-env #f clauses)
   (when (list-length=? 0 clauses)
-    (ERR () "empty 'wile-c' expression"))
+    (ERR loc "empty 'wile-c' expression"))
   (let ((vars (cdr clauses)))
     (let loop ((cs (string->list (car clauses))))
       (cond ((null? cs)
@@ -1450,25 +1446,41 @@
 	     #t)
 	    ((char=? (car cs) #\@)
 	     (cond ((null? (cdr cs))
-		    (raise "special-c error: trailing '@'"))
+		    (ERR loc "wile-c error: trailing '@'"))
 		   ((char=? (cadr cs) #\@)
 		    (emit-str #\@)
 		    (loop (cddr cs)))
+		   ((char=? (cadr cs) #\L)
+		    (emit-str loc)
+		    (loop (cddr cs)))
 		   ((char-numeric? (cadr cs))
 		    (when (char=? (cadr cs) #\0)
-		      (raise "special-c error: illegal @-index 0"))
-		    (let* ((svar (list-ref vars (- (char->integer (cadr cs))
-						    (char->integer #\1))))
-			   (cvar (assv svar cur-env)))
-		      (unless cvar
-			(raise
-			 (sprintf
-			  "special-c error: unbound variable '%v'" svar)))
-		      (unless (symbol=? (cadr cvar) 'c-var)
-			(raise
-			 (sprintf
-			  "special-c error: '%v' is not a variable" svar)))
-		      (emit-str (symbol->string (caddr cvar)))
+		      (ERR loc "wile-c error: illegal @-index 0"))
+		    (let ((svar (list-ref vars (- (char->integer (cadr cs))
+						  (char->integer #\1)))))
+		      (emit-str
+		       (case (type-of svar)
+			 ((symbol)
+			  (let ((cvar (assv svar cur-env)))
+			    (unless cvar
+			      (ERR loc
+				   "wile-c error: unbound variable '%v'" svar))
+			    (unless (symbol=? (cadr cvar) 'c-var)
+			      (ERR loc
+				   "wile-c error: '%v' is not a variable" svar))
+			    (symbol->string (caddr cvar))))
+			 ((boolean)
+			  (if svar "true" "false"))
+			 ((char)
+			  (sprintf "'\\%c'" svar))
+			 ((string)
+			  (string-append "\"" svar "\""))
+;;;	((rational? v) 'rational)
+;;;	((complex? v) 'complex)
+			 ((integer real)
+			  (number->string svar))
+			 (else
+			  (ERR loc "wile-c error: unsupported '%v'" svar))))
 		      (loop (cddr cs))))
 		   (else
 		    (emit-str (cadr cs))
@@ -1479,58 +1491,60 @@
 
 (define (compile-special cur-env tcall expr)
   (debug-trace 'compile-special cur-env tcall expr)
-  (cond ((symbol=? (car expr) 'and)
-	 (compile-special-andor 'true cur-env tcall (cdr expr)))
-	((symbol=? (car expr) 'or)
-	 (compile-special-andor 'false cur-env tcall (cdr expr)))
-	((symbol=? (car expr) 'begin)
-	 (compile-special-begin cur-env tcall (cdr expr)))
-((symbol=? (car expr) 'begin-new)
- (compile-special-begin-new cur-env tcall (cdr expr)))
-	((symbol=? (car expr) 'if)
-	 (compile-special-if cur-env tcall (cdr expr)))
-	((symbol=? (car expr) 'cond)
-	 (compile-special-cond #f cur-env tcall (cdr expr)
-			       (token-source-line expr)))
-	((symbol=? (car expr) 'do)
-	 (compile-special-do cur-env tcall (cdr expr)))
-	((symbol=? (car expr) 'let)
-	 (with-mirrors
-	  (let ((res (compile-special-lettish #f cur-env tcall (cdr expr))))
-	    (reset-mirrors global-mirrors)
-	    res)))
-	((symbol=? (car expr) 'let*)
-	 (with-mirrors
-	  (let ((res (compile-special-lettish #t cur-env tcall (cdr expr))))
-	    (reset-mirrors global-mirrors)
-	    res)))
-	((or (symbol=? (car expr) 'letrec)
-	     (symbol=? (car expr) 'letrec*))
-	 (with-mirrors
-	  (let ((res (compile-special-letrec cur-env tcall (cdr expr))))
-	    (reset-mirrors global-mirrors)
-	    res)))
-	((symbol=? (car expr) 'set!)
-	 (compile-special-set! cur-env tcall (cdr expr)))
-	((symbol=? (car expr) 'lambda)
-	 (compile-special-lambda #f #f cur-env tcall (cdr expr)))
-	((symbol=? (car expr) 'case)
-	 (compile-special-case cur-env tcall (cdr expr)))
-	((symbol=? (car expr) 'guard)
-	 (compile-special-guard cur-env tcall (cdr expr)))
-	((symbol=? (car expr) 'quote)
-	 (compile-immediate cur-env (cadr expr)))
-	((symbol=? (car expr) 'quasiquote)
-	 (compile-special-qq cur-env tcall (cdr expr)))
-	((symbol=? (car expr) 'unquote)
-	 (ERR () "naked 'unquote' form '%v'" expr))
-	((symbol=? (car expr) 'unquote-splicing)
-	 (ERR () "naked 'unquote-splicing' form '%v'" expr))
-	((symbol=? (car expr) 'cond-expand)
-	 (compile-special-cond-expand cur-env tcall (cdr expr)))
-	((symbol=? (car expr) 'wile-c)
-	 (compile-special-c-code cur-env (cdr expr)))
-	(else (ERR () "special form '%v' is not implemented yet" expr))))
+  (let ((loc (token-source-line (car expr))))
+    (cond ((symbol=? (car expr) 'and)
+	   (compile-special-andor 'true cur-env tcall (cdr expr)))
+	  ((symbol=? (car expr) 'or)
+	   (compile-special-andor 'false cur-env tcall (cdr expr)))
+	  ((symbol=? (car expr) 'begin)
+	   (compile-special-begin cur-env tcall (cdr expr)))
+	  ((symbol=? (car expr) 'begin-new)
+	   (compile-special-begin-new cur-env tcall (cdr expr)))
+	  ((symbol=? (car expr) 'if)
+	   (compile-special-if cur-env tcall (cdr expr) loc))
+	  ((symbol=? (car expr) 'cond)
+	   (compile-special-cond #f cur-env tcall (cdr expr) loc))
+	  ((symbol=? (car expr) 'do)
+	   (compile-special-do cur-env tcall (cdr expr)))
+	  ((symbol=? (car expr) 'let)
+	   (with-mirrors
+	    (let ((res (compile-special-lettish
+			#f cur-env tcall (cdr expr) loc)))
+	      (reset-mirrors global-mirrors)
+	      res)))
+	  ((symbol=? (car expr) 'let*)
+	   (with-mirrors
+	    (let ((res (compile-special-lettish
+			#t cur-env tcall (cdr expr) loc)))
+	      (reset-mirrors global-mirrors)
+	      res)))
+	  ((or (symbol=? (car expr) 'letrec)
+	       (symbol=? (car expr) 'letrec*))
+	   (with-mirrors
+	    (let ((res (compile-special-letrec cur-env tcall (cdr expr) loc)))
+	      (reset-mirrors global-mirrors)
+	      res)))
+	  ((symbol=? (car expr) 'set!)
+	   (compile-special-set! cur-env tcall (cdr expr) loc))
+	  ((symbol=? (car expr) 'lambda)
+	   (compile-special-lambda #f #f cur-env tcall (cdr expr) loc))
+	  ((symbol=? (car expr) 'case)
+	   (compile-special-case cur-env tcall (cdr expr) loc))
+	  ((symbol=? (car expr) 'guard)
+	   (compile-special-guard cur-env tcall (cdr expr) loc))
+	  ((symbol=? (car expr) 'quote)
+	   (compile-immediate cur-env (cadr expr)))
+	  ((symbol=? (car expr) 'quasiquote)
+	   (compile-special-qq cur-env tcall (cdr expr) loc))
+	  ((symbol=? (car expr) 'unquote)
+	   (ERR loc "naked 'unquote' form '%v'" expr))
+	  ((symbol=? (car expr) 'unquote-splicing)
+	   (ERR loc "naked 'unquote-splicing' form '%v'" expr))
+	  ((symbol=? (car expr) 'cond-expand)
+	   (compile-special-cond-expand cur-env tcall (cdr expr)))
+	  ((symbol=? (car expr) 'wile-c)
+	   (compile-special-c-code cur-env (cdr expr) loc))
+	  (else (ERR loc "special form '%v' is not implemented yet" expr)))))
 
 (define (is-special-form? val)
   (and (symbol? val)
@@ -2291,6 +2305,8 @@
 		(global-code code-port)
 		(global-func func-port))
       (emit-str global-file-head)
+      (when do-debug
+	(emit-str "#define WILE_DO_CHECK\n\n"))
       (let* ((inc-hash (hash-table-create string-hash string=?))
 	     (dirs (get-config-val 'scheme-include-directories))
 	     (data1 (read-recursive dirs inc-hash in-file))

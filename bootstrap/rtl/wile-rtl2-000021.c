@@ -25,9 +25,11 @@ lval wile_bytevector2list(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
+#ifdef WILE_DO_CHECK
 if (var_2[0].vt != LV_BVECTOR) {
 wile_exception("bytevector-length", "bld-rtl-dir/wile-rtl2-000021.scm:14", "input is not a bytevector");
 }
+#endif // WILE_DO_CHECK
 var_5 = LVI_INT(var_2[0].v.bvec.capa);
 var_4 = var_5;
 lval var_6;
@@ -68,12 +70,14 @@ lval var_17;
 var_17 = LVI_INT(var_4.v.iv - var_16.v.iv);
 var_4 = var_17;
 lval var_18;
+#ifdef WILE_DO_CHECK
 if (var_2[0].vt != LV_BVECTOR) {
 wile_exception("bytevector-ref", "bld-rtl-dir/wile-rtl2-000021.scm:18", "input is not a bytevector");
 }
 if (var_4.vt != LV_INT || var_4.v.iv < 0 || (size_t) var_4.v.iv >= var_2[0].v.bvec.capa) {
 wile_exception("bytevector-ref", "bld-rtl-dir/wile-rtl2-000021.scm:18", "got bad index value");
 }
+#endif // WILE_DO_CHECK
 var_18 = LVI_INT(var_2[0].v.bvec.arr[var_4.v.iv]);
 lval var_19;
 {

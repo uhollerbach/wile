@@ -30,9 +30,10 @@
   (let* ((scur (string-append "stage" (number->string n)))
 	 (name1-exe (string-append "wilec." scur))
 	 (rtl-fileish (list "wile-sql.c" "alloc.c" "print.c" "location.c"
-			    "wile-parse.c" "wile-lex.c" "swll-cfft.c"
-			    "continuations.c" "fsi_set.c" "nfa.c" "regex.c"
-			    "ulexlib.c" "sha256.c" "isocline.c"
+			    "wile-parse.c" "wile-lex.c" "wile-cfft.c"
+			    "wile-matlu.c" "wile-matband.c" "continuations.c"
+			    "fsi_set.c" "nfa.c" "regex.c" "ulexlib.c"
+			    "sha256.c" "isocline.c"
 			    "-s" "wile-rtl1.c" "wile-rtl2.scm" "math-funcs.c"))
 	 (rtl-flist (apply string-join-by " " rtl-fileish))
 ;;;	 (name2-exe (string-append "wilec-dbg." scur))

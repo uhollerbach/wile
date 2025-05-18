@@ -1,7 +1,7 @@
 ;;; -*- mode: scheme; -*-
 
 ;;; Wile -- the extremely stable scheming genius compiler
-;;; Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+;;; Copyright 2023 - 2025, Uwe Hollerbach <uhollerbach@gmail.com>
 ;;; License: GPLv3 or later, see file 'LICENSE' for details
 
 (define string-hash string-hash-64)
@@ -231,7 +231,7 @@
      ";;; Wile, the extremely stable scheming genius compiler\n"
      ";;; Wile is available from https://github.com/uhollerbach/wile\n"
      ";;; under GPLv3 or later for the compiler, LGPLv3 or later for the RTL\n"
-     ";;; Copyright 2023, Uwe Hollerbach\n")
+     ";;; Copyright 2023 - 2025, Uwe Hollerbach\n")
     (for-each (lambda (v)
 		(display v)
 		(newline))

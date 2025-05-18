@@ -21,14 +21,19 @@ static lval fn_47(lptr*, lptr, const char*);
 
 // definitions
 
-// @@@ bytevector-length @@@ bld-rtl-dir/wile-rtl2-000074.scm:15 @@@ fn_7 @@@
+// @@@ vector-length @@@ bld-rtl-dir/wile-rtl2-000074.scm:15 @@@ fn_7 @@@
 static lval fn_7(lptr* var_8, lptr var_9, const char* cloc)
 {
 lval var_11;
-if (var_9[0].vt != LV_BVECTOR) {
-wile_exception("bytevector-length", "bld-rtl-dir/wile-rtl2-000074.scm:15", "input is not a bytevector");
-}
+{
+if (var_9[0].vt == LV_VECTOR) {
+var_11 = LVI_INT(var_9[0].v.vec.capa);
+} else if (var_9[0].vt == LV_BVECTOR) {
 var_11 = LVI_INT(var_9[0].v.bvec.capa);
+} else {
+wile_exception("vector-length", "bld-rtl-dir/wile-rtl2-000074.scm:15", "input is not a vector");
+}
+}
 return var_11;
 }
 // end of prim fn_7
@@ -65,19 +70,21 @@ return var_27;
 static lval fn_47(lptr* var_48, lptr var_49, const char* cloc)
 {
 lval var_51;
-if (var_49[0].vt != LV_BVECTOR) {
-wile_exception("bytevector-ref", "bld-rtl-dir/wile-rtl2-000074.scm:21", "input is not a bytevector");
+#ifdef WILE_DO_CHECK
+if (var_49[0].vt != LV_VECTOR) {
+wile_exception("vector-ref", "bld-rtl-dir/wile-rtl2-000074.scm:21", "input is not a vector");
 }
-if (V_CLOS(var_48,0).vt != LV_INT || V_CLOS(var_48,0).v.iv < 0 || (size_t) V_CLOS(var_48,0).v.iv >= var_49[0].v.bvec.capa) {
-wile_exception("bytevector-ref", "bld-rtl-dir/wile-rtl2-000074.scm:21", "got bad index value");
+if (V_CLOS(var_48,0).vt != LV_INT || V_CLOS(var_48,0).v.iv < 0 || (size_t) V_CLOS(var_48,0).v.iv >= var_49[0].v.vec.capa) {
+wile_exception("vector-ref", "bld-rtl-dir/wile-rtl2-000074.scm:21", "got bad index value");
 }
-var_51 = LVI_INT(var_49[0].v.bvec.arr[V_CLOS(var_48,0).v.iv]);
+#endif // WILE_DO_CHECK
+var_51 = var_49[0].v.vec.arr[V_CLOS(var_48,0).v.iv] ? *(var_49[0].v.vec.arr[V_CLOS(var_48,0).v.iv]) : LVI_NIL();
 return var_51;
 }
 // end of lambda fn_47
 
-// @@@ (bytevector-for-each proc vec . vecs) @@@ bld-rtl-dir/wile-rtl2-000074.scm:13 @@@ wile_bytevector_foreach @@@
-lval wile_bytevector_foreach(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ (vector-for-each proc vec . vecs) @@@ bld-rtl-dir/wile-rtl2-000074.scm:13 @@@ wile_vector_foreach @@@
+lval wile_vector_foreach(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
@@ -156,7 +163,7 @@ break;
 }
 if (LV_IS_FALSE(var_31)) {
 lval var_32;
-var_32 = LVI_STRING("bytevector-for-each: unequal vector lengths");
+var_32 = LVI_STRING("vector-for-each: unequal vector lengths");
 lval var_33;
 {
 lval var_34[1];
@@ -174,9 +181,11 @@ longjmp(cachalot->cenv, 1);
 }
 lval var_36;
 lval var_37;
+#ifdef WILE_DO_CHECK
 if (var_6.vt != LV_PAIR) {
 wile_exception("car", "bld-rtl-dir/wile-rtl2-000074.scm:18", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_37 = (var_6.v.pair.car ? *(var_6.v.pair.car) : LVI_NIL());
 var_36 = var_37;
 lval var_41;
@@ -267,4 +276,4 @@ lbl_40:;
 *var_44 = var_41;
 return var_38;
 }
-// end of function wile_bytevector_foreach
+// end of function wile_vector_foreach

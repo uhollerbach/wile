@@ -20,65 +20,44 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ (sqlite-meta-schema port tbl) @@@ bld-rtl-dir/wile-rtl2-000055.scm:13 @@@ wile_sql_meta_schema @@@
-lval wile_sql_meta_schema(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ car @@@ bld-rtl-dir/wile-rtl2-000055.scm:14 @@@ fn_4 @@@
+static lval fn_4(lptr* var_5, lptr var_6, const char* cloc)
 {
-lval var_4;
-lval var_5;
-var_5 = LVI_STRING("select sql from sqlite_schema where (name = ?1)");
-lval var_6;
-{
-lval var_7[8];
-var_7[0] = var_2[0];
-var_7[1] = var_5;
-var_6 = wile_sql_stmt_prep(NULL, var_7, "bld-rtl-dir/wile-rtl2-000055.scm:14");
+lval var_8;
+#ifdef WILE_DO_CHECK
+if (var_6[0].vt != LV_PAIR) {
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000055.scm:14", "input is not a pair!");
 }
-var_4 = var_6;
+#endif // WILE_DO_CHECK
+var_8 = (var_6[0].v.pair.car ? *(var_6[0].v.pair.car) : LVI_NIL());
+return var_8;
+}
+// end of prim fn_4
+
+// @@@ (sqlite-meta-tables port) @@@ bld-rtl-dir/wile-rtl2-000055.scm:13 @@@ wile_sql_meta_tables @@@
+lval wile_sql_meta_tables(lptr* var_1, lptr var_2, const char* cloc)
+{
 lval var_9;
-{
-lval var_11[1];
-var_11[0] = var_2[1];
-var_9 = wile_gen_list(1, var_11, NULL);
-}
-{
-lval var_10[8];
-var_10[0] = var_4;
-var_10[1] = var_9;
-var_9 = wile_sql_stmt_bind(NULL, var_10, "bld-rtl-dir/wile-rtl2-000055.scm:16");
-}
-lval var_12;
-lval var_13;
-{
-lval var_14[8];
-var_14[0] = var_4;
-var_13 = wile_sql_stmt_run(NULL, var_14, "bld-rtl-dir/wile-rtl2-000055.scm:17");
-}
-var_12 = var_13;
-{
-lval var_16[8];
-var_16[0] = var_4;
-(void)
- wile_sql_stmt_clean(NULL, var_16, "bld-rtl-dir/wile-rtl2-000055.scm:18");
-}
-lval var_17;
-var_17 = LVI_STRING("caadr");
-lval var_18;
-{
-char* cp = strchr(var_17.v.str, 'r');
-var_18 = var_12;
-while (*(--cp) != 'c') {
-if (var_18.vt != LV_PAIR) {
-wile_exception("cxr", "bld-rtl-dir/wile-rtl2-000055.scm:19", "input does not have the right structure!");
-}
-if (*cp == 'a') {
-var_18 = (var_18.v.pair.car ? *(var_18.v.pair.car) : LVI_NIL());
-} else if (*cp == 'd') {
-var_18 = (var_18.v.pair.cdr ? *(var_18.v.pair.cdr) : LVI_NIL());
+var_9 = LVI_STRING("select name from sqlite_schema");
+lval var_10;
+#ifdef WILE_USES_SQLITE
+if (var_2[0].vt == LV_SQLITE_PORT && var_9.vt == LV_STRING) {
+var_10 = wile_sql_run(var_2[0].v.sqlite_conn, var_9.v.str, "bld-rtl-dir/wile-rtl2-000055.scm:14");
 } else {
-wile_exception("cxr", "bld-rtl-dir/wile-rtl2-000055.scm:19", "got malformed control string '%s'", var_17.v.str);
+wile_exception("sqlite-run", "bld-rtl-dir/wile-rtl2-000055.scm:14", "expects one sqlite-port and one string");
 }
+#else
+var_10 = LVI_BOOL(false);
+#endif // WILE_USES_SQLITE
+lval var_11;
+var_11 = LVI_NIL();
+{
+lval var_12[8];
+var_12[0] = LVI_PROC(fn_4,NULL,1);
+var_12[1] = var_10;
+var_12[2] = var_11;
+var_11 = wile_map(NULL, var_12, "bld-rtl-dir/wile-rtl2-000055.scm:14");
 }
+return var_11;
 }
-return var_18;
-}
-// end of function wile_sql_meta_schema
+// end of function wile_sql_meta_tables

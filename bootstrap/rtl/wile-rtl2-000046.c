@@ -25,6 +25,11 @@ lval wile_string_pad_center(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
+#ifdef WILE_DO_CHECK
+if (var_2[0].vt != LV_STRING) {
+wile_exception("string-length", "bld-rtl-dir/wile-rtl2-000046.scm:14", "input is not a string");
+}
+#endif // WILE_DO_CHECK
 var_5 = LVI_INT(strlen(var_2[0].v.str));
 var_4 = var_5;
 lval var_6;
@@ -83,24 +88,28 @@ lval var_14;
 var_14 = LVI_INT(var_8.v.iv - var_10.v.iv);
 var_13 = var_14;
 lval var_15;
+#ifdef WILE_DO_CHECK
 if (var_10.vt != LV_INT || var_10.v.iv < 0) {
 wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000046.scm:19", "first input is not a non-negative integer");
 }
 if (var_2[1].vt != LV_CHAR || var_2[1].v.chr == '\0') {
 wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000046.scm:19", "second input is not a valid character");
 }
+#endif // WILE_DO_CHECK
 var_15.vt = LV_STRING;
 var_15.origin = var_10.origin;
 var_15.v.str = LISP_ALLOC(char, 1 + var_10.v.iv);
 memset(var_15.v.str, var_2[1].v.chr, var_10.v.iv);
 var_15.v.str[var_10.v.iv] = '\0';
 lval var_16;
+#ifdef WILE_DO_CHECK
 if (var_13.vt != LV_INT || var_13.v.iv < 0) {
 wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000046.scm:19", "first input is not a non-negative integer");
 }
 if (var_2[1].vt != LV_CHAR || var_2[1].v.chr == '\0') {
 wile_exception("string-create", "bld-rtl-dir/wile-rtl2-000046.scm:19", "second input is not a valid character");
 }
+#endif // WILE_DO_CHECK
 var_16.vt = LV_STRING;
 var_16.origin = var_13.origin;
 var_16.v.str = LISP_ALLOC(char, 1 + var_13.v.iv);

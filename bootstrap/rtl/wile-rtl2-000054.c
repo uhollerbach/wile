@@ -20,42 +20,48 @@ extern lval var_flt_precision;
 
 // definitions
 
-// @@@ car @@@ bld-rtl-dir/wile-rtl2-000054.scm:14 @@@ fn_4 @@@
-static lval fn_4(lptr* var_5, lptr var_6, const char* cloc)
+// @@@ (all-true? vals) @@@ bld-rtl-dir/wile-rtl2-000054.scm:13 @@@ wile_all_true @@@
+lval wile_all_true(lptr* var_1, lptr var_2, const char* cloc)
 {
+lbl_3:;
+lval var_4;
+lval var_6;
+var_6 = LVI_BOOL(var_2[0].vt == LV_NIL);
+if (!LV_IS_FALSE(var_6)) {
+lval var_7;
+var_7 = LVI_BOOL(true);
+var_4 = var_7;
+goto lbl_5;
+}
 lval var_8;
-if (var_6[0].vt != LV_PAIR) {
-wile_exception("car", "bld-rtl-dir/wile-rtl2-000054.scm:14", "input is not a pair!");
+#ifdef WILE_DO_CHECK
+if (var_2[0].vt != LV_PAIR) {
+wile_exception("car", "bld-rtl-dir/wile-rtl2-000054.scm:15", "input is not a pair!");
 }
-var_8 = (var_6[0].v.pair.car ? *(var_6[0].v.pair.car) : LVI_NIL());
-return var_8;
-}
-// end of prim fn_4
-
-// @@@ (sqlite-meta-tables port) @@@ bld-rtl-dir/wile-rtl2-000054.scm:13 @@@ wile_sql_meta_tables @@@
-lval wile_sql_meta_tables(lptr* var_1, lptr var_2, const char* cloc)
-{
+#endif // WILE_DO_CHECK
+var_8 = (var_2[0].v.pair.car ? *(var_2[0].v.pair.car) : LVI_NIL());
 lval var_9;
-var_9 = LVI_STRING("select name from sqlite_schema");
+var_9 = LVI_BOOL(LV_IS_FALSE(var_8));
+if (!LV_IS_FALSE(var_9)) {
 lval var_10;
-#ifdef WILE_USES_SQLITE
-if (var_2[0].vt == LV_SQLITE_PORT && var_9.vt == LV_STRING) {
-var_10 = wile_sql_run(var_2[0].v.sqlite_conn, var_9.v.str, "bld-rtl-dir/wile-rtl2-000054.scm:14");
-} else {
-wile_exception("sqlite-run", "bld-rtl-dir/wile-rtl2-000054.scm:14", "expects one sqlite-port and one string");
-}
-#else
 var_10 = LVI_BOOL(false);
-#endif // WILE_USES_SQLITE
+var_4 = var_10;
+goto lbl_5;
+}
 lval var_11;
-var_11 = LVI_NIL();
-{
-lval var_12[8];
-var_12[0] = LVI_PROC(fn_4,NULL,1);
-var_12[1] = var_10;
-var_12[2] = var_11;
-var_11 = wile_map(NULL, var_12, "bld-rtl-dir/wile-rtl2-000054.scm:14");
+#ifdef WILE_DO_CHECK
+if (var_2[0].vt != LV_PAIR) {
+wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000054.scm:16", "input is not a pair!");
 }
-return var_11;
+#endif // WILE_DO_CHECK
+var_11 = (var_2[0].v.pair.cdr ? *(var_2[0].v.pair.cdr) : LVI_NIL());
+lval var_12;
+lval var_14[8];
+var_14[0] = var_11;
+var_2[0] = var_14[0];
+goto lbl_3;
+var_4 = var_12;
+lbl_5:;
+return var_4;
 }
-// end of function wile_sql_meta_tables
+// end of function wile_all_true

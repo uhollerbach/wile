@@ -1,5 +1,5 @@
 ;;; Wile -- the extremely stable scheming genius compiler
-;;; Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+;;; Copyright 2023 - 2025, Uwe Hollerbach <uhollerbach@gmail.com>
 ;;; License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
 
 ;;; monad laws - scheme notation

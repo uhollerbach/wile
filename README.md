@@ -1,6 +1,6 @@
-Last update: 2025-5-17 22:00 PDT
+Last update: 2025-8-4 23:00 PDT
 
-# `wile` - the extremely stable scheming genius compiler - version 1.2.10
+# `wile` - the extremely stable scheming genius compiler - version 1.2.12
 
 `wile` is a small scheme-to-c compiler which I'm writing; it's by no
 means complete, but it's capable enough that writing programs with it
@@ -391,9 +391,12 @@ The rest of the runtime library lives in a number of C and scheme files:
 
 - `wile-sql.c` contains most of the interface to `sqlite`.
 
-- `swll-cfft.c` contains `wile`'s 1D complex Fourier transform routine.
+- `wile-cfft.c` contains `wile`'s 1D complex Fourier transform routine.
   This should really be in some other library, not the standard runtime,
   but this sort of thing is kinda what I do a lot of, so there it is.
+
+- `wile-matlu.c` contains `wile`'s matrix LU-decomposition and solve
+  routines. Like the FFT, this is stuff I use a fair bit.
 
 - `continuations.c` implements `call/cc`.
 

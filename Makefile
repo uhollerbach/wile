@@ -1,5 +1,5 @@
 # Wile -- the extremely stable scheming genius compiler
-# Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+# Copyright 2023 - 2025, Uwe Hollerbach <uhollerbach@gmail.com>
 # License: GPLv3 or later, see file 'LICENSE' for details
 
 SHELL = /bin/sh
@@ -26,8 +26,8 @@ ASRC =	wile-lex.[ch] wile-parse.[ch] wile-parse.txt
 HDRS =	wile.h wile-lex.h wile-parse.h
 
 WRSRC1 = wile-sql.c alloc.c print.c location.c wile-parse.c wile-lex.c \
-	swll-cfft.c continuations.c fsi_set.c nfa.c regex.c ulexlib.c \
-	sha256.c isocline.c
+	wile-cfft.c wile-matlu.c wile-matband.c continuations.c \
+	fsi_set.c nfa.c regex.c ulexlib.c sha256.c isocline.c
 
 WRSRC2 = wile-rtl1.c wile-rtl2.scm math-funcs.c
 

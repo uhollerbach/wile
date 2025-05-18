@@ -84,8 +84,6 @@ Stuff TODO
   bytevector-pack
   bytevector-unpack
 
-  matrix-lu-decompose
-  matrix-lu-solve
   sat2-solve
 
   special cases in the compiler:

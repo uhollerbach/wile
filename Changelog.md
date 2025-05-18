@@ -1,6 +1,79 @@
-Last update: 2025-5-17 22:00 PDT
+Last update: 2025-8-4 23:00 PDT
 
 # Changelog for `wile`
+
+## Current version `wile` "1.2.12"
+
+- Add @L specifier to wile-c for source code location
+
+- Enhance and regularize error localization a bit, and enhance wile-c
+  to allow some c-compatible kinds of immediate data: characters, strings,
+  booleans, integers, and reals
+
+- Wrap a lot of the type checks in wile-prims in
+  #ifdef WILE_DO_CHECK ... #endif
+
+- Fix a tiny typo in a doc-string in wile-rtl2
+
+- Rename swll-cfft.c to wile-cfft.c and all references to it.
+  Initial checkin of wile-matlu.c, still in progress.
+
+- Update matrix-lu-(decompose,solve): real and complex matrices seem to be
+  working pretty well. Still have to do rational stuff.
+
+- Matrix LU decomposition is doing what I want, I think: rational, real,
+  complex.  The rational branch is pretty fussy, it does not handle
+  bignums, and that means that it only works error-free for small (random)
+  matrices - for bigger ones, it'll overflow quickly, and that does not
+  get detected.
+
+- Finish up matrix-lu-{decompose,solve} code (I think) and add a test case
+
+- Enhance matrix-print to handle more types of entries in a matrix:
+  strings, symbols, booleans, etc. Add an analogous matrix-print-banded,
+  in preparation for a banded matrix solver.
+
+- Update copyright notices
+
+- Add a couple of type checks in prims.
+
+- Add (downfrom s n) analogous to (upfrom s n)
+
+- Add wile-matband.c to libwrtl
+
+## Current version `wile` "1.2.11" 2025-8-4 23:00 PDT
+
+- Bump version number
+
+- Update version number
+
+- Add @L specifier to wile-c for source code location
+
+- Enhance and regularize error localization a bit, and enhance wile-c
+  to allow some c-compatible kinds of immediate data: characters, strings,
+- booleans, integers, and reals
+
+- Update boot file wilec.c to follow changes in wile-comp.scm
+
+- Wrap a lot of the type checks in wile-prims in
+	#ifdef WILE_DO_CHECK ... #endif
+  Fix a tiny typo in a doc-string in wile-rtl2
+
+- Rename swll-cfft.c to wile-cfft.c and all references to it.
+  Initial checkin of wile-matlu.c, still in progress.
+
+- Update matrix-lu-(decompose,solve): real and complex matrices seem to be
+  working pretty well. Still have to do rational stuff.
+
+- Matrix LU decomposition is doing what I want, I think: rational, real,
+  complex.  The rational branch is pretty fussy, it does not handle
+  bignums, and that means that it only works error-free for small (random)
+  matrices - for bigger ones, it'll overflow quickly, and that does not
+  get detected.
+
+- Enhance matrix-print to handle more types of entries in a matrix:
+  strings, symbols, booleans, etc. Add an analogous matrix-print-banded,
+  in preparation for a banded matrix solver.
 
 ## Current version `wile` "1.2.10" 2025-5-17 22:00 PDT
 

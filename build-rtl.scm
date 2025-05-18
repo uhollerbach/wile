@@ -1,6 +1,3 @@
-#!/home/uwe/tools/skeem
-;;; -*- mode: scheme; -*-
-
 ;;; Usage: <prog> [-g|-p] archive [-k] file1 file2 ... [-s] fileN ...
 ;;;
 ;;; If {-g|-p} option is given, build {debug|gprof} version, otherwise

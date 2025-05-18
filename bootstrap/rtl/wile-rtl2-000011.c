@@ -90,9 +90,11 @@ lval var_18;
 var_18 = LVI_INT(var_4.v.iv - var_17.v.iv);
 var_4 = var_18;
 lval var_19;
+#ifdef WILE_DO_CHECK
 if (var_2[0].vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000011.scm:17", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_19 = (var_2[0].v.pair.cdr ? *(var_2[0].v.pair.cdr) : LVI_NIL());
 var_2[0] = var_19;
 lval var_20;

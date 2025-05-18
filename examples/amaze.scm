@@ -1,4 +1,4 @@
-;;; Copyright 2024, Uwe Hollerbach <uhollerbach@gmail.com>
+;;; Copyright 2024 - 2025, Uwe Hollerbach <uhollerbach@gmail.com>
 ;;; License: GPLv3 or later, see file 'LICENSE' for details
 ;;;
 ;;; Demo program for wile: a random-maze generator

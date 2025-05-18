@@ -1,7 +1,7 @@
 ;;; -*- mode: scheme; -*-
 
 ;;; Wile -- the extremely stable scheming genius compiler
-;;; Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+;;; Copyright 2023 - 2025, Uwe Hollerbach <uhollerbach@gmail.com>
 ;;; License: GPLv3 or later, see file 'LICENSE' for details
 
 ;;; table of primitive functions
@@ -10,6 +10,9 @@
 ;;; as are relevant are supported everywhere
 
 ;;; TODO: add type-checking somehow
+
+;;; TODO: in a few places, add #ifdef WILE_DO_CHECK around existing
+;;; type checks; in a few more places, add some type checks
 
 ;;; Variadic functions, unless they are regular and can be expanded
 ;;; inside wile as roughly the following, must have a codelet that
@@ -542,9 +545,11 @@
 	 (lambda (r aL a1)
 	   (emit-code
 	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_PAIR) {
 	    >wile_exception("car", "@L", "input is not a pair!");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >@@ = (@1.v.pair.car ? *(@1.v.pair.car) : LVI_NIL());
 	    >HEREDOC
 	    )))
@@ -554,9 +559,11 @@
 	 (lambda (r aL a1)
 	   (emit-code
 	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_PAIR) {
 	    >wile_exception("cdr", "@L", "input is not a pair!");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >@@ = (@1.v.pair.cdr ? *(@1.v.pair.cdr) : LVI_NIL());
 	    >HEREDOC
 	    )))
@@ -567,9 +574,11 @@
 	   (emit-code
 	    #<< HEREDOC
 	    >{
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_PAIR) {
 	    >wile_exception("set-car!", "@L", "input is not a pair!");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >lptr p2 = NULL;
 	    >if (@2.vt != LV_NIL) {
 	    >p2 = new_lv(LV_NIL);
@@ -587,9 +596,11 @@
 	   (emit-code
 	    #<< HEREDOC
 	    >{
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_PAIR) {
 	    >wile_exception("set-cdr!", "@L", "input is not a pair!");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >lptr p2 = NULL;
 	    >if (@2.vt != LV_NIL) {
 	    >p2 = new_lv(LV_NIL);
@@ -610,9 +621,11 @@
 	    >char* cp = strchr(@1.v.str, 'r');
 	    >@@ = @2;
 	    >while (*(--cp) != 'c') {
+	    >#ifdef WILE_DO_CHECK
 	    >if (@@.vt != LV_PAIR) {
 	    >wile_exception("cxr", "@L", "input does not have the right structure!");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >if (*cp == 'a') {
 	    >@@ = (@@.v.pair.car ? *(@@.v.pair.car) : LVI_NIL());
 	    >} else if (*cp == 'd') {
@@ -839,9 +852,11 @@
 	 (lambda (r aL a1 a2)
 	   (emit-code
 	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_STRING || @2.vt != LV_STRING) {
 	    >wile_exception("create-link", "@L", "inputs are not strings");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >@@ = LVI_BOOL(link(@1.v.str, @2.v.str) == 0);
 	    >HEREDOC
 	    )))
@@ -851,9 +866,11 @@
 	 (lambda (r aL a1 a2)
 	   (emit-code
 	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_STRING || @2.vt != LV_STRING) {
 	    >wile_exception("create-symbolic-link", "@L", "inputs are not strings");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >@@ = LVI_BOOL(symlink(@1.v.str, @2.v.str) == 0);
 	    >HEREDOC
 	    )))
@@ -1043,26 +1060,29 @@
 	 1 (lambda (r aL a1)
 	     (emit-code
 	      #<< HEREDOC
-	      >if (@1.vt == LV_INT) {
-	      >@@ = wile_waitpid(@1.v.iv, 0);
-	      >} else {
+	      >#ifdef WILE_DO_CHECK
+	      >if (@1.vt != LV_INT) {
 	      >wile_exception("wait-process", "@L", "input is not an integer");
 	      >}
+	      >#endif // WILE_DO_CHECK
+	      >@@ = wile_waitpid(@1.v.iv, 0);
 	      >HEREDOC
 	      ))
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
 	      #<< HEREDOC
-	      >if (@1.vt == LV_INT && @2.vt == LV_INT) {
-	      >@@ = wile_waitpid(@1.v.iv, @2.v.iv);
-	      >} else {
+	      >#ifdef WILE_DO_CHECK
+	      >if (@1.vt != LV_INT || @2.vt != LV_INT) {
 	      >wile_exception("wait-process", "@L", "inputs are not both integers");
 	      >}
+	      >#endif // WILE_DO_CHECK
+	      >@@ = wile_waitpid(@1.v.iv, @2.v.iv);
 	      >HEREDOC
 	      )))
 
    (list 'get-current-directory
-	 "expects no arguments and returns a string which is the name of the current working directory" 'prim 0 "wile_getcwd")
+	 "expects no arguments and returns a string which is the name of the current working directory"
+	 'prim 0 "wile_getcwd")
 
    (list 'set-current-directory
 	 "expects one string argument, attempts to change the current working directory to that location, and returns #t if that succeeds or #f if it fails"
@@ -1076,15 +1096,18 @@
 	 (lambda (r aL a1)
 	   (emit-code
 	    #<< HEREDOC
-	    >if (@1.vt == LV_FILE_PORT) {
+	    >#ifdef WILE_DO_CHECK
+	    >if (@1.vt != LV_FILE_PORT) {
+	    >wile_exception("get-file-position", "@L", "input is not a file port");
+	    >}
+	    >#endif // WILE_DO_CHECK
+	    >{
 	    >long int offset = ftell(@1.v.fp);
 	    >if (offset < 0) {
 	    >@@ = LVI_BOOL(false);
 	    >} else {
 	    >@@ = LVI_INT(offset);
 	    >}
-	    >} else {
-	    >wile_exception("get-file-position", "@L", "input is not a file port");
 	    >}
 	    >HEREDOC
 	    )))
@@ -1132,11 +1155,14 @@
 	 1 (lambda (r aL a1)
 	     (emit-code
 	      #<< HEREDOC
-	      >if (@1.vt == LV_FILE_PORT || @1.vt == LV_PIPE_PORT || @1.vt == LV_SOCK_PORT) {
+	      >#ifdef WILE_DO_CHECK
+	      >if (@1.vt != LV_FILE_PORT && @1.vt != LV_PIPE_PORT && @1.vt != LV_SOCK_PORT) {
+	      >wile_exception("read-char", "@L", "input is not a port");
+	      >}
+	      >#endif // WILE_DO_CHECK
+	      >{
 	      >int c = fgetc(@1.v.fp);
 	      >@@ = ((c == EOF) ? LVI_BOOL(false) : LVI_CHAR(c));
-	      >} else {
-	      >wile_exception("read-char", "@L", "input is not a port");
 	      >}
 	      >HEREDOC
 	      )))
@@ -1153,12 +1179,13 @@
 	 1 (lambda (r aL a1)
 	     (emit-code
 	      #<< HEREDOC
-	      >if (@1.vt == LV_FILE_PORT || @1.vt == LV_PIPE_PORT || @1.vt == LV_SOCK_PORT) {
-	      >fputc('\n', @1.v.fp);
-	      >@@ = LVI_BOOL(true);
-	      >} else {
+	      >#ifdef WILE_DO_CHECK
+	      >if (@1.vt != LV_FILE_PORT && @1.vt != LV_PIPE_PORT && @1.vt != LV_SOCK_PORT) {
 	      >wile_exception("newline", "@L", "input is not a port");
 	      >}
+	      >#endif // WILE_DO_CHECK
+	      >fputc('\n', @1.v.fp);
+	      >@@ = LVI_BOOL(true);
 	      >HEREDOC
 	      )))
 
@@ -1227,12 +1254,13 @@
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
 	      #<< HEREDOC
-	      >if (@2.vt == LV_FILE_PORT || @2.vt == LV_PIPE_PORT || @2.vt == LV_SOCK_PORT) {
-	      >wile_print_lisp_val(&(@1), @2.v.fp, "@L");
-	      >@@ = @1;
-	      >} else {
+	      >#ifdef WILE_DO_CHECK
+	      >if (@2.vt != LV_FILE_PORT && @2.vt != LV_PIPE_PORT && @2.vt != LV_SOCK_PORT) {
 	      >wile_exception("display", "@L", "expects a scheme value and a port");
 	      >}
+	      >#endif // WILE_DO_CHECK
+	      >wile_print_lisp_val(&(@1), @2.v.fp, "@L");
+	      >@@ = @1;
 	      >HEREDOC
 	      )))
 
@@ -1252,22 +1280,24 @@
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
 	      #<< HEREDOC
-	      >if (@2.vt == LV_INT) {
-	      >@@ = wile_num2string(@1, @2.v.iv, INT_MIN, "@L");
-	      >} else {
+	      >#ifdef WILE_DO_CHECK
+	      >if (@2.vt != LV_INT) {
 	      >wile_exception("number->string", "@L", "base is not numeric");
 	      >}
+	      >#endif // WILE_DO_CHECK
+	      >@@ = wile_num2string(@1, @2.v.iv, INT_MIN, "@L");
 	      >HEREDOC
 	      ))
 	 ;;; number base precision
 	 3 (lambda (r aL a1 a2 a3)
 	     (emit-code
 	      #<< HEREDOC
-	      >if (@2.vt == LV_INT && @3.vt == LV_INT) {
-	      >@@ = wile_num2string(@1, @2.v.iv, @3.v.iv, "@L");
-	      >} else {
+	      >#ifdef WILE_DO_CHECK
+	      >if (@2.vt != LV_INT || @3.vt != LV_INT) {
 	      >wile_exception("number->string", "@L", "base or precision is not numeric");
 	      >}
+	      >#endif // WILE_DO_CHECK
+	      >@@ = wile_num2string(@1, @2.v.iv, @3.v.iv, "@L");
 	      >HEREDOC
 	      )))
 
@@ -2307,9 +2337,11 @@
 	 1 (lambda (r aL a1)
 	     (emit-code
 	      #<< HEREDOC
+	      >#ifdef WILE_DO_CHECK
 	      >if (@1.vt != LV_INT || @1.v.iv < 0) {
 	      >wile_exception("string-create", "@L", "input is not a non-negative integer");
 	      >}
+	      >#endif // WILE_DO_CHECK
 	      >@@.vt = LV_STRING;
 	      >@@.origin = @1.origin;
 	      >@@.v.str = LISP_ALLOC(char, 1 + @1.v.iv);
@@ -2320,12 +2352,14 @@
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
 	      #<< HEREDOC
+	      >#ifdef WILE_DO_CHECK
 	      >if (@1.vt != LV_INT || @1.v.iv < 0) {
 	      >wile_exception("string-create", "@L", "first input is not a non-negative integer");
 	      >}
 	      >if (@2.vt != LV_CHAR || @2.v.chr == '\0') {
 	      >wile_exception("string-create", "@L", "second input is not a valid character");
 	      >}
+	      >#endif // WILE_DO_CHECK
 	      >@@.vt = LV_STRING;
 	      >@@.origin = @1.origin;
 	      >@@.v.str = LISP_ALLOC(char, 1 + @1.v.iv);
@@ -2335,10 +2369,15 @@
 	      )))
 
    (list 'string-downcase "expects one string argument and returns a newly-allocated lower-cased version of the input"
-	 'prim 1
-	 (lambda (r a1)
+	 'priml 1
+	 (lambda (r aL a1)
 	   (emit-code
 	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
+	    >if (@1.vt != LV_STRING) {
+	    >wile_exception("string-downcase", "@L", "input is not a string");
+	    >}
+	    >#endif // WILE_DO_CHECK
 	    >@@ = LVI_STRING(@1.v.str);
 	    >{
 	    >char* sp = @@.v.str;
@@ -2351,10 +2390,15 @@
 	    )))
 
    (list 'string-upcase "expects one string argument and returns a newly-allocated upper-cased version of the input"
-	 'prim 1
-	 (lambda (r a1)
+	 'priml 1
+	 (lambda (r aL a1)
 	   (emit-code
 	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
+	    >if (@1.vt != LV_STRING) {
+	    >wile_exception("string-upcase", "@L", "input is not a string");
+	    >}
+	    >#endif // WILE_DO_CHECK
 	    >@@ = LVI_STRING(@1.v.str);
 	    >{
 	    >char* sp = @@.v.str;
@@ -2372,30 +2416,32 @@
 	 1 (lambda (r aL a1)
 	     (emit-code
 	      #<< HEREDOC
+	      >#ifdef WILE_DO_CHECK
 	      >if (@1.vt != LV_STRING) {
 	      >wile_exception("string-copy", "@L", "expects a string input");
 	      >}
+	      >#endif // WILE_DO_CHECK
 	      >@@ = LVI_STRING(@1.v.str);
 	      >HEREDOC
 	      ))
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
 	      #<< HEREDOC
+	      >#ifdef WILE_DO_CHECK
 	      >if (@1.vt != LV_STRING || @2.vt != LV_INT) {
 	      >wile_exception("string-copy", "@L", "expects a string and an integer input");
 	      >}
-	      >{
-	      >size_t len = strlen(@1.v.str);
-	      >if (@2.v.iv < 0 || (size_t) @2.v.iv >= len) {
+	      >if (@2.v.iv < 0 || (size_t) @2.v.iv >= strlen(@1.v.str)) {
 	      >wile_exception("string-copy", "@L", "start index is out of range");
 	      >}
+	      >#endif // WILE_DO_CHECK
 	      >@@ = LVI_STRING(@1.v.str + @2.v.iv);
-	      >}
 	      >HEREDOC
 	      ))
 	 3 (lambda (r aL a1 a2 a3)
 	     (emit-code
 	      #<< HEREDOC
+	      >#ifdef WILE_DO_CHECK
 	      >if (@1.vt != LV_STRING || @2.vt != LV_INT || @3.vt != LV_INT) {
 	      >wile_exception("string-copy", "@L", "expects a string and two integer inputs");
 	      >}
@@ -2407,31 +2453,43 @@
 	      >if (@3.v.iv < @2.v.iv || (size_t) @3.v.iv > len) {
 	      >wile_exception("string-copy", "@L", "end index is out of range");
 	      >}
+	      >}
+	      >#endif // WILE_DO_CHECK
 	      >@@.vt = LV_STRING;
 	      >@@.origin = @1.origin;
 	      >@@.v.str = LISP_ALLOC(char, 1 + @3.v.iv - @2.v.iv);
 	      >memcpy(@@.v.str, @1.v.str + @2.v.iv, @3.v.iv - @2.v.iv);
 	      >@@.v.str[@3.v.iv - @2.v.iv] = '\0';
-	      >}
 	      >HEREDOC
 	      )))
 
    (list 'string-length "expects one string argument and returns its length"
-	 'prim 1
-	 (lambda (r a1)
-	   (emit-code "@@ = LVI_INT(strlen(@1.v.str));")))
+	 'priml 1
+	 (lambda (r aL a1)
+	   (emit-code
+	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
+	    >if (@1.vt != LV_STRING) {
+	    >wile_exception("string-length", "@L", "input is not a string");
+	    >}
+	    >#endif // WILE_DO_CHECK
+	    >@@ = LVI_INT(strlen(@1.v.str));
+	    >HEREDOC
+	    )))
 
    (list 'string-ref "expects one string and one integer index, and returns the character at that position in the string"
 	 'priml 2
 	 (lambda (r aL a1 a2)
 	   (emit-code
 	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_STRING || @2.vt != LV_INT) {
 	    >wile_exception("string-ref", "@L", "expects a string input");
 	    >}
 	    >if (@2.v.iv < 0 || (size_t) @2.v.iv >= strlen(@1.v.str)) {
 	    >wile_exception("string-ref", "@L", "got bad index value");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >@@ = LVI_CHAR(@1.v.str[@2.v.iv]);
 	    >HEREDOC
 	    )))
@@ -2442,9 +2500,11 @@
 	 (lambda (r aL a1 a2)
 	   (emit-code
 	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_STRING || @2.vt != LV_CHAR) {
 	    >wile_exception("string-find-first-char", "@L", "expects a string and a character input");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >{
 	    >char* pos = strchr(@1.v.str, @2.v.chr);
 	    >if (pos) {
@@ -2462,9 +2522,11 @@
 	 (lambda (r aL a1 a2)
 	   (emit-code
 	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_STRING || @2.vt != LV_CHAR) {
 	    >wile_exception("string-find-last-char", "@L", "expects a string and a character input");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >{
 	    >char* pos = strrchr(@1.v.str, @2.v.chr);
 	    >if (pos) {
@@ -2482,12 +2544,14 @@
 	 (lambda (r aL a1 a2 a3)
 	   (emit-code
 	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_STRING || @2.vt != LV_INT || @3.vt != LV_CHAR) {
 	    >wile_exception("string-set!", "@L", "expects a string, an integer, and a character");
 	    >}
 	    >if (@2.v.iv < 0 || (size_t) @2.v.iv >= strlen(@1.v.str)) {
 	    >wile_exception("string-set!", "@L", "index is out of range");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >@1.v.str[@2.v.iv] = @3.v.chr;
 	    >@@ = @1;
 	    >HEREDOC
@@ -3708,11 +3772,13 @@
 	 (lambda (r aL a1 a2)
 	   (emit-code
 	    #<< HEREDOC
-	    >{
-	    >size_t i, capa;
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_VECTOR) {
 	    >wile_exception("vector-fill!", "@L", "first input is not a vector");
 	    >}
+	    >#endif // WILE_DO_CHECK
+	    >{
+	    >size_t i, capa;
 	    >capa = @1.v.vec.capa;
 	    >for (i = 0; i < capa; ++i) {
 	    >@1.v.vec.arr[i] = new_lv(LV_NIL);
@@ -3747,15 +3813,15 @@
 	 (lambda (r aL a1 a2)
 	   (emit-code
 	    #<< HEREDOC
-	    >{
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_VECTOR) {
 	    >wile_exception("vector-ref", "@L", "input is not a vector");
 	    >}
 	    >if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa) {
 	    >wile_exception("vector-ref", "@L", "got bad index value");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >@@ = @1.v.vec.arr[@2.v.iv] ? *(@1.v.vec.arr[@2.v.iv]) : LVI_NIL();
-	    >}
 	    >HEREDOC
 	    )))
 
@@ -3765,17 +3831,17 @@
 	 (lambda (r aL a1 a2 a3)
 	   (emit-code
 	    #<< HEREDOC
-	    >{
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_VECTOR) {
 	    >wile_exception("vector-set!", "@L", "input is not a vector");
 	    >}
 	    >if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa) {
 	    >wile_exception("vector-set!", "@L", "got bad index value");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >@1.v.vec.arr[@2.v.iv] = new_lv(LV_NIL);
 	    >*(@1.v.vec.arr[@2.v.iv]) = @3;
 	    >@@ = @1;
-	    >}
 	    >HEREDOC
 	    )))
 
@@ -3785,13 +3851,15 @@
 	 (lambda (r aL a1 a2 a3)
 	   (emit-code
 	    #<< HEREDOC
-	    >{
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_VECTOR) {
 	    >wile_exception("vector-swap!", "@L", "input is not a vector");
 	    >}
 	    >if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa || @3.vt != LV_INT || @3.v.iv < 0 || (size_t) @3.v.iv >= @1.v.vec.capa) {
 	    >wile_exception("vector-swap!", "@L", "got bad index value");
 	    >}
+	    >#endif // WILE_DO_CHECK
+	    >{
 	    >lptr tmp = @1.v.vec.arr[@2.v.iv];
 	    >@1.v.vec.arr[@2.v.iv] = @1.v.vec.arr[@3.v.iv];
 	    >@1.v.vec.arr[@3.v.iv] = tmp;
@@ -3806,9 +3874,12 @@
 	 1 (lambda (r aL a1)
 	     (emit-code
 	      #<< HEREDOC
+	      >#ifdef WILE_DO_CHECK
 	      >if (@1.vt != LV_VECTOR) {
 	      >wile_exception("vector-copy", "@L", "expects a vector input");
-	      >} else {
+	      >}
+	      >#endif // WILE_DO_CHECK
+	      >{
 	      >size_t i, capa;
 	      >@@.vt = LV_VECTOR;
 	      >@@.origin = @1.origin;
@@ -3829,11 +3900,15 @@
 	 2 (lambda (r aL a1 a2)
 	     (emit-code
 	      #<< HEREDOC
+	      >#ifdef WILE_DO_CHECK
 	      >if (@1.vt != LV_VECTOR || @2.vt != LV_INT) {
 	      >wile_exception("vector-copy", "@L", "expects a vector and an integer input");
-	      >} else if (@2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa) {
+	      >}
+	      >if (@2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa) {
 	      >wile_exception("vector-copy", "@L", "start index is out of range");
-	      >} else {
+	      >}
+	      >#endif // WILE_DO_CHECK
+	      >{
 	      >size_t i, capa;
 	      >@@.vt = LV_VECTOR;
 	      >@@.origin = @1.origin;
@@ -3854,13 +3929,18 @@
 	 3 (lambda (r aL a1 a2 a3)
 	     (emit-code
 	      #<< HEREDOC
+	      >#ifdef WILE_DO_CHECK
 	      >if (@1.vt != LV_VECTOR || @2.vt != LV_INT || @3.vt != LV_INT) {
 	      >wile_exception("vector-copy", "@L", "expects a vector and two integer inputs");
-	      >} else if (@2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa) {
+	      >}
+	      >if (@2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.vec.capa) {
 	      >wile_exception("vector-copy", "@L", "start index is out of range");
-	      >} else if (@3.v.iv < @2.v.iv || (size_t) @3.v.iv >= @1.v.vec.capa) {
+	      >}
+	      >if (@3.v.iv < @2.v.iv || (size_t) @3.v.iv >= @1.v.vec.capa) {
 	      >wile_exception("vector-copy", "@L", "end index is out of range");
-	      >} else {
+	      >}
+	      >#endif // WILE_DO_CHECK
+	      >{
 	      >size_t i, capa;
 	      >@@.vt = LV_VECTOR;
 	      >@@.origin = @1.origin;
@@ -3934,9 +4014,11 @@
 	 (lambda (r aL a1)
 	   (emit-code
 	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_BVECTOR) {
 	    >wile_exception("bytevector-length", "@L", "input is not a bytevector");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >@@ = LVI_INT(@1.v.bvec.capa);
 	    >HEREDOC
 	    )))
@@ -3947,12 +4029,14 @@
 	 (lambda (r aL a1 a2)
 	   (emit-code
 	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_BVECTOR) {
 	    >wile_exception("bytevector-ref", "@L", "input is not a bytevector");
 	    >}
 	    >if (@2.vt != LV_INT || @2.v.iv < 0 || (size_t) @2.v.iv >= @1.v.bvec.capa) {
 	    >wile_exception("bytevector-ref", "@L", "got bad index value");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >@@ = LVI_INT(@1.v.bvec.arr[@2.v.iv]);
 	    >HEREDOC
 	    )))
@@ -3963,6 +4047,7 @@
 	 (lambda (r aL a1 a2 a3)
 	   (emit-code
 	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_BVECTOR) {
 	    >wile_exception("bytevector-set!", "@L", "input is not a bytevector");
 	    >}
@@ -3972,6 +4057,7 @@
 	    >if (!(@3.vt == LV_CHAR || (@3.vt == LV_INT && @3.v.iv >= 0 && @3.v.iv < 256))) {
 	    >wile_exception("bytevector-set!", "@L", "got bad input value");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >@1.v.bvec.arr[@2.v.iv] = (@3.vt == LV_CHAR) ? @3.v.chr : (unsigned char) @3.v.iv;
 	    >@@ = @1;
 	    >HEREDOC
@@ -3983,6 +4069,7 @@
 	 (lambda (r aL a1 a2 a3)
 	   (emit-code
 	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_BVECTOR) {
 	    >wile_exception("bytevector-swap!", "@L", "input is not a bytevector");
 	    >}
@@ -3990,6 +4077,7 @@
 	    >@3.vt != LV_INT || @3.v.iv < 0 || (size_t) @3.v.iv >= @1.v.bvec.capa) {
 	    >wile_exception("bytevector-swap!", "@L", "got bad index value");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >{
 	    >unsigned char tmp = @1.v.bvec.arr[@2.v.iv];
 	    >@1.v.bvec.arr[@2.v.iv] = @1.v.bvec.arr[@3.v.iv];
@@ -4360,6 +4448,22 @@
 	 "expects an integer indicating the direction of the transform and a vector of a \"good\" length (see cfft-good-n?)  containing only numeric values, and computes the Fourier transform of that sequence in-place"
 	 'prim 2 "wile_cfft")
 
+   (list 'matrix-lu-decompose
+	 "expects a vector of numeric values and a boolean, and computes the LU decomposition of the matrix stored in the vector; the boolean indicates whether the matrix is stored in row-major (#f) or in column-major (#t) format. an optional third argument indicates whether to allow a decomposition in rational numbers if the input is all rationals; by default this is not allowed, because the rationals encountered in the decomposition can easily overflow 128-bit integers... use with caution"
+	 'priml
+	 2 (lambda (r aL a1 a2)
+	     (emit-code "@@ = wile_mat_lud(@1, @2, false, \"@L\");"))
+	 3 (lambda (r aL a1 a2 a3)
+	     (emit-code "@@ = wile_mat_lud(@1, @2, !(LV_IS_FALSE(@3)), \"@L\");")))
+
+   (list 'matrix-lu-solve
+	 "expects an LU-decomposed matrix returned by matrix-lu-decompose and a vector, and returns the solution of the matrix equation as a new vector"
+	 'prim 2 "wile_mat_lus")
+
+   (list 'matrix-banded-solve
+	 "expects a banded matrix, three integers specifying the number of rows/columns, the lower bandwidth, and the upper bandwidth respectively, and a vector, and returns the solution of the matrix equation as a new vector"
+	 'prim 5 "wile_mat_banded_solve")
+
    (list 'call/cc
 	 "expects one argument which is a procedure of one argument, and returns... well... it's complicated"
 	 'prim 1 "wile_call_cc")
@@ -4636,9 +4740,11 @@
 	 (lambda (r aL a1 a2)
 	   (emit-code
 	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_FILE_PORT || @2.vt != LV_INT || @2.v.iv <= 0) {
 	    >wile_exception("read-bytes", "@L", "expects a file port and number of bytes to read");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >@@.vt = LV_BVECTOR;
 	    >@@.origin = @1.origin;
 	    >@@.v.bvec.capa = @2.v.iv;
@@ -4653,9 +4759,11 @@
 	 (lambda (r aL a1 a2)
 	   (emit-code
 	    #<< HEREDOC
+	    >#ifdef WILE_DO_CHECK
 	    >if (@1.vt != LV_FILE_PORT || @2.vt != LV_BVECTOR) {
 	    >wile_exception("write-bytes", "@L", "expects a file port and a bytevector to write");
 	    >}
+	    >#endif // WILE_DO_CHECK
 	    >@@ = LVI_INT(fwrite(@2.v.bvec.arr, 1, @2.v.bvec.capa, @1.v.fp));
 	    >HEREDOC
 	    )))

@@ -1,5 +1,5 @@
 ;;; Explorations of the list monad: N-queens puzzle
-;;; Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+;;; Copyright 2023 - 2025, Uwe Hollerbach <uhollerbach@gmail.com>
 ;;; License: 2clause BSD
 
 (load-library "monad.scm")

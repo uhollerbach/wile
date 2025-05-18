@@ -73,15 +73,15 @@ lval var_17;
 var_17 = LVI_INT(var_4.v.iv - var_16.v.iv);
 var_4 = var_17;
 lval var_18;
-{
+#ifdef WILE_DO_CHECK
 if (var_2[0].vt != LV_VECTOR) {
 wile_exception("vector-ref", "bld-rtl-dir/wile-rtl2-000020.scm:18", "input is not a vector");
 }
 if (var_4.vt != LV_INT || var_4.v.iv < 0 || (size_t) var_4.v.iv >= var_2[0].v.vec.capa) {
 wile_exception("vector-ref", "bld-rtl-dir/wile-rtl2-000020.scm:18", "got bad index value");
 }
+#endif // WILE_DO_CHECK
 var_18 = var_2[0].v.vec.arr[var_4.v.iv] ? *(var_2[0].v.vec.arr[var_4.v.iv]) : LVI_NIL();
-}
 lval var_19;
 {
 lptr p1 = NULL, p2 = NULL;

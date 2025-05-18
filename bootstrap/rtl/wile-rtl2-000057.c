@@ -17,111 +17,525 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
+static lval fn_20(lptr*, lptr, const char*);
+static lval fn_29(lptr*, lptr, const char*);
+static lval fn_49(lptr*, lptr, const char*);
+static lval fn_66(lptr*, lptr, const char*);
+static lval fn_82(lptr*, lptr, const char*);
 
 // definitions
 
-// @@@ (julian-day year month day) @@@ bld-rtl-dir/wile-rtl2-000057.scm:22 @@@ wile_julian_day @@@
-lval wile_julian_day(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000057.scm:21 @@@ fn_20 @@@
+static lval fn_20(lptr* var_21, lptr var_22, const char* cloc)
+{
+lval var_24;
+var_24 = LVI_STRING("cadr");
+lval var_25;
+{
+char* cp = strchr(var_24.v.str, 'r');
+var_25 = var_22[0];
+while (*(--cp) != 'c') {
+#ifdef WILE_DO_CHECK
+if (var_25.vt != LV_PAIR) {
+wile_exception("cxr", "./wile-config.dat:0", "input does not have the right structure!");
+}
+#endif // WILE_DO_CHECK
+if (*cp == 'a') {
+var_25 = (var_25.v.pair.car ? *(var_25.v.pair.car) : LVI_NIL());
+} else if (*cp == 'd') {
+var_25 = (var_25.v.pair.cdr ? *(var_25.v.pair.cdr) : LVI_NIL());
+} else {
+wile_exception("cxr", "./wile-config.dat:0", "got malformed control string '%s'", var_24.v.str);
+}
+}
+}
+return var_25;
+}
+// end of lambda fn_20
+
+// @@@ lambda (a1) @@@ bld-rtl-dir/wile-rtl2-000057.scm:22 @@@ fn_29 @@@
+static lval fn_29(lptr* var_30, lptr var_31, const char* cloc)
+{
+lval var_33;
+var_33 = LVI_STRING("caddr");
+lval var_34;
+{
+char* cp = strchr(var_33.v.str, 'r');
+var_34 = var_31[0];
+while (*(--cp) != 'c') {
+#ifdef WILE_DO_CHECK
+if (var_34.vt != LV_PAIR) {
+wile_exception("cxr", "./wile-config.dat:0", "input does not have the right structure!");
+}
+#endif // WILE_DO_CHECK
+if (*cp == 'a') {
+var_34 = (var_34.v.pair.car ? *(var_34.v.pair.car) : LVI_NIL());
+} else if (*cp == 'd') {
+var_34 = (var_34.v.pair.cdr ? *(var_34.v.pair.cdr) : LVI_NIL());
+} else {
+wile_exception("cxr", "./wile-config.dat:0", "got malformed control string '%s'", var_33.v.str);
+}
+}
+}
+return var_34;
+}
+// end of lambda fn_29
+
+// @@@ lambda (s) @@@ bld-rtl-dir/wile-rtl2-000057.scm:26 @@@ fn_49 @@@
+static lval fn_49(lptr* var_50, lptr var_51, const char* cloc)
+{
+lval var_53;
+lval var_54;
+var_54 = LVI_STRING("^[-+]?[0-9]+$");
+lval var_55;
+{
+lval var_56[8];
+var_56[0] = var_54;
+var_56[1] = var_51[0];
+var_55 = wile_regex_match(NULL, var_56, "bld-rtl-dir/wile-rtl2-000057.scm:27");
+}
+if (LV_IS_FALSE(var_55)) {
+lval var_57;
+var_57 = LVI_STRING("\'");
+lval var_58;
+var_58 = LVI_STRING("\'");
+lval var_59;
+{
+lval var_61[3];
+var_61[0] = var_57;
+var_61[1] = var_51[0];
+var_61[2] = var_58;
+var_59 = wile_gen_list(3, var_61, NULL);
+}
+{
+lval var_60[8];
+var_60[0] = var_59;
+var_59 = wile_string_append(NULL, var_60, "bld-rtl-dir/wile-rtl2-000057.scm:29");
+}
+var_53 = var_59;
+} else {
+var_53 = var_51[0];
+}
+return var_53;
+}
+// end of lambda fn_49
+
+// @@@ lambda (n t) @@@ bld-rtl-dir/wile-rtl2-000057.scm:33 @@@ fn_66 @@@
+static lval fn_66(lptr* var_67, lptr var_68, const char* cloc)
+{
+lval var_70;
+var_70 = LVI_STRING(" ");
+lval var_71;
+{
+lval var_73[2];
+var_73[0] = var_68[0];
+var_73[1] = var_68[1];
+var_71 = wile_gen_list(2, var_73, NULL);
+}
+{
+lval var_72[8];
+var_72[0] = var_70;
+var_72[1] = var_71;
+var_71 = wile_string_join_by(NULL, var_72, "bld-rtl-dir/wile-rtl2-000057.scm:34");
+}
+return var_71;
+}
+// end of lambda fn_66
+
+// @@@ lambda (v) @@@ bld-rtl-dir/wile-rtl2-000057.scm:37 @@@ fn_82 @@@
+static lval fn_82(lptr* var_83, lptr var_84, const char* cloc)
+{
+lval var_86;
+var_86 = LVI_STRING("INSERT INTO ");
+lval var_87;
+var_87 = LVI_STRING(" VALUES (");
+lval var_88;
+var_88 = LVI_STRING(",");
+lval var_89;
+var_89 = LVI_NIL();
+{
+lval var_90[8];
+var_90[0] = V_CLOS(var_83,2);
+var_90[1] = var_84[0];
+var_90[2] = var_89;
+var_89 = wile_map(NULL, var_90, "bld-rtl-dir/wile-rtl2-000057.scm:40");
+}
+lval var_91;
+{
+lval var_93[1];
+var_93[0] = var_89;
+var_91 = wile_gen_list(1, var_93, NULL);
+}
+{
+lval var_92[8];
+var_92[0] = var_88;
+var_92[1] = var_91;
+var_91 = wile_string_join_by(NULL, var_92, "bld-rtl-dir/wile-rtl2-000057.scm:40");
+}
+lval var_94;
+var_94 = LVI_STRING(");\n");
+{
+FILE* fp;
+if (V_CLOS(var_83,0).vt == LV_FILE_PORT || V_CLOS(var_83,0).vt == LV_PIPE_PORT || V_CLOS(var_83,0).vt == LV_SOCK_PORT) {
+fp = V_CLOS(var_83,0).v.fp;
+} else if (V_CLOS(var_83,0).vt == LV_CHAR) {
+fp = stdout;
+fputc(V_CLOS(var_83,0).v.chr, fp);
+} else if (V_CLOS(var_83,0).vt == LV_STRING) {
+fp = stdout;
+fputs(V_CLOS(var_83,0).v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:38", "first input is not a string or char or port!");
+}
+if (var_86.vt == LV_CHAR) {
+fputc(var_86.v.chr, fp);
+} else if (var_86.vt == LV_STRING) {
+fputs(var_86.v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:38", "input is not a string or char!");
+}
+if (V_CLOS(var_83,1).vt == LV_CHAR) {
+fputc(V_CLOS(var_83,1).v.chr, fp);
+} else if (V_CLOS(var_83,1).vt == LV_STRING) {
+fputs(V_CLOS(var_83,1).v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:38", "input is not a string or char!");
+}
+if (var_87.vt == LV_CHAR) {
+fputc(var_87.v.chr, fp);
+} else if (var_87.vt == LV_STRING) {
+fputs(var_87.v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:38", "input is not a string or char!");
+}
+if (var_91.vt == LV_CHAR) {
+fputc(var_91.v.chr, fp);
+} else if (var_91.vt == LV_STRING) {
+fputs(var_91.v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:38", "input is not a string or char!");
+}
+if (var_94.vt == LV_CHAR) {
+fputc(var_94.v.chr, fp);
+} else if (var_94.vt == LV_STRING) {
+fputs(var_94.v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:38", "input is not a string or char!");
+}
+}
+lval var_95;
+var_95 = LVI_BOOL(true);
+return var_95;
+}
+// end of lambda fn_82
+
+// @@@ (sqlite-dump-table sport tbl oport) @@@ bld-rtl-dir/wile-rtl2-000057.scm:17 @@@ wile_sql_dump_table @@@
+lval wile_sql_dump_table(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
 lval var_5;
-var_5 = LVI_INT(14);
-lval var_6;
-var_6 = LVI_INT(var_5.v.iv - var_2[1].v.iv);
+{
+lval var_6[8];
+var_6[0] = var_2[0];
+var_5 = wile_sql_meta_tables(NULL, var_6, "bld-rtl-dir/wile-rtl2-000057.scm:18");
+}
 lval var_7;
-var_7 = LVI_INT(12);
-lval var_8;
 {
-lisp_int_t nq, nr;
-trunc_qr(var_6.v.iv, var_7.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000057.scm:23");
-var_8 = LVI_INT(nq);
+lval var_8[8];
+var_8[0] = var_2[1];
+var_8[1] = var_5;
+var_7 = wile_memv(NULL, var_8, "bld-rtl-dir/wile-rtl2-000057.scm:18");
 }
-var_4 = var_8;
+if (LV_IS_FALSE(var_7)) {
 lval var_9;
+var_9 = LVI_STRING("-- No such table \'");
 lval var_10;
-var_10 = LVI_INT(4800);
-lval var_11;
-switch (var_4.vt) {
-case LV_INT:
-var_11 = LVI_INT(-var_4.v.iv);
-break;
-case LV_RAT:
-if (var_4.v.irv.den >= 0) {
-var_11 = LVI_RAT(-var_4.v.irv.num, var_4.v.irv.den);
+var_10 = LVI_STRING("\'\n");
+{
+FILE* fp;
+if (var_2[2].vt == LV_FILE_PORT || var_2[2].vt == LV_PIPE_PORT || var_2[2].vt == LV_SOCK_PORT) {
+fp = var_2[2].v.fp;
+} else if (var_2[2].vt == LV_CHAR) {
+fp = stdout;
+fputc(var_2[2].v.chr, fp);
+} else if (var_2[2].vt == LV_STRING) {
+fp = stdout;
+fputs(var_2[2].v.str, fp);
 } else {
-var_11 = LVI_RAT(var_4.v.irv.num, -var_4.v.irv.den);
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:43", "first input is not a string or char or port!");
 }
-break;
-case LV_REAL:
-var_11 = LVI_REAL(-var_4.v.rv);
-break;
-case LV_CMPLX:
-var_11 = LVI_CMPLX2(-CREAL(var_4.v.cv), -CIMAG(var_4.v.cv));
-break;
-default:
-wile_exception("negative", "bld-rtl-dir/wile-rtl2-000057.scm:24", "got a non-numeric argument");
+if (var_9.vt == LV_CHAR) {
+fputc(var_9.v.chr, fp);
+} else if (var_9.vt == LV_STRING) {
+fputs(var_9.v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:43", "input is not a string or char!");
 }
+if (var_2[1].vt == LV_CHAR) {
+fputc(var_2[1].v.chr, fp);
+} else if (var_2[1].vt == LV_STRING) {
+fputs(var_2[1].v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:43", "input is not a string or char!");
+}
+if (var_10.vt == LV_CHAR) {
+fputc(var_10.v.chr, fp);
+} else if (var_10.vt == LV_STRING) {
+fputs(var_10.v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:43", "input is not a string or char!");
+}
+}
+lval var_11;
+var_11 = LVI_BOOL(true);
+var_4 = var_11;
+} else {
 lval var_12;
-var_12 = LVI_INT(var_2[0].v.iv + var_10.v.iv + var_11.v.iv);
-var_9 = var_12;
 lval var_13;
+var_13 = LVI_STRING("pragma table_info(\'");
 lval var_14;
-var_14 = LVI_INT(12);
+var_14 = LVI_STRING("\')");
 lval var_15;
-var_15 = LVI_INT(var_14.v.iv * var_4.v.iv);
-lval var_16;
-var_16 = LVI_INT(-3);
-lval var_17;
-var_17 = LVI_INT(var_2[1].v.iv + var_15.v.iv + var_16.v.iv);
-var_13 = var_17;
+{
+lval var_17[3];
+var_17[0] = var_13;
+var_17[1] = var_2[1];
+var_17[2] = var_14;
+var_15 = wile_gen_list(3, var_17, NULL);
+}
+{
+lval var_16[8];
+var_16[0] = var_15;
+var_15 = wile_string_append(NULL, var_16, "bld-rtl-dir/wile-rtl2-000057.scm:20");
+}
 lval var_18;
-var_18 = LVI_INT(153);
+#ifdef WILE_USES_SQLITE
+if (var_2[0].vt == LV_SQLITE_PORT && var_15.vt == LV_STRING) {
+var_18 = wile_sql_run(var_2[0].v.sqlite_conn, var_15.v.str, "bld-rtl-dir/wile-rtl2-000057.scm:19");
+} else {
+wile_exception("sqlite-run", "bld-rtl-dir/wile-rtl2-000057.scm:19", "expects one sqlite-port and one string");
+}
+#else
+var_18 = LVI_BOOL(false);
+#endif // WILE_USES_SQLITE
+var_12 = var_18;
 lval var_19;
-var_19 = LVI_INT(var_18.v.iv * var_13.v.iv);
-lval var_20;
-var_20 = LVI_INT(2);
-lval var_21;
-var_21 = LVI_INT(var_19.v.iv + var_20.v.iv);
-lval var_22;
-var_22 = LVI_INT(5);
-lval var_23;
-{
-lisp_int_t nq, nr;
-trunc_qr(var_21.v.iv, var_22.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000057.scm:26");
-var_23 = LVI_INT(nq);
-}
-lval var_24;
-var_24 = LVI_INT(365);
-lval var_25;
-var_25 = LVI_INT(var_24.v.iv * var_9.v.iv);
+MK_CLOS(var_21,0);
 lval var_26;
-var_26 = LVI_INT(4);
-lval var_27;
+var_26 = LVI_NIL();
 {
-lisp_int_t nq, nr;
-trunc_qr(var_9.v.iv, var_26.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000057.scm:27");
-var_27 = LVI_INT(nq);
+lval var_27[8];
+var_27[0] = LVI_PROC(fn_20,var_21,1);
+var_27[1] = var_12;
+var_27[2] = var_26;
+var_26 = wile_map(NULL, var_27, "bld-rtl-dir/wile-rtl2-000057.scm:21");
 }
+var_19 = var_26;
 lval var_28;
-var_28 = LVI_INT(-100);
-lval var_29;
+MK_CLOS(var_30,0);
+lval var_35;
+var_35 = LVI_NIL();
 {
-lisp_int_t nq, nr;
-trunc_qr(var_9.v.iv, var_28.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000057.scm:27");
-var_29 = LVI_INT(nq);
+lval var_36[8];
+var_36[0] = LVI_PROC(fn_29,var_30,1);
+var_36[1] = var_12;
+var_36[2] = var_35;
+var_35 = wile_map(NULL, var_36, "bld-rtl-dir/wile-rtl2-000057.scm:22");
 }
-lval var_30;
-var_30 = LVI_INT(400);
-lval var_31;
+var_28 = var_35;
+lval var_37;
+lval var_38;
+var_38 = LVI_STRING("select * from ");
+lval var_39;
 {
-lisp_int_t nq, nr;
-trunc_qr(var_9.v.iv, var_30.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000057.scm:27");
-var_31 = LVI_INT(nq);
+lval var_41[2];
+var_41[0] = var_38;
+var_41[1] = var_2[1];
+var_39 = wile_gen_list(2, var_41, NULL);
 }
-lval var_32;
-var_32 = LVI_INT(-32045);
-lval var_33;
-var_33 = LVI_INT(var_2[2].v.iv + var_23.v.iv + var_25.v.iv + var_27.v.iv + var_29.v.iv + var_31.v.iv + var_32.v.iv);
-return var_33;
+{
+lval var_40[8];
+var_40[0] = var_39;
+var_39 = wile_string_append(NULL, var_40, "bld-rtl-dir/wile-rtl2-000057.scm:23");
 }
-// end of function wile_julian_day
+lval var_42;
+#ifdef WILE_USES_SQLITE
+if (var_2[0].vt == LV_SQLITE_PORT && var_39.vt == LV_STRING) {
+var_42 = wile_sql_run(var_2[0].v.sqlite_conn, var_39.v.str, "bld-rtl-dir/wile-rtl2-000057.scm:23");
+} else {
+wile_exception("sqlite-run", "bld-rtl-dir/wile-rtl2-000057.scm:23", "expects one sqlite-port and one string");
+}
+#else
+var_42 = LVI_BOOL(false);
+#endif // WILE_USES_SQLITE
+var_37 = var_42;
+lval var_44;
+var_44 = LVI_STRING(",");
+lval var_45;
+{
+lval var_47[1];
+var_47[0] = var_19;
+var_45 = wile_gen_list(1, var_47, NULL);
+}
+{
+lval var_46[8];
+var_46[0] = var_44;
+var_46[1] = var_45;
+var_45 = wile_string_join_by(NULL, var_46, "bld-rtl-dir/wile-rtl2-000057.scm:24");
+}
+lval var_48;
+MK_CLOS(var_50,0);
+var_48 = LVI_PROC(fn_49,var_50,1);
+lval var_62;
+var_62 = LVI_STRING("DROP TABLE IF EXISTS ");
+lval var_63;
+var_63 = LVI_STRING(";\n\nCREATE TABLE ");
+lval var_64;
+var_64 = LVI_STRING(" (");
+lval var_65;
+var_65 = LVI_STRING(", ");
+MK_CLOS(var_67,0);
+lval var_74;
+{
+lval var_76[1];
+var_76[0] = var_28;
+var_74 = wile_gen_list(1, var_76, NULL);
+}
+{
+lval var_75[8];
+var_75[0] = LVI_PROC(fn_66,var_67,2);
+var_75[1] = var_19;
+var_75[2] = var_74;
+var_74 = wile_map(NULL, var_75, "bld-rtl-dir/wile-rtl2-000057.scm:33");
+}
+lval var_77;
+{
+lval var_79[1];
+var_79[0] = var_74;
+var_77 = wile_gen_list(1, var_79, NULL);
+}
+{
+lval var_78[8];
+var_78[0] = var_65;
+var_78[1] = var_77;
+var_77 = wile_string_join_by(NULL, var_78, "bld-rtl-dir/wile-rtl2-000057.scm:32");
+}
+lval var_80;
+var_80 = LVI_STRING(");\n\nBEGIN TRANSACTION;\n\n");
+{
+FILE* fp;
+if (var_2[2].vt == LV_FILE_PORT || var_2[2].vt == LV_PIPE_PORT || var_2[2].vt == LV_SOCK_PORT) {
+fp = var_2[2].v.fp;
+} else if (var_2[2].vt == LV_CHAR) {
+fp = stdout;
+fputc(var_2[2].v.chr, fp);
+} else if (var_2[2].vt == LV_STRING) {
+fp = stdout;
+fputs(var_2[2].v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:30", "first input is not a string or char or port!");
+}
+if (var_62.vt == LV_CHAR) {
+fputc(var_62.v.chr, fp);
+} else if (var_62.vt == LV_STRING) {
+fputs(var_62.v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:30", "input is not a string or char!");
+}
+if (var_2[1].vt == LV_CHAR) {
+fputc(var_2[1].v.chr, fp);
+} else if (var_2[1].vt == LV_STRING) {
+fputs(var_2[1].v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:30", "input is not a string or char!");
+}
+if (var_63.vt == LV_CHAR) {
+fputc(var_63.v.chr, fp);
+} else if (var_63.vt == LV_STRING) {
+fputs(var_63.v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:30", "input is not a string or char!");
+}
+if (var_2[1].vt == LV_CHAR) {
+fputc(var_2[1].v.chr, fp);
+} else if (var_2[1].vt == LV_STRING) {
+fputs(var_2[1].v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:30", "input is not a string or char!");
+}
+if (var_64.vt == LV_CHAR) {
+fputc(var_64.v.chr, fp);
+} else if (var_64.vt == LV_STRING) {
+fputs(var_64.v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:30", "input is not a string or char!");
+}
+if (var_77.vt == LV_CHAR) {
+fputc(var_77.v.chr, fp);
+} else if (var_77.vt == LV_STRING) {
+fputs(var_77.v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:30", "input is not a string or char!");
+}
+if (var_80.vt == LV_CHAR) {
+fputc(var_80.v.chr, fp);
+} else if (var_80.vt == LV_STRING) {
+fputs(var_80.v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:30", "input is not a string or char!");
+}
+}
+(void)
+ LVI_BOOL(true);
+MK_CLOS(var_83,3);
+lptr var_96 = new_lv(VT_UNINIT);
+var_96->v.pair.car = &(var_48);
+P_CLOS(var_83,2) = var_96;
+lptr var_97 = new_lv(VT_UNINIT);
+var_97->v.pair.car = &(var_2[1]);
+P_CLOS(var_83,1) = var_97;
+lptr var_98 = new_lv(VT_UNINIT);
+var_98->v.pair.car = &(var_2[2]);
+P_CLOS(var_83,0) = var_98;
+lval var_99;
+var_99 = LVI_NIL();
+{
+lval var_100[8];
+var_100[0] = LVI_PROC(fn_82,var_83,1);
+var_100[1] = var_37;
+var_100[2] = var_99;
+var_99 = wile_map(NULL, var_100, "bld-rtl-dir/wile-rtl2-000057.scm:37");
+}
+lval var_101;
+var_101 = LVI_STRING("\nCOMMIT;\n");
+{
+FILE* fp;
+if (var_2[2].vt == LV_FILE_PORT || var_2[2].vt == LV_PIPE_PORT || var_2[2].vt == LV_SOCK_PORT) {
+fp = var_2[2].v.fp;
+} else if (var_2[2].vt == LV_CHAR) {
+fp = stdout;
+fputc(var_2[2].v.chr, fp);
+} else if (var_2[2].vt == LV_STRING) {
+fp = stdout;
+fputs(var_2[2].v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:42", "first input is not a string or char or port!");
+}
+if (var_101.vt == LV_CHAR) {
+fputc(var_101.v.chr, fp);
+} else if (var_101.vt == LV_STRING) {
+fputs(var_101.v.str, fp);
+} else {
+wile_exception("write-string", "bld-rtl-dir/wile-rtl2-000057.scm:42", "input is not a string or char!");
+}
+}
+lval var_102;
+var_102 = LVI_BOOL(true);
+*var_96 = var_48;
+*var_97 = var_2[1];
+*var_98 = var_2[2];
+var_4 = var_102;
+}
+return var_4;
+}
+// end of function wile_sql_dump_table

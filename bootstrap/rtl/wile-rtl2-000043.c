@@ -26,9 +26,11 @@ static lval fn_10(lptr*, lptr, const char*);
 static lval fn_10(lptr* var_11, lptr var_12, const char* cloc)
 {
 lval var_14;
+#ifdef WILE_DO_CHECK
 if (V_CLOS(var_11,0).vt != LV_PAIR) {
 wile_exception("car", "bld-rtl-dir/wile-rtl2-000043.scm:18", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_14 = (V_CLOS(var_11,0).v.pair.car ? *(V_CLOS(var_11,0).v.pair.car) : LVI_NIL());
 lval var_15;
 var_15 = LVI_BOOL(wile_do_eqv(&(var_12[0]), &(var_14)));
@@ -49,9 +51,11 @@ lptr var_16 = new_lv(VT_UNINIT);
 var_16->v.pair.car = &(var_6[0]);
 P_CLOS(var_11,0) = var_16;
 lval var_17;
+#ifdef WILE_DO_CHECK
 if (var_6[0].vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000043.scm:18", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_17 = (var_6[0].v.pair.cdr ? *(var_6[0].v.pair.cdr) : LVI_NIL());
 lval var_18;
 {
@@ -61,9 +65,11 @@ var_19[1] = var_17;
 var_18 = wile_list_drop_while(NULL, var_19, "bld-rtl-dir/wile-rtl2-000043.scm:18");
 }
 lval var_20;
+#ifdef WILE_DO_CHECK
 if (var_6[0].vt != LV_PAIR) {
 wile_exception("car", "bld-rtl-dir/wile-rtl2-000043.scm:19", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_20 = (var_6[0].v.pair.car ? *(var_6[0].v.pair.car) : LVI_NIL());
 lval var_21;
 {

@@ -1,7 +1,7 @@
 ;;; -*- mode: scheme; -*-
 
 ;;; Wile -- the extremely stable scheming genius compiler *and* interpreter
-;;; Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+;;; Copyright 2023 - 2025, Uwe Hollerbach <uhollerbach@gmail.com>
 ;;; License: GPLv3 or later, see file 'LICENSE' for details
 
 (def-struct bbox name value)
@@ -93,7 +93,7 @@
       (begin
 	(write-string
 	 ";;; Welcome to wile          https://github.com/uhollerbach/wile\n"
-	 ";;; Copyright 2023 Uwe Hollerbach         available under GPLv3+\n")
+	 ";;; Copyright 2023 - 2025 Uwe Hollerbach  available under GPLv3+\n")
 	(for-each (lambda (v) (printf ";;;   %v\n" v)) (wile-build-info))
 	(write-string ";;; type 'bye' or 'quit' to exit\n")
 	(run-repl std-env))

@@ -55,9 +55,11 @@ if (LV_IS_FALSE(var_6)) {
 goto lbl_7;
 }
 lval var_11;
+#ifdef WILE_DO_CHECK
 if (var_2[1].vt != LV_PAIR) {
 wile_exception("car", "bld-rtl-dir/wile-rtl2-000026.scm:14", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_11 = (var_2[1].v.pair.car ? *(var_2[1].v.pair.car) : LVI_NIL());
 lval var_12;
 {
@@ -76,9 +78,11 @@ if (LV_IS_FALSE(var_6)) {
 var_5 = var_2[1];
 } else {
 lval var_13;
+#ifdef WILE_DO_CHECK
 if (var_2[1].vt != LV_PAIR) {
 wile_exception("car", "bld-rtl-dir/wile-rtl2-000026.scm:15", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_13 = (var_2[1].v.pair.car ? *(var_2[1].v.pair.car) : LVI_NIL());
 var_5 = var_13;
 }
@@ -118,9 +122,11 @@ var_29 = wile_list_reverse(NULL, var_30, "bld-rtl-dir/wile-rtl2-000026.scm:21");
 var_28 = var_29;
 lval var_31;
 lval var_32;
+#ifdef WILE_DO_CHECK
 if (var_28.vt != LV_PAIR) {
 wile_exception("car", "bld-rtl-dir/wile-rtl2-000026.scm:22", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_32 = (var_28.v.pair.car ? *(var_28.v.pair.car) : LVI_NIL());
 lval var_33;
 var_33 = LVI_NIL();
@@ -139,9 +145,11 @@ var_34 = LVI_PAIR(p1, p2);
 }
 var_31 = var_34;
 lval var_35;
+#ifdef WILE_DO_CHECK
 if (var_28.vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000026.scm:23", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_35 = (var_28.v.pair.cdr ? *(var_28.v.pair.cdr) : LVI_NIL());
 var_28 = var_35;
 lval var_39;
@@ -158,9 +166,11 @@ if (!LV_IS_FALSE(var_43)) {
 goto lbl_38;
 }
 lval var_44;
+#ifdef WILE_DO_CHECK
 if (var_28.vt != LV_PAIR) {
 wile_exception("car", "bld-rtl-dir/wile-rtl2-000026.scm:25", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_44 = (var_28.v.pair.car ? *(var_28.v.pair.car) : LVI_NIL());
 lval var_45;
 {
@@ -190,9 +200,11 @@ var_46 = LVI_PAIR(p1, p2);
 }
 var_31 = var_46;
 lval var_47;
+#ifdef WILE_DO_CHECK
 if (var_28.vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000026.scm:26", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_47 = (var_28.v.pair.cdr ? *(var_28.v.pair.cdr) : LVI_NIL());
 var_28 = var_47;
 lval var_48;

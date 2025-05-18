@@ -1,5 +1,5 @@
 ;;; Wile -- the extremely stable scheming genius compiler
-;;; Copyright 2024, Uwe Hollerbach <uhollerbach@gmail.com>
+;;; Copyright 2024 - 2025, Uwe Hollerbach <uhollerbach@gmail.com>
 ;;; License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
 
 ;;; bignum library - unsigned integers only so far

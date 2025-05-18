@@ -101,9 +101,11 @@ goto lbl_11;
 }
 lval var_20;
 lval var_21;
+#ifdef WILE_DO_CHECK
 if (var_13.vt != LV_PAIR) {
 wile_exception("car", "bld-rtl-dir/wile-rtl2-000018.scm:19", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_21 = (var_13.v.pair.car ? *(var_13.v.pair.car) : LVI_NIL());
 var_20 = var_21;
 lval var_23;
@@ -223,6 +225,7 @@ cachalot->errval = new_lv(LV_NIL);
 cachalot->whence = "bld-rtl-dir/wile-rtl2-000018.scm:23";
 longjmp(cachalot->cenv, 1);
 } else {
+#ifdef WILE_DO_CHECK
 if (var_7.vt != LV_BVECTOR) {
 wile_exception("bytevector-set!", "bld-rtl-dir/wile-rtl2-000018.scm:22", "input is not a bytevector");
 }
@@ -232,6 +235,7 @@ wile_exception("bytevector-set!", "bld-rtl-dir/wile-rtl2-000018.scm:22", "got ba
 if (!(var_20.vt == LV_CHAR || (var_20.vt == LV_INT && var_20.v.iv >= 0 && var_20.v.iv < 256))) {
 wile_exception("bytevector-set!", "bld-rtl-dir/wile-rtl2-000018.scm:22", "got bad input value");
 }
+#endif // WILE_DO_CHECK
 var_7.v.bvec.arr[var_12.v.iv] = (var_20.vt == LV_CHAR) ? var_20.v.chr : (unsigned char) var_20.v.iv;
 }
 lval var_37;
@@ -240,9 +244,11 @@ lval var_38;
 var_38 = LVI_INT(var_12.v.iv + var_37.v.iv);
 var_14 = var_38;
 lval var_39;
+#ifdef WILE_DO_CHECK
 if (var_13.vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000018.scm:17", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_39 = (var_13.v.pair.cdr ? *(var_13.v.pair.cdr) : LVI_NIL());
 var_15 = var_39;
 var_12 = var_14;

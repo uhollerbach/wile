@@ -2,7 +2,7 @@
 #define WILE_RUNTIME_H
 
 // Wile -- the extremely stable scheming genius compiler
-// Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+// Copyright 2023 - 2025, Uwe Hollerbach <uhollerbach@gmail.com>
 // License: LGPLv3 or later, see file 'LICENSE-LGPL' for details
 
 #include <stdlib.h>
@@ -1135,6 +1135,11 @@ lval wile_mat_mat_mul(lval mat1, lval nr1, lval nc1, lval tr1,
 		      lval tr3, const char* loc);
 
 lval wile_gauss_elim(lval* a, lval* rhs, lval* tr, const char* loc);
+
+lval wile_mat_lud(lval lmat, lval transpose, bool allow_rat, const char* loc);
+lval wile_mat_lus(lptr* clos, lptr args, const char* loc);
+
+lval wile_mat_banded_solve(lptr* clos, lptr args, const char* loc);
 
 lval wile_sha256_wrap(bool is_256, lval input, const char* loc);
 lval wile_sha256_init(bool is_256);

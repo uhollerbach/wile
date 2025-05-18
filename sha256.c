@@ -1,5 +1,5 @@
 // Wile -- the extremely stable scheming genius compiler
-// Copyright 2023, Uwe Hollerbach <uhollerbach@gmail.com>
+// Copyright 2023 - 2025, Uwe Hollerbach <uhollerbach@gmail.com>
 // This file is part of the wile RTL and is licensed under LGPL
 // version 3 or later; see file 'LICENSE-LGPL' for details.
 

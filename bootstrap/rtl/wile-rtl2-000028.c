@@ -24,14 +24,18 @@ extern lval var_flt_precision;
 lval wile_foldl1(lptr* var_1, lptr var_2, const char* cloc)
 {
 lval var_4;
+#ifdef WILE_DO_CHECK
 if (var_2[1].vt != LV_PAIR) {
 wile_exception("car", "bld-rtl-dir/wile-rtl2-000028.scm:14", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_4 = (var_2[1].v.pair.car ? *(var_2[1].v.pair.car) : LVI_NIL());
 lval var_5;
+#ifdef WILE_DO_CHECK
 if (var_2[1].vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000028.scm:14", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_5 = (var_2[1].v.pair.cdr ? *(var_2[1].v.pair.cdr) : LVI_NIL());
 lval var_6;
 {

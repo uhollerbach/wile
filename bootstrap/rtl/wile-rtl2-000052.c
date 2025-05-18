@@ -17,45 +17,102 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
+static lval fn_4(lptr*, lptr, const char*);
 
 // definitions
 
-// @@@ (any-true? vals) @@@ bld-rtl-dir/wile-rtl2-000052.scm:13 @@@ wile_any_true @@@
-lval wile_any_true(lptr* var_1, lptr var_2, const char* cloc)
+// @@@ lambda (n acc) @@@ bld-rtl-dir/wile-rtl2-000052.scm:14 @@@ fn_4 @@@
+static lval fn_4(lptr* var_5, lptr var_6, const char* cloc)
 {
-lbl_3:;
-lval var_4;
-lval var_6;
-var_6 = LVI_BOOL(var_2[0].vt == LV_NIL);
-if (!LV_IS_FALSE(var_6)) {
-lval var_7;
-var_7 = LVI_BOOL(false);
-var_4 = var_7;
-goto lbl_5;
-}
+lbl_7:;
 lval var_8;
-if (var_2[0].vt != LV_PAIR) {
-wile_exception("car", "bld-rtl-dir/wile-rtl2-000052.scm:15", "input is not a pair!");
-}
-var_8 = (var_2[0].v.pair.car ? *(var_2[0].v.pair.car) : LVI_NIL());
-if (!LV_IS_FALSE(var_8)) {
 lval var_9;
-var_9 = LVI_BOOL(true);
-var_4 = var_9;
-goto lbl_5;
+switch (TYPE_COMBO(var_6[0].vt,V_CLOS(var_5,0).vt)) {
+case TYPE_COMBO(LV_INT,LV_INT):
+var_9 = LVI_BOOL(var_6[0].v.iv > V_CLOS(var_5,0).v.iv);
+break;
+case TYPE_COMBO(LV_INT,LV_RAT):
+var_9 = LVI_BOOL(var_6[0].v.iv * V_CLOS(var_5,0).v.irv.den > V_CLOS(var_5,0).v.irv.num);
+break;
+case TYPE_COMBO(LV_INT,LV_REAL):
+var_9 = LVI_BOOL(var_6[0].v.iv > V_CLOS(var_5,0).v.rv);
+break;
+case TYPE_COMBO(LV_RAT,LV_INT):
+var_9 = LVI_BOOL(var_6[0].v.irv.num > V_CLOS(var_5,0).v.iv * var_6[0].v.irv.den);
+break;
+case TYPE_COMBO(LV_RAT,LV_RAT):
+var_9 = LVI_BOOL(var_6[0].v.irv.num * V_CLOS(var_5,0).v.irv.den > V_CLOS(var_5,0).v.irv.num * var_6[0].v.irv.den);
+break;
+case TYPE_COMBO(LV_RAT,LV_REAL):
+var_9 = LVI_BOOL(var_6[0].v.irv.num > V_CLOS(var_5,0).v.rv * var_6[0].v.irv.den);
+break;
+case TYPE_COMBO(LV_REAL,LV_INT):
+var_9 = LVI_BOOL(var_6[0].v.rv > V_CLOS(var_5,0).v.iv);
+break;
+case TYPE_COMBO(LV_REAL,LV_RAT):
+var_9 = LVI_BOOL(var_6[0].v.rv * V_CLOS(var_5,0).v.irv.den > V_CLOS(var_5,0).v.irv.num);
+break;
+case TYPE_COMBO(LV_REAL,LV_REAL):
+var_9 = LVI_BOOL(var_6[0].v.rv > V_CLOS(var_5,0).v.rv);
+break;
+default:
+wile_exception(">", "bld-rtl-dir/wile-rtl2-000052.scm:16", "inputs are not real-valued numbers");
+break;
 }
+if (LV_IS_FALSE(var_9)) {
 lval var_10;
-if (var_2[0].vt != LV_PAIR) {
-wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000052.scm:16", "input is not a pair!");
-}
-var_10 = (var_2[0].v.pair.cdr ? *(var_2[0].v.pair.cdr) : LVI_NIL());
+var_10 = LVI_INT(1);
 lval var_11;
-lval var_13[8];
-var_13[0] = var_10;
-var_2[0] = var_13[0];
-goto lbl_3;
-var_4 = var_11;
-lbl_5:;
-return var_4;
+var_11 = LVI_INT(var_6[0].v.iv + var_10.v.iv);
+lval var_12;
+{
+lptr p1 = NULL, p2 = NULL;
+if (var_6[0].vt != LV_NIL) {
+p1 = new_lv(LV_NIL);
+*p1 = var_6[0];
 }
-// end of function wile_any_true
+if (var_6[1].vt != LV_NIL) {
+p2 = new_lv(LV_NIL);
+*p2 = var_6[1];
+}
+var_12 = LVI_PAIR(p1, p2);
+}
+lval var_13;
+lval var_15[8];
+var_15[0] = var_11;
+var_15[1] = var_12;
+var_6[0] = var_15[0];
+var_6[1] = var_15[1];
+goto lbl_7;
+var_8 = var_13;
+} else {
+var_8 = var_6[1];
+}
+return var_8;
+}
+// end of lambda fn_4
+
+// @@@ (downfrom s n0) @@@ bld-rtl-dir/wile-rtl2-000052.scm:13 @@@ wile_downfrom @@@
+lval wile_downfrom(lptr* var_1, lptr var_2, const char* cloc)
+{
+MK_CLOS(var_5,1);
+lptr var_16 = new_lv(VT_UNINIT);
+var_16->v.pair.car = &(var_2[0]);
+P_CLOS(var_5,0) = var_16;
+lval var_17;
+var_17 = LVI_INT(var_2[0].v.iv - var_2[1].v.iv);
+lval var_18;
+var_18 = LVI_INT(1);
+lval var_19;
+var_19 = LVI_INT(var_17.v.iv + var_18.v.iv);
+lval var_20;
+var_20 = LVI_NIL();
+lval var_21;
+lval var_22[8];
+var_22[0] = var_19;
+var_22[1] = var_20;
+var_21 = fn_4(var_5, var_22, "bld-rtl-dir/wile-rtl2-000052.scm:14");
+*var_16 = var_2[0];
+return var_21;
+}
+// end of function wile_downfrom

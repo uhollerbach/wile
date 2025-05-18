@@ -100,29 +100,33 @@ var_9 = var_7;
 goto lbl_11;
 }
 lval var_20;
+#ifdef WILE_DO_CHECK
 if (var_13.vt != LV_PAIR) {
 wile_exception("car", "bld-rtl-dir/wile-rtl2-000017.scm:19", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_20 = (var_13.v.pair.car ? *(var_13.v.pair.car) : LVI_NIL());
-{
+#ifdef WILE_DO_CHECK
 if (var_7.vt != LV_VECTOR) {
 wile_exception("vector-set!", "bld-rtl-dir/wile-rtl2-000017.scm:19", "input is not a vector");
 }
 if (var_12.vt != LV_INT || var_12.v.iv < 0 || (size_t) var_12.v.iv >= var_7.v.vec.capa) {
 wile_exception("vector-set!", "bld-rtl-dir/wile-rtl2-000017.scm:19", "got bad index value");
 }
+#endif // WILE_DO_CHECK
 var_7.v.vec.arr[var_12.v.iv] = new_lv(LV_NIL);
 *(var_7.v.vec.arr[var_12.v.iv]) = var_20;
-}
 lval var_22;
 var_22 = LVI_INT(1);
 lval var_23;
 var_23 = LVI_INT(var_12.v.iv + var_22.v.iv);
 var_14 = var_23;
 lval var_24;
+#ifdef WILE_DO_CHECK
 if (var_13.vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000017.scm:17", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_24 = (var_13.v.pair.cdr ? *(var_13.v.pair.cdr) : LVI_NIL());
 var_15 = var_24;
 var_12 = var_14;

@@ -73,9 +73,11 @@ var_13[0] = var_12;
 var_12 = wile_subtract(NULL, var_13, "bld-rtl-dir/wile-rtl2-000004.scm:16");
 }
 lval var_15;
+#ifdef WILE_DO_CHECK
 if (var_2[1].vt != LV_PAIR) {
 wile_exception("cdr", "bld-rtl-dir/wile-rtl2-000004.scm:16", "input is not a pair!");
 }
+#endif // WILE_DO_CHECK
 var_15 = (var_2[1].v.pair.cdr ? *(var_2[1].v.pair.cdr) : LVI_NIL());
 lval var_16;
 lval var_18[8];

@@ -17,141 +17,111 @@ extern lval var_int_base;
 extern lval var_flt_base;
 extern lval var_flt_precision;
 #include "wile-rtl2.h"
-static lval var_1 = LVI_BOOL(false);
 
 // definitions
 
-// @@@ (day-of-year y m d) @@@ bld-rtl-dir/wile-rtl2-000063.scm:18 @@@ wile_day_of_year @@@
-lval wile_day_of_year(lptr* var_2, lptr var_3, const char* cloc)
+// @@@ (is-leap-year? y) @@@ bld-rtl-dir/wile-rtl2-000063.scm:15 @@@ wile_is_leap_year @@@
+lval wile_is_leap_year(lptr* var_1, lptr var_2, const char* cloc)
 {
-if (LV_IS_FALSE(var_1)) {
+lval var_4;
+var_4 = LVI_BOOL(true);
 lval var_6;
-var_6 = LVI_INT(0);
+var_6 = LVI_INT(4);
 lval var_7;
-var_7 = LVI_INT(31);
+{
+lisp_int_t nq, nr;
+trunc_qr(var_2[0].v.iv, var_6.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000063.scm:17");
+var_7 = LVI_INT(nr);
+}
 lval var_8;
-var_8 = LVI_INT(59);
-lval var_9;
-var_9 = LVI_INT(90);
-lval var_10;
-var_10 = LVI_INT(120);
-lval var_11;
-var_11 = LVI_INT(151);
-lval var_12;
-var_12 = LVI_INT(181);
-lval var_13;
-var_13 = LVI_INT(212);
-lval var_14;
-var_14 = LVI_INT(243);
-lval var_15;
-var_15 = LVI_INT(273);
-lval var_16;
-var_16 = LVI_INT(304);
-lval var_17;
-var_17 = LVI_INT(334);
-lval var_18;
-{
-lval var_20[12];
-var_20[0] = var_6;
-var_20[1] = var_7;
-var_20[2] = var_8;
-var_20[3] = var_9;
-var_20[4] = var_10;
-var_20[5] = var_11;
-var_20[6] = var_12;
-var_20[7] = var_13;
-var_20[8] = var_14;
-var_20[9] = var_15;
-var_20[10] = var_16;
-var_20[11] = var_17;
-var_18 = wile_gen_list(12, var_20, NULL);
-}
-{
-lval var_19[8];
-var_19[0] = var_18;
-var_18 = wile_list2vector(NULL, var_19, "bld-rtl-dir/wile-rtl2-000063.scm:20");
-}
-var_1 = var_18;
-} else {
-}
-lval var_22;
-var_22 = LVI_INT(1);
-lval var_23;
-var_23 = LVI_INT(var_3[1].v.iv - var_22.v.iv);
-lval var_24;
-{
-if (var_1.vt != LV_VECTOR) {
-wile_exception("vector-ref", "bld-rtl-dir/wile-rtl2-000063.scm:21", "input is not a vector");
-}
-if (var_23.vt != LV_INT || var_23.v.iv < 0 || (size_t) var_23.v.iv >= var_1.v.vec.capa) {
-wile_exception("vector-ref", "bld-rtl-dir/wile-rtl2-000063.scm:21", "got bad index value");
-}
-var_24 = var_1.v.vec.arr[var_23.v.iv] ? *(var_1.v.vec.arr[var_23.v.iv]) : LVI_NIL();
-}
-lval var_25;
-lval var_26;
-var_26 = LVI_BOOL(true);
-lval var_28;
-var_28 = LVI_INT(2);
-lval var_29;
-switch (TYPE_COMBO(var_3[1].vt,var_28.vt)) {
-case TYPE_COMBO(LV_INT,LV_INT):
-var_29 = LVI_BOOL(var_3[1].v.iv > var_28.v.iv);
+switch (var_7.vt) {
+case LV_REAL:
+var_8 = LVI_BOOL(var_7.v.rv == 0.0);
 break;
-case TYPE_COMBO(LV_INT,LV_RAT):
-var_29 = LVI_BOOL(var_3[1].v.iv * var_28.v.irv.den > var_28.v.irv.num);
+case LV_RAT:
+var_8 = LVI_BOOL((var_7.v.irv.num == 0 && var_7.v.irv.den != 0));
 break;
-case TYPE_COMBO(LV_INT,LV_REAL):
-var_29 = LVI_BOOL(var_3[1].v.iv > var_28.v.rv);
+case LV_INT:
+var_8 = LVI_BOOL(var_7.v.iv == 0);
 break;
-case TYPE_COMBO(LV_RAT,LV_INT):
-var_29 = LVI_BOOL(var_3[1].v.irv.num > var_28.v.iv * var_3[1].v.irv.den);
-break;
-case TYPE_COMBO(LV_RAT,LV_RAT):
-var_29 = LVI_BOOL(var_3[1].v.irv.num * var_28.v.irv.den > var_28.v.irv.num * var_3[1].v.irv.den);
-break;
-case TYPE_COMBO(LV_RAT,LV_REAL):
-var_29 = LVI_BOOL(var_3[1].v.irv.num > var_28.v.rv * var_3[1].v.irv.den);
-break;
-case TYPE_COMBO(LV_REAL,LV_INT):
-var_29 = LVI_BOOL(var_3[1].v.rv > var_28.v.iv);
-break;
-case TYPE_COMBO(LV_REAL,LV_RAT):
-var_29 = LVI_BOOL(var_3[1].v.rv * var_28.v.irv.den > var_28.v.irv.num);
-break;
-case TYPE_COMBO(LV_REAL,LV_REAL):
-var_29 = LVI_BOOL(var_3[1].v.rv > var_28.v.rv);
+case LV_CMPLX:
+var_8 = LVI_BOOL(CREAL(var_7.v.cv) == 0.0 && CIMAG(var_7.v.cv) == 0.0);
 break;
 default:
-wile_exception(">", "bld-rtl-dir/wile-rtl2-000063.scm:22", "inputs are not real-valued numbers");
-break;
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000063.scm:17", "expects a real-valued number");
 }
-var_26 = var_29;
-if (LV_IS_FALSE(var_26)) {
-goto lbl_27;
+var_4 = var_8;
+if (LV_IS_FALSE(var_4)) {
+goto lbl_5;
 }
-lval var_30;
+lval var_9;
+var_9 = LVI_BOOL(false);
+lval var_11;
+var_11 = LVI_INT(100);
+lval var_12;
 {
-lval var_31[8];
-var_31[0] = var_3[0];
-var_30 = wile_is_leap_year(NULL, var_31, "bld-rtl-dir/wile-rtl2-000063.scm:22");
+lisp_int_t nq, nr;
+trunc_qr(var_2[0].v.iv, var_11.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000063.scm:19");
+var_12 = LVI_INT(nr);
 }
-var_26 = var_30;
-if (LV_IS_FALSE(var_26)) {
-goto lbl_27;
+lval var_13;
+switch (var_12.vt) {
+case LV_REAL:
+var_13 = LVI_BOOL(var_12.v.rv == 0.0);
+break;
+case LV_RAT:
+var_13 = LVI_BOOL((var_12.v.irv.num == 0 && var_12.v.irv.den != 0));
+break;
+case LV_INT:
+var_13 = LVI_BOOL(var_12.v.iv == 0);
+break;
+case LV_CMPLX:
+var_13 = LVI_BOOL(CREAL(var_12.v.cv) == 0.0 && CIMAG(var_12.v.cv) == 0.0);
+break;
+default:
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000063.scm:19", "expects a real-valued number");
 }
-lbl_27:;
-if (LV_IS_FALSE(var_26)) {
-lval var_32;
-var_32 = LVI_INT(0);
-var_25 = var_32;
-} else {
-lval var_33;
-var_33 = LVI_INT(1);
-var_25 = var_33;
+lval var_14;
+var_14 = LVI_BOOL(LV_IS_FALSE(var_13));
+var_9 = var_14;
+if (!LV_IS_FALSE(var_9)) {
+goto lbl_10;
 }
-lval var_34;
-var_34 = LVI_INT(var_24.v.iv + var_3[2].v.iv + var_25.v.iv);
-return var_34;
+lval var_15;
+var_15 = LVI_INT(400);
+lval var_16;
+{
+lisp_int_t nq, nr;
+trunc_qr(var_2[0].v.iv, var_15.v.iv, &nq, &nr, "bld-rtl-dir/wile-rtl2-000063.scm:20");
+var_16 = LVI_INT(nr);
 }
-// end of function wile_day_of_year
+lval var_17;
+switch (var_16.vt) {
+case LV_REAL:
+var_17 = LVI_BOOL(var_16.v.rv == 0.0);
+break;
+case LV_RAT:
+var_17 = LVI_BOOL((var_16.v.irv.num == 0 && var_16.v.irv.den != 0));
+break;
+case LV_INT:
+var_17 = LVI_BOOL(var_16.v.iv == 0);
+break;
+case LV_CMPLX:
+var_17 = LVI_BOOL(CREAL(var_16.v.cv) == 0.0 && CIMAG(var_16.v.cv) == 0.0);
+break;
+default:
+wile_exception("zero?", "bld-rtl-dir/wile-rtl2-000063.scm:20", "expects a real-valued number");
+}
+var_9 = var_17;
+if (!LV_IS_FALSE(var_9)) {
+goto lbl_10;
+}
+lbl_10:;
+var_4 = var_9;
+if (LV_IS_FALSE(var_4)) {
+goto lbl_5;
+}
+lbl_5:;
+return var_4;
+}
+// end of function wile_is_leap_year
